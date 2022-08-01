@@ -146,7 +146,7 @@ namespace TownOfHost
                     Main.additionalwinners.Add(AdditionalWinners.Opportunist);
                 }
                 //SchrodingerCat
-                if (Options.CanBeforeSchrodingerCatWinTheCrewmate.GetBool())
+                if (SchrodingerCat.CanWinTheCrewmateBeforeChange.GetBool())
                     if (pc.Is(CustomRoles.SchrodingerCat) && Main.currentWinner == CustomWinner.Crewmate)
                     {
                         winner.Add(pc);

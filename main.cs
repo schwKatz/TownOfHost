@@ -275,12 +275,12 @@ namespace TownOfHost
         Puppeteer,
         TimeThief,
         LastImpostor,
+        ISchrodingerCat,//インポスター陣営のシュレディンガーの猫
         //Madmate
         MadGuardian,
         Madmate,
         MadSnitch,
         SKMadmate,
-        MSchrodingerCat,//インポスター陣営のシュレディンガーの猫
         //両陣営
         Watcher,
         //Crewmate(Vanilla)

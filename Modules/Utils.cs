@@ -157,7 +157,7 @@ namespace TownOfHost
                     if (cRole == CustomRoles.Arsonist) hasTasks = false;
                     if (cRole == CustomRoles.SchrodingerCat) hasTasks = false;
                     if (cRole == CustomRoles.CSchrodingerCat) hasTasks = false;
-                    if (cRole == CustomRoles.MSchrodingerCat) hasTasks = false;
+                    if (cRole == CustomRoles.ISchrodingerCat) hasTasks = false;
                     if (cRole == CustomRoles.EgoSchrodingerCat) hasTasks = false;
                     if (cRole == CustomRoles.JSchrodingerCat) hasTasks = false;
                     if (cRole == CustomRoles.Egoist) hasTasks = false;

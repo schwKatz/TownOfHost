@@ -95,8 +95,6 @@ namespace TownOfHost
         public static CustomOption CanTerroristSuicideWin;
         public static CustomOption ArsonistDouseTime;
         public static CustomOption ArsonistCooldown;
-        public static CustomOption CanBeforeSchrodingerCatWinTheCrewmate;
-        public static CustomOption SchrodingerCatExiledTeamChanges;
         public static CustomOption ExecutionerCanTargetImpostor;
         public static CustomOption ExecutionerChangeRolesAfterTargetKilled;
         public static CustomOption JackalKillCooldown;
@@ -331,9 +329,7 @@ namespace TownOfHost
             TerroristTasks = OverrideTasksData.Create(50220, CustomRoles.Terrorist);
             SetupLoversRoleOptionsToggle(50300);
 
-            SetupRoleOptions(50400, CustomRoles.SchrodingerCat);
-            CanBeforeSchrodingerCatWinTheCrewmate = CustomOption.Create(50410, Color.white, "CanBeforeSchrodingerCatWinTheCrewmate", false, CustomRoleSpawnChances[CustomRoles.SchrodingerCat]);
-            SchrodingerCatExiledTeamChanges = CustomOption.Create(50411, Color.white, "SchrodingerCatExiledTeamChanges", false, CustomRoleSpawnChances[CustomRoles.SchrodingerCat]);
+            SchrodingerCat.SetupCustomOption();
             SetupRoleOptions(50600, CustomRoles.Egoist);
             SetupRoleOptions(50700, CustomRoles.Executioner);
             ExecutionerCanTargetImpostor = CustomOption.Create(50710, Color.white, "ExecutionerCanTargetImpostor", false, CustomRoleSpawnChances[CustomRoles.Executioner]);

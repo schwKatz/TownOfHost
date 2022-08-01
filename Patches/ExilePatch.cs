@@ -86,8 +86,7 @@ namespace TownOfHost
                 }
                 if (exiled.Object.Is(CustomRoles.TimeThief))
                     exiled.Object.ResetVotingTime();
-                if (exiled.Object.Is(CustomRoles.SchrodingerCat) && Options.SchrodingerCatExiledTeamChanges.GetBool())
-                    exiled.Object.ExiledSchrodingerCatTeamChange();
+                SchrodingerCat.ExiledCatTeamChange(exiled.Object);
 
 
                 PlayerState.SetDead(exiled.PlayerId);

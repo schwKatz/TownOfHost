@@ -59,7 +59,7 @@ Terrorist,Terrorist,テロリスト,恐怖分子,恐怖分子
 Executioner,Executioner,エクスキューショナー,处刑者,劊子手
 SchrodingerCat,SchrodingerCat,シュレディンガーの猫,薛定谔的猫,薛定諤的貓
 CSchrodingerCat,SchrodingerCat,シュレディンガーの猫,薛定谔的猫,薛定諤的貓
-MSchrodingerCat,SchrodingerCat,シュレディンガーの猫,薛定谔的猫,薛定諤的貓
+ISchrodingerCat,SchrodingerCat,シュレディンガーの猫,薛定谔的猫,薛定諤的貓
 EgoSchrodingerCat,SchrodingerCat,シュレディンガーの猫,薛定谔的猫,薛定諤的貓
 JSchrodingerCat,SchrodingerCat,シュレディンガーの猫,薛定谔的猫,薛定諤的貓
 Opportunist,Opportunist,オポチュニスト,投机者,投機主義者
@@ -125,7 +125,7 @@ JesterInfo,Get voted out,追放されよう,想办法被投出去,想個辦法�
 OpportunistInfo,Stay alive,とにかく生き残りましょう,苟且偷生,做點什麼事來讓你存活
 SchrodingerCatInfo,Get killed and join killer team,殺された陣営に所属しろ,成为杀害你的玩家的仆从,成為殺害你的人的跟班
 CSchrodingerCatInfo,You are now on Team Crewmates,クルーメイトの味方になった,你是船员的仆从,"你是船員的跟班"
-MSchrodingerCatInfo,You are now on Team Impostors,インポスターの味方になった,你是内鬼的仆从,"你是狼人的跟班"
+ISchrodingerCatInfo,You are now on Team Impostors,インポスターの味方になった,你是内鬼的仆从,"你是狼人的跟班"
 EgoSchrodingerCatInfo,You are now on Team Egoists,エゴイストの味方になった,你是野心家的仆从,"你是利己主義者的跟班"
 JSchrodingerCatInfo,I became an ally of my Jackal,ジャッカルの味方になった,你是豺狼的仆从,"你是豺狼的跟班"
 TerroristInfo,Die after finishing your tasks,タスクを済ませ、自爆しよう,都别想活着！,"一個一個來,都別想給我活!"

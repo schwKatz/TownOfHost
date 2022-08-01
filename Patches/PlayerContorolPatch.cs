@@ -113,32 +113,7 @@ namespace TownOfHost
                     var canDirectKill = !killer.Is(CustomRoles.Arsonist);
                     if (canDirectKill)
                     {
-                        killer.RpcGuardAndKill(target);
-                        if (PlayerState.GetDeathReason(target.PlayerId) == PlayerState.DeathReason.Sniped)
-                        {
-                            //スナイプされた時
-                            target.RpcSetCustomRole(CustomRoles.MSchrodingerCat);
-                            var sniperId = Sniper.GetSniper(target.PlayerId);
-                            NameColorManager.Instance.RpcAdd(sniperId, target.PlayerId, $"{Utils.GetRoleColorCode(CustomRoles.SchrodingerCat)}");
-                        }
-                        else if (killer.GetBountyTarget() == target)
-                            killer.ResetBountyTarget();//ターゲットの選びなおし
-                        else
-                        {
-                            SerialKiller.OnCheckMurder(killer, isKilledSchrodingerCat: true);
-                            if (killer.GetCustomRole().IsImpostor())
-                                target.RpcSetCustomRole(CustomRoles.MSchrodingerCat);
-                            if (killer.Is(CustomRoles.Sheriff))
-                                target.RpcSetCustomRole(CustomRoles.CSchrodingerCat);
-                            if (killer.Is(CustomRoles.Egoist))
-                                target.RpcSetCustomRole(CustomRoles.EgoSchrodingerCat);
-                            if (killer.Is(CustomRoles.Jackal))
-                                target.RpcSetCustomRole(CustomRoles.JSchrodingerCat);
-
-                            NameColorManager.Instance.RpcAdd(killer.PlayerId, target.PlayerId, $"{Utils.GetRoleColorCode(CustomRoles.SchrodingerCat)}");
-                        }
-                        Utils.NotifyRoles();
-                        Utils.CustomSyncAllSettings();
+                        SchrodingerCat.OnKilled(killer, target);
                         return false;
                         //シュレディンガーの猫の役職変化処理終了
                         //第三陣営キル能力持ちが追加されたら、その陣営を味方するシュレディンガーの猫の役職を作って上と同じ書き方で書いてください
@@ -264,6 +239,12 @@ namespace TownOfHost
                             RPC.SetCurrentDousingTarget(killer.PlayerId, target.PlayerId);
                         }
                         return false;
+                    case CustomRoles.SchrodingerCat:
+                    case CustomRoles.ISchrodingerCat:
+                    case CustomRoles.EgoSchrodingerCat:
+                    case CustomRoles.JSchrodingerCat:
+                        if (!SchrodingerCat.CanUseKillButton(killer)) return false;
+                        break;
 
                     //==========クルー役職==========//
                     case CustomRoles.Sheriff:

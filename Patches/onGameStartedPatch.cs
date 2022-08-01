@@ -103,6 +103,7 @@ namespace TownOfHost
             TimeThief.Init();
             Mare.Init();
             Sheriff.Init();
+            SchrodingerCat.Init();
         }
     }
     [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
@@ -155,6 +156,7 @@ namespace TownOfHost
                 AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, sender, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, sender, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Jackal, AllPlayers, sender, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.SchrodingerCat, AllPlayers, sender, BaseRole: RoleTypes.Impostor);
             }
             if (sender.CurrentState == CustomRpcSender.State.InRootMessage) sender.EndMessage();
             //以下、バニラ側の役職割り当てが入る
@@ -263,7 +265,6 @@ namespace TownOfHost
                 AssignCustomRolesFromList(CustomRoles.SpeedBooster, Crewmates);
                 AssignCustomRolesFromList(CustomRoles.Trapper, Crewmates);
                 AssignCustomRolesFromList(CustomRoles.Dictator, Crewmates);
-                AssignCustomRolesFromList(CustomRoles.SchrodingerCat, Crewmates);
                 if (Options.IsEvilWatcher) AssignCustomRolesFromList(CustomRoles.Watcher, Impostors);
                 else AssignCustomRolesFromList(CustomRoles.Watcher, Crewmates);
                 if (Main.RealOptionsData.NumImpostors > 1)
