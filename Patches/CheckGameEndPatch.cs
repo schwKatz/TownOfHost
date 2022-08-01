@@ -219,10 +219,11 @@ namespace TownOfHost
         {
             foreach (var pc in PlayerControl.AllPlayerControls)
             {
-                var LoseImpostorRole = Main.AliveImpostorCount == 0 ? pc.Is(RoleType.Impostor) : pc.Is(CustomRoles.Egoist);
+                var role = pc.GetCustomRole();
+                var LoseImpostorRole = Main.AliveImpostorCount == 0 ? pc.Is(RoleType.Impostor) : role is CustomRoles.Egoist or CustomRoles.EgoSchrodingerCat;
                 if (pc.Is(CustomRoles.Sheriff) ||
                     (!(Main.currentWinner == CustomWinner.Arsonist) && pc.Is(CustomRoles.Arsonist)) ||
-                    (Main.currentWinner != CustomWinner.Jackal && pc.Is(CustomRoles.Jackal)) ||
+                    (Main.currentWinner != CustomWinner.Jackal && role is CustomRoles.Jackal or CustomRoles.JSchrodingerCat) ||
                     LoseImpostorRole)
                 {
                     pc.RpcSetRole(RoleTypes.GuardianAngel);
@@ -270,11 +271,11 @@ namespace TownOfHost
                             }
 
                             if (playerInfo.Role.TeamType == RoleTeamTypes.Impostor &&
-                            (playerInfo.GetCustomRole() != CustomRoles.Sheriff || playerInfo.GetCustomRole() != CustomRoles.Arsonist))
+                            (playerInfo.GetCustomRole() is not CustomRoles.Sheriff or CustomRoles.Arsonist or CustomRoles.ISchrodingerCat or CustomRoles.EgoSchrodingerCat))
                             {
                                 numImpostorsAlive++;
                             }
-                            else if (playerInfo.GetCustomRole() == CustomRoles.Jackal) numJackalsAlive++;
+                            else if (playerInfo.GetCustomRole() is CustomRoles.Jackal or CustomRoles.JSchrodingerCat) numJackalsAlive++;
                         }
                     }
                 }

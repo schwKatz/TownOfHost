@@ -558,6 +558,7 @@ namespace TownOfHost
                 CustomRoles.FireWorks => FireWorks.CanUseKillButton(pc),
                 CustomRoles.Sniper => Sniper.CanUseKillButton(pc),
                 CustomRoles.Sheriff => Sheriff.CanUseKillButton(pc),
+                CustomRoles.EgoSchrodingerCat or CustomRoles.JSchrodingerCat => SchrodingerCat.CanUseKillButton(pc),
                 _ => canUse,
             };
         }
@@ -635,6 +636,11 @@ namespace TownOfHost
         {
             switch (player.GetCustomRole())
             {
+                case CustomRoles.ISchrodingerCat:
+                case CustomRoles.EgoSchrodingerCat:
+                    DestroyableSingleton<HudManager>.Instance.ImpostorVentButton.ToggleVisible(true && !player.Data.IsDead);
+                    player.Data.Role.CanVent = true;
+                    break;
                 case CustomRoles.Sheriff:
                     DestroyableSingleton<HudManager>.Instance.ImpostorVentButton.ToggleVisible(false);
                     player.Data.Role.CanVent = false;
@@ -645,6 +651,7 @@ namespace TownOfHost
                     player.Data.Role.CanVent = CanUse;
                     return;
                 case CustomRoles.Jackal:
+                case CustomRoles.JSchrodingerCat:
                     bool jackal_canUse = Options.JackalCanVent.GetBool();
                     DestroyableSingleton<HudManager>.Instance.ImpostorVentButton.ToggleVisible(jackal_canUse && !player.Data.IsDead);
                     player.Data.Role.CanVent = jackal_canUse;
@@ -719,7 +726,9 @@ namespace TownOfHost
             return
                 player.GetCustomRole() is
                 CustomRoles.Egoist or
-                CustomRoles.Jackal;
+                CustomRoles.EgoSchrodingerCat or
+                CustomRoles.Jackal or
+                CustomRoles.JSchrodingerCat;
         }
 
         //汎用

@@ -31,10 +31,6 @@ namespace TownOfHost
         {
             float cooldown = 0;
             var cat = Utils.GetPlayerById(id);
-            if (cat.Is(RoleType.Impostor))
-                cooldown = Options.DefaultKillCooldown;
-            else if (cat.Is(CustomRoles.JSchrodingerCat))
-                cooldown = Options.JackalKillCooldown.GetFloat();
             return cooldown;
         }
         public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = GetKillCooldown(id);
@@ -45,12 +41,10 @@ namespace TownOfHost
 
             return player.GetCustomRole() switch
             {
+                CustomRoles.SchrodingerCat => false,
                 CustomRoles.ISchrodingerCat or CustomRoles.JSchrodingerCat or CustomRoles.EgoSchrodingerCat => true,
                 _ => false
             };
-        }
-        public static void OnCheckMurder(PlayerControl killer, PlayerControl target)
-        {
         }
         public static void OnKilled(PlayerControl killer, PlayerControl target)
         {
