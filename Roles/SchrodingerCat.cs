@@ -54,14 +54,24 @@ namespace TownOfHost
             else
             {
                 SerialKiller.OnCheckMurder(killer, isKilledSchrodingerCat: true);
-                if (killer.GetCustomRole().IsImpostor())
-                    target.RpcSetCustomRole(CustomRoles.ISchrodingerCat);
-                if (killer.Is(CustomRoles.Sheriff))
-                    target.RpcSetCustomRole(CustomRoles.CSchrodingerCat);
-                if (killer.Is(CustomRoles.Egoist))
-                    target.RpcSetCustomRole(CustomRoles.EgoSchrodingerCat);
-                if (killer.Is(CustomRoles.Jackal))
-                    target.RpcSetCustomRole(CustomRoles.JSchrodingerCat);
+                switch (killer.GetCustomRole())
+                {
+                    case CustomRoles.Sheriff:
+                        target.RpcSetCustomRole(CustomRoles.CSchrodingerCat);
+                        break;
+                    case CustomRoles.Egoist:
+                    case CustomRoles.EgoSchrodingerCat:
+                        target.RpcSetCustomRole(CustomRoles.EgoSchrodingerCat);
+                        break;
+                    case CustomRoles.Jackal:
+                    case CustomRoles.JSchrodingerCat:
+                        target.RpcSetCustomRole(CustomRoles.JSchrodingerCat);
+                        break;
+                    default:
+                        if (killer.GetCustomRole().IsImpostor())
+                            target.RpcSetCustomRole(CustomRoles.ISchrodingerCat);
+                        break;
+                }
 
                 NameColorManager.Instance.RpcAdd(killer.PlayerId, target.PlayerId, $"{Utils.GetRoleColorCode(CustomRoles.SchrodingerCat)}");
             }
