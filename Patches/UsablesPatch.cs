@@ -46,7 +46,9 @@ namespace TownOfHost
                 return false;
             else if (pc.Object.Is(CustomRoles.Arsonist) && pc.Object.IsDouseDone())
                 canUse = couldUse = VentForTrigger = true;
-            else if (pc.Object.GetCustomRole() is CustomRoles.Jackal or CustomRoles.JSchrodingerCat)
+            else if (pc.Object.GetCustomRole() is CustomRoles.ISchrodingerCat or CustomRoles.EgoSchrodingerCat)
+                canUse = couldUse = true;
+            else if (pc.Object.GetCustomRole() is CustomRoles.Jackal or CustomRoles.JSchrodingerCat && Options.JackalCanVent.GetBool())
                 canUse = couldUse = Options.JackalCanVent.GetBool();
             else if (pc.Role.TeamType == RoleTeamTypes.Impostor || pc.Role.Role == RoleTypes.Engineer) // インポスター陣営ベースの役職とエンジニアベースの役職は常にtrue
                 canUse = couldUse = true;

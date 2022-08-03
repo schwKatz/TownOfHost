@@ -219,7 +219,7 @@ namespace TownOfHost
             }
             if (player.GetButtonDown(50) && // 50:インポスターのベントボタンのactionId
             PlayerControl.LocalPlayer.Data?.Role?.IsImpostor == false &&
-            (PlayerControl.LocalPlayer.Is(CustomRoles.Arsonist) ||
+            (PlayerControl.LocalPlayer.GetCustomRole() is CustomRoles.Arsonist or CustomRoles.ISchrodingerCat or CustomRoles.EgoSchrodingerCat ||
             (PlayerControl.LocalPlayer.GetCustomRole() is CustomRoles.Jackal or CustomRoles.JSchrodingerCat && Options.JackalCanVent.GetBool())
             ) && PlayerControl.LocalPlayer.Data.Role.Role != RoleTypes.GuardianAngel)
             {
