@@ -560,7 +560,7 @@ namespace TownOfHost
                 CustomRoles.FireWorks => FireWorks.CanUseKillButton(pc),
                 CustomRoles.Sniper => Sniper.CanUseKillButton(pc),
                 CustomRoles.Sheriff => Sheriff.CanUseKillButton(pc),
-                CustomRoles.EgoSchrodingerCat or CustomRoles.JSchrodingerCat => SchrodingerCat.CanUseKillButton(pc),
+                CustomRoles.EgoSchrodingerCat or CustomRoles.JSchrodingerCat or CustomRoles.ISchrodingerCat or CustomRoles.EgoSchrodingerCat => SchrodingerCat.CanUseKillButton(pc),
                 _ => canUse,
             };
         }
