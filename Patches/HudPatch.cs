@@ -202,6 +202,7 @@ namespace TownOfHost
                 case CustomRoles.EgoSchrodingerCat:
                 case CustomRoles.Jackal:
                 case CustomRoles.JSchrodingerCat:
+                    __instance.KillButton.gameObject.SetActive(true);
                     __instance.KillButton.ToggleVisible(true);
                     __instance.SabotageButton.ToggleVisible(true);
                     player.CanUseImpostorVent();
