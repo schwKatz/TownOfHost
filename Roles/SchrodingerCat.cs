@@ -27,13 +27,6 @@ namespace TownOfHost
             playerIdList.Add(mare);
         }
         public static bool IsEnable => playerIdList.Count > 0;
-        public static float GetKillCooldown(byte id)
-        {
-            float cooldown = 0;
-            var cat = Utils.GetPlayerById(id);
-            return cooldown;
-        }
-        public static void SetKillCooldown(byte id) => Main.AllPlayerKillCooldown[id] = GetKillCooldown(id);
         public static bool CanUseKillButton(PlayerControl player)
         {
             if (player.Data.IsDead)

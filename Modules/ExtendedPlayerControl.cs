@@ -612,11 +612,8 @@ namespace TownOfHost
                     Mare.SetKillCooldown(player.PlayerId);
                     break;
                 case CustomRoles.Jackal:
-                    Main.AllPlayerKillCooldown[player.PlayerId] = Options.JackalKillCooldown.GetFloat();
-                    break;
-                case CustomRoles.ISchrodingerCat:
                 case CustomRoles.JSchrodingerCat:
-                    SchrodingerCat.SetKillCooldown(player.PlayerId);
+                    Main.AllPlayerKillCooldown[player.PlayerId] = Options.JackalKillCooldown.GetFloat();
                     break;
             }
             if (player.IsLastImpostor())
