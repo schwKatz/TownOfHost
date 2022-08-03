@@ -271,7 +271,7 @@ namespace TownOfHost
                             }
 
                             if (playerInfo.Role.TeamType == RoleTeamTypes.Impostor &&
-                            (playerInfo.GetCustomRole() is not CustomRoles.Sheriff or CustomRoles.Arsonist or CustomRoles.ISchrodingerCat or CustomRoles.EgoSchrodingerCat))
+                            (playerInfo.GetCustomRole() is not CustomRoles.Sheriff or CustomRoles.Arsonist or CustomRoles.EgoSchrodingerCat))
                             {
                                 numImpostorsAlive++;
                             }
