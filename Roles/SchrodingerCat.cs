@@ -41,7 +41,7 @@ namespace TownOfHost
 
             return player.GetCustomRole() switch
             {
-                CustomRoles.SchrodingerCat => false,
+                CustomRoles.SchrodingerCat or CustomRoles.CSchrodingerCat => false,
                 CustomRoles.ISchrodingerCat or CustomRoles.JSchrodingerCat or CustomRoles.EgoSchrodingerCat => true,
                 _ => false
             };
