@@ -303,6 +303,7 @@ namespace TownOfHost
                     }
                     break;
                 case CustomRoles.EgoSchrodingerCat:
+                case CustomRoles.ISchrodingerCat:
                     opt.SetVision(player, true);
                     break;
                 case CustomRoles.Doctor:
