@@ -221,7 +221,7 @@ namespace TownOfHost
             {
                 var role = pc.GetCustomRole();
                 var LoseImpostorRole = Main.AliveImpostorCount == 0 ? pc.Is(RoleType.Impostor) : role is CustomRoles.Egoist or CustomRoles.EgoSchrodingerCat;
-                if (pc.Is(CustomRoles.Sheriff) ||
+                if (pc.GetCustomRole() is CustomRoles.Sheriff or CustomRoles.SchrodingerCat ||
                     (!(Main.currentWinner == CustomWinner.Arsonist) && pc.Is(CustomRoles.Arsonist)) ||
                     (Main.currentWinner != CustomWinner.Jackal && role is CustomRoles.Jackal or CustomRoles.JSchrodingerCat) ||
                     LoseImpostorRole)
