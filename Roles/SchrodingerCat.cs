@@ -78,9 +78,6 @@ namespace TownOfHost
             Utils.NotifyRoles();
             Utils.CustomSyncAllSettings();
         }
-        public static void FixedUpdate(PlayerControl player)
-        {
-        }
         public static void ExiledCatTeamChange(PlayerControl player)
         {
             if (player == null || !(player.Is(CustomRoles.SchrodingerCat) && ExiledTeamChanges.GetBool())) return;
