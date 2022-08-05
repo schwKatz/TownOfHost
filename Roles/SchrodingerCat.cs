@@ -49,8 +49,8 @@ namespace TownOfHost
                 var sniperId = Sniper.GetSniper(target.PlayerId);
                 NameColorManager.Instance.RpcAdd(sniperId, target.PlayerId, $"{Utils.GetRoleColorCode(CustomRoles.SchrodingerCat)}");
             }
-            else if (killer.GetBountyTarget() == target)
-                killer.ResetBountyTarget();//ターゲットの選びなおし
+            else if (BountyHunter.GetTarget(killer) == target)
+                BountyHunter.ResetTarget(killer);//ターゲットの選びなおし
             else
             {
                 SerialKiller.OnCheckMurder(killer, isKilledSchrodingerCat: true);
