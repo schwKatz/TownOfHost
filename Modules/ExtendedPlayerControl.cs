@@ -166,7 +166,6 @@ namespace TownOfHost
                 sender.EndMessage();
                 sender.SendMessage();
             }
-            Main.BlockKilling[killer.PlayerId] = false;
         }
         public static void RpcSpecificMurderPlayer(this PlayerControl killer, PlayerControl target = null)
         {
@@ -641,7 +640,6 @@ namespace TownOfHost
             messageWriter.WriteNetObject(target);
             AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
             Utils.NotifyRoles();
-            Main.BlockKilling[killer.PlayerId] = false;
         }
         public static void NoCheckStartMeeting(this PlayerControl reporter, GameData.PlayerInfo target)
         { /*サボタージュ中でも関係なしに会議を起こせるメソッド
