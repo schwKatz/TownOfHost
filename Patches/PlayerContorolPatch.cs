@@ -49,12 +49,24 @@ namespace TownOfHost
 
             Logger.Info($"{killer.GetNameWithRole()} => {target.GetNameWithRole()}", "CheckMurder");
 
+            //死人はキルできない
+            if (killer.Data.IsDead)
+            {
+                Logger.Info($"{killer.GetNameWithRole()}は死亡しているためキャンセルされました。", "CheckMurder");
+                return false;
+            }
+
             //不正キル防止処理
             if (target.Data == null || //PlayerDataがnullじゃないか確認
                 target.inVent || target.inMovingPlat //targetの状態をチェック
             )
             {
                 Logger.Info("targetは現在キルできない状態です。", "CheckMurder");
+                return false;
+            }
+            if (target.Data.IsDead) //同じtargetへの同時キルをブロック
+            {
+                Logger.Info("targetは既に死んでいたため、キルをキャンセルしました。", "CheckMurder");
                 return false;
             }
             if (MeetingHud.Instance != null) //会議中でないかの判定
@@ -230,7 +242,8 @@ namespace TownOfHost
                     case CustomRoles.Puppeteer:
                         Main.PuppeteerList[target.PlayerId] = killer.PlayerId;
                         Main.AllPlayerKillCooldown[killer.PlayerId] = Options.DefaultKillCooldown * 2;
-                        killer.CustomSyncSettings(); //負荷軽減のため、killerだけがCustomSyncSettingsを実行
+                        killer.CustomSyncSettings(); //負荷軽減のため、killerだけがCustomSyncSettings,NotifyRolesを実行
+                        Utils.NotifyRoles(SpecifySeer: killer);
                         killer.RpcGuardAndKill(target);
                         return false;
                     case CustomRoles.TimeThief:
@@ -286,7 +299,6 @@ namespace TownOfHost
             if (!target.Data.IsDead || !AmongUsClient.Instance.AmHost) return;
 
             PlayerControl killer = __instance; //読み替え変数
-            bool doSetDead = true;
             if (PlayerState.GetDeathReason(target.PlayerId) == PlayerState.DeathReason.Sniped)
             {
                 killer = Utils.GetPlayerById(Sniper.GetSniper(target.PlayerId));
@@ -309,7 +321,6 @@ namespace TownOfHost
             {
                 Logger.Info(target?.Data?.PlayerName + "はTerroristだった", "MurderPlayer");
                 Utils.CheckTerroristWin(target.Data);
-                doSetDead = false;
             }
             if (target.Is(CustomRoles.Trapper) && !killer.Is(CustomRoles.Trapper))
                 killer.TrapperKilled(target);
@@ -348,8 +359,7 @@ namespace TownOfHost
             }
             FixedUpdatePatch.LoversSuicide(target.PlayerId);
 
-            if (doSetDead)
-                PlayerState.SetDead(target.PlayerId);
+            PlayerState.SetDead(target.PlayerId);
             Utils.CountAliveImpostors();
             Utils.CustomSyncAllSettings();
             Utils.NotifyRoles();
@@ -476,7 +486,7 @@ namespace TownOfHost
                 var vampireID = bp.Value.Item1;
                 var bitten = Utils.GetPlayerById(bp.Key);
 
-                if (!bitten.Data.IsDead)
+                if (bitten != null && !bitten.Data.IsDead)
                 {
                     PlayerState.SetDeathReason(bitten.PlayerId, PlayerState.DeathReason.Bite);
                     //Protectは強制的にはがす
@@ -519,7 +529,7 @@ namespace TownOfHost
 
             if (AmongUsClient.Instance.AmHost)
             {//実行クライアントがホストの場合のみ実行
-                if (GameStates.IsLobby && (ModUpdater.hasUpdate || ModUpdater.isBroken) && AmongUsClient.Instance.IsGamePublic)
+                if (GameStates.IsLobby && (ModUpdater.hasUpdate || ModUpdater.isBroken || !Main.AllowPublicRoom) && AmongUsClient.Instance.IsGamePublic)
                     AmongUsClient.Instance.ChangeGamePublic(false);
 
                 if (GameStates.IsInTask && CustomRoles.Vampire.IsEnable())
@@ -720,9 +730,13 @@ namespace TownOfHost
                 if (GameStates.IsLobby)
                 {
                     if (Main.playerVersion.TryGetValue(__instance.PlayerId, out var ver))
-                        if (Main.version.CompareTo(ver.version) == 0)
+                    {
+                        if (Main.ForkId != ver.forkId) // フォークIDが違う場合
+                            __instance.cosmetics.nameText.text = $"<color=#ff0000><size=1.2>{ver.forkId}</size>\n{__instance?.name}</color>";
+                        else if (Main.version.CompareTo(ver.version) == 0)
                             __instance.cosmetics.nameText.text = ver.tag == $"{ThisAssembly.Git.Commit}({ThisAssembly.Git.Branch})" ? $"<color=#87cefa>{__instance.name}</color>" : $"<color=#ffff00><size=1.2>{ver.tag}</size>\n{__instance?.name}</color>";
                         else __instance.cosmetics.nameText.text = $"<color=#ff0000><size=1.2>v{ver.version}</size>\n{__instance?.name}</color>";
+                    }
                     else __instance.cosmetics.nameText.text = __instance?.Data?.PlayerName;
                 }
                 if (GameStates.IsInGame)
@@ -1132,8 +1146,9 @@ namespace TownOfHost
             Logger.Info($"TaskComplete:{pc.PlayerId}", "CompleteTask");
             PlayerState.UpdateTask(pc);
             Utils.NotifyRoles();
-            if (pc.GetPlayerTaskState().IsTaskFinished &&
-                pc.GetCustomRole() is CustomRoles.Lighter or CustomRoles.SpeedBooster or CustomRoles.Doctor)
+            if ((pc.GetPlayerTaskState().IsTaskFinished &&
+                pc.GetCustomRole() is CustomRoles.Lighter or CustomRoles.Doctor) ||
+                pc.GetCustomRole() is CustomRoles.SpeedBooster)
             {
                 //ライターもしくはスピードブースターもしくはドクターがいる試合のみタスク終了時にCustomSyncAllSettingsを実行する
                 Utils.CustomSyncAllSettings();

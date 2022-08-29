@@ -309,39 +309,6 @@ namespace TownOfHost
                     opt.RoleOptions.ScientistCooldown = 0f;
                     opt.RoleOptions.ScientistBatteryCharge = Options.DoctorTaskCompletedBatteryCharge.GetFloat();
                     break;
-                case CustomRoles.SpeedBooster:
-                    if (!player.Data.IsDead)
-                    {
-                        if (player.GetPlayerTaskState().IsTaskFinished)
-                        {
-                            if (!Main.SpeedBoostTarget.ContainsKey(player.PlayerId))
-                            {
-                                var rand = new System.Random();
-                                List<PlayerControl> targetplayers = new();
-                                //切断者と死亡者を除外
-                                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
-                                {
-                                    if (!p.Data.Disconnected && !p.Data.IsDead && !Main.SpeedBoostTarget.ContainsValue(p.PlayerId)) targetplayers.Add(p);
-                                }
-                                //ターゲットが0ならアップ先をプレイヤーをnullに
-                                if (targetplayers.Count >= 1)
-                                {
-                                    PlayerControl target = targetplayers[rand.Next(0, targetplayers.Count)];
-                                    Logger.Info("スピードブースト先:" + target.cosmetics.nameText.text, "SpeedBooster");
-                                    Main.SpeedBoostTarget.Add(player.PlayerId, target.PlayerId);
-                                }
-                                else
-                                {
-                                    Main.SpeedBoostTarget.Add(player.PlayerId, 255);
-                                    Logger.SendInGame(GetString("Error.SpeedBoosterNullException"));
-                                    Logger.Warn("スピードブースト先がnullです。", "SpeedBooster");
-                                }
-                            }
-                            if (Main.SpeedBoostTarget.ContainsValue(player.PlayerId))
-                                Main.AllPlayerSpeed[player.PlayerId] = Options.SpeedBoosterUpSpeed.GetFloat();
-                        }
-                    }
-                    break;
                 case CustomRoles.Mayor:
                     opt.RoleOptions.EngineerCooldown =
                         Main.MayorUsedButtonCount.TryGetValue(player.PlayerId, out var count) && count < Options.MayorNumOfUseButton.GetInt()
@@ -376,7 +343,7 @@ namespace TownOfHost
                 foreach (var speed in Main.AllPlayerSpeed)
                 {
                     if (speed.Key == player.PlayerId)
-                        opt.PlayerSpeedMod = Mathf.Clamp(speed.Value, 0.0001f, 3f);
+                        opt.PlayerSpeedMod = Mathf.Clamp(speed.Value, Main.MinSpeed, 3f);
                 }
             }
             if (Options.GhostCanSeeOtherVotes.GetBool() && player.Data.IsDead && opt.AnonymousVotes)
@@ -386,10 +353,16 @@ namespace TownOfHost
             if ((Options.CurrentGameMode == CustomGameMode.HideAndSeek || Options.IsStandardHAS) && Options.HideAndSeekKillDelayTimer > 0)
             {
                 opt.ImpostorLightMod = 0f;
-                if (player.GetCustomRole().IsImpostor() || player.Is(CustomRoles.Egoist)) opt.PlayerSpeedMod = 0.0001f;
+                if (player.GetCustomRole().IsImpostor() || player.Is(CustomRoles.Egoist)) opt.PlayerSpeedMod = Main.MinSpeed;
             }
             opt.DiscussionTime = Mathf.Clamp(Main.DiscussionTime, 0, 300);
             opt.VotingTime = Mathf.Clamp(Main.VotingTime, TimeThief.LowerLimitVotingTime.GetInt(), 300);
+
+            if (Options.AllAliveMeeting.GetBool() && PlayerControl.AllPlayerControls.ToArray().All(x => !x.Data.IsDead))
+            {
+                opt.DiscussionTime = 0;
+                opt.VotingTime = Options.AllAliveMeetingTime.GetInt();
+            }
 
             opt.RoleOptions.ShapeshifterCooldown = Mathf.Max(1f, opt.RoleOptions.ShapeshifterCooldown);
 
@@ -552,21 +525,24 @@ namespace TownOfHost
                 case CustomRoles.SerialKiller:
                     SerialKiller.ApplyKillCooldown(player.PlayerId); //シリアルキラーはシリアルキラーのキルクールに。
                     break;
-                case CustomRoles.Arsonist:
-                    Main.AllPlayerKillCooldown[player.PlayerId] = Options.ArsonistCooldown.GetFloat(); //アーソニストはアーソニストのキルクールに。
-                    break;
-                case CustomRoles.Sheriff:
-                    Sheriff.SetKillCooldown(player.PlayerId); //シェリフはシェリフのキルクールに。
-                    break;
                 case CustomRoles.TimeThief:
                     TimeThief.SetKillCooldown(player.PlayerId); //タイムシーフはタイムシーフのキルクールに。
                     break;
                 case CustomRoles.Mare:
                     Mare.SetKillCooldown(player.PlayerId);
                     break;
+                case CustomRoles.Arsonist:
+                    Main.AllPlayerKillCooldown[player.PlayerId] = Options.ArsonistCooldown.GetFloat(); //アーソニストはアーソニストのキルクールに。
+                    break;
+                case CustomRoles.Egoist:
+                    Egoist.ApplyKillCooldown(player.PlayerId);
+                    break;
                 case CustomRoles.Jackal:
                 case CustomRoles.JSchrodingerCat:
                     Main.AllPlayerKillCooldown[player.PlayerId] = Options.JackalKillCooldown.GetFloat();
+                    break;
+                case CustomRoles.Sheriff:
+                    Sheriff.SetKillCooldown(player.PlayerId); //シェリフはシェリフのキルクールに。
                     break;
             }
             if (player.IsLastImpostor())
@@ -575,11 +551,12 @@ namespace TownOfHost
         public static void TrapperKilled(this PlayerControl killer, PlayerControl target)
         {
             Logger.Info($"{target?.Data?.PlayerName}はTrapperだった", "Trapper");
-            Main.AllPlayerSpeed[killer.PlayerId] = 0.00001f;
+            var tmpSpeed = Main.AllPlayerSpeed[killer.PlayerId];
+            Main.AllPlayerSpeed[killer.PlayerId] = Main.MinSpeed;    //tmpSpeedで後ほど値を戻すので代入しています。
             killer.CustomSyncSettings();
             new LateTask(() =>
             {
-                Main.AllPlayerSpeed[killer.PlayerId] = Main.RealOptionsData.PlayerSpeedMod;
+                Main.AllPlayerSpeed[killer.PlayerId] = Main.AllPlayerSpeed[killer.PlayerId] - Main.MinSpeed + tmpSpeed;
                 killer.CustomSyncSettings();
                 RPC.PlaySoundRPC(killer.PlayerId, Sounds.TaskComplete);
             }, Options.TrapperBlockMoveTime.GetFloat(), "Trapper BlockMove");
