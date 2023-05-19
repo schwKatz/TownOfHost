@@ -860,6 +860,7 @@ PanAlive12,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に渡す為�
 PanAlive13,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けての試作中。\nㅤ,\n面包店的手工炒饭人气急剧上升\n,,
 "Message.FailedToLoadOptions","Failed to load options","オプションの読み込みに失敗しました","","","",""
 "Message.CopiedOptions","Copied options","オプションデータをコピーしました","","","",""
+"Message.ExportedOptions","Exported options","オプションデータを出力しました","","","",""
 "Message.LoadedOptions","Loaded options","オプションデータを読み込みました","","","",""
 
 "## 警告"
