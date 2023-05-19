@@ -179,14 +179,17 @@ namespace TownOfHostY
                 opt.oldValue = opt.Value = CurrentValue;
             }
         }
-        public virtual void SetValue(int value)
+        public virtual void SetValue(int value, bool doSync = true)
         {
             int beforeValue = CurrentEntry.Value;
             int afterValue = CurrentEntry.Value = value;
 
             CallUpdateValueEvent(beforeValue, afterValue);
             Refresh();
-            SyncAllOptions();
+            if (doSync)
+            {
+                SyncAllOptions();
+            }
         }
 
         // 演算子オーバーロード
