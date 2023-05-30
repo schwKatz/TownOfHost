@@ -222,6 +222,11 @@ namespace TownOfHost
         public static OptionItem KickPlayerFriendCodeNotExist;
         public static OptionItem ApplyBanList;
 
+        // TOH_Y機能
+        // 会議収集理由表示
+        public static OptionItem ShowReportReason;
+
+
         public static readonly string[] suffixModes =
         {
             "SuffixMode.None",
@@ -425,6 +430,9 @@ namespace TownOfHost
                 .SetColor(Color.magenta);
 
             // 会議収集理由表示
+            ShowReportReason = BooleanOptionItem.Create(105200, "ShowReportReason", false, TabGroup.MainSettings, false)
+                .SetHeader(true)
+                .SetColor(Color.cyan);
 
             //道連れ人表記
 
@@ -433,8 +441,6 @@ namespace TownOfHost
 
             // ボタン回数同期
             SyncButtonMode = BooleanOptionItem.Create(100200, "SyncButtonMode", false, TabGroup.MainSettings, false)
-                //上記載時にheader消去
-                .SetHeader(true)
                 .SetColor(Color.cyan);
             SyncedButtonCount = IntegerOptionItem.Create(100201, "SyncedButtonCount", new(0, 100, 1), 10, TabGroup.MainSettings, false).SetParent(SyncButtonMode)
                 .SetValueFormat(OptionFormat.Times);
