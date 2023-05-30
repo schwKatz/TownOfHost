@@ -247,6 +247,7 @@ namespace TownOfHost
     {
         MainSettings,
         ImpostorRoles,
+        MadmateRoles,
         CrewmateRoles,
         NeutralRoles,
         Addons

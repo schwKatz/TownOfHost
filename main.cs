@@ -23,7 +23,7 @@ namespace TownOfHost
     {
         // == プログラム設定 / Program Config ==
         // modの名前 / Mod Name (Default: Town Of Host)
-        public static readonly string ModName = "Town Of Host_YS"";
+        public static readonly string ModName = "Town Of Host_YS";
         // modの色 / Mod Color (Default: #00bfff)
         public static readonly string ModColor = "#ffff00";
         // 公開ルームを許可する / Allow Public Room (Default: true)
@@ -84,6 +84,7 @@ namespace TownOfHost
         public static Dictionary<byte, Color32> PlayerColors = new();
         public static Dictionary<byte, CustomDeathReason> AfterMeetingDeathPlayers = new();
         public static Dictionary<CustomRoles, String> roleColors;
+        public static Dictionary<CustomColor, String> customColors;
         public static List<byte> ResetCamPlayerList;
         public static List<byte> winnerList;
         public static List<int> clientIdList;
@@ -210,6 +211,13 @@ namespace TownOfHost
                             break;
                     }
                 }
+                customColors = new Dictionary<CustomColor, string>()
+                {
+                    {CustomColor.LightCoral, "#f08080"},
+                    {CustomColor.RoyalBlue, "#4169e1"},
+                    {CustomColor.Coral, "#ff7f50"},
+                };
+
                 var type = typeof(RoleBase);
                 var roleClassArray =
                 CustomRoleManager.AllRolesClassType = Assembly.GetAssembly(type)
@@ -314,5 +322,11 @@ namespace TownOfHost
         Default,
         All,
         Random
+    }
+    public enum CustomColor
+    {
+        Coral,
+        LightCoral,
+        RoyalBlue,
     }
 }

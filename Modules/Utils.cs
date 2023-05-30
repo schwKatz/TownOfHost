@@ -307,6 +307,17 @@ namespace TownOfHost
             if (!Main.roleColors.TryGetValue(role, out var hexColor)) hexColor = role.GetRoleInfo()?.RoleColorCode;
             return hexColor;
         }
+        public static Color GetCustomColor(CustomColor color)
+        {
+            if (!Main.customColors.TryGetValue(color, out var hexColor)) hexColor = "#ffffff";
+            ColorUtility.TryParseHtmlString(hexColor, out Color c);
+            return c;
+        }
+        public static string GetCustomColorCode(CustomColor color)
+        {
+            if (!Main.customColors.TryGetValue(color, out var hexColor)) hexColor = "#ffffff";
+            return hexColor;
+        }
 
         public static string GetVitalText(byte playerId, bool RealKillerColor = false)
         {
