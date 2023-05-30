@@ -227,8 +227,8 @@ namespace TownOfHost
         public static OptionItem ShowReportReason;
         // 道連れ対象表示
         public static OptionItem ShowRevengeTarget;
-        // 初手会議に役職説明表示
-        public static OptionItem ShowRoleInfoAtFirstMeeting;
+
+
 
         public static readonly string[] suffixModes =
         {
@@ -442,10 +442,9 @@ namespace TownOfHost
                 .SetColor(Color.cyan)
                 .SetGameMode(CustomGameMode.Standard);
 
+
             //初手会議に役職名表示
-            ShowRoleInfoAtFirstMeeting = BooleanOptionItem.Create(105500, "ShowRoleInfoAtFirstMeeting", false, TabGroup.MainSettings, false)
-                .SetColor(Color.cyan)
-                .SetGameMode(CustomGameMode.Standard);
+
 
             // ボタン回数同期
             SyncButtonMode = BooleanOptionItem.Create(100200, "SyncButtonMode", false, TabGroup.MainSettings, false)
