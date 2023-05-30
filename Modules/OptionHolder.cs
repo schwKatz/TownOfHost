@@ -515,7 +515,6 @@ namespace TownOfHost
 
             // 転落死
             LadderDeath = BooleanOptionItem.Create(101100, "LadderDeath", false, TabGroup.MainSettings, false)
-                .SetHeader(true)
                 .SetColor(new Color32(255, 165, 0, 255));
             LadderDeathChance = StringOptionItem.Create(101110, "LadderDeathChance", rates[1..], 0, TabGroup.MainSettings, false).SetParent(LadderDeath);
 
