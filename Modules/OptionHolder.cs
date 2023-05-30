@@ -225,6 +225,9 @@ namespace TownOfHost
         // TOH_Y機能
         // 会議収集理由表示
         public static OptionItem ShowReportReason;
+        // 道連れ対象表示
+        public static OptionItem ShowRevengeTarget;
+
 
 
         public static readonly string[] suffixModes =
@@ -435,6 +438,10 @@ namespace TownOfHost
                 .SetColor(Color.cyan);
 
             //道連れ人表記
+            ShowRevengeTarget = BooleanOptionItem.Create(105300, "ShowRevengeTarget", false, TabGroup.MainSettings, false)
+                .SetColor(Color.cyan)
+                .SetGameMode(CustomGameMode.Standard);
+
 
             //初手会議に役職名表示
 

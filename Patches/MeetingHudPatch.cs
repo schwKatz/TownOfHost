@@ -186,6 +186,8 @@ namespace TownOfHost
                 RevengeOnExile(playerId, deathReason);
             }
         }
+        //道連れ
+        public static List<(PlayerControl, PlayerControl)> RevengeTargetPlayer;
         private static void RevengeOnExile(byte playerId, CustomDeathReason deathReason)
         {
             var player = Utils.GetPlayerById(playerId);
@@ -215,6 +217,8 @@ namespace TownOfHost
             if (TargetList == null || TargetList.Count == 0) return null;
             var rand = IRandom.Instance;
             var target = TargetList[rand.Next(TargetList.Count)];
+            // 道連れする側とされる側をセットでリストに追加
+            RevengeTargetPlayer.Add((exiledplayer, target));
             return target;
         }
     }
@@ -296,6 +300,15 @@ namespace TownOfHost
                 else
                     Utils.SendMessage(string.Format(GetString("Message.isReport"), ReportDeadBodyPatch.ReportTarget.PlayerName));
             }
+            if (Options.ShowRevengeTarget.GetBool())
+            {
+                foreach (var Exiled_Target in CheckForEndVotingPatch.RevengeTargetPlayer)
+                {
+                    Utils.SendMessage(string.Format(GetString("RevengeText"), Exiled_Target.Item1.name, Exiled_Target.Item2.name));
+                }
+                CheckForEndVotingPatch.RevengeTargetPlayer.Clear();
+            }
+
             if (AntiBlackout.OverrideExiledPlayer)
             {
                 Utils.SendMessage(Translator.GetString("Warning.OverrideExiledPlayer"));
