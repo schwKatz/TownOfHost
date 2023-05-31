@@ -62,7 +62,7 @@
 "JSchrodingerCat","Schrödinger's Cat","シュレディンガーの猫","薛定谔的猫","薛定諤的貓","Пленник Шакала","Gato de Schrodinger"
 "Opportunist","Opportunist","オポチュニスト","投机者","投機主義者","Выживший","Oportunista"
 "Egoist","Egoist","エゴイスト","野心家","利己主義者","Эгоист","Egoísta"
-"Lovers","Lovers","恋人","恋人","戀人","Любовники","Amantes"
+"Lovers","Lovers","ラバーズ","恋人","戀人","Любовники","Amantes"
 "Jackal","Jackal","ジャッカル","豺狼","豺狼","Шакал","Chacal"
 
 "# HideAndSeek"
@@ -432,6 +432,7 @@
 "AssignOnlyTo%role%","Assign Only To %role%","%role%のみに割り当てる","只赋予%role%","","Назначить только для %role%",""
 "WorkhorseNumLongTasks","Additional Long Tasks","追加ロングタスクの個数","额外长任务数","","Дополнительные долгие задания",""
 "WorkhorseNumShortTasks","Additional Short Tasks","追加ショートタスクの個数","额外短任务数","","Дополнительные короткие задания",""
+"LoversAddWin","Make the win an additional win","勝利を追加勝利にする","以胜利为追加胜利",
 
 "## かくれんぼ設定"
 "HideAndSeekOptions","Hide and Seek Settings","かくれんぼの設定","躲猫猫设置","躲貓貓設定","Настройки Пряток","Configurações do Esconde-Esconde"

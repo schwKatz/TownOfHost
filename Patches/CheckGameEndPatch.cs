@@ -53,7 +53,8 @@ namespace TownOfHost
                 }
                 if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw and not CustomWinner.None)
                 {
-                    if (Main.LoversPlayers.Count > 0 && Main.LoversPlayers.ToArray().All(p => p.IsAlive()) && !reason.Equals(GameOverReason.HumansByTask))
+                    if (Main.LoversPlayers.Count > 0 && Main.LoversPlayers.ToArray().All(p => p.IsAlive())
+                        && !reason.Equals(GameOverReason.HumansByTask) && !(Options.LoversAddWin.GetBool() /*|| PlatonicLover.PLoverAddWin.GetBool()*/))
                     {
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lovers);
                         Main.AllPlayerControls
@@ -63,6 +64,14 @@ namespace TownOfHost
                     //追加勝利陣営
                     foreach (var pc in Main.AllPlayerControls)
                     {
+                        //Lover追加勝利
+                        if (pc.Is(CustomRoles.Lovers) && pc.IsAlive()
+                            && (Options.LoversAddWin.GetBool()/* || PlatonicLover.PLoverAddWin.GetBool()*/))
+                        {
+                            CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Lovers);
+                        }
+
                         if (pc.GetRoleClass() is IAdditionalWinner additionalWinner)
                         {
                             if (additionalWinner.CheckWin(out var winnerType))

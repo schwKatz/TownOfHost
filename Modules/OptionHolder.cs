@@ -87,6 +87,8 @@ namespace TownOfHost
         public static OptionItem MadmateVentCooldown;
         public static OptionItem MadmateVentMaxTime;
 
+        public static OptionItem LoversAddWin;
+
         public static OptionItem KillFlashDuration;
 
         // HideAndSeek
@@ -342,6 +344,7 @@ namespace TownOfHost
                 info.OptionCreator?.Invoke();
             });
             SetupLoversRoleOptionsToggle(50300);
+            LoversAddWin = BooleanOptionItem.Create(50310, "LoversAddWin", false, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lovers]);
 
             // Add-Ons
             LastImpostor.SetupCustomOption();

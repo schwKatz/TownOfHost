@@ -292,6 +292,7 @@ namespace TownOfHost
         Opportunist = CustomRoles.Opportunist,
         SchrodingerCat = CustomRoles.SchrodingerCat,
         Executioner = CustomRoles.Executioner,
+        Lovers = CustomRoles.Lovers,
         HASFox = CustomRoles.HASFox,
     }
     /*public enum CustomRoles : byte
