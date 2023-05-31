@@ -644,3 +644,24 @@
 "DisabledBySettings","Disabled by Settings","設定で無効化されています","已在设置被中禁用","在設定中被禁用","Отключено настройкой","Desativado Pelas Configurações"
 "Disabled","Disabled","無効","禁用","已被禁用","Отключено","Desativado"
 "FailToTrack","Failed To Track","追跡失敗","追踪失败","無法追蹤","Не удалось отследить",""
+
+"VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
+"VoiceReaderHost","Host","ホスト",,,,
+"VoiceReaderRed","Red","レッド",,,,
+"VoiceReaderBlue","Blue","ブルー",,,,
+"VoiceReaderGreen","Green","グリーン",,,,
+"VoiceReaderPink","Pink","ピンク",,,,
+"VoiceReaderOrange","Orange","オレンジ",,,,
+"VoiceReaderYellow","Yellow","イエロー",,,,
+"VoiceReaderBlack","Black","ブラック",,,,
+"VoiceReaderWhite","White","ホワイト",,,,
+"VoiceReaderPurple","Purple","パープル",,,,
+"VoiceReaderBrown","Brown","ブラウン",,,,
+"VoiceReaderCyan","Cyan","シアン",,,,
+"VoiceReaderLime","Lime","ライム",,,,
+"VoiceReaderMaroon","Maroon","マルーン",,,,
+"VoiceReaderRose","Rose","ローズ",,,,
+"VoiceReaderBanana","Banana","バナナ",,,,
+"VoiceReaderGray","Gray","グレー",,,,
+"VoiceReaderTan","Tan","タン",,,,
+"VoiceReaderCoral","Coral","コーラル",,,,
