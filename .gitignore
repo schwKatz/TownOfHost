@@ -2,8 +2,7 @@ bin/
 obj/
 bin/
 FodyWeavers.xsd
-.vs/
-.github/
-.vscode/
-Properties/
-/.vs/TownOfHost/v17/.suo
+/.vs/
+/.github/
+/.vscode/
+/Properties/
