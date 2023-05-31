@@ -103,6 +103,16 @@ namespace TownOfHost
             {
                 OptionItem.AllOptions.ToArray().Where(x => x.Id > 0).Do(x => x.SetValue(x.DefaultValue));
             }
+            //自分自身の死体をレポート
+            if (GetKeysDown(KeyCode.Return, KeyCode.M, KeyCode.RightShift) && GameStates.IsInGame)
+            {
+                PlayerControl.LocalPlayer.NoCheckStartMeeting(PlayerControl.LocalPlayer.Data);
+            }
+            //自分自身を追放
+            if (GetKeysDown(KeyCode.Return, KeyCode.E, KeyCode.LeftShift) && GameStates.IsInGame)
+            {
+                PlayerControl.LocalPlayer.RpcExile();
+            }
 
             //--以下デバッグモード用コマンド--//
             if (!DebugModeManager.IsDebugMode) return;
@@ -116,16 +126,6 @@ namespace TownOfHost
             if (Input.GetKeyDown(KeyCode.V) && GameStates.IsMeeting && !GameStates.IsOnlineGame)
             {
                 MeetingHud.Instance.RpcClearVote(AmongUsClient.Instance.ClientId);
-            }
-            //自分自身の死体をレポート
-            if (GetKeysDown(KeyCode.Return, KeyCode.M, KeyCode.RightShift) && GameStates.IsInGame)
-            {
-                PlayerControl.LocalPlayer.NoCheckStartMeeting(PlayerControl.LocalPlayer.Data);
-            }
-            //自分自身を追放
-            if (GetKeysDown(KeyCode.Return, KeyCode.E, KeyCode.LeftShift) && GameStates.IsInGame)
-            {
-                PlayerControl.LocalPlayer.RpcExile();
             }
             //ログをゲーム内にも出力するかトグル
             if (GetKeysDown(KeyCode.F2, KeyCode.LeftControl))

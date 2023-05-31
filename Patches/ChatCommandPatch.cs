@@ -30,6 +30,11 @@ namespace TownOfHost
             var cancelVal = "";
             Main.isChatCommand = true;
             Logger.Info(text, "SendChat");
+
+            var tag = !PlayerControl.LocalPlayer.Data.IsDead ? "SendChatHost" : "SendChatDeadHost";
+            if (text.StartsWith("試合結果:") || text.StartsWith("キル履歴:")) tag = "SendSystemChat";
+            VoiceReader.ReadHost(text, tag);
+
             switch (args[0])
             {
                 case "/dump":
@@ -100,6 +105,43 @@ namespace TownOfHost
                                 Utils.ShowActiveSettings();
                                 break;
                         }
+                        break;
+
+                    case "/w":
+                        canceled = true;
+                        if (!GameStates.IsInGame) break;
+                        subArgs = args.Length < 2 ? "" : args[1];
+                        switch (subArgs)
+                        {
+                            case "crewmate":
+                                GameManager.Instance.enabled = false;
+                                CustomWinnerHolder.WinnerTeam = CustomWinner.Crewmate;
+                                GameManager.Instance.RpcEndGame(GameOverReason.HumansByTask, false);
+                                break;
+                            case "impostor":
+                                GameManager.Instance.enabled = false;
+                                CustomWinnerHolder.WinnerTeam = CustomWinner.Impostor;
+                                GameManager.Instance.RpcEndGame(GameOverReason.ImpostorByKill, false);
+                                break;
+                            case "none":
+                                GameManager.Instance.enabled = false;
+                                CustomWinnerHolder.WinnerTeam = CustomWinner.None;
+                                GameManager.Instance.RpcEndGame(GameOverReason.ImpostorByKill, false);
+                                break;
+                            case "jackal":
+                                GameManager.Instance.enabled = false;
+                                CustomWinnerHolder.WinnerTeam = CustomWinner.Jackal;
+                                CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Jackal);
+                                CustomWinnerHolder.WinnerRoles.Add(CustomRoles.JSchrodingerCat);
+                                GameManager.Instance.RpcEndGame(GameOverReason.ImpostorByKill, false);
+                                break;
+
+                            default:
+                                __instance.AddChat(PlayerControl.LocalPlayer, "crewmate | impostor | jackal | none");
+                                cancelVal = "/w";
+                                break;
+                        }
+                        ShipStatus.Instance.RpcRepairSystem(SystemTypes.Admin, 0);
                         break;
 
                     case "/dis":
@@ -237,6 +279,27 @@ namespace TownOfHost
                         Utils.GetPlayerById(id2)?.RpcMurderPlayer(Utils.GetPlayerById(id2));
                         break;
 
+                    case "/vo":
+                    case "/voice":
+                        canceled = true;
+                        if (args.Length > 1 && args[1] == "reset")
+                        {
+                            VoiceReader.ResetVoiceNo();
+                        }
+                        else if (args.Length > 1 && args[1] == "random")
+                        {
+                            VoiceReader.SetRandomVoiceNo();
+                        }
+                        else if (args.Length > 1 && int.TryParse(args[1], out int voiceNo))
+                        {
+                            var name = VoiceReader.SetHostVoiceNo(voiceNo);
+                            if (name != null && name != "")
+                                Utils.SendMessage($"ホスト の読上げを {name} に変更しました");
+                        }
+                        else
+                            Utils.SendMessage(VoiceReader.GetVoiceIdxMsg());
+                        break;
+
                     default:
                         Main.isChatCommand = false;
                         break;
@@ -335,6 +398,12 @@ namespace TownOfHost
         }
         public static void OnReceiveChat(PlayerControl player, string text)
         {
+            if (player != null)
+            {
+                var tag = !player.Data.IsDead ? "SendChatAlive" : "SendChatDead";
+                VoiceReader.Read(text, Palette.GetColorName(player.Data.DefaultOutfit.ColorId), tag);
+            }
+
             if (!AmongUsClient.Instance.AmHost) return;
             string[] args = text.Split(' ');
             string subArgs = "";
@@ -387,6 +456,27 @@ namespace TownOfHost
                 case "/template":
                     if (args.Length > 1) TemplateManager.SendTemplate(args[1], player.PlayerId);
                     else Utils.SendMessage($"{GetString("ForExample")}:\n{args[0]} test", player.PlayerId);
+                    break;
+
+                case "/vo":
+                case "/voice":
+                    var color = Palette.GetColorName(player.Data.DefaultOutfit.ColorId);
+                    if (VoiceReader.VoiceReaderMode == null || !VoiceReader.VoiceReaderMode.GetBool())
+                        Utils.SendMessage($"現在読上げは停止しています", player.PlayerId);
+                    else if (args.Length > 1 && args[1] == "n")
+                        Utils.SendMessage($"{color} の現在の読上げは {VoiceReader.GetVoiceName(color)} です", player.PlayerId);
+                    else if (args.Length > 1 && int.TryParse(args[1], out int voiceNo))
+                    {
+                        var name = VoiceReader.SetVoiceNo(color, voiceNo);
+                        if (name != null && name != "")
+                        {
+                            Utils.SendMessage($"{color} の読上げを {name} に変更しました", player.PlayerId);
+                            break;
+                        }
+                        Utils.SendMessage($"{color} の読上げを変更できませんでした", player.PlayerId);
+                    }
+                    else
+                        Utils.SendMessage(VoiceReader.GetVoiceIdxMsg(), player.PlayerId);
                     break;
 
                 default:

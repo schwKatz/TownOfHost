@@ -162,6 +162,7 @@ namespace TownOfHost
             Translator.Init();
             BanManager.Init();
             TemplateManager.Init();
+            VoiceReader.Init();
 
             IRandom.SetInstance(new NetRandomWrapper());
 
