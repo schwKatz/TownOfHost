@@ -550,16 +550,21 @@ namespace TownOfHost
                 foreach (var role in Options.CustomRoleCounts)
                 {
                     if (!role.Key.IsEnable()) continue;
-                    sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
+
+                    if (/*role.Key.IsAddOn() ||*/ role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse/* or CustomRoles.CompreteCrew*/)
+                        sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
+                    else
+                        sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
                     ShowChildrenSettings(Options.CustomRoleSpawnChances[role.Key], ref sb);
                     var text = sb.ToString();
                     sb.Clear().Append(text.RemoveHtmlTags());
                 }
                 foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 80000 && !x.IsHiddenOn(Options.CurrentGameMode)))
                 {
-                    if (opt.Name is "KillFlashDuration" or "RoleAssigningAlgorithm")
-                        sb.Append($"\n【{opt.GetName(true)}: {opt.GetString()}】\n");
-                    else
+                    //if (opt.Name is "SyncColorMode" && Options.GetSyncColorMode() != SyncColorMode.None)
+                    //    sb.Append($"\n【{opt.GetName(true)}: {opt.GetString()}】\n");
+                    //else
+                    if (!Options.NotShowOption(opt.Name))
                         sb.Append($"\n【{opt.GetName(true)}】\n");
                     ShowChildrenSettings(opt, ref sb);
                     var text = sb.ToString();
@@ -588,9 +593,7 @@ namespace TownOfHost
             sb.Append($"━━━━━━━━━━━━【{GetString("Settings")}】━━━━━━━━━━━━");
             foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 80000 && !x.IsHiddenOn(Options.CurrentGameMode)))
             {
-                if (opt.Name == "KillFlashDuration")
-                    sb.Append($"\n【{opt.GetName(true)}: {opt.GetString()}】\n");
-                else
+                if (!Options.NotShowOption(opt.Name))
                     sb.Append($"\n【{opt.GetName(true)}】\n");
                 ShowChildrenSettings(opt, ref sb);
                 var text = sb.ToString();

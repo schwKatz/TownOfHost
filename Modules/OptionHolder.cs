@@ -595,6 +595,23 @@ namespace TownOfHost
             IsLoaded = true;
         }
 
+        public static bool NotShowOption(string optionName)
+        {
+            return optionName is "KillFlashDuration"
+                            or "SuffixMode"
+                            or "HideGameSettings"
+                            or "AutoDisplayLastResult"
+                            or "AutoDisplayKillLog"
+                            or "RoleAssigningAlgorithm"
+                            or "IsReportShow"
+                            or "ShowRoleInfoAtFirstMeeting"
+                            or "ChangeNameToRoleInfo"
+                            or "AddonShowDontOmit"
+                            or "ApplyDenyNameList"
+                            or "KickPlayerFriendCodeNotExist"
+                            or "ApplyBanList"
+                            or "ChangeIntro";
+        }
         public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, CustomGameMode customGameMode = CustomGameMode.Standard)
         {
             var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false).SetColor(Utils.GetRoleColor(role))

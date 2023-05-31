@@ -253,7 +253,7 @@ namespace TownOfHost
                     case "/mw":
                     case "/messagewait":
                         canceled = true;
-                        if (args.Length > 1 && int.TryParse(args[1], out int sec))
+                        if (args.Length > 1 && float.TryParse(args[1], out float sec))
                         {
                             Main.MessageWait.Value = sec;
                             Utils.SendMessage(string.Format(GetString("Message.SetToSeconds"), sec), 0);

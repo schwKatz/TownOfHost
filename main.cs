@@ -64,7 +64,7 @@ namespace TownOfHost
         public static ConfigEntry<string> HideColor { get; private set; }
         public static ConfigEntry<bool> ForceJapanese { get; private set; }
         public static ConfigEntry<bool> JapaneseRoleName { get; private set; }
-        public static ConfigEntry<int> MessageWait { get; private set; }
+        public static ConfigEntry<float> MessageWait { get; private set; }
 
         public static Dictionary<byte, PlayerVersion> playerVersion = new();
         //Preset Name Options
