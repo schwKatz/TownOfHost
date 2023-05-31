@@ -357,7 +357,7 @@
 "MareAddSpeedInLightsOut","Mare Add Player Add Speed In Lights Out","停電時のメアーの加速値","梦魇熄灯时的额外速度","關燈時黑暗博士的額外速度","Скорость Ночного при Саботаже Света","Velocidade Adicional do Mare em Apagão"
 "MareKillCooldownInLightsOut","Kill Cooldown During Fix Lights","停電時のメアーのキルクール","梦魇熄灯时的击杀冷却","關燈時黑暗博士的殺人冷卻","Откат убийства Ночного при Саботаже Света","Tempo de Recarga (abate) Durante Apagão"
 "SabotageMasterSkillLimit","Ability Use Count(Excluding Doors)","修理能力を使用できる回数(ﾄﾞｱ閉鎖は除く)","修理大师修理破坏的最大次数","破壞大師修理破壞次數上限","Лимит способности (Кроме открытия дверей)","Máximo de Usos da Habilidade (Menos Portas)"
-"CanMakeMadmateCount","Sidekick Madmate Max Count","サイドキックマッドメイト(人)","变形者可以招募叛徒的数量","變形者招募叛徒最大人數","Максимум союзников Безумца","Máximo de Tripulantes Loucos Ajudantes"
+"CanMakeMadmateCount","Sidekick Madmate Max Count","サイドキックマッドメイト","变形者可以招募叛徒的数量","變形者招募叛徒最大人數","Максимум союзников Безумца","Máximo de Tripulantes Loucos Ajudantes"
 "MadSnitchTasks","Mad Snitch Tasks","マッドスニッチのタスク数","背叛的告密者任务数","背叛告密者任務數量","Задания Безумного Стукача","Tarefas do Dedo-Duro Louco"
 "MadSnitchCanAlsoBeExposedToImpostor","Known to Impostors","インポスターからも視認できる","对内鬼同样可见","對偽裝者同樣可見","Также не защищен от Предателей","Visível Para Impostor"
 "MadGuardianCanSeeWhoTriedToKill","Can See Attempted Murderer","自身の殺害未遂者を知ることができる","背叛的守卫可以得知尝试对其击杀的玩家","背叛天使可以看到是誰嘗試殺害自己","Может видеть кто пытался его убить","Pode Ver Quem Tentou Matar"
@@ -433,6 +433,8 @@
 "WorkhorseNumLongTasks","Additional Long Tasks","追加ロングタスクの個数","额外长任务数","","Дополнительные долгие задания",""
 "WorkhorseNumShortTasks","Additional Short Tasks","追加ショートタスクの個数","额外短任务数","","Дополнительные короткие задания",""
 "LoversAddWin","Make the win an additional win","勝利を追加勝利にする","以胜利为追加胜利",
+"ImpostorOperateVisibility","(MOD)Impostor can not be clairvoyant after death","(MOD)インポスターが霊界で千里眼できない","内鬼死后不可以有千里眼",
+"ChangeIntro","(MOD)Change the intro the original TOH specs.","(MOD)第三陣営やマッド役職のイントロを本家TOH仕様に戻す","(MOD)将介绍更改为原始TOH规格。"
 
 "## かくれんぼ設定"
 "HideAndSeekOptions","Hide and Seek Settings","かくれんぼの設定","躲猫猫设置","躲貓貓設定","Настройки Пряток","Configurações do Esconde-Esconde"
@@ -469,7 +471,7 @@
 
 "## クライアント設定"
 "Close","Close","閉じる","","","",""
-"TOHOptions","<color=#00bfff>TOH</color> Options","<color=#00bfff>TOH</color>の設定","","","",""
+"TOHOptions","<color=#ffff00>TOH</color> Options","<color=#ffff00>TOH</color>の設定","","","",""
 "ForceJapanese","Force Japanese","日本語に強制","强制使用日语","強制使用日語","Принудительный Японский","Forçar Japonês"
 "JapaneseRoleName","Japanese Role Name","日本語の役職名","","","",""
 "UnloadMod","Disable The Mod","Modを無効化","","","",""

@@ -76,6 +76,7 @@ namespace TownOfHost
         public static OptionItem EnableGM;
         public static float DefaultKillCooldown = Main.NormalOptions?.KillCooldown ?? 20;
         public static OptionItem DefaultShapeshiftCooldown;
+        public static OptionItem ImpostorOperateVisibility;
         public static OptionItem CanMakeMadmateCount;
         public static OptionItem MadmateCanFixLightsOut; // TODO:mii-47 マッド役職統一
         public static OptionItem MadmateCanFixComms;
@@ -232,6 +233,8 @@ namespace TownOfHost
         // 初手会議に役職説明表示
         public static OptionItem ShowRoleInfoAtFirstMeeting;
 
+        public static OptionItem ChangeIntro;
+
         public static readonly string[] suffixModes =
         {
             "SuffixMode.None",
@@ -299,8 +302,9 @@ namespace TownOfHost
             DefaultShapeshiftCooldown = FloatOptionItem.Create(5011, "DefaultShapeshiftCooldown", new(5f, 999f, 5f), 15f, TabGroup.ImpostorRoles, false)
                 .SetHeader(true)
                 .SetValueFormat(OptionFormat.Seconds);
-            CanMakeMadmateCount = IntegerOptionItem.Create(5012, "CanMakeMadmateCount", new(0, 15, 1), 0, TabGroup.ImpostorRoles, false)
-                .SetValueFormat(OptionFormat.Times);
+            ImpostorOperateVisibility = BooleanOptionItem.Create(5100, "ImpostorOperateVisibility", false, TabGroup.ImpostorRoles, false)
+                .SetGameMode(CustomGameMode.Standard);
+
 
             // Madmate
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Madmate).Do(info =>
@@ -308,6 +312,13 @@ namespace TownOfHost
                 SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
                 info.OptionCreator?.Invoke();
             });
+
+            CanMakeMadmateCount = IntegerOptionItem.Create(5012, "CanMakeMadmateCount", new(0, 15, 1), 0, TabGroup.MadmateRoles, false)
+                .SetColor(Palette.ImpostorRed)
+                .SetHeader(true)
+                .SetGameMode(CustomGameMode.Standard)
+                .SetValueFormat(OptionFormat.Players);
+
             // Madmate Common Options
             MadmateCanFixLightsOut = BooleanOptionItem.Create(15010, "MadmateCanFixLightsOut", false, TabGroup.MadmateRoles, false)
                 .SetHeader(true);
@@ -565,6 +576,8 @@ namespace TownOfHost
             SuffixMode = StringOptionItem.Create(1_000_001, "SuffixMode", suffixModes, 0, TabGroup.MainSettings, true);
             ColorNameMode = BooleanOptionItem.Create(1_000_003, "ColorNameMode", false, TabGroup.MainSettings, false);
             ChangeNameToRoleInfo = BooleanOptionItem.Create(1_000_004, "ChangeNameToRoleInfo", true, TabGroup.MainSettings, false);
+            ChangeIntro = BooleanOptionItem.Create(1_009_000, "ChangeIntro", false, TabGroup.MainSettings, false)
+                .SetGameMode(CustomGameMode.Standard);
             RoleAssigningAlgorithm = StringOptionItem.Create(1_000_005, "RoleAssigningAlgorithm", RoleAssigningAlgorithms, 0, TabGroup.MainSettings, true)
                 .RegisterUpdateValueEvent((object obj, OptionItem.UpdateValueEventArgs args) => IRandom.SetInstanceById(args.CurrentValue));
 
