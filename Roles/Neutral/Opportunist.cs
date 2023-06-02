@@ -1,21 +1,23 @@
 using AmongUs.GameOptions;
+using Hazel;
+using UnityEngine;
 
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Core.Interfaces;
 
 namespace TownOfHost.Roles.Neutral;
 
-public sealed class Opportunist : RoleBase, IAdditionalWinner
+public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
 {
     public static readonly SimpleRoleInfo RoleInfo =
         new(
             typeof(Opportunist),
             player => new Opportunist(player),
             CustomRoles.Opportunist,
-            () => RoleTypes.Crewmate,
+            () => OptionCanKill.GetBool() ? RoleTypes.Impostor : RoleTypes.Crewmate,
             CustomRoleTypes.Neutral,
             50100,
-            null,
+            SetupOptionItem,
             "op",
             "#00ff00"
         );
@@ -24,11 +26,91 @@ public sealed class Opportunist : RoleBase, IAdditionalWinner
         RoleInfo,
         player
     )
-    { }
+    {
+        CanKill = OptionCanKill.GetBool();
+        ShotLimit = ShotLimitOpt.GetInt();
+        KillCooldown = OptionKillCooldown.GetFloat();
+        HasImpostorVision = OptionHasImpostorVision.GetBool();
+    }
+    public static OptionItem OptionCanKill;
+    private static OptionItem OptionKillCooldown;
+    private static OptionItem ShotLimitOpt;
+    private static OptionItem OptionHasImpostorVision;
+    enum OptionName
+    {
+        CanKill,
+        SheriffShotLimit,
+    }
+    public static bool CanKill;
+    public int ShotLimit = 0;
+    public float KillCooldown = 30;
+    private static bool HasImpostorVision;
+
+    private static void SetupOptionItem()
+    {
+        OptionCanKill = BooleanOptionItem.Create(RoleInfo, 10, OptionName.CanKill, false, false);
+        OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 11, GeneralOption.KillCooldown, new(0f, 180f, 2.5f), 30f, false, OptionCanKill)
+            .SetValueFormat(OptionFormat.Seconds);
+        ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 13, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false, OptionCanKill)
+            .SetValueFormat(OptionFormat.Times);
+        OptionHasImpostorVision = BooleanOptionItem.Create(RoleInfo, 12, GeneralOption.ImpostorVision, false, false, OptionCanKill);
+    }
 
     public bool CheckWin(out AdditionalWinners winnerType)
     {
         winnerType = AdditionalWinners.Opportunist;
         return Player.IsAlive();
+    }
+
+    public override void Add()
+    {
+        if (!CanKill) return;
+
+        var playerId = Player.PlayerId;
+        KillCooldown = OptionKillCooldown.GetFloat();
+
+        if (!Main.ResetCamPlayerList.Contains(playerId))
+            Main.ResetCamPlayerList.Add(playerId);
+
+        ShotLimit = ShotLimitOpt.GetInt();
+        Logger.Info($"{Utils.GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "Oppo");
+    }
+    private void SendRPC()
+    {
+        using var sender = CreateSender(CustomRPC.SetOppoKillerShotLimit);
+        sender.Writer.Write(ShotLimit);
+    }
+    public override void ReceiveRPC(MessageReader reader, CustomRPC rpcType)
+    {
+        if (rpcType != CustomRPC.SetOppoKillerShotLimit) return;
+
+        ShotLimit = reader.ReadInt32();
+    }
+    public float CalculateKillCooldown() => KillCooldown;
+    public bool CanUseKillButton() => Player.IsAlive() && ShotLimit > 0;
+    public override bool CanSabotage(SystemTypes systemType) => false;
+    public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
+    public void OnCheckMurderAsKiller(MurderInfo info)
+    {
+        if (Is(info.AttemptKiller) && !info.IsSuicide)
+        {
+            (var killer, var target) = info.AttemptTuple;
+
+            Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "Sheriff");
+            if (ShotLimit <= 0)
+            {
+                info.DoKill = false;
+                return;
+            }
+            ShotLimit--;
+            SendRPC();
+            killer.ResetKillCooldown();
+        }
+        return;
+    }
+    public override string GetProgressText(bool comms = false)
+    {
+        if (!CanKill) return null;
+        return Utils.ColorString(CanUseKillButton() ? RoleInfo.RoleColor : Color.gray, $"({ShotLimit})");
     }
 }

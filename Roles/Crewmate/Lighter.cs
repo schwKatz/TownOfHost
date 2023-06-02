@@ -24,21 +24,27 @@ public sealed class Lighter : RoleBase
     {
         TaskCompletedVision = OptionTaskCompletedVision.GetFloat();
         TaskCompletedDisableLightOut = OptionTaskCompletedDisableLightOut.GetBool();
+        TaskTrigger = OptionTaskTrigger.GetInt();
     }
 
     private static OptionItem OptionTaskCompletedVision;
     private static OptionItem OptionTaskCompletedDisableLightOut;
+    private static OptionItem OptionTaskTrigger;
     enum OptionName
     {
         LighterTaskCompletedVision,
-        LighterTaskCompletedDisableLightOut
+        LighterTaskCompletedDisableLightOut,
+        SpeedBoosterTaskTrigger
     }
 
     private static float TaskCompletedVision;
     private static bool TaskCompletedDisableLightOut;
+    private static int TaskTrigger;
 
     private static void SetupOptionItem()
     {
+        OptionTaskTrigger = IntegerOptionItem.Create(RoleInfo, 12, OptionName.SpeedBoosterTaskTrigger, new(1, 20, 1), 5, false)
+            .SetValueFormat(OptionFormat.Pieces);
         OptionTaskCompletedVision = FloatOptionItem.Create(RoleInfo, 10, OptionName.LighterTaskCompletedVision, new(0f, 5f, 0.25f), 2f, false)
             .SetValueFormat(OptionFormat.Multiplier);
         OptionTaskCompletedDisableLightOut = BooleanOptionItem.Create(RoleInfo, 11, OptionName.LighterTaskCompletedDisableLightOut, true, false);
@@ -46,7 +52,7 @@ public sealed class Lighter : RoleBase
 
     public override void ApplyGameOptions(IGameOptions opt)
     {
-        if (!IsTaskFinished) return;
+        if (!IsTaskFinished || MyTaskState.CompletedTasksCount < TaskTrigger) return;
 
         var crewLightMod = FloatOptionNames.CrewLightMod;
 
@@ -58,7 +64,7 @@ public sealed class Lighter : RoleBase
     }
     public override bool OnCompleteTask()
     {
-        if (IsTaskFinished)
+        if (IsTaskFinished || MyTaskState.CompletedTasksCount >= TaskTrigger)
         {
             Player.MarkDirtySettings();
         }

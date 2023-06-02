@@ -25,8 +25,7 @@ public sealed class Executioner : RoleBase, IAdditionalWinner
     public Executioner(PlayerControl player)
     : base(
         RoleInfo,
-        player,
-        () => ChangeRolesAfterTargetKilled == CustomRoles.Crewmate ? HasTask.ForRecompute : HasTask.False
+        player
     )
     {
         CanTargetImpostor = OptionCanTargetImpostor.GetBool();

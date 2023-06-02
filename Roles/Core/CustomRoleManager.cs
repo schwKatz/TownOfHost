@@ -402,6 +402,7 @@ public enum CustomRoles
     EgoSchrodingerCat,//エゴイスト陣営のシュレディンガーの猫
     Jester,
     Opportunist,
+    OSchrodingerCat,
     SchrodingerCat,//無所属のシュレディンガーの猫
     Terrorist,
     Executioner,

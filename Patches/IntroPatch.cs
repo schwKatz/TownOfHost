@@ -220,7 +220,7 @@ namespace TownOfHost
         }
         private static async void StartFadeIntro(IntroCutscene __instance, Color start, Color end)
         {
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             int milliseconds = 0;
             while (true)
             {

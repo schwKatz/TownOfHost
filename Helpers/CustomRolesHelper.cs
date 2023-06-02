@@ -39,6 +39,7 @@ namespace TownOfHost
                 CustomRoles.SchrodingerCat or
                 CustomRoles.EgoSchrodingerCat or
                 CustomRoles.JSchrodingerCat or
+                CustomRoles.OSchrodingerCat or
                 CustomRoles.HASTroll or
                 CustomRoles.HASFox;
         }
@@ -60,7 +61,8 @@ namespace TownOfHost
                 CustomRoles.MSchrodingerCat or
                 CustomRoles.CSchrodingerCat or
                 CustomRoles.EgoSchrodingerCat or
-                CustomRoles.JSchrodingerCat;
+                CustomRoles.JSchrodingerCat or
+                CustomRoles.OSchrodingerCat;
         }
 
         public static CustomRoleTypes GetCustomRoleTypes(this CustomRoles role)

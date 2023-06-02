@@ -1,6 +1,7 @@
 using Hazel;
 
 using TownOfHost.Roles.Core;
+using TownOfHost.Roles.Crewmate;
 using TownOfHost.Roles.Impostor;
 
 namespace TownOfHost
@@ -10,6 +11,7 @@ namespace TownOfHost
         public static string ApplyNameColorData(this string name, PlayerControl seer, PlayerControl target, bool isMeeting)
         {
             if (!AmongUsClient.Instance.IsGameStarted) return name;
+            if (isMeeting && Snitch.IsCannotConfirmKillRoles(seer,target)) return name;
 
             if (!TryGetData(seer, target, out var colorCode))
             {

@@ -4,6 +4,7 @@ using HarmonyLib;
 using UnityEngine;
 
 using TownOfHost.Roles.Core;
+using TownOfHost.Roles.Crewmate;
 
 namespace TownOfHost
 {
@@ -41,6 +42,20 @@ namespace TownOfHost
                 _ => 0.0f
             };
         }
+        private static bool IsInfoPoor(PlayerControl pc)
+        {
+            return ((pc.Is(CustomRoles.Sheriff) && Sheriff.IsInfoPoor.GetBool())
+                /*|| pc.Is(CustomRoles.InfoPoor)*/);
+        }
+        public static bool IsPoorEnable()
+        {
+            foreach (var pc in Main.AllAlivePlayerControls)
+            {
+                if (IsInfoPoor(pc))
+                    return true;
+            }
+            return false;
+        }
         public static void FixedUpdate()
         {
             frame = frame == 3 ? 0 : ++frame;
@@ -49,6 +64,8 @@ namespace TownOfHost
             if (!DoDisable) return;
             foreach (var pc in Main.AllPlayerControls)
             {
+                bool PcIsPoor = IsInfoPoor(pc);
+
                 try
                 {
                     if (pc.IsModClient()) continue;

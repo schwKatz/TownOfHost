@@ -49,7 +49,7 @@ namespace TownOfHost
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.emptybottle.townofhost";
-        public const string PluginVersion = "500.9.1";
+        public const string PluginVersion = "500.9.2";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;
@@ -187,6 +187,7 @@ namespace TownOfHost
                     //ニュートラル役職
                     {CustomRoles.EgoSchrodingerCat, "#5600ff"},
                     {CustomRoles.JSchrodingerCat, "#00b4eb"},
+                    {CustomRoles.OSchrodingerCat, "#00ff00"},
                     //HideAndSeek
                     {CustomRoles.HASFox, "#e478ff"},
                     {CustomRoles.HASTroll, "#00ff00"},

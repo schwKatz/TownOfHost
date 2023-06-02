@@ -203,6 +203,7 @@ namespace TownOfHost
             {
                 case CustomRoles.Sheriff:
                 case CustomRoles.Arsonist:
+                case CustomRoles.Opportunist:
                     __instance.SabotageButton.ToggleVisible(false);
                     break;
                 case CustomRoles.Jackal:

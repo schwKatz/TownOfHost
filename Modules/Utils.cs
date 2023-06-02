@@ -228,6 +228,9 @@ namespace TownOfHost
             {
                 roleText = GetRoleName(mainRole);
                 roleColor = GetRoleColor(mainRole);
+
+                if (mainRole == CustomRoles.Opportunist && Opportunist.CanKill)
+                    roleText += GetString("killer");
             }
 
             if (subRolesList != null)

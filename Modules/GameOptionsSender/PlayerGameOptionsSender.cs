@@ -104,6 +104,9 @@ namespace TownOfHost.Modules
                 case CustomRoles.JSchrodingerCat:
                     ((Jackal)roleClass).ApplyGameOptions(opt);
                     break;
+                case CustomRoles.OSchrodingerCat:
+                    ((Opportunist)roleClass).ApplyGameOptions(opt);
+                    break;
             }
             foreach (var subRole in player.GetCustomSubRoles())
             {

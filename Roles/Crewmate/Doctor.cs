@@ -11,7 +11,7 @@ public sealed class Doctor : RoleBase, IDeathReasonSeeable
             typeof(Doctor),
             player => new Doctor(player),
             CustomRoles.Doctor,
-            () => RoleTypes.Scientist,
+            () => OptionHasVital.GetBool() ? RoleTypes.Scientist : RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
             20700,
             SetupOptionItem,
@@ -25,16 +25,22 @@ public sealed class Doctor : RoleBase, IDeathReasonSeeable
     )
     {
         TaskCompletedBatteryCharge = OptionTaskCompletedBatteryCharge.GetFloat();
+        HasVital = OptionHasVital.GetBool();
     }
+    private static OptionItem OptionHasVital;
     private static OptionItem OptionTaskCompletedBatteryCharge;
     enum OptionName
     {
-        DoctorTaskCompletedBatteryCharge
+        DoctorTaskCompletedBatteryCharge,
+        DoctorHasVital
     }
     private static float TaskCompletedBatteryCharge;
+    private static bool HasVital;
+
     private static void SetupOptionItem()
     {
-        OptionTaskCompletedBatteryCharge = FloatOptionItem.Create(RoleInfo, 10, OptionName.DoctorTaskCompletedBatteryCharge, new(0f, 10f, 1f), 5f, false)
+        OptionHasVital = BooleanOptionItem.Create(RoleInfo, 11, OptionName.DoctorHasVital, true, false);
+        OptionTaskCompletedBatteryCharge = FloatOptionItem.Create(RoleInfo, 10, OptionName.DoctorTaskCompletedBatteryCharge, new(0f, 10f, 1f), 5f, false, OptionHasVital)
             .SetValueFormat(OptionFormat.Seconds);
     }
     public override void ApplyGameOptions(IGameOptions opt)

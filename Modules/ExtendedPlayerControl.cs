@@ -405,6 +405,7 @@ namespace TownOfHost
                 CustomRoles.Sheriff => false,
                 CustomRoles.Egoist => true,
                 CustomRoles.Jackal => Jackal.CanVent,
+                CustomRoles.Opportunist => false,
                 CustomRoles.Arsonist => Arsonist.IsDouseDone(pc),
                 _ => pc.Is(CustomRoleTypes.Impostor),
             };
@@ -485,7 +486,8 @@ namespace TownOfHost
         }
         public static bool IsNeutralKiller(this PlayerControl player)
         {
-            return
+            if (player.Is(CustomRoles.Opportunist) && Opportunist.CanKill) return true;
+            return 
                 player.GetCustomRole() is
                 CustomRoles.Egoist or
                 CustomRoles.Jackal;

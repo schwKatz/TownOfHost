@@ -30,6 +30,7 @@ public class Snitch : RoleBase
         CanGetColoredArrow = OptionCanGetColoredArrow.GetBool();
         CanFindNeutralKiller = OptionCanFindNeutralKiller.GetBool();
         RemainingTasksToBeFound = OptionRemainingTasks.GetInt();
+        CannotConfirmKillRoles = OptionCannotConfirmKillRoles.GetBool();
 
         //他視点用のMarkメソッド登録
         CustomRoleManager.MarkOthers.Add(GetMarkOthers);
@@ -45,18 +46,22 @@ public class Snitch : RoleBase
     private static OptionItem OptionCanGetColoredArrow;
     private static OptionItem OptionCanFindNeutralKiller;
     private static OptionItem OptionRemainingTasks;
+    private static OptionItem OptionCannotConfirmKillRoles;
+
     enum OptionName
     {
         SnitchEnableTargetArrow,
         SnitchCanGetArrowColor,
         SnitchCanFindNeutralKiller,
         SnitchRemainingTaskFound,
+        SnitchCannotConfirmKillRoles
     }
 
     private static bool EnableTargetArrow;
     private static bool CanGetColoredArrow;
     private static bool CanFindNeutralKiller;
     private static int RemainingTasksToBeFound;
+    public static bool CannotConfirmKillRoles;
 
     private bool IsExposed = false;
     private bool IsComplete = false;
@@ -71,6 +76,7 @@ public class Snitch : RoleBase
         OptionEnableTargetArrow = BooleanOptionItem.Create(RoleInfo, 10, OptionName.SnitchEnableTargetArrow, false, false);
         OptionCanGetColoredArrow = BooleanOptionItem.Create(RoleInfo, 11, OptionName.SnitchCanGetArrowColor, false, false);
         OptionCanFindNeutralKiller = BooleanOptionItem.Create(RoleInfo, 12, OptionName.SnitchCanFindNeutralKiller, false, false);
+        OptionCannotConfirmKillRoles = BooleanOptionItem.Create(RoleInfo, 14, OptionName.SnitchCannotConfirmKillRoles, false, false);
         OptionRemainingTasks = IntegerOptionItem.Create(RoleInfo, 13, OptionName.SnitchRemainingTaskFound, new(0, 10, 1), 1, false);
         Options.OverrideTasksData.Create(RoleInfo, 20);
     }
@@ -84,6 +90,18 @@ public class Snitch : RoleBase
     {
         return target.Is(CustomRoleTypes.Impostor)
             || (CanFindNeutralKiller && target.IsNeutralKiller());
+    }
+    /// <summary>
+    /// スニッチが会議中ではキラーを視認できない判定
+    /// trueのとき視認できない
+    /// </summary>
+    /// <param name="seer">判定対象</param>
+    /// <param name="target">キラー</param>
+    /// <returns></returns>
+    public static bool IsCannotConfirmKillRoles(PlayerControl seer, PlayerControl target)
+    {
+        return CannotConfirmKillRoles && seer.Is(CustomRoles.Snitch)
+                && (target.Is(CustomRoleTypes.Impostor) || target.IsNeutralKiller());
     }
 
     /// <summary>

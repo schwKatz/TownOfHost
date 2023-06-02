@@ -86,6 +86,9 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner
                 case CustomRoles.Jackal:
                     target.RpcSetCustomRole(CustomRoles.JSchrodingerCat);
                     break;
+                case CustomRoles.Opportunist:
+                    target.RpcSetCustomRole(CustomRoles.OSchrodingerCat);
+                    break;
             }
             if (killer.Is(CustomRoleTypes.Impostor))
                 target.RpcSetCustomRole(CustomRoles.MSchrodingerCat);

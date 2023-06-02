@@ -29,6 +29,7 @@ namespace TownOfHost.Roles.AddOns.Common
             CustomRoles.MSchrodingerCat,
             CustomRoles.EgoSchrodingerCat,
             CustomRoles.JSchrodingerCat,
+            CustomRoles.OSchrodingerCat,
             CustomRoles.HASFox,
             CustomRoles.HASTroll,
             CustomRoles.GM,

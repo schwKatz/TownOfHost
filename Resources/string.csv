@@ -56,10 +56,12 @@
 "Terrorist","Terrorist","テロリスト","恐怖分子","恐怖分子","Террорист","Terrorista"
 "Executioner","Executioner","エクスキューショナー","处刑人","劊子手","Палач","Executor"
 "SchrodingerCat","Schrödinger's Cat","シュレディンガーの猫","薛定谔的猫","薛定諤的貓","Пленник","Gato de Schrodinger"
-"CSchrodingerCat","Schrödinger's Cat","シュレディンガーの猫","薛定谔的猫","薛定諤的貓","Пленник Экипажа","Gato de Schrodinger"
-"MSchrodingerCat","Schrödinger's Cat","シュレディンガーの猫","薛定谔的猫","薛定諤的貓","Пленник Предателя","Gato de Schrodinger"
-"EgoSchrodingerCat","Schrödinger's Cat","シュレディンガーの猫","薛定谔的猫","薛定諤的貓","Пленник Эгоиста","Gato de Schrodinger"
-"JSchrodingerCat","Schrödinger's Cat","シュレディンガーの猫","薛定谔的猫","薛定諤的貓","Пленник Шакала","Gato de Schrodinger"
+CSchrodingerCat,(Crew)SCat,(Crew)シュレ猫,(船员)薛定谔的猫,(船員)薛定諤的貓,Пленник Экипажа,"(Trip)Gato de S"
+MSchrodingerCat,(Impo)SCat,(Impo)シュレ猫,(内鬼)薛定谔的猫,(偽裝)薛定諤的貓,Пленник Предателя,"(Impo)Gato de S"
+EgoSchrodingerCat,(Ego)SCat,(Ego)シュレ猫,(野心)薛定谔的猫,(利己主義)薛定諤的貓,Пленник Эгоиста,"(Ego)Gato de S"
+JSchrodingerCat,(Jack)SCat,(Jack)シュレ猫,(豺狼)薛定谔的猫,(豺狼)薛定諤的貓,Пленник Шакала,"(Chac)Gato de S"
+OSchrodingerCat,(Oppo)SCat,(Oppo)シュレ猫,(投机)薛定谔的猫,(投機主義)薛定諤的貓,Пленник(Выживший),"(Opor)Gato de S"
+DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛定諤的貓,Пленник(Dark),"(Dark)Gato de S"
 "Opportunist","Opportunist","オポチュニスト","投机者","投機主義者","Выживший","Oportunista"
 "Egoist","Egoist","エゴイスト","野心家","利己主義者","Эгоист","Egoísta"
 "Lovers","Lovers","ラバーズ","恋人","戀人","Любовники","Amantes"
@@ -139,6 +141,8 @@
 "MSchrodingerCatInfo","You are now on Team Impostor","インポスターの味方になった","你加入了内鬼阵营，掩护自己的内鬼同伴，并且一起胜利","你現在變成偽裝者了，但是你不能砍人，盡量掩護你的隊友的身分","Теперь вы за Предателей","Você agora é do Time Impostor"
 "EgoSchrodingerCatInfo","You are now on Team Egoist","エゴイストの味方になった","你成为了野心家的伙伴","你是利己主義者的跟班","Теперь вы за Эгоистов","Você agora é do Time Egoísta"
 "JSchrodingerCatInfo","You are now on Team Jackal","ジャッカルの味方になった","你是豺狼的跟班，传宗接代是个好选择","你是豺狼的跟班，打個獻祭流或許是個不錯的選擇","Теперь вы за Шакалов","Você agora é do Time Chacal"
+OSchrodingerCatInfo,You are now on Opportunist,オポチュニストになった,你是投机者的跟班，传宗接代是个好选择,"你是投機主義者的跟班,盡量幫助他",Теперь вы в команде Opportunist
+DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方になった,你是潜藏者的跟班，传宗接代是个好选择,,Теперь вы в команде Darkhide
 "TerroristInfo","Finish your tasks, THEN die","タスクを済ませ、自爆しよう","都别想活着，和我一起同归于尽！","我要開火箭撞Mira總部","Умрите после выполнения всех заданий","Termine suas tarefas, DEPOIS morra"
 "ExecutionerInfo","Get your target voted out","ターゲットを追放させよう","不惜一切代价把你的目标票出去！","想出一切辦法來投出你的目標","Заставь игроков изгнать свою цель","Faça o seu alvo ser exilado"
 "EgoistInfo","Take over the Impostors' victory","インポスター勝利を独占しよう","夺走内鬼的胜利","讓我們來奪取偽裝者的勝利","Не дай Предателям победить","Ganhe no lugar do Impostor"
@@ -250,9 +254,9 @@
 "SuffixMode.OriginalName","OriginalName","元の名前","玩家名称","玩家原名稱","Настоящий Никнейм","Nome Original"
 "ColorNameMode","Color Name Mode","色名前モード","显示颜色名称","名字將被顏色名稱替換","Режим: Никнейм соответствует цвету","Modo Nomes de Cores"
 "FixFirstKillCooldown","Normalize First Kill Cooldown","初期スポーン時のクールダウン修正","修正首刀冷却时间","修正開場時的殺人冷卻時間","Нормализовать откат убийства в начале Игры","Normalizar Tempo de Recarga do Primeiro Abate"
-"GhostCanSeeOtherRoles","Ghosts Can See Other Roles","幽霊が他人の役職を見ることができる","幽灵可见他人职业","幽靈可以看見所有玩家職業","Призраки могут видеть все Роли","Fantasmas Podem Ver Outros Papéis"
-"GhostCanSeeOtherTasks","Ghosts Can See Other Tasks","幽霊が他人のタスク進捗を見ることができる"
-"GhostCanSeeOtherVotes","Ghosts Can See Other Votes","幽霊が他人の投票先を見ることができる","幽灵可见投票情况","幽靈可以看見所有玩家的投票","Призраки могут видеть цвета Голосов","Fantasmas Podem Ver Outros Votos"
+GhostCanSeeOtherRoles,Ghost Can't See Other Roles,幽霊が他人の役職を見ることができない,幽灵不可见他人职业,幽靈不可以看見所有玩家職業,
+GhostCanSeeOtherVotes,Ghost Can't See Other Votes,幽霊が他人の投票先を見ることができない,幽灵不可见投票情况,幽靈不可以看見所有玩家的投票,
+GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタスク進捗を見ることができない"
 "GhostCanSeeDeathReason","Ghost Can See Cause Of Death","幽霊が死因を見ることができる","幽灵可以看见死因","幽靈可以看見死因","Призраки могут видеть Причины Смерти","Fantasmas Podem Ver Causa da Morte"
 "GhostIgnoreTasks","Ghosts Exempt From Tasks","死人のタスクを免除する","幽灵无视任务","幽靈可以免除任務","Призраки игнорируют Задания","Fantasmas Isentos de Tarefas"
 "DisableTaskWin","Disable Task Win","タスク勝利を無効化","禁用任务胜利","禁用任務勝利","Отключить победу по Заданиям","Desativar Vitória por Tarefas"
@@ -385,6 +389,7 @@
 "SheriffMisfireKillsTarget","Misfire Kills Target","誤爆時、ターゲットも死ぬ","警长误杀好人会同时击杀目标","警長誤殺好人會同時擊殺目標","Шериф убивает цель вместе с собой","Pode Matar Alvo Incorreto"
 "SheriffShotLimit","Ammo","キル可能回数","最大执法次数","最大子彈數量","Количество выстрелов","Balas"
 "SheriffCanKillAllAlive","Can Kill With All Alive","全員生存時にキルできる","全员存活时可以执法","全員存活時可以執法","Может убить всех живых","Pode Matar Com Todos Vivos"
+"DoctorHasVital","Has Vital","バイタルを持つ","医生拥有生命监测仪",
 "DoctorTaskCompletedBatteryCharge","Battery Duration","充電持続時間","医生每次完成任务增加的设备充能数","醫生完成任務充電秒數","Длительность батарейки","Duração da Bateria"
 "SnitchEnableTargetArrow","Can See Arrow To Target","ターゲットを示す矢印が見える","告密者完成任务后可以通过箭头确认所有被发现目标","告密者完成任務後可以看到指向目標的箭頭","Может видеть стрелку цели","Pode Ver Seta Para o Alvo"
 "SnitchCanGetArrowColor","Can See Target Team Colored Arrow","矢印の色で陣営がわかる","对不同阵营的目标以不同颜色的箭头表示","對不同陣營的目標使用不同顏色的箭頭標示","Может видеть цвета стрелок","Pode Ver Seta Colorida Para Time Alvo"
@@ -432,9 +437,13 @@
 "AssignOnlyTo%role%","Assign Only To %role%","%role%のみに割り当てる","只赋予%role%","","Назначить только для %role%",""
 "WorkhorseNumLongTasks","Additional Long Tasks","追加ロングタスクの個数","额外长任务数","","Дополнительные долгие задания",""
 "WorkhorseNumShortTasks","Additional Short Tasks","追加ショートタスクの個数","额外短任务数","","Дополнительные короткие задания",""
-"LoversAddWin","Make the win an additional win","勝利を追加勝利にする","以胜利为追加胜利",
-"ImpostorOperateVisibility","(MOD)Impostor can not be clairvoyant after death","(MOD)インポスターが霊界で千里眼できない","内鬼死后不可以有千里眼",
-"ChangeIntro","(MOD)Change the intro the original TOH specs.","(MOD)第三陣営やマッド役職のイントロを本家TOH仕様に戻す","(MOD)将介绍更改为原始TOH规格。"
+"LoversAddWin","Make the Win an Additional Win","勝利を追加勝利にする","以胜利为追加胜利",
+"ImpostorOperateVisibility","(MOD)Impostor Can Not Be Clairvoyant After Death","(MOD)インポスターが霊界で千里眼できない","内鬼死后不可以有千里眼",
+"ChangeIntro","(MOD)Change the Intro the Original TOH Specs.","(MOD)第三陣営やマッド役職のイントロを本家TOH仕様に戻す","(MOD)将介绍更改为原始TOH规格。"
+"MafiaCanKillImpostorCount","Can Kill Remaining Impostor Count","キル可能になるインポスター残数","剩余的可以被击杀的内鬼的数量"
+"BaitWaitTime","Time From Bait Kill to Report","ベイトキルから通報までの時間","从杀死诱饵后到报告的时间长度"
+"CanKill","Can Kill","キルできる","可以击杀",
+
 
 "## かくれんぼ設定"
 "HideAndSeekOptions","Hide and Seek Settings","かくれんぼの設定","躲猫猫设置","躲貓貓設定","Настройки Пряток","Configurações do Esconde-Esconde"
@@ -459,7 +468,11 @@
 "DeathReason.Disconnected","Disconnected","回線切断","断连","斷線","Вышел","Desconectado"
 "DeathReason.Fall","Fall","転落","摔死","摔死","Упал","Queda"
 "DeathReason.Revenge","Revenge","道連れ","复仇","復仇","Месть",""
+"DeathReason.win","hit","的中","猜着",
+"DeathReason.WTaskFinish","TaskFinish","タスク完了","任务完成",
+"DeathReason.Poisoning","Poisoning","毒死","毒死",
 "DeathReason.etc","Other","その他","其他","其他","Другое","Outros"
+
 "Alive","Alive","生存","存活","存活","Выжил","Vivo"
 "Win"," Wins","勝利","胜利","勝利"," Победили","Vitória"
 "Last-","Last ","ラスト","仅存","獨活","Последний ",""
@@ -510,6 +523,7 @@
 "Message.BanedByBanList","{0} has been banned because it has been banned in the past.","{0}は過去にBAN済みのためBANされました。","{0} 已被封禁，因其之前就被封禁过","因為{0}在被記錄在黑名單中，所以禁止了{0}再次進入此房間。","{0} был заблокирован, потому что он был заблокирован в прошлый раз",""
 "Message.KickedByNoFriendCode","{0} was kicked because the friend code does not exist.","{0}はフレンドコードが存在しないためキックされました。","{0}被踢出，因其好友编号无效。","{0}因為沒有好友代碼，所以踢出了他。","{0} был кикнут, так как у него нет кода друга",""
 "Message.AddedPlayerToBanList","Added {0} to the ban list.","{0}をBANリストに追記しました。","{0}已被添加到封禁名单","已將 {0} 加入到黑名單中，此玩家將無法再進入你的房間。(需安裝TOH模組)","{0} был добавлен в список забаненых игроков",""
+"Message.AnnounceUsingTOH","This room uses TownOfHost_Y v{0}.\n/now can be used to check the current settings.\nPlease check GitHub for detailed roles descriptions.","この部屋はTownOfHost_YS v{0}を使用しています。本家TOH、現行版TOH_Yを含む他MOD導入中の方との共存は出来ません。\n/nで現在の設定、/h nで現在の設定の説明が確認できます。","本房间使用TownOfHost_Y mod v{0}。\n可以使用/now来查询当前设置。\n请前往本mod的Github页面来获取详细的职业信息。","本房間使用TownOfHost_Y v{0}。\n可以使用/n來查詢目前設定。\n若要獲得進一步的職業介紹(並沒有繁體中文翻譯版本)請前往本模組的Github頁面來獲得。","В этой комнате используется TownOfHost_Y v{0}. Используйте  \n/now чтобы увидеть текущие настройки. \nПожалуйста посетите GitHub для получения подробного описания мода и ролей.","Esta sala está usando TownOfHost_Y versão {0} .\nO comando /now pode ser usado para ver as configurações atuais.\nPor favor, verifique o GitHub para descrições detalhadas das classes."
 "Message.isReport","The meeting was started by the discovery of a dead body.\nReported dead body：{0}","死体発見により会議が開かれました。\n通報された死体：{0}","会议以发现一具尸体开始。\n报告的尸体：{0}"
 "Message.isButton","The meeting was started by an emergency button.","緊急ボタンにより会議が開かれました。","会议以使用紧急按钮开始."
 "Message.RevengeText","{0} is exiled, and another is died by revenge. \nmurdered：{1}","{0}が追放され、道連れが発生しました。\n{1}が死亡しています。","{0} 被投出，另一人因复仇而死. \n凶杀：{1}"
@@ -644,6 +658,7 @@
 "DisabledBySettings","Disabled by Settings","設定で無効化されています","已在设置被中禁用","在設定中被禁用","Отключено настройкой","Desativado Pelas Configurações"
 "Disabled","Disabled","無効","禁用","已被禁用","Отключено","Desativado"
 "FailToTrack","Failed To Track","追跡失敗","追踪失败","無法追蹤","Не удалось отследить",""
+"killer","Killer","キラー","杀手",
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,
