@@ -661,6 +661,10 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "Disabled","Disabled","無効","禁用","已被禁用","Отключено","Desativado"
 "FailToTrack","Failed To Track","追跡失敗","追踪失败","無法追蹤","Не удалось отследить",""
 "killer","Killer","キラー","杀手",
+"AntiAdminerAD","Warning Admin","アドミン注意！","管理室地图注意",,
+"AntiAdminerVI","Warning Vital","バイタル注意！","生命检测仪注意",,
+"AntiAdminerDL","Warning DoorLog","ドアログ注意！","日志注意",,
+"AntiAdminerCA","Warning Camera","カメラ注意！","摄像头注意",,
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,
@@ -682,7 +686,3 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "VoiceReaderGray","Gray","グレー",,,,
 "VoiceReaderTan","Tan","タン",,,,
 "VoiceReaderCoral","Coral","コーラル",,,,
-"AntiAdminerAD","Warning Admin","アドミン注意！","管理室地图注意",,
-"AntiAdminerVI","Warning Vital","バイタル注意！","生命检测仪注意",,
-"AntiAdminerDL","Warning DoorLog","ドアログ注意！","日志注意",,
-"AntiAdminerCA","Warning Camera","カメラ注意！","摄像头注意",,
