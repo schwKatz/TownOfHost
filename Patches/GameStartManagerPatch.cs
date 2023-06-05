@@ -8,6 +8,7 @@ using InnerNet;
 using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using TownOfHost.Modules;
 using static TownOfHost.Translator;
 using TownOfHost.Roles;
 
@@ -68,7 +69,11 @@ namespace TownOfHost
                 if (!AmongUsClient.Instance.AmHost) return;
 
                 // Make Public Button
+<<<<<<< HEAD
                 if (!Main.AllowPublicRoom)
+=======
+                if (ModUpdater.isBroken || ModUpdater.hasUpdate || !Main.AllowPublicRoom || !VersionChecker.IsSupported)
+>>>>>>> 2c289009 (サポートされていないバージョンの時に公開ルームを立てられないよう変更)
                 {
                     __instance.MakePublicButton.color = Palette.DisabledClear;
                     __instance.privatePublicText.color = Palette.DisabledClear;

@@ -1,8 +1,8 @@
 using System.Globalization;
 using HarmonyLib;
 using InnerNet;
-using TownOfHost.Modules;
 using UnityEngine;
+using TownOfHost.Modules;
 using static TownOfHost.Translator;
 
 namespace TownOfHost
@@ -20,9 +20,57 @@ namespace TownOfHost
                 Logger.SendInGame(message);
                 return false;
             }
+<<<<<<< HEAD
             return true;
         }
     }
+=======
+            if (ModUpdater.isBroken || ModUpdater.hasUpdate || !VersionChecker.IsSupported)
+            {
+                var message = "";
+                if (!VersionChecker.IsSupported) message = GetString("UnsupportedVersion");
+                if (ModUpdater.isBroken) message = GetString("ModBrokenMessage");
+                if (ModUpdater.hasUpdate) message = GetString("CanNotJoinPublicRoomNoLatest");
+                Logger.Info(message, "MakePublicPatch");
+                Logger.SendInGame(message);
+                return false;
+            }
+            return true;
+        }
+    }
+    [HarmonyPatch(typeof(MMOnlineManager), nameof(MMOnlineManager.Start))]
+    class MMOnlineManagerStartPatch
+    {
+        public static void Postfix(MMOnlineManager __instance)
+        {
+            if (!(ModUpdater.hasUpdate || ModUpdater.isBroken || !VersionChecker.IsSupported)) return;
+            var obj = GameObject.Find("FindGameButton");
+            if (obj)
+            {
+                obj?.SetActive(false);
+                var parentObj = obj.transform.parent.gameObject;
+                var textObj = Object.Instantiate<TMPro.TextMeshPro>(obj.transform.FindChild("Text_TMP").GetComponent<TMPro.TextMeshPro>());
+                textObj.transform.position = new Vector3(1f, -0.3f, 0);
+                textObj.name = "CanNotJoinPublic";
+                textObj.DestroyTranslator();
+                string message = "";
+                if (ModUpdater.hasUpdate)
+                {
+                    message = GetString("CanNotJoinPublicRoomNoLatest");
+                }
+                else if (ModUpdater.isBroken)
+                {
+                    message = GetString("ModBrokenMessage");
+                }
+                else if (!VersionChecker.IsSupported)
+                {
+                    message = GetString("UnsupportedVersion");
+                }
+                textObj.text = $"<size=2>{Utils.ColorString(Color.red, message)}</size>";
+            }
+        }
+    }
+>>>>>>> 2c289009 (サポートされていないバージョンの時に公開ルームを立てられないよう変更)
     [HarmonyPatch(typeof(SplashManager), nameof(SplashManager.Update))]
     class SplashLogoAnimatorPatch
     {
