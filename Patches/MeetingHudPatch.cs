@@ -192,6 +192,10 @@ namespace TownOfHost
         {
             var player = Utils.GetPlayerById(playerId);
             if (player == null) return;
+            //道連れ能力持たない時は下を通さない
+            if (!((player.Is(CustomRoles.SKMadmate) && Options.MadmateRevengeCrewmate.GetBool())
+                || player.Is(CustomRoles.EvilNekomata) || player.Is(CustomRoles.Nekomata)/* || player.Is(CustomRoles.Revenger)*/)) return;
+
             var target = PickRevengeTarget(player, deathReason);
             if (target == null) return;
             TryAddAfterMeetingDeathPlayers(CustomDeathReason.Revenge, target.PlayerId);
@@ -204,15 +208,25 @@ namespace TownOfHost
             foreach (var candidate in Main.AllAlivePlayerControls)
             {
                 if (candidate == exiledplayer || Main.AfterMeetingDeathPlayers.ContainsKey(candidate.PlayerId)) continue;
-                switch (exiledplayer.GetCustomRole())
+
+                //対象とならない人を判定
+                if (exiledplayer.Is(CustomRoleTypes.Madmate) || exiledplayer.Is(CustomRoleTypes.Impostor)) //インポスター陣営の場合
                 {
-                    //ここに道連れ役職を追加
-                    default:
-                        if (exiledplayer.Is(CustomRoleTypes.Madmate) && deathReason == CustomDeathReason.Vote && Options.MadmateRevengeCrewmate.GetBool() //黒猫オプション
-                        && !candidate.Is(CustomRoleTypes.Impostor))
-                            TargetList.Add(candidate);
-                        break;
+                    if (candidate.Is(CustomRoleTypes.Impostor)) continue; //インポスター
+                    if (candidate.Is(CustomRoleTypes.Madmate) && !Options.RevengeMadByImpostor.GetBool()) continue; //マッドメイト（設定）
                 }
+                if (candidate.Is(CustomRoleTypes.Neutral) && !Options.RevengeNeutral.GetBool()) continue; //第三陣営（設定）
+
+                TargetList.Add(candidate);
+                //switch (exiledplayer.GetCustomRole())
+                //{
+                //    //ここに道連れ役職を追加
+                //    default:
+                //        if (exiledplayer.Is(CustomRoleTypes.Madmate) && deathReason == CustomDeathReason.Vote && Options.MadmateRevengeCrewmate.GetBool() //黒猫オプション
+                //        && !candidate.Is(CustomRoleTypes.Impostor))
+                //            TargetList.Add(candidate);
+                //        break;
+                //}
             }
             if (TargetList == null || TargetList.Count == 0) return null;
             var rand = IRandom.Instance;

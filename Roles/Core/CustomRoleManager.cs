@@ -372,6 +372,7 @@ public enum CustomRoles
     Puppeteer,
     TimeThief,
     EvilTracker,
+    EvilNekomata,
     AntiAdminer,
     //Madmate
     MadGuardian,
@@ -396,6 +397,7 @@ public enum CustomRoles
     Doctor,
     Seer,
     TimeManager,
+    Nekomata,
     CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral
     Arsonist,

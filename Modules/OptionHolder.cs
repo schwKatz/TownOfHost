@@ -232,6 +232,9 @@ namespace TownOfHost
         public static OptionItem ShowRevengeTarget;
         // 初手会議に役職説明表示
         public static OptionItem ShowRoleInfoAtFirstMeeting;
+        // 道連れ設定
+        public static OptionItem RevengeNeutral;
+        public static OptionItem RevengeMadByImpostor;
 
         public static OptionItem ChangeIntro;
 
@@ -305,8 +308,11 @@ namespace TownOfHost
             ImpostorOperateVisibility = BooleanOptionItem.Create(5100, "ImpostorOperateVisibility", false, TabGroup.ImpostorRoles, false)
                 .SetGameMode(CustomGameMode.Standard);
 
-
             // Madmate
+            RevengeMadByImpostor = BooleanOptionItem.Create(75001, "RevengeMadByImpostor", false, TabGroup.MadmateRoles, false)
+                .SetGameMode(CustomGameMode.Standard)
+                .SetHeader(true);
+
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Madmate).Do(info =>
             {
                 SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
@@ -341,6 +347,10 @@ namespace TownOfHost
             });
 
             // Neutral
+            RevengeNeutral = BooleanOptionItem.Create(75000, "RevengeNeutral", true, TabGroup.NeutralRoles, false)
+                .SetGameMode(CustomGameMode.Standard)
+                .SetHeader(true);
+
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Neutral).Do(info =>
             {
                 switch (info.RoleName)
