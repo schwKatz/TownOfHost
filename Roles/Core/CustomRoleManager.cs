@@ -359,6 +359,8 @@ public enum CustomRoles
     Impostor,
     Shapeshifter,
     //Impostor
+    NormalImpostor,
+    NormalShapeshifter,
     BountyHunter,
     FireWorks,
     Mafia,
@@ -385,6 +387,8 @@ public enum CustomRoles
     GuardianAngel,
     Scientist,
     //Crewmate
+    NormalEngineer,
+    NormalScientist,
     Bait,
     Lighter,
     Mayor,

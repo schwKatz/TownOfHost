@@ -517,27 +517,44 @@ namespace TownOfHost
         {
             var roleClass = player.GetRoleClass();
             var role = player.GetCustomRole();
-            if (role is CustomRoles.Crewmate or CustomRoles.Impostor)
-                InfoLong = false;
-
-            var text = role.ToString();
 
             var Prefix = "";
-            if (!InfoLong)
-                switch (role)
-                {
-                    case CustomRoles.Mafia:
-                        if (roleClass is not Mafia mafia) break;
-
-                        Prefix = mafia.CanUseKillButton() ? "After" : "Before";
-                        break;
-                    case CustomRoles.MadSnitch:
-                    case CustomRoles.MadGuardian:
-                        text = CustomRoles.Madmate.ToString();
-                        Prefix = player.GetPlayerTaskState().IsTaskFinished ? "" : "Before";
-                        break;
-                };
-            var Info = (role.IsVanilla() ? "Blurb" : "Info") + (InfoLong ? "Long" : "");
+            var text = role.ToString();
+            var Info = "";
+            switch(role)
+            {
+                case CustomRoles.NormalImpostor:
+                    text = ""; Info = "ImpostorBlurb"; InfoLong = false;
+                    break;
+                case CustomRoles.NormalShapeshifter:
+                    text = ""; Info = "ShapeshifterBlurb";
+                    break;
+                case CustomRoles.NormalEngineer:
+                    text = ""; Info = "EngineerBlurb";
+                    break;
+                case CustomRoles.NormalScientist:
+                    text = ""; Info = "ScientistBlurb";
+                    break;
+                case CustomRoles.Crewmate:
+                case CustomRoles.Impostor:
+                    InfoLong = false;
+                    goto default;
+                case CustomRoles.Mafia:
+                    if (InfoLong) goto default;
+                    if (roleClass is not Mafia mafia) goto default;
+                    Prefix = mafia.CanUseKillButton() ? "After" : "Before";
+                    goto default;
+                case CustomRoles.MadSnitch:
+                case CustomRoles.MadGuardian:
+                    if (InfoLong) goto default;
+                    text = CustomRoles.Madmate.ToString();
+                    Prefix = player.GetPlayerTaskState().IsTaskFinished ? "" : "Before";
+                    goto default;
+                default:
+                    Info = role.IsVanilla() ? "Blurb" : "Info";
+                    break;
+            }
+            Info += (InfoLong ? "Long" : "");
             return GetString($"{Prefix}{text}{Info}");
         }
         public static void SetRealKiller(this PlayerControl target, PlayerControl killer, bool NotOverRide = false)

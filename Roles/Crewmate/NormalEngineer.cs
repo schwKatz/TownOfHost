@@ -1,0 +1,52 @@
+using AmongUs.GameOptions;
+
+using TownOfHost.Roles.Core;
+
+namespace TownOfHost.Roles.Crewmate;
+public sealed class NormalEngineer : RoleBase
+{
+    public static readonly SimpleRoleInfo RoleInfo =
+        new(
+            typeof(NormalEngineer),
+            player => new NormalEngineer(player),
+            CustomRoles.NormalEngineer,
+            () => RoleTypes.Engineer,
+            CustomRoleTypes.Crewmate,
+            19990,
+            SetupOptionItem,
+            "doc",
+            "#8cffff"
+        );
+    public NormalEngineer(PlayerControl player)
+    : base(
+        RoleInfo,
+        player
+    )
+    {
+        ventCooldown = OptionVentCooldown.GetFloat();
+        ventMaxTime = OptionVentMaxTime.GetFloat();
+    }
+
+    private static OptionItem OptionVentCooldown;
+    private static OptionItem OptionVentMaxTime;
+    enum OptionName
+    {
+        VentCooldown,
+        VentMaxTime,
+    }
+    public static float ventCooldown;
+    public static float ventMaxTime;
+
+    private static void SetupOptionItem()
+    {
+        OptionVentCooldown = FloatOptionItem.Create(RoleInfo, 3, OptionName.VentCooldown, new(0f, 180f, 5f), 30f, false)
+            .SetValueFormat(OptionFormat.Seconds);
+        OptionVentMaxTime = FloatOptionItem.Create(RoleInfo, 4, OptionName.VentMaxTime, new(0f, 180f, 5f), 15f, false)
+            .SetValueFormat(OptionFormat.Seconds);
+    }
+    public override void ApplyGameOptions(IGameOptions opt)
+    {
+        AURoleOptions.EngineerCooldown = ventCooldown;
+        AURoleOptions.EngineerInVentMaxTime = ventMaxTime;
+    }
+}

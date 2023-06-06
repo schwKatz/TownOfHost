@@ -14,6 +14,10 @@
 "GuardianAngel","Guardian Angel","守護天使","守护天使","守護天使","Ангел-хранитель","Anjo da Guarda"
 "Impostor","Impostor","インポスター","内鬼","偽裝者","Предатель","Impostor"
 "Shapeshifter","Shapeshifter","シェイプシフター","变形者","變形者","Оборотень","Metamorfo"
+"NormalImpostor","Normal Impostor","通常インポスター","普通内鬼"
+"NormalShapeshifter","Shapeshifter","シェイプシフター","变形者","變形者","Оборотень","Metamorfo"
+"NormalEngineer","Engineer","エンジニア","工程师","工程師","Инженер","Engenheiro"
+"NormalScientist","Scientist","科学者","科学家","科學家","Ученый","Cientista"
 
 "# 特殊インポスター役職"
 "BountyHunter","Bounty Hunter","バウンティハンター","赏金猎人","賞金獵人","Охотник за головами","Caçador de Recompensas"
@@ -350,6 +354,12 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "ImpostorVision","Impostor Vision","インポスター視界","拥有内鬼视野","擁有偽裝者的視野","Имеет дальность Обзора Предателя","Visão (Impostor)"
 "CanUseSabotage","Can Sabotage","サボタージュを使用できる","可以破坏","可以破壞","Может использовать Саботаж","Pode Sabotar"
 "CanCreateMadmate","Can Make SideKick Madmate","マッドメイトを指名できる","可以指名叛徒","可以招募叛徒","Он может назначить Безумцев",""
+"VentCooldown","Vent Cooldown","ベントクールダウン",钻管冷却,
+"VentMaxTime","Max Time In Vents","ベント内での最大時間",,
+"VitalCooldown","Vitals Cooldown","バイタルクールダウン",,
+"VitalBatteryDuration","Battery Duration","充電持続時間",,
+"ShapeshiftDuration","Shapeshift Duration","変身持続時間",,
+"ShapeshifterLeaveSkin","Leave Shapeshifting Evidence","変身の証拠を残す"
 
 "AssignMode","Assign Algorithm Mode","アサインモード","","","",""
 "AssignAlgorithm.Fixed","Fixed","固定","","","",""
@@ -453,7 +463,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "CanKill","Can Kill","キルできる","可以击杀",
 "AntiAdminerCanCheckCamera","Can check camera","カメラの人も検知出来る","可以检查摄像头",,
 "RevengeNeutral","Can Revenge Neutrals","道連れ能力持ちがニュートラル役職を道連れ出来る","可以接受同伴为中立",,
-"RevengeMadByImpostor","Can Revenge Madmates By Impostor","道連れ能力持ちインポスターがマッド系役職を道連れ出来る",,,
+"RevengeMadByImpostor","Can Revenge Madmates By Impostor Team","道連れ能力持ちインポスター陣営がマッド系役職を道連れ出来る",,,
 
 "## かくれんぼ設定"
 "HideAndSeekOptions","Hide and Seek Settings","かくれんぼの設定","躲猫猫设置","躲貓貓設定","Настройки Пряток","Configurações do Esconde-Esconde"

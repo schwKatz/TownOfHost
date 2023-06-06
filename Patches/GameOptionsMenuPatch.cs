@@ -52,12 +52,13 @@ namespace TownOfHost
 
             var gameSettingMenu = Object.FindObjectsOfType<GameSettingMenu>().FirstOrDefault();
             if (gameSettingMenu == null) return;
-            List<GameObject> menus = new() { gameSettingMenu.RegularGameSettings, gameSettingMenu.RolesSettings.gameObject };
-            List<SpriteRenderer> highlights = new() { gameSettingMenu.GameSettingsHightlight, gameSettingMenu.RolesSettingsHightlight };
+            List<GameObject> menus = new() { gameSettingMenu.RegularGameSettings/*, gameSettingMenu.RolesSettings.gameObject*/ };
+            List<SpriteRenderer> highlights = new() { gameSettingMenu.GameSettingsHightlight/*, gameSettingMenu.RolesSettingsHightlight*/ };
 
             var roleTab = GameObject.Find("RoleTab");
+                roleTab.gameObject.active = false;
             var gameTab = GameObject.Find("GameTab");
-            List<GameObject> tabs = new() { gameTab, roleTab };
+            List<GameObject> tabs = new() { gameTab/*, roleTab*/ };
 
             foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
@@ -136,6 +137,7 @@ namespace TownOfHost
 
                 var tohTab = Object.Instantiate(roleTab, roleTab.transform.parent);
                 tohTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite($"TownOfHost.Resources.TabIcon_{tab}.png", 100f);
+                tohTab.gameObject.active = true;
                 tabs.Add(tohTab);
                 var tohTabHighlight = tohTab.transform.FindChild("Hat Button").FindChild("Tab Background").GetComponent<SpriteRenderer>();
                 highlights.Add(tohTabHighlight);
@@ -319,27 +321,27 @@ namespace TownOfHost
             OptionItem.SyncAllOptions();
         }
     }
-    [HarmonyPatch(typeof(RolesSettingsMenu), nameof(RolesSettingsMenu.Start))]
-    public static class RolesSettingsMenuPatch
-    {
-        public static void Postfix(RolesSettingsMenu __instance)
-        {
-            foreach (var ob in __instance.Children)
-            {
-                switch (ob.Title)
-                {
-                    case StringNames.EngineerCooldown:
-                        ob.Cast<NumberOption>().ValidRange = new FloatRange(0, 180);
-                        break;
-                    case StringNames.ShapeshifterCooldown:
-                        ob.Cast<NumberOption>().ValidRange = new FloatRange(0, 180);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+    //[HarmonyPatch(typeof(RolesSettingsMenu), nameof(RolesSettingsMenu.Start))]
+    //public static class RolesSettingsMenuPatch
+    //{
+    //    public static void Postfix(RolesSettingsMenu __instance)
+    //    {
+    //        foreach (var ob in __instance.Children)
+    //        {
+    //            switch (ob.Title)
+    //            {
+    //                case StringNames.EngineerCooldown:
+    //                    ob.Cast<NumberOption>().ValidRange = new FloatRange(0, 180);
+    //                    break;
+    //                case StringNames.ShapeshifterCooldown:
+    //                    ob.Cast<NumberOption>().ValidRange = new FloatRange(0, 180);
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
     [HarmonyPatch(typeof(NormalGameOptionsV07), nameof(NormalGameOptionsV07.SetRecommendations))]
     public static class SetRecommendationsPatch
     {
