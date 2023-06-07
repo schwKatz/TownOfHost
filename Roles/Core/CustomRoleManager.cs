@@ -376,6 +376,9 @@ public enum CustomRoles
     EvilTracker,
     EvilNekomata,
     AntiAdminer,
+    CursedWolf,
+    Greedier,
+    Ambitioner,
     //Madmate
     MadGuardian,
     Madmate,
@@ -401,6 +404,8 @@ public enum CustomRoles
     Doctor,
     Seer,
     TimeManager,
+    SillySheriff,
+    Hunter,
     Nekomata,
     CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral

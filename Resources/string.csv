@@ -35,6 +35,9 @@
 "EvilTracker","EvilTracker","イビルトラッカー","邪恶的追踪者","邪惡的追蹤者","Злой Следопыт","Rastreador do Mal"
 "EvilNekomata","Evil Nekomata","イビル猫又","双尾妖猫",
 "AntiAdminer","Anti Adminer","アンチアドミナー","监管者",,
+"CursedWolf","Cursed Wolf","呪狼","被诅咒的狼"
+"Greedier","Greedier","グリーディア","贪婪者"
+"Ambitioner","Ambitioner","アンビショナー","渴望者"
 
 "# マッドメイト系役職"
 "Madmate","Madmate","マッドメイト","叛徒","叛徒","Безумец","Tripulante Louco"
@@ -57,6 +60,8 @@
 "Seer","Seer","シーア","灵媒","靈媒","Провидец","Vidente"
 "TimeManager","TimeManager","タイムマネージャー","时间管理者","時間大師","Мастер Времени",""
 "Nekomata","Nekomata","猫又","双尾怪猫",,
+"Hunter","Hunter","ハンター","猎人",,
+"SillySheriff","Silly Sheriff","バカシェリフ","憨批警长"
 
 "# ニュートラル役職"
 "Jester","Jester","ジェスター","小丑","小丑","Шут","Bobo"
@@ -119,6 +124,9 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "EvilTrackerInfo","Track others","プレイヤーを追跡しろ","让我看看，我的小目标在哪","你不要過來啊啊阿","Отслеживайте Игроков","Localize os outros"
 "EvilNekomataInfo","Let's get someone on the road","誰かを道連れにしよう","让我们在路上找一些人吧",,
 "AntiAdminerInfo","I wish Admin would just go away","アドミンなんて無くなればいい","我希望管理员能离开",,
+"CursedWolfInfo","It's foolish to kill me","私を斬るなんて愚かだ","杀我是愚蠢的",
+"GreedierInfo","Let's get one more kill","さらにもう一回キルしよう","让我们再多杀一个"
+"AmbitionerInfo","Can't stop，won't stop","やめられないとまらない","无法停止，无法停止"
 
 "# マッドメイト系役職"
 "MadmateInfo","Help the Impostors","インポスターの援助をしよう","帮助内鬼","幫助偽裝者","Помогите Предателям","Ajude os Impostores"
@@ -141,6 +149,8 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "SeerInfo","You see the moment someone dies","他人の死んだ瞬間がわかる","你能感知死亡","你擁有陰陽眼","Вы видите когда умирают игроки","Veja o momento em que alguém morre"
 "TimeManagerInfo","Do the tasks and extend meeting time","タスクをして会議時間を延ばそう","完成任务并延长会议持续时间","完成你的任務來延長會議時間","Выполняйте задания чтобы увеличить время встречи",""
 "NekomataInfo","I'll be exiled with someone else","人外まで道連れしたい","我将和别人一起被放逐",,
+"HunterInfo","Let's kill the suspicious person","怪しい人を斬ろう","让我们杀死可疑的人",,
+"SillySheriffInfo","Can you properly judge a Impostor?","ちゃんと人外判断できるかな","你能正确地判断内鬼吗?"
 
 "# ニュートラル役職"
 "ArsonistInfo","Burn them to crisps","燃やせ","火焰给我燃烧起来吧！","燒吧，燒吧，燃燒吧","Облейте и подожгите всех игроков","Queime tudo em pedacinhos"
@@ -188,6 +198,9 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "EvilTrackerInfoLong","(Impostors):\nYou can see where others are.\nYou will see arrows pointing to the other impostors and anyone you shapeshift into.\nYou will see a ""kill flash"" when your fellow impostors kill.","(インポスター陣営):\n他人の位置が分かるインポスター。\n味方のインポスターとシェイプシフトで選んだ一人の位置が矢印で表示される。\n味方インポスターのキルによるキルフラッシュも見える。","(内鬼阵营):\n邪恶追踪者可以追踪其他内鬼以及其所变形的玩家。\n玩家名称下面的箭头代表着目标的方向。\n当内鬼队友杀人时，邪恶追踪者将会看到击杀闪烁提示。","(狼人陣營):\n邪惡的追蹤者:\他有一個箭頭指向他的隊友以及他變形的玩家,\n當他的隊友殺人時將出現閃光顯示。","(Предатель):\nЗлой Следопыт может отслеживать других игроков. \nОн может видеть стрелки, которые указывают на Предателей или на того, в кого он превратился. \nОн может видеть когда было совершено убийство с помощью вспышки убийства.","(Impostores):\nVocê consegue ver a posição de outros.\nÉ possível ver setas apontando para outros Impostores e qualquer um em que você se transforme.\nVocê também verá uma piscada de tela quando um aliado Impostor matar alguém."
 "EvilNekomataInfoLong","(Impostors)\nWhen he is hanged，he takes one random person other than the imposter with him. (When the next discussion starts after he is hanged, he will be marked with an "X" without a corpse direction.)","[インポスター陣営]\n自身が吊られた際、インポスター以外のランダムな1人を道連れにする。(吊られた次の議論開始時に死体演出無しで×マークが付く)","(内鬼阵营)\n当他被绞死时，除了内鬼，他会随机带走一个人。(当他被绞死后的下一次会议开始时，他将被标记为“X”，但没有尸体的方向。)",,
 "AntiAdminerInfoLong","(Impostors)\nI can tell if someone is in front of the Admin，Door Log，or Vital equipment. It does not know if the person is actually using the equipment.","[インポスター陣営]\nアドミン・ドアログ・バイタル機器の前に人がいるか分かる。実際に機器を使用しているかは分からない。","(内鬼阵营)\n我可以告诉如果有人在管理地图，门日志，或重要设备的前面时。但它不知道这个人是否真的在使用设备。",,
+"CursedWolfInfoLong","(Impostors)\nWhen someone is about to be killed by someone else, Guard the kill from that person and Spell them to death.\nWhen the spell, its own killcool is set to half its usual level.","[インポスター陣営]\n誰かにキルされそうになった時、その人からキルをガードして呪殺する。(設定回数まで)\n呪殺した時、自身のキルクールは通常の半分にセットされる。","(内鬼阵营)\n当一个人要被别人杀死时。保护他不被那个人杀死。"
+"GreedierInfoLong","(Impostors)\nImpostor with different killcools for odd and even number of kills. Greedier is reset each time a meeting is held and always starts with the odd-numbered killcool.","[インポスター陣営]\nキル奇数回目と偶数回目でキルクールが異なるインポスター。会議が入る毎にリセットされ、必ず奇数回目キルクールからになる。,"(内鬼阵营)\n对于奇数次和偶数次的击杀，使用不同的击杀冷却。每次开会都会重新设置贪婪者的击杀冷却，并且总是以奇数击杀冷却开头。"
+"AmbitionerInfoLong","(Impostors)\nFor each kill, the killcool is shortened by a set multiplier. The killcool is reset every turn.","[インポスター陣営]\nキルする毎にキルクールが設定倍率短くなる。ターン毎にキルクールはリセットされる。","(内鬼阵营)\n对于每次击杀，击杀冷却都会缩短一个设置的乘数。每过一局就重置一次。"
 
 "# マッドメイト系役職"
 "MadmateInfoLong","(Impostors):\nYou are a crewmate, but you act as the impostors' ally.\nYou and the impostors cannot recognize each other.\nYou can vent, and you have no tasks.","(インポスター陣営):\nクルーだがインポスターの味方をする。\nインポスターと互いに認識できない。\nベントが使え、タスクはない。","(内鬼阵营):\n叛徒伪装成船员来帮助内鬼阵营，但是他们并不知道谁是内鬼。\n叛徒不可以进行击杀或者破坏，可以跳管道且没有任务。","(狼人陣營):\n船員,但是他們屬於狼人陣營.\n狼人無法知道叛徒是誰,\n他可以跳洞且沒有任務。","(Предатель):\nЧлен Экипажа, который на стороне Предателей. \nНо он не знает кто является Предателем в игре. \nМожет использовать вентиляцию, но нет заданий.","(Impostores):\nVocê é um tripulante que se aliou ao impostor.\nOs Impostores não sabem quem você é e vice-versa.\nPode usar a ventilação, e não tem tarefas."
@@ -210,6 +223,8 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "SeerInfoLong","(Crewmates):\nWhenever someone dies, you will see a ""kill flash"".","(クルー陣営):\nプレイヤーが死亡するごとに、シーアはキルフラッシュを見ることができる。","(船员阵营):\n每当玩家死亡时，灵媒将会看到击杀闪烁。","(船員):當有玩家死亡時,靈媒將看到閃光","(Член Экипажа):\nПровидец видит ''Вспышку Убийства'' каждый раз, когда игроки умирают.","(Tripulantes): \nQuando alguém morre, você vê um ""clarão de abate"" (a sua tela piscará brevemente)."
 "TimeManagerInfoLong","(Crewmates):The more tasks you do, the longer your meeting will last. When you die, the meeting time will be restored.","(クルー陣営):\nタスクを終わらせるごとに会議時間が延びる。死亡すると会議時間は元に戻る。","(船员阵营):\n你做的任务越多，会议时间就会越长。在你死后，会议时间会复原。","","(Член Экипажа):\nМастер Времени может увеличить время встречи, увеличивается время по мере выполнения заданий. Но когда он умрет, время встречи будет сброшено по умолчанию.",""
 "NekomataInfoLong","(Crewmates)\nWhen he is hanged，he takes one random person with him. ","[クルー陣営]\n自身が吊られた際、ランダムな1人を道連れにする。","(船员阵营)当他被绞死的时候，他会随机带走一个人。",,
+"HunterInfoLong","(Crewmates)\nCan be killed against anyone. The number of kills in parentheses () are possible. It is only a crewmates，so think about the timing. No task.","[クルー陣営]\n誰に向かってでもキルできる。()内回数キル可能。あくまでクルー陣営なのでタイミングは考えよう。タスクはもっていない。","(船员阵营)\n可以被任何人杀死。括号()中的击杀数量是可能的。这只是一个船员，所以考虑一下时机。没有任务。",,
+"SillySheriffInfoLong","(Crewmates)\nIt is almost the same as a normal sheriff, but sometimes it does not recognize the camp correctly.","[クルー陣営]\n普通のシェリフとほとんど変わりないが、正しく陣営を認識できない時がある。(人外に向かって自爆・クルーをキルする時がある)","(船员阵营)\n它与普通的警长几乎一样，但有时它不能正确识别阵营。"
 
 "# ニュートラル役職"
 "ArsonistInfoLong","(Neutrals):\nWhen you use the kill button, you douse your target in oil.\nAfter dousing all living players, you set everything ablaze and win by venting.","(ニュートラル):\nキルボタンを使おうとすると、ターゲットに油を塗れる。\nすべてのクルーに油を塗ったら船を燃やして勝利する。","(独立阵营):\n纵火犯可以通过对玩家点击击杀按钮并在跟随其数秒来完成涂油行为。\n当所有存活玩家都被纵火犯涂油后，纵火犯可以通过跳通风管来点火，并单独获得胜利。","(中立):\n當縱火犯嘗試使用殺人鍵,它將對他身邊最近的一個人澆上油,\n當他對所有玩家澆上油之後,縱火縱火犯點火即勝利。","(Нейтрал):\nПоджигатель может обливать игроков, нажав на кнопку 'Убить' и находясь рядом с игроком в течение нескольких секунд. \nПосле того как он обольёт всех живых игроков Поджигатель сможет запрыгнуть в вентиляцию, чтобы поджечь всех игроков, что приводит к победе Поджигателя.","(Neutros):\nAo apertar o botão de matar, você encharca o seu inimigo em óleo.\nApós ter encharcado todos os jogadores vivos, você coloca tudo em chamas e ganha entrando na ventilação."
@@ -403,6 +418,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "SheriffCanKillNeutrals","Can Kill Neutrals","ニュートラルをキルできる","警长可以执法独立阵营","警長可以槍死中立","Может убить Нейтралов","Pode Matar Neutros"
 "SheriffCanKillAll","<color=#00fefe>All ON</color>","<color=#00fefe>全てオン</color>","<color=#00fefe>全开</color>","<color=#00fefe>全開</color>","<color=#00fefe>Все ВКЛ</color>","<color=#00fefe>Todos Ligados</color>"
 "SheriffCanKillSeparately","Individual Settings","個別に設定","个别设定","個別設定","Выбрать кого","Configuração Individual"
+"SheriffIsInfoPoor","Unable to Use Devices such as Admin,Camera,etc.",アドミン・カメラ等の機器が使用できない",
+"SheriffIsClumsy","Can Not Fix Lights And Fix Comms","停電・通信妨害が直せない",
 "In%team%","(Team %team%)","(%team%陣営)","(%team%阵营)","(%team%陣營)","(Команда %team%)","(Time %team%)"
 "SheriffMisfireKillsTarget","Misfire Kills Target","誤爆時、ターゲットも死ぬ","警长误杀好人会同时击杀目标","警長誤殺好人會同時擊殺目標","Шериф убивает цель вместе с собой","Pode Matar Alvo Incorreto"
 "SheriffShotLimit","Ammo","キル可能回数","最大执法次数","最大子彈數量","Количество выстрелов","Balas"
@@ -464,6 +481,13 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "AntiAdminerCanCheckCamera","Can check camera","カメラの人も検知出来る","可以检查摄像头",,
 "RevengeNeutral","Can Revenge Neutrals","道連れ能力持ちがニュートラル役職を道連れ出来る","可以接受同伴为中立",,
 "RevengeMadByImpostor","Can Revenge Madmates By Impostor Team","道連れ能力持ちインポスター陣営がマッド系役職を道連れ出来る",,,
+"CursedWolfGuardSpellTimes","Guard and Spell Times","キルを防いで呪殺する回数","守护和下咒时间",
+"GreedierDefaultKillCooldown","Kill Cooldown After the Meeting","会議明けのキルクール",
+"GreedierOddKillCooldown","Odd Kill cooldown","キル奇数回目のキルクール","奇数击杀冷却",
+"GreedierEvenKillCooldown","Even Kill cooldown","キル偶数回目のキルクール","偶数击杀冷却",
+"AmbitionerKillCoolDecreaseRate","Killcool Decrease rate","キルクール減少率","击杀冷却降低率",
+"SillySheriffProbability","Probability of not correctly recognizing and killing","正しく認識してキルできない確率","不能正确识别和击杀的概率",
+"HunterKnowTargetIsImpostor","Can show if the kill target is not Crewmate","キルした時、敵陣営かどうか分かる","可以显示杀死的目标是不是船员"
 
 "## かくれんぼ設定"
 "HideAndSeekOptions","Hide and Seek Settings","かくれんぼの設定","躲猫猫设置","躲貓貓設定","Настройки Пряток","Configurações do Esconde-Esconde"

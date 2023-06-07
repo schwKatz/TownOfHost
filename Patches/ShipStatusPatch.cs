@@ -5,6 +5,7 @@ using HarmonyLib;
 using UnityEngine;
 
 using TownOfHost.Roles.Core;
+using TownOfHost.Roles.Crewmate;
 
 namespace TownOfHost
 {
@@ -117,6 +118,10 @@ namespace TownOfHost
         }
         public static bool OnSabotage(PlayerControl player, SystemTypes systemType, byte amount)
         {
+            if (/*player.Is(CustomRoles.Clumsy) ||*/
+                (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool()) ||
+                (player.Is(CustomRoles.SillySheriff) && SillySheriff.IsClumsy.GetBool())) return false;
+
             if (player.Is(CustomRoleTypes.Madmate))
             {
                 if (systemType == SystemTypes.Comms)

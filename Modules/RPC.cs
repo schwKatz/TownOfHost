@@ -22,6 +22,8 @@ namespace TownOfHost
         SetBountyTarget,
         WitchSync,
         SetSheriffShotLimit,
+        SetSSheriffShotLimit,
+        SetHunterShotLimit,
         SetDousedPlayer,
         SetNameColorData,
         SniperSync,
@@ -32,6 +34,7 @@ namespace TownOfHost
         SetRealKiller,
         SyncPuppet,
         SetOppoKillerShotLimit,
+        SetCursedWolfSpellCount,
     }
     public enum Sounds
     {
