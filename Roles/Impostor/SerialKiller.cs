@@ -3,6 +3,7 @@ using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Neutral;
 using static TownOfHostY.Translator;
 
 namespace TownOfHostY.Roles.Impostor
@@ -114,6 +115,10 @@ namespace TownOfHostY.Roles.Impostor
                 if (HasKilled())
                     SuicideTimer = 0f;
             }
+        }
+        public void OnSchrodingerCatKill(SchrodingerCat schrodingerCat)
+        {
+            SuicideTimer = null;
         }
     }
 }

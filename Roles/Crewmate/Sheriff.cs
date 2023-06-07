@@ -10,7 +10,7 @@ using TownOfHostY.Roles.Neutral;
 using static TownOfHostY.Translator;
 
 namespace TownOfHostY.Roles.Crewmate;
-public sealed class Sheriff : RoleBase, IKiller
+public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -60,8 +60,11 @@ public sealed class Sheriff : RoleBase, IKiller
     public float CurrentKillCooldown = 30;
     public static readonly string[] KillOption =
     {
-            "SheriffCanKillAll", "SheriffCanKillSeparately"
-        };
+        "SheriffCanKillAll", "SheriffCanKillSeparately"
+    };
+
+    public SchrodingerCat.TeamType SchrodingerCatChangeTo => SchrodingerCat.TeamType.Crew;
+
     private static void SetupOptionItem()
     {
         KillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(0f, 180f, 2.5f), 30f, false)
