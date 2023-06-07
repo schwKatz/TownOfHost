@@ -438,7 +438,6 @@ public enum CustomRoles
     MadBrackOuter,
     MadNimrod,
     SKMadmate,
-    MSchrodingerCat,//インポスター陣営のシュレディンガーの猫
     //Crewmate(Vanilla)
     Engineer,
     GuardianAngel,
@@ -478,24 +477,19 @@ public enum CustomRoles
     Psychic,
     Nimrod,
     Detector,
-    CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral
     Arsonist,
     Egoist,
-    EgoSchrodingerCat,//エゴイスト陣営のシュレディンガーの猫
     Jester,
     Opportunist,
-    OSchrodingerCat,
-    SchrodingerCat,//無所属のシュレディンガーの猫
+    SchrodingerCat,
     Terrorist,
     Executioner,
     Jackal,
-    JSchrodingerCat,//ジャッカル陣営のシュレディンガーの猫
     JClient,
     AntiComplete,
     Workaholic,
     DarkHide,
-    DSchrodingerCat,//ダークハイド陣営のシュレディンガーの猫
     LoveCutter,
     PlatonicLover,
     Lawyer,

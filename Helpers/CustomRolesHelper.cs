@@ -22,10 +22,7 @@ namespace TownOfHostY
             var roleInfo = role.GetRoleInfo();
             if (roleInfo != null)
                 return roleInfo.CustomRoleType == CustomRoleTypes.Madmate;
-            return
-                role is
-                CustomRoles.SKMadmate or
-                CustomRoles.MSchrodingerCat;
+            return role == CustomRoles.SKMadmate;
         }
         public static bool IsImpostorTeam(this CustomRoles role) => role.IsImpostor() || role.IsMadmate();
         public static bool IsNeutral(this CustomRoles role)
@@ -33,15 +30,7 @@ namespace TownOfHostY
             var roleInfo = role.GetRoleInfo();
             if (roleInfo != null)
                 return roleInfo.CustomRoleType == CustomRoleTypes.Neutral;
-            return
-                role is
-                CustomRoles.SchrodingerCat or
-                CustomRoles.EgoSchrodingerCat or
-                CustomRoles.JSchrodingerCat or
-                CustomRoles.DSchrodingerCat or
-                CustomRoles.OSchrodingerCat or
-                CustomRoles.HASTroll or
-                CustomRoles.HASFox;
+            return role is CustomRoles.HASTroll or CustomRoles.HASFox;
         }
         public static bool IsCrewmate(this CustomRoles role) => role.GetRoleInfo()?.CustomRoleType == CustomRoleTypes.Crewmate || (!role.IsImpostorTeam() && !role.IsNeutral());
         public static bool IsVanilla(this CustomRoles role)
