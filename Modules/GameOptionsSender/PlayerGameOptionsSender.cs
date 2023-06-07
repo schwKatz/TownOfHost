@@ -103,21 +103,6 @@ namespace TownOfHostY.Modules
 
             var roleClass = player.GetRoleClass();
             roleClass?.ApplyGameOptions(opt);
-            switch (role)
-            {
-                case CustomRoles.EgoSchrodingerCat:
-                    opt.SetVision(true);
-                    break;
-                case CustomRoles.JSchrodingerCat:
-                    ((Jackal)roleClass).ApplyGameOptions(opt);
-                    break;
-                case CustomRoles.OSchrodingerCat:
-                    ((Opportunist)roleClass).ApplyGameOptions(opt);
-                    break;
-                case CustomRoles.DSchrodingerCat:
-                    ((DarkHide)roleClass).ApplyGameOptions(opt);
-                    break;
-            }
             foreach (var subRole in player.GetCustomSubRoles())
             {
                 switch (subRole)
