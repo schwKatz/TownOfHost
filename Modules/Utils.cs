@@ -217,10 +217,10 @@ namespace TownOfHostY
             var (roleColor, roleText) = GetTrueRoleNameData(seen.PlayerId, enabled);
 
             //seen側による変更
-            seen.GetRoleClass()?.OverrideRoleNameAsSeen(seer, isMeeting, ref enabled, ref roleColor, ref roleText);
+            seen.GetRoleClass()?.OverrideDisplayRoleNameAsSeen(seer, isMeeting, ref enabled, ref roleColor, ref roleText);
 
             //seer側による変更
-            seer.GetRoleClass()?.OverrideRoleNameAsSeer(seen, isMeeting, ref enabled, ref roleColor, ref roleText);
+            seer.GetRoleClass()?.OverrideDisplayRoleNameAsSeer(seen, isMeeting, ref enabled, ref roleColor, ref roleText);
 
             return enabled ? ColorString(roleColor, roleText) : "";
         }
@@ -353,7 +353,9 @@ namespace TownOfHostY
         private static (Color color, string text) GetTrueRoleNameData(byte playerId, bool showSubRoleMarks = true, bool TOHSubRoleAll = false)
         {
             var state = PlayerState.GetByPlayerId(playerId);
-            return GetRoleNameData(state.MainRole, state.SubRoles, showSubRoleMarks, playerId, TOHSubRoleAll);
+            var (color, text) = GetRoleNameData(state.MainRole, state.SubRoles, showSubRoleMarks, playerId, TOHSubRoleAll);
+            CustomRoleManager.GetByPlayerId(playerId)?.OverrideTrueRoleName(ref color, ref text);
+            return (color, text);
         }
         /// <summary>
         /// 対象のRoleNameを全て正確に表示
@@ -496,7 +498,7 @@ namespace TownOfHostY
                         hasTasks = false;
                         break;
                     default:
-                        if (role.IsImpostor() || role.IsKilledSchrodingerCat()) hasTasks = false;
+                        if (role.IsImpostor()) hasTasks = false;
                         break;
                 }
 

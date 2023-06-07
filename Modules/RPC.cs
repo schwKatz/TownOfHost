@@ -33,6 +33,9 @@ namespace TownOfHostY
         SetEvilTrackerTarget,
         SetRealKiller,
         SyncPuppet,
+        MareSync,
+        SetSchrodingerCatTeam,
+
         SetOppoKillerShotLimit,
         SetCursedWolfSpellCount,
         SetNBakryPoison,
@@ -40,7 +43,6 @@ namespace TownOfHostY
         SetEvilDiviner,
         SetLawyerTarget,
         SetRemoveLawyerTarget,
-        MareSync,
     }
     public enum Sounds
     {

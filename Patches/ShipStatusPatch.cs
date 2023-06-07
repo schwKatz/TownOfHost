@@ -6,6 +6,7 @@ using UnityEngine;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY
 {
