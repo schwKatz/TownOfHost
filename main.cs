@@ -49,7 +49,7 @@ namespace TownOfHost
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.emptybottle.townofhost";
-        public const string PluginVersion = "500.9.3";
+        public const string PluginVersion = "500.9.4";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;
@@ -286,6 +286,9 @@ namespace TownOfHost
         Arsonist = CustomRoles.Arsonist,
         Egoist = CustomRoles.Egoist,
         Jackal = CustomRoles.Jackal,
+
+        NBakery = CustomRoles.NBakery,
+
         HASTroll = CustomRoles.HASTroll,
     }
     public enum AdditionalWinners

@@ -404,6 +404,8 @@ public enum CustomRoles
     Doctor,
     Seer,
     TimeManager,
+    Bakery,
+    NBakery,
     SillySheriff,
     Hunter,
     Nekomata,
