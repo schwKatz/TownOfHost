@@ -512,6 +512,25 @@ namespace TownOfHost
             return ColorString(TextColor, $"({Completed}/{state.taskState.AllTasksCount})");
 
         }
+
+        public static (int, int) GetTasksState() //Y-TM
+        {
+            if (!CustomRoles.Workhorse.IsEnable())
+                return (GameData.Instance.CompletedTasks, GameData.Instance.TotalTasks);
+
+            var completed = 0;
+            var all = 0;
+            foreach (var pc in Main.AllPlayerControls)
+            {
+                var taskState = PlayerState.GetByPlayerId(pc.PlayerId).taskState;
+                if (taskState.hasTasks && HasTasks(pc.Data))
+                {
+                    completed += taskState.CompletedTasksCount;
+                    all += taskState.AllTasksCount;
+                }
+            }
+            return (completed, all);
+        }
         public static void ShowActiveSettingsHelp(byte PlayerId = byte.MaxValue)
         {
             SendMessage(GetString("CurrentActiveSettingsHelp") + ":", PlayerId);

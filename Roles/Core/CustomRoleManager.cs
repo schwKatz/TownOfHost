@@ -406,6 +406,7 @@ public enum CustomRoles
     Seer,
     TimeManager,
     Bakery,
+    TaskManager,
     SillySheriff,
     Hunter,
     Nekomata,
