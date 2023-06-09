@@ -410,6 +410,8 @@ public enum CustomRoles
     SillySheriff,
     Hunter,
     Nekomata,
+    Chairman,
+    Express,
     CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral
     Arsonist,
