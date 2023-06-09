@@ -202,6 +202,7 @@ namespace TownOfHostY
         public static OptionItem DisableAirshipViewingDeckLightsPanel;
         public static OptionItem DisableAirshipGapRoomLightsPanel;
         public static OptionItem DisableAirshipCargoLightsPanel;
+        public static OptionItem BlockDisturbancesToSwitches;
 
         // マップ改造
         public static OptionItem AirShipVariableElectrical;
@@ -565,7 +566,7 @@ namespace TownOfHostY
             DisableAirshipViewingDeckLightsPanel = BooleanOptionItem.Create(100211, "DisableAirshipViewingDeckLightsPanel", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
             DisableAirshipGapRoomLightsPanel = BooleanOptionItem.Create(100212, "DisableAirshipGapRoomLightsPanel", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
             DisableAirshipCargoLightsPanel = BooleanOptionItem.Create(100213, "DisableAirshipCargoLightsPanel", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
-
+            BlockDisturbancesToSwitches = BooleanOptionItem.Create(100214, "BlockDisturbancesToSwitches", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
             // コミュサボカモフラージュ
             CommsCamouflage = BooleanOptionItem.Create(100220, "CommsCamouflage", false, TabGroup.MainSettings, false)
                 .SetColor(Color.magenta)
