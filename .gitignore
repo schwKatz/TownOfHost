@@ -3,6 +3,3 @@ obj/
 bin/
 FodyWeavers.xsd
 /.vs/
-/.github/
-/.vscode/
-/Properties/
