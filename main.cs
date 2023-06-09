@@ -269,6 +269,7 @@ namespace TownOfHost
         Execution,
         Disconnected,
         Fall,
+        Poisoning,
         etc = -1
     }
     //WinData
@@ -287,7 +288,7 @@ namespace TownOfHost
         Egoist = CustomRoles.Egoist,
         Jackal = CustomRoles.Jackal,
 
-        NBakery = CustomRoles.NBakery,
+        NBakery = CustomRoles.Bakery,
 
         HASTroll = CustomRoles.HASTroll,
     }
@@ -295,6 +296,7 @@ namespace TownOfHost
     {
         None = -1,
         Opportunist = CustomRoles.Opportunist,
+        OSchrodingerCat = CustomRoles.OSchrodingerCat,
         SchrodingerCat = CustomRoles.SchrodingerCat,
         Executioner = CustomRoles.Executioner,
         Lovers = CustomRoles.Lovers,

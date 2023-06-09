@@ -59,6 +59,8 @@
 "Dictator","Dictator","ディクテーター","独裁者","獨裁主義者","Диктатор","Ditador"
 "Seer","Seer","シーア","灵媒","靈媒","Провидец","Vidente"
 "TimeManager","TimeManager","タイムマネージャー","时间管理者","時間大師","Мастер Времени",""
+"Bakery","Bakery","パン屋","面包师",,
+"NBakery","(Neu)Awakening Bakery","(第三)覚醒パン屋","(中立)觉醒面包师",,
 "Nekomata","Nekomata","猫又","双尾怪猫",,
 "Hunter","Hunter","ハンター","猎人",,
 "SillySheriff","Silly Sheriff","バカシェリフ","憨批警长"
@@ -148,6 +150,8 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "DictatorInfo","Decide who to eject","独裁政治をしよう","让我统治世界，拥有无上的权利","讓所有人臣服於你","Повесьте своего врага на страх и риск","Escolha quem será exilado"
 "SeerInfo","You see the moment someone dies","他人の死んだ瞬間がわかる","你能感知死亡","你擁有陰陽眼","Вы видите когда умирают игроки","Veja o momento em que alguém morre"
 "TimeManagerInfo","Do the tasks and extend meeting time","タスクをして会議時間を延ばそう","完成任务并延长会议持续时间","完成你的任務來延長會議時間","Выполняйте задания чтобы увеличить время встречи",""
+"BakeryInfo","Let's bring bread to everyone","みんなにパンを届けよう","让我们给所有人面包吧",,
+"NBakeryInfo","Let's bring POISONED bread to everyone","みんなに【毒入り】パンを届けよう",,
 "NekomataInfo","I'll be exiled with someone else","人外まで道連れしたい","我将和别人一起被放逐",,
 "HunterInfo","Let's kill the suspicious person","怪しい人を斬ろう","让我们杀死可疑的人",,
 "SillySheriffInfo","Can you properly judge a Impostor?","ちゃんと人外判断できるかな","你能正确地判断内鬼吗?"
@@ -222,6 +226,8 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "DictatorInfoLong","(Crewmates):\nWhen you vote someone, the meeting will end on the spot and the player you voted will be ejected.\nThe moment you vote someone out, you will also die.\nWhen you vote for someone in a meeting, they forcibly break that meeting and exile the player they vote for.\nAfter exercising the force, the Dictators die just after meeting.","(クルー陣営):\n会議中に誰かに投票をすると、会議を強制終了させて投票先を吊る事ができる。\n投票したタイミングでディクテーターは死ぬ。","(船员阵营):\n当独裁者在会议阶段投票给玩家后，会议会被强制结束并放逐其投票对象。\n该技能发动后独裁者将会死亡。","(船員):\n如果獨裁主義者在會議上投票給某位玩家,\n獨裁主義者將強制結束會議並無視場上票數將獨裁主義者投的那個人投出\n但是獨裁主義者將死於他投票的瞬間。","(Член Экипажа):\nЕсли Диктатор проголосует за любого игрока во время собрания, он сможет принудительно завершить собрание и кикнуть игрока за которого он отдал голос \nТак же Диктатор умрёт после собрания когда он отдаст голос.","(Tripulantes): \nQuando votar em alguém, durante uma reunião, a reunião será encerrada e a pessoa em que você votou, será exilada. \nAo exilar alguém, você morre-rá."
 "SeerInfoLong","(Crewmates):\nWhenever someone dies, you will see a ""kill flash"".","(クルー陣営):\nプレイヤーが死亡するごとに、シーアはキルフラッシュを見ることができる。","(船员阵营):\n每当玩家死亡时，灵媒将会看到击杀闪烁。","(船員):當有玩家死亡時,靈媒將看到閃光","(Член Экипажа):\nПровидец видит ''Вспышку Убийства'' каждый раз, когда игроки умирают.","(Tripulantes): \nQuando alguém morre, você vê um ""clarão de abate"" (a sua tela piscará brevemente)."
 "TimeManagerInfoLong","(Crewmates):The more tasks you do, the longer your meeting will last. When you die, the meeting time will be restored.","(クルー陣営):\nタスクを終わらせるごとに会議時間が延びる。死亡すると会議時間は元に戻る。","(船员阵营):\n你做的任务越多，会议时间就会越长。在你死后，会议时间会复原。","","(Член Экипажа):\nМастер Времени может увеличить время встречи, увеличивается время по мере выполнения заданий. Но когда он умрет, время встречи будет сброшено по умолчанию.",""
+"BakeryInfoLong","(Crewmates)\nWhile the baker is alive，comments about the baker are played at the beginning of the meeting.\nBakery changes to Neutral at a low probability (setting) during the course of the match.","[クルー陣営]\n生存中、会議はじめにパン屋についてのコメントが流れる。レアコメントあり。\n低確率(設定)で試合途中、第三陣営に変化する。","(船员阵营)\n当面包师还活着时，关于面包师的评论会在会议开始时播放。",,
+"NBakeryInfoLong","(Neutrals)\nHe awakened and became Neutral.\nAwakened to kill people, he developed a bread that causes death when eaten. While the awakened baker is alive, he offers the poisoned bread to a random player every meeting. That player dies at the end of the meeting unless the baker is exiled that turn.\nThe awakened baker reduces the number of players by distributing bread, and when the victory condition based on the number of Imposter or Cremate is met, he wins alone if he is still alive.","[ニュートラル]\n覚醒して第三陣営になった。\n人殺しに目覚め、食べると死亡するパンを開発した。覚醒パン屋が生存中、会議を挟む毎にランダムなプレイヤーに毒入りパンを提供する。そのプレイヤーはパン屋をそのターンに追放しない限り、会議終了時に死亡する。\n覚醒パン屋はパン配布で人数を減らしていき、インポスターorクルーの人数での勝利条件が満たされた時、生存していると単独勝利する。"
 "NekomataInfoLong","(Crewmates)\nWhen he is hanged，he takes one random person with him. ","[クルー陣営]\n自身が吊られた際、ランダムな1人を道連れにする。","(船员阵营)当他被绞死的时候，他会随机带走一个人。",,
 "HunterInfoLong","(Crewmates)\nCan be killed against anyone. The number of kills in parentheses () are possible. It is only a crewmates，so think about the timing. No task.","[クルー陣営]\n誰に向かってでもキルできる。()内回数キル可能。あくまでクルー陣営なのでタイミングは考えよう。タスクはもっていない。","(船员阵营)\n可以被任何人杀死。括号()中的击杀数量是可能的。这只是一个船员，所以考虑一下时机。没有任务。",,
 "SillySheriffInfoLong","(Crewmates)\nIt is almost the same as a normal sheriff, but sometimes it does not recognize the camp correctly.","[クルー陣営]\n普通のシェリフとほとんど変わりないが、正しく陣営を認識できない時がある。(人外に向かって自爆・クルーをキルする時がある)","(船员阵营)\n它与普通的警长几乎一样，但有时它不能正确识别阵营。"
@@ -488,6 +494,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "AmbitionerKillCoolDecreaseRate","Killcool Decrease rate","キルクール減少率","击杀冷却降低率",
 "SillySheriffProbability","Probability of not correctly recognizing and killing","正しく認識してキルできない確率","不能正确识别和击杀的概率",
 "HunterKnowTargetIsImpostor","Can show if the kill target is not Crewmate","キルした時、敵陣営かどうか分かる","可以显示杀死的目标是不是船员"
+"BakeryChangeChances","Chance that Bakery will change to Neutral","ニュートラルに変化する確率","面包师变为中立的可能性"
 
 "## かくれんぼ設定"
 "HideAndSeekOptions","Hide and Seek Settings","かくれんぼの設定","躲猫猫设置","躲貓貓設定","Настройки Пряток","Configurações do Esconde-Esconde"
@@ -571,6 +578,39 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "Message.isReport","The meeting was started by the discovery of a dead body.\nReported dead body：{0}","死体発見により会議が開かれました。\n通報された死体：{0}","会议以发现一具尸体开始。\n报告的尸体：{0}"
 "Message.isButton","The meeting was started by an emergency button.","緊急ボタンにより会議が開かれました。","会议以使用紧急按钮开始."
 "Message.RevengeText","{0} is exiled, and another is died by revenge. \nmurdered：{1}","{0}が追放され、道連れが発生しました。\n{1}が死亡しています。","{0} 被投出，另一人因复仇而死. \n凶杀：{1}"
+
+BakeryChange,"\nA Bakery awakens and develops a poisoned bread.\nAfter the next turn, if the awakened baker is not expelled, the person dealt to will be poisoned and die.\nㅤ","\nパン屋が覚醒し、毒入りパンを開発した。\n次ターン以降、覚醒パン屋を追放しないと\nㅤ配られた人は毒が回って死亡してしまう。\nㅤ","\n面包师醒来并做出了有毒的面包.\n下一局后，如果被唤醒的面包师没有被驱逐，被喂食的人的人将中毒并死亡\nㅤ"
+BakeryChangeNow,"\nA Bakery awakens and delivers a poisoned bread.\nif the awakened baker is not expelled, the person dealt to will be poisoned and die.\nㅤ","\nパン屋が覚醒し、毒入りパンを配達した。\n覚醒パン屋を追放しないと\nㅤ配られた人は毒が回って死亡してしまう。\nㅤ","\n面包店醒来后送来了一个中毒的面包。\n如果醒了的面包店没有被驱逐，被处理的人就会中毒而死。\nㅤ"
+BakeryChangeNONE,"\nDespite his awakening, the baker failed to make the poisoned bread this turn.\nㅤ","\nパン屋は覚醒したにも関わらず、このターンの\nㅤ毒入りパンを焼くのに失敗した。残念。\nㅤ","\n尽管面包师醒了过来，但这一次他还是没能做出中毒的面包.\nㅤ"
+PanAliveMessageTitle,【The bakery is alive】,【パン屋生存中】,【面包师仍然存活】,,
+ONPanAliveMessageTitle,【The bakery is alive】,【パン屋生存中】,【面包师仍然存活】,,
+#PanAlive1,\nBread was served by the bakery.\nㅤ,\nパン屋はクロワッサンが大好物らしい。\nㅤ,\n面包师好像很喜欢牛角面包\n,,
+#PanAlive2,\nBread was served by the bakery.\nㅤ,\nパン屋がInstagramで広告を出し始めた。\nㅤ,\n面包店开始在Instagram上发布广告\n,,
+#PanAlive3,\nBread was served by the bakery.\nㅤ,\nパン屋がパン焦がした。くさい。\nㅤ,\n面包师把面包烤焦了，好臭。\n,,
+#PanAlive4,\nBread was served by the bakery.\nㅤ,\nパン屋は大盛況。30分待ちの列ができた。\nㅤ,\n面包店盛况空前。排了半个小时队\n,,
+#PanAlive5,\nBread was served by the bakery.\nㅤ,\nパン屋、ついに海外進出。\nㅤ,\n面包店终于进军海外\n,,
+#PanAlive6,\nBread was served by the bakery.\nㅤ,\nパン屋が小麦粉ぶちまけた。まっしろけ。\nㅤ,\n面包师把面粉撒了。是白色的\n,,
+#PanAlive7,\nBread was served by the bakery.\nㅤ,\nﾊﾟｰﾘｰﾋﾟｰﾎﾟｰﾊﾟﾝﾔｲｪｲﾊｯﾋﾟｰﾊﾟﾗﾀﾞｲｽ!!!\nㅤ,\n宝贝儿宝贝儿宝贝儿（以下省略500字）！！！\n,,
+#PanAlive8,\nBread was served by the bakery.\nㅤ,\nパン屋が米屋を招待。\n炊き立てご飯が振る舞われました。\nㅤ,\n面包店招待米店。\n刚煮好的饭被招待了\n,,
+#PanAlive9,\nBread was served by the bakery.\nㅤ,\nパン屋はパン焼き窯を暖炉代わりにお休み。\nㅤ,\n面包店把面包烤炉代替壁炉来休息\n,,
+#PanAlive10,\nBread was served by the bakery.\nㅤ,\nパン屋はパン生地を練るのに夢中に。\nㅤ,\n面包师热衷于揉面团。\nㅤ,,
+#PanAlive11,\nBread was served by the bakery.\nㅤ,\nパン屋が二号店を開店。売り上げ好調。\nㅤ,\n面包店开了二号店。销售情况良好\n,,
+#PanAlive12,\nBread was served by the bakery.\nㅤ,\nパン屋の人気下落。暇つぶしに筋トレ始めた。\nㅤ,\n面包店的人气下降。面包师为了打发时间开始锻炼肌肉\n,,
+#PanAlive13,\nBread was served by the bakery.\nㅤ,\nパン屋のお手製チャーハンで人気急上昇。\nㅤ,\n面包店的手工炒饭人气急剧上升\n,,
+PanAlive,\nBread was served by the bakery.\nㅤ,\nパン屋によってパンが振る舞われました。\nㅤ,\n面包店提供了面包。\nㅤ,,
+PanAlive1,\nBread was served by the bakery.\nㅤ,\nパン屋は今日もみんなの人気者。\nㅤ,\n面包店今天也很受欢迎\n,,
+PanAlive2,\nBread was served by the bakery.\nㅤ,\nパン屋がパン生地をこねこねしています。\nㅤ,\n面包师正在揉面团\n,,
+PanAlive3,\nBread was served by the bakery.\nㅤ,\nパン屋、タイマーをかけ忘れて焦がした。\nㅤ,\n面包师傅忘了开计时器，面包烧焦了\n,,
+PanAlive4,\nBread was served by the bakery.\nㅤ,\nパン屋は大盛況。行列が隣の店まで続く。\nㅤ,\n面包店盛况空前。队伍一直排到隔壁的商店\n,,
+PanAlive5,\nBread was served by the bakery.\nㅤ,\nパン屋がチェーン展開。全国10店舗達成。\nㅤ,\n面包店开始建连锁店。全国10家店铺达成\n,,
+PanAlive6,\nBread was served by the bakery.\nㅤ,\nパン屋が小麦粉ぶちまけた。まっしろけ。\nㅤ,\n面包师把面粉撒了。是白色的\n,,
+PanAlive7,\nBread was served by the bakery.\nㅤ,\nｳﾙﾄﾗｽｰﾊﾟｰﾊﾟﾘﾋﾟﾊﾟﾝﾔｷｮｳﾓﾊｯﾋﾟｰﾊﾟﾗﾀﾞｲｽ!!!\nㅤ,\n宝贝儿宝贝儿宝贝儿（以下省略500字）！！！\n,,
+PanAlive8,\nBread was served by the bakery.\nㅤ,\nパン屋が米屋を招待。\n炊き立てご飯が振る舞われました。\nㅤ,\n面包店招待米店。\n刚煮好的饭被招待了\n,,
+PanAlive9,\nBread was served by the bakery.\nㅤ,\nパン屋がYouTubeを始め、知名度向上を狙う。\nㅤ,\n面包店把面包烤炉代替壁炉来休息\n,,
+PanAlive10,\nBread was served by the bakery.\nㅤ,\nパン屋はカレーパンのカレー作りに没頭。\nㅤ,\n面包师埋头做咖喱面包\n,,
+PanAlive11,\nBread was served by the bakery.\nㅤ,\nパン屋は新商品の開発に熱が入っている。\nㅤ,\n面包店热衷于开发新商品\n,,
+PanAlive12,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に渡す為に研究中。\nㅤ,\n面包店以YouTube为开始，以提高知名度为目标\n,,
+PanAlive13,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けての試作中。\nㅤ,\n面包店的手工炒饭人气急剧上升\n,,
 
 "## 警告"
 "Warning.EgoistCannotWin","Egoist cannot win","エゴイストが勝利できません","野心家无法获胜","利己主義者無法獲勝","Эгоист не может победить!","Egoísta não pode vencer"

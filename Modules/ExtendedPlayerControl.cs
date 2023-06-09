@@ -11,6 +11,7 @@ using TownOfHost.Modules;
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Core.Interfaces;
 using TownOfHost.Roles.Impostor;
+using TownOfHost.Roles.Crewmate;
 using TownOfHost.Roles.Neutral;
 using TownOfHost.Roles.AddOns.Impostor;
 using static TownOfHost.Translator;
@@ -549,6 +550,10 @@ namespace TownOfHost
                     if (InfoLong) goto default;
                     text = CustomRoles.Madmate.ToString();
                     Prefix = player.GetPlayerTaskState().IsTaskFinished ? "" : "Before";
+                    goto default;
+                case CustomRoles.Bakery:
+                    if (Bakery.IsNeutral(player))
+                        text = "NBakery";
                     goto default;
                 default:
                     Info = role.IsVanilla() ? "Blurb" : "Info";

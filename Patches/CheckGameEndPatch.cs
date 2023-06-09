@@ -6,6 +6,7 @@ using Hazel;
 
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Core.Interfaces;
+using TownOfHost.Roles.Crewmate;
 using TownOfHost.Roles.Neutral;
 
 namespace TownOfHost
@@ -39,9 +40,14 @@ namespace TownOfHost
                 switch (CustomWinnerHolder.WinnerTeam)
                 {
                     case CustomWinner.Crewmate:
-                        Main.AllPlayerControls
-                            .Where(pc => pc.Is(CustomRoleTypes.Crewmate) && !pc.Is(CustomRoles.Lovers))
-                            .Do(pc => CustomWinnerHolder.WinnerIds.Add(pc.PlayerId));
+                        foreach (var pc in PlayerControl.AllPlayerControls)
+                        {
+                            if(pc.Is(CustomRoleTypes.Crewmate) && !pc.Is(CustomRoles.Lovers)
+                                && !(pc.Is(CustomRoles.Bakery) && Bakery.IsNeutral(pc)))
+                            {
+                                CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                            }
+                        }
                         break;
                     case CustomWinner.Impostor:
                         if (Egoist.CheckWin()) break;
@@ -61,6 +67,17 @@ namespace TownOfHost
                             .Where(p => p.Is(CustomRoles.Lovers) && p.IsAlive())
                             .Do(p => CustomWinnerHolder.WinnerIds.Add(p.PlayerId));
                     }
+                    foreach (var pc in PlayerControl.AllPlayerControls)
+                    {
+                        if (pc.Is(CustomRoles.Bakery) && Bakery.IsNeutral(pc) && pc.IsAlive()
+                            && ((CustomWinnerHolder.WinnerTeam == CustomWinner.Impostor && !reason.Equals(GameOverReason.ImpostorBySabotage)) || CustomWinnerHolder.WinnerTeam == CustomWinner.NBakery
+                            || (CustomWinnerHolder.WinnerTeam == CustomWinner.Crewmate && !reason.Equals(GameOverReason.HumansByTask))))
+                        {
+                            CustomWinnerHolder.ResetAndSetWinner(CustomWinner.NBakery);
+                            CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                        }
+                    }
+
                     //追加勝利陣営
                     foreach (var pc in Main.AllPlayerControls)
                     {
@@ -75,6 +92,7 @@ namespace TownOfHost
                         if (pc.Is(CustomRoles.OSchrodingerCat) && pc.IsAlive())
                         {
                             CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.OSchrodingerCat);
                         }
 
                         if (pc.GetRoleClass() is IAdditionalWinner additionalWinner)

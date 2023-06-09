@@ -35,6 +35,7 @@ namespace TownOfHost
         SyncPuppet,
         SetOppoKillerShotLimit,
         SetCursedWolfSpellCount,
+        SetNBakryPoison,
     }
     public enum Sounds
     {

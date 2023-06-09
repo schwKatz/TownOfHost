@@ -20,6 +20,7 @@ using TownOfHost.Roles.AddOns.Common;
 using TownOfHost.Roles.AddOns.Impostor;
 using TownOfHost.Roles.AddOns.Crewmate;
 using static TownOfHost.Translator;
+using TownOfHost.Roles.Crewmate;
 
 namespace TownOfHost
 {
@@ -219,7 +220,7 @@ namespace TownOfHost
         /// <param name="mainRole">表示する役職</param>
         /// <param name="subRolesList">表示する属性のList</param>
         /// <returns>RoleNameを構築する色とテキスト(Color, string)</returns>
-        public static (Color color, string text) GetRoleNameData(CustomRoles mainRole, List<CustomRoles> subRolesList, bool showSubRoleMarks = true)
+        public static (Color color, string text) GetRoleNameData(CustomRoles mainRole, List<CustomRoles> subRolesList, bool showSubRoleMarks = true, byte PlayerId = 255)
         {
             string roleText = "";
             Color roleColor = Color.white;
@@ -231,6 +232,8 @@ namespace TownOfHost
 
                 if (mainRole == CustomRoles.Opportunist && Opportunist.CanKill)
                     roleText += GetString("killer");
+                if (mainRole == CustomRoles.Bakery && Bakery.IsNeutral(GetPlayerById(PlayerId)))
+                    roleText = GetString("NBakery");
             }
 
             if (subRolesList != null)
@@ -279,7 +282,7 @@ namespace TownOfHost
         private static (Color color, string text) GetTrueRoleNameData(byte playerId, bool showSubRoleMarks = true)
         {
             var state = PlayerState.GetByPlayerId(playerId);
-            return GetRoleNameData(state.MainRole, state.SubRoles, showSubRoleMarks);
+            return GetRoleNameData(state.MainRole, state.SubRoles, showSubRoleMarks, playerId);
         }
         /// <summary>
         /// 対象のRoleNameを全て正確に表示
@@ -327,8 +330,10 @@ namespace TownOfHost
             if (!GameStates.IsInGame) return null;
 
             var sb = new StringBuilder();
-            var role = player.GetCustomRole();
-            sb.Append(GetString(role.ToString())).Append(player.GetRoleInfo(true));
+            var roleString = player.GetCustomRole().ToString();
+            if (player.GetCustomRole() == CustomRoles.Bakery && Bakery.IsNeutral(player))
+                roleString = "NBakery";
+            sb.Append(GetString(roleString)).Append(player.GetRoleInfo(true));
 
             foreach (var subRole in player.GetCustomSubRoles())
             {
@@ -853,6 +858,7 @@ namespace TownOfHost
                     || seer.Is(CustomRoles.Arsonist)
                     || seer.Is(CustomRoles.Lovers)
                     || Witch.IsSpelled()
+                    || Bakery.IsPoisoned()
                     || seer.Is(CustomRoles.Executioner)
                     || seer.Is(CustomRoles.Doctor) //seerがドクター
                     || seer.Is(CustomRoles.Puppeteer)
