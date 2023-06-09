@@ -11,6 +11,7 @@ using TownOfHost.Modules;
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Core.Interfaces;
 using TownOfHost.Roles.Impostor;
+using TownOfHost.Roles.Madmate;
 using TownOfHost.Roles.Crewmate;
 using TownOfHost.Roles.Neutral;
 using TownOfHost.Roles.AddOns.Impostor;
@@ -406,7 +407,7 @@ namespace TownOfHost
                 CustomRoles.Sheriff => false,
                 CustomRoles.Egoist => true,
                 CustomRoles.Jackal => Jackal.CanVent,
-                CustomRoles.Opportunist => false,
+                CustomRoles.MadSheriff => MadSheriff.CanVent,
                 CustomRoles.Arsonist => Arsonist.IsDouseDone(pc),
                 _ => pc.Is(CustomRoleTypes.Impostor),
             };

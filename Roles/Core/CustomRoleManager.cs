@@ -383,6 +383,7 @@ public enum CustomRoles
     MadGuardian,
     Madmate,
     MadSnitch,
+    MadSheriff,
     SKMadmate,
     MSchrodingerCat,//インポスター陣営のシュレディンガーの猫
     //Crewmate(Vanilla)
@@ -422,6 +423,8 @@ public enum CustomRoles
     Jackal,
     JSchrodingerCat,//ジャッカル陣営のシュレディンガーの猫
     Workaholic,
+    PlatonicLover,
+    Totocalcio,
     //HideAndSeek
     HASFox,
     HASTroll,

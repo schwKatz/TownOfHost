@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.Linq;
 using Hazel;
 using UnityEngine;
 using AmongUs.GameOptions;
 
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
 
 namespace TownOfHost.Roles.Crewmate;
 public sealed class Hunter : RoleBase, IKiller
