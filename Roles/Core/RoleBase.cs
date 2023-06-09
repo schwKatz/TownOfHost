@@ -341,5 +341,7 @@ public abstract class RoleBase : IDisposable
         ImpostorVision,
         CanUseSabotage,
         CanCreateMadmate,
+        VentCooldown,
+        VentMaxTime,
     }
 }

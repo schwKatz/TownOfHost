@@ -289,6 +289,7 @@ namespace TownOfHost
         Jackal = CustomRoles.Jackal,
 
         NBakery = CustomRoles.Bakery,
+        Workaholic = CustomRoles.Workaholic,
 
         HASTroll = CustomRoles.HASTroll,
     }

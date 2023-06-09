@@ -21,6 +21,7 @@ using TownOfHost.Roles.AddOns.Impostor;
 using TownOfHost.Roles.AddOns.Crewmate;
 using static TownOfHost.Translator;
 using TownOfHost.Roles.Crewmate;
+using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHost
 {
@@ -202,8 +203,9 @@ namespace TownOfHost
             seen ??= seer;
             //デフォルト値
             bool enabled = seer == seen
-                        || seen.Is(CustomRoles.GM)
-                        || (Main.VisibleTasksCount && !seer.IsAlive() && Options.GhostCanSeeOtherRoles.GetBool());
+                || seen.Is(CustomRoles.GM)
+                || (seen.Is(CustomRoles.Workaholic) && Workaholic.Seen)
+                || (Main.VisibleTasksCount && !seer.IsAlive() && Options.GhostCanSeeOtherRoles.GetBool());
             var (roleColor, roleText) = GetTrueRoleNameData(seen.PlayerId);
 
             //seen側による変更
@@ -463,7 +465,8 @@ namespace TownOfHost
                 }
             }
             bool enabled = seer == seen
-                        || (Main.VisibleTasksCount && !seer.IsAlive() && Options.GhostCanSeeOtherTasks.GetBool());
+                        || (Main.VisibleTasksCount && !seer.IsAlive() && Options.GhostCanSeeOtherTasks.GetBool())
+                        || (seen.Is(CustomRoles.Workaholic) && Workaholic.Seen && Workaholic.TaskSeen);
             string text = GetProgressText(seen.PlayerId, comms);
 
             //seer側による変更
@@ -863,11 +866,12 @@ namespace TownOfHost
                     || seer.Is(CustomRoles.Doctor) //seerがドクター
                     || seer.Is(CustomRoles.Puppeteer)
                     || seer.IsNeutralKiller() //seerがキル出来るニュートラル
-                    || IsActive(SystemTypes.Electrical)
-                    || IsActive(SystemTypes.Comms)
+                    || (IsActive(SystemTypes.Electrical) && CustomRoles.Mare.IsEnable())    //メアーが入っていない時は通さない
+                    || (IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())   //カモフラオプションがない時は通さない
                     || NoCache
                     || ForceLoop
-                )
+                    || (CustomRoles.Workaholic.IsEnable() && Workaholic.Seen)
+                    )
                 {
                     foreach (var target in Main.AllPlayerControls)
                     {

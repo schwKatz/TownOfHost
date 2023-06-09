@@ -3,6 +3,7 @@ using Hazel;
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Crewmate;
 using TownOfHost.Roles.Impostor;
+using TownOfHost.Roles.Neutral;
 
 namespace TownOfHost
 {
@@ -33,7 +34,9 @@ namespace TownOfHost
             return seer == target
                 || target.Is(CustomRoles.GM)
                 || (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoleTypes.Impostor))
-                || Mare.KnowTargetRoleColor(target, isMeeting);
+                || Mare.KnowTargetRoleColor(target, isMeeting)
+                || (target.Is(CustomRoles.Workaholic) && Workaholic.Seen)
+                ;
         }
         public static bool TryGetData(PlayerControl seer, PlayerControl target, out string colorCode)
         {

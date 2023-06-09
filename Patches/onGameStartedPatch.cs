@@ -304,6 +304,13 @@ namespace TownOfHost
                                 NameColorManager.Add(seer.PlayerId, pc.PlayerId);
                         }
                     }
+                    foreach (var seer in Main.AllPlayerControls)
+                    {
+                        if (seer == pc) continue;
+                        if (pc.Is(CustomRoles.GM)/* || pc.Is(CustomRoles.Rainbow) */
+                            || (pc.Is(CustomRoles.Workaholic) && Workaholic.Seen))
+                            NameColorManager.Add(seer.PlayerId, pc.PlayerId, pc.GetRoleColorCode());
+                    }
                 }
 
                 RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Shapeshifter };
