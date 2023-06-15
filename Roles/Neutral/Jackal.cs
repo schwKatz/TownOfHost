@@ -17,14 +17,14 @@ namespace TownOfHostY.Roles.Neutral
                 50700,
                 SetupOptionItem,
                 "ジャッカル",
-                "#00b4eb"
+                "#00b4eb",
+                countType: CountTypes.Jackal
             );
         public Jackal(PlayerControl player)
         : base(
             RoleInfo,
             player,
-            () => HasTask.False,
-            CountTypes.Jackal
+            () => HasTask.False
         )
         {
             KillCooldown = OptionKillCooldown.GetFloat();
