@@ -112,13 +112,16 @@
 "Dictator","Dictator","ディクテーター","独裁者","獨裁主義者","Диктатор","Ditador"
 "Seer","Seer","シーア","灵媒","靈媒","Провидец","Vidente"
 "TimeManager","TimeManager","タイムマネージャー","时间管理者","時間大師","Мастер Времени",""
+"Bakery","Bakery","パン屋","面包师",,
 "NBakery","(Neu)Awakening Bakery","(第三)覚醒パン屋","(中立)觉醒面包师",,
-"Hunter","Hunter","ハンター","猎人",,"Bakery","Bakery","パン屋","面包师",,
+"Hunter","Hunter","ハンター","猎人",,
 "TaskManager","Task Manager","タスマネ","任务管理员",,
 "Nekomata","Nekomata","猫又","双尾怪猫",,
 "Express","Express","エクスプレス","邮递员",,
 "Chairman","Chairman","チェアマン","总裁",,
+"SeeingOff","Seeing Off","見送り人","送行者",,
 "SillySheriff","Silly Sheriff","バカシェリフ","憨批警长"
+"CandleLighter","Candle Lighter","キャンドルライター",
 
 "BaitInfo","Bait your enemies","敵を罠にはめよう","诱骗敌人，让敌人落入你的陷阱","犧牲小我，完成大我","Убийца моментально зарепортит ваш труп","Engane os seus inimigos"
 "LighterInfo","Light 'em up","すべてを照らそう","驱散黑暗，照亮前路","照亮黑暗中的一切吧","Увеличьте свой обзор выполнив свои задания","Luz para todo lado"
@@ -138,8 +141,10 @@
 "TaskManagerInfo","Let's keep an eye on the number of tasks","タスクの数を見張ろう","让我们来关注一下任务的数量",,
 "NekomataInfo","I'll be exiled with someone else","人外まで道連れしたい","我将和别人一起被放逐",,
 "ExpressInfo","Let's run around comfortably","気持ちよく駆け回ろう","让我们舒服的奔跑吧",,
+"SeeingOffInfo","I'll see you through your final days.","あなたの最期を見送ってあげる","被驱逐者是内鬼吗？",,
 "ChairmanInfo","Manipulate conference openings and closings","会議開閉を操ろう","操纵会议的开场和结束",,
 "SillySheriffInfo","Can you properly judge a Impostor?","ちゃんと人外判断できるかな","你能正确地判断内鬼吗?"
+"CandleLighterInfo","By the time the wax is gone...","ろうが無くなるまでには、、",
 
 "BaitInfoLong","(Crewmates):\nWhen you are killed, you force your killer to immediately self-report.","(クルー陣営):\nキルされた時に、自身をキルした人に\n強制的にセルフレポートさせる事ができる。","(船员阵营):\n诱饵被击杀时，击杀诱饵的凶手将被迫报告。","(船員):\n當被殺時,兇手將強制自行舉報","(Член Экипажа):\nКогда Приманку убивают, он заставляет убившего игрока \nмоментально зарепортить ваш труп.","(Tripulantes):\nQuando morrer, você força o seu assassino a reportar o seu corpo imediatamente."
 "LighterInfoLong","(Crewmates):\nOnce you finish all your tasks, your vision will increase.","(クルー陣営):\nタスクを終わらせると、自分の視界を広げることができる。","(船员阵营):\n执灯人完成任务后，视野会扩大，且不受照明破坏影响。","(船員):\n當做完所有任務時可以增大視野且不受關燈影響","(Член Экипажа):\nПосле выполнения всех заданий Фонарик сможет увеличить свое поле зрения.","(Tripulantes):\nQuando você terminar todas as suas tarefas, sua visão irá aumentar."
@@ -161,6 +166,7 @@
 "ExpressInfoLong","(Crewmates)\nIt is just fast. From other viewpoints，they appear to be the same speed and out-of-sync warp. (Specification)","[クルー陣営]\nただ足が速い。他視点からは同じスピードで同期ズレワープのように見える。(仕様)","(船员阵营)\n它只是很快。从另一个角度来看，他们的速度是一样的，而且是不同步的曲速。(规范)",,
 "ChairmanInfoLong","(Crewmates)\nWhen you enter a vent，you can open a meeting. During sabotage，entering a vent does not open a meeting. The vent button is consumed at the same time as the normal button count. (If you use the vent button first when you have one normal button count，you will not be able to use the normal button.) Voting for someone can immediately interrupt the meeting. You cannot vote normally except for skip/self-vote，which triggers the ability.","[クルー陣営]\n・ベントに入ると会議が開ける。サボタージュ中はベントに入っても会議を開けない。\n通常ボタン回数と同時に消費する。(通常ボタン回数1回の時、先にベントボタンを使うと、通常ボタンは使えなくなる。)\n・誰かに投票することでその会議を即中断できる(追放は起こらずスキップ扱い)。\nスキップ・自投票以外の普通の投票は出来ず、能力を発動してしまう。","(船员阵营)\n当你进入一个通风口时，你可以发起一个会议。在破坏过程中，进入通风口并不会开启会议。管道按钮与正常按钮计数同时消耗。(如果你在有一个正常按钮的情况下先使用管道按钮，你将不能使用正常按钮。)为某人投票会立即打断会议。你不能正常投票，除了跳过/自我投票，这会触发能力。",,
 "SillySheriffInfoLong","(Crewmates)\nIt is almost the same as a normal sheriff, but sometimes it does not recognize the camp correctly.","[クルー陣営]\n普通のシェリフとほとんど変わりないが、正しく陣営を認識できない時がある。(人外に向かって自爆・クルーをキルする時がある)","(船员阵营)\n它与普通的警长几乎一样，但有时它不能正确识别阵营。"
+"CandleLighterInfoLong","(Crewmates)\nHis vision is gradually getting smaller and smaller like a candle. However, unlike others, I am not affected by the blackout because I light my surroundings with a candle.\nWhen all tasks are completed, a new candle is supplied and can be re-lit to its brightest state.","[クルー陣営]\n視界がろうそくのようにだんだんと小さく狭くなっていく。しかし他人と違いろうそくで周りを灯している為、停電の影響は受けない。\nタスクを全て完了させると新たに一本ろうそくが供給され、一番明るい状態に点け直すことができる。",
 
 
 "# ニュートラル役職"
@@ -427,7 +433,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "SheriffCanKillNeutrals","Can Kill Neutrals","ニュートラルをキルできる","警长可以执法独立阵营","警長可以槍死中立","Может убить Нейтралов","Pode Matar Neutros"
 "SheriffCanKillAll","<color=#00fefe>All ON</color>","<color=#00fefe>全てオン</color>","<color=#00fefe>全开</color>","<color=#00fefe>全開</color>","<color=#00fefe>Все ВКЛ</color>","<color=#00fefe>Todos Ligados</color>"
 "SheriffCanKillSeparately","Individual Settings","個別に設定","个别设定","個別設定","Выбрать кого","Configuração Individual"
-"SheriffIsInfoPoor","Unable to Use Devices such as Admin,Camera,etc.",アドミン・カメラ等の機器が使用できない",
+"SheriffIsInfoPoor","Unable to Use Devices such as Admin,Camera,etc.","アドミン・カメラ等の機器が使用できない",
 "SheriffIsClumsy","Can Not Fix Lights And Fix Comms","停電・通信妨害が直せない",
 "In%team%","(Team %team%)","(%team%陣営)","(%team%阵营)","(%team%陣營)","(Команда %team%)","(Time %team%)"
 "SheriffMisfireKillsTarget","Misfire Kills Target","誤爆時、ターゲットも死ぬ","警长误杀好人会同时击杀目标","警長誤殺好人會同時擊殺目標","Шериф убивает цель вместе с собой","Pode Matar Alvo Incorreto"
@@ -505,6 +511,11 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "TotocalcioInitialCoolDown","'BET'Initial Ability Cooldown","「賭ける」の初期クールタイム",
 "TotocalcioFinalCoolDown","'BET'Final Ability Cooldown","「賭ける」の最終クールタイム",
 "ExpressSpeed","Speed","スピード","速度",,
+"TaskmanagerSeeNowtask","Watch Now All Task Count","会議時以外でもタスク数が見える","现在观看所有的任务计数",,
+"ChairmanIgnoreSkip","Disable Forced Skipping","強制スキップを無効化する","禁用强制跳过"
+"CandleLighterStartVision","Start Vision(Widest Vision)","初めの視界(一番広い視界)",
+"CandleLighterEndVisionTime","Time to End Vision","最後の視界になる時間",
+"CandleLighterTimeMoveMeeting","Time Move Even During Meeting","会議中もろうそくが消費される",
 
 "## かくれんぼ設定"
 "HideAndSeekOptions","Hide and Seek Settings","かくれんぼの設定","躲猫猫设置","躲貓貓設定","Настройки Пряток","Configurações do Esconde-Esconde"
@@ -759,6 +770,8 @@ PanAlive13,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "AntiAdminerVI","Warning Vital","バイタル注意！","生命检测仪注意",,
 "AntiAdminerDL","Warning DoorLog","ドアログ注意！","日志注意",,
 "AntiAdminerCA","Warning Camera","カメラ注意！","摄像头注意",,
+"isImpostor","{0} is Impostor.","{0}はインポスターだった","{0} 是 内鬼."
+"isNotImpostor","{0} is not Impostor.","{0}はインポスターではなかった","{0} 不是 内鬼.",
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,

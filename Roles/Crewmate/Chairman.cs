@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AmongUs.GameOptions;
 
 using TownOfHost.Roles.Core;
+using static TownOfHost.CheckForEndVotingPatch;
 
 namespace TownOfHost.Roles.Crewmate;
 public sealed class Chairman : RoleBase
@@ -85,15 +86,17 @@ public sealed class Chairman : RoleBase
             Player.IsAlive())
         {
             var voteTarget = Utils.GetPlayerById(pva.VotedFor);
-            
-            statesList.Add(new()
-            {
-                VoterId = pva.TargetPlayerId,
-                VotedForId = 253
-            });
+
+            MeetingHud.Instance.RpcVotingComplete(new MeetingHud.VoterState[]{ new ()
+                {
+                    VoterId = pva.TargetPlayerId,
+                    VotedForId = 253
+                }}, null, false); //RPC
+
             Logger.Info("ディクテーターによる強制会議終了", "Special Phase");
+            return false;
         }
-        return false;
+        return true;
     }
     public override void AfterMeetingTasks()=> Player.RpcResetAbilityCooldown();
 }

@@ -57,7 +57,7 @@ public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
         OptionInitialCoolDown = FloatOptionItem.Create(RoleInfo, 10, OptionName.TotocalcioInitialCoolDown, new(0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
         OptionBetChangeCount = IntegerOptionItem.Create(RoleInfo, 11, OptionName.TotocalcioBetChangeCount, new(0, 10, 1), 0, false)
-            .SetValueFormat(OptionFormat.Seconds);
+            .SetValueFormat(OptionFormat.Times);
         OptionFinalCoolDown = FloatOptionItem.Create(RoleInfo, 12, OptionName.TotocalcioFinalCoolDown, new(0f, 180f, 2.5f), 60f, false)
             .SetValueFormat(OptionFormat.Seconds);
     }
@@ -93,6 +93,7 @@ public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
             BetTarget = target;
             BetTargetCount--;
             killer.RpcGuardAndKill(target);
+            info.DoKill = false;
             Logger.Info($"{killer.GetNameWithRole()} : {target.GetRealName()}に賭けた", "Totocalcio");
 
             Utils.NotifyRoles();

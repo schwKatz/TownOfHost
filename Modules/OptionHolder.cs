@@ -291,7 +291,7 @@ namespace TownOfHost
             var sortedRoleInfo = CustomRoleManager.AllRolesInfo.Values.OrderBy(role => role.ConfigId);
             // GM
             EnableGM = BooleanOptionItem.Create(100, "GM", false, TabGroup.MainSettings, false)
-                .SetColor(Utils.GetRoleColor(CustomRoles.GM))
+                .SetColor(new Color32(255, 91, 112, 255))
                 .SetHeader(true);
 
             RoleAssignManager.SetupOptionItem();
@@ -528,23 +528,23 @@ namespace TownOfHost
 
             // 幽霊
             GhostIgnoreTasks = BooleanOptionItem.Create(900_012, "GhostIgnoreTasks", false, TabGroup.MainSettings, false)
-                .SetColor(new Color32(90, 143, 208, 255))
+                .SetColor(Palette.LightBlue)
                 .SetHeader(true)
                 .SetGameMode(CustomGameMode.Standard);
-            GhostCanSeeOtherRoles = BooleanOptionItem.Create(900_010, "GhostCanSeeOtherRoles", true, TabGroup.MainSettings, false)
-                .SetColor(new Color32(90, 143, 208, 255));
-            GhostCanSeeOtherTasks = BooleanOptionItem.Create(900_015, "GhostCanSeeOtherTasks", true, TabGroup.MainSettings, false)
-                .SetColor(new Color32(90, 143, 208, 255));
-            GhostCanSeeOtherVotes = BooleanOptionItem.Create(900_011, "GhostCanSeeOtherVotes", true, TabGroup.MainSettings, false)
-                .SetColor(new Color32(90, 143, 208, 255));
+            GhostCanSeeOtherRoles = BooleanOptionItem.Create(900_010, "GhostCanSeeOtherRoles", false, TabGroup.MainSettings, false)
+                .SetColor(Palette.LightBlue);
+            GhostCanSeeOtherTasks = BooleanOptionItem.Create(900_015, "GhostCanSeeOtherTasks", false, TabGroup.MainSettings, false)
+                .SetColor(Palette.LightBlue);
+            GhostCanSeeOtherVotes = BooleanOptionItem.Create(900_011, "GhostCanSeeOtherVotes", false, TabGroup.MainSettings, false)
+                .SetColor(Palette.LightBlue);
             GhostCanSeeDeathReason = BooleanOptionItem.Create(900_014, "GhostCanSeeDeathReason", false, TabGroup.MainSettings, false)
-                .SetColor(new Color32(90, 143, 208, 255))
+                .SetColor(Palette.LightBlue)
                 .SetGameMode(CustomGameMode.Standard);
 
             // ランダムマップ
             RandomMapsMode = BooleanOptionItem.Create(100400, "RandomMapsMode", false, TabGroup.MainSettings, false)
                 .SetHeader(true)
-                .SetColor(new Color32(255, 165, 0, 255));
+                .SetColor(Palette.Orange);
             AddedTheSkeld = BooleanOptionItem.Create(100401, "AddedTheSkeld", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode);
             AddedMiraHQ = BooleanOptionItem.Create(100402, "AddedMIRAHQ", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode);
             AddedPolus = BooleanOptionItem.Create(100403, "AddedPolus", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode);
@@ -553,18 +553,18 @@ namespace TownOfHost
 
             // 転落死
             LadderDeath = BooleanOptionItem.Create(101100, "LadderDeath", false, TabGroup.MainSettings, false)
-                .SetColor(new Color32(255, 165, 0, 255));
+                .SetColor(Palette.Orange);
             LadderDeathChance = StringOptionItem.Create(101110, "LadderDeathChance", rates[1..], 0, TabGroup.MainSettings, false).SetParent(LadderDeath);
 
             // マップ改造
             AirShipVariableElectrical = BooleanOptionItem.Create(101600, "AirShipVariableElectrical", false, TabGroup.MainSettings, false)
-                .SetColor(new Color32(255, 165, 0, 255));
+                .SetColor(Palette.Orange);
             DisableAirshipMovingPlatform = BooleanOptionItem.Create(101700, "DisableAirshipMovingPlatform", false, TabGroup.MainSettings, false)
-                .SetColor(new Color32(255, 165, 0, 255));
+                .SetColor(Palette.Orange);
 
             // 初手キルクール調整
             FixFirstKillCooldown = BooleanOptionItem.Create(900_000, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
-                .SetColor(new Color32(255, 165, 0, 255));
+                .SetColor(Palette.Orange);
 
             //シンクロカラーモード
 

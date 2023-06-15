@@ -22,6 +22,9 @@ namespace TownOfHost
         public static void Postfix(AmongUsClient __instance)
         {
             //注:この時点では役職は設定されていません。
+            Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
+            Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Engineer, 0, 0);
+            Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Scientist, 0, 0);
             Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.GuardianAngel, 0, 0);
 
             PlayerState.Clear();

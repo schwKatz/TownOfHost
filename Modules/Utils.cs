@@ -205,7 +205,7 @@ namespace TownOfHost
             bool enabled = seer == seen
                 || seen.Is(CustomRoles.GM)
                 || (seen.Is(CustomRoles.Workaholic) && Workaholic.Seen)
-                || (Main.VisibleTasksCount && !seer.IsAlive() && Options.GhostCanSeeOtherRoles.GetBool());
+                || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCanSeeOtherRoles.GetBool());
             var (roleColor, roleText) = GetTrueRoleNameData(seen.PlayerId);
 
             //seen側による変更
@@ -465,7 +465,7 @@ namespace TownOfHost
                 }
             }
             bool enabled = seer == seen
-                        || (Main.VisibleTasksCount && !seer.IsAlive() && Options.GhostCanSeeOtherTasks.GetBool())
+                        || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCanSeeOtherTasks.GetBool())
                         || (seen.Is(CustomRoles.Workaholic) && Workaholic.Seen && Workaholic.TaskSeen);
             string text = GetProgressText(seen.PlayerId, comms);
 
@@ -866,6 +866,9 @@ namespace TownOfHost
                 string SelfName = $"{ColorString(seer.GetRoleColor(), SeerRealName)}{SelfDeathReason}{SelfMark}";
                 if (Arsonist.IsDouseDone(seer))
                     SelfName = $"</size>\r\n{ColorString(seer.GetRoleColor(), GetString("EnterVentToWin"))}";
+                else if (seer.Is(CustomRoles.SeeingOff)/* || seer.Is(CustomRoles.Sending)*/)
+                    SelfName = SeeingOff.RealNameChange(SelfName);
+
                 SelfName = SelfRoleName + "\r\n" + SelfName;
                 SelfName += SelfSuffix.ToString() == "" ? "" : "\r\n " + SelfSuffix.ToString();
                 if (!isForMeeting) SelfName += "\r\n";

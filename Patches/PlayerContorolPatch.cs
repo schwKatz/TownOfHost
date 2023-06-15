@@ -11,6 +11,7 @@ using TownOfHost.Modules;
 using TownOfHost.Roles;
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Core.Interfaces;
+using TownOfHost.Roles.Crewmate;
 using TownOfHost.Roles.Neutral;
 using TownOfHost.Roles.AddOns.Crewmate;
 using static TownOfHost.Translator;
@@ -389,6 +390,8 @@ namespace TownOfHost
                     { //targetが自分自身
                         if (target.Is(CustomRoles.Arsonist) && Arsonist.IsDouseDone(target))
                             RealName = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Arsonist), GetString("EnterVentToWin"));
+                        else if (target.Is(CustomRoles.SeeingOff)/* || target.Is(CustomRoles.Sending)*/)
+                            RealName = SeeingOff.RealNameChange(RealName);
                     }
 
                     //NameColorManager準拠の処理

@@ -128,7 +128,7 @@ namespace TownOfHost.Modules
             }
 
             state.taskState.hasTasks = Utils.HasTasks(player.Data, false);
-            if (Options.GhostCanSeeOtherVotes.GetBool() && player.Data.IsDead)
+            if (!Options.GhostCanSeeOtherVotes.GetBool() && player.Data.IsDead)
                 opt.SetBool(BoolOptionNames.AnonymousVotes, false);
             if (Options.AdditionalEmergencyCooldown.GetBool() &&
                 Options.AdditionalEmergencyCooldownThreshold.GetInt() <= Utils.AllAlivePlayersCount)

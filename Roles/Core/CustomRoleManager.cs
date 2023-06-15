@@ -412,6 +412,8 @@ public enum CustomRoles
     Nekomata,
     Chairman,
     Express,
+    CandleLighter,
+    SeeingOff,
     CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral
     Arsonist,
