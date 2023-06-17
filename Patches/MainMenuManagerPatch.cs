@@ -136,7 +136,7 @@ namespace TownOfHost
         [HarmonyPatch(nameof(MainMenuManager.OpenAccountMenu))]
         [HarmonyPatch(nameof(MainMenuManager.OpenCredits))]
         [HarmonyPostfix]
-        public static void OpenGameModeMenuPostfix()
+        public static void OpenMenuPostfix()
         {
             if (CredentialsPatch.TohLogo != null)
             {
