@@ -312,11 +312,7 @@ namespace TownOfHost
 
             if (AmongUsClient.Instance.AmHost)
             {//実行クライアントがホストの場合のみ実行
-<<<<<<< HEAD
-                if (GameStates.IsLobby && !Main.AllowPublicRoom && AmongUsClient.Instance.IsGamePublic)
-=======
                 if (GameStates.IsLobby && (ModUpdater.hasUpdate || ModUpdater.isBroken || !Main.AllowPublicRoom || !VersionChecker.IsSupported) && AmongUsClient.Instance.IsGamePublic)
->>>>>>> 2c289009 (サポートされていないバージョンの時に公開ルームを立てられないよう変更)
                     AmongUsClient.Instance.ChangeGamePublic(false);
 
                 if (GameStates.IsInTask && ReportDeadBodyPatch.CanReport[__instance.PlayerId] && ReportDeadBodyPatch.WaitReport[__instance.PlayerId].Count > 0)
