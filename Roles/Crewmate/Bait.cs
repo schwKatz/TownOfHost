@@ -14,7 +14,7 @@ public sealed class Bait : RoleBase
             CustomRoleTypes.Crewmate,
             20000,
             SetUpOptionItem,
-            "ba",
+            "ベイト",
             "#00f7ff"
         );
     public Bait(PlayerControl player)
@@ -56,7 +56,7 @@ public sealed class Bait : RoleBase
             }, 0.15f + WaitTime, "Bait Self Report");
     }
 
-    private static PlayerControl BaitKillPlayer;
+    public static PlayerControl BaitKillPlayer;
     /// <summary>
     /// キラーから見たベイト警告マーク
     /// キラーにはベイトをキルした時の警告マーク

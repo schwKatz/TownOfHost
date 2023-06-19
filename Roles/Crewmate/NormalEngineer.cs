@@ -14,7 +14,7 @@ public sealed class NormalEngineer : RoleBase
             CustomRoleTypes.Crewmate,
             19990,
             SetupOptionItem,
-            "doc",
+            "エンジニア",
             "#8cffff"
         );
     public NormalEngineer(PlayerControl player)

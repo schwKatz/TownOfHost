@@ -21,7 +21,7 @@ public sealed class EvilTracker : RoleBase, IImpostor, IKillFlashSeeable, ISidek
             CustomRoleTypes.Impostor,
             2900,
             SetupOptionItem,
-            "et",
+            "イビルトラッカー",
             canMakeMadmate: () => OptionCanCreateMadmate.GetBool()
         );
 

@@ -17,7 +17,7 @@ public sealed class SpeedBooster : RoleBase
             CustomRoleTypes.Crewmate,
             20600,
             SetupOptionItem,
-            "sb",
+            "スピードブースター",
             "#00ffff"
         );
     public SpeedBooster(PlayerControl player)

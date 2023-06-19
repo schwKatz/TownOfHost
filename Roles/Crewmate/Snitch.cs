@@ -17,7 +17,7 @@ public class Snitch : RoleBase
             CustomRoleTypes.Crewmate,
             20500,
             SetupOptionItem,
-            "sn",
+            "スニッチ",
             "#b8fb4f"
         );
     public Snitch(PlayerControl player)

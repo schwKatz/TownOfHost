@@ -20,7 +20,7 @@ public sealed class Sniper : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             1800,
             SetupOptionItem,
-            "snp"
+            "スナイパー"
         );
     public Sniper(PlayerControl player)
     : base(

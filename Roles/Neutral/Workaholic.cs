@@ -1,5 +1,6 @@
 using System.Linq;
 using AmongUs.GameOptions;
+using UnityEngine;
 
 using TownOfHost.Roles.Core;
 namespace TownOfHost.Roles.Neutral;
@@ -15,7 +16,7 @@ public sealed class Workaholic : RoleBase
             CustomRoleTypes.Neutral,
             60100,
             SetupOptionItem,
-            "wo",
+            "ワーカホリック",
             "#008b8b",
             introSound: () => ShipStatus.Instance.CommonTasks.Where(task => task.TaskType == TaskTypes.FixWiring).FirstOrDefault().MinigamePrefab.OpenSound
         );
@@ -85,4 +86,10 @@ public sealed class Workaholic : RoleBase
         }
         return true;
     }
+
+    public override void OverrideRoleNameAsSeen(PlayerControl seer, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    {
+        if (Seen) enabled = true;
+    }
+
 }

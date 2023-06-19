@@ -133,7 +133,6 @@ namespace TownOfHost
         public int CompletedTasksCount;
         public bool hasTasks;
         public int RemainingTasksCount => AllTasksCount - CompletedTasksCount;
-        public bool DoExpose => RemainingTasksCount <= Options.SnitchExposeTaskLeft && hasTasks;
         public bool IsTaskFinished => RemainingTasksCount <= 0 && hasTasks;
         public TaskState()
         {

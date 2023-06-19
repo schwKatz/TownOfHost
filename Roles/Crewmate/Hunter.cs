@@ -6,6 +6,7 @@ using AmongUs.GameOptions;
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Core.Interfaces;
 
+using static TownOfHost.Utils;
 namespace TownOfHost.Roles.Crewmate;
 public sealed class Hunter : RoleBase, IKiller
 {
@@ -18,7 +19,7 @@ public sealed class Hunter : RoleBase, IKiller
             CustomRoleTypes.Crewmate,
             35100,
             SetupOptionItem,
-            "hu",
+            "ハンター",
             "#f8cd46",
             true,
             introSound: () => GetIntroSound(RoleTypes.Crewmate)
@@ -73,7 +74,7 @@ public sealed class Hunter : RoleBase, IKiller
             Main.ResetCamPlayerList.Add(playerId);
 
         ShotLimit = ShotLimitOpt.GetInt();
-        Logger.Info($"{Utils.GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "Hunter");
+        Logger.Info($"{GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "Hunter");
     }
     private void SendRPC()
     {
@@ -118,7 +119,7 @@ public sealed class Hunter : RoleBase, IKiller
             killer.ResetKillCooldown();
         }
     }
-    public override string GetProgressText(bool comms = false) => Utils.ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"({ShotLimit})");
+    public override string GetProgressText(bool comms = false) => ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"({ShotLimit})");
 
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
     {
@@ -126,11 +127,11 @@ public sealed class Hunter : RoleBase, IKiller
         seen ??= seer;
 
         if (KnowTargetIsImpostor.GetBool() && seer.Is(CustomRoles.Hunter) && isImpostor == 1)
-            return Utils.ColorString(Utils.GetRoleColor(CustomRoles.Hunter), "◎");
+            return ColorString(RoleInfo.RoleColor, "◎");
         if (KnowTargetIsImpostor.GetBool() && seer.Is(CustomRoles.Hunter) && isImpostor == 2)
-            return Utils.ColorString(Utils.GetRoleColor(CustomRoles.Hunter), "▽");
+            return ColorString(RoleInfo.RoleColor, "▽");
 
-        return "";
+        return string.Empty;
     }
     public override void OnStartMeeting()
     {

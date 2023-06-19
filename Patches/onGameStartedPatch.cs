@@ -42,6 +42,7 @@ namespace TownOfHost
             Main.ShapeshiftTarget = new();
 
             ReportDeadBodyPatch.CanReport = new();
+            ReportDeadBodyPatch.CanReportByDeadBody = new();
             CheckForEndVotingPatch.RevengeTargetPlayer = new();
             Options.UsedButtonCount = 0;
             Main.RealOptionsData = new OptionBackupData(GameOptionsManager.Instance.CurrentGameOptions);
@@ -82,12 +83,17 @@ namespace TownOfHost
             foreach (var pc in Main.AllPlayerControls)
             {
                 var colorId = pc.Data.DefaultOutfit.ColorId;
-                if (AmongUsClient.Instance.AmHost && Options.ColorNameMode.GetBool()) pc.RpcSetName(Palette.GetColorName(colorId));
+                if (AmongUsClient.Instance.AmHost && Options.ColorNameMode.GetBool())
+                {
+                    if(pc.Is(CustomRoles.Rainbow)) pc.RpcSetName(GetString("RainbowColor"));
+                    else pc.RpcSetName(Palette.GetColorName(colorId));
+                }
                 PlayerState.Create(pc.PlayerId);
                 Main.AllPlayerNames[pc.PlayerId] = pc?.Data?.PlayerName;
                 Main.PlayerColors[pc.PlayerId] = Palette.PlayerColors[colorId];
                 Main.AllPlayerSpeed[pc.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod); //移動速度をデフォルトの移動速度に変更
                 ReportDeadBodyPatch.CanReport[pc.PlayerId] = true;
+                ReportDeadBodyPatch.CanReportByDeadBody[pc.PlayerId] = true;
                 ReportDeadBodyPatch.WaitReport[pc.PlayerId] = new();
                 pc.cosmetics.nameText.text = pc.name;
 
@@ -311,7 +317,8 @@ namespace TownOfHost
                     {
                         if (seer == pc) continue;
                         if (pc.Is(CustomRoles.GM)/* || pc.Is(CustomRoles.Rainbow) */
-                            || (pc.Is(CustomRoles.Workaholic) && Workaholic.Seen))
+                            || (pc.Is(CustomRoles.Workaholic) && Workaholic.Seen)
+                            || pc.Is(CustomRoles.Rainbow))
                             NameColorManager.Add(seer.PlayerId, pc.PlayerId, pc.GetRoleColorCode());
                     }
                 }

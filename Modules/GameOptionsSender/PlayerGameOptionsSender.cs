@@ -7,6 +7,7 @@ using Mathf = UnityEngine.Mathf;
 
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Neutral;
+using TownOfHost.Roles.Crewmate;
 
 namespace TownOfHost.Modules
 {
@@ -117,6 +118,14 @@ namespace TownOfHost.Modules
                         break;
                 }
             }
+
+            if (Blinder.BlindPlayer.Contains(player.PlayerId))
+            {
+                opt.SetFloat(FloatOptionNames.CrewLightMod, Blinder.BlinderVision);
+                opt.SetFloat(FloatOptionNames.ImpostorLightMod, Blinder.BlinderVision);
+                opt.SetVision(false);
+            }
+
             if (Main.AllPlayerKillCooldown.TryGetValue(player.PlayerId, out var killCooldown))
             {
                 AURoleOptions.KillCooldown = Mathf.Max(0f, killCooldown);

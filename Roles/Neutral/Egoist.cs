@@ -17,7 +17,7 @@ public sealed class Egoist : RoleBase, ISidekickable, IKiller
             CustomRoleTypes.Neutral,
             50600,
             SetupOptionItem,
-            "eg",
+            "エゴイスト",
             "#5600ff",
             canMakeMadmate: () => OptionCanCreateMadmate.GetBool()
         );

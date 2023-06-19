@@ -409,6 +409,8 @@ namespace TownOfHost
                 CustomRoles.Jackal => Jackal.CanVent,
                 CustomRoles.MadSheriff => MadSheriff.CanVent,
                 CustomRoles.Arsonist => Arsonist.IsDouseDone(pc),
+
+                CustomRoles.Telepathisters => Telepathisters.VentCountLimit > -1,
                 _ => pc.Is(CustomRoleTypes.Impostor),
             };
         }

@@ -185,9 +185,9 @@ namespace TownOfHost
         /// <param name="seer">見る側</param>
         /// <param name="seen">見られる側</param>
         /// <returns>RoleName + ProgressTextを表示するか、構築する色とテキスト(bool, Color, string)</returns>
-        public static (bool enabled, string text) GetRoleNameAndProgressTextData(PlayerControl seer, PlayerControl seen = null)
+        public static (bool enabled, string text) GetRoleNameAndProgressTextData(bool isMeeting, PlayerControl seer, PlayerControl seen = null)
         {
-            var roleName = GetDisplayRoleName(seer, seen);
+            var roleName = GetDisplayRoleName(isMeeting,seer, seen);
             var progressText = GetProgressText(seer, seen);
             var text = roleName + (roleName != "" ? " " : "") + progressText;
             return (text != "", text);
@@ -198,21 +198,20 @@ namespace TownOfHost
         /// <param name="seer">見る側</param>
         /// <param name="seen">見られる側</param>
         /// <returns>構築されたRoleName</returns>
-        private static string GetDisplayRoleName(PlayerControl seer, PlayerControl seen = null)
+        private static string GetDisplayRoleName(bool isMeeting, PlayerControl seer, PlayerControl seen = null)
         {
             seen ??= seer;
             //デフォルト値
             bool enabled = seer == seen
                 || seen.Is(CustomRoles.GM)
-                || (seen.Is(CustomRoles.Workaholic) && Workaholic.Seen)
                 || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCanSeeOtherRoles.GetBool());
             var (roleColor, roleText) = GetTrueRoleNameData(seen.PlayerId);
 
             //seen側による変更
-            seen.GetRoleClass()?.OverrideRoleNameAsSeen(seer, ref enabled, ref roleColor, ref roleText);
+            seen.GetRoleClass()?.OverrideRoleNameAsSeen(seer, isMeeting, ref enabled, ref roleColor, ref roleText);
 
             //seer側による変更
-            seer.GetRoleClass()?.OverrideRoleNameAsSeer(seen, ref enabled, ref roleColor, ref roleText);
+            seer.GetRoleClass()?.OverrideRoleNameAsSeer(seen, isMeeting, ref enabled, ref roleColor, ref roleText);
 
             return enabled ? ColorString(roleColor, roleText) : "";
         }
@@ -515,9 +514,6 @@ namespace TownOfHost
 
         public static (int, int) GetTasksState() //Y-TM
         {
-            if (!CustomRoles.Workhorse.IsEnable())
-                return (GameData.Instance.CompletedTasks, GameData.Instance.TotalTasks);
-
             var completed = 0;
             var all = 0;
             foreach (var pc in Main.AllPlayerControls)
@@ -745,7 +741,13 @@ namespace TownOfHost
             if (Main.nickName != "") name = Main.nickName;
             if (AmongUsClient.Instance.IsGameStarted)
             {
-                if (Options.ColorNameMode.GetBool() && Main.nickName == "") name = Palette.GetColorName(Camouflage.PlayerSkins[PlayerControl.LocalPlayer.PlayerId].ColorId);
+                if (Options.ColorNameMode.GetBool() && Main.nickName == "")
+                {
+                    if(PlayerControl.LocalPlayer.Is(CustomRoles.Rainbow))
+                        name = GetString("RainbowColor");
+                    else
+                        name = Palette.GetColorName(Camouflage.PlayerSkins[PlayerControl.LocalPlayer.PlayerId].ColorId);
+                }
             }
             else
             {
@@ -860,7 +862,7 @@ namespace TownOfHost
                     SeerRealName = seer.GetRoleInfo();
 
                 //seerの役職名とSelfTaskTextとseerのプレイヤー名とSelfMarkを合成
-                var (enabled, text) = GetRoleNameAndProgressTextData(seer);
+                var (enabled, text) = GetRoleNameAndProgressTextData(isForMeeting, seer);
                 string SelfRoleName = enabled ? $"<size={fontSize}>{text}</size>" : "";
                 string SelfDeathReason = seer.KnowDeathReason(seer) ? $"({ColorString(GetRoleColor(CustomRoles.Doctor), GetVitalText(seer.PlayerId))})" : "";
                 string SelfName = $"{ColorString(seer.GetRoleColor(), SeerRealName)}{SelfDeathReason}{SelfMark}";
@@ -893,6 +895,10 @@ namespace TownOfHost
                     || NoCache
                     || ForceLoop
                     || (CustomRoles.Workaholic.IsEnable() && Workaholic.Seen)
+                    || CustomRoles.Rainbow.IsEnable()
+                    || seer.Is(CustomRoles.FortuneTeller)
+                    || seer.Is(CustomRoles.Sympathizer)
+                    || seer.Is(CustomRoles.AntiComplete)
                     )
                 {
                     foreach (var target in Main.AllPlayerControls)
@@ -921,7 +927,7 @@ namespace TownOfHost
                         }
 
                         //他人の役職とタスクは幽霊が他人の役職を見れるようになっていてかつ、seerが死んでいる場合のみ表示されます。それ以外の場合は空になります。
-                        var targetRoleData = GetRoleNameAndProgressTextData(seer, target);
+                        var targetRoleData = GetRoleNameAndProgressTextData(isForMeeting, seer, target);
                         var TargetRoleText = targetRoleData.enabled ? $"<size={fontSize}>{targetRoleData.text}</size>\r\n" : "";
 
                         TargetSuffix.Clear();

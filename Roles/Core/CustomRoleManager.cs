@@ -8,6 +8,8 @@ using Il2CppSystem.Text;
 using AmongUs.GameOptions;
 using TownOfHost.Roles.Core.Interfaces;
 using TownOfHost.Roles.AddOns.Common;
+using TownOfHost.Roles.Impostor;
+using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHost.Roles.Core;
 
@@ -58,6 +60,9 @@ public static class CustomRoleManager
         {
             if (killer.IsKiller)
             {
+                //イビルディバイナーのみ占いのためここで先に処理
+                if (killerRole is EvilDiviner && !EvilDiviner.OnCheckMurder(attemptKiller, attemptTarget))
+                    return;
                 // ターゲットのキルチェック処理実行
                 if (targetRole != null)
                 {
@@ -379,11 +384,17 @@ public enum CustomRoles
     CursedWolf,
     Greedier,
     Ambitioner,
+    Scavenger,
+    EvilDiviner,
+    Telepathisters,
     //Madmate
     MadGuardian,
     Madmate,
     MadSnitch,
     MadSheriff,
+    MadDictator,
+    MadNatureCalls,
+    MadBrackOuter,
     SKMadmate,
     MSchrodingerCat,//インポスター陣営のシュレディンガーの猫
     //Crewmate(Vanilla)
@@ -412,8 +423,12 @@ public enum CustomRoles
     Nekomata,
     Chairman,
     Express,
-    CandleLighter,
     SeeingOff,
+    Rainbow,
+    Sympathizer,
+    Blinder,
+    CandleLighter,
+    FortuneTeller,
     CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral
     Arsonist,
@@ -427,6 +442,7 @@ public enum CustomRoles
     Executioner,
     Jackal,
     JSchrodingerCat,//ジャッカル陣営のシュレディンガーの猫
+    AntiComplete,
     Workaholic,
     PlatonicLover,
     Totocalcio,

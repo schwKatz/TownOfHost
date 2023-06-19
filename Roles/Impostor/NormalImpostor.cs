@@ -15,7 +15,7 @@ public sealed class NormalImpostor : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             990,
             null,
-            "en"
+            "インポスター"
         );
     public NormalImpostor(PlayerControl player)
     : base(

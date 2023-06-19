@@ -16,7 +16,7 @@ public sealed class CursedWolf : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             3200,
             SetupOptionItem,
-            "en"
+            "呪狼"
         );
     public CursedWolf(PlayerControl player)
     : base(

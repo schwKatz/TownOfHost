@@ -19,7 +19,7 @@ public sealed class SillySheriff : RoleBase, IKiller
             CustomRoleTypes.Crewmate,
             35800,
             SetupOptionItem,
-            "ssh",
+            "バカシェリフ",
             "#f8cd46",
             true,
             introSound: () => GetIntroSound(RoleTypes.Crewmate)

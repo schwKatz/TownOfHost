@@ -15,7 +15,7 @@ public sealed class Ambitioner : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             3400,
             SetupOptionItem,
-            "am"
+            "アンビショナー"
         );
     public Ambitioner(PlayerControl player)
     : base(

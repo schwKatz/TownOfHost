@@ -20,7 +20,7 @@ namespace TownOfHost.Roles.Impostor
                 CustomRoleTypes.Impostor,
                 1500,
                 SetupOptionItem,
-                "wi"
+                "ウィッチ"
             );
         public Witch(PlayerControl player)
         : base(

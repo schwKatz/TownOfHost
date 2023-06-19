@@ -18,7 +18,7 @@ namespace TownOfHost.Roles.Impostor
                 CustomRoleTypes.Impostor,
                 1100,
                 SetUpOptionItem,
-                "sk"
+                "シリアルキラー"
             );
         public SerialKiller(PlayerControl player)
         : base(

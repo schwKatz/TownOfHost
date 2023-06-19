@@ -15,7 +15,7 @@ public sealed class NormalShapeshifter : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             995,
             SetupOptionItem,
-            "en"
+            "シェイプシフター"
         );
     public NormalShapeshifter(PlayerControl player)
     : base(

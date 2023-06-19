@@ -20,7 +20,7 @@ public sealed class EvilNekomata : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             3000,
             null,
-            "en"
+            "イビル猫又"
         );
     public EvilNekomata(PlayerControl player)
     : base(

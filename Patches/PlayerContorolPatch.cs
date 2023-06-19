@@ -15,6 +15,7 @@ using TownOfHost.Roles.Crewmate;
 using TownOfHost.Roles.Neutral;
 using TownOfHost.Roles.AddOns.Crewmate;
 using static TownOfHost.Translator;
+using TownOfHost.Roles.Impostor;
 
 namespace TownOfHost
 {
@@ -215,6 +216,7 @@ namespace TownOfHost
         public static GameData.PlayerInfo ReportTarget;
 
         public static Dictionary<byte, bool> CanReport;
+        public static Dictionary<byte, bool> CanReportByDeadBody;
         public static Dictionary<byte, List<GameData.PlayerInfo>> WaitReport = new();
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
         {
@@ -223,6 +225,10 @@ namespace TownOfHost
             Logger.Info($"{__instance.GetNameWithRole()} => {target?.Object?.GetNameWithRole() ?? "null"}", "ReportDeadBody");
             if (Options.IsStandardHAS && target != null && __instance == target.Object) return true; //[StandardHAS] ボタンでなく、通報者と死体が同じなら許可
             if (Options.CurrentGameMode == CustomGameMode.HideAndSeek || Options.IsStandardHAS) return false;
+
+            // Scavenger
+            if (target != null && !CanReportByDeadBody[target.PlayerId]) return false;
+
             if (!CanReport[__instance.PlayerId])
             {
                 WaitReport[__instance.PlayerId].Add(target);
@@ -366,7 +372,7 @@ namespace TownOfHost
                     //    var hasRole = main.AllPlayerCustomRoles.TryGetValue(__instance.PlayerId, out var role);
                     //    if (hasRole) RoleTextData = Utils.GetRoleTextHideAndSeek(__instance.Data.Role.Role, role);
                     //}
-                    (RoleText.enabled, RoleText.text) = Utils.GetRoleNameAndProgressTextData(PlayerControl.LocalPlayer, __instance);
+                    (RoleText.enabled, RoleText.text) = Utils.GetRoleNameAndProgressTextData(false, PlayerControl.LocalPlayer, __instance);
                     if (!AmongUsClient.Instance.IsGameStarted && AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay)
                     {
                         RoleText.enabled = false; //ゲームが始まっておらずフリープレイでなければロールを非表示

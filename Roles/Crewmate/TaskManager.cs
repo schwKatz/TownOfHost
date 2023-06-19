@@ -15,7 +15,7 @@ public sealed class TaskManager : RoleBase
             CustomRoleTypes.Crewmate,
             35200,
             SetupOptionItem,
-            "tam",
+            "タスクマネージャー",
             "#80ffdd",
             introSound: () => GetIntroSound(RoleTypes.Scientist)
         );

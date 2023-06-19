@@ -14,7 +14,7 @@ public sealed class NormalScientist : RoleBase
             CustomRoleTypes.Crewmate,
             19995,
             SetupOptionItem,
-            "doc",
+            "科学者",
             "#8cffff"
         );
     public NormalScientist(PlayerControl player)

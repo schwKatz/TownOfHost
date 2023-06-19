@@ -16,7 +16,7 @@ namespace TownOfHost.Roles.Impostor
                 CustomRoleTypes.Impostor,
                 2400,
                 SetupOptionItem,
-                "tt"
+                "タイムシーフ"
             );
         public TimeThief(PlayerControl player)
         : base(

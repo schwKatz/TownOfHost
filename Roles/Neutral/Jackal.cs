@@ -16,7 +16,7 @@ namespace TownOfHost.Roles.Neutral
                 CustomRoleTypes.Neutral,
                 50900,
                 SetupOptionItem,
-                "jac",
+                "ジャッカル",
                 "#00b4eb"
             );
         public Jackal(PlayerControl player)

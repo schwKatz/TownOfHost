@@ -17,7 +17,7 @@ public sealed class Express : RoleBase
             CustomRoleTypes.Crewmate,
             35500,
             SetupOptionItem,
-            "exp",
+            "エクスプレス",
             "#00ffff"
         );
     public Express(PlayerControl player)

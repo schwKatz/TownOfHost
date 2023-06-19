@@ -17,7 +17,7 @@ public sealed class Mare : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             2300,
             SetupCustomOption,
-            "ma"
+            "メアー"
         );
     public Mare(PlayerControl player)
     : base(

@@ -20,7 +20,7 @@ public sealed class Sheriff : RoleBase, IKiller
             CustomRoleTypes.Crewmate,
             20400,
             SetupOptionItem,
-            "sh",
+            "シェリフ",
             "#f8cd46",
             true,
             introSound: () => GetIntroSound(RoleTypes.Crewmate)

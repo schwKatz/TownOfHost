@@ -14,7 +14,7 @@ public sealed class Nekomata : RoleBase
             CustomRoleTypes.Crewmate,
             35300,
             null,
-            "ne",
+            "猫又",
             "#00ffff"
         );
     public Nekomata(PlayerControl player)

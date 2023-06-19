@@ -18,7 +18,7 @@ public sealed class Bakery : RoleBase
             CustomRoleTypes.Crewmate,
             35000,
             SetupOptionItem,
-            "bak",
+            "パン屋",
             "#b58428"
         );
     public Bakery(PlayerControl player)

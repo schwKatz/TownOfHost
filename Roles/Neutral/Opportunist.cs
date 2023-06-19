@@ -18,7 +18,7 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
             CustomRoleTypes.Neutral,
             50100,
             SetupOptionItem,
-            "op",
+            "オポチュニスト",
             "#00ff00"
         );
     public Opportunist(PlayerControl player)

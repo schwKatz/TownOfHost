@@ -18,7 +18,7 @@ public sealed class Executioner : RoleBase, IAdditionalWinner
             CustomRoleTypes.Neutral,
             50700,
             SetupOptionItem,
-            "exe",
+            "エクスキューショナー",
             "#611c3a",
             introSound: () => GetIntroSound(RoleTypes.Shapeshifter)
         );

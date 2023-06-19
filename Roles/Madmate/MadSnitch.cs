@@ -18,7 +18,7 @@ public sealed class MadSnitch : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
             CustomRoleTypes.Madmate,
             10200,
             SetupOptionItem,
-            "msn",
+            "マッドスニッチ",
             introSound: () => GetIntroSound(RoleTypes.Impostor)
         );
     public MadSnitch(PlayerControl player)

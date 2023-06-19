@@ -15,7 +15,7 @@ public sealed class Mafia : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             1600,
             SetUpOptionItem,
-            "mf"
+            "マフィア"
         );
     public Mafia(PlayerControl player)
     : base(

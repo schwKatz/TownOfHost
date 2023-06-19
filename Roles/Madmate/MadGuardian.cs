@@ -16,7 +16,7 @@ public sealed class MadGuardian : RoleBase, IKillFlashSeeable
             CustomRoleTypes.Madmate,
             10100,
             SetupOptionItem,
-            "mg",
+            "マッドガーディアン",
             introSound: () => GetIntroSound(RoleTypes.Impostor)
         );
     public MadGuardian(PlayerControl player)

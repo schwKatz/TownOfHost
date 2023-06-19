@@ -14,7 +14,7 @@ public sealed class Jester : RoleBase
             CustomRoleTypes.Neutral,
             50000,
             null,
-            "je",
+            "ジェスター",
             "#ec62a5"
         );
     public Jester(PlayerControl player)

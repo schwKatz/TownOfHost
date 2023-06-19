@@ -20,7 +20,7 @@ public sealed class AntiAdminer : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             3100,
             SetupOptionItem,
-            "aa"
+            "アンチアドミナー"
         );
     public AntiAdminer(PlayerControl player)
     : base(

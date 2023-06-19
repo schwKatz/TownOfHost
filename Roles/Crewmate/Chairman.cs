@@ -16,7 +16,7 @@ public sealed class Chairman : RoleBase
             CustomRoleTypes.Crewmate,
             35410,
             SetupOptionItem,
-            "cha",
+            "チェアマン",
             "#204d42",
             introSound: () => GetIntroSound(RoleTypes.Crewmate)
         );

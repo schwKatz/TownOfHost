@@ -49,7 +49,7 @@ namespace TownOfHost
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.emptybottle.townofhost";
-        public const string PluginVersion = "500.9.5";
+        public const string PluginVersion = "500.9.7";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;
@@ -269,6 +269,7 @@ namespace TownOfHost
         Disconnected,
         Fall,
         Poisoning,
+        Win,
         etc = -1
     }
     //WinData
@@ -287,6 +288,7 @@ namespace TownOfHost
         Egoist = CustomRoles.Egoist,
         Jackal = CustomRoles.Jackal,
 
+        AntiComplete = CustomRoles.AntiComplete,
         NBakery = CustomRoles.Bakery,
         Workaholic = CustomRoles.Workaholic,
 

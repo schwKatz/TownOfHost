@@ -15,7 +15,7 @@ public sealed class Seer : RoleBase, IKillFlashSeeable
             CustomRoleTypes.Crewmate,
             21000,
             null,
-            "se",
+            "シーア",
             "#61b26c"
         );
     public Seer(PlayerControl player)

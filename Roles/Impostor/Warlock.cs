@@ -20,7 +20,7 @@ public sealed class Warlock : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             1400,
             null,
-            "wa"
+            "ウォーロック"
         );
     public Warlock(PlayerControl player)
     : base(

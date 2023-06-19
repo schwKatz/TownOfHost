@@ -260,8 +260,6 @@ namespace TownOfHost
             return (SuffixModes)SuffixMode.GetValue();
         }
 
-        public static int SnitchExposeTaskLeft = 1;
-
         public static bool IsLoaded = false;
         public static int GetRoleCount(CustomRoles role)
         {
@@ -298,7 +296,15 @@ namespace TownOfHost
             // Impostor
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Impostor).Do(info =>
             {
-                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                switch (info.RoleName)
+                {
+                    case CustomRoles.Telepathisters:
+                        SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
+                        break;
+                    default:
+                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                        break;
+                }
                 info.OptionCreator?.Invoke();
             });
 
@@ -342,7 +348,15 @@ namespace TownOfHost
             // Crewmate
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Crewmate).Do(info =>
             {
-                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                switch (info.RoleName)
+                {
+                    case CustomRoles.Sympathizer: //共鳴者は2人固定
+                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 2);
+                        break;
+                    default:
+                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                        break;
+                }
                 info.OptionCreator?.Invoke();
             });
 
@@ -664,6 +678,20 @@ namespace TownOfHost
             CustomRoleSpawnChances.Add(role, spawnOption);
             CustomRoleCounts.Add(role, countOption);
         }
+        private static void SetupTelepathistersOptions(int id, TabGroup tab, CustomRoles role)
+        {
+            var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false).SetColor(Utils.GetRoleColor(role))
+                .SetValueFormat(OptionFormat.Percent)
+                .SetHeader(true)
+                .SetGameMode(CustomGameMode.Standard) as IntegerOptionItem;
+            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(2, 3, 1), 2, tab, false).SetParent(spawnOption)
+                .SetValueFormat(OptionFormat.Players)
+                .SetGameMode(CustomGameMode.Standard);
+
+            CustomRoleSpawnChances.Add(role, spawnOption);
+            CustomRoleCounts.Add(role, countOption);
+        }
+
         public class OverrideTasksData
         {
             public static Dictionary<CustomRoles, OverrideTasksData> AllData = new();
@@ -674,12 +702,14 @@ namespace TownOfHost
             public OptionItem numLongTasks;
             public OptionItem numShortTasks;
 
-            public OverrideTasksData(int idStart, TabGroup tab, CustomRoles role)
+            public OverrideTasksData(int idStart, TabGroup tab, CustomRoles role, OptionItem option = null)
             {
                 this.IdStart = idStart;
                 this.Role = role;
+
+                if(option == null) option = CustomRoleSpawnChances[role];
                 Dictionary<string, string> replacementDic = new() { { "%role%", Utils.GetRoleName(role) } };
-                doOverride = BooleanOptionItem.Create(idStart++, "doOverride", false, tab, false).SetParent(CustomRoleSpawnChances[role])
+                doOverride = BooleanOptionItem.Create(idStart++, "doOverride", false, tab, false).SetParent(option)
                     .SetValueFormat(OptionFormat.None);
                 doOverride.ReplacementDictionary = replacementDic;
                 assignCommonTasks = BooleanOptionItem.Create(idStart++, "assignCommonTasks", true, tab, false).SetParent(doOverride)
@@ -699,9 +729,9 @@ namespace TownOfHost
             {
                 return new OverrideTasksData(idStart, tab, role);
             }
-            public static OverrideTasksData Create(SimpleRoleInfo roleInfo, int idOffset)
+            public static OverrideTasksData Create(SimpleRoleInfo roleInfo, int idOffset, OptionItem option = null)
             {
-                return new OverrideTasksData(roleInfo.ConfigId + idOffset, roleInfo.Tab, roleInfo.RoleName);
+                return new OverrideTasksData(roleInfo.ConfigId + idOffset, roleInfo.Tab, roleInfo.RoleName, option);
             }
         }
     }

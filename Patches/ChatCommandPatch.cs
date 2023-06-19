@@ -324,7 +324,7 @@ namespace TownOfHost
                 roleCommands = new Dictionary<CustomRoles, string>();
 
                 // GM
-                roleCommands.Add(CustomRoles.GM, "gm");
+                roleCommands.Add(CustomRoles.GM, "ゲームマスター");
 
                 // Impostor役職
                 roleCommands.Add((CustomRoles)(-1), $"== {GetString("Impostor")} ==");  // 区切り用
@@ -333,7 +333,7 @@ namespace TownOfHost
                 // Madmate役職
                 roleCommands.Add((CustomRoles)(-2), $"== {GetString("Madmate")} ==");  // 区切り用
                 ConcatCommands(CustomRoleTypes.Madmate);
-                roleCommands.Add(CustomRoles.SKMadmate, "sm");
+                roleCommands.Add(CustomRoles.SKMadmate, "サイドキックマッドメイト");
 
                 // Crewmate役職
                 roleCommands.Add((CustomRoles)(-3), $"== {GetString("Crewmate")} ==");  // 区切り用
@@ -345,9 +345,9 @@ namespace TownOfHost
 
                 // 属性
                 roleCommands.Add((CustomRoles)(-5), $"== {GetString("Addons")} ==");  // 区切り用
-                roleCommands.Add(CustomRoles.Lovers, "lo");
-                roleCommands.Add(CustomRoles.Watcher, "wat");
-                roleCommands.Add(CustomRoles.Workhorse, "wh");
+                roleCommands.Add(CustomRoles.Lovers, "ラバーズ");
+                roleCommands.Add(CustomRoles.Watcher, "ウォッチャー");
+                roleCommands.Add(CustomRoles.Workhorse, "ワークホース");
 
                 // HAS
                 roleCommands.Add((CustomRoles)(-6), $"== {GetString("HideAndSeek")} ==");  // 区切り用
@@ -356,8 +356,6 @@ namespace TownOfHost
 #pragma warning restore IDE0028
             }
 
-            var msg = "";
-            var rolemsg = $"{GetString("Command.h_args")}";
             foreach (var r in roleCommands)
             {
                 var roleName = r.Key.ToString();
@@ -368,25 +366,8 @@ namespace TownOfHost
                     Utils.SendMessage(GetString(roleName) + GetString($"{roleName}InfoLong"));
                     return;
                 }
-
-                var roleText = $"{roleName.ToLower()}({roleShort.ToLower()}), ";
-                if ((int)r.Key < 0)
-                {
-                    msg += rolemsg + "\n" + roleShort + "\n";
-                    rolemsg = "";
-                }
-                else if ((rolemsg.Length + roleText.Length) > 40)
-                {
-                    msg += rolemsg + "\n";
-                    rolemsg = roleText;
-                }
-                else
-                {
-                    rolemsg += roleText;
-                }
             }
-            msg += rolemsg;
-            Utils.SendMessage(msg);
+            Utils.SendMessage(GetString("Message.HelpRoleNone"));
         }
         private static void ConcatCommands(CustomRoleTypes roleType)
         {

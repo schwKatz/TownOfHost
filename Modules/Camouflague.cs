@@ -51,7 +51,8 @@ namespace TownOfHost
 
             if (oldIsCamouflage != IsCamouflage)
             {
-                Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(pc));
+                Main.AllPlayerControls.Do(pc =>
+                { if(!pc.Is(Roles.Core.CustomRoles.Rainbow)) RpcSetSkin(pc); });
                 Utils.NotifyRoles(NoCache: true);
             }
         }

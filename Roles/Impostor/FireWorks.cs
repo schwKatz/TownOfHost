@@ -29,7 +29,7 @@ public sealed class FireWorks : RoleBase, IImpostor
             CustomRoleTypes.Impostor,
             1700,
             SetupCustomOption,
-            "fw"
+            "花火職人"
         );
     public FireWorks(PlayerControl player)
     : base(

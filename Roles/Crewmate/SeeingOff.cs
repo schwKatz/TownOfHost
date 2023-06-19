@@ -16,7 +16,7 @@ public sealed class SeeingOff : RoleBase
             CustomRoleTypes.Crewmate,
             35600,
             null,
-            "so",
+            "見送り人",
             "#883fd1"
         );
     public SeeingOff(PlayerControl player)

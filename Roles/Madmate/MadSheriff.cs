@@ -15,7 +15,7 @@ public sealed class MadSheriff : RoleBase, IKiller, IKillFlashSeeable, IDeathRea
             CustomRoleTypes.Madmate,
             10600,
             SetupOptionItem,
-            "msh",
+            "マッドシェリフ",
             requireResetCam: true
         );
     public MadSheriff(PlayerControl player)

@@ -18,7 +18,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner
             CustomRoleTypes.Neutral,
             50400,
             SetupOptionItem,
-            "sc",
+            "シュレディンガーの猫",
             "#696969",
             introSound: () => GetIntroSound(RoleTypes.Impostor)
         );
