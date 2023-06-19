@@ -10,7 +10,7 @@ namespace TownOfHost.Roles.Crewmate;
 public sealed class Bakery : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Bakery),
             player => new Bakery(player),
             CustomRoles.Bakery,
@@ -194,7 +194,7 @@ public sealed class Bakery : RoleBase
                 && !Main.AfterMeetingDeathPlayers.ContainsKey(PoisonPlayer.PlayerId))
             {
                 PoisonPlayer.SetRealKiller(Player);
-                CheckForEndVotingPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.Poisoning, PoisonPlayer.PlayerId);
+                MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.Poisoning, PoisonPlayer.PlayerId);
             }
         }
         else //吊られた時のKey取り消し 以降のパンセットいらないので返す

@@ -11,7 +11,7 @@ namespace TownOfHost.Roles.Crewmate;
 public sealed class Hunter : RoleBase, IKiller
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Hunter),
             player => new Hunter(player),
             CustomRoles.Hunter,

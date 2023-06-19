@@ -7,7 +7,7 @@ namespace TownOfHost.Roles.Crewmate;
 public sealed class TaskManager : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(TaskManager),
             player => new TaskManager(player),
             CustomRoles.TaskManager,

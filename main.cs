@@ -49,7 +49,7 @@ namespace TownOfHost
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.emptybottle.townofhost";
-        public const string PluginVersion = "5.0.0";
+        public const string PluginVersion = "501.9.0";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.6.13";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -110,8 +110,11 @@ namespace TownOfHost
         public static bool introDestroyed = false;
         public static float DefaultCrewmateVision;
         public static float DefaultImpostorVision;
-        public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 24 or 25;
-        public static bool IsInitialRelease = DateTime.Now.Month == 12 && DateTime.Now.Day is 4;
+        public static bool IsValentine = DateTime.Now.Month == 3 && DateTime.Now.Day is 9 or 10 or 11 or 12 or 13 or 14 or 15;
+        public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 23 or 24 or 25 or 26;
+        public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3;
+        public static bool IsInitialRelease = DateTime.Now.Month == 11 && DateTime.Now.Day is 2;
+        public static bool IsOneNightRelease = DateTime.Now.Month == 6;
         public const float RoleTextSize = 2f;
 
         public static IEnumerable<PlayerControl> AllPlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null);

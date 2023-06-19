@@ -7,7 +7,7 @@ using static TownOfHost.Utils;
 public sealed class Sympathizer : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Sympathizer),
             player => new Sympathizer(player),
             CustomRoles.Sympathizer,

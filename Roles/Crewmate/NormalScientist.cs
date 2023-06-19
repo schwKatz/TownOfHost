@@ -6,7 +6,7 @@ namespace TownOfHost.Roles.Crewmate;
 public sealed class NormalScientist : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(NormalScientist),
             player => new NormalScientist(player),
             CustomRoles.NormalScientist,

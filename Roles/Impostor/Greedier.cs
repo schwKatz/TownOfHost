@@ -7,7 +7,7 @@ namespace TownOfHost.Roles.Impostor;
 public sealed class Greedier : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Greedier),
             player => new Greedier(player),
             CustomRoles.Greedier,

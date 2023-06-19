@@ -14,7 +14,7 @@ namespace TownOfHost.Roles.Impostor;
 public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Telepathisters),
             player => new Telepathisters(player),
             CustomRoles.Telepathisters,

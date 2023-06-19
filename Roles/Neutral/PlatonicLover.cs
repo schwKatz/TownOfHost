@@ -8,7 +8,7 @@ namespace TownOfHost.Roles.Neutral;
 public sealed class PlatonicLover : RoleBase, IKiller
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(PlatonicLover),
             player => new PlatonicLover(player),
             CustomRoles.PlatonicLover,

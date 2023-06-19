@@ -43,7 +43,7 @@ namespace TownOfHost
 
             ReportDeadBodyPatch.CanReport = new();
             ReportDeadBodyPatch.CanReportByDeadBody = new();
-            CheckForEndVotingPatch.RevengeTargetPlayer = new();
+            MeetingHudPatch.RevengeTargetPlayer = new();
             Options.UsedButtonCount = 0;
             Main.RealOptionsData = new OptionBackupData(GameOptionsManager.Instance.CurrentGameOptions);
 

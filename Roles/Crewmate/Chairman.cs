@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using AmongUs.GameOptions;
 
+using TownOfHost.Modules;
 using TownOfHost.Roles.Core;
-using static TownOfHost.CheckForEndVotingPatch;
 
 namespace TownOfHost.Roles.Crewmate;
 public sealed class Chairman : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Chairman),
             player => new Chairman(player),
             CustomRoles.Chairman,
@@ -76,27 +76,18 @@ public sealed class Chairman : RoleBase
 
         return false;
     }
-    public override bool OnCheckForEndVoting(ref List<MeetingHud.VoterState> statesList, PlayerVoteArea pva)
+
+    public override (byte? votedForId, int? numVotes, bool doVote) OnVote(byte voterId, byte sourceVotedForId)
     {
-        //死んでいないチェアマンが投票済み
-        if (!IgnoreSkip &&
-            pva.DidVote &&
-            pva.VotedFor != Player.PlayerId &&
-            pva.VotedFor < 253 &&
-            Player.IsAlive())
+        var (votedForId, numVotes, doVote) = base.OnVote(voterId, sourceVotedForId);
+        var baseVote = (votedForId, numVotes, doVote);
+        if (IgnoreSkip || voterId != Player.PlayerId || sourceVotedForId == Player.PlayerId || sourceVotedForId >= 253 || !Player.IsAlive())
         {
-            var voteTarget = Utils.GetPlayerById(pva.VotedFor);
-
-            MeetingHud.Instance.RpcVotingComplete(new MeetingHud.VoterState[]{ new ()
-                {
-                    VoterId = pva.TargetPlayerId,
-                    VotedForId = 253
-                }}, null, false); //RPC
-
-            Logger.Info("ディクテーターによる強制会議終了", "Special Phase");
-            return false;
+            return baseVote;
         }
-        return true;
+        MeetingVoteManager.Instance.ClearAndExile(Player.PlayerId, 253);
+        return (votedForId, numVotes, false);
     }
+
     public override void AfterMeetingTasks()=> Player.RpcResetAbilityCooldown();
 }

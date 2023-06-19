@@ -8,7 +8,7 @@ namespace TownOfHost.Roles.Neutral;
 public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Totocalcio),
             player => new Totocalcio(player),
             CustomRoles.Totocalcio,

@@ -20,247 +20,6 @@ public static class MeetingHudPatch
         public static bool Prefix()
         {
             if (!AmongUsClient.Instance.AmHost) return true;
-            var voteLog = Logger.Handler("Vote");
-            try
-            {
-                List<MeetingHud.VoterState> statesList = new();
-                MeetingHud.VoterState[] states;
-                foreach (var pva in __instance.playerStates)
-                {
-                    if (pva == null) continue;
-                    PlayerControl pc = Utils.GetPlayerById(pva.TargetPlayerId);
-                    if (pc == null) continue;
-
-                    if (pc.GetRoleClass()?.OnCheckForEndVoting(ref statesList, pva) == false)
-                        return false;
-                }
-                foreach (var ps in __instance.playerStates)
-                {
-                    //死んでいないプレイヤーが投票していない
-                    if (!(PlayerState.GetByPlayerId(ps.TargetPlayerId).IsDead || ps.DidVote)) return false;
-                }
-
-                GameData.PlayerInfo exiledPlayer = PlayerControl.LocalPlayer.Data;
-                bool tie = false;
-
-                for (var i = 0; i < __instance.playerStates.Length; i++)
-                {
-                    PlayerVoteArea ps = __instance.playerStates[i];
-                    if (ps == null) continue;
-                    voteLog.Info(string.Format("{0,-2}{1}:{2,-3}{3}", ps.TargetPlayerId, Utils.PadRightV2($"({Utils.GetVoteName(ps.TargetPlayerId)})", 40), ps.VotedFor, $"({Utils.GetVoteName(ps.VotedFor)})"));
-                    var voter = Utils.GetPlayerById(ps.TargetPlayerId);
-                    if (voter == null || voter.Data == null || voter.Data.Disconnected) continue;
-                    if (Options.VoteMode.GetBool())
-                    {
-                        if (ps.VotedFor == 253 && !voter.Data.IsDead && //スキップ
-                            !(Options.WhenSkipVoteIgnoreFirstMeeting.GetBool() && MeetingStates.FirstMeeting) && //初手会議を除く
-                            !(Options.WhenSkipVoteIgnoreNoDeadBody.GetBool() && !MeetingStates.IsExistDeadBody) && //死体がない時を除く
-                            !(Options.WhenSkipVoteIgnoreEmergency.GetBool() && MeetingStates.IsEmergencyMeeting) //緊急ボタンを除く
-                            )
-                        {
-                            switch (Options.GetWhenSkipVote())
-                            {
-                                case VoteMode.Suicide:
-                                    TryAddAfterMeetingDeathPlayers(CustomDeathReason.Suicide, ps.TargetPlayerId);
-                                    voteLog.Info($"スキップしたため{voter.GetNameWithRole()}を自殺させました");
-                                    break;
-                                case VoteMode.SelfVote:
-                                    ps.VotedFor = ps.TargetPlayerId;
-                                    voteLog.Info($"スキップしたため{voter.GetNameWithRole()}に自投票させました");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                        if (ps.VotedFor == 254 && !voter.Data.IsDead)//無投票
-                        {
-                            switch (Options.GetWhenNonVote())
-                            {
-                                case VoteMode.Suicide:
-                                    TryAddAfterMeetingDeathPlayers(CustomDeathReason.Suicide, ps.TargetPlayerId);
-                                    voteLog.Info($"無投票のため{voter.GetNameWithRole()}を自殺させました");
-                                    break;
-                                case VoteMode.SelfVote:
-                                    ps.VotedFor = ps.TargetPlayerId;
-                                    voteLog.Info($"無投票のため{voter.GetNameWithRole()}に自投票させました");
-                                    break;
-                                case VoteMode.Skip:
-                                    ps.VotedFor = 253;
-                                    voteLog.Info($"無投票のため{voter.GetNameWithRole()}にスキップさせました");
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
-                    statesList.Add(new MeetingHud.VoterState()
-                    {
-                        VoterId = ps.TargetPlayerId,
-                        VotedForId = ps.VotedFor
-                    });
-                }
-                states = statesList.ToArray();
-
-                var VotingData = __instance.CustomCalculateVotes();
-                byte exileId = byte.MaxValue;
-                int max = 0;
-                voteLog.Info("===追放者確認処理開始===");
-                foreach (var data in VotingData)
-                {
-                    voteLog.Info($"{data.Key}({Utils.GetVoteName(data.Key)}):{data.Value}票");
-                    if (data.Value > max)
-                    {
-                        voteLog.Info(data.Key + "番が最高値を更新(" + data.Value + ")");
-                        exileId = data.Key;
-                        max = data.Value;
-                        tie = false;
-                    }
-                    else if (data.Value == max)
-                    {
-                        voteLog.Info(data.Key + "番が" + exileId + "番と同数(" + data.Value + ")");
-                        exileId = byte.MaxValue;
-                        tie = true;
-                    }
-                    voteLog.Info($"exileId: {exileId}, max: {max}票");
-                }
-
-                voteLog.Info($"追放者決定: {exileId}({Utils.GetVoteName(exileId)})");
-
-                if (Options.VoteMode.GetBool() && Options.WhenTie.GetBool() && tie)
-                {
-                    switch ((TieMode)Options.WhenTie.GetValue())
-                    {
-                        case TieMode.Default:
-                            exiledPlayer = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(info => info.PlayerId == exileId);
-                            break;
-                        case TieMode.All:
-                            var exileIds = VotingData.Where(x => x.Key < 15 && x.Value == max).Select(kvp => kvp.Key).ToArray();
-                            foreach (var playerId in exileIds)
-                                Utils.GetPlayerById(playerId).SetRealKiller(null);
-                            TryAddAfterMeetingDeathPlayers(CustomDeathReason.Vote, exileIds);
-                            exiledPlayer = null;
-                            break;
-                        case TieMode.Random:
-                            exiledPlayer = GameData.Instance.AllPlayers.ToArray().OrderBy(_ => Guid.NewGuid()).FirstOrDefault(x => VotingData.TryGetValue(x.PlayerId, out int vote) && vote == max);
-                            tie = false;
-                            break;
-                    }
-                }
-                else
-                    exiledPlayer = GameData.Instance.AllPlayers.ToArray().FirstOrDefault(info => !tie && info.PlayerId == exileId);
-                if (exiledPlayer != null)
-                    exiledPlayer.Object.SetRealKiller(null);
-
-                //RPC
-                if (AntiBlackout.OverrideExiledPlayer)
-                {
-                    __instance.RpcVotingComplete(states, null, true);
-                    ExileControllerWrapUpPatch.AntiBlackout_LastExiled = exiledPlayer;
-                }
-                else __instance.RpcVotingComplete(states, exiledPlayer, tie); //通常処理
-
-                CheckForDeathOnExile(CustomDeathReason.Vote, exileId);
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Logger.SendInGame(string.Format(GetString("Error.MeetingException"), ex.Message), true);
-                throw;
-            }
-        }
-        public static void TryAddAfterMeetingDeathPlayers(CustomDeathReason deathReason, params byte[] playerIds)
-        {
-            var AddedIdList = new List<byte>();
-            foreach (var playerId in playerIds)
-                if (Main.AfterMeetingDeathPlayers.TryAdd(playerId, deathReason))
-                    AddedIdList.Add(playerId);
-            CheckForDeathOnExile(deathReason, AddedIdList.ToArray());
-        }
-        public static void CheckForDeathOnExile(CustomDeathReason deathReason, params byte[] playerIds)
-        {
-            foreach (var playerId in playerIds)
-            {
-                //Loversの後追い
-                if (CustomRoles.Lovers.IsPresent() && !Main.isLoversDead && Main.LoversPlayers.Find(lp => lp.PlayerId == playerId) != null)
-                    FixedUpdatePatch.LoversSuicide(playerId, true);
-                //道連れチェック
-                RevengeOnExile(playerId, deathReason);
-            }
-        }
-        //道連れ
-        public static List<(PlayerControl, PlayerControl)> RevengeTargetPlayer;
-        private static void RevengeOnExile(byte playerId, CustomDeathReason deathReason)
-        {
-            var player = Utils.GetPlayerById(playerId);
-            if (player == null) return;
-            //道連れ能力持たない時は下を通さない
-            if (!((player.Is(CustomRoles.SKMadmate) && Options.MadmateRevengeCrewmate.GetBool())
-                || player.Is(CustomRoles.EvilNekomata) || player.Is(CustomRoles.Nekomata)/* || player.Is(CustomRoles.Revenger)*/)) return;
-
-            var target = PickRevengeTarget(player, deathReason);
-            if (target == null) return;
-            TryAddAfterMeetingDeathPlayers(CustomDeathReason.Revenge, target.PlayerId);
-            target.SetRealKiller(player);
-            Logger.Info($"{player.GetNameWithRole()}の道連れ先:{target.GetNameWithRole()}", "RevengeOnExile");
-        }
-        private static PlayerControl PickRevengeTarget(PlayerControl exiledplayer, CustomDeathReason deathReason)//道連れ先選定
-        {
-            List<PlayerControl> TargetList = new();
-            foreach (var candidate in Main.AllAlivePlayerControls)
-            {
-                if (candidate == exiledplayer || Main.AfterMeetingDeathPlayers.ContainsKey(candidate.PlayerId)) continue;
-
-                //対象とならない人を判定
-                if (exiledplayer.Is(CustomRoleTypes.Madmate) || exiledplayer.Is(CustomRoleTypes.Impostor)) //インポスター陣営の場合
-                {
-                    if (candidate.Is(CustomRoleTypes.Impostor)) continue; //インポスター
-                    if (candidate.Is(CustomRoleTypes.Madmate) && !Options.RevengeMadByImpostor.GetBool()) continue; //マッドメイト（設定）
-                }
-                if (candidate.Is(CustomRoleTypes.Neutral) && !Options.RevengeNeutral.GetBool()) continue; //第三陣営（設定）
-
-                TargetList.Add(candidate);
-                //switch (exiledplayer.GetCustomRole())
-                //{
-                //    //ここに道連れ役職を追加
-                //    default:
-                //        if (exiledplayer.Is(CustomRoleTypes.Madmate) && deathReason == CustomDeathReason.Vote && Options.MadmateRevengeCrewmate.GetBool() //黒猫オプション
-                //        && !candidate.Is(CustomRoleTypes.Impostor))
-                //            TargetList.Add(candidate);
-                //        break;
-                //}
-            }
-            if (TargetList == null || TargetList.Count == 0) return null;
-            var rand = IRandom.Instance;
-            var target = TargetList[rand.Next(TargetList.Count)];
-            // 道連れする側とされる側をセットでリストに追加
-            RevengeTargetPlayer.Add((exiledplayer, target));
-            return target;
-        }
-    }
-
-    static class ExtendedMeetingHud
-    {
-        public static Dictionary<byte, int> CustomCalculateVotes(this MeetingHud __instance)
-        {
-            Logger.Info("CustomCalculateVotes開始", "Vote");
-            Dictionary<byte, int> dic = new();
-            //| 投票された人 | 投票された回数 |
-            for (int i = 0; i < __instance.playerStates.Length; i++)
-            {
-                PlayerVoteArea ps = __instance.playerStates[i];
-                if (ps == null) continue;
-                if (ps.VotedFor is not ((byte)252) and not byte.MaxValue and not ((byte)254))
-                {
-                    int VoteNum = 1;
-                    if (CustomRoleManager.GetByPlayerId(ps.TargetPlayerId) is Mayor) VoteNum += Mayor.AdditionalVote;
-                    //投票を1追加 キーが定義されていない場合は1で上書きして定義
-                    dic[ps.VotedFor] = !dic.TryGetValue(ps.VotedFor, out int num) ? VoteNum : num + VoteNum;
-                }
-            }
-            return dic;
-        }
-    }
             MeetingVoteManager.Instance?.CheckAndEndMeeting();
             return false;
         }
@@ -332,11 +91,11 @@ public static class MeetingHudPatch
             }
             if (Options.ShowRevengeTarget.GetBool())
             {
-                foreach (var Exiled_Target in CheckForEndVotingPatch.RevengeTargetPlayer)
+                foreach (var Exiled_Target in RevengeTargetPlayer)
                 {
                     Utils.SendMessage(string.Format(GetString("RevengeText"), Exiled_Target.Item1.name, Exiled_Target.Item2.name));
                 }
-                CheckForEndVotingPatch.RevengeTargetPlayer.Clear();
+                RevengeTargetPlayer.Clear();
             }
 
             if (AntiBlackout.OverrideExiledPlayer)
@@ -377,8 +136,8 @@ public static class MeetingHudPatch
                 // 初手会議での役職説明表示
                 if (Options.ShowRoleInfoAtFirstMeeting.GetBool() && MeetingStates.FirstMeeting)
                 {
-                    String RoleInfoTitleString = $"{GetString("RoleInfoTitle")}";
-                    String RoleInfoTitle = $"{Utils.ColorString(Utils.GetRoleColor(target.GetCustomRole()), RoleInfoTitleString)}";
+                    string RoleInfoTitleString = $"{GetString("RoleInfoTitle")}";
+                    string RoleInfoTitle = $"{Utils.ColorString(Utils.GetRoleColor(target.GetCustomRole()), RoleInfoTitleString)}";
                     Utils.SendMessage(Utils.GetMyRoleInfo(target), sendTo: pva.TargetPlayerId, title: RoleInfoTitle);
                 }
 
@@ -472,10 +231,16 @@ public static class MeetingHudPatch
             RevengeOnExile(playerId, deathReason);
         }
     }
+    //道連れ
+    public static List<(PlayerControl, PlayerControl)> RevengeTargetPlayer;
     private static void RevengeOnExile(byte playerId, CustomDeathReason deathReason)
     {
         var player = Utils.GetPlayerById(playerId);
         if (player == null) return;
+        //道連れ能力持たない時は下を通さない
+        if (!((player.Is(CustomRoles.SKMadmate) && Options.MadmateRevengeCrewmate.GetBool())
+            || player.Is(CustomRoles.EvilNekomata) || player.Is(CustomRoles.Nekomata)/* || player.Is(CustomRoles.Revenger)*/)) return;
+
         var target = PickRevengeTarget(player, deathReason);
         if (target == null) return;
         TryAddAfterMeetingDeathPlayers(CustomDeathReason.Revenge, target.PlayerId);
@@ -488,19 +253,31 @@ public static class MeetingHudPatch
         foreach (var candidate in Main.AllAlivePlayerControls)
         {
             if (candidate == exiledplayer || Main.AfterMeetingDeathPlayers.ContainsKey(candidate.PlayerId)) continue;
-            switch (exiledplayer.GetCustomRole())
+
+            //対象とならない人を判定
+            if (exiledplayer.Is(CustomRoleTypes.Madmate) || exiledplayer.Is(CustomRoleTypes.Impostor)) //インポスター陣営の場合
             {
-                //ここに道連れ役職を追加
-                default:
-                    if (exiledplayer.Is(CustomRoleTypes.Madmate) && deathReason == CustomDeathReason.Vote && Options.MadmateRevengeCrewmate.GetBool() //黒猫オプション
-                    && !candidate.Is(CustomRoleTypes.Impostor))
-                        TargetList.Add(candidate);
-                    break;
+                if (candidate.Is(CustomRoleTypes.Impostor)) continue; //インポスター
+                if (candidate.Is(CustomRoleTypes.Madmate) && !Options.RevengeMadByImpostor.GetBool()) continue; //マッドメイト（設定）
             }
+            if (candidate.Is(CustomRoleTypes.Neutral) && !Options.RevengeNeutral.GetBool()) continue; //第三陣営（設定）
+
+            TargetList.Add(candidate);
+            //switch (exiledplayer.GetCustomRole())
+            //{
+            //    //ここに道連れ役職を追加
+            //    default:
+            //        if (exiledplayer.Is(CustomRoleTypes.Madmate) && deathReason == CustomDeathReason.Vote && Options.MadmateRevengeCrewmate.GetBool() //黒猫オプション
+            //        && !candidate.Is(CustomRoleTypes.Impostor))
+            //            TargetList.Add(candidate);
+            //        break;
+            //}
         }
         if (TargetList == null || TargetList.Count == 0) return null;
         var rand = IRandom.Instance;
         var target = TargetList[rand.Next(TargetList.Count)];
+        // 道連れする側とされる側をセットでリストに追加
+        RevengeTargetPlayer.Add((exiledplayer, target));
         return target;
     }
 }

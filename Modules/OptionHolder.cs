@@ -393,7 +393,7 @@ namespace TownOfHost
                 .SetGameMode(CustomGameMode.Standard);
 
             KillFlashDuration = FloatOptionItem.Create(90000, "KillFlashDuration", new(0.1f, 0.45f, 0.05f), 0.3f, TabGroup.MainSettings, false)
-                .SetColor(Color.red)
+                .SetColor(Palette.ImpostorRed)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetGameMode(CustomGameMode.Standard);
 

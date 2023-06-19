@@ -9,7 +9,7 @@ namespace TownOfHost.Roles.Crewmate;
 public sealed class Express : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Express),
             player => new Express(player),
             CustomRoles.Express,

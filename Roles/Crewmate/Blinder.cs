@@ -9,7 +9,7 @@ namespace TownOfHost.Roles.Crewmate;
 public sealed class Blinder : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Blinder),
             player => new Blinder(player),
             CustomRoles.Blinder,

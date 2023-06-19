@@ -11,7 +11,7 @@ namespace TownOfHost.Roles.Crewmate;
 public sealed class FortuneTeller : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(FortuneTeller),
             player => new FortuneTeller(player),
             CustomRoles.FortuneTeller,
@@ -77,13 +77,17 @@ public sealed class FortuneTeller : RoleBase
 
         return ColorString(RoleInfo.RoleColor, $"[{NumOfForecast - TargetResult.Count}]");
     }
-    public override bool OnCheckForEndVoting(ref List<MeetingHud.VoterState> statesList, PlayerVoteArea pva)
+    public override (byte? votedForId, int? numVotes, bool doVote) OnVote(byte voterId, byte sourceVotedForId)
     {
-        Logger.Info($"MeetingPrefix voter: {Player.name}, vote: {pva.DidVote} target: {pva.name}, notSelf: {Player.PlayerId != pva.VotedFor}, pcIsDead: {Player.Data.IsDead}, voteFor: {pva.VotedFor}", "FortuneTeller");
-        if (pva.DidVote && pva.VotedFor != Player.PlayerId && pva.VotedFor < 253 && !Player.Data.IsDead) //自分以外に投票
-            VoteForecastTarget(Player,pva.VotedFor);
-
-        return true;
+        var (votedForId, numVotes, doVote) = base.OnVote(voterId, sourceVotedForId);
+        var baseVote = (votedForId, numVotes, doVote);
+        //Logger.Info($"MeetingPrefix voter: {Player.name}, vote: {pva.DidVote} target: {pva.name}, notSelf: {Player.PlayerId != pva.VotedFor}, pcIsDead: {Player.Data.IsDead}, voteFor: {pva.VotedFor}", "FortuneTeller");
+        if (voterId != Player.PlayerId || sourceVotedForId == Player.PlayerId || sourceVotedForId >= 253 || !Player.IsAlive())
+        {
+            return baseVote;
+        }
+        VoteForecastTarget(Player, sourceVotedForId);
+        return (null, null, true);
     }
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
     {

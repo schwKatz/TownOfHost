@@ -8,7 +8,7 @@ namespace TownOfHost.Roles.Crewmate;
 public sealed class SeeingOff : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(SeeingOff),
             player => new SeeingOff(player),
             CustomRoles.SeeingOff,

@@ -12,7 +12,7 @@ namespace TownOfHost.Roles.Impostor;
 public sealed class EvilNekomata : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(EvilNekomata),
             player => new EvilNekomata(player),
             CustomRoles.EvilNekomata,

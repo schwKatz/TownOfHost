@@ -8,7 +8,7 @@ namespace TownOfHost.Roles.Neutral;
 public sealed class Workaholic : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Workaholic),
             player => new Workaholic(player),
             CustomRoles.Workaholic,

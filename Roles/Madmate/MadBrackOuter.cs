@@ -9,7 +9,7 @@ namespace TownOfHost.Roles.Madmate;
 public sealed class MadBrackOuter : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(MadBrackOuter),
             player => new MadBrackOuter(player),
             CustomRoles.MadBrackOuter,

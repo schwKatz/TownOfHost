@@ -9,7 +9,7 @@ namespace TownOfHost.Roles.Impostor;
 public sealed class EvilDiviner : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(EvilDiviner),
             player => new EvilDiviner(player),
             CustomRoles.EvilDiviner,

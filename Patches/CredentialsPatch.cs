@@ -79,7 +79,7 @@ namespace TownOfHost
                     SpecialEventText.color = Color.white;
                     SpecialEventText.fontSizeMin = 3f;
                     SpecialEventText.alignment = TextAlignmentOptions.Center;
-                    SpecialEventText.transform.localPosition = new Vector3(0f, 0.8f, 0f);
+                    SpecialEventText.transform.localPosition = new Vector3(0f, -1.2f, 0f);
                 }
                 SpecialEventText.enabled = TitleLogoPatch.amongUsLogo != null;
                 if (Main.IsInitialRelease)
@@ -88,12 +88,24 @@ namespace TownOfHost
                     ColorUtility.TryParseHtmlString(Main.ModColor, out var col);
                     SpecialEventText.color = col;
                 }
+                if (Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
+                {
+                    SpecialEventText.text = "TOH_YSへようこそ！" +
+                        "\n<size=55%>ゲームモードやあまり使われない機能を削除して動作を軽くしたバージョンです。" +
+                        "\nここにない機能はTOH_Yをご利用ください。\n</size><size=40%>\nTOH_YSのＳはSimpleのＳです。</size>";
+                    SpecialEventText.color = Color.yellow;
+                }
+                //if (Main.IsValentine)
+                //{
+                //    SpecialEventText.text = "♥happy Valentine♥";
+                //    if (CultureInfo.CurrentCulture.Name == "ja-JP")
+                //        SpecialEventText.text += "<size=60%>\n<color=#b58428>チョコレート屋で遊んでみてね。</size></color>";
+                //    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
+                //}
                 if (Main.IsChristmas && CultureInfo.CurrentCulture.Name == "ja-JP")
                 {
-                    //このソースコ―ドを見た人へ。口外しないでもらえると嬉しいです...
-                    //To anyone who has seen this source code. I would appreciate it if you would keep your mouth shut...
-                    SpecialEventText.text = "何とは言いませんが、特別な日ですね。\n<size=15%>\n\n末永く爆発しろ</size>";
-                    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
+                    SpecialEventText.text = "★Merry Christmas★\n<size=15%>\n\nTOH_Yからのプレゼントはありません。</size>";
+                    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Rainbow);
                 }
             }
         }
@@ -113,8 +125,8 @@ namespace TownOfHost
                 var logoTransform = logoObject.transform;
                 TohLogo = logoObject.AddComponent<SpriteRenderer>();
                 logoTransform.parent = rightpanel;
-                logoTransform.localPosition = new(0f, 0.15f, 1f);
-                logoTransform.localScale *= 1.2f;
+                logoTransform.localPosition = new(0f, 0.18f, 1f);
+                //logoTransform.localScale *= 1f;
                 TohLogo.sprite = Utils.LoadSprite("TownOfHost.Resources.TownOfHost-Logo.png", 300f);
             }
         }
@@ -130,10 +142,10 @@ namespace TownOfHost
             }
             public static void Postfix(ModManager __instance)
             {
-                var offset_y = HudManager.InstanceExists ? 1.6f : 0.9f;
+                //var offset_y = HudManager.InstanceExists ? 1.6f : 0.9f;
                 __instance.ModStamp.transform.position = AspectPosition.ComputeWorldPosition(
                     __instance.localCamera, AspectPosition.EdgeAlignments.RightTop,
-                    new Vector3(0.4f, offset_y, __instance.localCamera.nearClipPlane + 0.1f));
+                    new Vector3(0.4f, 1.6f, __instance.localCamera.nearClipPlane + 0.1f));
             }
         }
     }

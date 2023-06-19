@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AmongUs.GameOptions;
 
 using UnityEngine;
+using TownOfHost.Modules;
 using TownOfHost.Roles.Core;
 using static TownOfHost.Utils;
 
@@ -10,7 +11,7 @@ namespace TownOfHost.Roles.Neutral;
 public sealed class AntiComplete : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(AntiComplete),
             player => new AntiComplete(player),
             CustomRoles.AntiComplete,
@@ -108,35 +109,22 @@ public sealed class AntiComplete : RoleBase
         return string.Empty;
     }
 
-    public override string GetProgressText(bool comms = false) => Utils.ColorString(GuardCount > 0 ? RoleInfo.RoleColor : Color.gray, $"({GuardCount})");
+    public override string GetProgressText(bool comms = false) => ColorString(GuardCount > 0 ? RoleInfo.RoleColor : Color.gray, $"({GuardCount})");
 
-    public override bool OnCheckForEndVoting(ref List<MeetingHud.VoterState> statesList, PlayerVoteArea pva)
+    public override (byte? votedForId, int? numVotes, bool doVote) OnVote(byte voterId, byte sourceVotedForId)
     {
-        if (pva.DidVote && Player.PlayerId != pva.VotedFor
-            && pva.VotedFor < 253 && Player.IsAlive())
+        var (votedForId, numVotes, doVote) = base.OnVote(voterId, sourceVotedForId);
+        var baseVote = (votedForId, numVotes, doVote);
+        if (voterId != Player.PlayerId || sourceVotedForId == Player.PlayerId || sourceVotedForId >= 253 || !Player.IsAlive())
         {
-            statesList.Add(new()
-            {
-                VoterId = pva.TargetPlayerId,
-                VotedForId = pva.VotedFor
-            });
-            var states = statesList.ToArray();
-            if (AntiBlackout.OverrideExiledPlayer)
-            {
-                MeetingHud.Instance.RpcVotingComplete(states, null, true);
-                ExileControllerWrapUpPatch.AntiBlackout_LastExiled = Player.Data;
-            }
-            else MeetingHud.Instance.RpcVotingComplete(states, Player.Data, false); //通常処理
-            Logger.Info("アンチコンプによる強制会議終了", "Special Phase");
-
-            var taskState = PlayerState.GetByPlayerId(pva.VotedFor).GetTaskState();
-            if (taskState.IsTaskFinished) MyState.DeathReason = CustomDeathReason.Win;
-            else MyState.DeathReason = CustomDeathReason.Suicide;
-
-            return true;
+            return baseVote;
         }
 
-        return true;
+        var taskState = PlayerState.GetByPlayerId(sourceVotedForId).GetTaskState();
+        if (taskState.IsTaskFinished) MyState.DeathReason = CustomDeathReason.Win;
+        else MyState.DeathReason = CustomDeathReason.Suicide;
+        MeetingVoteManager.Instance.ClearAndExile(Player.PlayerId, sourceVotedForId);
+        return (voterId, numVotes, false);
     }
 
     public override void OnExileWrapUp(GameData.PlayerInfo exiled, ref bool DecidedWinner)

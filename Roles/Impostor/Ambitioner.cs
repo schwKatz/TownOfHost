@@ -7,7 +7,7 @@ namespace TownOfHost.Roles.Impostor;
 public sealed class Ambitioner : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
-        new(
+         SimpleRoleInfo.Create(
             typeof(Ambitioner),
             player => new Ambitioner(player),
             CustomRoles.Ambitioner,
