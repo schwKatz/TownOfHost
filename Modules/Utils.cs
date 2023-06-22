@@ -641,16 +641,16 @@ namespace TownOfHostY
             var sb = new StringBuilder();
             if (Options.CurrentGameMode == CustomGameMode.HideAndSeek)
             {
-                sb.Append(GetString("Roles")).Append(":");
+                sb.Append(GetString("Roles")).Append(':');
                 if (CustomRoles.HASFox.IsEnable()) sb.AppendFormat("\n{0}:{1}", GetRoleName(CustomRoles.HASFox), CustomRoles.HASFox.GetCount());
                 if (CustomRoles.HASTroll.IsEnable()) sb.AppendFormat("\n{0}:{1}", GetRoleName(CustomRoles.HASTroll), CustomRoles.HASTroll.GetCount());
                 SendMessage(sb.ToString(), PlayerId);
-                sb.Clear().Append(GetString("Settings")).Append(":");
+                sb.Clear().Append(GetString("Settings")).Append(':');
                 sb.Append(GetString("HideAndSeek"));
             }
             else
             {
-                sb.Append(GetString("Settings")).Append(":");
+                sb.Append(GetString("Settings")).Append(':');
                 foreach (var role in Options.CustomRoleCounts)
                 {
                     if (!role.Key.IsEnable() || role.Key is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
@@ -713,7 +713,7 @@ namespace TownOfHostY
                 SendMessage(GetString("Message.HideGameSettings"), PlayerId);
                 return;
             }
-            var sb = new StringBuilder(GetString("Roles")).Append(":");
+            var sb = new StringBuilder(GetString("Roles")).Append(':');
             sb.AppendFormat("\n{0}:{1}", GetRoleName(CustomRoles.GM), Options.EnableGM.GetString().RemoveHtmlTags());
             foreach (CustomRoles role in CustomRolesHelper.AllRoles)
             {
@@ -761,7 +761,7 @@ namespace TownOfHostY
             }
             var sb = new StringBuilder();
 
-            sb.Append(GetString("LastResult")).Append(":");
+            sb.Append(GetString("LastResult")).Append(':');
             List<byte> cloneRoles = new(PlayerState.AllPlayerStates.Keys);
             sb.Append($"\n{SetEverythingUpPatch.LastWinsText}\n");
             foreach (var id in Main.winnerList)
