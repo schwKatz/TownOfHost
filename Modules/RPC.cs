@@ -109,7 +109,7 @@ namespace TownOfHostY
                     catch
                     {
                         Logger.Warn($"{__instance?.Data?.PlayerName}({__instance.PlayerId}): バージョン情報が無効です", "RpcVersionCheck");
-                        new LateTask(() =>
+                        _ = new LateTask(() =>
                         {
                             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.RequestRetryVersionCheck, SendOption.Reliable, __instance.GetClientId());
                             AmongUsClient.Instance.FinishRpcImmediately(writer);

@@ -117,7 +117,7 @@ namespace TownOfHostY
             if (AmongUsClient.Instance.AmHost)
             {
                 OptionItem.SyncAllOptions();
-                new LateTask(() =>
+                _ = new LateTask(() =>
                 {
                     if (client.Character == null) return;
                     if (AmongUsClient.Instance.IsGamePublic) Utils.SendMessage(string.Format(GetString("Message.AnnounceUsingTOH"), Main.PluginVersion), client.Character.PlayerId);
@@ -125,7 +125,7 @@ namespace TownOfHostY
                 }, 3f, "Welcome Message");
                 if (Options.AutoDisplayLastResult.GetBool() && PlayerState.AllPlayerStates.Count != 0 && Main.clientIdList.Contains(client.Id))
                 {
-                    new LateTask(() =>
+                    _ = new LateTask(() =>
                     {
                         if (!AmongUsClient.Instance.IsGameStarted && client.Character != null)
                         {
@@ -136,7 +136,7 @@ namespace TownOfHostY
                 }
                 if (Options.AutoDisplayKillLog.GetBool() && PlayerState.AllPlayerStates.Count != 0 && Main.clientIdList.Contains(client.Id))
                 {
-                    new LateTask(() =>
+                    _ = new LateTask(() =>
                     {
                         if (!GameStates.IsInGame && client.Character != null)
                         {

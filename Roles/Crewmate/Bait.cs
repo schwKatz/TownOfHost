@@ -14,7 +14,7 @@ public sealed class Bait : RoleBase
             CustomRoleTypes.Crewmate,
             30100,
             SetUpOptionItem,
-            "ベイト",
+            "�x�C�g",
             "#00f7ff"
         );
     public Bait(PlayerControl player)
@@ -25,7 +25,7 @@ public sealed class Bait : RoleBase
     {
         WaitTime = OptionWaitTime.GetFloat();
 
-        //他視点用のMarkメソッド登録
+        //�����_�p��Mark���\�b�h�o�^
         CustomRoleManager.MarkOthers.Add(GetMarkOthers);
     }
     private static OptionItem OptionWaitTime;
@@ -49,7 +49,7 @@ public sealed class Bait : RoleBase
         var (killer, target) = info.AttemptTuple;
         BaitKillPlayer = killer;
         if (target.Is(CustomRoles.Bait) && !info.IsSuicide)
-            new LateTask(() =>
+            _ = new LateTask(() =>
             {
                 killer.CmdReportDeadBody(target.Data);
                 BaitKillPlayer = null;

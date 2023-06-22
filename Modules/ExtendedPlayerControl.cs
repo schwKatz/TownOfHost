@@ -354,17 +354,17 @@ namespace TownOfHostY
             var systemtypes = SystemTypes.Reactor;
             if (Main.NormalOptions.MapId == 2) systemtypes = SystemTypes.Laboratory;
 
-            new LateTask(() =>
+            _ = new LateTask(() =>
             {
                 pc.RpcDesyncRepairSystem(systemtypes, 128);
             }, 0f + delay, "Reactor Desync");
 
-            new LateTask(() =>
+            _ = new LateTask(() =>
             {
                 pc.RpcSpecificMurderPlayer();
             }, 0.2f + delay, "Murder To Reset Cam");
 
-            new LateTask(() =>
+            _ = new LateTask(() =>
             {
                 pc.RpcDesyncRepairSystem(systemtypes, 16);
                 if (Main.NormalOptions.MapId == 4) //Airship用
@@ -382,7 +382,7 @@ namespace TownOfHostY
 
             pc.RpcDesyncRepairSystem(systemtypes, 128);
 
-            new LateTask(() =>
+            _ = new LateTask(() =>
             {
                 pc.RpcDesyncRepairSystem(systemtypes, 16);
 

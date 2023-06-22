@@ -205,7 +205,7 @@ namespace TownOfHostY
             //変身解除のタイミングがずれて名前が直せなかった時のために強制書き換え
             if (!shapeshifting)
             {
-                new LateTask(() =>
+                _ = new LateTask(() =>
                 {
                     Utils.NotifyRoles(NoCache: true);
                 },
@@ -552,7 +552,7 @@ namespace TownOfHostY
                     MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(__instance.NetId, (byte)RpcCalls.BootFromVent, SendOption.Reliable, -1);
                     writer.WritePacked(127);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    new LateTask(() =>
+                    _ = new LateTask(() =>
                     {
                         int clientId = user.GetClientId();
                         MessageWriter writer2 = AmongUsClient.Instance.StartRpcImmediately(__instance.NetId, (byte)RpcCalls.BootFromVent, SendOption.Reliable, clientId);
