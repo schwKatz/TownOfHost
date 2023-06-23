@@ -1,7 +1,14 @@
 using System;
+using System.Collections.Generic;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
+using AmongUs.Data;
+using Assets.InnerNet;
+using AmongUs.Data.Player;
+using System.Collections;
+using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 
 using Object = UnityEngine.Object;
 
@@ -152,5 +159,24 @@ namespace TownOfHost
                 CredentialsPatch.TohLogo.gameObject.SetActive(true);
             }
         }
+    }
+
+    public static class ObjectHelper
+    {
+        /// <summary>
+        /// オブジェクトの<see cref="TextTranslatorTMP"/>コンポーネントを破棄します
+        /// </summary>
+        public static void DestroyTranslator(this GameObject obj)
+        {
+            var translator = obj.GetComponent<TextTranslatorTMP>();
+            if (translator != null)
+            {
+                Object.Destroy(translator);
+            }
+        }
+        /// <summary>
+        /// オブジェクトの<see cref="TextTranslatorTMP"/>コンポーネントを破棄します
+        /// </summary>
+        public static void DestroyTranslator(this MonoBehaviour obj) => obj.gameObject.DestroyTranslator();
     }
 }
