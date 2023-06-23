@@ -1,13 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Modules",
-    "\\Roles",
-    "\\Roles\\AddOns",
-    "\\Roles\\Core",
-    "\\Roles\\Core\\Interfaces",
-    "\\Roles\\Crewmate"
+    "\\Patches"
   ],
-  "SelectedNode": "\\TownOfHost.csproj",
+  "SelectedNode": "\\TownOfHost.sln",
   "PreviewInSolutionExplorer": false
 }
