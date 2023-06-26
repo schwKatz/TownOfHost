@@ -63,7 +63,7 @@ namespace TownOfHostY
                 var roleClass = player.GetRoleClass();
                 if (roleClass != null)
                 {
-                    return roleClass.CanSabotage(nextSabotage);
+                    return roleClass.OnInvokeSabotage(nextSabotage);
                 }
                 else
                 {
