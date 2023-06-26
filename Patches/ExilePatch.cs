@@ -120,20 +120,7 @@ namespace TownOfHost
                 {
                     Main.AfterMeetingDeathPlayers.Do(x =>
                     {
-                        var player = Utils.GetPlayerById(x.Key);
-                        var roleClass = CustomRoleManager.GetByPlayerId(x.Key);
-                        var requireResetCam = player?.GetCustomRole().GetRoleInfo()?.RequireResetCam;
-                        var state = PlayerState.GetByPlayerId(x.Key);
-                        Logger.Info($"{player.GetNameWithRole()}を{x.Value}で死亡させました", "AfterMeetingDeath");
-                        state.DeathReason = x.Value;
-                        state.SetDead();
-                        player?.RpcExileV2();
-                        if (x.Value == CustomDeathReason.Suicide)
-                            player?.SetRealKiller(player, true);
-                        if (Main.ResetCamPlayerList.Contains(x.Key) || (requireResetCam.HasValue && requireResetCam.Value))
-                            player?.ResetPlayerCam(1f);
-                        if (roleClass is Executioner executioner && executioner.TargetId == x.Key)
-                            Executioner.ChangeRoleByTarget(x.Key);
+                        REIKAITENSOU(x.Key, x.Value);
                     });
                     Main.AfterMeetingDeathPlayers.Clear();
                 }, 0.5f, "AfterMeetingDeathPlayers Task");
@@ -144,7 +131,26 @@ namespace TownOfHost
             SoundManager.Instance.ChangeAmbienceVolume(DataManager.Settings.Audio.AmbienceVolume);
             Logger.Info("タスクフェイズ開始", "Phase");
         }
+
+        public static void REIKAITENSOU(byte playerId, CustomDeathReason reason)
+        {
+            var player = Utils.GetPlayerById(playerId);
+            var roleClass = CustomRoleManager.GetByPlayerId(playerId);
+            var requireResetCam = player?.GetCustomRole().GetRoleInfo()?.RequireResetCam;
+            var state = PlayerState.GetByPlayerId(playerId);
+            Logger.Info($"{player.GetNameWithRole()}を{reason}で死亡させました", "AfterMeetingDeath");
+            state.DeathReason = reason;
+            state.SetDead();
+            player?.RpcExileV2();
+            if (reason == CustomDeathReason.Suicide)
+                player?.SetRealKiller(player, true);
+            if (Main.ResetCamPlayerList.Contains(playerId) || (requireResetCam.HasValue && requireResetCam.Value))
+                player?.ResetPlayerCam(1f);
+            if (roleClass is Executioner executioner && executioner.TargetId == playerId)
+                Executioner.ChangeRoleByTarget(playerId);
+        }
     }
+
 
     [HarmonyPatch(typeof(PbExileController), nameof(PbExileController.PlayerSpin))]
     class PolusExileHatFixPatch

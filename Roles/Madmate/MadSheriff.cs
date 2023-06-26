@@ -74,9 +74,9 @@ public sealed class MadSheriff : RoleBase, IKiller, IKillFlashSeeable, IDeathRea
             (var killer, var target) = info.AttemptTuple;
 
             PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
-            killer.RpcMurderPlayer(killer);
+            killer.RpcMurderPlayerEx(killer);
 
-            if (MisfireKillsTarget) killer.RpcMurderPlayer(target);
+            if (MisfireKillsTarget) killer.RpcMurderPlayerEx(target);
         }
     }
 

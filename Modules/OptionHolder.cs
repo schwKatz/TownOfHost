@@ -298,14 +298,31 @@ namespace TownOfHost
             {
                 switch (info.RoleName)
                 {
-                    case CustomRoles.Telepathisters:
-                        SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
+                    case CustomRoles.Puppeteer:
+                    case CustomRoles.Witch:
+                    case CustomRoles.Vampire:
+                    case CustomRoles.Warlock:
+                    case CustomRoles.CursedWolf:
+                    case CustomRoles.EvilDiviner:
+                        //0622不具合対応のため表示させない
                         break;
+
                     default:
-                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                        switch (info.RoleName)
+                        {
+                            case CustomRoles.Telepathisters:
+                                SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
+                                break;
+                            //case CustomRoles.EvilDiviner: //いったん1人固定
+                                //SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                                //break;
+                            default:
+                                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                                break;
+                        }
+                        info.OptionCreator?.Invoke();
                         break;
                 }
-                info.OptionCreator?.Invoke();
             });
 
             DefaultShapeshiftCooldown = FloatOptionItem.Create(5011, "DefaultShapeshiftCooldown", new(5f, 999f, 5f), 15f, TabGroup.ImpostorRoles, false)
@@ -321,8 +338,12 @@ namespace TownOfHost
 
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Madmate).Do(info =>
             {
-                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                info.OptionCreator?.Invoke();
+                //0622不具合対応のため表示させない
+                if (info.RoleName is not CustomRoles.MadGuardian and not CustomRoles.MadSheriff)
+                {
+                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                    info.OptionCreator?.Invoke();
+                }
             });
 
             CanMakeMadmateCount = IntegerOptionItem.Create(5012, "CanMakeMadmateCount", new(0, 15, 1), 0, TabGroup.MadmateRoles, false)
@@ -348,16 +369,23 @@ namespace TownOfHost
             // Crewmate
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Crewmate).Do(info =>
             {
-                switch (info.RoleName)
+                //0622不具合対応のため表示させない
+                if (info.RoleName is not CustomRoles.SillySheriff and not CustomRoles.Sheriff)
                 {
-                    case CustomRoles.Sympathizer: //共鳴者は2人固定
-                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 2);
-                        break;
-                    default:
-                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                        break;
+                    switch (info.RoleName)
+                    {
+                        case CustomRoles.Sympathizer: //共鳴者は2人固定
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 2);
+                            break;
+                        case CustomRoles.FortuneTeller: //いったん1人固定
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                            break;
+                        default:
+                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                            break;
+                    }
+                    info.OptionCreator?.Invoke();
                 }
-                info.OptionCreator?.Invoke();
             });
 
             // Neutral
@@ -367,17 +395,26 @@ namespace TownOfHost
 
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Neutral).Do(info =>
             {
-                switch (info.RoleName)
+                        //0622不具合対応のため表示させない
+                if (info.RoleName is not CustomRoles.Arsonist
+                    and not CustomRoles.SchrodingerCat
+                    and not CustomRoles.PlatonicLover
+                    and not CustomRoles.Totocalcio)
                 {
-                    case CustomRoles.Jackal: //ジャッカルは1人固定
-                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
-                        break;
-                    default:
-                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                        break;
+                    switch (info.RoleName)
+                    {
+                        case CustomRoles.Jackal: //ジャッカルは1人固定
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                            break;
+                        default:
+                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                            break;
+                    }
+                    info.OptionCreator?.Invoke();
                 }
-                info.OptionCreator?.Invoke();
             });
+
+            //0622不具合なので一旦消す
             SetupLoversRoleOptionsToggle(50300);
             LoversAddWin = BooleanOptionItem.Create(50310, "LoversAddWin", false, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lovers]);
 
@@ -659,8 +696,8 @@ namespace TownOfHost
                 .SetHeader(true)
                 .SetGameMode(customGameMode) as IntegerOptionItem;
 
-            var countOption = IntegerOptionItem.Create(id + 1, "NumberOfLovers", new(2, 2, 1), 2, TabGroup.Addons, false).SetParent(spawnOption)
-                .SetHidden(true)
+            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(2, 2, 1), 2, TabGroup.Addons, false).SetParent(spawnOption)
+                //.SetHidden(true)
                 .SetGameMode(customGameMode);
 
             CustomRoleSpawnChances.Add(role, spawnOption);
@@ -674,7 +711,7 @@ namespace TownOfHost
                 .SetGameMode(customGameMode) as IntegerOptionItem;
             // 初期値,最大値,最小値が同じで、stepが0のどうやっても変えることができない個数オプション
             var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(count, count, count), count, tab, false).SetParent(spawnOption)
-                .SetHidden(true)
+                //.SetHidden(true)
                 .SetGameMode(customGameMode);
 
             CustomRoleSpawnChances.Add(role, spawnOption);

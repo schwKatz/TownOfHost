@@ -116,24 +116,34 @@ namespace TownOfHost
                             case "crewmate":
                                 GameManager.Instance.enabled = false;
                                 CustomWinnerHolder.WinnerTeam = CustomWinner.Crewmate;
-                                GameManager.Instance.RpcEndGame(GameOverReason.HumansByTask, false);
+                                foreach (var player in Main.AllPlayerControls.Where(pc => pc.Is(CustomRoleTypes.Crewmate)))
+                                {
+                                    CustomWinnerHolder.WinnerIds.Add(player.PlayerId);
+                                }
+                                GameEndChecker.StartEndGame(GameOverReason.HumansByTask);
                                 break;
                             case "impostor":
                                 GameManager.Instance.enabled = false;
                                 CustomWinnerHolder.WinnerTeam = CustomWinner.Impostor;
-                                GameManager.Instance.RpcEndGame(GameOverReason.ImpostorByKill, false);
+                                foreach (var player in Main.AllPlayerControls.Where(pc => pc.Is(CustomRoleTypes.Impostor) || pc.Is(CustomRoleTypes.Madmate)))
+                                {
+                                    CustomWinnerHolder.WinnerIds.Add(player.PlayerId);
+                                }
+                                GameEndChecker.StartEndGame(GameOverReason.ImpostorByKill);
                                 break;
                             case "none":
                                 GameManager.Instance.enabled = false;
                                 CustomWinnerHolder.WinnerTeam = CustomWinner.None;
-                                GameManager.Instance.RpcEndGame(GameOverReason.ImpostorByKill, false);
+                                GameEndChecker.StartEndGame(GameOverReason.ImpostorByKill);
                                 break;
                             case "jackal":
                                 GameManager.Instance.enabled = false;
                                 CustomWinnerHolder.WinnerTeam = CustomWinner.Jackal;
-                                CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Jackal);
-                                CustomWinnerHolder.WinnerRoles.Add(CustomRoles.JSchrodingerCat);
-                                GameManager.Instance.RpcEndGame(GameOverReason.ImpostorByKill, false);
+                                foreach (var player in Main.AllPlayerControls.Where(pc => pc.Is(CustomRoles.Jackal) || pc.Is(CustomRoles.JSchrodingerCat)))
+                                {
+                                    CustomWinnerHolder.WinnerIds.Add(player.PlayerId);
+                                }
+                                GameEndChecker.StartEndGame(GameOverReason.ImpostorByKill);
                                 break;
 
                             default:
@@ -276,7 +286,7 @@ namespace TownOfHost
                     case "/kill":
                         canceled = true;
                         if (args.Length < 2 || !int.TryParse(args[1], out int id2)) break;
-                        Utils.GetPlayerById(id2)?.RpcMurderPlayer(Utils.GetPlayerById(id2));
+                        Utils.GetPlayerById(id2)?.RpcMurderPlayerEx(Utils.GetPlayerById(id2));
                         break;
 
                     case "/vo":

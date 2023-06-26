@@ -90,19 +90,15 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
     public bool CanUseKillButton() => Player.IsAlive() && ShotLimit > 0;
     public override bool CanSabotage(SystemTypes systemType) => false;
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
-    public void OnCheckMurderAsKiller(MurderInfo info)
+    //public void OnCheckMurderAsKiller(MurderInfo info)
+    public void OnMurderPlayerAsKiller(MurderInfo info)
     {
         if (Is(info.AttemptKiller) && !info.IsSuicide)
         {
             (var killer, var target) = info.AttemptTuple;
 
-            Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "Sheriff");
-            if (ShotLimit <= 0)
-            {
-                info.DoKill = false;
-                return;
-            }
             ShotLimit--;
+            Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "OppoKiller");
             SendRPC();
             killer.ResetKillCooldown();
         }

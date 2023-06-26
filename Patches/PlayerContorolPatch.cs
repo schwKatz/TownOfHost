@@ -26,7 +26,10 @@ namespace TownOfHost
         {
             if (!AmongUsClient.Instance.AmHost) return false;
             Logger.Info("CheckProtect発生: " + __instance.GetNameWithRole() + "=>" + target.GetNameWithRole(), "CheckProtect");
-            if (__instance.Is(CustomRoles.Sheriff))
+            if (__instance.Is(CustomRoles.Sheriff)
+                ||__instance.Is(CustomRoles.SillySheriff)
+                ||__instance.Is(CustomRoles.Hunter)
+                ||__instance.Is(CustomRoles.MadSheriff))
             {
                 if (__instance.Data.IsDead)
                 {
@@ -486,7 +489,7 @@ namespace TownOfHost
                             if (isExiled)
                                 MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, partnerPlayer.PlayerId);
                             else
-                                partnerPlayer.RpcMurderPlayer(partnerPlayer);
+                                partnerPlayer.RpcMurderPlayerEx(partnerPlayer);
                         }
                     }
                 }
@@ -519,7 +522,7 @@ namespace TownOfHost
             if (AmongUsClient.Instance.IsGameStarted && Options.CurrentGameMode == CustomGameMode.HideAndSeek)
             {
                 //ゲーム中に色を変えた場合
-                __instance.RpcMurderPlayer(__instance);
+                __instance.RpcMurderPlayerEx(__instance);
             }
             return true;
         }

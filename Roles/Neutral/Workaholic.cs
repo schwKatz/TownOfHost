@@ -71,18 +71,22 @@ public sealed class Workaholic : RoleBase
         if (IsTaskFinished && !(CannotWinAtDeath && !Player.IsAlive()))
         {   //全タスク完了で、死亡後勝利無効でない場合
             //生存者は全員爆破
-            foreach (var otherPlayer in Main.AllAlivePlayerControls)
-            {
-                if (otherPlayer == Player) continue;
+            //foreach (var otherPlayer in Main.AllAlivePlayerControls)
+            //{
+            //    if (otherPlayer == Player) continue;
 
-                otherPlayer.SetRealKiller(Player);
-                otherPlayer.RpcMurderPlayer(otherPlayer);
-                var playerState = PlayerState.GetByPlayerId(otherPlayer.PlayerId);
-                playerState.DeathReason = CustomDeathReason.Bombed;
-                playerState.SetDead();
-            }
+            //    otherPlayer.SetRealKiller(Player);
+            //    otherPlayer.RpcMurderPlayer(otherPlayer);
+            //    var playerState = PlayerState.GetByPlayerId(otherPlayer.PlayerId);
+            //    playerState.DeathReason = CustomDeathReason.Bombed;
+            //    playerState.SetDead();
+            //}
+            GameManager.Instance.enabled = false;
+
             CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Workaholic);
             CustomWinnerHolder.WinnerIds.Add(Player.PlayerId);
+            if (!AmongUsClient.Instance.AmHost) return true;
+            GameEndChecker.StartEndGame(GameOverReason.ImpostorByKill);
         }
         return true;
     }

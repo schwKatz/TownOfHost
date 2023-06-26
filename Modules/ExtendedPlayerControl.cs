@@ -407,7 +407,6 @@ namespace TownOfHost
 
             return pc.GetCustomRole() switch
             {
-                CustomRoles.Sheriff => false,
                 CustomRoles.Egoist => true,
                 CustomRoles.Jackal => Jackal.CanVent,
                 CustomRoles.MadSheriff => MadSheriff.CanVent,
@@ -444,6 +443,16 @@ namespace TownOfHost
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.Exiled, SendOption.None, -1);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
+
+        public static void RpcMurderPlayerEx(this PlayerControl killer, PlayerControl target)
+        {
+            killer.MurderPlayer(target);
+            Logger.Info($"killer: {killer?.name}, target: {target?.name}", "RpcMurderPlayerEx");
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.None);
+            messageWriter.WriteNetObject((InnerNetObject)target);
+            AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
+        }
+
         public static void RpcMurderPlayerV2(this PlayerControl killer, PlayerControl target)
         {
             if (target == null) target = killer;

@@ -64,7 +64,8 @@ public sealed class Greedier : RoleBase, IImpostor
         Main.AllPlayerKillCooldown[Player.PlayerId] = DefaultKillCooldown;
         Player.SyncSettings();//キルクール処理を同期
     }
-    public void OnCheckMurderAsKiller(MurderInfo info)
+    //public void OnCheckMurderAsKiller(MurderInfo info)
+    public void OnMurderPlayerAsKiller(MurderInfo info)
     {
         if (!info.IsSuicide)
         {

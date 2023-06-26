@@ -90,9 +90,10 @@ namespace TownOfHost
                 }
                 if (Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
                 {
-                    SpecialEventText.text = "TOH_YSへようこそ！" +
-                        "\n<size=55%>ゲームモードやあまり使われない機能を削除して動作を軽くしたバージョンです。" +
-                        "\nここにない機能はTOH_Yをご利用ください。\n</size><size=40%>\nTOH_YSのＳはSimpleのＳです。</size>";
+                    SpecialEventText.text = "TOH_YS(制限版)へようこそ！" +
+                        "\n<size=55%>6/22のAmongUs内部的サイレント更新のため、" +
+                        "\nホスト系MODの役職に不具合が発生しております。" +
+                        "\nしばらくはこのTOH_YSをご利用ください。\n</size><size=40%>\nTOH_YSのＳはSimpleのＳです。</size>";
                     SpecialEventText.color = Color.yellow;
                 }
                 //if (Main.IsValentine)

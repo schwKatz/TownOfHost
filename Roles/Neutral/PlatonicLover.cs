@@ -33,7 +33,7 @@ public sealed class PlatonicLover : RoleBase, IKiller
         LoversAddWin,
     }
     public bool isMadeLover;
-    bool AddWin;
+    public static bool AddWin;
 
     private static void SetupOptionItem()
     {

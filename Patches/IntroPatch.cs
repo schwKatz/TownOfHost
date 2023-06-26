@@ -143,7 +143,7 @@ namespace TownOfHost
                         __instance.ImpostorText.text = GetString("TeamJackal");
                         __instance.BackgroundBar.material.color = Utils.GetRoleColor(CustomRoles.Jackal);
                         break;
-                    /*
+                    
                     case CustomRoles.MadSheriff:
                         __instance.ImpostorText.gameObject.SetActive(true);
                         var numImpostors = Main.NormalOptions.NumImpostors;
@@ -152,7 +152,7 @@ namespace TownOfHost
                             : __instance.ImpostorText.text = string.Format(DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.NumImpostorsP), numImpostors);
                         __instance.ImpostorText.text = __instance.ImpostorText.text.Replace("[FF1919FF]", "<color=#FF1919FF>").Replace("[]", "</color>");
                         break;
-                    */
+                    
                 }
             }
             else
@@ -182,6 +182,8 @@ namespace TownOfHost
             switch (role)
             {
                 case CustomRoles.Sheriff:
+                case CustomRoles.Hunter:
+                case CustomRoles.SillySheriff:
                     __instance.BackgroundBar.material.color = Palette.CrewmateBlue;
                     __instance.ImpostorText.gameObject.SetActive(true);
                     var numImpostors = Main.NormalOptions.NumImpostors;
@@ -242,7 +244,9 @@ namespace TownOfHost
     {
         public static bool Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
-            if (PlayerControl.LocalPlayer.Is(CustomRoles.Sheriff))
+            if (PlayerControl.LocalPlayer.Is(CustomRoles.Sheriff)
+                ||PlayerControl.LocalPlayer.Is(CustomRoles.Hunter)
+                ||PlayerControl.LocalPlayer.Is(CustomRoles.SillySheriff))
             {
                 //シェリフの場合はキャンセルしてBeginCrewmateに繋ぐ
                 yourTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();

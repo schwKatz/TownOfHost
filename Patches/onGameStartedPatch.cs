@@ -173,8 +173,13 @@ namespace TownOfHost
                 }
                 Dictionary<(byte, byte), RoleTypes> rolesMap = new();
                 AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.Hunter, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.SillySheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Jackal, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 if (Opportunist.OptionCanKill.GetBool())
                     AssignDesyncRole(CustomRoles.Opportunist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
 
@@ -272,7 +277,9 @@ namespace TownOfHost
                 foreach (var role in CustomRolesHelper.AllRoles.Where(x => x < CustomRoles.NotAssigned))
                 {
                     if (role.IsVanilla()) continue;
-                    if (role is CustomRoles.Sheriff or CustomRoles.Arsonist or CustomRoles.Jackal) continue;
+                    if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
+                        or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
+                        /*or CustomRoles.DarkHide*/ or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
                     if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
 
                     var baseRoleTypes = role.GetRoleTypes() switch
@@ -476,7 +483,9 @@ namespace TownOfHost
             int count = 0;
             foreach (var role in CustomRolesHelper.AllRoles.Where(x => x < CustomRoles.NotAssigned))
             {
-                if (role is CustomRoles.Sheriff or CustomRoles.Arsonist or CustomRoles.Jackal) continue;
+                if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
+                        or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
+                        /*or CustomRoles.DarkHide*/ or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
                 if (role == CustomRoles.Egoist && Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) <= 1) continue;
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role.GetRoleTypes() == roleTypes)

@@ -17,6 +17,7 @@
 "NormalScientist","Scientist","科学者","科学家","科學家","Ученый","Cientista"
 
 "# 特殊インポスター役職"
+"EvilWatcher","Evil Watcher","イビルウォッチャー","邪恶的窥视者","邪惡的觀察者","Злой Наблюдатель","Observador do Mal"
 "BountyHunter","Bounty Hunter","バウンティハンター","赏金猎人","賞金獵人","Охотник за головами","Caçador de Recompensas"
 "Mare","Mare","メアー","梦魇","黑暗博士","Ночной","Mare"
 "FireWorks","Fireworker","花火職人","烟花商人","煙火工匠","Фейерверк","Fogos de Artifício"
@@ -39,6 +40,7 @@
 "EvilDiviner","Evil Diviner","イビルディバイナー",
 "Telepathisters","Telepathisters","テレパシスターズ",
 
+"EvilWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
 "BountyHunterInfo","Eliminate your target","標的を確実に仕留めよう","猎杀你的赏金目标","將你的目標拿下","Охотьтесь за своей целью","Elimine o seu alvo"
 "MareInfo","Darkness aids you. Kill","闇の世界で暗殺せよ","在黑暗中作案","在黑暗中獵殺","Убивайте в темноте","O escuro está do seu lado. Mate"
 "FireWorksInfo","Go out with a BANG","最後に一華咲かせよう","一起来看最后的烟花吧","在最後時刻來看煙火秀吧","Морфитесь чтобы поставить фейерверк","Termine com uma EXPLOSÃO"
@@ -117,6 +119,7 @@
 
 
 "# 特殊クルー役職"
+"NiceWatcher","Nice Watcher","ナイスウォッチャー","正义的窥视者","正義的觀察者","Добрый Наблюдатель","Observador do Bem"
 "Bait","Bait","ベイト","诱饵","誘餌","Приманка","Isca"
 "Lighter","Lighter","ライター","执灯人","小燈人","Фонарь","Lanterneiro"
 "Mayor","Mayor","メイヤー","市长","市長","Мэр","Prefeito"
@@ -146,6 +149,7 @@
 "CandleLighter","Candle Lighter","キャンドルライター",
 "FortuneTeller","FortuneTeller","占い師",,,,
 
+"NiceWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
 "BaitInfo","Bait your enemies","敵を罠にはめよう","诱骗敌人，让敌人落入你的陷阱","犧牲小我，完成大我","Убийца моментально зарепортит ваш труп","Engane os seus inimigos"
 "LighterInfo","Light 'em up","すべてを照らそう","驱散黑暗，照亮前路","照亮黑暗中的一切吧","Увеличьте свой обзор выполнив свои задания","Luz para todo lado"
 "MayorInfo","Your vote has more influence","自分の票が何倍もの力を持っている","你的投票更有分量","你的票數更多，更有料","У вас больше голосов","O seu voto tem mais influência"
@@ -173,6 +177,7 @@
 "CandleLighterInfo","By the time the wax is gone...","ろうが無くなるまでには、、",
 "FortuneTellerInfo","Forecast Other Player","役職を占おう",,,,
 
+"NiceWatcherInfoLong","(Crewmates):\nYou can see everyone's votes even if anonymous voting is on.","(クルー陣営):\n全員の投票先を見ることができる。","(船员阵营:\n会议时窥视者可以看到所有人的投票。","(船員):\n會議時觀察者可以看到所有人的投票。","(Член Экипажа):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Tripulantes):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
 "BaitInfoLong","(Crewmates):\nWhen you are killed, you force your killer to immediately self-report.","(クルー陣営):\nキルされた時に、自身をキルした人に\n強制的にセルフレポートさせる事ができる。","(船员阵营):\n诱饵被击杀时，击杀诱饵的凶手将被迫报告。","(船員):\n當被殺時,兇手將強制自行舉報","(Член Экипажа):\nКогда Приманку убивают, он заставляет убившего игрока \nмоментально зарепортить ваш труп.","(Tripulantes):\nQuando morrer, você força o seu assassino a reportar o seu corpo imediatamente."
 "LighterInfoLong","(Crewmates):\nOnce you finish all your tasks, your vision will increase.","(クルー陣営):\nタスクを終わらせると、自分の視界を広げることができる。","(船员阵营):\n执灯人完成任务后，视野会扩大，且不受照明破坏影响。","(船員):\n當做完所有任務時可以增大視野且不受關燈影響","(Член Экипажа):\nПосле выполнения всех заданий Фонарик сможет увеличить свое поле зрения.","(Tripulantes):\nQuando você terminar todas as suas tarefas, sua visão irá aumentar."
 "MayorInfoLong","(Crewmates):\nYou have multiple votes, which will all go towards the one person you vote or skip.","(クルー陣営):\n会議の票を複数持ち、まとめて一人または\nスキップに入れることができる。(設定有)","(船员阵营):\n市长在投票时可投下多票 (票数多寡根据设置)，市长还拥有以跳通风管来召开紧急会议的能力。","(船員):\n可以一次投很多票並可以將它灌到一個人身上或跳過 (可以設定票數)","(Член Экипажа):\nМэр можете иметь несколько голосов на собрании, и проголосовать за любого игрока этими доп. голосами или \nпросто отдать все голоса в скип.","(Tripulantes):\nVocê tem votos adicionais, todo eles vão para a pessoa em que você votar ou pular."
@@ -187,7 +192,7 @@
 "TimeManagerInfoLong","(Crewmates):\nThe more tasks you do, the longer your meeting will last. When you die, the meeting time will be restored.","(クルー陣営):\nタスクを終わらせるごとに会議時間が延びる。死亡すると会議時間は元に戻る。","(船员阵营):\n你做的任务越多，会议时间就会越长。在你死后，会议时间会复原。","","(Член Экипажа):\nМастер Времени может увеличить время встречи, увеличивается время по мере выполнения заданий. Но когда он умрет, время встречи будет сброшено по умолчанию.",""
 "BakeryInfoLong","(Crewmates)\nWhile the baker is alive，comments about the baker are played at the beginning of the meeting.\nBakery changes to Neutral at a low probability (setting) during the course of the match.","[クルー陣営]\n生存中、会議はじめにパン屋についてのコメントが流れる。レアコメントあり。\n低確率(設定)で試合途中、第三陣営に変化する。","(船员阵营)\n当面包师还活着时，关于面包师的评论会在会议开始时播放。",,
 "NBakeryInfoLong","(Neutrals)\nHe awakened and became Neutral.\nAwakened to kill people, he developed a bread that causes death when eaten. While the awakened baker is alive, he offers the poisoned bread to a random player every meeting. That player dies at the end of the meeting unless the baker is exiled that turn.\nThe awakened baker reduces the number of players by distributing bread, and when the victory condition based on the number of Imposter or Cremate is met, he wins alone if he is still alive.","[ニュートラル]\n覚醒して第三陣営になった。\n人殺しに目覚め、食べると死亡するパンを開発した。覚醒パン屋が生存中、会議を挟む毎にランダムなプレイヤーに毒入りパンを提供する。そのプレイヤーはパン屋をそのターンに追放しない限り、会議終了時に死亡する。\n覚醒パン屋はパン配布で人数を減らしていき、インポスターorクルーの人数での勝利条件が満たされた時、生存していると単独勝利する。"
-"HunterInfoLong","(Crewmates)\nCan be killed against anyone. The number of kills in parentheses () are possible. It is only a crewmates，so think about the timing. No task.","[クルー陣営]\n誰に向かってでもキルできる。()内回数キル可能。あくまでクルー陣営なのでタイミングは考えよう。タスクはもっていない。","(船员阵营)\n可以被任何人杀死。括号()中的击杀数量是可能的。这只是一个船员，所以考虑一下时机。没有任务。",,
+"HunterInfoLong","(Crewmates)\nCan be killed against anyone. The number of kills in parentheses () are possible. It is only a crewmates，so think about the timing. No task.","[クルー陣営]\n誰に向かってでもキルできる。()内回数キル可能。あくまでクルー陣営なのでタイミングは考えよう。タスクはもっていない。\n「キルした時敵陣営かどうかわかる」設定がオンの時、インポスターをキルした時、自身の名前に◎が付く。第三陣営をキルした時、自身の名前に▽が付く。","(船员阵营)\n可以被任何人杀死。括号()中的击杀数量是可能的。这只是一个船员，所以考虑一下时机。没有任务。",,
 "TaskManagerInfoLong","(Crewmates)\nThe total number of tasks completed by all members is shown (in () next to the role).","(タスクマネージャー)[クルー陣営]\n全員の合計タスク完了数が分かる(役職名横()にて)。","(船员阵营)\n所有成员完成的任务总数显示在(在工作名称的()中)。",,
 "RainbowInfoLong","(Crewmates)\nThe name of one's position is colorful. Also，the color of my body changes every second. You can tell that you are a Rainbow from all of you.","[クルー陣営]\n自分の役職名がカラフル。また、自分の体の色が1秒ごとに変わる。自分の全員から自分がにじいろスターだということが分かる。","(船员阵营)\n一个人的职位名称是丰富多彩的。而且，我身体的颜色每秒钟都在变化。你可以从你们所有人身上看出你是一道彩虹。",,
 "NekomataInfoLong","(Crewmates)\nWhen he is hanged，he takes one random person with him. ","[クルー陣営]\n自身が吊られた際、ランダムな1人を道連れにする。","(船员阵营)当他被绞死的时候，他会随机带走一个人。",,
@@ -537,6 +542,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "BaitWaitTime","Time From Bait Kill to Report","ベイトキルから通報までの時間","从杀死诱饵后到报告的时间长度"
 "SillySheriffProbability","Probability of Not Correctly Recognizing and Killing","正しく認識してキルできない確率","不能正确识别和击杀的概率",
 "HunterKnowTargetIsImpostor","Can Show If the Kill Target Is Not Crewmate","キルした時、敵陣営かどうか分かる","可以显示杀死的目标是不是船员"
+"HunterKnowTargetMadIsImpostor","MadMate Is Indicated By Imposter Determination.","マッドメイトはインポスター判定で表示する",
 "BakeryChangeChances","Chance that Bakery will change to Neutral","ニュートラルに変化する確率","面包师变为中立的可能性"
 "ExpressSpeed","Speed","スピード","速度",,
 "TaskmanagerSeeNowtask","Watch Now All Task Count","会議時以外でもタスク数が見える","现在观看所有的任务计数",,

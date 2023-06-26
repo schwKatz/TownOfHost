@@ -148,18 +148,18 @@ public sealed class SillySheriff : RoleBase, IKiller
             int Chance = (Probability as StringOptionItem).GetChance();
             int chance = Random.Range(1, 101);
 
-            Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "SillySheriff");
             if (ShotLimit <= 0)
             {
                 info.DoKill = false;
                 return;
             }
             ShotLimit--;
+            Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "SillySheriff");
             SendRPC();
             if ((CanBeKilledBy(target) && chance <= Chance) || (!CanBeKilledBy(target) && chance >= Chance))
             {
                 // 自殺
-                killer.RpcMurderPlayer(killer);
+                killer.RpcMurderPlayerEx(killer);
                 PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
                 if (!MisfireKillsTarget.GetBool())
                 {

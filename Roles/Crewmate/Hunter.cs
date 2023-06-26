@@ -33,6 +33,7 @@ public sealed class Hunter : RoleBase, IKiller
     {
         ShotLimit = ShotLimitOpt.GetInt();
         CurrentKillCooldown = KillCooldown.GetFloat();
+        KnowTargetMadIsImpostor = OpKnowTargetMadIsImpostor.GetBool();
         isImpostor = 0;
     }
 
@@ -40,12 +41,15 @@ public sealed class Hunter : RoleBase, IKiller
     private static OptionItem ShotLimitOpt;
     private static OptionItem CanKillAllAlive;
     private static OptionItem KnowTargetIsImpostor;
+    private static OptionItem OpKnowTargetMadIsImpostor;
+    private static bool KnowTargetMadIsImpostor;
 
     enum OptionName
     {
         SheriffShotLimit,
         SheriffCanKillAllAlive,
-        HunterKnowTargetIsImpostor
+        HunterKnowTargetIsImpostor,
+        HunterKnowTargetMadIsImpostor,
     }
     public static Dictionary<CustomRoles, OptionItem> KillTargetOptions = new();
     public int ShotLimit = 0;
@@ -62,7 +66,8 @@ public sealed class Hunter : RoleBase, IKiller
         ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 11, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false)
             .SetValueFormat(OptionFormat.Times);
         CanKillAllAlive = BooleanOptionItem.Create(RoleInfo, 12, OptionName.SheriffCanKillAllAlive, true, false);
-        KnowTargetIsImpostor = BooleanOptionItem.Create(RoleInfo, 13, OptionName.HunterKnowTargetIsImpostor, false, false);
+        KnowTargetIsImpostor = BooleanOptionItem.Create(RoleInfo, 13, OptionName.HunterKnowTargetIsImpostor, true, false);
+        OpKnowTargetMadIsImpostor = BooleanOptionItem.Create(RoleInfo, 14, OptionName.HunterKnowTargetMadIsImpostor, true, false, KnowTargetIsImpostor);
     }
     public override void Add()
     {
@@ -99,26 +104,52 @@ public sealed class Hunter : RoleBase, IKiller
     {
         opt.SetVision(false);
     }
-    public void OnCheckMurderAsKiller(MurderInfo info)
+    public void OnMurderPlayerAsKiller(MurderInfo info)
     {
         if (Is(info.AttemptKiller) && !info.IsSuicide)
         {
             (var killer, var target) = info.AttemptTuple;
-
-            Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "Hunter");
-            if (ShotLimit <= 0)
-            {
-                info.DoKill = false;
-                return;
-            }
             ShotLimit--;
-            if (target.Is(CustomRoleTypes.Impostor)) isImpostor = 1;
-            else if (target.Is(CustomRoleTypes.Neutral)) isImpostor = 2;
-            else isImpostor = 0;
+
+            switch(target.GetCustomRole().GetCustomRoleTypes())
+            {
+                case CustomRoleTypes.Impostor:
+                    isImpostor = 1; break;
+                case CustomRoleTypes.Madmate:
+                    if(KnowTargetMadIsImpostor) isImpostor = 1;
+                    else isImpostor = 0;
+                    break;
+                case CustomRoleTypes.Neutral:
+                    isImpostor = 2; break;
+                default:
+                    isImpostor = 0; break;
+            }
+
             SendRPC();
+            Utils.NotifyRoles(SpecifySeer: killer);
             killer.ResetKillCooldown();
         }
     }
+    //public void OnCheckMurderAsKiller(MurderInfo info)
+    //{
+    //    if (Is(info.AttemptKiller) && !info.IsSuicide)
+    //    {
+    //        (var killer, var target) = info.AttemptTuple;
+
+    //        Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "Hunter");
+    //        if (ShotLimit <= 0)
+    //        {
+    //            info.DoKill = false;
+    //            return;
+    //        }
+    //        ShotLimit--;
+    //        if (target.Is(CustomRoleTypes.Impostor)) isImpostor = 1;
+    //        else if (target.Is(CustomRoleTypes.Neutral)) isImpostor = 2;
+    //        else isImpostor = 0;
+    //        SendRPC();
+    //        killer.ResetKillCooldown();
+    //    }
+    //}
     public override string GetProgressText(bool comms = false) => ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"({ShotLimit})");
 
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
@@ -126,11 +157,13 @@ public sealed class Hunter : RoleBase, IKiller
         //seenが省略の場合seer
         seen ??= seer;
 
-        if (KnowTargetIsImpostor.GetBool() && seer.Is(CustomRoles.Hunter) && isImpostor == 1)
-            return ColorString(RoleInfo.RoleColor, "◎");
-        if (KnowTargetIsImpostor.GetBool() && seer.Is(CustomRoles.Hunter) && isImpostor == 2)
-            return ColorString(RoleInfo.RoleColor, "▽");
-
+        if (seen == seer && KnowTargetIsImpostor.GetBool())
+        {
+            if (isImpostor == 1)
+                return ColorString(RoleInfo.RoleColor, "◎");
+            if (isImpostor == 2)
+                return ColorString(RoleInfo.RoleColor, "▽");
+        }
         return string.Empty;
     }
     public override void OnStartMeeting()

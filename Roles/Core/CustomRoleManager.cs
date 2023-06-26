@@ -78,7 +78,7 @@ public static class CustomRoleManager
         {
             //MurderPlayer用にinfoを保存
             CheckMurderInfos[appearanceKiller.PlayerId] = info;
-            appearanceKiller.RpcMurderPlayer(appearanceTarget);
+            appearanceKiller.RpcMurderPlayerEx(appearanceTarget);
         }
         else
         {
@@ -368,6 +368,7 @@ public enum CustomRoles
     //Impostor
     NormalImpostor,
     NormalShapeshifter,
+    EvilWatcher,
     BountyHunter,
     FireWorks,
     Mafia,
@@ -406,6 +407,7 @@ public enum CustomRoles
     //Crewmate
     NormalEngineer,
     NormalScientist,
+    NiceWatcher,
     Bait,
     Lighter,
     Mayor,
