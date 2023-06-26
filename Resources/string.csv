@@ -219,6 +219,7 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "Opportunist","Opportunist","オポチュニスト","投机者","投機主義者","Выживший","Oportunista"
 "Egoist","Egoist","エゴイスト","野心家","利己主義者","Эгоист","Egoísta"
 "Jackal","Jackal","ジャッカル","豺狼","豺狼","Шакал","Chacal"
+"JClient","Client","クライアント",,,,
 "AntiComplete","Anti Complete","アンチコンプリート","防成者",,
 "Workaholic","Workaholic","ワーカホリック","工作狂",,
 "PlatonicLover","Platonic Lover","純愛者","真爱者",,
@@ -238,6 +239,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "ExecutionerInfo","Get your target voted out","ターゲットを追放させよう","不惜一切代价把你的目标票出去！","想出一切辦法來投出你的目標","Заставь игроков изгнать свою цель","Faça o seu alvo ser exilado"
 "EgoistInfo","Take over the Impostors' victory","インポスター勝利を独占しよう","夺走内鬼的胜利","讓我們來奪取偽裝者的勝利","Не дай Предателям победить","Ganhe no lugar do Impostor"
 "JackalInfo","Kill Everyone","すべてを殺せ","快去杀光所有人，一只苍蝇都不要剩下！","殺光所有人不留活口","Убей всех игроков","Mate todos"
+"JClientInfo","Finish your tasks to help the Jackal","タスクを済ませ、ジャッカルの援助をしよう",,,,
 "AntiCompleteInfo","I hate guys who can work","仕事出来るやつが嫌いだ","我讨厌可以工作的人",,
 "WorkaholicInfo","I can't live without my job","仕事してないと生きてられない","我不能离开我的工作",,
 "PlatonicLoverInfo","I will win with the lover I met","出会った恋人と共に勝ち抜くのだ","我会和我遇到的爱人一起胜利",,
@@ -251,6 +253,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "OpportunistInfoLong","(Neutrals):\nSo long as you are alive at the end of the game, you will win alongside whoever the victor is.","(ニュートラル):\n試合終了時に生存していれば追加勝利となる。","(独立阵营):\n若投机者在游戏结束时存活，则投机者跟随获胜玩家一同获得胜利。","(中立):\n如果投機主義者活到最後,他將跟著遊戲結束獲勝的陣營一起獲勝。","(Нейтрал):\nВыживший выигрывает игру с любыми другими ролями, но только если он выжил.","(Neutros): \nContanto que você esteja vivo no final do jogo, você dividirá a vitória ao lado do vencedor."
 "EgoistInfoLong","(Neutrals):\nWhen all impostors are dead, you solo victory by fulfilling impostor victory conditions.\nYou and the impostors know who each other are.","(ニュートラル):\n味方がすべて死んだ状態でインポスターが勝つと単独勝利する。\nインポスターは誰がエゴイストか分かる。エゴイストも、誰がインポスターか分かる。","(独立阵营):\n原则上野心家属于内鬼阵营。野心家与内鬼阵营玩家互认但不可以击杀对方。\n当其他内鬼阵营玩家全部死亡后，若野心家存活且内鬼阵营达成胜利条件，则野心家单独获得胜利。","(中立陣營):\n如果所有的偽裝者都死亡，且利己主義者存活，利己主義者將獨自獲勝。\n(偽裝者和利己主義者互相知道對方但是不可以互刀對方)","(Нейтрал):\nПосле того, как все Предатели умрут то Эгоист побеждает вместо Предателей. \nПредатели и Эгоист видят друг друга.","(Neutros): \nQuando todos os Impostores morrerem, você ganha sozinho assumindo o papel de Impostor. \nVocê e os Impostores sabem quem são uns aos outros."
 "JackalInfoLong","(Neutrals):\nJackal can kill all Crewmates, Impostors and Neutrals.\nTeam Jackal wins when living Jackal outnumbers living Crewmates and when there are no Impostors alive.","(ニュートラル):\nジャッカルはすべてのプレイヤーを殺すことができる。\nインポスターが残っておらず、生き残っているジャッカルの人数がクルーと同じかそれ以上でジャッカルが勝利する。","(独立阵营):\n豺狼需要击杀所有人。\n存活的玩家只剩豺狼和一名其他船员时，豺狼获得胜利。","(中立):\n豺狼需要殺死所有人來獲得勝利,\n如果場上存活的玩家只剩下豺狼和另一名不帶刀職業時,豺狼將獲勝。","(Нейтрал):\nШакал может убить всех Членов Экипажа, Нейтралов и Предателей тоже. \nШакал может победить, когда в живых остался только 1 Шакал и 1 Член Экипажа.","(Neutros): \nVocê pode matar todos os jogadores. \nGanhe quando não existirem mais Impostores, e o número de Chacais for maior que o de Tripulantes."
+"JClientInfoLong","(Neutrals):\nCrewmate, but they belong to team Jackal, one type of Jackal's Madmates.\nThey can see who is the Jackal after finishing all their tasks.\nDepending on option, they can use vents.","(ジャッカル陣営):\nクルーだがジャッカルの味方をする。\nジャッカルと互いに認識できないが、タスクを全て完了させるとジャッカルを認識できるようになる。",,,,
 "AntiCompleteInfoLong","(Neutrals)\nDuring the meeting, you can vote for your favorite person only once in the entire meeting. If that person has already completed the task,，he or she wins alone. If you select someone who has no task or who has not completed a task，you die and lose. When the AntiComplete selects someone，the meeting is forced to end.","[ニュートラル]\n会議中、全体で1回のみ好きな人を投票で選択出来る。その人がタスクを既に完了させていたら単独勝利。タスクがない人、タスクが終わってない人を選ぶと死亡し敗北。\nアンチコンプが誰か選択した時、会議は強制終了する。","(中立阵营)\n在整个会议中，您只能投票给您喜欢的人一次。如果这个人已经完成了任务，它独自获胜。如果你选择了一个没有任务或者没有完成任务的人，你就会失败。当防成者选择某人时，会议将被迫结束。",,
 "WorkaholicInfoLong","(Neutrals)\nWhen you complete a task，you win alone. The amount of tasks is very large. Even if you die，you win when you finish the task. Vent is possible.","[ニュートラル]\nタスクを完了させた時、単独勝利。タスク量はとても多い。死亡しても関係なく、タスクが終わると勝利。霊界からでも終わらそう。ベント可。","(中立阵营)\n当你完成一项任务时，你独自获胜。任务的数量非常大。即使你死了，当你完成任务时你就赢了。钻管是可能的。",,
 "PlatonicLoverInfoLong","(Neutrals):\nBy pressing the kill button toward someone, you can become Lovers with that person.(When set up, it cannot be put in at the same time as Lovers.)","[ニュートラル]\n誰かに向かってキルボタンを押すことで、その人とラバーズになることが出来る。(設定時、ラバーズと同時に入れることは出来ない。)","(中立阵营):\n按下某人的击杀按钮，你就可以和那个人成为恋人。(设置时不能和恋人同时存在)",,
@@ -581,6 +584,15 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "TotocalcioBetChangeCount","'BET'Change Count","「賭ける」の変更できる回数",
 "TotocalcioInitialCoolDown","'BET'Initial Ability Cooldown","「賭ける」の初期クールタイム",
 "TotocalcioFinalCoolDown","'BET'Final Ability Cooldown","「賭ける」の最終クールタイム",
+"JClientCanVent","Client Can Vent","クライアントがベントを使える",,,,
+"JClientImpostorVision","Client Impostor Vision","クライアントがインポスター視界を持つ",,,,
+"JClientVentCooldown","Client Vent Cooldown","クライアントのベントクールダウン",,,,
+"JClientVentMaxTime","Client Max Time In Vents(s)","クライアントのベント内での最大時間",,,,
+"JClientHasImpostorVision","Client Have Impostor Vision","クライアントがインポスター視界を持つ",,,,
+"JClientCanAlsoBeExposedToJackal","Client Also Exposed To Jackal","クライアントがジャッカルからも視認できる",,,,
+"JClientAfterJackalDead","Client Mode After Jackal Dead","クライアントのジャッカル死亡後モード",,,,
+"JClientAfterJackalDeadMode.None","None","なし",,,,
+"JClientAfterJackalDeadMode.Following","Following","後追い",,,,
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"

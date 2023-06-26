@@ -446,6 +446,7 @@ public enum CustomRoles
     Executioner,
     Jackal,
     JSchrodingerCat,//ジャッカル陣営のシュレディンガーの猫
+    JClient,
     AntiComplete,
     Workaholic,
     PlatonicLover,
