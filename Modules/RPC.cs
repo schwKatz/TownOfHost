@@ -308,6 +308,21 @@ namespace TownOfHost
             writer.Write(killerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
+        public static void ReportDeadBodyForced(this PlayerControl player, GameData.PlayerInfo target)
+        {
+            //PlayerControl.ReportDeadBodyと同様の処理
+            if (!AmongUsClient.Instance.AmHost) return;
+            //if (AmongUsClient.Instance.IsGameOver || (bool)MeetingHud.Instance || (target == null && LocalPlayer.myTasks.Any(PlayerTask.TaskIsEmergency)) || Data.IsDead)
+            //    return;
+
+            MeetingRoomManager.Instance.AssignSelf(player, target);
+            //if (AmongUsClient.Instance.AmHost && !ShipStatus.Instance.   .CheckTaskCompletion())
+            if (AmongUsClient.Instance.AmHost)
+            {
+                DestroyableSingleton<HudManager>.Instance.OpenMeetingRoom(player);
+                player.RpcStartMeeting(target);
+            }
+        }
     }
     [HarmonyPatch(typeof(InnerNet.InnerNetClient), nameof(InnerNet.InnerNetClient.StartRpc))]
     class StartRpcPatch

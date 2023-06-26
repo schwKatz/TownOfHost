@@ -390,6 +390,7 @@ public enum CustomRoles
     Scavenger,
     EvilDiviner,
     Telepathisters,
+    ShapeKiller,
     //Madmate
     MadGuardian,
     Madmate,

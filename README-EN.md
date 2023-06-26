@@ -334,6 +334,23 @@ Unless they kill before the time runs out, they kill themselves instantly.<br>
 | SerialKiller Kill Cooldown(s) |
 | Time Limit To Suicide(s)      |
 
+### ShapeKiller
+
+Create by くろにゃんこ<br>
+Idea by マチア, くろにゃんこ<br>
+
+Team : Impostors<br>
+Basis : Shapeshifter<br>
+
+ShapeKiller can disguise reports.<br>
+By shape-shifting and reporting, ShapeKiller can report the shape-shifted target.<br>
+
+#### Game Options
+
+| Name                  |
+| --------------------- |
+| Can Dead Reported     |
+
 ### ShapeMaster
 
 Create and idea by しゅー<br>

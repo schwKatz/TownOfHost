@@ -39,6 +39,7 @@
 "Scavenger","Scavenger","スカベンジャー","清道夫",
 "EvilDiviner","Evil Diviner","イビルディバイナー",
 "Telepathisters","Telepathisters","テレパシスターズ",
+"ShapeKiller","ShapeKiller","シェイプキラー",,,,
 
 "EvilWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
 "BountyHunterInfo","Eliminate your target","標的を確実に仕留めよう","猎杀你的赏金目标","將你的目標拿下","Охотьтесь за своей целью","Elimine o seu alvo"
@@ -64,6 +65,7 @@
 "ScavengerInfo","Let's eat up the crew","クルーを食べつくそう","要不 我把它吃了？",
 "EvilDivinerInfo","Know the role of others and deceive them","役職を知って騙ろう",
 "TelepathistersInfo","understand each other without language","以心伝心でキルしよう",
+"ShapeKillerInfo","Shape &	Camouflage Report","プレイヤーを偽装しよう",,,,
 
 "BountyHunterInfoLong","(Impostors):\nIf you kill your indicated target, your next kill cooldown will be greatly reduced.\nIf you kill anyone other than your target, your next kill cooldown will increase.\nThe target swaps after a configurable amount of time.","(インポスター陣営):\n表示されたターゲットをキルした場合、次のキルクールがとても短くなる。\nターゲットではないプレイヤーをキルした場合は、キルクールが伸びてしまう。\nターゲットは一定時間ごとに変更される。","(内鬼阵营):\n如果赏金猎人击杀了赏金目标，击杀冷却缩短。\n反之，则冷却增加。","(偽裝者陣營):\n如果賞金獵人殺了賞金目標，下一次的殺人冷卻會變得非常的短\n如果賞金獵人殺了非賞金目標，下一次的殺人冷卻將會被延長或不變\n目標將會重置在時間結束或殺死賞金目標後。","(Предатель):\nЕсли Охотник за головами убьет назначенную ему цель, время отката убийства будет намного меньше чем обычно. \n При убийстве игрока который не является его целью, приводит к стандартному времени отката убийства. \nЦели меняются спустя какое-то время","(Impostores):\nSe você matar o seu alvo, o tempo de recarga (abate) será mais rápido.\nMatar um jogador que não seja seu alvo, resulta em um tempo de recarga (abate) maior.\nOs alvos são alterados em intervalos regulares."
 "FireWorksInfoLong","(Impostors):\nWhenever you shapeshift, you can place a firework.\n After placing all fireworks, you can set them all off at once when you shapeshift once you become the last impostor.\nOnce you start placing fireworks, you cannot kill until the fireworks go off.","(インポスター陣営):\n変身することで花火を最大3か所に設置可能。\nすべて設置した後、インポスター最後の生き残りになった時に再度変身することで一斉起爆できる。\n花火が設置されている間はキルできない。","(内鬼阵营):\n烟花商人可以安放烟花炸弹，造成范围性杀伤。\n烟花商人在变形状态下可以安放至多三个烟花炸弹。\n当存活的内鬼阵营玩家仅剩烟花商人且烟花炸弹安置完毕时，烟花商人可以在变形状态下引爆炸弹。\n烟花商人不可以进行常规击杀，除非安放并引爆所有烟花炸弹。\n烟花炸弹可以同样炸死烟花商人自己。\n如果烟花炸弹炸死所有存活玩家，内鬼阵营将获胜。","(偽裝者陣營):\n煙火工匠可以放置最多3個煙火在不同的地方。\n當煙火工匠設定好所有東西且煙火工匠是最後一位偽裝者時，煙火工匠可以將所有人引到放置煙火的地方並使用變形來讓煙火爆炸。\n但是煙火工匠在他還沒放置完所有煙火前不能殺人，\n如果爆炸讓所有存活的玩家死亡，則偽裝者陣營獲勝。","(Предатель):\nФейерверк может поставить несколько фейерверков с помощью Морфлинга. \nПосле установки всех фейерверков он может поджечь их все сразу с помощью использования Морфлинга, когда он является последним Предателем. \nТолько после этого он сможет убивать."," (Impostores):\nAo mudar de corpo, você coloca um fogo de artifício.\nDepois de colocar todos, você pode acender tudo de uma vez ao trocar de corpo sendo o último Impostor.\nQuando começar a colocar fogos de artifício, você não poderá matar até eles explodirem."
@@ -86,6 +88,7 @@
 "ScavengerInfoLong","(Impostors)\nBodies killed by Scavenger will not be able to be reported.(It does not respond when we press report)","[インポスター陣営]\nスカベンジャーにキルされた死体は、通報することが出来なくなる。(通報ボタンを押しても反応しない)","(内鬼阵营)\n被清道夫击杀的尸体将无法被报告.(当点击报告时无响应)",
 "EvilDivinerInfoLong","(Impostors)\nBy pressing the kill button once, the target's Role can be divined after one second. In that case, no kill occurs and the killcool is reset.\nWhen the kill button is double-clicked, it becomes a kill. When the number of divinations reaches 0, a kill is made by simply pressing the button once.","[インポスター陣営]\n1回キルボタンを押すことで、1秒後に対象者の役職を占うことが出来る。その場合、キルは起こらずにキルクールがリセットされる。\nキルボタンをダブルクリックした時、キルになる。なお占い回数が0になった時は、1回押すだけでキルになる。",
 "TelepathistersInfoLong","(Impostors)\nTelepathisters are Impostors that can only be set up by more than one person.\nThe arrows indicate the location of other Telepathisers.\nThe number of times the Telepathisters vent can be used is shared by all Telepathisters  and can only be used up to a set number.","[インポスター陣営]\n複数人でしか設定できないインポスター。\nテレパシスターズの相方(以下、シスターとする)の位置が矢印8方向で分かる。\n設定により、シスターのキルによるキルフラッシュが見えたり、会議時にシスターの最終位置を表示できたりする。\nなお、テレパシスターズのベント使用回数は全員で共有されており、設定数までしか使用できない。",
+"ShapeKillerInfoLong","(Impostors):\ShapeKiller can disguise reports.\nBy shape-shifting and reporting, ShapeKiller can report the shape-shifted target.","(インポスター陣営):\n通報を偽装できるインポスター。\nシェイプシフトして死体通報することでシェイプシフトした相手の通報にできる。",,,,
 
 
 "# マッドメイト系役職"
@@ -493,6 +496,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "TelepathistersCanSeeLastRoomInMeeting","Can See Telepathisters Last Room In Meeting","会議中、シスターの最終位置を表示する",
 "TelepathistersOptionVentCount","Number of times entered in vent (common for Telepathisters)","ベントの使える回数(シスターズ共有)",
 "EvilDivinerDivinationMaxCount","Number of divination","占える回数",
+"ShapeKillerCanDeadReport","Can Dead Reported","死者での偽装通報ができる",,,,
 
 # マッドメイト
 "CanMakeMadmateCount","Sidekick Madmate Max Count","サイドキックマッドメイト","变形者可以招募叛徒的数量","變形者招募叛徒最大人數","Максимум союзников Безумца","Máximo de Tripulantes Loucos Ajudantes"
