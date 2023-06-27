@@ -51,7 +51,9 @@ public sealed class ShapeKiller : RoleBase, IImpostor
     }
     public override bool OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
     {
-        if (target == null || reporter.PlayerId == target.PlayerId) return true;
+        if (target == null) return true;
+        if (reporter == null || reporter.PlayerId != Player.PlayerId) return true;
+        if (reporter.PlayerId == target.PlayerId) return true;
 
         if (ShapeTarget != null && (CanDeadReport || (!ShapeTarget.Data.IsDead && !ShapeTarget.Data.Disconnected)))
         {
