@@ -390,6 +390,7 @@ public enum CustomRoles
     Scavenger,
     EvilDiviner,
     Telepathisters,
+    ShapeKiller,
     //Madmate
     MadGuardian,
     Madmate,
@@ -446,6 +447,7 @@ public enum CustomRoles
     Executioner,
     Jackal,
     JSchrodingerCat,//ジャッカル陣営のシュレディンガーの猫
+    JClient,
     AntiComplete,
     Workaholic,
     PlatonicLover,

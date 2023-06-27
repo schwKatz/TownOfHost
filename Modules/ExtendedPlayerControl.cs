@@ -32,6 +32,7 @@ namespace TownOfHost
             else if (role >= CustomRoles.NotAssigned)   //500:NoSubRole 501~:SubRole
             {
                 PlayerState.GetByPlayerId(player.PlayerId).SetSubRole(role);
+                return;
             }
             if (AmongUsClient.Instance.AmHost)
             {
