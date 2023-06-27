@@ -377,9 +377,6 @@ namespace TownOfHost
                         case CustomRoles.Sympathizer: //共鳴者は2人固定
                             SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 2);
                             break;
-                        case CustomRoles.FortuneTeller: //いったん1人固定
-                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
-                            break;
                         default:
                             SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
                             break;

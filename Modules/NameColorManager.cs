@@ -37,9 +37,7 @@ namespace TownOfHost
                 || Mare.KnowTargetRoleColor(target, isMeeting)
                 || (target.Is(CustomRoles.Workaholic) && Workaholic.Seen)
                 || target.Is(CustomRoles.Rainbow)
-                || (FortuneTeller.IsShowTargetRole(seer, target) && isMeeting)
-
-                ;
+                || (seer.Is(CustomRoles.FortuneTeller) && ((FortuneTeller)seer.GetRoleClass()).KnowTargetRoleColor(target) && isMeeting);
         }
         public static bool TryGetData(PlayerControl seer, PlayerControl target, out string colorCode)
         {
