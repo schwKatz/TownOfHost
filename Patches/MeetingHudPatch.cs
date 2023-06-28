@@ -93,7 +93,7 @@ public static class MeetingHudPatch
             {
                 foreach (var Exiled_Target in RevengeTargetPlayer)
                 {
-                    Utils.SendMessage(string.Format(GetString("RevengeText"), Exiled_Target.Item1.name, Exiled_Target.Item2.name));
+                    Utils.SendMessage(string.Format(GetString("Message.RevengeText"), Exiled_Target.Item1.name, Exiled_Target.Item2.name));
                 }
                 RevengeTargetPlayer.Clear();
             }

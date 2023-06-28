@@ -505,6 +505,14 @@ namespace TownOfHost
                 CustomRoles.Egoist or
                 CustomRoles.Jackal;
         }
+        public static bool IsCrewKiller(this PlayerControl player)
+        {
+            return
+                player.GetCustomRole() is
+                CustomRoles.Sheriff or
+                CustomRoles.SillySheriff or
+                CustomRoles.Hunter;
+        }
         public static bool KnowDeathReason(this PlayerControl seer, PlayerControl seen)
         {
             // targetが生きてたらfalse

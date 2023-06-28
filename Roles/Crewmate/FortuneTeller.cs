@@ -35,6 +35,7 @@ public sealed class FortuneTeller : RoleBase
         KillerOnly = OptionKillerOnly.GetBool();
 
         Target = null;
+        TargetResult = new();
     }
 
     public static OptionItem OptionNumOfForecast;
@@ -51,14 +52,14 @@ public sealed class FortuneTeller : RoleBase
         FortuneTellerKillerOnly,
     }
 
-    public static int NumOfForecast;
-    public static int ForecastTaskTrigger;
-    public static bool CanForecastNoDeadBody;
-    public static bool ConfirmCamp;
-    public static bool KillerOnly;
+    private static int NumOfForecast;
+    private static int ForecastTaskTrigger;
+    private static bool CanForecastNoDeadBody;
+    private static bool ConfirmCamp;
+    private static bool KillerOnly;
 
-    static PlayerControl Target;
-    static Dictionary<byte, PlayerControl> TargetResult = new ();
+    private PlayerControl Target;
+    private Dictionary<byte, PlayerControl> TargetResult = new ();
 
     private static void SetupOptionItem()
     {
@@ -71,81 +72,52 @@ public sealed class FortuneTeller : RoleBase
         OptionKillerOnly = BooleanOptionItem.Create(RoleInfo, 14, OptionName.FortuneTellerKillerOnly, true, false);
     }
 
-    public override string GetProgressText(bool comms = false)
-    {
-        if ((Player?.GetPlayerTaskState()?.CompletedTasksCount ?? -1) < ForecastTaskTrigger) return string.Empty;
-
-        return ColorString(RoleInfo.RoleColor, $"[{NumOfForecast - TargetResult.Count}]");
-    }
     public override (byte? votedForId, int? numVotes, bool doVote) OnVote(byte voterId, byte sourceVotedForId)
     {
-        var (votedForId, numVotes, doVote) = base.OnVote(voterId, sourceVotedForId);
-        var baseVote = (votedForId, numVotes, doVote);
+        var baseVote = base.OnVote(voterId, sourceVotedForId);
         //Logger.Info($"MeetingPrefix voter: {Player.name}, vote: {pva.DidVote} target: {pva.name}, notSelf: {Player.PlayerId != pva.VotedFor}, pcIsDead: {Player.Data.IsDead}, voteFor: {pva.VotedFor}", "FortuneTeller");
-        if (voterId != Player.PlayerId || sourceVotedForId == Player.PlayerId || sourceVotedForId >= 253 || !Player.IsAlive())
+        if (voterId == Player.PlayerId && sourceVotedForId != Player.PlayerId && sourceVotedForId < 253 && Player.IsAlive())
         {
-            return baseVote;
+            VoteForecastTarget(sourceVotedForId);
         }
-        VoteForecastTarget(Player, sourceVotedForId);
-        return (null, null, true);
+        return baseVote;
     }
-    public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
+    private void VoteForecastTarget(byte targetId)
     {
-        //seenが省略の場合seer
-        seen ??= seer;
+        if (!CanForecastNoDeadBody &&
+            GameData.Instance.AllPlayers.ToArray().Where(x => x.IsDead).Count() <= 0) //死体無し
+        {
+            Logger.Info($"VoteForecastTarget NotForecast NoDeadBody player: {Player.name}, targetId: {targetId}", "FortuneTeller");
+            return;
+        }
+        if (MyTaskState.CompletedTasksCount < ForecastTaskTrigger) //占い可能タスク数
+        {
+            Logger.Info($"VoteForecastTarget NotForecast LessTasks player: {Player.name}, targetId: {targetId}, task: {MyTaskState.CompletedTasksCount}/{ForecastTaskTrigger}", "FortuneTeller");
+            return;
+        }
 
-        if (isForMeeting && HasForecastResult(seer, seen.PlayerId))
-            return ColorString(RoleInfo.RoleColor, "★");
+        var target = GetPlayerById(targetId);
+        if (target == null || !target.IsAlive()) return;
+        if (TargetResult.ContainsKey(targetId)) return;  //既に占い結果があるときはターゲットにならない
 
-        return string.Empty;
+        Target = target;
+        Logger.Info($"SetForecastTarget player: {Player.name}, target: {target.name}", "FortuneTeller");
     }
     public override bool OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
     {
-        if (Player.Is(CustomRoles.FortuneTeller) && Player.IsAlive() && Target != null)
-            SetForecastResult(Player);
+        SetForecastResult();
         return true;
     }
-    public override void OverrideRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
-    {
-        if (!isMeeting) return;
-
-        if (IsShowTargetRole(Player, seen))
-        {
-            enabled = true;
-        }
-        else if (IsShowTargetCamp(Player, seen, out bool onlyKiller))
-        {
-            enabled = true;
-            if (seen.GetCustomRole().IsImpostor() ||
-                (!onlyKiller && seen.GetCustomRole().IsMadmate()))
-            {
-                roleColor = Palette.ImpostorRed;
-                roleText = GetString("TeamImpostor");
-            }
-            else if (seen.GetCustomRole().IsNeutral() &&
-                (!onlyKiller || seen.IsNeutralKiller()))
-            {
-                roleColor = Color.gray;
-                roleText = GetString("Neutral");
-            }
-            else
-            {
-                roleColor = Palette.CrewmateBlue;
-                roleText = GetString("TeamCrewmate");
-            }
-        }
-    }
-
-    private void SetForecastResult(PlayerControl player)
+    private void SetForecastResult()
     {
         if (Target == null)
         {
-            Logger.Info($"SetForecastResult NotSet NotHasForecastTarget player: {player.name}", "FortuneTeller");
+            Logger.Info($"SetForecastResult NotSet NotHasForecastTarget player: {Player.name}", "FortuneTeller");
             return;
         }
         if (Target == null || !Target.IsAlive())
         {
-            Logger.Info($"SetForecastResult NotSet TargetNotValid player: {player.name}, target: {Target?.name} dead: {Target?.Data.IsDead}, disconnected: {Target?.Data.Disconnected}", "FortuneTeller");
+            Logger.Info($"SetForecastResult NotSet TargetNotValid player: {Player.name}, target: {Target?.name} dead: {Target?.Data.IsDead}, disconnected: {Target?.Data.Disconnected}", "FortuneTeller");
             return;
         }
 
@@ -155,62 +127,66 @@ public sealed class FortuneTeller : RoleBase
         }
         if (TargetResult.Count >= NumOfForecast)
         {
-            Logger.Info($"SetForecastResult NotSet ForecastCountOver player: {player.name}, target: {Target.name} forecastCount: {TargetResult.Count}, canCount: {NumOfForecast}", "FortuneTeller");
+            Logger.Info($"SetForecastResult NotSet ForecastCountOver player: {Player.name}, target: {Target.name} forecastCount: {TargetResult.Count}, canCount: {NumOfForecast}", "FortuneTeller");
             Target = null;
             return;
         }
 
         TargetResult[Target.PlayerId] = Target;
-        Logger.Info($"SetForecastResult SetTarget player: {player.name}, target: {Target.name}", "FortuneTeller");
+        Logger.Info($"SetForecastResult SetTarget player: {Player.name}, target: {Target.name}", "FortuneTeller");
         Target = null;
     }
-
-    public void VoteForecastTarget(PlayerControl player, byte targetId)
+    public bool HasForecastResult() => TargetResult.Count > 0;
+    private int ForecastLimit => NumOfForecast - TargetResult.Count;
+    public override string GetProgressText(bool comms = false)
     {
-        if (!CanForecastNoDeadBody &&
-            GameData.Instance.AllPlayers.ToArray().Where(x => x.IsDead).Count() <= 0) //死体無し
+        if (MyTaskState.CompletedTasksCount < ForecastTaskTrigger) return string.Empty;
+
+        return ColorString(ForecastLimit > 0 ? RoleInfo.RoleColor : Color.gray, $"[{ForecastLimit}]");
+    }
+    public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
+    {
+        if (seen == null || !isForMeeting) return string.Empty;
+
+        if (TargetResult.ContainsKey(seen.PlayerId))
+            return ColorString(RoleInfo.RoleColor, "★");
+
+        return string.Empty;
+    }
+    public override void OverrideRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    {
+        if (!isMeeting) return;
+        if (!TargetResult.ContainsKey(seen.PlayerId)) return;
+        if (KillerOnly &&
+            !(seen.GetCustomRole().IsImpostor() || seen.IsNeutralKiller() || seen.IsCrewKiller())) return;
+
+        enabled = true;
+
+        if (!ConfirmCamp) return;   //役職表示
+
+        //陣営表示
+        if (seen.GetCustomRole().IsImpostor() || seen.GetCustomRole().IsMadmate())
         {
-            Logger.Info($"VoteForecastTarget NotForecast NoDeadBody player: {player.name}, targetId: {targetId}", "FortuneTeller");
-            return;
+            roleColor = Palette.ImpostorRed;
+            roleText = GetString("TeamImpostor");
         }
-        var completedTasks = player.GetPlayerTaskState().CompletedTasksCount;
-        if (completedTasks < ForecastTaskTrigger) //占い可能タスク数
+        else if (seen.GetCustomRole().IsNeutral())
         {
-            Logger.Info($"VoteForecastTarget NotForecast LessTasks player: {player.name}, targetId: {targetId}, task: {completedTasks}/{ForecastTaskTrigger}", "FortuneTeller");
-            return;
+            roleColor = Color.gray;
+            roleText = GetString("Neutral");
         }
-
-        SetForecastTarget(player, targetId);
+        else
+        {
+            roleColor = Palette.CrewmateBlue;
+            roleText = GetString("TeamCrewmate");
+        }
     }
-    private void SetForecastTarget(PlayerControl player, byte targetId)
+    public bool KnowTargetRoleColor(PlayerControl target)
     {
-        var target = GetPlayerById(targetId);
-        if (target == null || !target.IsAlive()) return;
-        if (HasForecastResult(player, target.PlayerId)) return;  //既に占い結果があるときはターゲットにならない
-
-        Target = target;
-        Logger.Info($"SetForecastTarget player: {player.name}, target: {target.name}", "FortuneTeller");
-    }
-    public static bool HasForecastResult(PlayerControl player, byte targetId)
-    {
-        return TargetResult.ContainsKey(targetId);
-    }
-    public bool HasForecastResult(PlayerControl player)
-    {
-        return TargetResult.Count > 0;
-    }
-    public static bool IsShowTargetRole(PlayerControl seer, PlayerControl target)
-    {
-        if (!HasForecastResult(seer,target.PlayerId)) return false;
+        if (!TargetResult.ContainsKey(target.PlayerId)) return false;
         if (ConfirmCamp) return false;
         if (KillerOnly &&
-            !(target.GetCustomRole().IsImpostor() || target.IsNeutralKiller())) return false;
+            !(target.GetCustomRole().IsImpostor() || target.IsNeutralKiller() || target.IsCrewKiller())) return false;
         return true;
-    }
-    public bool IsShowTargetCamp(PlayerControl seer, PlayerControl target, out bool onlyKiller)
-    {
-        onlyKiller = KillerOnly;
-        if (!HasForecastResult(seer,target.PlayerId)) return false;
-        return !IsShowTargetRole(seer, target);
     }
 }

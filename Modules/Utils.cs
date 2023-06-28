@@ -901,7 +901,7 @@ namespace TownOfHost
                     || ForceLoop
                     || (CustomRoles.Workaholic.IsEnable() && Workaholic.Seen)
                     || CustomRoles.Rainbow.IsEnable()
-                    || seer.Is(CustomRoles.FortuneTeller)
+                    || (seer.Is(CustomRoles.FortuneTeller) && ((FortuneTeller)seer.GetRoleClass()).HasForecastResult())
                     || seer.Is(CustomRoles.Sympathizer)
                     || seer.Is(CustomRoles.AntiComplete)
                     )
