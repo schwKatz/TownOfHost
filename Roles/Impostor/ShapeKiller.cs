@@ -34,7 +34,7 @@ public sealed class ShapeKiller : RoleBase, IImpostor
     }
     private static bool CanDeadReport;
 
-    public static PlayerControl ShapeTarget = null;
+    public PlayerControl ShapeTarget = null;
 
     private static void SetUpOptionItem()
     {
@@ -49,19 +49,20 @@ public sealed class ShapeKiller : RoleBase, IImpostor
         else ShapeTarget = target;
         Logger.Info($"{Player.GetNameWithRole()}のターゲットを {target?.GetNameWithRole()} に設定", "ShepeKillerTarget");
     }
-    public override bool OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public static bool DummyReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
     {
-        if (target == null) return true;
-        if (reporter == null || reporter.PlayerId != Player.PlayerId) return true;
-        if (reporter.PlayerId == target.PlayerId) return true;
+        if (target == null) return false;
+        if (reporter == null || !reporter.Is(CustomRoles.ShapeKiller)) return false;
+        if (reporter.PlayerId == target.PlayerId) return false;
 
-        if (ShapeTarget != null && (CanDeadReport || (!ShapeTarget.Data.IsDead && !ShapeTarget.Data.Disconnected)))
+        var shapeKiller = (ShapeKiller)reporter.GetRoleClass();
+        if (shapeKiller.ShapeTarget != null && (CanDeadReport || shapeKiller.ShapeTarget.IsAlive()))
         {
-            RPC.ReportDeadBodyForced(ShapeTarget, target);
-            Logger.Info($"ShapeKillerの偽装通報 player: {ShapeTarget?.name}, target: {target?.PlayerName}", "ShepeKillerReport");
-            return false;
+            RPC.ReportDeadBodyForced(shapeKiller.ShapeTarget, target);
+            Logger.Info($"ShapeKillerの偽装通報 player: {shapeKiller.ShapeTarget?.name}, target: {target?.PlayerName}", "ShepeKillerReport");
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

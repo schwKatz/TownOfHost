@@ -275,6 +275,8 @@ namespace TownOfHost
             Utils.NotifyRoles(isForMeeting: true, NoCache: true);
 
             Utils.SyncAllSettings();
+
+            if (ShapeKiller.DummyReportDeadBody(__instance, target)) return false;
             return true;
         }
         public static async void ChangeLocalNameAndRevert(string name, int time)
