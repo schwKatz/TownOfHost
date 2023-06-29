@@ -6,13 +6,11 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using Hazel;
 
+using TownOfHostY.Attributes;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Common;
-using TownOfHostY.Roles.AddOns.Impostor;
-using TownOfHostY.Roles.AddOns.Crewmate;
-using TownOfHostY.Roles.Neutral;
 using static TownOfHostY.Translator;
 
 namespace TownOfHostY
@@ -32,8 +30,6 @@ namespace TownOfHostY
             ImpostorSetNum = Main.NormalOptions.NumImpostors;
             if (CustomRoles.StrayWolf.GetCount() >= 2)
                 Main.NormalOptions.NumImpostors = ImpostorSetNum - CustomRoles.StrayWolf.GetCount();
-
-            PlayerState.Clear();
 
             Main.AllPlayerKillCooldown = new Dictionary<byte, float>();
             Main.AllPlayerSpeed = new Dictionary<byte, float>();
@@ -57,7 +53,6 @@ namespace TownOfHostY
 
             RandomSpawn.CustomNetworkTransformPatch.NumOfTP = new();
 
-            MeetingTimeManager.Init();
             Main.DefaultCrewmateVision = Main.RealOptionsData.GetFloat(FloatOptionNames.CrewLightMod);
             Main.DefaultImpostorVision = Main.RealOptionsData.GetFloat(FloatOptionNames.ImpostorLightMod);
 
@@ -67,7 +62,6 @@ namespace TownOfHostY
             //名前の記録
             Main.AllPlayerNames = new();
 
-            Camouflage.Init();
             var invalidColor = Main.AllPlayerControls.Where(p => p.Data.DefaultOutfit.ColorId < 0 || Palette.PlayerColors.Length <= p.Data.DefaultOutfit.ColorId);
             if (invalidColor.Any())
             {
@@ -77,6 +71,8 @@ namespace TownOfHostY
                 Utils.SendMessage(msg);
                 Logger.Error(msg, "CoStartGame");
             }
+
+            GameModuleInitializerAttribute.InitializeAll();
 
             foreach (var target in Main.AllPlayerControls)
             {
