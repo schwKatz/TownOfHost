@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TownOfHost.Attributes;
 using UnityEngine;
 
 namespace TownOfHostY
@@ -12,6 +13,7 @@ namespace TownOfHostY
         public static Dictionary<byte, byte> FirstTriggerTarget = new();
         public static Dictionary<byte, Action> FirstTriggerAction = new();
 
+        [GameModuleInitializer]
         public static void Init()
         {
             PlayerIdList = new();

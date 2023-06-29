@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using HarmonyLib;
+using TownOfHostY.Attributes;
 using static TownOfHostY.Translator;
 namespace TownOfHostY
 {
@@ -10,6 +11,7 @@ namespace TownOfHostY
         private static readonly string DENY_NAME_LIST_PATH = @"./TOH_DATA/DenyName.txt";
         private static readonly string BAN_LIST_PATH = @"./TOH_DATA/BanList.txt";
 
+        [PluginModuleInitializer]
         public static void Init()
         {
             Directory.CreateDirectory("TOH_DATA");

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Hazel;
 
+using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core;
 
 namespace TownOfHostY
@@ -21,6 +22,8 @@ namespace TownOfHostY
         // 単独勝利するニュートラルの処理に最適です。
         public static HashSet<byte> WinnerIds;
 
+        [GameModuleInitializer]
+        [PluginModuleInitializer]
         public static void Reset()
         {
             WinnerTeam = CustomWinner.Default;

@@ -1,5 +1,4 @@
-using System;
-using System.Linq;
+using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using static TownOfHostY.Options;
@@ -20,6 +19,7 @@ namespace TownOfHostY.Roles.AddOns.Impostor
                 .SetValueFormat(OptionFormat.Seconds);
             SetUpAddOnOptions(Id + 20, CustomRoles.LastImpostor, TabGroup.Addons);
         }
+        [GameModuleInitializer]
         public static void Init() => currentId = byte.MaxValue;
         public static void Add(byte id) => currentId = id;
         public static void SetKillCooldown(PlayerControl pc)

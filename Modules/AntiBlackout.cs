@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using AmongUs.GameOptions;
 using Hazel;
 
+using TownOfHost.Attributes;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles.Neutral;
 
@@ -136,6 +137,7 @@ namespace TownOfHostY
             }
         }
 
+        [GameModuleInitializer]
         public static void Reset()
         {
             logger.Info("==Reset==");
