@@ -226,6 +226,8 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "AntiComplete","Anti Complete","アンチコンプリート","防成者",,
 "Workaholic","Workaholic","ワーカホリック","工作狂",,
 "PlatonicLover","Platonic Lover","純愛者","真爱者",,
+"Lawyer","Lawyer","弁護士","律师",
+"Pursuer","Pursuer","追跡者","起诉人",
 "Totocalcio","Totocalcio","トトカルチョ",
 
 "ArsonistInfo","Burn them to crisps","燃やせ","火焰给我燃烧起来吧！","燒吧，燒吧，燃燒吧","Облейте и подожгите всех игроков","Queime tudo em pedacinhos"
@@ -246,6 +248,8 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "AntiCompleteInfo","I hate guys who can work","仕事出来るやつが嫌いだ","我讨厌可以工作的人",,
 "WorkaholicInfo","I can't live without my job","仕事してないと生きてられない","我不能离开我的工作",,
 "PlatonicLoverInfo","I will win with the lover I met","出会った恋人と共に勝ち抜くのだ","我会和我遇到的爱人一起胜利",,
+"LawyerInfo","I work for my client","依頼人の為に私、動きます","我为我的客户工作",
+"PursuerInfo","I lost a client","依頼人いなくなっちゃった","我丢失了一个客户",
 "TotocalcioInfo","I leave my victory to you","私の勝利は貴方に任せる",
 
 "ArsonistInfoLong","(Neutrals):\nWhen you use the kill button, you douse your target in oil.\nAfter dousing all living players, you set everything ablaze and win by venting.","(ニュートラル):\nキルボタンを使おうとすると、ターゲットに油を塗れる。\nすべてのクルーに油を塗ったら船を燃やして勝利する。","(独立阵营):\n纵火犯可以通过对玩家点击击杀按钮并在跟随其数秒来完成涂油行为。\n当所有存活玩家都被纵火犯涂油后，纵火犯可以通过跳通风管来点火，并单独获得胜利。","(中立):\n當縱火犯嘗試使用殺人鍵,它將對他身邊最近的一個人澆上油,\n當他對所有玩家澆上油之後,縱火縱火犯點火即勝利。","(Нейтрал):\nПоджигатель может обливать игроков, нажав на кнопку 'Убить' и находясь рядом с игроком в течение нескольких секунд. \nПосле того как он обольёт всех живых игроков Поджигатель сможет запрыгнуть в вентиляцию, чтобы поджечь всех игроков, что приводит к победе Поджигателя.","(Neutros):\nAo apertar o botão de matar, você encharca o seu inimigo em óleo.\nApós ter encharcado todos os jogadores vivos, você coloca tudo em chamas e ganha entrando na ventilação."
@@ -260,6 +264,8 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "AntiCompleteInfoLong","(Neutrals)\nDuring the meeting, you can vote for your favorite person only once in the entire meeting. If that person has already completed the task,，he or she wins alone. If you select someone who has no task or who has not completed a task，you die and lose. When the AntiComplete selects someone，the meeting is forced to end.","[ニュートラル]\n会議中、全体で1回のみ好きな人を投票で選択出来る。その人がタスクを既に完了させていたら単独勝利。タスクがない人、タスクが終わってない人を選ぶと死亡し敗北。\nアンチコンプが誰か選択した時、会議は強制終了する。","(中立阵营)\n在整个会议中，您只能投票给您喜欢的人一次。如果这个人已经完成了任务，它独自获胜。如果你选择了一个没有任务或者没有完成任务的人，你就会失败。当防成者选择某人时，会议将被迫结束。",,
 "WorkaholicInfoLong","(Neutrals)\nWhen you complete a task，you win alone. The amount of tasks is very large. Even if you die，you win when you finish the task. Vent is possible.","[ニュートラル]\nタスクを完了させた時、単独勝利。タスク量はとても多い。死亡しても関係なく、タスクが終わると勝利。霊界からでも終わらそう。ベント可。","(中立阵营)\n当你完成一项任务时，你独自获胜。任务的数量非常大。即使你死了，当你完成任务时你就赢了。钻管是可能的。",,
 "PlatonicLoverInfoLong","(Neutrals):\nBy pressing the kill button toward someone, you can become Lovers with that person.(When set up, it cannot be put in at the same time as Lovers.)","[ニュートラル]\n誰かに向かってキルボタンを押すことで、その人とラバーズになることが出来る。(設定時、ラバーズと同時に入れることは出来ない。)","(中立阵营):\n按下某人的击杀按钮，你就可以和那个人成为恋人。(设置时不能和恋人同时存在)",,
+"LawyerInfoLong","(Neutrals):\nLawyer defends the impostor or NeutralKiller.\nIf the client dies, the Lawyer changes his role to Pursuer(additional win if he survives & prevents a set number of kills).Both Lawyer and Pursuer do not have the task.\n\nThere are two conditions for a lawyer's victory.\nWhen the client wins when he is alive,\n1) If the lawyer is dead, he wins along with his winning team.\n2) If the lawyer survives, the winning team's victory is intercepted (sole victory for the lawyer).","[ニュートラル]\n弁護士は、依頼人となるインポスターorキル可能な第3陣営を擁護する。\n依頼人が死亡すると弁護士は役職が変更されて「追跡者(自身が生存していれば追加勝利 + 設定回数キルを防ぐ)」 になる。弁護士、追跡者共にタスクはもたない。\n\n弁護士の勝利条件は以下の2通り。\n依頼人が生存時に勝利した時、\n1) 弁護士が死亡していたら、その優勝チームと共に勝利。\n2) 弁護士が生存していたら、優勝チームの勝利を横取り(弁護士の単独勝利)。","(中立阵营):\n律师为内鬼/中立杀手负责辩护\n如果客户死了 它就会变成起诉人(如果他活了下来并防止了一定数量的击杀，则会赢得额外的胜利).律师和追击者都没有任务\n\n律师获胜有两个条件\n当客户活着时获胜,\n1) 如果律师死了，他将与获胜团队一起获胜.\n2) 如果律师活到了最后，获胜团队的胜利将被取消（律师抢夺了胜利）",
+"PursuerInfoLong","(Neutrals):\nThe client died, so the lawyer became a pursuer.\nIf you yourself are still alive at the end of the game, you win an additional victory. It is also possible to prevent kills for a set number of times.","[ニュートラル]\n依頼人が死亡したので弁護士は追跡者になった。\n自身がゲーム終了時に生存していれば追加で勝利となる。また、設定回数分キルを防ぐことが可能。","(中立阵营):\n当客户死了 律师将会变成起诉人\n如果起诉人在游戏结束时还活着，它将单独获得胜利. 也可以在设定的次数内阻止死亡",
 "TotocalcioInfoLong","(Neutrals):\nThe kill button can be used to 'BET' on someone.If the BET player on the game wins, he can win an additional unconditional victory.","[ニュートラル]\nキルボタンを使用して、誰かに「賭ける」ことが可能。賭けた対象プレイヤーが勝利すると、無条件で自身も追加で勝利できる。\n「賭ける」先は設定により途中で変更することも可能。ただし生存人数が減るごとに「賭ける」クールタイムが長くなる。",,
 
 
@@ -597,6 +603,9 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "JClientAfterJackalDead","Client Mode After Jackal Dead","クライアントのジャッカル死亡後モード",,,,
 "JClientAfterJackalDeadMode.None","None","なし",,,,
 "JClientAfterJackalDeadMode.Following","Following","後追い",,,,
+"LawyerTargetKnows","Lawyer target knows","依頼人は弁護されている事がわかる","律师的客户知道自己有律师",
+"LawyerKnowTargetRole","Lawyer know target role","弁護士は依頼人の役職が分かる","律师知道客户职业",
+"PursuerGuardNum","Pursuer guard count","追跡者のキルガード回数","起诉人自保次数",
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
@@ -628,7 +637,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DeathReason.Disconnected","Disconnected","回線切断","断连","斷線","Вышел","Desconectado"
 "DeathReason.Fall","Fall","転落","摔死","摔死","Упал","Queda"
 "DeathReason.Revenge","Revenge","道連れ","复仇","復仇","Месть",""
-"DeathReason.win","hit","的中","猜着",
+"DeathReason.Win","hit","的中","猜着",
 "DeathReason.Poisoning","Poisoning","毒死","毒死",
 "DeathReason.etc","Other","その他","其他","其他","Другое","Outros"
 

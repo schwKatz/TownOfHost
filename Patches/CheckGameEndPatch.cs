@@ -104,6 +104,8 @@ namespace TownOfHost
                             }
                         }
                     }
+                    //弁護士且つ追跡者
+                    Lawyer.EndGameCheck();
                 }
                 ShipStatus.Instance.enabled = false;
                 StartEndGame(reason);

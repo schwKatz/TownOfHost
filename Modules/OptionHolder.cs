@@ -695,6 +695,7 @@ namespace TownOfHost
 
             var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(2, 2, 1), 2, TabGroup.Addons, false).SetParent(spawnOption)
                 //.SetHidden(true)
+                .SetValueFormat(OptionFormat.Players)
                 .SetGameMode(customGameMode);
 
             CustomRoleSpawnChances.Add(role, spawnOption);
@@ -709,6 +710,7 @@ namespace TownOfHost
             // 初期値,最大値,最小値が同じで、stepが0のどうやっても変えることができない個数オプション
             var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(count, count, count), count, tab, false).SetParent(spawnOption)
                 //.SetHidden(true)
+                .SetValueFormat(OptionFormat.Players)
                 .SetGameMode(customGameMode);
 
             CustomRoleSpawnChances.Add(role, spawnOption);

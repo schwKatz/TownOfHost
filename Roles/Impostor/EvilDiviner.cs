@@ -1,5 +1,6 @@
 using AmongUs.GameOptions;
 using System.Collections.Generic;
+using Hazel;
 using UnityEngine;
 
 using TownOfHost.Roles.Core;
@@ -27,6 +28,8 @@ public sealed class EvilDiviner : RoleBase, IImpostor
     {
         KillCooldown = OptionKillCooldown.GetFloat();
         DivinationMaxCount = OptionDivinationMaxCount.GetInt();
+
+        DivinationTarget = new();
     }
     private static OptionItem OptionKillCooldown;
     private static OptionItem OptionDivinationMaxCount;
@@ -38,7 +41,7 @@ public sealed class EvilDiviner : RoleBase, IImpostor
     private static int DivinationMaxCount;
 
     static int DivinationCount;
-    static List<byte> DivinationTarget = new();
+    private static Dictionary<byte, List<byte>> DivinationTarget = new();
 
     public static void SetupOptionItem()
     {
@@ -50,15 +53,35 @@ public sealed class EvilDiviner : RoleBase, IImpostor
     public override void Add()
     {
         DivinationCount = DivinationMaxCount;
-        DivinationTarget = new();
+        DivinationTarget.TryAdd(Player.PlayerId, new());
         Player.AddDoubleTrigger();
     }
+    private void SendRPC(byte playerId, byte targetId)
+    {
+        using var sender = CreateSender(CustomRPC.SetEvilDiviner);
+        sender.Writer.Write(playerId);
+        sender.Writer.Write(targetId);
+    }
+
+    public override void ReceiveRPC(MessageReader reader, CustomRPC rpcType)
+    {
+        if (rpcType != CustomRPC.SetBountyTarget) return;
+
+        byte playerId = reader.ReadByte();
+        byte targetId = reader.ReadByte();
+
+        if (DivinationTarget.ContainsKey(playerId))
+            DivinationTarget[playerId].Add(targetId);
+        else
+            DivinationTarget.Add(playerId, new());
+    }
+
     public float CalculateKillCooldown() => KillCooldown;
     public override string GetProgressText(bool comms = false) => Utils.ColorString(DivinationCount > 0 ? Palette.ImpostorRed : Color.gray, $"({DivinationCount})");
 
     public override void OverrideRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {
-        if (DivinationTarget != null && DivinationTarget.Contains(seen.PlayerId) && Player.IsAlive())
+        if (DivinationTarget[Player.PlayerId].Contains(seen.PlayerId) && Player.IsAlive())
             enabled = true;
     }
 
@@ -72,10 +95,12 @@ public sealed class EvilDiviner : RoleBase, IImpostor
     }
     public static void SetDivination(PlayerControl killer, PlayerControl target)
     {
-        if (!DivinationTarget.Contains(target.PlayerId))
+        var killerId = killer.PlayerId;
+        var targetId = target.PlayerId;
+        if (!DivinationTarget[killerId].Contains(targetId))
         {
             DivinationCount--;
-            DivinationTarget.Add(target.PlayerId);
+            DivinationTarget[killerId].Add(targetId);
             Logger.Info($"{killer.GetNameWithRole()}：占った 占い先→{target.GetNameWithRole()} || 残り{DivinationCount}回", "EvilDiviner");
             Utils.NotifyRoles(SpecifySeer: killer);
 

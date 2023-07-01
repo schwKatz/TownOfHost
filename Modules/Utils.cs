@@ -236,6 +236,8 @@ namespace TownOfHost
                     roleText += GetString("killer");
                 if (mainRole == CustomRoles.Bakery && Bakery.IsNeutral(GetPlayerById(PlayerId)))
                     roleText = GetString("NBakery");
+                if (mainRole == CustomRoles.Lawyer && Lawyer.IsPursuer(GetPlayerById(PlayerId)))
+                    roleText = GetString("Pursuer");
             }
 
             if (subRolesList != null)
@@ -335,6 +337,8 @@ namespace TownOfHost
             var roleString = player.GetCustomRole().ToString();
             if (player.GetCustomRole() == CustomRoles.Bakery && Bakery.IsNeutral(player))
                 roleString = "NBakery";
+            if (player.GetCustomRole() == CustomRoles.Lawyer && Lawyer.IsPursuer(player))
+                roleString = "Pursuer";
             sb.Append(GetString(roleString)).Append(player.GetRoleInfo(true));
 
             foreach (var subRole in player.GetCustomSubRoles())

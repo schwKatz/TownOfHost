@@ -36,7 +36,10 @@ namespace TownOfHost
         SetOppoKillerShotLimit,
         SetCursedWolfSpellCount,
         SetNBakryPoison,
-        SetBlinderVisionPlayer
+        SetBlinderVisionPlayer,
+        SetEvilDiviner,
+        SetLawyerTarget,
+        SetRemoveLawyerTarget,
     }
     public enum Sounds
     {

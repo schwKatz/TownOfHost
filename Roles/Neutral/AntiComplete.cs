@@ -115,16 +115,27 @@ public sealed class AntiComplete : RoleBase
     {
         var (votedForId, numVotes, doVote) = base.OnVote(voterId, sourceVotedForId);
         var baseVote = (votedForId, numVotes, doVote);
-        if (voterId != Player.PlayerId || sourceVotedForId == Player.PlayerId || sourceVotedForId >= 253 || !Player.IsAlive())
+        if (voterId != Player.PlayerId              // 投票者がアンチコンプ自身でない
+            || sourceVotedForId == Player.PlayerId  // 投票先がアンチコンプ自身(自投票)
+            || sourceVotedForId >= 253              // 投票先がスキップ253/無投票254
+            || !Player.IsAlive())                   // アンチコンプ自身が死亡
         {
-            return baseVote;
+            return baseVote;                        // 変更なしで返す
         }
+        
+        // 今までに行われた投票をすべて削除し，特定の投票先に1票投じられた状態で会議を強制終了
+        // 投票者 = アンチコンプ自身  exiled = 投票先  アンチコンプ処理
+        MeetingVoteManager.Instance.ClearAndExile(Player.PlayerId, sourceVotedForId, true);
 
+        // 投票先のタスクステートを取得
         var taskState = PlayerState.GetByPlayerId(sourceVotedForId).GetTaskState();
-        if (taskState.IsTaskFinished) MyState.DeathReason = CustomDeathReason.Win;
-        else MyState.DeathReason = CustomDeathReason.Suicide;
-        MeetingVoteManager.Instance.ClearAndExile(Player.PlayerId, sourceVotedForId);
-        return (voterId, numVotes, false);
+        if (taskState.IsTaskFinished)   // 投票先がタスク完了している
+            MyState.DeathReason = CustomDeathReason.Win;
+        else                            // タスク未完了/タスク未所持
+            MyState.DeathReason = CustomDeathReason.Suicide;
+
+        // 変更後の投票先 = 元の投票先  変更後の票数 = 1  投票カウント = しない
+        return (votedForId, numVotes, false);
     }
 
     public override void OnExileWrapUp(GameData.PlayerInfo exiled, ref bool DecidedWinner)

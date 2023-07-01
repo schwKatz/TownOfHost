@@ -15,7 +15,7 @@ public sealed class JClient : RoleBase
             CustomRoleTypes.Neutral,
             51000,
             SetupOptionItem,
-            "jcl",
+            "クライアント",
             "#00b4eb",
             introSound: () => GetIntroSound(RoleTypes.Impostor)
         );

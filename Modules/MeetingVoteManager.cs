@@ -41,14 +41,15 @@ public class MeetingVoteManager
     /// </summary>
     /// <param name="voter">投票を行う人</param>
     /// <param name="exiled">追放先</param>
-    public void ClearAndExile(byte voter, byte exiled)
+    public void ClearAndExile(byte voter, byte exiled, bool isAntiComp = false)
     {
         logger.Info($"{Utils.GetPlayerById(voter).GetNameWithRole()} によって {GetVoteName(exiled)} が追放されます");
         ClearVotes();
         var vote = new VoteData(voter);
         vote.DoVote(exiled, 1);
         allVotes[voter] = vote;
-        EndMeeting(false);
+        byte antiCompId = isAntiComp ? voter : byte.MaxValue;
+        EndMeeting(false, antiCompId);
     }
     /// <summary>
     /// 投票を追加します
@@ -108,10 +109,13 @@ public class MeetingVoteManager
     /// 無条件で会議を終了します
     /// </summary>
     /// <param name="applyVoteMode">スキップと同数投票の設定を適用するかどうか</param>
-    public void EndMeeting(bool applyVoteMode = true)
+    public void EndMeeting(bool applyVoteMode = true, byte antiCompId = byte.MaxValue)
     {
         var result = CountVotes(applyVoteMode);
-        var logName = result.Exiled == null ? (result.IsTie ? "同数" : "スキップ") : result.Exiled.Object.GetNameWithRole();
+        //Y-anti
+        var exiled = (antiCompId == byte.MaxValue) ? result.Exiled : Utils.GetPlayerInfoById(antiCompId);
+
+        var logName = exiled == null ? (result.IsTie ? "同数" : "スキップ") : exiled.Object.GetNameWithRole();
         logger.Info($"追放者: {logName} で会議を終了します");
 
         var states = new List<MeetingHud.VoterState>();
@@ -136,15 +140,15 @@ public class MeetingVoteManager
         if (AntiBlackout.OverrideExiledPlayer)
         {
             meetingHud.RpcVotingComplete(states.ToArray(), null, true);
-            ExileControllerWrapUpPatch.AntiBlackout_LastExiled = result.Exiled;
+            ExileControllerWrapUpPatch.AntiBlackout_LastExiled = exiled;
         }
         else
         {
-            meetingHud.RpcVotingComplete(states.ToArray(), result.Exiled, result.IsTie);
+            meetingHud.RpcVotingComplete(states.ToArray(), exiled, result.IsTie);
         }
-        if (result.Exiled != null)
+        if (exiled != null)
         {
-            MeetingHudPatch.CheckForDeathOnExile(CustomDeathReason.Vote, result.Exiled.PlayerId);
+            MeetingHudPatch.CheckForDeathOnExile(CustomDeathReason.Vote, exiled.PlayerId);
         }
         Destroy();
     }

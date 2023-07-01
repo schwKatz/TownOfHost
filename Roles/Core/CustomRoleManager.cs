@@ -451,6 +451,7 @@ public enum CustomRoles
     AntiComplete,
     Workaholic,
     PlatonicLover,
+    Lawyer,
     Totocalcio,
     //HideAndSeek
     HASFox,

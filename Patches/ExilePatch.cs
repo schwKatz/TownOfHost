@@ -59,7 +59,8 @@ namespace TownOfHost
                     exiled.Object?.ResetPlayerCam(1f);
 
                 exiled.IsDead = true;
-                PlayerState.GetByPlayerId(exiled.PlayerId).DeathReason = CustomDeathReason.Vote;
+                if (role != CustomRoles.AntiComplete)
+                    PlayerState.GetByPlayerId(exiled.PlayerId).DeathReason = CustomDeathReason.Vote;
 
                 foreach (var roleClass in CustomRoleManager.AllActiveRoles.Values)
                 {
