@@ -109,6 +109,9 @@ namespace TownOfHost.Modules
                 case CustomRoles.OSchrodingerCat:
                     ((Opportunist)roleClass).ApplyGameOptions(opt);
                     break;
+                case CustomRoles.DSchrodingerCat:
+                    ((DarkHide)roleClass).ApplyGameOptions(opt);
+                    break;
             }
             foreach (var subRole in player.GetCustomSubRoles())
             {

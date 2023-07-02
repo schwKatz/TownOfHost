@@ -206,6 +206,7 @@ namespace TownOfHost
                 case CustomRoles.SillySheriff:
                 case CustomRoles.MadSheriff:
                 case CustomRoles.Hunter:
+                case CustomRoles.DarkHide:
                 case CustomRoles.PlatonicLover:
                 case CustomRoles.Totocalcio:
                 case CustomRoles.Opportunist:

@@ -78,6 +78,8 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner
                     serialKiller.SuicideTimer = null;
                     break;
                 case CustomRoles.Sheriff:
+                case CustomRoles.Hunter:
+                case CustomRoles.SillySheriff:
                     target.RpcSetCustomRole(CustomRoles.CSchrodingerCat);
                     break;
                 case CustomRoles.Egoist:
@@ -85,6 +87,9 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner
                     break;
                 case CustomRoles.Jackal:
                     target.RpcSetCustomRole(CustomRoles.JSchrodingerCat);
+                    break;
+                case CustomRoles.DarkHide:
+                    target.RpcSetCustomRole(CustomRoles.DSchrodingerCat);
                     break;
                 case CustomRoles.Opportunist:
                     target.RpcSetCustomRole(CustomRoles.OSchrodingerCat);
@@ -137,9 +142,10 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner
         {
             if (pc.Is(CustomRoles.Egoist) && !Rand.Contains(CustomRoles.EgoSchrodingerCat))
                 Rand.Add(CustomRoles.EgoSchrodingerCat);
-
             if (pc.Is(CustomRoles.Jackal) && !Rand.Contains(CustomRoles.JSchrodingerCat))
                 Rand.Add(CustomRoles.JSchrodingerCat);
+            if (pc.Is(CustomRoles.DarkHide) && !Rand.Contains(CustomRoles.DSchrodingerCat))
+                Rand.Add(CustomRoles.DSchrodingerCat);
         }
         var Role = Rand[rand.Next(Rand.Count)];
         player.RpcSetCustomRole(Role);

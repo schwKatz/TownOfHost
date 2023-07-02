@@ -450,6 +450,8 @@ public enum CustomRoles
     JClient,
     AntiComplete,
     Workaholic,
+    DarkHide,
+    DSchrodingerCat,//ダークハイド陣営のシュレディンガーの猫
     PlatonicLover,
     Lawyer,
     Totocalcio,

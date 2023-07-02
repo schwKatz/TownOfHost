@@ -38,6 +38,7 @@ namespace TownOfHost
                 CustomRoles.SchrodingerCat or
                 CustomRoles.EgoSchrodingerCat or
                 CustomRoles.JSchrodingerCat or
+                CustomRoles.DSchrodingerCat or
                 CustomRoles.OSchrodingerCat or
                 CustomRoles.HASTroll or
                 CustomRoles.HASFox;
@@ -60,6 +61,7 @@ namespace TownOfHost
                 CustomRoles.MSchrodingerCat or
                 CustomRoles.CSchrodingerCat or
                 CustomRoles.EgoSchrodingerCat or
+                CustomRoles.DSchrodingerCat or
                 CustomRoles.JSchrodingerCat or
                 CustomRoles.OSchrodingerCat;
         }

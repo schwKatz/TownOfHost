@@ -177,6 +177,7 @@ namespace TownOfHost
                 AssignDesyncRole(CustomRoles.SillySheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Jackal, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.DarkHide, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
@@ -279,7 +280,7 @@ namespace TownOfHost
                     if (role.IsVanilla()) continue;
                     if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
-                        /*or CustomRoles.DarkHide*/ or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
+                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
                     if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
 
                     var baseRoleTypes = role.GetRoleTypes() switch
@@ -485,7 +486,7 @@ namespace TownOfHost
             {
                 if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
-                        /*or CustomRoles.DarkHide*/ or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
+                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
                 if (role == CustomRoles.Egoist && Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) <= 1) continue;
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role.GetRoleTypes() == roleTypes)

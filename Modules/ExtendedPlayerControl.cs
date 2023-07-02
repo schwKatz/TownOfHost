@@ -503,7 +503,8 @@ namespace TownOfHost
             return 
                 player.GetCustomRole() is
                 CustomRoles.Egoist or
-                CustomRoles.Jackal;
+                CustomRoles.Jackal or
+                CustomRoles.DarkHide;
         }
         public static bool IsCrewKiller(this PlayerControl player)
         {

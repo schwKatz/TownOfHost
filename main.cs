@@ -185,6 +185,7 @@ namespace TownOfHost
                     //ニュートラル役職
                     {CustomRoles.EgoSchrodingerCat, "#5600ff"},
                     {CustomRoles.JSchrodingerCat, "#00b4eb"},
+                    {CustomRoles.DSchrodingerCat, "#483d8b"},
                     {CustomRoles.OSchrodingerCat, "#00ff00"},
                     //HideAndSeek
                     {CustomRoles.HASFox, "#e478ff"},
