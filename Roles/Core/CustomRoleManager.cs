@@ -469,10 +469,10 @@ public enum CustomRoles
 }
 public enum CustomRoleTypes
 {
-    Crewmate,
     Impostor,
+    Madmate,
+    Crewmate,
     Neutral,
-    Madmate
 }
 public enum HasTask
 {

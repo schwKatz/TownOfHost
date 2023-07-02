@@ -252,7 +252,7 @@ namespace TownOfHost
             }
         }
     }
-
+    
     [HarmonyPatch(typeof(TextBoxTMP), nameof(TextBoxTMP.SetText))]
     public static class HiddenTextPatch
     {
