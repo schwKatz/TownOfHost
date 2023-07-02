@@ -99,6 +99,7 @@ namespace TownOfHost
                     state.DeathReason = CustomDeathReason.Disconnected;
                     state.SetDead();
                 }
+                data.Character?.GetRoleClass()?.Dispose();
                 AntiBlackout.OnDisconnect(data.Character.Data);
                 PlayerGameOptionsSender.RemoveSender(data.Character);
             }
