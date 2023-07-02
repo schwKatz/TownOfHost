@@ -907,6 +907,8 @@ namespace TownOfHost
                     || CustomRoles.Rainbow.IsEnable()
                     || (seer.Is(CustomRoles.FortuneTeller) && ((FortuneTeller)seer.GetRoleClass()).HasForecastResult())
                     || seer.Is(CustomRoles.Sympathizer)
+                    || seer.Is(CustomRoles.Medic)
+                    || seer.Is(CustomRoles.GrudgeSheriff)
                     || seer.Is(CustomRoles.AntiComplete)
                     )
                 {

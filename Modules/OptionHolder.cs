@@ -370,7 +370,7 @@ namespace TownOfHost
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Crewmate).Do(info =>
             {
                 //0622不具合対応のため表示させない
-                if (info.RoleName is not CustomRoles.SillySheriff and not CustomRoles.Sheriff)
+                if (info.RoleName is not CustomRoles.SillySheriff and not CustomRoles.Sheriff and not CustomRoles.Medic)
                 {
                     switch (info.RoleName)
                     {
@@ -396,6 +396,7 @@ namespace TownOfHost
                 if (info.RoleName is not CustomRoles.Arsonist
                     and not CustomRoles.SchrodingerCat
                     and not CustomRoles.PlatonicLover
+                    and not CustomRoles.LoveCutter
                     and not CustomRoles.Totocalcio)
                 {
                     switch (info.RoleName)

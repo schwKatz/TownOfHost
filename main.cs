@@ -49,7 +49,7 @@ namespace TownOfHost
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.emptybottle.townofhost";
-        public const string PluginVersion = "501.10.5";
+        public const string PluginVersion = "501.10.6";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.6.13";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -119,6 +119,7 @@ namespace TownOfHost
 
         public static IEnumerable<PlayerControl> AllPlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null);
         public static IEnumerable<PlayerControl> AllAlivePlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null && p.IsAlive());
+        public static IEnumerable<PlayerControl> AllDeadPlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null && !p.IsAlive());
 
         public static Main Instance;
 
@@ -273,6 +274,7 @@ namespace TownOfHost
         AntiComplete = CustomRoles.AntiComplete,
         NBakery = CustomRoles.Bakery,
         Workaholic = CustomRoles.Workaholic,
+        LoveCutter = CustomRoles.LoveCutter,
         Lawyer = CustomRoles.Lawyer,
 
         HASTroll = CustomRoles.HASTroll,

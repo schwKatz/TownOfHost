@@ -146,11 +146,14 @@
 "TaskManager","Task Manager","タスマネ","任务管理员",,
 "Rainbow","<color=#ffff00>★</color><color=#ff0000>R</color><color=#ffa500>a</color><color=#ffff00>i</color><color=#00ff00>n</color><color=#00ffff>b</color><color=#0000ff>o</color><color=#800080>w</color><color=#ffff00>★</color>","<color=#ffff00>★</color><color=#ff0000>に</color><color=#ffa500>じ</color><color=#ffff00>い</color><color=#00ff00>ろ</color><color=#00ffff>ス</color><color=#0000ff>タ</color><color=#800080>ー</color><color=#ffff00>★</color>","<color=#ffff00>★</color><color=#ff0000>彩<color=#0000ff></color><color=#800080>虹</color><color=#ffff00>★</color>",,
 "RainbowResize","<size=8><color=#ffff00>★</color></size><color=#ff0000>R</color><color=#ffa500>a</color><color=#ffff00>i</color><color=#00ff00>n</color><color=#00ffff>b</color><color=#0000ff>o</color><color=#800080>w</color><size=8><color=#ffff00>★</color></size>","<size=8><color=#ffff00>★</color></size><color=#ff0000>に</color><color=#ffa500>じ</color><color=#ffff00>い</color><color=#00ff00>ろ</color><color=#00ffff>ス</color><color=#0000ff>タ</color><color=#800080>ー</color><size=8><color=#ffff00>★</color></size>","<size=8><color=#ffff00>★</color></size><color=#ff0000>彩<color=#0000ff></color><color=#800080>虹</color><size=8><color=#ffff00>★</color></size>",,
-"SillySheriff","Silly Sheriff","バカシェリフ","憨批警长"
-"Sympathizer","Sympathizer","共鳴者","同情者"
-"Blinder","Blinder","ブラインダー","盲人"
+"SillySheriff","Silly Sheriff","バカシェリフ","憨批警长",
+"Sympathizer","Sympathizer","共鳴者","同情者",
+"Blinder","Blinder","ブラインダー","盲人",
+"Medic","Medic","メディック",,
+"GrudgeSheriff","Grudge Sheriff","グラージシェリフ",
 "CandleLighter","Candle Lighter","キャンドルライター",
-"FortuneTeller","FortuneTeller","占い師",,,,
+"FortuneTeller","Fortune Teller","占い師",,,,
+"Psychic","Psychic","霊媒師",
 
 "NiceWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
 "BaitInfo","Bait your enemies","敵を罠にはめよう","诱骗敌人，让敌人落入你的陷阱","犧牲小我，完成大我","Убийца моментально зарепортит ваш труп","Engane os seus inimigos"
@@ -177,8 +180,11 @@
 "SillySheriffInfo","Can you properly judge a Impostor?","ちゃんと人外判断できるかな","你能正确地判断内鬼吗?",
 "SympathizerInfo","Neither of us is an imposter!","ふたりで白をとり合おう","我们都不是内鬼",
 "BlinderInfo","You can kill me, right?","私をキルしてもいいんだよ?",
+"MedicInfo","You're the only one I don't want to die","あなただけは斬られてほしくないんだ",
+"GrudgeSheriffInfo","Don't make me hate you","私には恨まれないようにしてくれ",
 "CandleLighterInfo","By the time the wax is gone...","ろうが無くなるまでには、、",
 "FortuneTellerInfo","Forecast Other Player","役職を占おう",,,,
+"PsychicInfo","I wanted to use your ability","貴方の能力を使いたかった",
 
 "NiceWatcherInfoLong","(Crewmates):\nYou can see everyone's votes even if anonymous voting is on.","(クルー陣営):\n全員の投票先を見ることができる。","(船员阵营:\n会议时窥视者可以看到所有人的投票。","(船員):\n會議時觀察者可以看到所有人的投票。","(Член Экипажа):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Tripulantes):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
 "BaitInfoLong","(Crewmates):\nWhen you are killed, you force your killer to immediately self-report.","(クルー陣営):\nキルされた時に、自身をキルした人に\n強制的にセルフレポートさせる事ができる。","(船员阵营):\n诱饵被击杀时，击杀诱饵的凶手将被迫报告。","(船員):\n當被殺時,兇手將強制自行舉報","(Член Экипажа):\nКогда Приманку убивают, он заставляет убившего игрока \nмоментально зарепортить ваш труп.","(Tripulantes):\nQuando morrer, você força o seu assassino a reportar o seu corpo imediatamente."
@@ -204,8 +210,11 @@
 "SillySheriffInfoLong","(Crewmates)\nIt is almost the same as a normal sheriff, but sometimes it does not recognize the camp correctly.","[クルー陣営]\n普通のシェリフとほとんど変わりないが、正しく陣営を認識できない時がある。(人外に向かって自爆・クルーをキルする時がある)","(船员阵营)\n它与普通的警长几乎一样，但有时它不能正确识别阵营。"
 "SympathizerInfoLong","(Crewmates)\nOnly two Sympathizer can be set up at any given time.\nWhen the number of tasks completed is reached, ◎ is placed on the other Sympathizer, which is visible only to the Sympathizer, and when both Sympathizers have exceeded the number of tasks set for each other, the other Sympathizer is also marked with ◎.","[クルー陣営]\n共鳴者は必ず2人でしか設定できない。\n設定タスク数まで完了させると自身にしか見えない◎がつく。2人ともタスクが互いに設定数を超えた時、相手にも◎が付きもう1人の共鳴者が誰か分かる。","(船员阵营)\n任何时候只能设置两个同情者。\n当需要完成的任务数量达到时，“◎”会被放在另一个同情者身上，只有同情者才能看到，当两个同情者都超过了为对方设定的任务数量时，另一个同情者也会被标记为“◎”。",
 "BlinderInfoLong","(Crewmates)\nCrew with an independent vision.\nMake the view of the person who kills you the same as the blinder's own view.Killed people become affected by the blackout regardless of the original setting.","[クルー陣営]\n独立した視野を持つクルー。\nキルしてきた人の視野をブラインダー自身の視野と同じにさせる。キルした人は元設定に関わらず停電の影響を受けるようになる。","(船员阵营)\n此船员具有独立的视野。让杀你的人的视野和盲人的视野一样。被杀的人会受到停电的影响，不管最初的设定是什么。",
+"MedicInfoLong","(Crewmates)\nIt can grant a shield that prevents a kill to one person other than itself once. During the task turn, Medic can specify which player to grant it to by entering and exiting the vent.\nThe shielded side cannot see either the shield or the kill guard. The medic's side is marked when the shield is granted, and the mark disappears when the shield is removed by a kill.","[クルー陣営]\n自身以外の誰か1人に1回、キルを防ぐシールドを付与することが出来る。タスクターン中、ベントに出入りすることで付与するプレイヤーを指定できる。\nシールドが張られた側はシールド付与、キルガード共に確認できない。メディック側はシールドを付与するとそのプレイヤーにマークが付き、シールドがキルにより剝がされるとそのマークは消える。",
+"GrudgeSheriffInfoLong","(Crewmates)\nDuring the task turn, GrudgeSheriff may select players by entering and exiting the vent.\nIf you are not Crewmates when you approach that person, you can kill them. \nIf the person is unkillable, he will kill himself when approached.",[クルー陣営]\nベントでキルしたいプレイヤーを選択する。その人に近づいた時、クルー陣営でなければキルすることができる。\nその人がクルー等グラージシェリフがキルできない役職であった場合、近づいた時に自殺する。,
 "CandleLighterInfoLong","(Crewmates)\nHis vision is gradually getting smaller and smaller like a candle. However, unlike others, I am not affected by the blackout because I light my surroundings with a candle.\nWhen all tasks are completed, a new candle is supplied and can be re-lit to its brightest state.","[クルー陣営]\n視界がろうそくのようにだんだんと小さく狭くなっていく。しかし他人と違いろうそくで周りを灯している為、停電の影響は受けない。\nタスクを全て完了させると新たに一本ろうそくが供給され、一番明るい状態に点け直すことができる。",
 "FortuneTellerInfoLong","(Crewmates):You can see other player's roles by forecast.\nBy voting for the player you want to forecast, you can see the roles at the next meeting.","(クルーメイト陣営):\n占うことで、他のプレイヤーの役職をみることができる。\n占いたい人に投票することで次の会議で占い結果が表示される。",,,,
+"PsychicInfoLong","(Crewmates)\nThe deceased can be selected by venting to see their Role.",[クルー陣営]\n死亡した人をベントで選択して役職を確認することができる。,
 
 
 "# ニュートラル役職"
@@ -222,10 +231,11 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "Opportunist","Opportunist","オポチュニスト","投机者","投機主義者","Выживший","Oportunista"
 "Egoist","Egoist","エゴイスト","野心家","利己主義者","Эгоист","Egoísta"
 "Jackal","Jackal","ジャッカル","豺狼","豺狼","Шакал","Chacal"
-"JClient","Client","クライアント",,,,
+"JClient","Client","クライアント","客户",,,
 "AntiComplete","Anti Complete","アンチコンプリート","防成者",,
 "Workaholic","Workaholic","ワーカホリック","工作狂",,
 "DarkHide","Dark Hide","ダークハイド","潜藏者",,
+"LoveCutter","Love Cutter","ラブカッター","切爱者",
 "PlatonicLover","Platonic Lover","純愛者","真爱者",,
 "Lawyer","Lawyer","弁護士","律师",
 "Pursuer","Pursuer","追跡者","起诉人",
@@ -249,6 +259,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "AntiCompleteInfo","I hate guys who can work","仕事出来るやつが嫌いだ","我讨厌可以工作的人",,
 "WorkaholicInfo","I can't live without my job","仕事してないと生きてられない","我不能离开我的工作",,
 "DarkHideInfo","Let's kill it and cause a blackout","キルして停電を起こそう","可以对中立杀手的计数",,
+"LoveCutterInfo","I need someone to kill me","誰か私をキルしてほしいの","我需要有人来杀了我",
 "PlatonicLoverInfo","I will win with the lover I met","出会った恋人と共に勝ち抜くのだ","我会和我遇到的爱人一起胜利",,
 "LawyerInfo","I work for my client","依頼人の為に私、動きます","我为我的客户工作",
 "PursuerInfo","I lost a client","依頼人いなくなっちゃった","我丢失了一个客户",
@@ -266,6 +277,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "AntiCompleteInfoLong","(Neutrals)\nDuring the meeting, you can vote for your favorite person only once in the entire meeting. If that person has already completed the task,，he or she wins alone. If you select someone who has no task or who has not completed a task，you die and lose. When the AntiComplete selects someone，the meeting is forced to end.","[ニュートラル]\n会議中、全体で1回のみ好きな人を投票で選択出来る。その人がタスクを既に完了させていたら単独勝利。タスクがない人、タスクが終わってない人を選ぶと死亡し敗北。\nアンチコンプが誰か選択した時、会議は強制終了する。","(中立阵营)\n在整个会议中，您只能投票给您喜欢的人一次。如果这个人已经完成了任务，它独自获胜。如果你选择了一个没有任务或者没有完成任务的人，你就会失败。当防成者选择某人时，会议将被迫结束。",,
 "WorkaholicInfoLong","(Neutrals)\nWhen you complete a task，you win alone. The amount of tasks is very large. Even if you die，you win when you finish the task. Vent is possible.","[ニュートラル]\nタスクを完了させた時、単独勝利。タスク量はとても多い。死亡しても関係なく、タスクが終わると勝利。霊界からでも終わらそう。ベント可。","(中立阵营)\n当你完成一项任务时，你独自获胜。任务的数量非常大。即使你死了，当你完成任务时你就赢了。钻管是可能的。",,
 "DarkHideInfoLong","(Neutrals)\nCan kill anyone. Unable to vent. Every time a kill is made, a power outage occurs. (If the power is already out, it remains as it is).\nWhen the Imposter team wins while you are alive, or when the Crewmate team wins (excluding task wins) by killing one or more Imposters (setting: + NeutralKiller) while you are alive. The victory is overwritten and becomes a single victory. ","[ニュートラル]\n誰でも切れる。ベント不可。キルを起こす度に停電が起こる。(既に停電の場合はそのまま)。\n・自身生存時にインポスター陣営が勝利した時\n・自身生存時にインポスター(設定:+斬れる第三陣営)を1人以上斬ってクルー陣営が勝利(タスク勝利除く)した時\n上書きして単独勝利となる。","(中立阵营)\n可以杀死任何人。无法钻管。每杀一次人，就会发生一次停电。(如果已经停电，则保持原状)\n当内鬼团队在你活着的时候获胜，或者当船员团队在你活着的时候通过杀死一个或多个内鬼（设置：+中立杀手）而获胜（不包括任务获胜）。胜利会被覆盖，成为单人的胜利。",,
+"LoveCutterInfoLong","(Neutrals)\nWhen a LoveCutter is killed, guard the kill and count it. If the LoveCutter is killed by someone a set number of times, it wins.","[ニュートラル]\nラブカッターがキルされた時、キルをガードしてカウントする。設定回数誰かにキルされたら単独勝利。","(中立阵营)\n当一个切爱者被杀死时，会保护它他并开始数数量。如果切爱者被某人杀死一定次数，它就会获胜。",
 "PlatonicLoverInfoLong","(Neutrals):\nBy pressing the kill button toward someone, you can become Lovers with that person.(When set up, it cannot be put in at the same time as Lovers.)","[ニュートラル]\n誰かに向かってキルボタンを押すことで、その人とラバーズになることが出来る。(設定時、ラバーズと同時に入れることは出来ない。)","(中立阵营):\n按下某人的击杀按钮，你就可以和那个人成为恋人。(设置时不能和恋人同时存在)",,
 "LawyerInfoLong","(Neutrals):\nLawyer defends the impostor or NeutralKiller.\nIf the client dies, the Lawyer changes his role to Pursuer(additional win if he survives & prevents a set number of kills).Both Lawyer and Pursuer do not have the task.\n\nThere are two conditions for a lawyer's victory.\nWhen the client wins when he is alive,\n1) If the lawyer is dead, he wins along with his winning team.\n2) If the lawyer survives, the winning team's victory is intercepted (sole victory for the lawyer).","[ニュートラル]\n弁護士は、依頼人となるインポスターorキル可能な第3陣営を擁護する。\n依頼人が死亡すると弁護士は役職が変更されて「追跡者(自身が生存していれば追加勝利 + 設定回数キルを防ぐ)」 になる。弁護士、追跡者共にタスクはもたない。\n\n弁護士の勝利条件は以下の2通り。\n依頼人が生存時に勝利した時、\n1) 弁護士が死亡していたら、その優勝チームと共に勝利。\n2) 弁護士が生存していたら、優勝チームの勝利を横取り(弁護士の単独勝利)。","(中立阵营):\n律师为内鬼/中立杀手负责辩护\n如果客户死了 它就会变成起诉人(如果他活了下来并防止了一定数量的击杀，则会赢得额外的胜利).律师和追击者都没有任务\n\n律师获胜有两个条件\n当客户活着时获胜,\n1) 如果律师死了，他将与获胜团队一起获胜.\n2) 如果律师活到了最后，获胜团队的胜利将被取消（律师抢夺了胜利）",
 "PursuerInfoLong","(Neutrals):\nThe client died, so the lawyer became a pursuer.\nIf you yourself are still alive at the end of the game, you win an additional victory. It is also possible to prevent kills for a set number of times.","[ニュートラル]\n依頼人が死亡したので弁護士は追跡者になった。\n自身がゲーム終了時に生存していれば追加で勝利となる。また、設定回数分キルを防ぐことが可能。","(中立阵营):\n当客户死了 律师将会变成起诉人\n如果起诉人在游戏结束时还活着，它将单独获得胜利. 也可以在设定的次数内阻止死亡",
@@ -547,6 +559,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "SnitchEnableTargetArrow","Can See Arrow To Target","ターゲットを示す矢印が見える","告密者完成任务后可以通过箭头确认所有被发现目标","告密者完成任務後可以看到指向目標的箭頭","Может видеть стрелку цели","Pode Ver Seta Para o Alvo"
 "SnitchCanGetArrowColor","Can See Target Team Colored Arrow","矢印の色で陣営がわかる","对不同阵营的目标以不同颜色的箭头表示","對不同陣營的目標使用不同顏色的箭頭標示","Может видеть цвета стрелок","Pode Ver Seta Colorida Para Time Alvo"
 "SnitchCanFindNeutralKiller","Can Find Neutral Killers","ニュートラルのキル可能役職を見つけることが出来る","告密者也可以和拥有击杀能力的独立阵营玩家互相发现","告密者也可以和中立陣營帶刀職業互認","Может видеть нейтральных убийц","Pode Achar Assassinos Neutros"
+"SnitchCannotConfirmKillRoles","Cannot Confirm Kill Roles During Meeting","会議中にはキル役職を確認できない","无法在会议期间确认杀手职业",
 "SnitchRemainingTaskFound","Remaining tasks to be found","敵陣営に見つかるタスク残量","剩余任务数对敌对阵营可见","帶刀職業可見告密者剩餘任務數","Оставшиеся задания при которых он будет виден",""
 "SpeedBoosterUpSpeed","Random Player's Speed Boost","加速値","增速者加速时的移动速度","被加速器加速的玩家的移動速度","Повысить скорость игрока на","Impulso de Velocidade"
 "SpeedBoosterTaskTrigger","Tasks Until Boost Activated","効果を発動するタスク数","效果发动所需任务数","效果發動所需任務數","Задачи повышающие скорость","Tarefas Para Ativar Impulso"
@@ -576,6 +589,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "FortuneTellerCanForecastNoDeadBody","Can Forecast No Dead Body","死体が無くても占いができる",,,,
 "FortuneTellerConfirmCamp","Make it a Camp Confirmation, Not Role",役職でなく陣営確認にする,
 "FortuneTellerKillerOnly","Check only Killer",キルできる役職のみ確認できる,
+"PsychicMaxCheckRole","Role of The Deceased Can Be Checked Count","霊媒できる回数",
 
 # ニュートラル
 "CanBeforeSchrodingerCatWinTheCrewmate","Can Win With Crewmates If No Team","役職変化前であれば、クルー陣営と勝利できる","薛定谔的猫未加入其他阵营前可以跟随船员阵营获胜","薛定諤的貓的陣營轉變前可以隨船員一起獲勝","Без команды он может победить с Членами Экипажа","Pode Ganhar Com Tripulantes"
@@ -595,7 +609,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "WorkaholicTaskSeen","Can See the Workaholic Task Count from Everyone","全員視点からワーカホリックのタスク数がわかる","可以从每个人身上看工作狂的任务数".
 "WorkaholicCannotWinAtDeath","Loss of Victory at Death","死亡した時勝利できない","死亡时失去胜利",,
 "DarkHideCanCountNeutralKiller","Can count Neutral killer","キルできる第三陣営もカウントする","可以对中立杀手的计数",,
-
+"LoveCutterVictoryCutCount","Victory Cut Count","勝利条件のキルされる回数","胜利需要被杀次数",
+"LoveCutterKnowKiller","Task completed shows kill Roles","タスク完了でキル役職がわかる","任务已完成显示杀手角色",
 "TotocalcioBetChangeCount","'BET'Change Count","「賭ける」の変更できる回数",
 "TotocalcioInitialCoolDown","'BET'Initial Ability Cooldown","「賭ける」の初期クールタイム",
 "TotocalcioFinalCoolDown","'BET'Final Ability Cooldown","「賭ける」の最終クールタイム",
@@ -867,6 +882,7 @@ PanAlive13,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "TotocalcioButtonText","BET","賭ける",
 "BountyHunterChangeButtonText","Swap","変更","变更","變更","Смена цели","Trocar"
 "EvilTrackerChangeButtonText","Track","追跡","追踪","追蹤","Отслеживать",""
+"ChangeButtonText","SetTarget","ターゲット設定",
 "DefaultShapeshiftText","Shift","変身","变形","變身","Превращение","Mutar"
 "DisabledBySettings","Disabled by Settings","設定で無効化されています","已在设置被中禁用","在設定中被禁用","Отключено настройкой","Desativado Pelas Configurações"
 "Disabled","Disabled","無効","禁用","已被禁用","Отключено","Desativado"
@@ -879,6 +895,11 @@ PanAlive13,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "isImpostor","{0} is Impostor.","{0}はインポスターだった","{0} 是 内鬼."
 "isNotImpostor","{0} is not Impostor.","{0}はインポスターではなかった","{0} 不是 内鬼.",
 "RainbowColor","Rainbow","レインボー","彩虹色",,
+"SelectPlayerTag","Currently Selected Player：","現在選択中のプレイヤー：",
+"SelectPlayerTagMini","Selected：","選択中：",
+"SelectPlayerTagBefore","You can choose which player in the vent.","ベントでプレイヤーを選択できます。",
+"SelectPlayerTagMiniBefore","Select player in vent.","ベントでプレイヤーを選択",
+
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,

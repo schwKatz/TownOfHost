@@ -9,6 +9,7 @@ using AmongUs.GameOptions;
 using TownOfHost.Roles.Core.Interfaces;
 using TownOfHost.Roles.AddOns.Common;
 using TownOfHost.Roles.Impostor;
+using TownOfHost.Roles.Crewmate;
 using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHost.Roles.Core;
@@ -68,6 +69,8 @@ public static class CustomRoleManager
                 {
                     if (!targetRole.OnCheckMurderAsTarget(info)) return;
                 }
+                //メディックの対象プレイヤー
+                if (!Medic.GuardPlayerCheckMurder(attemptKiller, attemptTarget)) return;
             }
             // キラーのキルチェック処理実行
             killer.OnCheckMurderAsKiller(info);
@@ -424,6 +427,7 @@ public enum CustomRoles
     Bakery,
     TaskManager,
     SillySheriff,
+    GrudgeSheriff,
     Hunter,
     Nekomata,
     Chairman,
@@ -432,8 +436,10 @@ public enum CustomRoles
     Rainbow,
     Sympathizer,
     Blinder,
+    Medic,
     CandleLighter,
     FortuneTeller,
+    Psychic,
     CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral
     Arsonist,
@@ -452,6 +458,7 @@ public enum CustomRoles
     Workaholic,
     DarkHide,
     DSchrodingerCat,//ダークハイド陣営のシュレディンガーの猫
+    LoveCutter,
     PlatonicLover,
     Lawyer,
     Totocalcio,

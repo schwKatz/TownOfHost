@@ -131,18 +131,23 @@ public sealed class Sheriff : RoleBase, IKiller
     {
         opt.SetVision(false);
     }
-    public void OnMurderPlayerAsKiller(MurderInfo info)
+    public void OnCheckMurderAsKiller(MurderInfo info)
     {
         if (Is(info.AttemptKiller) && !info.IsSuicide)
         {
             (var killer, var target) = info.AttemptTuple;
 
+            if (ShotLimit <= 0)
+            {
+                info.DoKill = false;
+                return;
+            }
             ShotLimit--;
             Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "Sheriff");
             SendRPC();
             if (!CanBeKilledBy(target))
             {
-                killer.RpcMurderPlayerEx(killer);
+                killer.RpcMurderPlayer(killer);
                 PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
                 if (!MisfireKillsTarget.GetBool())
                 {
@@ -154,34 +159,6 @@ public sealed class Sheriff : RoleBase, IKiller
         }
         return;
     }
-    //public void OnCheckMurderAsKiller(MurderInfo info)
-    //{
-    //    if (Is(info.AttemptKiller) && !info.IsSuicide)
-    //    {
-    //        (var killer, var target) = info.AttemptTuple;
-
-    //        if (ShotLimit <= 0)
-    //        {
-    //            info.DoKill = false;
-    //            return;
-    //        }
-    //        ShotLimit--;
-    //        Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "Sheriff");
-    //        SendRPC();
-    //        if (!CanBeKilledBy(target))
-    //        {
-    //            killer.RpcMurderPlayer(killer);
-    //            PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
-    //            if (!MisfireKillsTarget.GetBool())
-    //            {
-    //                info.DoKill = false;
-    //                return;
-    //            }
-    //        }
-    //        killer.ResetKillCooldown();
-    //    }
-    //    return;
-    //}
     public override string GetProgressText(bool comms = false) => Utils.ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"({ShotLimit})");
     public static bool CanBeKilledBy(PlayerControl player)
     {

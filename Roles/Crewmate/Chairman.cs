@@ -13,7 +13,7 @@ public sealed class Chairman : RoleBase
             CustomRoles.Chairman,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Crewmate,
-            35410,
+            35400,
             SetupOptionItem,
             "チェアマン",
             "#204d42",

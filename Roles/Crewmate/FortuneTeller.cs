@@ -158,7 +158,8 @@ public sealed class FortuneTeller : RoleBase
         if (!isMeeting) return;
         if (!TargetResult.ContainsKey(seen.PlayerId)) return;
         if (KillerOnly &&
-            !(seen.GetCustomRole().IsImpostor() || seen.IsNeutralKiller() || seen.IsCrewKiller())) return;
+            !(seen.GetCustomRole().IsImpostor() || seen.IsNeutralKiller() || seen.IsCrewKiller()
+            || seen.Is(CustomRoles.MadSheriff) || seen.Is(CustomRoles.GrudgeSheriff))) return;
 
         enabled = true;
 
