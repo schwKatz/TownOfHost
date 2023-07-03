@@ -110,30 +110,20 @@ public sealed class FortuneTeller : RoleBase
     }
     private void SetForecastResult()
     {
-        if (Target == null)
+        if (Target == null) return;
+        if (!Target.IsAlive() || TargetResult.Count >= NumOfForecast)
         {
-            Logger.Info($"SetForecastResult NotSet NotHasForecastTarget player: {Player.name}", "FortuneTeller");
-            return;
-        }
-        if (Target == null || !Target.IsAlive())
-        {
-            Logger.Info($"SetForecastResult NotSet TargetNotValid player: {Player.name}, target: {Target?.name} dead: {Target?.Data.IsDead}, disconnected: {Target?.Data.Disconnected}", "FortuneTeller");
-            return;
-        }
-
-        if (TargetResult.Count == 0)
-        {
-            TargetResult = new();
-        }
-        if (TargetResult.Count >= NumOfForecast)
-        {
-            Logger.Info($"SetForecastResult NotSet ForecastCountOver player: {Player.name}, target: {Target.name} forecastCount: {TargetResult.Count}, canCount: {NumOfForecast}", "FortuneTeller");
+            Logger.Info($"SetForecastResult NotSet player: {Player?.name}, target: {Target?.name} dead: {Target?.Data.IsDead}, disconnected: {Target?.Data.Disconnected}, canCount: {NumOfForecast}", "FortuneTeller");
             Target = null;
             return;
         }
 
         TargetResult[Target.PlayerId] = Target;
-        Logger.Info($"SetForecastResult SetTarget player: {Player.name}, target: {Target.name}", "FortuneTeller");
+        var canSeeRole = Target.GetRoleClass() is IKiller;
+        if (canSeeRole && Player != null)
+            NameColorManager.Add(Player.PlayerId, Target.PlayerId);
+        Logger.Info($"SetForecastResult SetTarget player: {Player?.name}, target: {Target.name}, canSeeRole: {canSeeRole}", "FortuneTeller");
+
         Target = null;
     }
     public bool HasForecastResult() => TargetResult.Count > 0;
