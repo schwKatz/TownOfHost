@@ -467,6 +467,9 @@ public enum CustomRoles
     HASTroll,
     //GM
     GM,
+
+    _Max,
+
     // Sub-roll after 500
     NotAssigned = 500,
     LastImpostor,

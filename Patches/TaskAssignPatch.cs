@@ -137,7 +137,7 @@ namespace TownOfHost
             for (int i = 0; i < list.Count - 1; i++)
             {
                 T obj = list[i];
-                int rand = UnityEngine.Random.Range(i, list.Count);
+                int rand = IRandom.Instance.Next(i, list.Count);
                 list[i] = list[rand];
                 list[rand] = obj;
             }

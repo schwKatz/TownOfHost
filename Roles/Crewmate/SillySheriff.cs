@@ -146,7 +146,7 @@ public sealed class SillySheriff : RoleBase, IKiller
             (var killer, var target) = info.AttemptTuple;
 
             int Chance = (Probability as StringOptionItem).GetChance();
-            int chance = Random.Range(1, 101);
+            int chance = IRandom.Instance.Next(1, 101);
 
             if (ShotLimit <= 0)
             {

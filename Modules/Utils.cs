@@ -761,13 +761,13 @@ namespace TownOfHost
             else
             {
                 if (AmongUsClient.Instance.IsGamePublic)
-                    name = $"<color={Main.ModColor}>TownOfHost v{Main.PluginVersion}</color>\r\n" + name;
+                    name = $"<color={Main.ModColor}>TownOfHost_Y v{Main.PluginVersion}</color>\r\n" + name;
                 switch (Options.GetSuffixMode())
                 {
                     case SuffixModes.None:
                         break;
-                    case SuffixModes.TOH:
-                        name += $"\r\n<color={Main.ModColor}>TOH v{Main.PluginVersion}</color>";
+                    case SuffixModes.TOH_Y:
+                        name += $"\r\n<color={Main.ModColor}>TOH_Y v{Main.PluginVersion}</color>";
                         break;
                     case SuffixModes.Streaming:
                         name += $"\r\n<color={Main.ModColor}>{GetString("SuffixMode.Streaming")}</color>";
@@ -1051,10 +1051,11 @@ namespace TownOfHost
             };
             Process.Start(startInfo);
         }
-        public static string SummaryTexts(byte id, bool disableColor = true)
+        public static string SummaryTexts(bool showName, byte id, bool disableColor = true)
         {
             var RolePos = TranslationController.Instance.currentLanguage.languageID == SupportedLangs.English ? 47 : 37;
-            string summary = $"{ColorString(Main.PlayerColors[id], Main.AllPlayerNames[id])}<pos=22%>{GetProgressText(id)}</pos><pos=29%> {GetVitalText(id)}</pos><pos={RolePos}%> {GetTrueRoleName(id, false)}{GetSubRolesText(id)}</pos>";
+            string summary = showName ? $"{ColorString(Main.PlayerColors[id], Main.AllPlayerNames[id])}": $"{id}";
+            summary += $"<pos=22%>{GetProgressText(id)}</pos><pos=29%> {GetVitalText(id)}</pos><pos={RolePos}%> {GetTrueRoleName(id, false)}{GetSubRolesText(id)}</pos>";
             return disableColor ? summary.RemoveHtmlTags() : summary;
         }
         public static string RemoveHtmlTags(this string str) => Regex.Replace(str, "<[^>]*?>", "");

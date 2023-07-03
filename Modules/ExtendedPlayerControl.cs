@@ -145,7 +145,7 @@ namespace TownOfHost
             }
             Main.LastNotifyNames[(player.PlayerId, seer.PlayerId)] = name;
             HudManagerPatch.LastSetNameDesyncCount++;
-            Logger.Info($"Set:{player?.Data?.PlayerName}:{name} for {seer.GetNameWithRole()}", "RpcSetNamePrivate");
+            Logger.Info($"Set:{player?.Data?.PlayerName}:{name.RemoveHtmlTags()} for {seer.GetNameWithRole()}", "RpcSetNamePrivate");
 
             var clientId = seer.GetClientId();
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetName, Hazel.SendOption.Reliable, clientId);
@@ -332,7 +332,8 @@ namespace TownOfHost
             if (!player) return null;
             var text = Utils.GetRoleName(player.GetCustomRole());
             text += player.GetSubRoleName();
-            return text;
+            // Logでしか使用していないのでここにRemoveTag
+            return text.RemoveHtmlTags();
         }
         public static string GetNameWithRole(this PlayerControl player)
         {

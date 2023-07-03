@@ -7,6 +7,8 @@ namespace TownOfHost
 {
     public static class SendDiscord
     {
+        public static string HostRandomName = "Randomer";
+
         public enum MassageType
         {
             Impostor,

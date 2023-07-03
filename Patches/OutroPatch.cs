@@ -16,6 +16,7 @@ namespace TownOfHost
     class EndGamePatch
     {
         public static Dictionary<byte, string> SummaryText = new();
+        public static Dictionary<byte, string> SDSummaryText = new();
         public static string KillLog = "";
         static Task taskSendDiscord;
         public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
@@ -26,9 +27,12 @@ namespace TownOfHost
             Logger.Info("-----------ゲーム終了-----------", "Phase");
             if (!GameStates.IsModHost) return;
             SummaryText = new();
+            SDSummaryText = new();
             foreach (var id in PlayerState.AllPlayerStates.Keys)
-                SummaryText[id] = Utils.SummaryTexts(id, disableColor: false);
-
+            {
+                SummaryText[id] = Utils.SummaryTexts(true, id, disableColor: false);
+                SDSummaryText[id] = Utils.SummaryTexts(false, id, disableColor: false);
+            }
             var sb = new StringBuilder(GetString("KillLog") + ":");
             foreach (var kvp in PlayerState.AllPlayerStates.OrderBy(x => x.Value.RealKiller.Item1.Ticks))
             {
@@ -107,18 +111,19 @@ namespace TownOfHost
                     //0:Imp 1:Mad 2:Crew 3:Neu
                     bool[] isSend = { false, false, false, false };
                     StringBuilder[] sendMasagge = { new StringBuilder(),new StringBuilder(),new StringBuilder(),new StringBuilder() };
-                    foreach (var pc in Main.AllPlayerControls)
+                    foreach (var IS in PlayerState.AllPlayerStates)
                     {
-                        var role = pc.GetCustomRole();
+                        var id = IS.Key;    var state = IS.Value;
+                        var role = state.MainRole;
                         if (role.IsVanilla()) continue;
                         int roleTypeNumber = (int)role.GetCustomRoleTypes();
 
                         if (isSend[roleTypeNumber]) sendMasagge[roleTypeNumber].Append("/");
-                        if (Main.winnerList.Contains(pc.PlayerId)) sendMasagge[roleTypeNumber].Append("★");
-                        sendMasagge[roleTypeNumber].Append(pc.GetTrueRoleName().RemoveHtmlTags());
+                        if (Main.winnerList.Contains(id)) sendMasagge[roleTypeNumber].Append("★");
+                        sendMasagge[roleTypeNumber].Append(Utils.GetTrueRoleName(id).RemoveHtmlTags());
                         isSend[roleTypeNumber] = true;
                     }
-                    var hostName = Main.AllPlayerNames[0] + ":arrow_forward:";
+                    var hostName = SendDiscord.HostRandomName + ":arrow_forward:";
                     for (int i = 0; i < 4; i++)
                     {
                         if (isSend[i]) SendDiscord.SendWebhook((SendDiscord.MassageType)i, hostName + sendMasagge[i].ToString());
@@ -264,17 +269,17 @@ namespace TownOfHost
                 else
                 {
                     var resultMessage = new StringBuilder();
-                    resultMessage.Append(">>> ");
+                    resultMessage.Append($">>> {Main.ForkId} {Main.PluginVersion} ");
                     if (AmongUsClient.Instance.IsGamePublic) resultMessage.Append("◆");
-                    else if(GameStates.IsLocalGame) resultMessage.Append("▽");
-                    resultMessage.Append(">>> ").Append(Main.AllPlayerNames[0]).Append($" {DateTime.Now.ToString("T")}------------\n");
+                    else if (GameStates.IsLocalGame) resultMessage.Append("▽");
+                    resultMessage.Append(SendDiscord.HostRandomName).Append($" {DateTime.Now.ToString("T")}------------\n");
                     foreach (var id in Main.winnerList)
                     {
-                        resultMessage.Append(SendDiscord.ColorIdToDiscordEmoji(Palette.PlayerColors.IndexOf(Main.PlayerColors[id]), !PlayerState.GetByPlayerId(id).IsDead)).Append(":star:").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags()).Append("\n");
+                        resultMessage.Append(SendDiscord.ColorIdToDiscordEmoji(Palette.PlayerColors.IndexOf(Main.PlayerColors[id]), !PlayerState.GetByPlayerId(id).IsDead)).Append(":star:").Append(EndGamePatch.SDSummaryText[id].RemoveHtmlTags()).Append("\n");
                     }
                     foreach (var id in cloneRoles)
                     {
-                        resultMessage.Append(SendDiscord.ColorIdToDiscordEmoji(Palette.PlayerColors.IndexOf(Main.PlayerColors[id]), !PlayerState.GetByPlayerId(id).IsDead)).Append("\u3000").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags()).Append("\n");
+                        resultMessage.Append(SendDiscord.ColorIdToDiscordEmoji(Palette.PlayerColors.IndexOf(Main.PlayerColors[id]), !PlayerState.GetByPlayerId(id).IsDead)).Append("\u3000").Append(EndGamePatch.SDSummaryText[id].RemoveHtmlTags()).Append("\n");
                     }
                     SendDiscord.SendWebhook(SendDiscord.MassageType.Result, resultMessage.ToString(), GetString("LastResult"));
                 }

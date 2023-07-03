@@ -43,7 +43,7 @@ public sealed class Rainbow : RoleBase
 
     public override void Add()
     {
-        int chance = Random.Range(0, 17);
+        int chance = IRandom.Instance.Next(0, 17);
         colorchange = chance;
         Player.SetNamePlate("nameplate_flagRainbow");
         CustomRpcSender.Create(name: $"RpcSetNamePlate({Player.Data.PlayerName})").AutoStartRpc(Player.NetId, (byte)RpcCalls.SetNamePlateStr)

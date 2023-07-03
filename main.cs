@@ -114,7 +114,7 @@ namespace TownOfHost
         public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 23 or 24 or 25 or 26;
         public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3;
         public static bool IsInitialRelease = DateTime.Now.Month == 11 && DateTime.Now.Day is 2;
-        public static bool IsOneNightRelease = DateTime.Now.Month == 6;
+        public static bool IsOneNightRelease = DateTime.Now.Month == 7;
         public const float RoleTextSize = 2f;
 
         public static IEnumerable<PlayerControl> AllPlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null);
@@ -301,7 +301,7 @@ namespace TownOfHost
     public enum SuffixModes
     {
         None = 0,
-        TOH,
+        TOH_Y,
         Streaming,
         Recording,
         RoomHost,

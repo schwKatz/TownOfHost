@@ -136,7 +136,7 @@ public sealed class Bakery : RoleBase
         else if (Player.Is(CustomRoles.Bakery) && Player.IsAlive())
         {
             string panMessage = "";
-            int chance = UnityEngine.Random.Range(1, 101);
+            int chance = IRandom.Instance.Next(1, 101);
             if (chance <= ChangeChances)
             {
                 panMessage = GetString("BakeryChange");

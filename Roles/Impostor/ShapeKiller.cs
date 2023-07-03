@@ -15,7 +15,7 @@ public sealed class ShapeKiller : RoleBase, IImpostor, ISidekickable
             CustomRoleTypes.Impostor,
             3800,
             SetUpOptionItem,
-            "shk"
+            "シェイプキラー"
         );
     public ShapeKiller(PlayerControl player)
     : base(

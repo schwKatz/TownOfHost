@@ -279,6 +279,8 @@ namespace TownOfHost
                 foreach (var role in CustomRolesHelper.AllRoles.Where(x => x < CustomRoles.NotAssigned))
                 {
                     if (role.IsVanilla()) continue;
+                    if (role is CustomRoles.HASTroll or CustomRoles.HASFox) continue;
+
                     if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
                         or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
