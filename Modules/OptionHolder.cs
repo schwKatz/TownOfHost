@@ -301,14 +301,14 @@ namespace TownOfHost
             {
                 switch (info.RoleName)
                 {
-                    case CustomRoles.Puppeteer:
-                    case CustomRoles.Witch:
-                    case CustomRoles.Vampire:
-                    case CustomRoles.Warlock:
-                    case CustomRoles.CursedWolf:
-                    case CustomRoles.EvilDiviner:
-                        //0622不具合対応のため表示させない
-                        break;
+                    //case CustomRoles.Puppeteer:
+                    //case CustomRoles.Witch:
+                    //case CustomRoles.Vampire:
+                    //case CustomRoles.Warlock:
+                    //case CustomRoles.CursedWolf:
+                    //case CustomRoles.EvilDiviner:
+                    //    //0622不具合対応のため表示させない
+                    //    break;
 
                     default:
                         switch (info.RoleName)
@@ -341,12 +341,12 @@ namespace TownOfHost
 
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Madmate).Do(info =>
             {
-                //0622不具合対応のため表示させない
-                if (info.RoleName is not CustomRoles.MadGuardian and not CustomRoles.MadSheriff)
-                {
+                ////0622不具合対応のため表示させない
+                //if (info.RoleName is not CustomRoles.MadGuardian and not CustomRoles.MadSheriff)
+                //{
                     SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
                     info.OptionCreator?.Invoke();
-                }
+                //}
             });
 
             CanMakeMadmateCount = IntegerOptionItem.Create(5012, "CanMakeMadmateCount", new(0, 15, 1), 0, TabGroup.MadmateRoles, false)
@@ -372,9 +372,9 @@ namespace TownOfHost
             // Crewmate
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Crewmate).Do(info =>
             {
-                //0622不具合対応のため表示させない
-                if (info.RoleName is not CustomRoles.SillySheriff and not CustomRoles.Sheriff and not CustomRoles.Medic)
-                {
+                ////0622不具合対応のため表示させない
+                //if (info.RoleName is not CustomRoles.SillySheriff and not CustomRoles.Sheriff and not CustomRoles.Medic)
+                //{
                     switch (info.RoleName)
                     {
                         case CustomRoles.Sympathizer: //共鳴者は2人固定
@@ -385,7 +385,7 @@ namespace TownOfHost
                             break;
                     }
                     info.OptionCreator?.Invoke();
-                }
+                //}
             });
 
             // Neutral
@@ -395,13 +395,13 @@ namespace TownOfHost
 
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Neutral).Do(info =>
             {
-                        //0622不具合対応のため表示させない
-                if (info.RoleName is not CustomRoles.Arsonist
-                    and not CustomRoles.SchrodingerCat
-                    and not CustomRoles.PlatonicLover
-                    and not CustomRoles.LoveCutter
-                    and not CustomRoles.Totocalcio)
-                {
+                //        //0622不具合対応のため表示させない
+                //if (info.RoleName is not CustomRoles.Arsonist
+                //    and not CustomRoles.SchrodingerCat
+                //    and not CustomRoles.PlatonicLover
+                //    and not CustomRoles.LoveCutter
+                //    and not CustomRoles.Totocalcio)
+                //{
                     switch (info.RoleName)
                     {
                         case CustomRoles.Jackal: //ジャッカルは1人固定
@@ -412,7 +412,7 @@ namespace TownOfHost
                             break;
                     }
                     info.OptionCreator?.Invoke();
-                }
+                //}
             });
 
             //0622不具合なので一旦消す
