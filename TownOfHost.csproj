@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>netstandard2.1</TargetFramework>
 		<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
 		<GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
 		<Description>Town Of Host_Y</Description>
@@ -19,7 +19,7 @@
 
 	<ItemGroup>
 		<Reference Include="C:\Program Files (x86)\Steam\steamapps\common\Among Us_TOH_Y - dev_0613\BepInEx\core\*.dll" />
-		<Reference Include="C:\Program Files (x86)\Steam\steamapps\common\Among Us_TOH_Y - dev_0613\BepInEx\interop\*.dll" />
+		<Reference Include="C:\Program Files (x86)\Steam\steamapps\common\Among Us_TOH_Y - dev_0613\BepInEx\unhollowed\*.dll" />
 		<EmbeddedResource Include=".\Resources\*.png" />
 		<EmbeddedResource Include=".\Resources\string.csv" />
 	</ItemGroup>
