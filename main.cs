@@ -5,9 +5,9 @@ using System.Reflection;
 using AmongUs.GameOptions;
 using BepInEx;
 using BepInEx.Configuration;
-using BepInEx.Unity.IL2CPP;
+using BepInEx.IL2CPP;
 using HarmonyLib;
-using Il2CppInterop.Runtime.Injection;
+using UnhollowerRuntimeLib;
 using UnityEngine;
 
 using TownOfHost.Roles.Core;
@@ -49,9 +49,9 @@ namespace TownOfHost
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.emptybottle.townofhost";
-        public const string PluginVersion = "501.10.6";
+        public const string PluginVersion = "502.11.0";
         // サポートされている最低のAmongUsバージョン
-        public static readonly string LowestSupportedVersion = "2023.6.13";
+        public static readonly string LowestSupportedVersion = "2023.3.28";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;

@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using AmongUs.Data;
 using AmongUs.GameOptions;
-using Il2CppInterop.Runtime.InteropTypes;
+using UnhollowerBaseLib;
 using UnityEngine;
 
 using TownOfHost.Modules;
