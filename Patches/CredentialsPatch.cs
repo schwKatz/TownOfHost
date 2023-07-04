@@ -60,8 +60,7 @@ namespace TownOfHost
                 var credentials = Object.Instantiate(__instance.text);
                 credentials.text = Main.credentialsText;
                 credentials.alignment = TextAlignmentOptions.Right;
-                credentials.transform.position = new Vector3(1f, 2.65f, -2f);
-                credentials.fontSize = credentials.fontSizeMax = credentials.fontSizeMin = 2f;
+                credentials.transform.position = new Vector3(4.6f, 3.2f, 0);
 
                 ErrorText.Create(__instance.text);
                 if (Main.hasArgumentException && ErrorText.Instance != null)
@@ -73,7 +72,7 @@ namespace TownOfHost
 
                 if (SpecialEventText == null)
                 {
-                    SpecialEventText = Object.Instantiate(__instance.text, TohLogo.transform);
+                    SpecialEventText = Object.Instantiate(__instance.text);
                     SpecialEventText.name = "SpecialEventText";
                     SpecialEventText.text = "";
                     SpecialEventText.color = Color.white;
@@ -88,14 +87,14 @@ namespace TownOfHost
                     ColorUtility.TryParseHtmlString(Main.ModColor, out var col);
                     SpecialEventText.color = col;
                 }
-                if (Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
-                {
-                    SpecialEventText.text = "TOH_YS(制限版)へようこそ！" +
-                        "\n<size=55%>6/22のAmongUs内部的サイレント更新のため、" +
-                        "\nホスト系MODの役職に不具合が発生しております。" +
-                        "\nしばらくはこのTOH_YSをご利用ください。\n</size><size=40%>\nTOH_YSのＳはSimpleのＳです。</size>";
-                    SpecialEventText.color = Color.yellow;
-                }
+                //if (Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
+                //{
+                //    SpecialEventText.text = "TOH_YS(制限版)へようこそ！" +
+                //        "\n<size=55%>6/22のAmongUs内部的サイレント更新のため、" +
+                //        "\nホスト系MODの役職に不具合が発生しております。" +
+                //        "\nしばらくはこのTOH_YSをご利用ください。\n</size><size=40%>\nTOH_YSのＳはSimpleのＳです。</size>";
+                //    SpecialEventText.color = Color.yellow;
+                //}
                 //if (Main.IsValentine)
                 //{
                 //    SpecialEventText.text = "♥happy Valentine♥";
@@ -115,20 +114,19 @@ namespace TownOfHost
         class TitleLogoPatch
         {
             public static GameObject amongUsLogo;
-
-            [HarmonyPriority(Priority.VeryHigh)]
             static void Postfix(MainMenuManager __instance)
             {
-                amongUsLogo = GameObject.Find("LOGO-AU");
+                if ((amongUsLogo = GameObject.Find("bannerLogo_AmongUs")) != null)
+                {
+                    amongUsLogo.transform.localScale *= 0.4f;
+                    amongUsLogo.transform.position += Vector3.up * 0.25f;
+                }
 
-                var rightpanel = __instance.gameModeButtons.transform.parent;
-                var logoObject = new GameObject("titleLogo_TOH");
-                var logoTransform = logoObject.transform;
-                TohLogo = logoObject.AddComponent<SpriteRenderer>();
-                logoTransform.parent = rightpanel;
-                logoTransform.localPosition = new(0f, 0.18f, 1f);
-                //logoTransform.localScale *= 1f;
-                TohLogo.sprite = Utils.LoadSprite("TownOfHost.Resources.TownOfHost-Logo.png", 300f);
+                var tohLogo = new GameObject("titleLogo_TOH");
+                tohLogo.transform.position = Vector3.up;
+                tohLogo.transform.localScale *= 1.2f;
+                var renderer = tohLogo.AddComponent<SpriteRenderer>();
+                renderer.sprite = Utils.LoadSprite("TownOfHost.Resources.TownOfHost-Logo.png", 300f);
             }
         }
         [HarmonyPatch(typeof(ModManager), nameof(ModManager.LateUpdate))]
@@ -143,10 +141,10 @@ namespace TownOfHost
             }
             public static void Postfix(ModManager __instance)
             {
-                //var offset_y = HudManager.InstanceExists ? 1.6f : 0.9f;
+                var offset_y = HudManager.InstanceExists ? 1.6f : 0.9f;
                 __instance.ModStamp.transform.position = AspectPosition.ComputeWorldPosition(
                     __instance.localCamera, AspectPosition.EdgeAlignments.RightTop,
-                    new Vector3(0.4f, 1.6f, __instance.localCamera.nearClipPlane + 0.1f));
+                    new Vector3(0.4f, offset_y, __instance.localCamera.nearClipPlane + 0.1f));
             }
         }
     }

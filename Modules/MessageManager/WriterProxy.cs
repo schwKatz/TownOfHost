@@ -1,5 +1,5 @@
 using Hazel;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using UnhollowerBaseLib;
 using InnerNet;
 
 namespace TownOfHost

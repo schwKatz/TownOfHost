@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using AmongUs.GameOptions;
 using HarmonyLib;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-
+using UnhollowerBaseLib;
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.AddOns.Crewmate;
 
