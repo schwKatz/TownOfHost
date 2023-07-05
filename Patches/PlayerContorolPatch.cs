@@ -316,7 +316,7 @@ namespace TownOfHost
             if (!GameStates.IsModHost) return;
 
             TargetArrow.OnFixedUpdate(player);
-
+            VentSelect.OnFixedUpdate(player);
             CustomRoleManager.OnFixedUpdate(player);
 
             if (AmongUsClient.Instance.AmHost)
