@@ -219,6 +219,7 @@ public sealed class Lawyer : RoleBase
         Pursuers = true;
         Target = null;
         SendRPC(Player.PlayerId);
+        Utils.NotifyRoles();
     }
 
 
