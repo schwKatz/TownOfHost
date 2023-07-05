@@ -32,7 +32,6 @@ public sealed class GrudgeSheriff : RoleBase
         ShotLimit = ShotLimitOpt.GetInt();
         KillCooldown = OptionKillCooldown.GetFloat();
 
-        ShotLimit = ShotLimitOpt.GetInt();
     }
 
     private static OptionItem OptionKillCooldown;
@@ -96,7 +95,7 @@ public sealed class GrudgeSheriff : RoleBase
         KillWaitPlayerSelect = null;
         KillWaitPlayer = null;
         IsCoolTimeOn = true;
-        ShotLimit = 0;
+        ShotLimit = ShotLimitOpt.GetInt();
 
         Player.AddVentSelect();
     }
