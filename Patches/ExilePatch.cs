@@ -150,7 +150,6 @@ namespace TownOfHost
                 player?.ResetPlayerCam(1f);
             if (roleClass is Executioner executioner && executioner.TargetId == playerId)
                 Executioner.ChangeRoleByTarget(playerId);
-            if (roleClass is Lawyer lawyer && lawyer.Target == player)
                 Lawyer.ChangeRoleByTarget(player);
         }
     }

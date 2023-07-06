@@ -67,7 +67,7 @@ public sealed class Lawyer : RoleBase
     private static int PursuerGuardNum;
 
     private static HashSet<Lawyer> Lawyers = new(15);
-    public PlayerControl Target = null;
+    private PlayerControl Target = null;
     private bool Pursuers = false;
 
     private int GuardCount = 0;
@@ -140,11 +140,6 @@ public sealed class Lawyer : RoleBase
     }
     public bool IsPursuer() => Pursuers;
 
-    public override void OnMurderPlayerAsTarget(MurderInfo _)
-    {
-        Target = null;
-        SendRPC(Player.PlayerId);
-    }
     public static void OnMurderPlayerOthers(MurderInfo info)
     {
         var target = info.AttemptTarget;
@@ -223,6 +218,7 @@ public sealed class Lawyer : RoleBase
     {
         Pursuers = true;
         Target = null;
+        SendRPC(Player.PlayerId);
     }
 
 
