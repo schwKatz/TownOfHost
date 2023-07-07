@@ -28,7 +28,6 @@ public sealed class JClient : RoleBase
         CanVent = OptionCanVent.GetBool();
         VentCooldown = OptionVentCooldown.GetFloat();
         VentMaxTime = OptionVentMaxTime.GetFloat();
-        HasImpostorVision = OptionHasImpostorVision.GetBool();
         CanAlsoBeExposedToJackal = OptionCanAlsoBeExposedToJackal.GetBool();
         AfterJackalDead = (AfterJackalDeadMode)OptionAfterJackalDead.GetValue();
 
@@ -38,7 +37,6 @@ public sealed class JClient : RoleBase
     private static OptionItem OptionCanVent;
     private static OptionItem OptionVentCooldown;
     private static OptionItem OptionVentMaxTime;
-    private static OptionItem OptionHasImpostorVision;
     private static OptionItem OptionCanAlsoBeExposedToJackal;
     private static OptionItem OptionAfterJackalDead;
     private static Options.OverrideTasksData Tasks;
@@ -55,7 +53,6 @@ public sealed class JClient : RoleBase
     private static bool CanVent;
     public static float VentCooldown;
     public static float VentMaxTime;
-    public static bool HasImpostorVision;
     private static bool CanAlsoBeExposedToJackal;
     private static AfterJackalDeadMode AfterJackalDead;
     public static void SetupOptionItem()
@@ -85,7 +82,6 @@ public sealed class JClient : RoleBase
     {
         AURoleOptions.EngineerCooldown = JClient.VentCooldown;
         AURoleOptions.EngineerInVentMaxTime = JClient.VentMaxTime;
-        opt.SetVision(HasImpostorVision);
     }
 
     public bool KnowsJackal() => IsTaskFinished;
