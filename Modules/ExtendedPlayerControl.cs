@@ -422,7 +422,7 @@ namespace TownOfHost
         {
             Main.AllPlayerKillCooldown[player.PlayerId] = (player.GetRoleClass() as IKiller)?.CalculateKillCooldown() ?? Options.DefaultKillCooldown; //キルクールをデフォルトキルクールに変更
             if (player.PlayerId == LastImpostor.currentId)
-                LastImpostor.SetKillCooldown();
+                LastImpostor.SetKillCooldown(player);
         }
         public static bool CanMakeMadmate(this PlayerControl player)
         {
@@ -534,7 +534,8 @@ namespace TownOfHost
                 return deathReasonSeeable.CheckSeeDeathReason(seen);
             }
             // IDeathReasonSeeable未対応役職はこちら
-            return seer.Is(CustomRoleTypes.Madmate) && Options.MadmateCanSeeDeathReason.GetBool();
+            return (seer.Is(CustomRoles.SKMadmate) && Options.MadmateCanSeeDeathReason.GetBool())
+                || seer.Is(CustomRoles.Autopsy);
         }
         public static string GetRoleInfo(this PlayerControl player, bool InfoLong = false)
         {

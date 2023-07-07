@@ -54,6 +54,41 @@ namespace TownOfHost
                 CustomRoles.Impostor or
                 CustomRoles.Shapeshifter;
         }
+
+        public static bool IsAddAddOn(this CustomRoles role)
+        {
+            return role.IsMadmate() || 
+                role is CustomRoles.JClient;
+        }
+        public static bool IsAddOn(this CustomRoles role) => role.IsBuffAddOn() || role.IsDebuffAddOn();
+        public static bool IsBuffAddOn(this CustomRoles role)
+        {
+            return
+                role is CustomRoles.AddWatch or
+                CustomRoles.AddLight or
+                CustomRoles.AddSeer or
+                CustomRoles.Autopsy or
+                CustomRoles.VIP or
+                CustomRoles.Revenger or
+                CustomRoles.Management or
+                CustomRoles.Sending or
+                CustomRoles.TieBreaker or
+                CustomRoles.Loyalty or
+                CustomRoles.PlusVote or
+                CustomRoles.Guarding or
+                CustomRoles.AddBait or
+                CustomRoles.Refusing;
+        }
+        public static bool IsDebuffAddOn(this CustomRoles role)
+        {
+            return
+                role is
+                CustomRoles.Sunglasses or
+                CustomRoles.Clumsy or
+                CustomRoles.InfoPoor or
+                CustomRoles.NonReport;
+        }
+
         public static bool IsKilledSchrodingerCat(this CustomRoles role)
         {
             return role is

@@ -9,6 +9,7 @@ using Mathf = UnityEngine.Mathf;
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Neutral;
 using TownOfHost.Roles.Crewmate;
+using TownOfHost.Roles.AddOns.Common;
 
 namespace TownOfHost.Modules
 {
@@ -117,18 +118,12 @@ namespace TownOfHost.Modules
             {
                 switch (subRole)
                 {
-                    case CustomRoles.Watcher:
-                        opt.SetBool(BoolOptionNames.AnonymousVotes, false);
-                        break;
+                    case CustomRoles.AddWatch: AddWatch.ApplyGameOptions(opt); break;
+                    case CustomRoles.AddLight: AddLight.ApplyGameOptions(opt); break;
+                    case CustomRoles.Sunglasses: Sunglasses.ApplyGameOptions(opt); break;
                 }
             }
-
-            if (Blinder.BlindPlayer.Contains(player.PlayerId))
-            {
-                opt.SetFloat(FloatOptionNames.CrewLightMod, Blinder.BlinderVision);
-                opt.SetFloat(FloatOptionNames.ImpostorLightMod, Blinder.BlinderVision);
-                opt.SetVision(false);
-            }
+            Blinder.ApplyGameOptionsByOther(player.PlayerId, opt);
 
             if (Main.AllPlayerKillCooldown.TryGetValue(player.PlayerId, out var killCooldown))
             {

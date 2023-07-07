@@ -75,6 +75,11 @@ namespace TownOfHost
             "Rate50", "Rate60", "Rate70", "Rate80", "Rate90", "Rate100",
         };
 
+        //役職直接属性付与
+        public static Dictionary<(CustomRoles, CustomRoles), OptionItem> AddOnRoleOptions = new();
+        public static Dictionary<CustomRoles, OptionItem> AddOnBuffAssign = new();
+        public static Dictionary<CustomRoles, OptionItem> AddOnDebuffAssign = new();
+
         // 各役職の詳細設定
         public static OptionItem EnableGM;
         public static float DefaultKillCooldown = Main.NormalOptions?.KillCooldown ?? 20;
@@ -239,7 +244,9 @@ namespace TownOfHost
         public static OptionItem RevengeNeutral;
         public static OptionItem RevengeMadByImpostor;
 
+        public static OptionItem AddonShowDontOmit;
         public static OptionItem ChangeIntro;
+        public static OptionItem ChangeAddon;
 
         public static readonly string[] suffixModes =
         {
@@ -354,16 +361,15 @@ namespace TownOfHost
                 .SetHeader(true)
                 .SetGameMode(CustomGameMode.Standard)
                 .SetValueFormat(OptionFormat.Players);
+            MadmateCanFixLightsOut = BooleanOptionItem.Create(15010, "MadmateCanFixLightsOut", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
+            MadmateCanFixComms = BooleanOptionItem.Create(15011, "MadmateCanFixComms", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
+            MadmateHasImpostorVision = BooleanOptionItem.Create(15012, "MadmateHasImpostorVision", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
+            MadmateCanSeeKillFlash = BooleanOptionItem.Create(15015, "MadmateCanSeeKillFlash", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
+            MadmateCanSeeOtherVotes = BooleanOptionItem.Create(15016, "MadmateCanSeeOtherVotes", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
+            MadmateCanSeeDeathReason = BooleanOptionItem.Create(15017, "MadmateCanSeeDeathReason", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
+            MadmateRevengeCrewmate = BooleanOptionItem.Create(15018, "MadmateExileCrewmate", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
 
             // Madmate Common Options
-            MadmateCanFixLightsOut = BooleanOptionItem.Create(15010, "MadmateCanFixLightsOut", false, TabGroup.MadmateRoles, false)
-                .SetHeader(true);
-            MadmateCanFixComms = BooleanOptionItem.Create(15011, "MadmateCanFixComms", false, TabGroup.MadmateRoles, false);
-            MadmateHasImpostorVision = BooleanOptionItem.Create(15012, "MadmateHasImpostorVision", false, TabGroup.MadmateRoles, false);
-            MadmateCanSeeKillFlash = BooleanOptionItem.Create(15015, "MadmateCanSeeKillFlash", false, TabGroup.MadmateRoles, false);
-            MadmateCanSeeOtherVotes = BooleanOptionItem.Create(15016, "MadmateCanSeeOtherVotes", false, TabGroup.MadmateRoles, false);
-            MadmateCanSeeDeathReason = BooleanOptionItem.Create(15017, "MadmateCanSeeDeathReason", false, TabGroup.MadmateRoles, false);
-            MadmateRevengeCrewmate = BooleanOptionItem.Create(15018, "MadmateExileCrewmate", false, TabGroup.MadmateRoles, false);
             MadmateVentCooldown = FloatOptionItem.Create(15213, "MadmateVentCooldown", new(0f, 180f, 5f), 0f, TabGroup.MadmateRoles, false)
                 .SetValueFormat(OptionFormat.Seconds);
             MadmateVentMaxTime = FloatOptionItem.Create(15214, "MadmateVentMaxTime", new(0f, 180f, 5f), 0f, TabGroup.MadmateRoles, false)
@@ -415,14 +421,31 @@ namespace TownOfHost
                 }
             });
 
-            //0622不具合なので一旦消す
-            SetupLoversRoleOptionsToggle(50300);
-            LoversAddWin = BooleanOptionItem.Create(50310, "LoversAddWin", false, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lovers]);
-
             // Add-Ons
+            SetupSingleRoleOptions(50300, TabGroup.Addons, CustomRoles.Lovers, 2);
+            LoversAddWin = BooleanOptionItem.Create(50310, "LoversAddWin", false, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lovers]);
             LastImpostor.SetupCustomOption();
-            Watcher.SetupCustomOption();
+            CompreteCrew.SetupCustomOption();
             Workhorse.SetupCustomOption();
+
+            AddWatch.SetupCustomOption();
+            AddLight.SetupCustomOption();
+            AddSeer.SetupCustomOption();
+            Autopsy.SetupCustomOption();
+            VIP.SetupCustomOption();
+            Revenger.SetupCustomOption();
+            Management.SetupCustomOption();
+            Sending.SetupCustomOption();
+            TieBreaker.SetupCustomOption();
+            PlusVote.SetupCustomOption();
+            Guarding.SetupCustomOption();
+            AddBait.SetupCustomOption();
+            Refusing.SetupCustomOption();
+
+            Sunglasses.SetupCustomOption();
+            Clumsy.SetupCustomOption();
+            InfoPoor.SetupCustomOption();
+            NonReport.SetupCustomOption();
             #endregion
 
             HideGameSettings = BooleanOptionItem.Create(1_000_002, "HideGameSettings", false, TabGroup.MainSettings, false)
@@ -638,8 +661,9 @@ namespace TownOfHost
             SuffixMode = StringOptionItem.Create(1_000_001, "SuffixMode", suffixModes, 0, TabGroup.MainSettings, true);
             ColorNameMode = BooleanOptionItem.Create(1_000_003, "ColorNameMode", false, TabGroup.MainSettings, false);
             ChangeNameToRoleInfo = BooleanOptionItem.Create(1_000_004, "ChangeNameToRoleInfo", true, TabGroup.MainSettings, false);
-            ChangeIntro = BooleanOptionItem.Create(1_009_000, "ChangeIntro", false, TabGroup.MainSettings, false)
-                .SetGameMode(CustomGameMode.Standard);
+            AddonShowDontOmit = BooleanOptionItem.Create(1_009_000, "AddonShowDontOmit", false, TabGroup.MainSettings, false);
+            ChangeAddon = BooleanOptionItem.Create(1_009_001, "ChangeAddon", false, TabGroup.MainSettings, false);
+            ChangeIntro = BooleanOptionItem.Create(1_009_002, "ChangeIntro", false, TabGroup.MainSettings, false);
             RoleAssigningAlgorithm = StringOptionItem.Create(1_000_005, "RoleAssigningAlgorithm", RoleAssigningAlgorithms, 0, TabGroup.MainSettings, true)
                 .RegisterUpdateValueEvent((object obj, OptionItem.UpdateValueEventArgs args) => IRandom.SetInstanceById(args.CurrentValue));
             VoiceReader.SetupCustomOption();
@@ -677,28 +701,14 @@ namespace TownOfHost
         public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, CustomGameMode customGameMode = CustomGameMode.Standard)
         {
             if (role.IsVanilla()) return;
+            int MaxCount = 15;
+            if (role.IsImpostor()) MaxCount = 3;
 
             var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false).SetColor(Utils.GetRoleColor(role))
                 .SetValueFormat(OptionFormat.Percent)
                 .SetHeader(true)
                 .SetGameMode(customGameMode) as IntegerOptionItem;
-            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(1, 15, 1), 1, tab, false).SetParent(spawnOption)
-                .SetValueFormat(OptionFormat.Players)
-                .SetGameMode(customGameMode);
-
-            CustomRoleSpawnChances.Add(role, spawnOption);
-            CustomRoleCounts.Add(role, countOption);
-        }
-        private static void SetupLoversRoleOptionsToggle(int id, CustomGameMode customGameMode = CustomGameMode.Standard)
-        {
-            var role = CustomRoles.Lovers;
-            var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, TabGroup.Addons, false).SetColor(Utils.GetRoleColor(role))
-                .SetValueFormat(OptionFormat.Percent)
-                .SetHeader(true)
-                .SetGameMode(customGameMode) as IntegerOptionItem;
-
-            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(2, 2, 1), 2, TabGroup.Addons, false).SetParent(spawnOption)
-                //.SetHidden(true)
+            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(1, MaxCount, 1), 1, tab, false).SetParent(spawnOption)
                 .SetValueFormat(OptionFormat.Players)
                 .SetGameMode(customGameMode);
 
@@ -732,6 +742,35 @@ namespace TownOfHost
 
             CustomRoleSpawnChances.Add(role, spawnOption);
             CustomRoleCounts.Add(role, countOption);
+        }
+        //AddOn
+        public static void SetUpAddOnOptions(int Id, CustomRoles PlayerRole, TabGroup tab)
+        {
+            AddOnBuffAssign[PlayerRole] = BooleanOptionItem.Create(Id, "AddOnBuffAssign", false, tab, false).SetParent(CustomRoleSpawnChances[PlayerRole]);
+            Id += 10;
+            foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsBuffAddOn()))
+            {
+                if (Addon == CustomRoles.Loyalty && PlayerRole is
+                    CustomRoles.MadSnitch or CustomRoles.JClient or CustomRoles.LastImpostor or CustomRoles.CompreteCrew) continue;
+
+                SetUpAddOnRoleOption(PlayerRole, tab, Addon, Id, false, AddOnBuffAssign[PlayerRole]);
+                Id++;
+            }
+            AddOnDebuffAssign[PlayerRole] = BooleanOptionItem.Create(Id, "AddOnDebuffAssign", false, tab, false).SetParent(CustomRoleSpawnChances[PlayerRole]);
+            Id += 10;
+            foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsDebuffAddOn()))
+            {
+                SetUpAddOnRoleOption(PlayerRole, tab, Addon, Id, false, AddOnDebuffAssign[PlayerRole]);
+                Id++;
+            }
+        }
+        public static void SetUpAddOnRoleOption(CustomRoles PlayerRole, TabGroup tab, CustomRoles role, int Id, bool defaultValue = false, OptionItem parent = null)
+        {
+            if (parent == null) parent = CustomRoleSpawnChances[PlayerRole];
+            var roleName = Utils.GetRoleName(role) + Utils.GetAddonAbilityInfo(role);
+            Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), roleName) } };
+            AddOnRoleOptions[(PlayerRole, role)] = BooleanOptionItem.Create(Id, "AddOnAssign%role%", defaultValue, tab, false).SetParent(parent);
+            AddOnRoleOptions[(PlayerRole, role)].ReplacementDictionary = replacementDic;
         }
 
         public class OverrideTasksData

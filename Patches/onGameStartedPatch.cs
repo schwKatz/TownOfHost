@@ -117,12 +117,33 @@ namespace TownOfHost
                 }
             }
             CustomRoleManager.Initialize();
-            FallFromLadder.Reset();
+            //Add-on
             LastImpostor.Init();
+            CompreteCrew.Init();
+            Workhorse.Init();
+
+            AddWatch.Init();
+            AddLight.Init();
+            Autopsy.Init();
+            VIP.Init();
+            Revenger.Init();
+            Management.Init();
+            Sending.Init();
+            TieBreaker.Init();
+            Loyalty.Init();
+            PlusVote.Init();
+            Guarding.Init();
+            AddBait.Init();
+            Refusing.Init();
+
+            Sunglasses.Init();
+            Clumsy.Init();
+            InfoPoor.Init();
+            NonReport.Init();
+
+            FallFromLadder.Reset();
             TargetArrow.Init();
             DoubleTrigger.Init();
-            Watcher.Init();
-            Workhorse.Init();
             CustomWinnerHolder.Reset();
             AntiBlackout.Reset();
             IRandom.SetInstanceById(Options.RoleAssigningAlgorithm.GetValue());
@@ -211,9 +232,14 @@ namespace TownOfHost
             List<PlayerControl> GuardianAngels = new();
             List<PlayerControl> Shapeshifters = new();
 
+            List<PlayerControl> allPlayersbySub = new();
+
             foreach (var pc in Main.AllPlayerControls)
             {
                 pc.Data.IsDead = false; //プレイヤーの死を解除する
+
+                if (!pc.Is(CustomRoles.GM)) allPlayersbySub.Add(pc);
+
                 var state = PlayerState.GetByPlayerId(pc.PlayerId);
                 if (state.MainRole != CustomRoles.NotAssigned) continue; //既にカスタム役職が割り当てられていればスキップ
                 var role = CustomRoles.NotAssigned;
@@ -297,8 +323,26 @@ namespace TownOfHost
                     };
                     AssignCustomRolesFromList(role, baseRoleTypes);
                 }
-                AssignLoversRoles();
-                AddOnsAssignData.AssignAddOnsFromList();
+
+                // Random-Addon
+                if (!CustomRoles.PlatonicLover.IsEnable()) AssignLoversRolesFromList(allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.AddWatch, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.Sunglasses, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.AddLight, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.AddSeer, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.Autopsy, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.VIP, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.Clumsy, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.Revenger, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.Management, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.InfoPoor, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.Sending, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.TieBreaker, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.NonReport, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.PlusVote, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.Guarding, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.AddBait, allPlayersbySub);
+                AssignCustomSubRolesFromList(CustomRoles.Refusing, allPlayersbySub);
 
                 foreach (var pair in PlayerState.AllPlayerStates)
                 {
@@ -313,6 +357,19 @@ namespace TownOfHost
                 {
                     HudManager.Instance.SetHudActive(true);
                     pc.ResetKillCooldown();
+
+                    // DirectAssign-Addon
+                    if (pc.GetCustomRole().IsAddAddOn()
+                        && (Options.AddOnBuffAssign[pc.GetCustomRole()].GetBool() || Options.AddOnDebuffAssign[pc.GetCustomRole()].GetBool()))
+                    {
+                        foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsAddOn()))
+                        {
+                            if (Options.AddOnRoleOptions.TryGetValue((pc.GetCustomRole(), Addon), out var option) && option.GetBool())
+                            {
+                                pc.RpcSetCustomRole(Addon);
+                            }
+                        }
+                    }
 
                     //通常モードでかくれんぼをする人用
                     if (Options.IsStandardHAS)
@@ -454,34 +511,39 @@ namespace TownOfHost
             return AssignedPlayers;
         }
 
-        private static void AssignLoversRoles(int RawCount = -1)
+        private static List<PlayerControl> AssignCustomSubRolesFromList(CustomRoles role, List<PlayerControl> allPlayersbySub, int RawCount = -1)
         {
-            if (!CustomRoles.Lovers.IsPresent()) return;
-            //Loversを初期化
-            Main.LoversPlayers.Clear();
-            Main.isLoversDead = false;
-            var allPlayers = new List<PlayerControl>();
-            foreach (var player in Main.AllPlayerControls)
-            {
-                if (player.Is(CustomRoles.GM)) continue;
-                allPlayers.Add(player);
-            }
-            var loversRole = CustomRoles.Lovers;
+            if (allPlayersbySub == null || allPlayersbySub.Count <= 0) return null;
             var rand = IRandom.Instance;
-            var count = Math.Clamp(RawCount, 0, allPlayers.Count);
-            if (RawCount == -1) count = Math.Clamp(loversRole.GetRealCount(), 0, allPlayers.Count);
-            if (count <= 0) return;
+            var count = Math.Clamp(RawCount, 0, allPlayersbySub.Count);
+            if (RawCount == -1) count = Math.Clamp(role.GetCount(), 0, allPlayersbySub.Count);
+            if (count <= 0) return null;
+            List<PlayerControl> AssignedPlayers = new();
 
             for (var i = 0; i < count; i++)
             {
-                var player = allPlayers[rand.Next(0, allPlayers.Count)];
-                Main.LoversPlayers.Add(player);
-                allPlayers.Remove(player);
-                PlayerState.GetByPlayerId(player.PlayerId).SetSubRole(loversRole);
-                Logger.Info("役職設定:" + player?.Data?.PlayerName + " = " + player.GetCustomRole().ToString() + " + " + loversRole.ToString(), "AssignLovers");
+                var player = allPlayersbySub[rand.Next(0, allPlayersbySub.Count)];
+                AssignedPlayers.Add(player);
+                if (role == CustomRoles.Lovers) Main.LoversPlayers.Add(player);
+                allPlayersbySub.Remove(player);
+                PlayerState.GetByPlayerId(player.PlayerId).SetSubRole(role);
+                Logger.Info("属性設定:" + player?.Data?.PlayerName + " = " + player.GetCustomRole().ToString() + " + " + role.ToString(), "AssignSubRoles");
             }
-            RPC.SyncLoversPlayers();
+            if (role == CustomRoles.Lovers) RPC.SyncLoversPlayers();
+
+            return AssignedPlayers;
         }
+        private static List<PlayerControl> AssignLoversRolesFromList(List<PlayerControl> allPlayersbySub)
+        {
+            if (!CustomRoles.Lovers.IsEnable()) return null;
+                //Loversを初期化
+                Main.LoversPlayers.Clear();
+                Main.isLoversDead = false;
+                //ランダムに2人選出
+                //AssignLoversRoles(2);
+                return AssignCustomSubRolesFromList(CustomRoles.Lovers, allPlayersbySub, 2);
+        }
+
         public static int GetRoleTypesCount(RoleTypes roleTypes)
         {
             int count = 0;

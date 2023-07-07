@@ -48,6 +48,7 @@ namespace TownOfHost.Roles.Neutral
             OptionCanVent = BooleanOptionItem.Create(RoleInfo, 11, GeneralOption.CanVent, true, false);
             OptionCanUseSabotage = BooleanOptionItem.Create(RoleInfo, 12, GeneralOption.CanUseSabotage, false, false);
             OptionHasImpostorVision = BooleanOptionItem.Create(RoleInfo, 13, GeneralOption.ImpostorVision, true, false);
+            Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, RoleInfo.RoleName, RoleInfo.Tab);
         }
         public float CalculateKillCooldown() => KillCooldown;
         public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);

@@ -44,6 +44,7 @@ public sealed class MadGuardian : RoleBase, IKillFlashSeeable
         OptionCanSeeWhoTriedToKill = BooleanOptionItem.Create(RoleInfo, 10, OptionName.MadGuardianCanSeeWhoTriedToKill, false, false);
         //ID10120~10123を使用
         Tasks = OverrideTasksData.Create(RoleInfo, 20);
+        Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);
     }
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {

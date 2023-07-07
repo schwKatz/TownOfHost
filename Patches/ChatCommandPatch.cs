@@ -355,9 +355,28 @@ namespace TownOfHost
 
                 // 属性
                 roleCommands.Add((CustomRoles)(-5), $"== {GetString("Addons")} ==");  // 区切り用
+                roleCommands.Add(CustomRoles.LastImpostor, "ラストインポスター");
                 roleCommands.Add(CustomRoles.Lovers, "ラバーズ");
-                roleCommands.Add(CustomRoles.Watcher, "ウォッチャー");
                 roleCommands.Add(CustomRoles.Workhorse, "ワークホース");
+                roleCommands.Add(CustomRoles.CompreteCrew, "コンプリートクルー");
+                roleCommands.Add(CustomRoles.AddWatch, "ウォッチング");
+                roleCommands.Add(CustomRoles.Sunglasses, "サングラス");
+                roleCommands.Add(CustomRoles.AddLight, "ライティング");
+                roleCommands.Add(CustomRoles.AddSeer, "シーイング");
+                roleCommands.Add(CustomRoles.Autopsy, "オートプシー");
+                roleCommands.Add(CustomRoles.VIP, "VIP");
+                roleCommands.Add(CustomRoles.Clumsy, "クラムシー");
+                roleCommands.Add(CustomRoles.Revenger, "リベンジャー");
+                roleCommands.Add(CustomRoles.Management, "マネジメント");
+                roleCommands.Add(CustomRoles.InfoPoor, "インフォプアー");
+                roleCommands.Add(CustomRoles.Sending, "センディング");
+                roleCommands.Add(CustomRoles.TieBreaker, "タイブレーカー");
+                roleCommands.Add(CustomRoles.NonReport, "ノンレポート");
+                roleCommands.Add(CustomRoles.Loyalty, "ロイヤルティ");
+                roleCommands.Add(CustomRoles.PlusVote, "プラスボート");
+                roleCommands.Add(CustomRoles.Guarding, "ガーディング");
+                roleCommands.Add(CustomRoles.AddBait, "ベイティング");
+                roleCommands.Add(CustomRoles.Refusing, "リフュージング");
 
                 // HAS
                 roleCommands.Add((CustomRoles)(-6), $"== {GetString("HideAndSeek")} ==");  // 区切り用

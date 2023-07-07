@@ -116,18 +116,22 @@ namespace TownOfHost
             }
             return true;
         }
+        private static bool IsClumsy(PlayerControl player)
+        {
+            return player.Is(CustomRoles.Clumsy) ||
+                (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool()) ||
+                (player.Is(CustomRoles.SillySheriff) && SillySheriff.IsClumsy.GetBool());
+        }
         public static bool OnSabotage(PlayerControl player, SystemTypes systemType, byte amount)
         {
-            if (/*player.Is(CustomRoles.Clumsy) ||*/
-                (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool()) ||
-                (player.Is(CustomRoles.SillySheriff) && SillySheriff.IsClumsy.GetBool())) return false;
-
-            if (player.Is(CustomRoleTypes.Madmate))
+            if (player.Is(CustomRoles.SKMadmate) || IsClumsy(player))
             {
                 if (systemType == SystemTypes.Comms)
                 {
                     //直せてしまったらキャンセル
-                    return !(!Options.MadmateCanFixComms.GetBool() && amount is 0 or 16 or 17);
+                    return !(((player.Is(CustomRoles.SKMadmate) && !Options.MadmateCanFixComms.GetBool())
+                        || IsClumsy(player))
+                        && amount is 0 or 16 or 17);
                 }
                 if (systemType == SystemTypes.Electrical)
                 {
@@ -135,23 +139,22 @@ namespace TownOfHost
                     if (amount.HasAnyBit(128)) return true;
 
                     //直せないならキャンセル
-                    if (!Options.MadmateCanFixLightsOut.GetBool())
+                    if ((player.Is(CustomRoles.SKMadmate) && !Options.MadmateCanFixLightsOut.GetBool())
+                        || IsClumsy(player))
                         return false;
 
                     //Airshipの特定の停電を直せないならキャンセル
-                    switch (Main.NormalOptions.MapId)
+                    if (Main.NormalOptions.MapId == 4)
                     {
-                        case 4:
-                            var console = player.closest.TryCast<Console>();
-                            if (console != null)
-                            {
-                                Logger.Info($"{console.GetType()}", "RepairSystemPatch.OnSabotage");
-                                Logger.Info($"{console.tag}", "RepairSystemPatch.OnSabotage");
-                            }
-                            if (Options.DisableAirshipViewingDeckLightsPanel.GetBool() && Vector2.Distance(player.transform.position, new(-12.93f, -11.28f)) <= 2f) return false;
-                            if (Options.DisableAirshipGapRoomLightsPanel.GetBool() && Vector2.Distance(player.transform.position, new(13.92f, 6.43f)) <= 2f) return false;
-                            if (Options.DisableAirshipCargoLightsPanel.GetBool() && Vector2.Distance(player.transform.position, new(30.56f, 2.12f)) <= 2f) return false;
-                            break;
+                        var console = player.closest.TryCast<Console>();
+                        if (console != null)
+                        {
+                            Logger.Info($"{console.GetType()}", "RepairSystemPatch.OnSabotage");
+                            Logger.Info($"{console.tag}", "RepairSystemPatch.OnSabotage");
+                        }
+                        if (Options.DisableAirshipViewingDeckLightsPanel.GetBool() && Vector2.Distance(player.transform.position, new(-12.93f, -11.28f)) <= 2f) return false;
+                        if (Options.DisableAirshipGapRoomLightsPanel.GetBool() && Vector2.Distance(player.transform.position, new(13.92f, 6.43f)) <= 2f) return false;
+                        if (Options.DisableAirshipCargoLightsPanel.GetBool() && Vector2.Distance(player.transform.position, new(30.56f, 2.12f)) <= 2f) return false;
                     }
                 }
             }

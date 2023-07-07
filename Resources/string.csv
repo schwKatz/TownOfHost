@@ -297,19 +297,92 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "# 属性"
 "Lovers","Lovers","ラバーズ","恋人","戀人","Любовники","Amantes"
 "LastImpostor","Last Impostor","ラストインポスター","绝境者","絕境者","Последний Предатель","Último Impostor"
-"Watcher","Watcher","ウォッチャー","窥视者","觀察者","Наблюдатель","Observador"
 "Workhorse","Workhorse","ワークホース","实干家","","Работник",""
+AddWatch,Watching,ウォッチング,窥视
+AddLight,Lighting,ライティング,火炬
+Sunglasses,Sunglasses,サングラス,太阳镜
+AddSeer,Foreseeing,シーイング,灵媒
+Autopsy,Autopsy,オートプシー,检尸
+VIP,VIP,VIP,VIP
+Clumsy,Clumsy,クラムシー,笨人
+Revenger,Revenger,リベンジャー,复仇者
+Management,Management,マネジメント,经营者
+Sending,Sending,センディング
+InfoPoor,InfoPoor,インフォプアー,
+TieBreaker,TieBreaker,タイブレーカー,
+NonReport,NonReport,ノンレポート,
+Loyalty,Loyalty,ロイヤルティ,
+PlusVote,PlusVote,プラスボート,
+Guarding,Guarding,ガーディング
+AddBait,Baiting,ベイティング
+Refusing,Refusing,リフュージング,
+CompreteCrew,Comprete Crew,コンプリートクルー,
+
+"AddWatchInfo1",Can See Everyone Votes,他人の投票先が分かる,
+"AddLightInfo1",Widen the Vision (with detailed settings),視野が広くなる (詳細設定あり),
+SunglassesInfo1,Narrowing the Vision (with detailed settings),視野が狭くなる (詳細設定あり),
+"AddSeerInfo1",Can See Kill Flash,誰かがキルした時フラッシュが見える,
+"AutopsyInfo1",Can See Cause Of Death,死亡した人の死因が分かる,
+VIPInfo1,Kill Flash Occurs For Everyone When Killed,キルされた時全員にフラッシュが起こる,
+ClumsyInfo1,Can Not Fix Lights And Fix Comms,停電・通信妨害が直せない,
+RevengerInfo1,Revenge A Someone When Exiled,追放された時誰かを道連れにする,
+ManagementInfo1,"Can See Total Tasks Completed By All (with detailed settings)",全員の合計タスク完了数が分かる (詳細設定あり),
+SendingInfo1,"Can Know If Exiled Person Is An Impostor",追放された人がインポスターかわかる,,
+InfoPoorInfo1,"Unable to Use Admin,Camera,Door-log,and Vital",アドミン・カメラ等の機器が使用できない,
+TieBreakerInfo1,"If Voted on, It Breaks the Tie Vote",同数投票になった片方に入れていると優先される,
+NonReportInfo1,"NonReport Cannot Report Dead Bodies",死体通報ができない,
+LoyaltyInfo1,"Know the Parent of the Same Camp.",同陣営の親が分かる,
+PlusVoteInfo1,Voting Increases to Two Votes,投票が二票に増える,
+GuardingInfo1,Can Guard Against A Kill,一回キルを防げる,
+AddBaitInfo1,Have the Killers Self-Report,キルした人にセルフレポートさせる,
+RefusingInfo1,"Refuse to be exiled once you are about to be exiled.",追放されそうになった時、一度追放を拒む,
 
 "LoversInfo","Live happily ever after, together","恋人と生きて幸せを掴もう","你们坠入了爱河，成为了一对恋人，一起活到最后吧！","你墜入了愛河(心理)","Выживите со своим Любовником","Vivam felizes para sempre, juntos"
 "LastImpostorInfo","You are the last of us","残ったのはあなただけ","你是狼村最后的希望…","你是狼村最後的希望...","Ты последний предатель","Você é o último Impostor"
-"WatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
 "WorkhorseInfo","You have Extra tasks","タスクはまだ終わらない","这活还得继续肝","","Теперь у вас дополнительные задания",""
+"AddWatchInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
+"AddLightInfo","Light 'em up","すべてを照らそう","驱散黑暗，照亮前路","照亮黑暗中的一切吧","Увеличьте свой обзор","Luz para todo lado"
+SunglassesInfo,I don't like the glare,まぶしいのは嫌いなんだ,我不喜欢这种眩光,
+"AddSeerInfo","You see the moment someone dies","他人の死んだ瞬間を感知しよう","你能感知死亡","你擁有陰陽眼","Вы Видите Когда Умирают Игроки","Veja o momento em que alguém morre"
+"AutopsyInfo","And thus they died...","斯くして奴は死んだ","调查他人死因","看見他們的死因","Вы знаете причину смерти игроков","Veja os sinais vitais e causa da morte"
+VIPInfo,"Protect me desperately","私を必死に守りなさい",保护我不死,
+ClumsyInfo,"Sorry, I'm clumsy","ごめんなさい、私不器用なの",对不起，我笨手笨脚的,
+RevengerInfo,"I can't imagine them banishing me","私を追放するなんて考えられない",我无法想象当他们驱逐我的时候的样子,
+ManagementInfo,Let's keep an eye on the number of tasks,タスクの数を見張ろう,让我们来关注一下任务的数量,,
+SendingInfo,"I'll see you through your final days.",あなたの最期を見送ってあげる,
+InfoPoorInfo,I'm not very good with devices,私機械に弱くて、、,
+TieBreakerInfo,My vote will make the difference in your fate,私の一票があなたの命運を分ける,
+NonReportInfo,"I'm sorry, my megaphone broke.",メガホン壊れたから、、ごめんね,
+LoyaltyInfo,"For that person, I'd be willing...","あの人のためなら、私は喜んで..."
+PlusVoteInfo,"Double is very strong, you know?",二倍ってめっちゃ強いんだよ?
+GuardingInfo,This is what an ironclad defense is all about,鉄壁のディフェンスとはこのこと
+AddBaitInfo,"Bait your enemies","敵を罠にはめよう","诱骗敌人，让敌人落入你的陷阱",
+RefusingInfo,"No! I'm still staying on the ship!",イヤだ！船にまだ残るんだ！,
+CompreteCrewInfo,"This makes me the perfect being..",これで私は完璧な存在に、、,
 
 ##LastImpostorInfoLong,"(Add-ons):\nAn Add-on granted to the last Impostor remaining.\nKill cooldown is reduced according to this setting or given a set Add-On.","(属性):\n最後のインポスターに付与される属性。\nキルクールが設定した時間まで短くなったり、設定された属性が付与される。","（效果）:\n这个效果在内鬼仅剩一人时赋予该内鬼。\n使其击杀冷却缩短或者给一组效果",
 "LoversInfoLong","(Neutrals),\nLovers is an additional Neutrals role assigned to 2 random players on top of their defined roles.\nIf you and your lover both survive til the end, you both will win.\nIf one of you dies, the other will also die. If crewmates get a task victory, you both will lose.","(ニュートラル):\n全プレイヤーの中からランダムで2人に他の役職と重複して配役されるニュートラル。\n恋人が2人とも生き残っている状態で試合終了すれば勝利。\n恋人の片方が死んだときにもう片方も死ぬ。クルーのタスクが完了すると敗北。","恋人为两名玩家的组合。\n恋人存活到游戏结束则恋人独自获胜。\n船员阵营的恋人玩家没有任务。\n从恋人阵营玩家可以看到两名恋人玩家昵称旁有心形标志。\n恋人一同赴死。\n恋人中的一方在会议中被放逐时，另一方将死亡并变为不可以被报告的尸体。","(中立),\n遊戲開始系統會隨機抽取兩人當戀人,該職業可以和其他職業屬於同一個玩家身上\n戀人將獲勝在遊戲結束時如果兩個戀人都活著.\n但是當一個戀人死去,另一個戀人也會跟著死去\n如果船員完成所有任務,戀人即宣告失敗。","(Нейтралы):\nДополнительно с какой-либо ролью Любовники назначаются 2 случайных игрока. \nЕсли оба любовника останутся живы, то они выиграют. \nКогда умрёт хотя бы один любовник, то моментально умрёт и второй. Они проиграют когда Члены Экипажа выполнят все задания.","(Neutros): \nOs Amantes, é um papel dado a 2 jogadores aleatórios, somado a sua classe já definida. \nSe você e seu amante sobreviverem até o final, vocês ganharão. \nCaso um dos dois morra, o outro também morre. Se os Tripulantes ganharem por tarefas, os dois perdem."
 "LastImpostorInfoLong","(Add-ons):\nAn Add-on granted to the last Impostor remaining.\nKill cooldown is reduced according to this setting.\nNot granted to Bounty Hunters, Serial Killers, or Vampires.","(属性):\n最後のインポスターに付与される属性。\nキルクールが設定した時間まで短くなる。\nバウンティハンター、シリアルキラー、ヴァンパイアには付与されない。","（效果）:\n这个效果在内鬼仅剩一人时赋予该内鬼。\n使其击杀冷却缩短。\n该效果对赏金猎人、嗜血杀手以及吸血鬼不适用。","(附加效果):\n該效果給予在場上的最後一位偽裝者，擁有該效果的偽裝者刀人冷卻時間會變短，該效果不會給予:\n賞金獵人, 連環殺手或吸血鬼 (可以設定冷卻)","(Атрибут):\nАтрибут, присваивается последнему Предателю. \nВремя отката убийства становится меньше, чем обычно. \nНе назначается Охотнику за головами, Серийному убийце или Вампиру.","(Atributos): \nUm Atributo dado ao último Impostor. \nO tempo de recarga (abate) é reduzido segundo a configuração. \nNão é dado para Caçadores de Recompensas, Serial Killers ou Vampiros."
-"WatcherInfoLong","(Add-ons):\nYou can see everyone's votes even if anonymous voting is on.","(属性):\n全員の投票先を見ることができる。","(效果):\n会议时窥视者可以看到所有人的投票。","(附加效果):\n會議時觀察者可以看到所有人的投票。","(Атрибут):\nНаблюдатель может видеть все цвета голосов несмотря на анонимное голосование.","(Atributos):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
 "WorkhorseInfoLong","(Add-ons):\nAn Add-on granted to the first living Crewmate finishing all the tasks.\nYou are assigned additional tasks necessary for the tasks win.\nNot granted to roles with no tasks or with abilities triggered by finishing tasks.","(属性):\n最初に生きてタスクを終えたクルーに付与される属性。\n追加タスクが割り当てられる。\nクルーメイト以外にも割り当てる設定でもタスクが無い、タスク完了で能力が発動する役職には付与されない。","(附加效果):\n该附加效果赋予给第一个完成所有任务并存活的船员。\n你需要完成额外的任务来达成任务胜利。\n此效果不会赋予那些没有任务或者通过完成任务才能使用能力的诸多职业。","","(Атрибут):\nДополнительные задания присваиваются первому живому Члену Экипажа, который выполнит все задания. \nЕму назначаются дополнительные задания, необходимые для победы с помощью заданий. \nНе может присваиваться ролям которые не имеют заданий, или ролям со способностями которые активируются после выполнения заданий.",""
+"AddWatchInfoLong","(Add-ons):\nYou can see everyone's votes even if anonymous voting is on.","(属性):\n全員の投票先を見ることができる。","(效果):\n会议时窥视者可以看到所有人的投票。","(附加效果):\n會議時觀察者可以看到所有人的投票。","(Атрибут):\nНаблюдатель может видеть все цвета голосов несмотря на анонимное голосование.","(Atributos):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
+AddLightInfoLong,"(Add-ons):\nThis person will have a wider view by a set magnification. The setting can disable the narrowing of the field of view in a power outage.",[属性]:\n設定倍率分、視界が広くなる。設定で停電での視界の狭さを無効化できる。,(效果):\n这个人会有一个单独的设置来获得更大的视野。该设置可以禁用在断电时缩小视野,
+SunglassesInfoLong,"(Add-ons):\nThis person's field of view is reduced by the set magnification.",[属性]:\n設定倍率分、視界が狭くなる。,(效果):\n此人的视野将按设置的放大倍数缩小。,
+"AddSeerInfoLong","(Add-ons):\nWhenever someone dies, you will see a ""kill flash"".","[属性]:\nプレイヤーが死亡するごとに、キルフラッシュを見ることができる。","(效果):\n每当玩家死亡时，灵媒将会看到击杀闪烁。","(附加效果):當有玩家死亡時,靈媒將看到閃光","(Атрибут):\nКаждый раз когда игроки умирают, Seer может видеть вспышку убийства.","(Atributos): \nQuando alguém morre, você vê um ""clarão de abate"" (a sua tela piscará brevemente)."
+"AutopsyInfoLong","(Add-ons):\nAt the time of the meeting, Autopsy can confirm the cause of death of the deceased player.",[属性]:\n会議時に、死亡したプレイヤーの死因を確認することが出来る。,(效果):\n在开会时，检尸员可以确认已死亡玩家的死因。,
+"VIPInfoLong","(Add-ons):\nWhen VIP are killed, a kill flash occurs for everyone.","[属性]:\n自身がキルされた時、全員にキルフラッシュが起こる。","(效果):\n当VIP被杀时，每个人面前都会出现一次闪光",
+ClumsyInfoLong,"(Add-ons):\nIt is not possible to fix sabotage (power outages and communication interference).","[属性]:\n停電と通信妨害を直すことが出来ない。","(效果):\n无法修复破坏（灯光和通信）.",
+RevengerInfoLong,"(Add-ons):\nWhen he is exiled，he takes one random person with him. ",[属性]:\n自身が吊られた際、ランダムな1人を道連れにする。,(效果):\n当他被绞死的时候，他会随机带走一个人。,
+ManagementInfoLong,"(Add-ons):\nThe total number of tasks completed by all members is shown (in () next to the role).",[属性]:\n全員の合計タスク完了数が分かる(役職名横()にて)。,(效果):\n所有船员完成的任务总数显示在工作名称的括号中。,
+SendingInfoLong,"(Add-ons):\nYou can know if exiled person is an Impostor or not.",[属性]:\n追放した人がインポスターかそうでないかがわかる。,
+InfoPoorInfoLong,"(Add-ons):\nUnable to Use Admin,Camera,Door-log,and Vital.",[属性]:\nアドミン・カメラ・ドアログ・バイタルが使用できない,
+TieBreakerInfoLong,"(Add-ons):\nIf there is a tie vote, the tie breaker will break the tie vote in favor of whichever one of them is placed by the tiebreaker.",[属性]:\nもし同数投票があった時、タイブレーカーがそのどれかに入れていた方が優先されて同数投票を壊す。,
+NonReportInfoLong,"(Add-ons):\nNonReport cannot report Dead bodies.","[属性]:\n死体通報ができない。",
+LoyaltyInfoLong,"(Add-ons):\nLoyalty know the parent of the same camp.(madmate→impostor)","[属性]:\n同陣営の親が分かる(マッドメイト→インポスター)",
+PlusVoteInfoLong,"(Add-ons):\nWhen voting at the meeting, one person can vote twice, to the same person.",[属性]:\n会議の投票時、1人で2票同じ人のところに投票できる。,"(效果):\n当他被投出时，再次召开会议，对猎人进行投票。在这里，只有猎人被流放后才被允许讨论这件事，他可以选择一个人在途中投票并处决。"
+GuardingInfoLong,"(Add-ons):\nIt can prevent one unconditional kill. The protected barrier to itself is invisible.","[属性]:\n1回無条件でキルを防ぐことが出来る。自身への守ったバリアは見えない。",
+AddBaitInfoLong,"(Add-ons):\nWhen you are killed, you force your killer to immediately self-report.","[属性]:\nキルされた時に、自身をキルした人にセルフレポートさせる。","(效果):\n诱饵被击杀时，击杀诱饵的凶手将被迫报告。",
+Add1InfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exiled and stays on the ship.",[属性]:\n追放されそうになった時、一度追放を拒んで船に居続ける。,
+CompreteCrewInfoLong,"(Add-ons):\nIt will be granted to those who have completed all the tasks, up to a set number of people in order of earliest to latest. They will have the set number of Add-On.",[属性]:\nタスクを全て完了させた人に、早い順に設定人数分まで付与される。\n設定された属性を持つようになる。,
 
 "# GM"
 "GM","GM","ゲームマスター","GM(管理员)","GM(遊戲大師)","GM(Призрак)","GM(Fantasma)"
@@ -470,6 +543,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DefaultShapeshiftCooldown","Default Shapeshift Cooldown","デフォルトの変身クールダウン","默认变形冷却时间","預設變身時間","Обычная перезарядка Оборотня","Tempo de Recarga Padrão (Mutar)"
 "ImpostorOperateVisibility","(MOD)Impostor Can Not Be Clairvoyant After Death","(MOD)インポスターが霊界で千里眼できない","内鬼死后不可以有千里眼",
 "ChangeIntro","(MOD)Change the Intro the Original TOH Specs.","(MOD)第三陣営やマッド役職のイントロを本家TOH仕様に戻す","(MOD)将介绍更改为原始TOH规格。"
+"ChangeAddon","Change the Addon Display the Original TOH Specs.","属性表示を本家TOH仕様に戻す",
 "CanKill","Can Kill","キルできる","可以击杀",
 "RevengeNeutral","Can Revenge Neutrals","道連れ能力持ちがニュートラル役職を道連れ出来る","可以接受同伴为中立",,
 "RevengeMadByImpostor","Can Revenge Madmates By Impostor Team","道連れ能力持ちインポスター陣営がマッド系役職を道連れ出来る",,,
@@ -633,6 +707,19 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "AssignOnlyTo%role%","Assign Only To %role%","%role%のみに割り当てる","只赋予%role%","","Назначить только для %role%",""
 "WorkhorseNumLongTasks","Additional Long Tasks","追加ロングタスクの個数","额外长任务数","","Дополнительные долгие задания",""
 "WorkhorseNumShortTasks","Additional Short Tasks","追加ショートタスクの個数","额外短任务数","","Дополнительные короткие задания",""
+"LastImpostorChangeKillCooldown","Change the kill cooldown(Excluding some Role)","キルクールを変更する(一部役職除く)","更改击杀冷却时间（不包括某些职业）"
+"AddLightAddCrewmateVision"," - rate of increase in CrewmateVision(+)"," - クルー視界増加率(+)"," - 船员视野增加率(+)",
+"AddLightAddImpostorVision"," - rate of increase in ImpostorVision(+)"," - インポスター視界増加率(+)"," - 内鬼视野增加率(+)",
+"AddLighterDisableLightOut"," - Ignore Fix Lights Effect"," - 停電を無効にする"," - 不受熄灯影响",
+"SunglassesSubCrewmateVision"," - rate of decrease in CrewmateVision(-)"," - クルー視界減少率(-)"," - 船员视野减小率(-)",
+"SunglassesSubImpostorVision"," - rate of decrease in ImpostorVision(-)"," - インポスター視界減少率(-)"," - 内鬼视野减小率(-)",
+"ManagementSeeNowtask"," - Watch now all task count"," - 会議時以外でもタスク数が見える"," - 现在观看所有的任务计数",,
+
+"AddOnBuffAssign","Assign Buff Add-On","バフ属性を付与する","分配加强效果"
+"AddOnDebuffAssign","Assign Debuff Add-On","デバフ属性を付与する","分配弱化效果"
+"AddOnAssign%role%","%role%","%role%","%role%","%role%"
+"AddonShowDontOmit","When have more than Add-On, do not omit","2つ以上属性を持つ時も省略せず表示する","当有多个效果时，不会忽略"
+
 
 "## かくれんぼ設定"
 "HideAndSeekOptions","Hide and Seek Settings","かくれんぼの設定","躲猫猫设置","躲貓貓設定","Настройки Пряток","Configurações do Esconde-Esconde"
@@ -665,6 +752,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "Alive","Alive","生存","存活","存活","Выжил","Vivo"
 "Win"," Wins","勝利","胜利","勝利"," Победили","Vitória"
 "Last-","Last ","ラスト","仅存","獨活","Последний ",""
+"Comprete-","Comprete","コンプリート",
 
 "## リアクターの時間制御"
 "SabotageTimeControl","Sabotage Duration Control","サボタージュの時間制御","更改修理时限","重新設定緊急任務時間","Изменить время Саботажа","Controle da Duração de Sabotagem"

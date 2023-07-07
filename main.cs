@@ -196,8 +196,26 @@ namespace TownOfHost
                     //サブ役職
                     {CustomRoles.LastImpostor, "#ff1919"},
                     {CustomRoles.Lovers, "#ff6be4"},
-                    {CustomRoles.Watcher, "#800080"},
                     {CustomRoles.Workhorse, "#00ffff"},
+                    {CustomRoles.CompreteCrew, "#ffff00"},
+                    {CustomRoles.AddWatch, "#800080"},
+                    {CustomRoles.Sunglasses, "#883fd1"},
+                    {CustomRoles.AddLight, "#eee5be"},
+                    {CustomRoles.AddSeer, "#61b26c"},
+                    {CustomRoles.Autopsy, "#80ffdd"},
+                    {CustomRoles.VIP, "#ffff00"},
+                    {CustomRoles.Clumsy, "#696969"},
+                    {CustomRoles.Revenger, "#00ffff"},
+                    {CustomRoles.Management, "#80ffdd"},
+                    {CustomRoles.Sending, "#883fd1"},
+                    {CustomRoles.InfoPoor, "#556b2f"},
+                    {CustomRoles.TieBreaker, "#204d42"},
+                    {CustomRoles.NonReport, "#883fd1"},
+                    {CustomRoles.Loyalty, "#b8fb4f"},
+                    {CustomRoles.PlusVote, "#204d42"},
+                    {CustomRoles.Guarding, "#8cffff"},
+                    {CustomRoles.AddBait, "#00f7ff"},
+                    {CustomRoles.Refusing, "#61b26c"},
 
                     {CustomRoles.NotAssigned, "#ffffff"}
                 };

@@ -11,8 +11,8 @@ using TownOfHost.Modules;
 using TownOfHost.Roles;
 using TownOfHost.Roles.Core;
 using TownOfHost.Roles.Core.Interfaces;
-using TownOfHost.Roles.Crewmate;
 using TownOfHost.Roles.Neutral;
+using TownOfHost.Roles.AddOns.Common;
 using TownOfHost.Roles.AddOns.Crewmate;
 using static TownOfHost.Translator;
 using TownOfHost.Roles.Impostor;
@@ -216,6 +216,7 @@ namespace TownOfHost
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.ReportDeadBody))]
     class ReportDeadBodyPatch
     {
+        public static GameData.PlayerInfo reporter;
         public static GameData.PlayerInfo ReportTarget;
 
         public static Dictionary<byte, bool> CanReport;
@@ -223,11 +224,14 @@ namespace TownOfHost
         public static Dictionary<byte, List<GameData.PlayerInfo>> WaitReport = new();
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
         {
+            reporter = __instance.Data;
             ReportTarget = target;
             if (GameStates.IsMeeting) return false;
             Logger.Info($"{__instance.GetNameWithRole()} => {target?.Object?.GetNameWithRole() ?? "null"}", "ReportDeadBody");
             if (Options.IsStandardHAS && target != null && __instance == target.Object) return true; //[StandardHAS] ボタンでなく、通報者と死体が同じなら許可
             if (Options.CurrentGameMode == CustomGameMode.HideAndSeek || Options.IsStandardHAS) return false;
+            if (reporter.Object.Is(CustomRoles.NonReport) &&
+                target != null && !target.Object.Is(CustomRoles.Bait) && !target.Object.Is(CustomRoles.AddBait)) return false;
 
             // Scavenger
             if (target != null && !CanReportByDeadBody[target.PlayerId]) return false;
@@ -406,8 +410,8 @@ namespace TownOfHost
                     { //targetが自分自身
                         if (target.Is(CustomRoles.Arsonist) && Arsonist.IsDouseDone(target))
                             RealName = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Arsonist), GetString("EnterVentToWin"));
-                        else if (target.Is(CustomRoles.SeeingOff)/* || target.Is(CustomRoles.Sending)*/)
-                            RealName = SeeingOff.RealNameChange(RealName);
+                        else if (target.Is(CustomRoles.SeeingOff) || target.Is(CustomRoles.Sending))
+                            RealName = Sending.RealNameChange(RealName);
                     }
 
                     //NameColorManager準拠の処理
@@ -450,20 +454,20 @@ namespace TownOfHost
                     if (Suffix.ToString() != "")
                     {
                         //名前が2行になると役職テキストを上にずらす必要がある
-                        RoleText.transform.SetLocalY(0.35f);
+                        RoleText.transform.SetLocalY(0.45f);
                         target.cosmetics.nameText.text += "\r\n" + Suffix.ToString();
 
                     }
                     else
                     {
                         //役職テキストの座標を初期値に戻す
-                        RoleText.transform.SetLocalY(0.2f);
+                        RoleText.transform.SetLocalY(0.3f);
                     }
                 }
                 else
                 {
                     //役職テキストの座標を初期値に戻す
-                    RoleText.transform.SetLocalY(0.2f);
+                    RoleText.transform.SetLocalY(0.3f);
                 }
             }
         }

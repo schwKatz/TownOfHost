@@ -10,7 +10,6 @@ using TownOfHost.Roles.Core.Interfaces;
 using TownOfHost.Roles.AddOns.Common;
 using TownOfHost.Roles.Impostor;
 using TownOfHost.Roles.Crewmate;
-using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHost.Roles.Core;
 
@@ -61,15 +60,16 @@ public static class CustomRoleManager
         {
             if (killer.IsKiller)
             {
-                //イビルディバイナーのみ占いのためここで先に処理
-                if (killerRole is EvilDiviner && !EvilDiviner.OnCheckMurder(attemptKiller, attemptTarget))
-                    return;
+                // イビルディバイナーのみ占いのためここで先に処理
+                if (killerRole is EvilDiviner && !EvilDiviner.OnCheckMurder(attemptKiller, attemptTarget)) return;
+                // ガーディング属性によるガード
+                if (!Guarding.OnCheckMurder(attemptKiller, attemptTarget)) return;
                 // ターゲットのキルチェック処理実行
                 if (targetRole != null)
                 {
                     if (!targetRole.OnCheckMurderAsTarget(info)) return;
                 }
-                //メディックの対象プレイヤー
+                // メディックの対象プレイヤー
                 if (!Medic.GuardPlayerCheckMurder(attemptKiller, attemptTarget)) return;
             }
             // キラーのキルチェック処理実行
@@ -125,6 +125,7 @@ public static class CustomRoleManager
         {
             onMurderPlayer(info);
         }
+        AddBait.OnMurderPlayer(info);
 
         //サブロール処理ができるまではラバーズをここで処理
         FixedUpdatePatch.LoversSuicide(attemptTarget.PlayerId);
@@ -214,25 +215,41 @@ public static class CustomRoleManager
         {
             roleInfo.CreateInstance(player).Add();
         }
-        else
+        //AddonAdd
         {
-            OtherRolesAdd(player);
+            foreach (var subRole in player.GetCustomSubRoles())
+            {
+                subRoleAdd(player.PlayerId, subRole);
+            }
         }
         if (player.Data.Role.Role == RoleTypes.Shapeshifter)
         {
             Main.CheckShapeshift.TryAdd(player.PlayerId, false);
         }
     }
-    public static void OtherRolesAdd(PlayerControl pc)
+    public static void subRoleAdd(byte playerId, CustomRoles subRole)
     {
-        foreach (var subRole in pc.GetCustomSubRoles())
+        switch (subRole)
         {
-            switch (subRole)
-            {
-                case CustomRoles.Watcher:
-                    Watcher.Add(pc.PlayerId);
-                    break;
-            }
+            case CustomRoles.AddWatch: AddWatch.Add(playerId); break;
+            case CustomRoles.AddLight: AddLight.Add(playerId); break;
+            case CustomRoles.AddSeer: AddSeer.Add(playerId); break;
+            case CustomRoles.Autopsy: Autopsy.Add(playerId); break;
+            case CustomRoles.VIP: VIP.Add(playerId); break;
+            case CustomRoles.Revenger: Revenger.Add(playerId); break;
+            case CustomRoles.Management: Management.Add(playerId); break;
+            case CustomRoles.Sending: Sending.Add(playerId); break;
+            case CustomRoles.TieBreaker: TieBreaker.Add(playerId); break;
+            case CustomRoles.Loyalty: Loyalty.Add(playerId); break;
+            case CustomRoles.PlusVote: PlusVote.Add(playerId); break;
+            case CustomRoles.Guarding: Guarding.Add(playerId); break;
+            case CustomRoles.AddBait: AddBait.Add(playerId); break;
+            case CustomRoles.Refusing: Refusing.Add(playerId); break;
+
+            case CustomRoles.Sunglasses: Sunglasses.Add(playerId); break;
+            case CustomRoles.Clumsy: Clumsy.Add(playerId); break;
+            case CustomRoles.InfoPoor: InfoPoor.Add(playerId); break;
+            case CustomRoles.NonReport: NonReport.Add(playerId); break;
         }
     }
     /// <summary>
@@ -473,9 +490,27 @@ public enum CustomRoles
     // Sub-roll after 500
     NotAssigned = 500,
     LastImpostor,
+    CompreteCrew,
     Lovers,
-    Watcher,
     Workhorse,
+    AddWatch,
+    AddLight,
+    AddSeer,
+    Autopsy,
+    VIP,
+    Revenger,
+    Management,
+    Sending,
+    TieBreaker,
+    Loyalty,
+    PlusVote,
+    Guarding,
+    AddBait,
+    Refusing,
+    Sunglasses,
+    Clumsy,
+    InfoPoor,
+    NonReport,
 }
 public enum CustomRoleTypes
 {

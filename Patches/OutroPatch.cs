@@ -102,7 +102,9 @@ namespace TownOfHost
                 Main.winnerList.Add(pc.PlayerId);
             }
 
-            taskSendDiscord = Task.Run(() =>
+            if (PlayerControl.LocalPlayer.PlayerId == 0)
+            {
+                taskSendDiscord = Task.Run(() =>
             {
                 if (CustomWinnerHolder.WinnerTeam == CustomWinner.Draw)
                     Logger.Info("廃村のため試合結果の送信をキャンセル", "Webhook");
@@ -110,10 +112,10 @@ namespace TownOfHost
                 {
                     //0:Imp 1:Mad 2:Crew 3:Neu
                     bool[] isSend = { false, false, false, false };
-                    StringBuilder[] sendMasagge = { new StringBuilder(),new StringBuilder(),new StringBuilder(),new StringBuilder() };
+                    StringBuilder[] sendMasagge = { new StringBuilder(), new StringBuilder(), new StringBuilder(), new StringBuilder() };
                     foreach (var IS in PlayerState.AllPlayerStates)
                     {
-                        var id = IS.Key;    var state = IS.Value;
+                        var id = IS.Key; var state = IS.Value;
                         var role = state.MainRole;
                         if (role.IsVanilla()) continue;
                         int roleTypeNumber = (int)role.GetCustomRoleTypes();
@@ -130,6 +132,7 @@ namespace TownOfHost
                     }
                 }
             });
+            }
 
             Main.VisibleTasksCount = false;
             if (AmongUsClient.Instance.AmHost)

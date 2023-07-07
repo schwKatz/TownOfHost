@@ -65,11 +65,10 @@ public sealed class JClient : RoleBase
             .SetValueFormat(OptionFormat.Seconds);
         OptionVentMaxTime = FloatOptionItem.Create(RoleInfo, 12, OptionName.JClientVentMaxTime, new(0f, 180f, 5f), 0f, false)
             .SetValueFormat(OptionFormat.Seconds);
+        OptionCanAlsoBeExposedToJackal = BooleanOptionItem.Create(RoleInfo, 13, OptionName.JClientCanAlsoBeExposedToJackal, false, false);
+        OptionAfterJackalDead = StringOptionItem.Create(RoleInfo, 14, OptionName.JClientAfterJackalDead, AfterJackalDeadModeText, 0, false);
         Tasks = Options.OverrideTasksData.Create(RoleInfo, 20);
-
-        OptionHasImpostorVision = BooleanOptionItem.Create(RoleInfo, 30, OptionName.JClientHasImpostorVision, false, false);
-        OptionCanAlsoBeExposedToJackal = BooleanOptionItem.Create(RoleInfo, 31, OptionName.JClientCanAlsoBeExposedToJackal, false, false);
-        OptionAfterJackalDead = StringOptionItem.Create(RoleInfo, 32, OptionName.JClientAfterJackalDead, AfterJackalDeadModeText, 0, false);
+        Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);
     }
 
     public enum AfterJackalDeadMode

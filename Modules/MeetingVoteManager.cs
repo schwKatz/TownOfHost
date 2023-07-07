@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using TownOfHost.Roles.Core;
-
+using TownOfHost.Roles.AddOns.Common;
 namespace TownOfHost.Modules;
 
 public class MeetingVoteManager
@@ -68,19 +68,21 @@ public class MeetingVoteManager
         {
             logger.Info($"ID: {voter}の投票を上書きします");
         }
+        var voterPc = Utils.GetPlayerById(voter);
 
         bool doVote = true;
         foreach (var role in CustomRoleManager.AllActiveRoles.Values)
         {
             var (roleVoteFor, roleNumVotes, roleDoVote) = role.OnVote(voter, voteFor);
+
             if (roleVoteFor.HasValue)
             {
-                logger.Info($"{role.Player.GetNameWithRole()} が {Utils.GetPlayerById(voter).GetNameWithRole()} の投票先を {GetVoteName(roleVoteFor.Value)} に変更します");
+                logger.Info($"{role.Player.GetNameWithRole()} が {voterPc.GetNameWithRole()} の投票先を {GetVoteName(roleVoteFor.Value)} に変更します");
                 voteFor = roleVoteFor.Value;
             }
             if (roleNumVotes.HasValue)
             {
-                logger.Info($"{role.Player.GetNameWithRole()} が {Utils.GetPlayerById(voter).GetNameWithRole()} の投票数を {roleNumVotes.Value} に変更します");
+                logger.Info($"{role.Player.GetNameWithRole()} が {voterPc.GetNameWithRole()} の投票数を {roleNumVotes.Value} に変更します");
                 numVotes = roleNumVotes.Value;
             }
             if (!roleDoVote)
@@ -88,7 +90,10 @@ public class MeetingVoteManager
                 logger.Info($"{role.Player.GetNameWithRole()} によって投票は取り消されます");
                 doVote = roleDoVote;
             }
+
         }
+        numVotes = PlusVote.OnVote(voter, numVotes);
+        TieBreaker.OnVote(voter, voteFor);
 
         if (doVote)
         {
@@ -315,6 +320,9 @@ public class MeetingVoteManager
                 Exiled = GameData.Instance.GetPlayerById(mostVotedPlayers[0]);
                 logger.Info($"最多得票者: {GetVoteName(mostVotedPlayers[0])}");
             }
+
+            (IsTie, Exiled) = TieBreaker.BreakingVote(IsTie, Exiled, votedCounts, maxVoteNum);
+            Exiled = Refusing.VoteChange(Exiled);
 
             // 同数投票時の特殊モード
             if (IsTie && Options.VoteMode.GetBool())

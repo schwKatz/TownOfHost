@@ -14,7 +14,7 @@ public sealed class MadNatureCalls : RoleBase, IKillFlashSeeable, IDeathReasonSe
             () => RoleTypes.Engineer,
             CustomRoleTypes.Madmate,
             10400,
-            null,
+            SetupOptionItem,
             "マッドネイチャコール",
             introSound: () => GetIntroSound(RoleTypes.Impostor)
         );
@@ -31,6 +31,10 @@ public sealed class MadNatureCalls : RoleBase, IKillFlashSeeable, IDeathReasonSe
     private static bool canSeeKillFlash;
     private static bool canSeeDeathReason;
 
+    public static void SetupOptionItem()
+    {
+        Options.SetUpAddOnOptions(RoleInfo.ConfigId + 10, RoleInfo.RoleName, RoleInfo.Tab);
+    }
     public override bool OnEnterVent(PlayerPhysics physics, int ventId)
     {
         ShipStatus.Instance.RpcRepairSystem(SystemTypes.Doors, 79);

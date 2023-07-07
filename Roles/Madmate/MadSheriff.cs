@@ -52,6 +52,7 @@ public sealed class MadSheriff : RoleBase, IKiller, IKillFlashSeeable, IDeathRea
             .SetValueFormat(OptionFormat.Seconds);
         OptionMisfireKillsTarget = BooleanOptionItem.Create(RoleInfo, 11, OptionName.SheriffMisfireKillsTarget, false, false);
         OptionCanVent = BooleanOptionItem.Create(RoleInfo, 12, GeneralOption.CanVent, false, false);
+        Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, RoleInfo.RoleName, RoleInfo.Tab);
     }
     public override void Add()
     {
@@ -65,7 +66,7 @@ public sealed class MadSheriff : RoleBase, IKiller, IKillFlashSeeable, IDeathRea
     public override bool CanSabotage(SystemTypes systemType) => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
-        opt.SetVision(false);
+        opt.SetVision(Options.AddOnRoleOptions[(CustomRoles.MadSheriff, CustomRoles.AddLight)].GetBool());
     }
     public void OnCheckMurderAsKiller(MurderInfo info)
     {

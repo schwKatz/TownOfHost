@@ -106,7 +106,7 @@ namespace TownOfHost
                 if (Main.IsChristmas && CultureInfo.CurrentCulture.Name == "ja-JP")
                 {
                     SpecialEventText.text = "★Merry Christmas★\n<size=15%>\n\nTOH_Yからのプレゼントはありません。</size>";
-                    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Rainbow);
+                    SpecialEventText.color = Color.yellow;
                 }
             }
         }

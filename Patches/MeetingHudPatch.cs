@@ -8,6 +8,7 @@ using TownOfHost.Modules;
 using TownOfHost.Roles;
 using TownOfHost.Roles.Core;
 using static TownOfHost.Translator;
+using TownOfHost.Roles.AddOns.Common;
 
 namespace TownOfHost;
 
@@ -41,6 +42,7 @@ public static class MeetingHudPatch
             ChatUpdatePatch.DoBlockChat = true;
             GameStates.AlreadyDied |= !Utils.IsAllAlive;
             Main.AllPlayerControls.Do(x => ReportDeadBodyPatch.WaitReport[x.PlayerId].Clear());
+            Sending.OnStartMeeting();
             MeetingStates.MeetingCalled = true;
         }
         public static void Postfix(MeetingHud __instance)
@@ -238,8 +240,8 @@ public static class MeetingHudPatch
         var player = Utils.GetPlayerById(playerId);
         if (player == null) return;
         //道連れ能力持たない時は下を通さない
-        if (!((player.Is(CustomRoleTypes.Madmate) && Options.MadmateRevengeCrewmate.GetBool())
-            || player.Is(CustomRoles.EvilNekomata) || player.Is(CustomRoles.Nekomata)/* || player.Is(CustomRoles.Revenger)*/)) return;
+        if (!((player.Is(CustomRoles.SKMadmate) && Options.MadmateRevengeCrewmate.GetBool())
+            || player.Is(CustomRoles.EvilNekomata) || player.Is(CustomRoles.Nekomata) || player.Is(CustomRoles.Revenger))) return;
 
         var target = PickRevengeTarget(player, deathReason);
         if (target == null) return;

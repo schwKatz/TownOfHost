@@ -65,6 +65,15 @@ public sealed class Blinder : RoleBase
     {
         opt.SetFloat(FloatOptionNames.CrewLightMod, BlinderVision);
     }
+    public static void ApplyGameOptionsByOther(byte id, IGameOptions opt)
+    {
+        if (BlindPlayer.Contains(id))
+        {
+            opt.SetFloat(FloatOptionNames.CrewLightMod, BlinderVision);
+            opt.SetFloat(FloatOptionNames.ImpostorLightMod, BlinderVision);
+            opt.SetVision(false);
+        }
+    }
 
     public override void OnMurderPlayerAsTarget(MurderInfo info)
     {

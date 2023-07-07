@@ -16,7 +16,7 @@ public sealed class MadBrackOuter : RoleBase, IKillFlashSeeable, IDeathReasonSee
             () => RoleTypes.Engineer,
             CustomRoleTypes.Madmate,
             10500,
-            null,
+            SetupOptionItem,
             "マッドブラックアウター",
             introSound: () => GetIntroSound(RoleTypes.Impostor)
         );
@@ -33,6 +33,10 @@ public sealed class MadBrackOuter : RoleBase, IKillFlashSeeable, IDeathReasonSee
     private static bool canSeeKillFlash;
     private static bool canSeeDeathReason;
 
+    public static void SetupOptionItem()
+    {
+        Options.SetUpAddOnOptions(RoleInfo.ConfigId + 10, RoleInfo.RoleName, RoleInfo.Tab);
+    }
     public override bool OnEnterVent(PlayerPhysics physics, int ventId)
     {
         if (!AmongUsClient.Instance.AmHost) return true;

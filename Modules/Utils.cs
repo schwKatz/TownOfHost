@@ -130,17 +130,25 @@ namespace TownOfHost
             PlayerControl killer = info.AppearanceKiller, target = info.AttemptTarget;
 
             if (seer.Is(CustomRoles.GM)) return true;
+            foreach (var subRole in PlayerState.GetByPlayerId(target.PlayerId).SubRoles)
+            {
+                if (subRole == CustomRoles.VIP) return true;
+            }
             if (seer.Data.IsDead || killer == seer || target == seer) return false;
 
             if (seer.GetRoleClass() is IKillFlashSeeable killFlashSeeable)
             {
                 return killFlashSeeable.CheckKillFlash(info);
             }
+            foreach (var subRole in PlayerState.GetByPlayerId(seer.PlayerId).SubRoles)
+            {
+                if (subRole == CustomRoles.AddSeer) return true;
+            }
 
             return seer.GetCustomRole() switch
             {
                 // IKillFlashSeeable未適用役職はここに書く
-                _ => seer.Is(CustomRoleTypes.Madmate) && Options.MadmateCanSeeKillFlash.GetBool(),
+                _ => seer.Is(CustomRoles.SKMadmate) && Options.MadmateCanSeeKillFlash.GetBool(),
             };
         }
         public static void KillFlash(this PlayerControl player)
@@ -206,7 +214,8 @@ namespace TownOfHost
             bool enabled = seer == seen
                 || seen.Is(CustomRoles.GM)
                 || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCanSeeOtherRoles.GetBool());
-            var (roleColor, roleText) = GetTrueRoleNameData(seen.PlayerId);
+            //オーバーライドによる表示ではサブロールは見えないようにする/上記場合のみ表示
+            var (roleColor, roleText) = GetTrueRoleNameData(seen.PlayerId, enabled);
 
             //seen側による変更
             seen.GetRoleClass()?.OverrideRoleNameAsSeen(seer, isMeeting, ref enabled, ref roleColor, ref roleText);
@@ -224,41 +233,74 @@ namespace TownOfHost
         /// <returns>RoleNameを構築する色とテキスト(Color, string)</returns>
         public static (Color color, string text) GetRoleNameData(CustomRoles mainRole, List<CustomRoles> subRolesList, bool showSubRoleMarks = true, byte PlayerId = 255)
         {
-            string roleText = "";
+            StringBuilder roleText = new();
             Color roleColor = Color.white;
 
-            if (mainRole < CustomRoles.NotAssigned)
-            {
-                roleText = GetRoleName(mainRole);
-                roleColor = GetRoleColor(mainRole);
-
-                if (mainRole == CustomRoles.Opportunist && Opportunist.CanKill)
-                    roleText += GetString("killer");
-                if (mainRole == CustomRoles.Bakery && Bakery.IsNeutral(GetPlayerById(PlayerId)))
-                    roleText = GetString("NBakery");
-                if (mainRole == CustomRoles.Lawyer && Lawyer.IsPursuer(GetPlayerById(PlayerId)))
-                    roleText = GetString("Pursuer");
-            }
-
+            //Addonが先に表示されるので前に持ってくる
             if (subRolesList != null)
             {
+                var count = subRolesList.Count;
                 foreach (var subRole in subRolesList)
                 {
                     if (subRole <= CustomRoles.NotAssigned) continue;
                     switch (subRole)
                     {
+                        //ラストインポスターとコンプリートクルーのみ必ず省略せずに表示させる
                         case CustomRoles.LastImpostor:
-                            roleText = GetRoleString("Last-") + roleText;
+                            roleText.Append(ColorString(Palette.ImpostorRed, GetRoleString("Last-")));
+                            count--;
                             break;
+                        case CustomRoles.CompreteCrew:
+                            roleText.Append(ColorString(Color.yellow, GetRoleString("Comprete-")));
+                            count--;
+                            break;
+                    }
+                }
+
+                if (showSubRoleMarks && !Options.ChangeAddon.GetBool())
+                {
+                    if (count >= 2 && !Options.AddonShowDontOmit.GetBool())
+                    {
+                        //var text = roleText.ToString();
+                        roleText.Insert(0, ColorString(Color.white, "＋")/* + text*/);
+                    }
+                    else
+                    {
+                        int i = 0;
+                        foreach (var subRole in subRolesList)
+                        {
+                            if (subRole <= CustomRoles.CompreteCrew) continue;
+
+                            roleText.Append(ColorString(GetRoleColor(subRole), GetRoleName(subRole)));
+                            i++;
+                            if (i % 2 == 0) roleText.Append("\n");
+                        }
                     }
                 }
             }
 
-            string subRoleMarks = showSubRoleMarks ? GetSubRoleMarks(subRolesList) : "";
-            if (roleText != "" && subRoleMarks != "")
-                subRoleMarks = " " + subRoleMarks; //空じゃなければ空白を追加
+            if (mainRole < CustomRoles.NotAssigned)
+            {
+                roleText.Append(GetRoleName(mainRole));
+                roleColor = GetRoleColor(mainRole);
 
-            return (roleColor, roleText + subRoleMarks);
+                if (mainRole == CustomRoles.Opportunist && Opportunist.CanKill)
+                    roleText.Append(GetString("killer"));
+                if (mainRole == CustomRoles.Bakery && Bakery.IsNeutral(GetPlayerById(PlayerId)))
+                    roleText.Replace(GetRoleName(mainRole), GetString("NBakery"));
+                if (mainRole == CustomRoles.Lawyer && Lawyer.IsPursuer(GetPlayerById(PlayerId)))
+                    roleText.Replace(GetRoleName(mainRole), GetString("Pursuer"));
+            }
+
+            string subRoleMarks = string.Empty;
+            if (showSubRoleMarks && Options.ChangeAddon.GetBool())
+            {
+                subRoleMarks = GetSubRoleMarks(subRolesList);
+                if (roleText.ToString() != string.Empty && subRoleMarks != string.Empty)
+                    roleText.Append((subRolesList.Count >= 2) ? "\n" : " ").Append(subRoleMarks); //空じゃなければ空白を追加
+            }
+
+            return (roleColor, roleText.ToString());
         }
         public static string GetSubRoleMarks(List<CustomRoles> subRolesList)
         {
@@ -267,12 +309,27 @@ namespace TownOfHost
             {
                 foreach (var subRole in subRolesList)
                 {
-                    if (subRole <= CustomRoles.NotAssigned) continue;
+                    if (subRole <= CustomRoles.CompreteCrew) continue;
                     switch (subRole)
                     {
-                        case CustomRoles.Watcher:
-                            sb.Append(Watcher.SubRoleMark);
-                            break;
+                        case CustomRoles.AddWatch: sb.Append(AddWatch.SubRoleMark); break;
+                        case CustomRoles.AddLight: sb.Append(AddLight.SubRoleMark); break;
+                        case CustomRoles.AddSeer: sb.Append(AddSeer.SubRoleMark); break;
+                        case CustomRoles.Autopsy: sb.Append(Autopsy.SubRoleMark); break;
+                        case CustomRoles.VIP: sb.Append(VIP.SubRoleMark); break;
+                        case CustomRoles.Revenger: sb.Append(Revenger.SubRoleMark); break;
+                        case CustomRoles.Management: sb.Append(Management.SubRoleMark); break;
+                        case CustomRoles.Sending: sb.Append(Sending.SubRoleMark); break;
+                        case CustomRoles.TieBreaker: sb.Append(TieBreaker.SubRoleMark); break;
+                        case CustomRoles.PlusVote: sb.Append(PlusVote.SubRoleMark); break;
+                        case CustomRoles.Guarding: sb.Append(Guarding.SubRoleMark); break;
+                        case CustomRoles.AddBait: sb.Append(AddBait.SubRoleMark); break;
+                        case CustomRoles.Refusing: sb.Append(Refusing.SubRoleMark); break;
+
+                        case CustomRoles.Sunglasses: sb.Append(Sunglasses.SubRoleMark); break;
+                        case CustomRoles.Clumsy: sb.Append(Clumsy.SubRoleMark); break;
+                        case CustomRoles.InfoPoor: sb.Append(InfoPoor.SubRoleMark); break;
+                        case CustomRoles.NonReport: sb.Append(NonReport.SubRoleMark); break;
                     }
                 }
             }
@@ -301,6 +358,11 @@ namespace TownOfHost
         public static string GetRoleName(CustomRoles role)
         {
             return GetRoleString(Enum.GetName(typeof(CustomRoles), role));
+        }
+        public static string GetAddonAbilityInfo(CustomRoles role)
+        {
+            var text = role.ToString();
+            return ColorString(Color.white, $"　{GetString($"{text}Info1")}");
         }
         public static string GetDeathReason(CustomDeathReason status)
         {
@@ -493,6 +555,13 @@ namespace TownOfHost
             {
                 ProgressText.Append(roleClass.GetProgressText(comms));
             }
+
+            //manegement
+            if (State.SubRoles.Contains(CustomRoles.Management))
+            {
+                ProgressText.Append(Management.GetProgressText(State, comms));
+            }
+
             if (GetPlayerById(playerId).CanMakeMadmate()) ProgressText.Append(ColorString(Palette.ImpostorRed.ShadeColor(0.5f), $"[{Options.CanMakeMadmateCount.GetInt() - Main.SKMadmateNowCount}]"));
 
             return ProgressText.ToString();
@@ -586,7 +655,7 @@ namespace TownOfHost
                 {
                     if (!role.Key.IsEnable()) continue;
 
-                    if (/*role.Key.IsAddOn() ||*/ role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse/* or CustomRoles.CompreteCrew*/)
+                    if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse/* or CustomRoles.CompreteCrew*/)
                         sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
                     else
                         sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
@@ -664,6 +733,10 @@ namespace TownOfHost
                 if (opt.Value.Name == "DisableAirshipDevices" && !Options.IsActiveAirship) continue;
                 if (opt.Value.Name == "PolusReactorTimeLimit" && !Options.IsActivePolus) continue;
                 if (opt.Value.Name == "AirshipReactorTimeLimit" && !Options.IsActiveAirship) continue;
+
+                if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
+                if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;
+
                 if (deep > 0)
                 {
                     sb.Append(string.Concat(Enumerable.Repeat("┃", Mathf.Max(deep - 1, 0))));
@@ -877,8 +950,8 @@ namespace TownOfHost
                 string SelfName = $"{ColorString(seer.GetRoleColor(), SeerRealName)}{SelfDeathReason}{SelfMark}";
                 if (Arsonist.IsDouseDone(seer))
                     SelfName = $"</size>\r\n{ColorString(seer.GetRoleColor(), GetString("EnterVentToWin"))}";
-                else if (seer.Is(CustomRoles.SeeingOff)/* || seer.Is(CustomRoles.Sending)*/)
-                    SelfName = SeeingOff.RealNameChange(SelfName);
+                else if (seer.Is(CustomRoles.SeeingOff) || seer.Is(CustomRoles.Sending))
+                    SelfName = Sending.RealNameChange(SelfName);
 
                 SelfName = SelfRoleName + "\r\n" + SelfName;
                 SelfName += SelfSuffix.ToString() == "" ? "" : "\r\n " + SelfSuffix.ToString();
