@@ -24,8 +24,10 @@ public static class Refusing
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
-        IgnoreExiled.Add(playerId);
+        if (!playerIdList.Contains(playerId))
+            playerIdList.Add(playerId);
+        if (!IgnoreExiled.Contains(playerId))
+            IgnoreExiled.Add(playerId);
     }
     public static GameData.PlayerInfo VoteChange(GameData.PlayerInfo Exiled)
     {

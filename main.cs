@@ -49,7 +49,7 @@ namespace TownOfHost
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.emptybottle.townofhost";
-        public const string PluginVersion = "501.10.6";
+        public const string PluginVersion = "501.10.7";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.6.13";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -338,6 +338,12 @@ namespace TownOfHost
         Default,
         All,
         Random
+    }
+    public enum AddonShowMode
+    {
+        Default,
+        All,
+        TOH
     }
     public enum CustomColor
     {

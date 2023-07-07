@@ -28,7 +28,8 @@ public static class Management
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
+        if (!playerIdList.Contains(playerId))
+            playerIdList.Add(playerId);
     }
     public static string GetProgressText(PlayerState State, bool comms)
     {

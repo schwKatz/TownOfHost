@@ -28,7 +28,8 @@ public static class Sending
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
+        if (!playerIdList.Contains(playerId))
+            playerIdList.Add(playerId);
     }
     public static void OnExileWrapUp(PlayerControl exiled)
     {

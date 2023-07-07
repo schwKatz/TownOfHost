@@ -22,7 +22,8 @@ public static class InfoPoor
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
+        if (!playerIdList.Contains(playerId))
+            playerIdList.Add(playerId);
     }
     public static bool IsEnable => playerIdList.Count > 0;
     public static bool IsThisRole(byte playerId) => playerIdList.Contains(playerId);

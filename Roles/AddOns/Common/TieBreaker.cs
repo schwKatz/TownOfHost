@@ -25,7 +25,8 @@ public static class TieBreaker
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
+        if (!playerIdList.Contains(playerId))
+            playerIdList.Add(playerId);
     }
 
     public static void OnVote(byte voter, byte votedFor)

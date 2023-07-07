@@ -30,8 +30,10 @@ public static class Guarding
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
-        GuardingList.Add(playerId);
+        if (!playerIdList.Contains(playerId))
+            playerIdList.Add(playerId);
+        if (!GuardingList.Contains(playerId))
+            GuardingList.Add(playerId);
     }
     /// <summary>
     /// trueはキルが起こる

@@ -256,9 +256,9 @@ namespace TownOfHost
                     }
                 }
 
-                if (showSubRoleMarks && !Options.ChangeAddon.GetBool())
+                if (showSubRoleMarks && Options.GetAddonShowModes() != AddonShowMode.TOH)
                 {
-                    if (count >= 2 && !Options.AddonShowDontOmit.GetBool())
+                    if (count >= 2 && Options.GetAddonShowModes() == AddonShowMode.Default)
                     {
                         //var text = roleText.ToString();
                         roleText.Insert(0, ColorString(Color.white, "＋")/* + text*/);
@@ -292,7 +292,7 @@ namespace TownOfHost
             }
 
             string subRoleMarks = string.Empty;
-            if (showSubRoleMarks && Options.ChangeAddon.GetBool())
+            if (showSubRoleMarks && Options.GetAddonShowModes() == AddonShowMode.TOH)
             {
                 subRoleMarks = GetSubRoleMarks(subRolesList);
                 if (roleText.ToString() != string.Empty && subRoleMarks != string.Empty)
@@ -718,7 +718,13 @@ namespace TownOfHost
             foreach (CustomRoles role in CustomRolesHelper.AllRoles)
             {
                 if (role is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
-                if (role.IsEnable()) sb.AppendFormat("\n{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
+                if (role.IsEnable())
+                {
+                    if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
+                        sb.AppendFormat("\n◆{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
+                    else
+                        sb.AppendFormat("\n　{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
+                }
             }
             SendMessage(sb.ToString(), PlayerId);
         }
@@ -1109,7 +1115,7 @@ namespace TownOfHost
         public static void DumpLog()
         {
             string t = DateTime.Now.ToString("yyyy-MM-dd_HH.mm.ss");
-            string filename = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}/TownOfHost-v{Main.PluginVersion}-{t}.log";
+            string filename = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}/TOH_Y-v{Main.PluginVersion}-{t}.log";
             FileInfo file = new(@$"{System.Environment.CurrentDirectory}/BepInEx/LogOutput.log");
             file.CopyTo(@filename);
             System.Diagnostics.Process.Start(@$"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}");

@@ -24,7 +24,8 @@ public static class AddWatch
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
+        if (!playerIdList.Contains(playerId))
+            playerIdList.Add(playerId);
     }
     public static void ApplyGameOptions(IGameOptions opt)
     {

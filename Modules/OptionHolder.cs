@@ -244,9 +244,13 @@ namespace TownOfHost
         public static OptionItem RevengeNeutral;
         public static OptionItem RevengeMadByImpostor;
 
-        public static OptionItem AddonShowDontOmit;
         public static OptionItem ChangeIntro;
-        public static OptionItem ChangeAddon;
+        public static OptionItem AddonShow;
+        public static readonly string[] addonShowModes =
+{
+            "addonShowModes.Default", "addonShowModes.All", "addonShowModes.TOH"
+        };
+        public static AddonShowMode GetAddonShowModes() => (AddonShowMode)AddonShow.GetValue();
 
         public static readonly string[] suffixModes =
         {
@@ -661,9 +665,8 @@ namespace TownOfHost
             SuffixMode = StringOptionItem.Create(1_000_001, "SuffixMode", suffixModes, 0, TabGroup.MainSettings, true);
             ColorNameMode = BooleanOptionItem.Create(1_000_003, "ColorNameMode", false, TabGroup.MainSettings, false);
             ChangeNameToRoleInfo = BooleanOptionItem.Create(1_000_004, "ChangeNameToRoleInfo", true, TabGroup.MainSettings, false);
-            AddonShowDontOmit = BooleanOptionItem.Create(1_009_000, "AddonShowDontOmit", false, TabGroup.MainSettings, false);
-            ChangeAddon = BooleanOptionItem.Create(1_009_001, "ChangeAddon", false, TabGroup.MainSettings, false);
-            ChangeIntro = BooleanOptionItem.Create(1_009_002, "ChangeIntro", false, TabGroup.MainSettings, false);
+            AddonShow = StringOptionItem.Create(1_009_000, "AddonShowMode", addonShowModes, 0, TabGroup.MainSettings, true);
+            ChangeIntro = BooleanOptionItem.Create(1_009_001, "ChangeIntro", false, TabGroup.MainSettings, false);
             RoleAssigningAlgorithm = StringOptionItem.Create(1_000_005, "RoleAssigningAlgorithm", RoleAssigningAlgorithms, 0, TabGroup.MainSettings, true)
                 .RegisterUpdateValueEvent((object obj, OptionItem.UpdateValueEventArgs args) => IRandom.SetInstanceById(args.CurrentValue));
             VoiceReader.SetupCustomOption();

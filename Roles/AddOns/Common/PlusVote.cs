@@ -22,7 +22,8 @@ public static class PlusVote
     }
     public static void Add(byte playerId)
     {
-        playerIdList.Add(playerId);
+        if (!playerIdList.Contains(playerId))
+            playerIdList.Add(playerId);
     }
     public static int OnVote(byte voter, int numVotes)
     {

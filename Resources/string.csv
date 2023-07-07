@@ -543,7 +543,6 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DefaultShapeshiftCooldown","Default Shapeshift Cooldown","デフォルトの変身クールダウン","默认变形冷却时间","預設變身時間","Обычная перезарядка Оборотня","Tempo de Recarga Padrão (Mutar)"
 "ImpostorOperateVisibility","(MOD)Impostor Can Not Be Clairvoyant After Death","(MOD)インポスターが霊界で千里眼できない","内鬼死后不可以有千里眼",
 "ChangeIntro","(MOD)Change the Intro the Original TOH Specs.","(MOD)第三陣営やマッド役職のイントロを本家TOH仕様に戻す","(MOD)将介绍更改为原始TOH规格。"
-"ChangeAddon","Change the Addon Display the Original TOH Specs.","属性表示を本家TOH仕様に戻す",
 "CanKill","Can Kill","キルできる","可以击杀",
 "RevengeNeutral","Can Revenge Neutrals","道連れ能力持ちがニュートラル役職を道連れ出来る","可以接受同伴为中立",,
 "RevengeMadByImpostor","Can Revenge Madmates By Impostor Team","道連れ能力持ちインポスター陣営がマッド系役職を道連れ出来る",,,
@@ -718,7 +717,10 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "AddOnBuffAssign","Assign Buff Add-On","バフ属性を付与する","分配加强效果"
 "AddOnDebuffAssign","Assign Debuff Add-On","デバフ属性を付与する","分配弱化效果"
 "AddOnAssign%role%","%role%","%role%","%role%","%role%"
-"AddonShowDontOmit","When have more than Add-On, do not omit","2つ以上属性を持つ時も省略せず表示する","当有多个效果时，不会忽略"
+"AddonShowMode","Add-On Show Style","属性の表示方法",
+"addonShowModes.Default","Default","デフォルト",
+"addonShowModes.All","All","全て表示",
+"addonShowModes.TOH","TOH Original","本家TOH",
 
 
 "## かくれんぼ設定"

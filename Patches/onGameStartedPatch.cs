@@ -367,6 +367,7 @@ namespace TownOfHost
                             if (Options.AddOnRoleOptions.TryGetValue((pc.GetCustomRole(), Addon), out var option) && option.GetBool())
                             {
                                 pc.RpcSetCustomRole(Addon);
+                                CustomRoleManager.subRoleAdd(pc.PlayerId, Addon);
                             }
                         }
                     }

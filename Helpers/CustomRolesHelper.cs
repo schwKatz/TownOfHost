@@ -58,7 +58,7 @@ namespace TownOfHost
         public static bool IsAddAddOn(this CustomRoles role)
         {
             return role.IsMadmate() || 
-                role is CustomRoles.JClient;
+                role is CustomRoles.Jackal or CustomRoles.JClient;
         }
         public static bool IsAddOn(this CustomRoles role) => role.IsBuffAddOn() || role.IsDebuffAddOn();
         public static bool IsBuffAddOn(this CustomRoles role)

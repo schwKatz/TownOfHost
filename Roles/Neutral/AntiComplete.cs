@@ -61,7 +61,7 @@ public sealed class AntiComplete : RoleBase
     private static void SetupOptionItem()
     {
         OptionGuardCount = IntegerOptionItem.Create(RoleInfo, 10, OptionName.AntiCompGuardCount, new(0, 20, 1), 2, false)
-                .SetValueFormat(OptionFormat.Seconds);
+                .SetValueFormat(OptionFormat.Times);
         OptionKnowOption = BooleanOptionItem.Create(RoleInfo, 11, OptionName.AntiCompKnowOption, false, false);
         OptionKnowNotask = BooleanOptionItem.Create(RoleInfo, 12, OptionName.AntiCompKnowNotask, true, false, OptionKnowOption);
         OptionKnowCompTask = BooleanOptionItem.Create(RoleInfo, 13, OptionName.AntiCompKnowCompTask, false, false, OptionKnowOption);

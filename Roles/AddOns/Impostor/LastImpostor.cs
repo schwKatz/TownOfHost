@@ -54,13 +54,14 @@ namespace TownOfHost.Roles.AddOns.Impostor
                 if (CanBeLastImpostor(pc))
                 {
                     pc.RpcSetCustomRole(CustomRoles.LastImpostor);
-                    if (Options.AddOnBuffAssign[CustomRoles.LastImpostor].GetBool() || Options.AddOnDebuffAssign[CustomRoles.LastImpostor].GetBool())
+                    if (AddOnBuffAssign[CustomRoles.LastImpostor].GetBool() || AddOnDebuffAssign[CustomRoles.LastImpostor].GetBool())
                     {
                         foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsAddOn()))
                         {
-                            if (Options.AddOnRoleOptions.TryGetValue((CustomRoles.LastImpostor, Addon), out var option) && option.GetBool())
+                            if (AddOnRoleOptions.TryGetValue((CustomRoles.LastImpostor, Addon), out var option) && option.GetBool())
                             {
                                 pc.RpcSetCustomRole(Addon);
+                                CustomRoleManager.subRoleAdd(pc.PlayerId, Addon);
                             }
                         }
                     }
