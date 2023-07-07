@@ -287,7 +287,7 @@ namespace TownOfHost
                     roleText.Append(GetString("killer"));
                 if (mainRole == CustomRoles.Bakery && Bakery.IsNeutral(GetPlayerById(PlayerId)))
                     roleText.Replace(GetRoleName(mainRole), GetString("NBakery"));
-                if (mainRole == CustomRoles.Lawyer && Lawyer.IsPursuer(GetPlayerById(PlayerId)))
+                if (mainRole == CustomRoles.Lawyer && ((Lawyer)GetPlayerById(PlayerId).GetRoleClass()).IsPursuer())
                     roleText.Replace(GetRoleName(mainRole), GetString("Pursuer"));
             }
 
@@ -320,6 +320,7 @@ namespace TownOfHost
                         case CustomRoles.Management: sb.Append(Management.SubRoleMark); break;
                         case CustomRoles.Sending: sb.Append(Sending.SubRoleMark); break;
                         case CustomRoles.TieBreaker: sb.Append(TieBreaker.SubRoleMark); break;
+                        case CustomRoles.Loyalty: sb.Append(Loyalty.SubRoleMark); break;
                         case CustomRoles.PlusVote: sb.Append(PlusVote.SubRoleMark); break;
                         case CustomRoles.Guarding: sb.Append(Guarding.SubRoleMark); break;
                         case CustomRoles.AddBait: sb.Append(AddBait.SubRoleMark); break;

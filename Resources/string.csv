@@ -381,7 +381,7 @@ LoyaltyInfoLong,"(Add-ons):\nLoyalty know the parent of the same camp.(madmate�
 PlusVoteInfoLong,"(Add-ons):\nWhen voting at the meeting, one person can vote twice, to the same person.",[属性]:\n会議の投票時、1人で2票同じ人のところに投票できる。,"(效果):\n当他被投出时，再次召开会议，对猎人进行投票。在这里，只有猎人被流放后才被允许讨论这件事，他可以选择一个人在途中投票并处决。"
 GuardingInfoLong,"(Add-ons):\nIt can prevent one unconditional kill. The protected barrier to itself is invisible.","[属性]:\n1回無条件でキルを防ぐことが出来る。自身への守ったバリアは見えない。",
 AddBaitInfoLong,"(Add-ons):\nWhen you are killed, you force your killer to immediately self-report.","[属性]:\nキルされた時に、自身をキルした人にセルフレポートさせる。","(效果):\n诱饵被击杀时，击杀诱饵的凶手将被迫报告。",
-Add1InfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exiled and stays on the ship.",[属性]:\n追放されそうになった時、一度追放を拒んで船に居続ける。,
+RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exiled and stays on the ship.",[属性]:\n追放されそうになった時、一度追放を拒んで船に居続ける。,
 CompreteCrewInfoLong,"(Add-ons):\nIt will be granted to those who have completed all the tasks, up to a set number of people in order of earliest to latest. They will have the set number of Add-On.",[属性]:\nタスクを全て完了させた人に、早い順に設定人数分まで付与される。\n設定された属性を持つようになる。,
 
 "# GM"
