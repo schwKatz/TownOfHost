@@ -124,6 +124,12 @@ namespace TownOfHostY
         }
         public static bool OnSabotage(PlayerControl player, SystemTypes systemType, byte amount)
         {
+            // 停電サボタージュが鳴らされた場合は関係なし(ホスト名義で飛んでくるため誤爆注意)
+            if (systemType == SystemTypes.Electrical && amount.HasBit(SwitchSystem.DamageSystem))
+            {
+                return true;
+            }
+
             if (player.Is(CustomRoles.SKMadmate) || IsClumsy(player))
             {
                 if (systemType == SystemTypes.Comms)
@@ -135,9 +141,6 @@ namespace TownOfHostY
                 }
                 if (systemType == SystemTypes.Electrical)
                 {
-                    //初回は関係なし(なぜかホスト名義で飛んでくるため誤爆注意)
-                    if (amount.HasAnyBit(128)) return true;
-
                     //直せないならキャンセル
                     if ((player.Is(CustomRoles.SKMadmate) && !Options.MadmateCanFixLightsOut.GetBool())
                         || IsClumsy(player))
