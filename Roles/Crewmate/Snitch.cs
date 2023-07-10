@@ -3,9 +3,9 @@ using System.Linq;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public class Snitch : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -15,7 +15,7 @@ public class Snitch : RoleBase
             CustomRoles.Snitch,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            20500,
+            30500,
             SetupOptionItem,
             "スニッチ",
             "#b8fb4f"

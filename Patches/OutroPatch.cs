@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using UnityEngine;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Translator;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]
     class EndGamePatch

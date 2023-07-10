@@ -3,12 +3,12 @@ using System.Text;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 public sealed class AntiAdminer : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -18,7 +18,7 @@ public sealed class AntiAdminer : RoleBase, IImpostor
             CustomRoles.AntiAdminer,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            3100,
+            20100,
             SetupOptionItem,
             "アンチアドミナー"
         );

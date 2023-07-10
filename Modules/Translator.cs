@@ -7,7 +7,7 @@ using Csv;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public static class Translator
     {
@@ -22,7 +22,7 @@ namespace TownOfHost
         public static void LoadLangs()
         {
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            var stream = assembly.GetManifestResourceStream("TownOfHost.Resources.string.csv");
+            var stream = assembly.GetManifestResourceStream("TownOfHost_Y.Resources.string.csv");
             translateMaps = new Dictionary<string, Dictionary<int, string>>();
 
             var options = new CsvOptions()

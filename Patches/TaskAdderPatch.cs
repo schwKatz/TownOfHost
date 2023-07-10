@@ -3,9 +3,9 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(TaskAdderGame), nameof(TaskAdderGame.ShowFolder))]
     class ShowFolderPatch

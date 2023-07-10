@@ -5,12 +5,12 @@ using HarmonyLib;
 
 using AmongUs.GameOptions;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
 using UnityEngine;
-using static TownOfHost.Translator;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Psychic : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -20,7 +20,7 @@ public sealed class Psychic : RoleBase
             CustomRoles.Psychic,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Crewmate,
-            36300,
+            41200,
             SetupOptionItem,
             "霊媒師",
             "#883fd1",

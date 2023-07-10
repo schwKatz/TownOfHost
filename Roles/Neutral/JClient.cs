@@ -1,9 +1,9 @@
 using System.Linq;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 public sealed class JClient : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class JClient : RoleBase
             CustomRoles.JClient,
             () => OptionCanVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate,
             CustomRoleTypes.Neutral,
-            51000,
+            50800,
             SetupOptionItem,
             "クライアント",
             "#00b4eb",

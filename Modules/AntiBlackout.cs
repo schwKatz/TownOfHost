@@ -4,10 +4,10 @@ using System.Runtime.CompilerServices;
 using AmongUs.GameOptions;
 using Hazel;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Neutral;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Neutral;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public static class AntiBlackout
     {

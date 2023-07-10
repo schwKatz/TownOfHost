@@ -4,9 +4,9 @@ using Hazel;
 using AmongUs.GameOptions;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 public sealed class Lawyer : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =

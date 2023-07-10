@@ -1,10 +1,10 @@
 using AmongUs.GameOptions;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-using static TownOfHost.Translator;
-using static TownOfHost.Utils;
+using static TownOfHostY.Translator;
+using static TownOfHostY.Utils;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class SeeingOff : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -14,7 +14,7 @@ public sealed class SeeingOff : RoleBase
             CustomRoles.SeeingOff,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            35600,
+            40500,
             null,
             "見送り人",
             "#883fd1"

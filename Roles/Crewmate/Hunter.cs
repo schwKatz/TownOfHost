@@ -3,11 +3,11 @@ using Hazel;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-using static TownOfHost.Utils;
-namespace TownOfHost.Roles.Crewmate;
+using static TownOfHostY.Utils;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Hunter : RoleBase, IKiller
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -17,7 +17,7 @@ public sealed class Hunter : RoleBase, IKiller
             CustomRoles.Hunter,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Crewmate,
-            35100,
+            8100,
             SetupOptionItem,
             "ハンター",
             "#f8cd46",

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public interface IRandom
     {

@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class Revenger
 {
-    private static readonly int Id = 79800;
+    private static readonly int Id = 80400;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.Revenger);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｒ");
     private static List<byte> playerIdList = new();

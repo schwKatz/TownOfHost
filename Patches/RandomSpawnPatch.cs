@@ -5,9 +5,9 @@ using HarmonyLib;
 using Hazel;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     class RandomSpawn
     {

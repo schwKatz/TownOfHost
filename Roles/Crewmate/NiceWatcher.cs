@@ -1,7 +1,7 @@
 using AmongUs.GameOptions;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class NiceWatcher : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -11,7 +11,7 @@ public sealed class NiceWatcher : RoleBase
             CustomRoles.NiceWatcher,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            49900,
+            30000,
             null,
             "ナイスウォッチャー",
             "#800080"

@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class InfoPoor
 {
-    private static readonly int Id = 77000;
+    private static readonly int Id = 85200;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.InfoPoor);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｉ");
     private static List<byte> playerIdList = new();

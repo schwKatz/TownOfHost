@@ -1,8 +1,8 @@
 using AmongUs.GameOptions;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
-using static TownOfHost.Utils;
+namespace TownOfHostY.Roles.Crewmate;
+using static TownOfHostY.Utils;
 
 public sealed class Sympathizer : RoleBase
 {
@@ -13,7 +13,7 @@ public sealed class Sympathizer : RoleBase
             CustomRoles.Sympathizer,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            35900,
+            40700,
             SetupOptionItem,
             "共鳴者",
             "#f08080",

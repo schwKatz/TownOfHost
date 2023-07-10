@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 using System.Linq;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class Loyalty
 {

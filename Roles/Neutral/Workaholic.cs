@@ -2,8 +2,8 @@ using System.Linq;
 using AmongUs.GameOptions;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
-namespace TownOfHost.Roles.Neutral;
+using TownOfHostY.Roles.Core;
+namespace TownOfHostY.Roles.Neutral;
 
 public sealed class Workaholic : RoleBase
 {

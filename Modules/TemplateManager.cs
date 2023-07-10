@@ -6,9 +6,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using AmongUs.Data;
 using HarmonyLib;
-using static TownOfHost.Translator;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public static class TemplateManager
     {

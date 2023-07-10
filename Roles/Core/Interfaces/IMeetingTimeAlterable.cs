@@ -1,4 +1,4 @@
-namespace TownOfHost.Roles.Core.Interfaces;
+namespace TownOfHostY.Roles.Core.Interfaces;
 
 public interface IMeetingTimeAlterable
 {

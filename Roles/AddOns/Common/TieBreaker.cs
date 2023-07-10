@@ -1,14 +1,14 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class TieBreaker
 {
-    private static readonly int Id = 77100;
+    private static readonly int Id = 80700;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.TieBreaker);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｔ");
     private static List<byte> playerIdList = new();

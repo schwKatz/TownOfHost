@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Hazel;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public static class CustomWinnerHolder
     {

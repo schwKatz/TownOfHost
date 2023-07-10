@@ -1,11 +1,11 @@
 using Hazel;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Crewmate;
-using TownOfHost.Roles.Impostor;
-using TownOfHost.Roles.Neutral;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Impostor;
+using TownOfHostY.Roles.Neutral;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public static class NameColorManager
     {

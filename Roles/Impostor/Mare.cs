@@ -1,10 +1,10 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 
 public sealed class Mare : RoleBase, IImpostor
 {
@@ -15,7 +15,7 @@ public sealed class Mare : RoleBase, IImpostor
             CustomRoles.Mare,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            2300,
+            11100,
             SetupCustomOption,
             "メアー"
         );

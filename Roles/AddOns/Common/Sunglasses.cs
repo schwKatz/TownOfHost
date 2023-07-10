@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 using AmongUs.GameOptions;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class Sunglasses
 {
-    private static readonly int Id = 79300;
+    private static readonly int Id = 85000;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.Sunglasses);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Su");
     private static List<byte> playerIdList = new();

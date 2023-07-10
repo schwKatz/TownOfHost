@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     static class DoubleTrigger
     {

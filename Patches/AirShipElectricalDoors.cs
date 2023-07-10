@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using HarmonyLib;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public class AirShipElectricalDoors
     {

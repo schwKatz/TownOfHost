@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-using static TownOfHost.Options;
-using static TownOfHost.Translator;
-using static TownOfHost.Utils;
+using static TownOfHostY.Options;
+using static TownOfHostY.Translator;
+using static TownOfHostY.Utils;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class Sending
 {
-    private static readonly int Id = 77600;
+    private static readonly int Id = 80600;
     private static Color RoleColor = GetRoleColor(CustomRoles.Sending);
     public static string SubRoleMark = ColorString(RoleColor, "Se");
     private static List<byte> playerIdList = new();

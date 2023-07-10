@@ -10,8 +10,8 @@
 		<PackageId>TownOfHost_Y</PackageId>
 		<Company>tukasa0001(EmptyBottle), integral0131, yumenopai</Company>
 		<Product>TownOfHost_Y</Product>
-		<AssemblyName>TownOfHost</AssemblyName>
-		<RootNamespace>TownOfHost</RootNamespace>
+		<AssemblyName>TownOfHost_Y</AssemblyName>
+		<RootNamespace>TownOfHost_Y</RootNamespace>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DefineConstants>TRACE</DefineConstants>

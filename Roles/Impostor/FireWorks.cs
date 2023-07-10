@@ -3,11 +3,11 @@ using System.Linq;
 using UnityEngine;
 
 using AmongUs.GameOptions;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 
 public sealed class FireWorks : RoleBase, IImpostor
 {
@@ -27,7 +27,7 @@ public sealed class FireWorks : RoleBase, IImpostor
             CustomRoles.FireWorks,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            1700,
+            10800,
             SetupCustomOption,
             "花火職人"
         );

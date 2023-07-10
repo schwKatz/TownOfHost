@@ -6,16 +6,16 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using Hazel;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.AddOns.Common;
-using TownOfHost.Roles.AddOns.Impostor;
-using TownOfHost.Roles.AddOns.Crewmate;
-using TownOfHost.Roles.Neutral;
-using static TownOfHost.Translator;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.AddOns.Common;
+using TownOfHostY.Roles.AddOns.Impostor;
+using TownOfHostY.Roles.AddOns.Crewmate;
+using TownOfHostY.Roles.Neutral;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.CoStartGame))]
     class ChangeRoleSettings

@@ -5,10 +5,10 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
     class SetUpRoleTextPatch

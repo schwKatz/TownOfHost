@@ -11,19 +11,19 @@ using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.InteropTypes;
 using UnityEngine;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using TownOfHost.Roles.Impostor;
-using TownOfHost.Roles.Neutral;
-using TownOfHost.Roles.AddOns.Common;
-using TownOfHost.Roles.AddOns.Impostor;
-using TownOfHost.Roles.AddOns.Crewmate;
-using static TownOfHost.Translator;
-using TownOfHost.Roles.Crewmate;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Impostor;
+using TownOfHostY.Roles.Neutral;
+using TownOfHostY.Roles.AddOns.Common;
+using TownOfHostY.Roles.AddOns.Impostor;
+using TownOfHostY.Roles.AddOns.Crewmate;
+using static TownOfHostY.Translator;
+using TownOfHostY.Roles.Crewmate;
 using static UnityEngine.GraphicsBuffer;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public static class Utils
     {
@@ -663,7 +663,7 @@ namespace TownOfHost
                     var text = sb.ToString();
                     sb.Clear().Append(text.RemoveHtmlTags());
                 }
-                foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 80000 && !x.IsHiddenOn(Options.CurrentGameMode)))
+                foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode)))
                 {
                     //if (opt.Name is "SyncColorMode" && Options.GetSyncColorMode() != SyncColorMode.None)
                     //    sb.Append($"\n【{opt.GetName(true)}: {opt.GetString()}】\n");
@@ -695,7 +695,7 @@ namespace TownOfHost
                 sb.Clear().Append(text.RemoveHtmlTags());
             }
             sb.Append($"━━━━━━━━━━━━【{GetString("Settings")}】━━━━━━━━━━━━");
-            foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 80000 && !x.IsHiddenOn(Options.CurrentGameMode)))
+            foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode)))
             {
                 if (!Options.NotShowOption(opt.Name))
                     sb.Append($"\n【{opt.GetName(true)}】\n");

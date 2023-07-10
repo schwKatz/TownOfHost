@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Express : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -15,7 +15,7 @@ public sealed class Express : RoleBase
             CustomRoles.Express,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            35500,
+            40400,
             SetupOptionItem,
             "エクスプレス",
             "#00ffff"

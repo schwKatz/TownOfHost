@@ -4,13 +4,13 @@ using System.Text;
 using HarmonyLib;
 using UnityEngine;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Translator;
-using TownOfHost.Roles.AddOns.Common;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Translator;
+using TownOfHostY.Roles.AddOns.Common;
 
-namespace TownOfHost;
+namespace TownOfHostY;
 
 [HarmonyPatch]
 public static class MeetingHudPatch

@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class CandleLighter : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class CandleLighter : RoleBase
             CustomRoles.CandleLighter,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            36200,
+            41000,
             SetupOptionItem,
             "キャンドルライター",
             "#ff7f50"

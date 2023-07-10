@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using Hazel;
 
 using AmongUs.GameOptions;
-using static TownOfHost.Translator;
-using static TownOfHost.Utils;
-using TownOfHost.Roles.Core;
+using static TownOfHostY.Translator;
+using static TownOfHostY.Utils;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Bakery : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -16,7 +16,7 @@ public sealed class Bakery : RoleBase
             CustomRoles.Bakery,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            35000,
+            40000,
             SetupOptionItem,
             "パン屋",
             "#b58428"

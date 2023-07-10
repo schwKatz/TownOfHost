@@ -3,11 +3,11 @@ using System.Linq;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Impostor
+namespace TownOfHostY.Roles.Impostor
 {
     public sealed class Vampire : RoleBase, IImpostor
     {
@@ -18,7 +18,7 @@ namespace TownOfHost.Roles.Impostor
                 CustomRoles.Vampire,
                 () => RoleTypes.Impostor,
                 CustomRoleTypes.Impostor,
-                1300,
+                10400,
                 SetupOptionItem,
                 "ヴァンパイア",
                 introSound: () => GetIntroSound(RoleTypes.Shapeshifter)

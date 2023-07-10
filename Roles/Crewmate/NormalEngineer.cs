@@ -1,8 +1,8 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class NormalEngineer : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -12,7 +12,7 @@ public sealed class NormalEngineer : RoleBase
             CustomRoles.NormalEngineer,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Crewmate,
-            19990,
+            2000,
             SetupOptionItem,
             "エンジニア",
             "#8cffff"

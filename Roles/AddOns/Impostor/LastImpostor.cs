@@ -1,14 +1,14 @@
 using System;
 using System.Linq;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Impostor
+namespace TownOfHostY.Roles.AddOns.Impostor
 {
     public static class LastImpostor
     {
-        private static readonly int Id = 79000;
+        private static readonly int Id = 70000;
         public static byte currentId = byte.MaxValue;
         public static OptionItem IsChangeKillCooldown;
         public static OptionItem KillCooldown;

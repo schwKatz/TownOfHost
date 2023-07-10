@@ -4,10 +4,10 @@ using Hazel;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class SillySheriff : RoleBase, IKiller
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -17,7 +17,7 @@ public sealed class SillySheriff : RoleBase, IKiller
             CustomRoles.SillySheriff,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Crewmate,
-            35800,
+            8200,
             SetupOptionItem,
             "バカシェリフ",
             "#f8cd46",

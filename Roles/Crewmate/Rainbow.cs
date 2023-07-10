@@ -1,8 +1,8 @@
 using AmongUs.GameOptions;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 using UnityEngine;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Rainbow : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -12,7 +12,7 @@ public sealed class Rainbow : RoleBase
             CustomRoles.Rainbow,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            35700,
+            40600,
             SetupOptionItem,
             "にじいろスター",
             "#ffff00"

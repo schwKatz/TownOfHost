@@ -2,10 +2,10 @@ using System.Linq;
 
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Madmate;
+namespace TownOfHostY.Roles.Madmate;
 
 public sealed class MadSnitch : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
 {
@@ -16,7 +16,7 @@ public sealed class MadSnitch : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
             CustomRoles.MadSnitch,
             () => OptionCanVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            10200,
+            5200,
             SetupOptionItem,
             "マッドスニッチ",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

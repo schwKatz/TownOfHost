@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 
 public sealed class ShapeMaster : RoleBase, IImpostor
 {
@@ -14,7 +14,7 @@ public sealed class ShapeMaster : RoleBase, IImpostor
             CustomRoles.ShapeMaster,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            1200,
+            10300,
             SetupOptionItem,
             "シェイプマスター"
         );

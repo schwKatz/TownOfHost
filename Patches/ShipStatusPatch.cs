@@ -4,10 +4,10 @@ using System.Linq;
 using HarmonyLib;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Crewmate;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.FixedUpdate))]
     class ShipFixedUpdatePatch

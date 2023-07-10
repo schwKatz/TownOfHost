@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using AmongUs.GameOptions;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-using static TownOfHost.Utils;
-using static TownOfHost.Translator;
+using static TownOfHostY.Utils;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class FortuneTeller : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -18,7 +18,7 @@ public sealed class FortuneTeller : RoleBase
             CustomRoles.FortuneTeller,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            36400,
+            41100,
             SetupOptionItem,
             "占い師",
             "#9370db"

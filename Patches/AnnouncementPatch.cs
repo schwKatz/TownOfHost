@@ -7,7 +7,7 @@ using Assets.InnerNet;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
-namespace TownOfHost;
+namespace TownOfHostY;
 
 public class ModNews
 {

@@ -1,8 +1,8 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 
 public sealed class SabotageMaster : RoleBase
 {
@@ -13,7 +13,7 @@ public sealed class SabotageMaster : RoleBase
             CustomRoles.SabotageMaster,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            20300,
+            30400,
             SetupOptionItem,
             "サボタージュマスター",
             "#0000ff",

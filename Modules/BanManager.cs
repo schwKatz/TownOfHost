@@ -2,8 +2,8 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using HarmonyLib;
-using static TownOfHost.Translator;
-namespace TownOfHost
+using static TownOfHostY.Translator;
+namespace TownOfHostY
 {
     public static class BanManager
     {

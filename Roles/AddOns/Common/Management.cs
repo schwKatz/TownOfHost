@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class Management
 {
-    private static readonly int Id = 79900;
+    private static readonly int Id = 80500;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.Management);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｍ");
     private static List<byte> playerIdList = new();

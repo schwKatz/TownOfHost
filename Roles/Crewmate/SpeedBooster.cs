@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class SpeedBooster : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -15,7 +15,7 @@ public sealed class SpeedBooster : RoleBase
             CustomRoles.SpeedBooster,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            20600,
+            30600,
             SetupOptionItem,
             "スピードブースター",
             "#00ffff"

@@ -1,11 +1,11 @@
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Impostor
+namespace TownOfHostY.Roles.Impostor
 {
     public sealed class SerialKiller : RoleBase, IImpostor
     {
@@ -16,7 +16,7 @@ namespace TownOfHost.Roles.Impostor
                 CustomRoles.SerialKiller,
                 () => RoleTypes.Shapeshifter,
                 CustomRoleTypes.Impostor,
-                1100,
+                10200,
                 SetUpOptionItem,
                 "シリアルキラー"
             );

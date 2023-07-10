@@ -1,10 +1,10 @@
 using System.Linq;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 using static UnityEngine.GraphicsBuffer;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 
 public sealed class LoveCutter : RoleBase
 {

@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     class VoiceReader
     {

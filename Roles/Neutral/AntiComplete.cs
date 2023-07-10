@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using AmongUs.GameOptions;
 
 using UnityEngine;
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Utils;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Utils;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 
 public sealed class AntiComplete : RoleBase
 {

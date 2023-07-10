@@ -3,11 +3,11 @@ using System.Linq;
 using System.Text;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 using UnityEngine;
-using static TownOfHost.Translator;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class GrudgeSheriff : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -17,7 +17,7 @@ public sealed class GrudgeSheriff : RoleBase
             CustomRoles.GrudgeSheriff,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Crewmate,
-            36100,
+            8300,
             SetupOptionItem,
             "グラージシェリフ",
             "#f8cd46",

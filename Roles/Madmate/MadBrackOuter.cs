@@ -2,10 +2,10 @@ using AmongUs.GameOptions;
 using Hazel;
 using InnerNet;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Madmate;
+namespace TownOfHostY.Roles.Madmate;
 public sealed class MadBrackOuter : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -15,7 +15,7 @@ public sealed class MadBrackOuter : RoleBase, IKillFlashSeeable, IDeathReasonSee
             CustomRoles.MadBrackOuter,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Madmate,
-            10500,
+            5500,
             SetupOptionItem,
             "マッドブラックアウター",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

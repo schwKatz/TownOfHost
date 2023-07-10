@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using TownOfHost.Roles.Impostor;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Impostor;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 public sealed class SchrodingerCat : RoleBase, IAdditionalWinner
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -16,7 +16,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner
             CustomRoles.SchrodingerCat,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Neutral,
-            50400,
+            50300,
             SetupOptionItem,
             "シュレディンガーの猫",
             "#696969",

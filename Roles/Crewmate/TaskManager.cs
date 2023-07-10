@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using static TownOfHost.Utils;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Utils;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class TaskManager : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class TaskManager : RoleBase
             CustomRoles.TaskManager,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            35200,
+            40100,
             SetupOptionItem,
             "タスクマネージャー",
             "#80ffdd",

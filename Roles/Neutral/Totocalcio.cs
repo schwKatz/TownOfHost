@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 using System.Linq;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-namespace TownOfHost.Roles.Neutral;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+namespace TownOfHostY.Roles.Neutral;
 
 public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
 {
@@ -14,7 +14,7 @@ public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
             CustomRoles.Totocalcio,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Neutral,
-            60700,
+            60600,
             SetupOptionItem,
             "トトカルチョ",
             "#00ff00"

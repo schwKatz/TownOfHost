@@ -1,10 +1,10 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.Madmate;
+namespace TownOfHostY.Roles.Madmate;
 public sealed class MadGuardian : RoleBase, IKillFlashSeeable
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -14,7 +14,7 @@ public sealed class MadGuardian : RoleBase, IKillFlashSeeable
             CustomRoles.MadGuardian,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            10100,
+            5100,
             SetupOptionItem,
             "マッドガーディアン",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

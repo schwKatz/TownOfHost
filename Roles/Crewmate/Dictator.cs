@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Dictator : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class Dictator : RoleBase
             CustomRoles.Dictator,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            20900,
+            30900,
             null,
             "ディクテーター",
             "#df9b00"

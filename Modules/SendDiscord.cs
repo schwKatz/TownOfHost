@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public static class SendDiscord
     {

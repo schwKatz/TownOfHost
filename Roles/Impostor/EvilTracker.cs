@@ -4,11 +4,11 @@ using Hazel;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 
 public sealed class EvilTracker : RoleBase, IImpostor, IKillFlashSeeable, ISidekickable
 {
@@ -19,7 +19,7 @@ public sealed class EvilTracker : RoleBase, IImpostor, IKillFlashSeeable, ISidek
             CustomRoles.EvilTracker,
             () => (TargetMode)OptionTargetMode.GetValue() == TargetMode.Never ? RoleTypes.Impostor : RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            2900,
+            11300,
             SetupOptionItem,
             "イビルトラッカー",
             canMakeMadmate: () => OptionCanCreateMadmate.GetBool()

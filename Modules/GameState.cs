@@ -4,9 +4,9 @@ using System.Linq;
 using AmongUs.GameOptions;
 using HarmonyLib;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public class PlayerState
     {

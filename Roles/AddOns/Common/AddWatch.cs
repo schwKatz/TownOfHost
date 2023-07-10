@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class AddWatch
 {
-    private static readonly int Id = 79100;
+    private static readonly int Id = 75000;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.AddWatch);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｗ");
     private static List<byte> playerIdList = new();

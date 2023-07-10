@@ -5,10 +5,10 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using UnityEngine;
-using static TownOfHost.Translator;
+using static TownOfHostY.Translator;
 using Object = UnityEngine.Object;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.InitializeOptions))]
     public static class GameSettingMenuPatch
@@ -136,7 +136,7 @@ namespace TownOfHost
                 menus.Add(tohSettings.gameObject);
 
                 var tohTab = Object.Instantiate(roleTab, roleTab.transform.parent);
-                tohTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite($"TownOfHost.Resources.TabIcon_{tab}.png", 100f);
+                tohTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite($"TownOfHost_Y.Resources.TabIcon_{tab}.png", 100f);
                 tohTab.gameObject.active = true;
                 tabs.Add(tohTab);
                 var tohTabHighlight = tohTab.transform.FindChild("Hat Button").FindChild("Tab Background").GetComponent<SpriteRenderer>();

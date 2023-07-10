@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
 using Hazel;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 public sealed class Arsonist : RoleBase, IKiller
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -17,7 +17,7 @@ public sealed class Arsonist : RoleBase, IKiller
             CustomRoles.Arsonist,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Neutral,
-            50500,
+            50400,
             SetupOptionItem,
             "アーソニスト",
             "#ff6633",

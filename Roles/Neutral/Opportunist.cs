@@ -2,10 +2,10 @@ using AmongUs.GameOptions;
 using Hazel;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 
 public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
 {

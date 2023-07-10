@@ -4,12 +4,12 @@ using AmongUs.GameOptions;
 using HarmonyLib;
 using Hazel;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using TownOfHost.Roles.Crewmate;
-using TownOfHost.Roles.Neutral;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Neutral;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
     class GameEndChecker

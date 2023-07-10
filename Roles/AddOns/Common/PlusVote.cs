@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class PlusVote
 {
-    private static readonly int Id = 77300;
+    private static readonly int Id = 80800;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.PlusVote);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｐ");
     private static List<byte> playerIdList = new();

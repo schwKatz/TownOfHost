@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public class FallFromLadder
     {

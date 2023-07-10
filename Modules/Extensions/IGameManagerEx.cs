@@ -1,6 +1,6 @@
 using AmongUs.GameOptions;
 
-namespace TownOfHost.Modules.Extensions
+namespace TownOfHostY.Modules.Extensions
 {
     public static class IGameManagerEx
     {

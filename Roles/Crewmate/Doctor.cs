@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Doctor : RoleBase, IDeathReasonSeeable
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class Doctor : RoleBase, IDeathReasonSeeable
             CustomRoles.Doctor,
             () => OptionHasVital.GetBool() ? RoleTypes.Scientist : RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            20700,
+            30700,
             SetupOptionItem,
             "ドクター",
             "#80ffdd"

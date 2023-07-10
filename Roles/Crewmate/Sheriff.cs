@@ -4,11 +4,11 @@ using Hazel;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Sheriff : RoleBase, IKiller
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -18,7 +18,7 @@ public sealed class Sheriff : RoleBase, IKiller
             CustomRoles.Sheriff,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Crewmate,
-            20400,
+            8000,
             SetupOptionItem,
             "シェリフ",
             "#f8cd46",

@@ -1,8 +1,8 @@
 using HarmonyLib;
 
-using TownOfHost.Modules.ClientOptions;
+using TownOfHostY.Modules.ClientOptions;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(OptionsMenuBehaviour), nameof(OptionsMenuBehaviour.Start))]
     public static class OptionsMenuBehaviourStartPatch

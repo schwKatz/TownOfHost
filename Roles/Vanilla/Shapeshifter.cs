@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Vanilla;
+namespace TownOfHostY.Roles.Vanilla;
 
 public sealed class Shapeshifter : RoleBase, IImpostor, IKiller, ISidekickable
 {

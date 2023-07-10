@@ -1,6 +1,6 @@
 using System;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public class NetRandomWrapper : IRandom
     {

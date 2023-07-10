@@ -1,10 +1,10 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Crewmate;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 public sealed class Scavenger : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -14,7 +14,7 @@ public sealed class Scavenger : RoleBase, IImpostor
             CustomRoles.Scavenger,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            3500,
+            20500,
             SetUpOptionItem,
             "スカベンジャー"
         );

@@ -10,14 +10,15 @@ using HarmonyLib;
 using Il2CppInterop.Runtime.Injection;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-[assembly: AssemblyFileVersionAttribute(TownOfHost.Main.PluginVersion)]
-[assembly: AssemblyInformationalVersionAttribute(TownOfHost.Main.PluginVersion)]
-namespace TownOfHost
+[assembly: AssemblyFileVersionAttribute(TownOfHostY.Main.PluginVersion)]
+[assembly: AssemblyInformationalVersionAttribute(TownOfHostY.Main.PluginVersion)]
+namespace TownOfHostY
 {
-    [BepInPlugin(PluginGuid, "Town Of Host", PluginVersion)]
+    [BepInPlugin(PluginGuid, "Town Of Host_Y", PluginVersion)]
     [BepInIncompatibility("jp.ykundesu.supernewroles")]
+    [BepInIncompatibility("com.emptybottle.townofhost")]
     [BepInProcess("Among Us.exe")]
     public class Main : BasePlugin
     {
@@ -48,7 +49,7 @@ namespace TownOfHost
 
         // ==========
         //Sorry for many Japanese comments.
-        public const string PluginGuid = "com.emptybottle.townofhost";
+        public const string PluginGuid = "com.yumenopai.townofhosty";
         public const string PluginVersion = "501.10.7";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.6.13";
@@ -128,19 +129,19 @@ namespace TownOfHost
             Instance = this;
 
             //Client Options
-            HideName = Config.Bind("Client Options", "Hide Game Code Name", "Town Of Host");
+            HideName = Config.Bind("Client Options", "Hide Game Code Name", "Town Of Host_Y");
             HideColor = Config.Bind("Client Options", "Hide Game Code Color", $"{ModColor}");
             ForceJapanese = Config.Bind("Client Options", "Force Japanese", false);
             JapaneseRoleName = Config.Bind("Client Options", "Japanese Role Name", true);
             DebugKeyInput = Config.Bind("Authentication", "Debug Key", "");
 
             Logger = BepInEx.Logging.Logger.CreateLogSource("TOH_Y");
-            TownOfHost.Logger.Enable();
-            TownOfHost.Logger.Disable("NotifyRoles");
-            TownOfHost.Logger.Disable("SendRPC");
-            TownOfHost.Logger.Disable("ReceiveRPC");
-            TownOfHost.Logger.Disable("SwitchSystem");
-            TownOfHost.Logger.Disable("CustomRpcSender");
+            TownOfHostY.Logger.Enable();
+            TownOfHostY.Logger.Disable("NotifyRoles");
+            TownOfHostY.Logger.Disable("SendRPC");
+            TownOfHostY.Logger.Disable("ReceiveRPC");
+            TownOfHostY.Logger.Disable("SwitchSystem");
+            TownOfHostY.Logger.Disable("CustomRpcSender");
             //TownOfHost.Logger.isDetail = true;
 
             // 認証関連-初期化
@@ -160,7 +161,7 @@ namespace TownOfHost
             Preset5 = Config.Bind("Preset Name Options", "Preset5", "Preset_5");
             WebhookURL = Config.Bind("Other", "WebhookURL", "none");
             BetaBuildURL = Config.Bind("Other", "BetaBuildURL", "");
-            MessageWait = Config.Bind("Other", "MessageWait", 1f);
+            MessageWait = Config.Bind("Other", "MessageWait", 0.5f);
             LastKillCooldown = Config.Bind("Other", "LastKillCooldown", (float)30);
             LastShapeshifterCooldown = Config.Bind("Other", "LastShapeshifterCooldown", (float)30);
 
@@ -231,15 +232,15 @@ namespace TownOfHost
             }
             catch (ArgumentException ex)
             {
-                TownOfHost.Logger.Error("エラー:Dictionaryの値の重複を検出しました", "LoadDictionary");
-                TownOfHost.Logger.Exception(ex, "LoadDictionary");
+                TownOfHostY.Logger.Error("エラー:Dictionaryの値の重複を検出しました", "LoadDictionary");
+                TownOfHostY.Logger.Exception(ex, "LoadDictionary");
                 hasArgumentException = true;
                 ExceptionMessage = ex.Message;
                 ExceptionMessageIsShown = false;
             }
-            TownOfHost.Logger.Info($"{Application.version}", "AmongUs Version");
+            TownOfHostY.Logger.Info($"{Application.version}", "AmongUs Version");
 
-            var handler = TownOfHost.Logger.Handler("GitVersion");
+            var handler = TownOfHostY.Logger.Handler("GitVersion");
             handler.Info($"{nameof(ThisAssembly.Git.Branch)}: {ThisAssembly.Git.Branch}");
             handler.Info($"{nameof(ThisAssembly.Git.BaseTag)}: {ThisAssembly.Git.BaseTag}");
             handler.Info($"{nameof(ThisAssembly.Git.Commit)}: {ThisAssembly.Git.Commit}");

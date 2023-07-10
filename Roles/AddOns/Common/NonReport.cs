@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class NonReport
 {
-    private static readonly int Id = 77200;
+    private static readonly int Id = 85300;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.NonReport);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｎ");
     private static List<byte> playerIdList = new();

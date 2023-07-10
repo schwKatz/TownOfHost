@@ -2,13 +2,13 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.AddOns.Crewmate
+namespace TownOfHostY.Roles.AddOns.Crewmate
 {
     public static class CompreteCrew
     {
-        private static readonly int Id = 77700;
+        private static readonly int Id = 72000;
         public static List<byte> playerIdList = new();
         public static void SetupCustomOption()
         {

@@ -1,7 +1,7 @@
 using System;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     public class FloatOptionItem : OptionItem
     {

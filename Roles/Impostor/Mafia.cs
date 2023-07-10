@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 public sealed class Mafia : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class Mafia : RoleBase, IImpostor
             CustomRoles.Mafia,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            1600,
+            10700,
             SetUpOptionItem,
             "マフィア"
         );

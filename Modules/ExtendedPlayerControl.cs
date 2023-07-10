@@ -7,17 +7,17 @@ using Hazel;
 using InnerNet;
 using UnityEngine;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using TownOfHost.Roles.Impostor;
-using TownOfHost.Roles.Madmate;
-using TownOfHost.Roles.Crewmate;
-using TownOfHost.Roles.Neutral;
-using TownOfHost.Roles.AddOns.Impostor;
-using static TownOfHost.Translator;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Impostor;
+using TownOfHostY.Roles.Madmate;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Neutral;
+using TownOfHostY.Roles.AddOns.Impostor;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     static class ExtendedPlayerControl
     {

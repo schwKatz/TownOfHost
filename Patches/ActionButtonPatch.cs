@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace TownOfHost.Patches;
+namespace TownOfHostY.Patches;
 
 [HarmonyPatch(typeof(SabotageButton), nameof(SabotageButton.DoClick))]
 public static class SabotageButtonDoClickPatch

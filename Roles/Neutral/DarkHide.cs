@@ -3,11 +3,11 @@ using AmongUs.GameOptions;
 using Hazel;
 using InnerNet;
 
-using static TownOfHost.Options;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using static TownOfHostY.Options;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Neutral
+namespace TownOfHostY.Roles.Neutral
 {
     public sealed class DarkHide : RoleBase, IKiller
     {

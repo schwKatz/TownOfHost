@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Chairman : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class Chairman : RoleBase
             CustomRoles.Chairman,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Crewmate,
-            35400,
+            40300,
             SetupOptionItem,
             "チェアマン",
             "#204d42",

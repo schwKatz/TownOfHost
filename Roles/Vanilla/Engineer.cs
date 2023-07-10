@@ -1,8 +1,8 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Vanilla;
+namespace TownOfHostY.Roles.Vanilla;
 
 public sealed class Engineer : RoleBase
 {

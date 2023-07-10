@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using AmongUs.GameOptions;
 using Hazel;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Blinder : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -15,7 +15,7 @@ public sealed class Blinder : RoleBase
             CustomRoles.Blinder,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            36000,
+            40800,
             SetupOptionItem,
             "ブラインダー",
             "#883fd1"

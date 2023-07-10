@@ -3,11 +3,11 @@ using System.Text;
 
 using AmongUs.GameOptions;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Translator;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Medic : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -17,7 +17,7 @@ public sealed class Medic : RoleBase
             CustomRoles.Medic,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Crewmate,
-            37000,
+            40900,
             null,
             "メディック",
             "#6495ed",

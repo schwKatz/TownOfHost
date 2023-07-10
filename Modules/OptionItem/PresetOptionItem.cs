@@ -1,4 +1,4 @@
-namespace TownOfHost
+namespace TownOfHostY
 {
     public class PresetOptionItem : OptionItem
     {

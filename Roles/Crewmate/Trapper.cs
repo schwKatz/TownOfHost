@@ -1,8 +1,8 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Trapper : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -12,7 +12,7 @@ public sealed class Trapper : RoleBase
             CustomRoles.Trapper,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            20800,
+            30800,
             SetupOptionItem,
             "トラッパー",
             "#5a8fd0"

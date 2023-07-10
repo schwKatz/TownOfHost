@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 public sealed class Egoist : RoleBase, ISidekickable, IKiller
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -15,7 +15,7 @@ public sealed class Egoist : RoleBase, ISidekickable, IKiller
             CustomRoles.Egoist,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Neutral,
-            50600,
+            50500,
             SetupOptionItem,
             "エゴイスト",
             "#5600ff",

@@ -7,17 +7,17 @@ using HarmonyLib;
 using Hazel;
 using UnityEngine;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using TownOfHost.Roles.Neutral;
-using TownOfHost.Roles.AddOns.Common;
-using TownOfHost.Roles.AddOns.Crewmate;
-using static TownOfHost.Translator;
-using TownOfHost.Roles.Impostor;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Neutral;
+using TownOfHostY.Roles.AddOns.Common;
+using TownOfHostY.Roles.AddOns.Crewmate;
+using static TownOfHostY.Translator;
+using TownOfHostY.Roles.Impostor;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckProtect))]
     class CheckProtectPatch

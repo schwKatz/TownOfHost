@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Madmate;
+namespace TownOfHostY.Roles.Madmate;
 public sealed class Madmate : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class Madmate : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
             CustomRoles.Madmate,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Madmate,
-            10000,
+            5000,
             SetupOptionItem,
             "マッドメイト",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

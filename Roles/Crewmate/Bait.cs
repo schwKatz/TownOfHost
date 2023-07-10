@@ -1,8 +1,8 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Bait : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -12,7 +12,7 @@ public sealed class Bait : RoleBase
             CustomRoles.Bait,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            20000,
+            30100,
             SetUpOptionItem,
             "ベイト",
             "#00f7ff"

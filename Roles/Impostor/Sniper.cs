@@ -4,11 +4,11 @@ using Hazel;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 public sealed class Sniper : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -18,7 +18,7 @@ public sealed class Sniper : RoleBase, IImpostor
             CustomRoles.Sniper,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            1800,
+            10900,
             SetupOptionItem,
             "スナイパー"
         );

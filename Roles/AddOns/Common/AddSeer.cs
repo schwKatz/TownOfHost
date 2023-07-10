@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class AddSeer
 {
-    private static readonly int Id = 79400;
+    private static readonly int Id = 80100;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.AddSeer);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Se");
     private static List<byte> playerIdList = new();

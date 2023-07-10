@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using AmongUs.GameOptions;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Madmate;
+namespace TownOfHostY.Roles.Madmate;
 
 public sealed class MadDictator : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
 {
@@ -16,7 +16,7 @@ public sealed class MadDictator : RoleBase, IKillFlashSeeable, IDeathReasonSeeab
             CustomRoles.MadDictator,
             () => OptionCanVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            10300,
+            5300,
             SetupOptionItem,
             "マッドディクテーター",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

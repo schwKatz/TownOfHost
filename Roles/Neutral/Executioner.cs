@@ -3,10 +3,10 @@ using System.Linq;
 using Hazel;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Neutral;
+namespace TownOfHostY.Roles.Neutral;
 public sealed class Executioner : RoleBase, IAdditionalWinner
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -16,7 +16,7 @@ public sealed class Executioner : RoleBase, IAdditionalWinner
             CustomRoles.Executioner,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Neutral,
-            50700,
+            50600,
             SetupOptionItem,
             "エクスキューショナー",
             "#611c3a",

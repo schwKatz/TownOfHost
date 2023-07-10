@@ -3,13 +3,13 @@ using System.Text;
 using UnityEngine;
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
-using static TownOfHost.Utils;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
+using static TownOfHostY.Utils;
 using HarmonyLib;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 
 public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
 {
@@ -20,7 +20,7 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
             CustomRoles.Telepathisters,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            3700,
+            20700,
             SetupOptionItem,
             "テレパシスターズ"
         );

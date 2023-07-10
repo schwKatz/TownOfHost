@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 using Epic.OnlineServices.Presence;
 using Il2CppSystem.Reflection;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class AddBait
 {
-    private static readonly int Id = 77500;
+    private static readonly int Id = 81000;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.AddBait);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｂ");
     private static List<byte> playerIdList = new();

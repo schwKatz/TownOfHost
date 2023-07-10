@@ -6,12 +6,12 @@ using Il2CppSystem.Linq;
 using InnerNet;
 using Mathf = UnityEngine.Mathf;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Neutral;
-using TownOfHost.Roles.Crewmate;
-using TownOfHost.Roles.AddOns.Common;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Neutral;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.AddOns.Common;
 
-namespace TownOfHost.Modules
+namespace TownOfHostY.Modules
 {
     public class PlayerGameOptionsSender : GameOptionsSender
     {

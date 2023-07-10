@@ -1,10 +1,10 @@
 using AmongUs.GameOptions;
 using Hazel;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 public sealed class CursedWolf : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -14,7 +14,7 @@ public sealed class CursedWolf : RoleBase, IImpostor
             CustomRoles.CursedWolf,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            3200,
+            20200,
             SetupOptionItem,
             "呪狼"
         );

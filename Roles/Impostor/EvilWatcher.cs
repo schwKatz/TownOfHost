@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 public sealed class EvilWatcher : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -13,7 +13,7 @@ public sealed class EvilWatcher : RoleBase, IImpostor
             CustomRoles.EvilWatcher,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            9000,
+            10000,
             SetupOptionItem,
             "イビルウォッチャー"
         );

@@ -1,7 +1,7 @@
 using AmongUs.GameOptions;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 
-namespace TownOfHost.Roles.Crewmate;
+namespace TownOfHostY.Roles.Crewmate;
 public sealed class Lighter : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
@@ -11,7 +11,7 @@ public sealed class Lighter : RoleBase
             CustomRoles.Lighter,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            20100,
+            30200,
             SetupOptionItem,
             "ライター",
             "#eee5be"

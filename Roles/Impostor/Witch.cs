@@ -3,11 +3,11 @@ using System.Text;
 using Hazel;
 
 using AmongUs.GameOptions;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using static TownOfHost.Translator;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost.Roles.Impostor
+namespace TownOfHostY.Roles.Impostor
 {
     public sealed class Witch : RoleBase, IImpostor
     {
@@ -18,7 +18,7 @@ namespace TownOfHost.Roles.Impostor
                 CustomRoles.Witch,
                 () => RoleTypes.Impostor,
                 CustomRoleTypes.Impostor,
-                1500,
+                10600,
                 SetupOptionItem,
                 "ウィッチ"
             );

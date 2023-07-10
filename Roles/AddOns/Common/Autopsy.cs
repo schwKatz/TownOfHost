@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Common;
+namespace TownOfHostY.Roles.AddOns.Common;
 
 public static class Autopsy
 {
-    private static readonly int Id = 79500;
+    private static readonly int Id = 80200;
     private static Color RoleColor = Utils.GetRoleColor(CustomRoles.Autopsy);
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ａ");
     private static List<byte> playerIdList = new();

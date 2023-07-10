@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using TownOfHost.Roles.Core;
-using static TownOfHost.Options;
+using TownOfHostY.Roles.Core;
+using static TownOfHostY.Options;
 
-namespace TownOfHost.Roles.AddOns.Crewmate
+namespace TownOfHostY.Roles.AddOns.Crewmate
 {
     public static class Workhorse
     {
-        private static readonly int Id = 80100;
+        private static readonly int Id = 71000;
         public static Color RoleColor = Utils.GetRoleColor(CustomRoles.Workhorse);
         public static List<byte> playerIdList = new();
         private static OptionItem OptionAssignOnlyToCrewmate;

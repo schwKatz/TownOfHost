@@ -1,9 +1,9 @@
 using AmongUs.GameOptions;
 
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
-namespace TownOfHost.Roles.Neutral
+namespace TownOfHostY.Roles.Neutral
 {
     public sealed class Jackal : RoleBase, IKiller
     {
@@ -14,7 +14,7 @@ namespace TownOfHost.Roles.Neutral
                 CustomRoles.Jackal,
                 () => RoleTypes.Impostor,
                 CustomRoleTypes.Neutral,
-                50900,
+                50700,
                 SetupOptionItem,
                 "ジャッカル",
                 "#00b4eb"

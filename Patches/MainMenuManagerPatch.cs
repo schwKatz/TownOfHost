@@ -12,7 +12,7 @@ using BepInEx.Unity.IL2CPP.Utils.Collections;
 
 using Object = UnityEngine.Object;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(MainMenuManager))]
     public class MainMenuManagerPatch

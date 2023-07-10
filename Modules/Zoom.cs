@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using HarmonyLib;
-using TownOfHost.Roles.Core;
+using TownOfHostY.Roles.Core;
 using UnityEngine;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     // https://github.com/tugaru1975/TownOfPlus/TOPmods/Zoom.cs 
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]

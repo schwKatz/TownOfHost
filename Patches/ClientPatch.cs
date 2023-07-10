@@ -2,10 +2,10 @@ using System.Globalization;
 using HarmonyLib;
 using InnerNet;
 using UnityEngine;
-using TownOfHost.Modules;
-using static TownOfHost.Translator;
+using TownOfHostY.Modules;
+using static TownOfHostY.Translator;
 
-namespace TownOfHost
+namespace TownOfHostY
 {
     [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.MakePublic))]
     class MakePublicPatch
