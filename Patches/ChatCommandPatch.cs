@@ -320,7 +320,6 @@ namespace TownOfHostY
                 Logger.Info("Command Canceled", "ChatCommand");
                 __instance.freeChatField.textArea.Clear();
                 __instance.freeChatField.textArea.SetText(cancelVal);
-                //__instance.quickChatMenu.ResetGlyphs();
             }
             return !canceled;
         }
