@@ -50,9 +50,9 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "501.10.7";
+        public const string PluginVersion = "502.12";
         // サポートされている最低のAmongUsバージョン
-        public static readonly string LowestSupportedVersion = "2023.6.13";
+        public static readonly string LowestSupportedVersion = "2023.7.11";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;

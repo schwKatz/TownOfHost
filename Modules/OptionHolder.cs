@@ -323,6 +323,7 @@ namespace TownOfHostY
                     case CustomRoles.Warlock:
                     case CustomRoles.CursedWolf:
                     case CustomRoles.EvilDiviner:
+                    case CustomRoles.StrayWolf:
                         //0622不具合対応のため表示させない
                         break;
 
@@ -444,6 +445,7 @@ namespace TownOfHostY
             Sending.SetupCustomOption();
             TieBreaker.SetupCustomOption();
             PlusVote.SetupCustomOption();
+            //0622不具合対応のため表示させない
             Guarding.SetupCustomOption();
             AddBait.SetupCustomOption();
             Refusing.SetupCustomOption();
@@ -755,6 +757,9 @@ namespace TownOfHostY
             Id += 10;
             foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsBuffAddOn()))
             {
+                //0622不具合対応のため表示させない
+                if (Addon == CustomRoles.Guarding) continue;
+
                 if (Addon == CustomRoles.Loyalty && PlayerRole is
                     CustomRoles.MadSnitch or CustomRoles.JClient or CustomRoles.LastImpostor or CustomRoles.CompreteCrew) continue;
                 if (Addon == CustomRoles.Revenger && PlayerRole is CustomRoles.MadNimrod) continue;

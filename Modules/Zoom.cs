@@ -60,7 +60,7 @@ namespace TownOfHostY
                 Camera.main.orthographicSize *= size;
                 HudManager.Instance.UICamera.orthographicSize *= size;
             }
-            ResolutionManager.ResolutionChanged.Invoke((float)Screen.width / Screen.height);
+            ResolutionManager.ResolutionChanged.Invoke((float)Screen.width / Screen.height, Screen.width, Screen.height, Screen.fullScreen);
         }
     }
 }

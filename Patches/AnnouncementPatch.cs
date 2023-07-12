@@ -281,7 +281,7 @@ public class ModNewsHistory
                 //BeforeNumber = 0,
                 Title = "Town Of Host_YS おススメ役職【ハンター】",
                 SubTitle = "シェリフが使えないから、代わりにどうだい？",
-                ShortTitle = "ハンターをおススメします",
+                ShortTitle = "★ハンターをおススメします",
                 Text = "Thank you for playing TownOfHost_Y!\n"
                 + "\n<b>シェリフは使えません</b>"
                 + "\n　シェリフが今回の未対応役職の1つになってしまったのはかなりの痛手です。\n"
@@ -303,6 +303,39 @@ public class ModNewsHistory
             };
             AllModNews.Add(news);
         }
+        {
+            var news = new ModNews
+            {
+                Number = 100012,
+                //BeforeNumber = 0,
+                Title = "Town Of Host_YS v502.12",
+                SubTitle = "★★★★★v502.12アップデート★★★★★",
+                ShortTitle = "★TOH_Y v502.12",
+                Text = "Thank you for playing TownOfHost_Y!\n"
+                + "\n<b>ごめんね、まだシェリフは使えないんだ。</b>\n"
+                + "\n　なにげにちょこっと新役職追加。インポスターも用意していたけど鯖変更のやつにひっかかっちゃった"
+                + "\n<b>-【新役職】マッドニムロッド・ニムロッド・決闘者</b>"
+                + "\n　ニムロッドはワンナイトモードの狩人と能力は同じです。道連れしたい人を指名することができます。"
+                + "\n　決闘者は第三陣営の追加勝利役職。好きな人を宿敵に選んでその人とバチバチ戦おう。\n"
+                + "\n----------------------------------------------------------------"
+                + "\n　Among Usバニラ側の内部的仕様変更により、ホスト系MOD全てでキル関連に関する問題が発生しています。"
+                + "\n　それに伴い、以下役職が正常に使用できません。(既に設定できないように隠してあります。)"
+                + "\n----------------------------------------------------------------"
+                + "\n<b>-【インポスター】</b>パペッティア・ウィッチ・ヴァンパイア・ウォーロック・イビルディバイナー・呪狼</b>"
+                + "\n<b>-【マッド】</b>マッドガーディアン・マッドシェリフ</b>"
+                + "\n<b>-【クルー】</b>シェリフ/バカシェリフ</b>"
+                + "\n<b>-【第三】</b>アーソニスト・シュレディンガーの猫・純愛者・トトカルチョ・ラブカッター</b>"
+                + "\n<b>-【属性】</b>ガーディング</b>"
+                + "\n<b>-【一部機能不可】</b>アンチコンプリートガード・追跡者ガード</b>"
+
+                + "\n　対応までご不便をおかけしますが、今後ともTOH_Yをよろしくお願いいたします。"
+                + "\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
+                Date = "2023-07-12T00:00:00Z"
+
+            };
+            AllModNews.Add(news);
+        }
+
     }
 
     [HarmonyPatch(typeof(PlayerAnnouncementData), nameof(PlayerAnnouncementData.SetAnnouncements)), HarmonyPrefix]
