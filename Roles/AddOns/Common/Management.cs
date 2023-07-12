@@ -18,7 +18,7 @@ public static class Management
     public static void SetupCustomOption()
     {
         SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.Management);
-        OptionSeeNowtask = BooleanOptionItem.Create(Id + 10, "ManagementSeeNowtask", true, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Management]);
+        OptionSeeNowtask = BooleanOptionItem.Create(Id + 10, "ManagementSeeNowtask", true, TabGroup.Addons, false);
     }
     public static void Init()
     {

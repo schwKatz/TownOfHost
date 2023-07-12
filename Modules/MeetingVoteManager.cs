@@ -3,6 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Common;
+using TownOfHostY.Roles.Madmate;
+using TownOfHostY.Roles.Crewmate;
+
 namespace TownOfHostY.Modules;
 
 public class MeetingVoteManager
@@ -323,6 +326,8 @@ public class MeetingVoteManager
 
             (IsTie, Exiled) = TieBreaker.BreakingVote(IsTie, Exiled, votedCounts, maxVoteNum);
             Exiled = Refusing.VoteChange(Exiled);
+            Exiled = Nimrod.VoteChange(Exiled);
+            Exiled = MadNimrod.VoteChange(Exiled);
 
             // 同数投票時の特殊モード
             if (IsTie && Options.VoteMode.GetBool())

@@ -4,7 +4,7 @@ using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Madmate;
-public sealed class MadSheriff : RoleBase, IKiller, IKillFlashSeeable, IDeathReasonSeeable
+public sealed class MadSheriff : RoleBase, IKiller
 {
     public static readonly SimpleRoleInfo RoleInfo =
          SimpleRoleInfo.Create(
@@ -25,8 +25,6 @@ public sealed class MadSheriff : RoleBase, IKiller, IKillFlashSeeable, IDeathRea
         () => HasTask.False
     )
     {
-        canSeeKillFlash = Options.MadmateCanSeeKillFlash.GetBool();
-        canSeeDeathReason = Options.MadmateCanSeeDeathReason.GetBool();
         KillCooldown = OptionKillCooldown.GetFloat();
         MisfireKillsTarget = OptionMisfireKillsTarget.GetBool();
         CanVent = OptionCanVent.GetBool();
@@ -41,8 +39,6 @@ public sealed class MadSheriff : RoleBase, IKiller, IKillFlashSeeable, IDeathRea
         SheriffMisfireKillsTarget,
     }
     private static float KillCooldown;
-    private static bool canSeeKillFlash;
-    private static bool canSeeDeathReason;
     private static bool MisfireKillsTarget;
     public static bool CanVent;
 
@@ -80,7 +76,4 @@ public sealed class MadSheriff : RoleBase, IKiller, IKillFlashSeeable, IDeathRea
             if (MisfireKillsTarget) killer.RpcMurderPlayerEx(target);
         }
     }
-
-    public bool CheckKillFlash(MurderInfo info) => canSeeKillFlash;
-    public bool CheckSeeDeathReason(PlayerControl seen) => canSeeDeathReason;
 }

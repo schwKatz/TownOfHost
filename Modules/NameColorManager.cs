@@ -33,7 +33,7 @@ namespace TownOfHostY
         {
             return seer == target
                 || target.Is(CustomRoles.GM)
-                || (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoleTypes.Impostor))
+                || (seer.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoleTypes.Impostor) && !seer.Is(CustomRoles.StrayWolf) && !target.Is(CustomRoles.StrayWolf))
                 || Mare.KnowTargetRoleColor(target, isMeeting)
                 || (target.Is(CustomRoles.Workaholic) && Workaholic.Seen)
                 || target.Is(CustomRoles.Rainbow)

@@ -225,7 +225,7 @@ namespace TownOfHostY
         public static OptionItem AutoDisplayKillLog;
         public static OptionItem SuffixMode;
         public static OptionItem HideGameSettings;
-        public static OptionItem ColorNameMode;
+        public static OptionItem NameChangeMode;
         public static OptionItem ChangeNameToRoleInfo;
         public static OptionItem RoleAssigningAlgorithm;
 
@@ -251,6 +251,11 @@ namespace TownOfHostY
             "addonShowModes.Default", "addonShowModes.All", "addonShowModes.TOH"
         };
         public static AddonShowMode GetAddonShowModes() => (AddonShowMode)AddonShow.GetValue();
+        public static readonly string[] nameChangeModes =
+{
+            "nameChangeMode.None", "nameChangeMode.Crew", "nameChangeMode.Color"
+        };
+        public static NameChange GetNameChangeModes() => (NameChange)NameChangeMode.GetValue();
 
         public static readonly string[] suffixModes =
         {
@@ -660,7 +665,7 @@ namespace TownOfHostY
             AutoDisplayLastResult = BooleanOptionItem.Create(1_002_001, "AutoDisplayLastResult", true, TabGroup.MainSettings, false);
             AutoDisplayKillLog = BooleanOptionItem.Create(1_002_002, "AutoDisplayKillLog", true, TabGroup.MainSettings, false);
             SuffixMode = StringOptionItem.Create(1_002_003, "SuffixMode", suffixModes, 0, TabGroup.MainSettings, true);
-            ColorNameMode = BooleanOptionItem.Create(1_002_004, "ColorNameMode", false, TabGroup.MainSettings, false);
+            NameChangeMode = StringOptionItem.Create(1_002_004, "NameChangeMode", nameChangeModes, 0, TabGroup.MainSettings, true);
             ChangeNameToRoleInfo = BooleanOptionItem.Create(1_002_005, "ChangeNameToRoleInfo", true, TabGroup.MainSettings, false);
             AddonShow = StringOptionItem.Create(1_002_006, "AddonShowMode", addonShowModes, 0, TabGroup.MainSettings, true);
             ChangeIntro = BooleanOptionItem.Create(1_002_007, "ChangeIntro", false, TabGroup.MainSettings, false);
@@ -752,6 +757,7 @@ namespace TownOfHostY
             {
                 if (Addon == CustomRoles.Loyalty && PlayerRole is
                     CustomRoles.MadSnitch or CustomRoles.JClient or CustomRoles.LastImpostor or CustomRoles.CompreteCrew) continue;
+                if (Addon == CustomRoles.Revenger && PlayerRole is CustomRoles.MadNimrod) continue;
 
                 SetUpAddOnRoleOption(PlayerRole, tab, Addon, Id, false, AddOnBuffAssign[PlayerRole]);
                 Id++;

@@ -829,7 +829,7 @@ namespace TownOfHostY
             if (Main.nickName != "") name = Main.nickName;
             if (AmongUsClient.Instance.IsGameStarted)
             {
-                if (Options.ColorNameMode.GetBool() && Main.nickName == "")
+                if (Options.GetNameChangeModes() == NameChange.Color && Main.nickName == "")
                 {
                     if(PlayerControl.LocalPlayer.Is(CustomRoles.Rainbow))
                         name = GetString("RainbowColor");
@@ -989,6 +989,7 @@ namespace TownOfHostY
                     || seer.Is(CustomRoles.Medic)
                     || seer.Is(CustomRoles.GrudgeSheriff)
                     || seer.Is(CustomRoles.AntiComplete)
+                    || Duelist.CheckNotify(seer)
                     )
                 {
                     foreach (var target in Main.AllPlayerControls)

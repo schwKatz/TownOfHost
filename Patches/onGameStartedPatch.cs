@@ -20,6 +20,7 @@ namespace TownOfHostY
     [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.CoStartGame))]
     class ChangeRoleSettings
     {
+        public static int ImpostorSetNum = 2;
         public static void Postfix(AmongUsClient __instance)
         {
             //注:この時点では役職は設定されていません。
@@ -27,6 +28,9 @@ namespace TownOfHostY
             Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Engineer, 0, 0);
             Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Scientist, 0, 0);
             Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.GuardianAngel, 0, 0);
+
+            ImpostorSetNum = Main.NormalOptions.NumImpostors;
+            Main.NormalOptions.NumImpostors = ImpostorSetNum - CustomRoles.StrayWolf.GetCount();
 
             PlayerState.Clear();
 
@@ -84,7 +88,7 @@ namespace TownOfHostY
             foreach (var pc in Main.AllPlayerControls)
             {
                 var colorId = pc.Data.DefaultOutfit.ColorId;
-                if (AmongUsClient.Instance.AmHost && Options.ColorNameMode.GetBool())
+                if (AmongUsClient.Instance.AmHost && Options.GetNameChangeModes() == NameChange.Color)
                 {
                     if(pc.Is(CustomRoles.Rainbow)) pc.RpcSetName(GetString("RainbowColor"));
                     else pc.RpcSetName(Palette.GetColorName(colorId));
@@ -203,6 +207,7 @@ namespace TownOfHostY
                 AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 if (Opportunist.OptionCanKill.GetBool())
                     AssignDesyncRole(CustomRoles.Opportunist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
 
@@ -309,7 +314,8 @@ namespace TownOfHostY
 
                     if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
-                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
+                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal
+                        or CustomRoles.StrayWolf) continue;
                     if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
 
                     var baseRoleTypes = role.GetRoleTypes() switch
@@ -552,7 +558,8 @@ namespace TownOfHostY
             {
                 if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
-                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
+                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal
+                        or CustomRoles.StrayWolf) continue;
                 if (role == CustomRoles.Egoist && Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) <= 1) continue;
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role.GetRoleTypes() == roleTypes)

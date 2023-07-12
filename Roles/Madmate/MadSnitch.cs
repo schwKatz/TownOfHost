@@ -1,13 +1,11 @@
 using System.Linq;
 
 using AmongUs.GameOptions;
-
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Madmate;
 
-public sealed class MadSnitch : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
+public sealed class MadSnitch : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -27,9 +25,6 @@ public sealed class MadSnitch : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
         player,
         () => HasTask.ForRecompute)
     {
-        canSeeKillFlash = Options.MadmateCanSeeKillFlash.GetBool();
-        canSeeDeathReason = Options.MadmateCanSeeDeathReason.GetBool();
-
         canVent = OptionCanVent.GetBool();
         canAlsoBeExposedToImpostor = OptionCanAlsoBeExposedToImpostor.GetBool();
 
@@ -41,18 +36,15 @@ public sealed class MadSnitch : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
     private static Options.OverrideTasksData Tasks;
     enum OptionName
     {
-        CanVent,
         MadSnitchCanAlsoBeExposedToImpostor,
     }
 
-    private static bool canSeeKillFlash;
-    private static bool canSeeDeathReason;
     private static bool canVent;
     private static bool canAlsoBeExposedToImpostor;
 
     public static void SetupOptionItem()
     {
-        OptionCanVent = BooleanOptionItem.Create(RoleInfo, 10, OptionName.CanVent, false, false);
+        OptionCanVent = BooleanOptionItem.Create(RoleInfo, 10, GeneralOption.CanVent, false, false);
         OptionCanAlsoBeExposedToImpostor = BooleanOptionItem.Create(RoleInfo, 11, OptionName.MadSnitchCanAlsoBeExposedToImpostor, false, false);
         Tasks = Options.OverrideTasksData.Create(RoleInfo, 20);
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);
@@ -89,7 +81,4 @@ public sealed class MadSnitch : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
 
         return Utils.ColorString(Utils.GetRoleColor(CustomRoles.MadSnitch), "★");
     }
-
-    public bool CheckKillFlash(MurderInfo info) => canSeeKillFlash;
-    public bool CheckSeeDeathReason(PlayerControl seen) => canSeeDeathReason;
 }

@@ -1,11 +1,10 @@
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Core.Interfaces;
 using static TownOfHostY.Options;
 
 namespace TownOfHostY.Roles.Madmate;
-public sealed class MadGuardian : RoleBase, IKillFlashSeeable
+public sealed class MadGuardian : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -26,7 +25,6 @@ public sealed class MadGuardian : RoleBase, IKillFlashSeeable
         () => HasTask.ForRecompute
     )
     {
-        FieldCanSeeKillFlash = MadmateCanSeeKillFlash.GetBool();
         CanSeeWhoTriedToKill = OptionCanSeeWhoTriedToKill.GetBool();
     }
 
@@ -36,7 +34,6 @@ public sealed class MadGuardian : RoleBase, IKillFlashSeeable
     {
         MadGuardianCanSeeWhoTriedToKill
     }
-    private static bool FieldCanSeeKillFlash;
     private static bool CanSeeWhoTriedToKill;
 
     private static void SetupOptionItem()
@@ -44,7 +41,7 @@ public sealed class MadGuardian : RoleBase, IKillFlashSeeable
         OptionCanSeeWhoTriedToKill = BooleanOptionItem.Create(RoleInfo, 10, OptionName.MadGuardianCanSeeWhoTriedToKill, false, false);
         //ID10120~10123を使用
         Tasks = OverrideTasksData.Create(RoleInfo, 20);
-        Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);
+        SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);
     }
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
@@ -64,5 +61,4 @@ public sealed class MadGuardian : RoleBase, IKillFlashSeeable
 
         return false;
     }
-    public bool CheckKillFlash(MurderInfo info) => FieldCanSeeKillFlash;
 }

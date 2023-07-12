@@ -43,7 +43,7 @@ namespace TownOfHostY
                         foreach (var pc in PlayerControl.AllPlayerControls)
                         {
                             if(pc.Is(CustomRoleTypes.Crewmate) && !pc.Is(CustomRoles.Lovers)
-                                && !(pc.Is(CustomRoles.Bakery) && Bakery.IsNeutral(pc)))
+                                && !(pc.Is(CustomRoles.Bakery) && Bakery.IsNeutral(pc)) && !pc.Is(CustomRoles.Archenemy))
                             {
                                 CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
                             }
@@ -53,7 +53,7 @@ namespace TownOfHostY
                         if (Egoist.CheckWin()) break;
 
                         Main.AllPlayerControls
-                            .Where(pc => (pc.Is(CustomRoleTypes.Impostor) || pc.Is(CustomRoleTypes.Madmate)) && !pc.Is(CustomRoles.Lovers))
+                            .Where(pc => (pc.Is(CustomRoleTypes.Impostor) || pc.Is(CustomRoleTypes.Madmate)) && !pc.Is(CustomRoles.Lovers) && !pc.Is(CustomRoles.Archenemy))
                             .Do(pc => CustomWinnerHolder.WinnerIds.Add(pc.PlayerId));
                         break;
                 }
@@ -102,6 +102,11 @@ namespace TownOfHostY
                                 CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
                                 CustomWinnerHolder.AdditionalWinnerTeams.Add(winnerType);
                             }
+                        }
+                        if (Duelist.ArchenemyCheckWin(pc))
+                        {
+                            CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Archenemy);
                         }
                     }
                     //弁護士且つ追跡者

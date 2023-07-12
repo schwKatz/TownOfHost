@@ -411,6 +411,7 @@ public enum CustomRoles
     EvilDiviner,
     Telepathisters,
     ShapeKiller,
+    StrayWolf,
     //Madmate
     MadGuardian,
     Madmate,
@@ -419,6 +420,7 @@ public enum CustomRoles
     MadDictator,
     MadNatureCalls,
     MadBrackOuter,
+    MadNimrod,
     SKMadmate,
     MSchrodingerCat,//インポスター陣営のシュレディンガーの猫
     //Crewmate(Vanilla)
@@ -457,6 +459,7 @@ public enum CustomRoles
     CandleLighter,
     FortuneTeller,
     Psychic,
+    Nimrod,
     CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral
     Arsonist,
@@ -479,6 +482,7 @@ public enum CustomRoles
     PlatonicLover,
     Lawyer,
     Totocalcio,
+    Duelist,
     //HideAndSeek
     HASFox,
     HASTroll,
@@ -511,6 +515,7 @@ public enum CustomRoles
     Clumsy,
     InfoPoor,
     NonReport,
+    Archenemy,
 }
 public enum CustomRoleTypes
 {

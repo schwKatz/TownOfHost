@@ -217,6 +217,7 @@ namespace TownOfHostY
                     {CustomRoles.Guarding, "#8cffff"},
                     {CustomRoles.AddBait, "#00f7ff"},
                     {CustomRoles.Refusing, "#61b26c"},
+                    {CustomRoles.Archenemy, "#ff6347"},
 
                     {CustomRoles.NotAssigned, "#ffffff"}
                 };
@@ -309,6 +310,8 @@ namespace TownOfHostY
         Lawyer = CustomRoles.Lawyer,
         Pursuer = CustomRoles.Lawyer,
         Totocalcio = CustomRoles.Totocalcio,
+        Duelist = CustomRoles.Duelist,
+        Archenemy = CustomRoles.Archenemy,
         HASFox = CustomRoles.HASFox,
     }
     /*public enum CustomRoles : byte
@@ -345,6 +348,12 @@ namespace TownOfHostY
         Default,
         All,
         TOH
+    }
+    public enum NameChange
+    {
+        None,
+        Crew,
+        Color
     }
     public enum CustomColor
     {

@@ -1,13 +1,11 @@
-using System.Collections.Generic;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Madmate;
 
-public sealed class MadDictator : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
+public sealed class MadDictator : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
          SimpleRoleInfo.Create(
@@ -27,16 +25,10 @@ public sealed class MadDictator : RoleBase, IKillFlashSeeable, IDeathReasonSeeab
         player
     )
     {
-        canSeeKillFlash = Options.MadmateCanSeeKillFlash.GetBool();
-        canSeeDeathReason = Options.MadmateCanSeeDeathReason.GetBool();
-
         canVent = OptionCanVent.GetBool();
     }
 
     private static OptionItem OptionCanVent;
-
-    private static bool canSeeKillFlash;
-    private static bool canSeeDeathReason;
     private static bool canVent;
 
     private static void SetupOptionItem()
@@ -58,7 +50,4 @@ public sealed class MadDictator : RoleBase, IKillFlashSeeable, IDeathReasonSeeab
         MeetingVoteManager.Instance.ClearAndExile(Player.PlayerId, sourceVotedForId);
         return (votedForId, numVotes, false);
     }
-
-    public bool CheckKillFlash(MurderInfo info) => canSeeKillFlash;
-    public bool CheckSeeDeathReason(PlayerControl seen) => canSeeDeathReason;
 }

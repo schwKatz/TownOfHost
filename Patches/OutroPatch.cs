@@ -25,6 +25,7 @@ namespace TownOfHostY
             GameStates.InGame = false;
 
             Logger.Info("-----------ゲーム終了-----------", "Phase");
+            Main.NormalOptions.NumImpostors = ChangeRoleSettings.ImpostorSetNum;
             if (!GameStates.IsModHost) return;
             SummaryText = new();
             SDSummaryText = new();

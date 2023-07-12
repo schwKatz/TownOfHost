@@ -3,10 +3,9 @@ using Hazel;
 using InnerNet;
 
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Madmate;
-public sealed class MadBrackOuter : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
+public sealed class MadBrackOuter : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
          SimpleRoleInfo.Create(
@@ -26,12 +25,7 @@ public sealed class MadBrackOuter : RoleBase, IKillFlashSeeable, IDeathReasonSee
         player
     )
     {
-        canSeeKillFlash = Options.MadmateCanSeeKillFlash.GetBool();
-        canSeeDeathReason = Options.MadmateCanSeeDeathReason.GetBool();
     }
-
-    private static bool canSeeKillFlash;
-    private static bool canSeeDeathReason;
 
     public static void SetupOptionItem()
     {
@@ -56,7 +50,4 @@ public sealed class MadBrackOuter : RoleBase, IKillFlashSeeable, IDeathReasonSee
         }
         return true;
     }
-
-    public bool CheckKillFlash(MurderInfo info) => canSeeKillFlash;
-    public bool CheckSeeDeathReason(PlayerControl seen) => canSeeDeathReason;
 }

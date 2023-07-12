@@ -1,10 +1,9 @@
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Madmate;
-public sealed class Madmate : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
+public sealed class Madmate : RoleBase
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -24,18 +23,10 @@ public sealed class Madmate : RoleBase, IKillFlashSeeable, IDeathReasonSeeable
         player
     )
     {
-        canSeeKillFlash = Options.MadmateCanSeeKillFlash.GetBool();
-        canSeeDeathReason = Options.MadmateCanSeeDeathReason.GetBool();
     }
-
-    private static bool canSeeKillFlash;
-    private static bool canSeeDeathReason;
 
     public static void SetupOptionItem()
     {
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 10, RoleInfo.RoleName, RoleInfo.Tab);
     }
-
-    public bool CheckKillFlash(MurderInfo info) => canSeeKillFlash;
-    public bool CheckSeeDeathReason(PlayerControl seen) => canSeeDeathReason;
 }
