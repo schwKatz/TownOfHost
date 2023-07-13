@@ -1,7 +1,7 @@
 using System.Linq;
 using HarmonyLib;
 using UnityEngine;
-using TownOfHost.Modules;
+using TownOfHostY.Modules;
 
 namespace TownOfHostY
 {
@@ -74,7 +74,7 @@ namespace TownOfHostY
             //実行ファイルのフォルダを開く
             if (GetKeysDown(KeyCode.F10))
             {
-                System.Diagnostics.Process.Start(System.Environment.CurrentDirectory);
+                Utils.OpenDirectory(System.Environment.CurrentDirectory);
             }
 
             //--以下ホスト専用コマンド--//

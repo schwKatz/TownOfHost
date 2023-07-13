@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AmongUs.GameOptions;
 
+using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
 
@@ -18,6 +19,7 @@ public static class AddWatch
     {
         SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.AddWatch);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

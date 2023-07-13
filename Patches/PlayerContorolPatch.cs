@@ -321,7 +321,7 @@ namespace TownOfHostY
 
             if (AmongUsClient.Instance.AmHost)
             {//実行クライアントがホストの場合のみ実行
-                if (GameStates.IsLobby && (!Main.AllowPublicRoom || !VersionChecker.IsSupported) && AmongUsClient.Instance.IsGamePublic)
+                if (GameStates.IsLobby && (!Main.AllowPublicRoom || !Main.CanPublicRoom.Value || !VersionChecker.IsSupported) && AmongUsClient.Instance.IsGamePublic)
                     AmongUsClient.Instance.ChangeGamePublic(false);
 
                 if (GameStates.IsInTask && ReportDeadBodyPatch.CanReport[__instance.PlayerId] && ReportDeadBodyPatch.WaitReport[__instance.PlayerId].Count > 0)
@@ -495,7 +495,7 @@ namespace TownOfHostY
                             if (isExiled)
                                 MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, partnerPlayer.PlayerId);
                             else
-                                partnerPlayer.RpcMurderPlayer(partnerPlayer);
+                                partnerPlayer.RpcMurderPlayerV2(partnerPlayer);
                         }
                     }
                 }
@@ -528,7 +528,7 @@ namespace TownOfHostY
             if (AmongUsClient.Instance.IsGameStarted && Options.CurrentGameMode == CustomGameMode.HideAndSeek)
             {
                 //ゲーム中に色を変えた場合
-                __instance.RpcMurderPlayer(__instance);
+                __instance.RpcMurderPlayerV2(__instance);
             }
             return true;
         }

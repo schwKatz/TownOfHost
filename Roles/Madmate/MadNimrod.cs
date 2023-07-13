@@ -52,7 +52,7 @@ public sealed class MadNimrod : RoleBase
     {
         if (Exiled == null || !playerIdList.Contains(Exiled.PlayerId)) return Exiled;
 
-        new LateTask(() =>
+        _ = new LateTask(() =>
         {
             Utils.GetPlayerById(Exiled.PlayerId).NoCheckStartMeeting(Exiled);
             IsExecutionMeeting = Exiled.PlayerId;

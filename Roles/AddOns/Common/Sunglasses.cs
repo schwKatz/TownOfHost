@@ -3,6 +3,7 @@ using UnityEngine;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
 using AmongUs.GameOptions;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -27,6 +28,7 @@ public static class Sunglasses
         OptionSubImpostorVision = FloatOptionItem.Create(Id + 11, "SunglassesSubImpostorVision", new(0f, 5f, 0.1f), 0.5f, TabGroup.Addons, false)
             .SetValueFormat(OptionFormat.Multiplier).SetGameMode(CustomGameMode.Standard);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

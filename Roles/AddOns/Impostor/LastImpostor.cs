@@ -1,6 +1,8 @@
+using System;
+using System.Linq;
 using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Core.Interfaces;
+
 using static TownOfHostY.Options;
 
 namespace TownOfHostY.Roles.AddOns.Impostor

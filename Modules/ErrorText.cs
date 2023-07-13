@@ -51,12 +51,14 @@ namespace TownOfHostY
         public void Update()
         {
             AllErrors.ForEach(err => err.IncreaseTimer());
-            var ToRemove = AllErrors.Where(err => err.ErrorLevel <= 1 && 30f < err.Timer);
+            var ToRemove = AllErrors.Where(err => err.ErrorLevel <= 1 && 8f < err.Timer);
             if (ToRemove.Any())
             {
                 AllErrors.RemoveAll(err => ToRemove.Contains(err));
                 UpdateText();
                 if (HnSFlag)
+                    Destroy(this.gameObject);
+                if (PublicFlag)
                     Destroy(this.gameObject);
             }
         }
@@ -90,7 +92,8 @@ namespace TownOfHostY
             int maxLevel = 0;
             foreach (var err in AllErrors)
             {
-                text += $"{err}: {err.Message}\n";
+                //text += $"{err}: {err.Message}\n";
+                text += $"{err.Message}\n";
                 if (maxLevel < err.ErrorLevel) maxLevel = err.ErrorLevel;
             }
             if (maxLevel == 0)
@@ -99,7 +102,7 @@ namespace TownOfHostY
             }
             else
             {
-                if (!HnSFlag)
+                if (!HnSFlag && !PublicFlag)
                     text += $"{GetString($"ErrorLevel{maxLevel}")}";
                 Text.enabled = true;
             }
@@ -138,6 +141,7 @@ namespace TownOfHostY
         }
 
         public bool HnSFlag;
+        public bool PublicFlag;
     }
     public enum ErrorCode
     {
@@ -162,5 +166,6 @@ namespace TownOfHostY
         TestError2 = 0009202, // 000-920-2 Test Error 2
         TestError3 = 0009303, // 000-930-3 Test Error 3
         HnsUnload = 000_804_1, // 000-804-1 Unloaded By HnS
+        PublicModeChange = 000_503_1, // 000_503_1 PublicModeChange
     }
 }

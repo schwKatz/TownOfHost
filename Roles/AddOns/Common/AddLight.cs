@@ -3,6 +3,7 @@ using UnityEngine;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
 using AmongUs.GameOptions;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -31,6 +32,7 @@ public static class AddLight
         OptionDisableLightOut = BooleanOptionItem.Create(79212, "AddLighterDisableLightOut", true, TabGroup.Addons, false)
             .SetGameMode(CustomGameMode.Standard);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

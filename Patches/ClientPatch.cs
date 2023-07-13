@@ -20,7 +20,51 @@ namespace TownOfHostY
                 Logger.SendInGame(message);
                 return false;
             }
+            if (!VersionChecker.IsSupported)
+            {
+                var message = "";
+                message = GetString("UnsupportedVersion");
+                Logger.Info(message, "MakePublicPatch");
+                Logger.SendInGame(message);
+                return false;
+            }
+            if (!Main.CanPublicRoom.Value)
+            {
+                var message = GetString("DisabledBySetting");
+                Logger.Info(message, "MakePublicPatch");
+                Logger.SendInGame(message);
+                return false;
+            }
             return true;
+        }
+    }
+    [HarmonyPatch(typeof(MMOnlineManager), nameof(MMOnlineManager.Start))]
+    class MMOnlineManagerStartPatch
+    {
+        public static void Postfix(MMOnlineManager __instance)
+        {
+            if (VersionChecker.IsSupported && Main.CanPublicRoom.Value) return;
+
+            var obj = GameObject.Find("FindGameButton");
+            if (obj)
+            {
+                obj?.SetActive(false);
+                var parentObj = obj.transform.parent.gameObject;
+                var textObj = Object.Instantiate<TMPro.TextMeshPro>(obj.transform.FindChild("Text_TMP").GetComponent<TMPro.TextMeshPro>());
+                textObj.transform.position = new Vector3(1f, -0.3f, 0);
+                textObj.name = "CanNotJoinPublic";
+                textObj.DestroyTranslator();
+                string message = "";
+                if (!VersionChecker.IsSupported)
+                {
+                    message = GetString("UnsupportedVersion");
+                }
+                else if (!Main.CanPublicRoom.Value)
+                {
+                    message = GetString("DisabledBySetting1");
+                }
+                textObj.text = $"<size=2>{Utils.ColorString(Color.red, message)}</size>";
+            }
         }
     }
     [HarmonyPatch(typeof(SplashManager), nameof(SplashManager.Update))]
@@ -83,15 +127,6 @@ namespace TownOfHostY
         {
             if (AmongUsClient.Instance.AmHost)
                 GameOptionsSender.SendAllGameOptions();
-        }
-    }
-    [HarmonyPatch(typeof(Constants), nameof(Constants.GetBroadcastVersion))]
-    class ConstantsVersionPatch
-    {
-        static void Postfix(ref int __result)
-        {
-            if(!GameStates.IsLocalGame)
-                __result = Constants.GetVersion(2222, 0, 0, 0);
         }
     }
 }

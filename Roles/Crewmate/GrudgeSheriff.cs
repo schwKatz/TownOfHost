@@ -154,7 +154,7 @@ public sealed class GrudgeSheriff : RoleBase
             if (!CanBeKilledBy(target))
             {
                 PlayerState.GetByPlayerId(Player.PlayerId).DeathReason = CustomDeathReason.Misfire;
-                Player.RpcMurderPlayer(Player);
+                Player.RpcMurderPlayerV2(Player);
                 Utils.MarkEveryoneDirtySettings();
                 KillWaitPlayerSelect = null;
                 KillWaitPlayer = null;
@@ -165,7 +165,7 @@ public sealed class GrudgeSheriff : RoleBase
                 }
             }
             target.SetRealKiller(Player);
-            Player.RpcMurderPlayer(target);
+            Player.RpcMurderPlayerV2(target);
             Utils.MarkEveryoneDirtySettings();
             KillWaitPlayerSelect = null;
             KillWaitPlayer = null;

@@ -88,7 +88,7 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
     }
     public float CalculateKillCooldown() => KillCooldown;
     public bool CanUseKillButton() => Player.IsAlive() && ShotLimit > 0;
-    public override bool CanSabotage(SystemTypes systemType) => false;
+    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
     //public void OnCheckMurderAsKiller(MurderInfo info)
     public void OnMurderPlayerAsKiller(MurderInfo info)

@@ -3,6 +3,7 @@ using UnityEngine;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
 using System.Linq;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -12,6 +13,7 @@ public static class Loyalty
     public static string SubRoleMark = Utils.ColorString(RoleColor, "Ｌ");
     private static List<byte> playerIdList = new();
 
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

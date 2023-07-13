@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -16,6 +17,7 @@ public static class NonReport
     {
         SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.NonReport);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

@@ -9,6 +9,7 @@ namespace TownOfHostY
     {
         private static ClientActionItem ForceJapanese;
         private static ClientActionItem JapaneseRoleName;
+        private static ClientActionItem CanPublicRoom;
         private static ClientActionItem UnloadMod;
         private static ClientActionItem DumpLog;
 
@@ -26,6 +27,10 @@ namespace TownOfHostY
             if (JapaneseRoleName == null || JapaneseRoleName.ToggleButton == null)
             {
                 JapaneseRoleName = ClientOptionItem.Create("JapaneseRoleName", Main.JapaneseRoleName, __instance);
+            }
+            if (CanPublicRoom == null || CanPublicRoom.ToggleButton == null)
+            {
+                CanPublicRoom = ClientOptionItem.Create("CanPublicRoom", Main.CanPublicRoom, __instance);
             }
             if (UnloadMod == null || UnloadMod.ToggleButton == null)
             {

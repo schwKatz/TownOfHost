@@ -1,4 +1,4 @@
-namespace TownOfHost.Attributes;
+namespace TownOfHostY.Attributes;
 
 /// <summary>
 /// <see cref="AmongUsClient.CoStartGame"/>のPostfixで毎ゲーム初期化するメソッドに使う<br/>

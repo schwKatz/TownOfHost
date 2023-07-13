@@ -317,14 +317,21 @@ namespace TownOfHostY
             {
                 if (info.RoleName != CustomRoles.StrayWolf)
                 {
-                    switch (info.RoleName)
+                    if (info.RoleName.IsCannotPublicRole())
                     {
-                        case CustomRoles.Telepathisters:
-                            SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
-                            break;
-                        default:
-                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                            break;
+                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic : true);
+                    }
+                    else
+                    {
+                        switch (info.RoleName)
+                        {
+                            case CustomRoles.Telepathisters:
+                                SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
+                                break;
+                            default:
+                                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                                break;
+                        }
                     }
                     info.OptionCreator?.Invoke();
                 }
@@ -343,8 +350,15 @@ namespace TownOfHostY
 
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Madmate).Do(info =>
             {
-                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                info.OptionCreator?.Invoke();
+                if (info.RoleName.IsCannotPublicRole())
+                {
+                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic : true);
+                }
+                else
+                {
+                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                    info.OptionCreator?.Invoke();
+                }
             });
 
             CanMakeMadmateCount = IntegerOptionItem.Create(91510, "CanMakeMadmateCount", new(0, 15, 1), 0, TabGroup.MadmateRoles, false)
@@ -369,16 +383,23 @@ namespace TownOfHostY
             // Crewmate
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Crewmate).Do(info =>
             {
-                switch (info.RoleName)
+                if (info.RoleName.IsCannotPublicRole())
                 {
-                    case CustomRoles.Sympathizer: //共鳴者は2人固定
-                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 2);
-                        break;
-                    default:
-                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                        break;
+                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic : true);
                 }
-                info.OptionCreator?.Invoke();
+                else
+                {
+                    switch (info.RoleName)
+                    {
+                        case CustomRoles.Sympathizer: //共鳴者は2人固定
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 2);
+                            break;
+                        default:
+                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                            break;
+                    }
+                    info.OptionCreator?.Invoke();
+                }
             });
 
             // Neutral
@@ -388,19 +409,27 @@ namespace TownOfHostY
 
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Neutral).Do(info =>
             {
-                switch (info.RoleName)
+                if (info.RoleName.IsCannotPublicRole())
                 {
-                    case CustomRoles.Jackal: //ジャッカルは1人固定
-                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
-                        break;
-                    case CustomRoles.DarkHide: //ジャッカルは1人固定
-                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
-                        break;
-                    default:
-                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                        break;
+                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic : true);
                 }
-                info.OptionCreator?.Invoke();
+                else
+                {
+
+                    switch (info.RoleName)
+                    {
+                        case CustomRoles.Jackal: //ジャッカルは1人固定
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                            break;
+                        case CustomRoles.DarkHide: //ジャッカルは1人固定
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                            break;
+                        default:
+                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                            break;
+                    }
+                    info.OptionCreator?.Invoke();
+                }
             });
 
             // Add-Ons
@@ -679,7 +708,7 @@ namespace TownOfHostY
                             or "ApplyBanList"
                             or "ChangeIntro";
         }
-        public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, CustomGameMode customGameMode = CustomGameMode.Standard)
+        public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, CustomGameMode customGameMode = CustomGameMode.Standard, bool isPublic = false)
         {
             if (role.IsVanilla()) return;
             int MaxCount = 15;
@@ -688,6 +717,7 @@ namespace TownOfHostY
             var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false).SetColor(Utils.GetRoleColor(role))
                 .SetValueFormat(OptionFormat.Percent)
                 .SetHeader(true)
+                .SetIsPublicDontUse(isPublic)
                 .SetGameMode(customGameMode) as IntegerOptionItem;
             var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(1, MaxCount, 1), 1, tab, false).SetParent(spawnOption)
                 .SetValueFormat(OptionFormat.Players)
@@ -751,7 +781,7 @@ namespace TownOfHostY
             if (parent == null) parent = CustomRoleSpawnChances[PlayerRole];
             var roleName = Utils.GetRoleName(role) + Utils.GetAddonAbilityInfo(role);
             Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), roleName) } };
-            AddOnRoleOptions[(PlayerRole, role)] = BooleanOptionItem.Create(Id, "AddOnAssign%role%", defaultValue, tab, false).SetParent(parent);
+            AddOnRoleOptions[(PlayerRole, role)] = BooleanOptionItem.Create(Id, "AddOnAssign%role%", defaultValue, tab, false).SetParent(parent).SetIsPublicDontUse(role == CustomRoles.Guarding);
             AddOnRoleOptions[(PlayerRole, role)].ReplacementDictionary = replacementDic;
         }
 

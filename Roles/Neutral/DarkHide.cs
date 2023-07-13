@@ -21,14 +21,14 @@ namespace TownOfHostY.Roles.Neutral
                 60200,
                 SetupOptionItem,
                 "ダークハイド",
-                "#483d8b"
+                "#483d8b",
+                countType : CountTypes.Crew
             );
         public DarkHide(PlayerControl player)
         : base(
             RoleInfo,
             player,
-            () => HasTask.False,
-            CountTypes.Crew
+            () => HasTask.False
         )
         {
             KillCooldown = OptionKillCooldown.GetFloat();
@@ -82,6 +82,6 @@ namespace TownOfHostY.Roles.Neutral
 
         public float CalculateKillCooldown() => KillCooldown;
         public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
-        public override bool CanSabotage(SystemTypes systemType) => false;
+        public override bool OnInvokeSabotage(SystemTypes systemType) => false;
     }
 }

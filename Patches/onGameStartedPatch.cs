@@ -10,7 +10,7 @@ using TownOfHostY.Attributes;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.AddOns.Common;
+using TownOfHostY.Roles.Neutral;
 using static TownOfHostY.Translator;
 
 namespace TownOfHostY
@@ -117,36 +117,7 @@ namespace TownOfHostY
                     Options.HideAndSeekKillDelayTimer = Options.StandardHASWaitingTime.GetFloat();
                 }
             }
-            CustomRoleManager.Initialize();
-            //Add-on
-            LastImpostor.Init();
-            CompreteCrew.Init();
-            Workhorse.Init();
 
-            AddWatch.Init();
-            AddLight.Init();
-            Autopsy.Init();
-            VIP.Init();
-            Revenger.Init();
-            Management.Init();
-            Sending.Init();
-            TieBreaker.Init();
-            Loyalty.Init();
-            PlusVote.Init();
-            Guarding.Init();
-            AddBait.Init();
-            Refusing.Init();
-
-            Sunglasses.Init();
-            Clumsy.Init();
-            InfoPoor.Init();
-            NonReport.Init();
-
-            FallFromLadder.Reset();
-            TargetArrow.Init();
-            DoubleTrigger.Init();
-            CustomWinnerHolder.Reset();
-            AntiBlackout.Reset();
             IRandom.SetInstanceById(Options.RoleAssigningAlgorithm.GetValue());
 
             MeetingStates.MeetingCalled = false;
@@ -195,15 +166,18 @@ namespace TownOfHostY
                     PlayerControl.LocalPlayer.Data.IsDead = true;
                 }
                 Dictionary<(byte, byte), RoleTypes> rolesMap = new();
-                AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                if (!Main.CanPublicRoom.Value)
+                {
+                    AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                    AssignDesyncRole(CustomRoles.SillySheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                    AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                    AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                    AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                    AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                }
                 AssignDesyncRole(CustomRoles.Hunter, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.SillySheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Jackal, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.DarkHide, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 if (CustomRoles.StrayWolf.GetCount() >= 2)
                     AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 if (Opportunist.OptionCanKill.GetBool())
@@ -309,6 +283,7 @@ namespace TownOfHostY
                 {
                     if (role.IsVanilla()) continue;
                     if (role is CustomRoles.HASTroll or CustomRoles.HASFox) continue;
+                    if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
 
                     if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
@@ -344,7 +319,8 @@ namespace TownOfHostY
                 AssignCustomSubRolesFromList(CustomRoles.TieBreaker, allPlayersbySub);
                 AssignCustomSubRolesFromList(CustomRoles.NonReport, allPlayersbySub);
                 AssignCustomSubRolesFromList(CustomRoles.PlusVote, allPlayersbySub);
-                AssignCustomSubRolesFromList(CustomRoles.Guarding, allPlayersbySub);
+                if (!Main.CanPublicRoom.Value)
+                    AssignCustomSubRolesFromList(CustomRoles.Guarding, allPlayersbySub);
                 AssignCustomSubRolesFromList(CustomRoles.AddBait, allPlayersbySub);
                 AssignCustomSubRolesFromList(CustomRoles.Refusing, allPlayersbySub);
 
@@ -389,7 +365,7 @@ namespace TownOfHostY
                     foreach (var seer in Main.AllPlayerControls)
                     {
                         if (seer == pc) continue;
-                        if (pc.Is(CustomRoles.GM)/* || pc.Is(CustomRoles.Rainbow) */
+                        if (pc.Is(CustomRoles.GM)
                             || (pc.Is(CustomRoles.Workaholic) && Workaholic.Seen)
                             || pc.Is(CustomRoles.Rainbow))
                             NameColorManager.Add(seer.PlayerId, pc.PlayerId, pc.GetRoleColorCode());

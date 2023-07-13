@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -20,6 +21,7 @@ public static class Management
         SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.Management);
         OptionSeeNowtask = BooleanOptionItem.Create(Id + 10, "ManagementSeeNowtask", true, TabGroup.Addons, false);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

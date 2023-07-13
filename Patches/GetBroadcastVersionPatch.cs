@@ -1,13 +1,13 @@
 using HarmonyLib;
 
-namespace TownOfHost.Patches;
+namespace TownOfHostY.Patches;
 
 [HarmonyPatch(typeof(Constants), nameof(Constants.GetBroadcastVersion))]
 public static class GetBroadcastVersionPatch
 {
     public static bool Prefix(ref int __result)
     {
-        if (GameStates.IsLocalGame)
+        if (GameStates.IsLocalGame || Main.CanPublicRoom.Value)
         {
             return true;
         }

@@ -59,7 +59,7 @@ public sealed class MadSheriff : RoleBase, IKiller
     }
     public float CalculateKillCooldown() => CanUseKillButton() ? KillCooldown : 0f;
     public bool CanUseKillButton() => Player.IsAlive();
-    public override bool CanSabotage(SystemTypes systemType) => false;
+    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
         opt.SetVision(Options.AddOnRoleOptions[(CustomRoles.MadSheriff, CustomRoles.AddLight)].GetBool());
@@ -70,7 +70,7 @@ public sealed class MadSheriff : RoleBase, IKiller
         (var killer, var target) = info.AttemptTuple;
 
         PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
-        killer.RpcMurderPlayer(killer);
+        killer.RpcMurderPlayerV2(killer);
 
         if (!MisfireKillsTarget) info.DoKill = false;
     }

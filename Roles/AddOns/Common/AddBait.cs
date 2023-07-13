@@ -2,8 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
-using Epic.OnlineServices.Presence;
-using Il2CppSystem.Reflection;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -18,6 +17,7 @@ public static class AddBait
     {
         SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.AddBait);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();
@@ -32,7 +32,7 @@ public static class AddBait
         var (killer, target) = info.AttemptTuple;
 
         if (playerIdList.Contains(target.PlayerId) && !info.IsSuicide)
-            new LateTask(() =>
+            _ = new LateTask(() =>
             {
                 killer.CmdReportDeadBody(target.Data);
             }, 0.15f, "AddBait Self Report");

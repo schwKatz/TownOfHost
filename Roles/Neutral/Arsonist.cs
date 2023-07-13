@@ -183,7 +183,7 @@ public sealed class Arsonist : RoleBase, IKiller
                 {
                     //生存者は焼殺
                     pc.SetRealKiller(Player);
-                    pc.RpcMurderPlayer(pc);
+                    pc.RpcMurderPlayerV2(pc);
                     var state = PlayerState.GetByPlayerId(pc.PlayerId);
                     state.DeathReason = CustomDeathReason.Torched;
                     state.SetDead();

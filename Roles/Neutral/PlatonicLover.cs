@@ -50,7 +50,7 @@ public sealed class PlatonicLover : RoleBase, IKiller
     }
     public float CalculateKillCooldown() => CanUseKillButton() ? 0.1f : 0f;
     public bool CanUseKillButton() => Player.IsAlive() && !isMadeLover;
-    public override bool CanSabotage(SystemTypes systemType) => false;
+    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(false);
     public void OnCheckMurderAsKiller(MurderInfo info)
     {

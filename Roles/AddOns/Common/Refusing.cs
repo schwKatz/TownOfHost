@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -17,6 +18,7 @@ public static class Refusing
     {
         SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.Refusing);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

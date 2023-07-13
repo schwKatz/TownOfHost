@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -244,13 +245,17 @@ namespace TownOfHostY
                     if (subRole <= CustomRoles.NotAssigned) continue;
                     switch (subRole)
                     {
-                        //ラストインポスターとコンプリートクルーのみ必ず省略せずに表示させる
+                        //必ず省略せずに表示させる
                         case CustomRoles.LastImpostor:
                             roleText.Append(ColorString(Palette.ImpostorRed, GetRoleString("Last-")));
                             count--;
                             break;
                         case CustomRoles.CompreteCrew:
                             roleText.Append(ColorString(Color.yellow, GetRoleString("Comprete-")));
+                            count--;
+                            break;
+                        case CustomRoles.Archenemy:
+                            roleText.Append(ColorString(Utils.GetRoleColor(subRole), GetRoleString("Archenemy")));
                             count--;
                             break;
                     }
@@ -625,6 +630,8 @@ namespace TownOfHostY
                 foreach (var role in CustomRolesHelper.AllRoles)
                 {
                     if (role is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
+                    if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
+
                     if (role.IsEnable() && !role.IsVanilla()) SendMessage(GetRoleName(role) + GetString(Enum.GetName(typeof(CustomRoles), role) + "InfoLong"), PlayerId);
                 }
             }
@@ -654,6 +661,7 @@ namespace TownOfHostY
                 foreach (var role in Options.CustomRoleCounts)
                 {
                     if (!role.Key.IsEnable() || role.Key is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
+                    if (Main.CanPublicRoom.Value && role.Key.IsCannotPublicRole()) continue;
 
                     if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
                         sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
@@ -688,8 +696,13 @@ namespace TownOfHostY
             sb.Append($"━━━━━━━━━━━━【{GetString("Roles")}】━━━━━━━━━━━━");
             foreach (var role in Options.CustomRoleCounts)
             {
-                if (!role.Key.IsEnable()) continue;
-                sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
+                if (!role.Key.IsEnable() || role.Key is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
+                if (Main.CanPublicRoom.Value && role.Key.IsCannotPublicRole()) continue;
+
+                if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
+                    sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
+                else
+                    sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
                 ShowChildrenSettings(Options.CustomRoleSpawnChances[role.Key], ref sb);
                 var text = sb.ToString();
                 sb.Clear().Append(text.RemoveHtmlTags());
@@ -718,6 +731,8 @@ namespace TownOfHostY
             foreach (CustomRoles role in CustomRolesHelper.AllRoles)
             {
                 if (role is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
+                if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
+
                 if (role.IsEnable())
                 {
                     if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
@@ -1120,9 +1135,17 @@ namespace TownOfHostY
             string filename = $"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}/TOH_Y-v{Main.PluginVersion}-{t}.log";
             FileInfo file = new(@$"{System.Environment.CurrentDirectory}/BepInEx/LogOutput.log");
             file.CopyTo(@filename);
-            System.Diagnostics.Process.Start(@$"{System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory)}");
+            OpenDirectory(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory));
             if (PlayerControl.LocalPlayer != null)
                 HudManager.Instance?.Chat?.AddChat(PlayerControl.LocalPlayer, "デスクトップにログを保存しました。バグ報告チケットを作成してこのファイルを添付してください。");
+        }
+        public static void OpenDirectory(string path)
+        {
+            var startInfo = new ProcessStartInfo(path)
+            {
+                UseShellExecute = true,
+            };
+            Process.Start(startInfo);
         }
         public static string SummaryTexts(bool showName, byte id, bool disableColor = true)
         {

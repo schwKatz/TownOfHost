@@ -8,6 +8,8 @@ using Il2CppSystem.Text;
 using AmongUs.GameOptions;
 using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Impostor;
 using TownOfHostY.Roles.AddOns.Common;
 
 namespace TownOfHostY.Roles.Core;
@@ -80,7 +82,7 @@ public static class CustomRoleManager
         {
             //MurderPlayer用にinfoを保存
             CheckMurderInfos[appearanceKiller.PlayerId] = info;
-            appearanceKiller.RpcMurderPlayer(appearanceTarget);
+            appearanceKiller.RpcMurderPlayerV2(appearanceTarget);
         }
         else
         {

@@ -5,6 +5,7 @@ using TownOfHostY.Roles.Core;
 using static TownOfHostY.Options;
 using static TownOfHostY.Translator;
 using static TownOfHostY.Utils;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -21,6 +22,7 @@ public static class Sending
     {
         SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.Sending);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

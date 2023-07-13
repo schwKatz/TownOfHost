@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TownOfHost.Attributes;
+using TownOfHostY.Attributes;
 using UnityEngine;
 
 namespace TownOfHostY

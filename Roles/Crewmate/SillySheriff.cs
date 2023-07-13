@@ -134,7 +134,7 @@ public sealed class SillySheriff : RoleBase, IKiller
         => Player.IsAlive()
         && (CanKillAllAlive.GetBool() || GameStates.AlreadyDied)
         && ShotLimit > 0;
-    public override bool CanSabotage(SystemTypes systemType) => false;
+    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
         opt.SetVision(false);
@@ -158,7 +158,7 @@ public sealed class SillySheriff : RoleBase, IKiller
         if ((CanBeKilledBy(target) && chance <= Chance) || (!CanBeKilledBy(target) && chance >= Chance))
         {
             // 自殺
-            killer.RpcMurderPlayer(killer);
+            killer.RpcMurderPlayerV2(killer);
             PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
             if (!MisfireKillsTarget.GetBool())
             {

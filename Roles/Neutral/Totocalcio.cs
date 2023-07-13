@@ -82,7 +82,7 @@ public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
         return CanUseKillButton() ? InitialCoolDown + plusCool : 300f;
     }
     public bool CanUseKillButton() => Player.IsAlive() && BetTargetCount > 0;
-    public override bool CanSabotage(SystemTypes systemType) => false;
+    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(false);
     public void OnCheckMurderAsKiller(MurderInfo info)
     {

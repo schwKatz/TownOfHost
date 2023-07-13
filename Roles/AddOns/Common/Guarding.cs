@@ -5,6 +5,7 @@ using static TownOfHostY.Options;
 using Unity.Services.Authentication.Internal;
 using Hazel;
 using System.Linq;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -22,8 +23,9 @@ public static class Guarding
 
     public static void SetupCustomOption()
     {
-        SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.Guarding);
+        SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.Guarding, isPublic : true);
     }
+    [GameModuleInitializer]
     public static void Init()
     {
         playerIdList = new();

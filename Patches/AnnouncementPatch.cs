@@ -247,7 +247,7 @@ public class ModNewsHistory
                 //BeforeNumber = 0,
                 Title = "Town Of Host_YS v501.10.2",
                 SubTitle = "★★★★★v501.10.2アップデート★★★★★",
-                ShortTitle = "★TOH_Y v501.10.2",
+                ShortTitle = "★TOH_YS v501.10.2",
                 Text = "Thank you for playing TownOfHost_Y!\n"
                 + "\n<b>対応までしばらくは制限版で、、、</b>\n"
                 + "\n　Among Usバニラ側の内部的仕様変更により、ホスト系MOD全てでキル関連に関する問題が発生しています。"
@@ -310,7 +310,7 @@ public class ModNewsHistory
                 //BeforeNumber = 0,
                 Title = "Town Of Host_YS v502.12",
                 SubTitle = "★★★★★v502.12アップデート★★★★★",
-                ShortTitle = "★TOH_Y v502.12",
+                ShortTitle = "★TOH_YS v502.12",
                 Text = "Thank you for playing TownOfHost_Y!\n"
                 + "\n<b>ごめんね、まだシェリフは使えないんだ。</b>\n"
                 + "\n　なにげにちょこっと新役職追加。インポスターも用意していたけど鯖変更のやつにひっかかっちゃった"
@@ -335,7 +335,34 @@ public class ModNewsHistory
             };
             AllModNews.Add(news);
         }
+        {
+            var news = new ModNews
+            {
+                Number = 100013,
+                //BeforeNumber = 0,
+                Title = "Town Of Host_Y v503.13",
+                SubTitle = "★★★★★v503.13アップデート★★★★★",
+                ShortTitle = "★TOH_Y v503.13",
+                Text = "Thank you for playing TownOfHost_Y!\n"
+                + "\n<b>おかえり！ようやく全て使えるようになったよ！</b>\n"
+                + "\n　シェリフ等一部役職が使用できなくなっていましたが、Innersloth側が提供してくれたホストMODのための仕様のおかげで"
+                + "ようやく全ての役職が使用できるようになりました！これからも色んな役職で遊んでね。\n"
+                + "\n----------------------------------------------------------------"
+                + "\n<b>その代わり公開ルームが犠牲になるよ</b>\n"
+                + "\n　ちゃんと動く状態のものは特殊仕様になっているため、公開ルームでの検索(野良)で他の人が入れなくなりました。"
+                + "\nYでは設定(歯車)にて制限版にすることで公開ルームでも使用できるようにご用意いたしました。使えない役職は非表示にしているので、"
+                + "表示されていて入れた役職で不具合が起こった時は報告してください。"
+                + "\n----------------------------------------------------------------"
+                + "\n<b>-【v12新役職】マッドニムロッド・ニムロッド・決闘者</b>"
+                + "\n　ニムロッドはワンナイトモードの狩人と能力は同じです。道連れしたい人を指名することができます。"
+                + "\n　決闘者は第三陣営の追加勝利役職。好きな人を宿敵に選んでその人とバチバチ戦おう。\n"
 
+                + "\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
+                Date = "2023-07-14T00:00:00Z"
+
+            };
+            AllModNews.Add(news);
+        }
     }
 
     [HarmonyPatch(typeof(PlayerAnnouncementData), nameof(PlayerAnnouncementData.SetAnnouncements)), HarmonyPrefix]

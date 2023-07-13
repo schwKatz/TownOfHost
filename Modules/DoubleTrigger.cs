@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using TownOfHost.Attributes;
+using TownOfHostY.Attributes;
 using UnityEngine;
 
 namespace TownOfHostY

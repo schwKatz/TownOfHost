@@ -91,7 +91,7 @@ public sealed class BountyHunter : RoleBase, IImpostor
     //public static void SetKillCooldown(byte id, float amount) => Main.AllPlayerKillCooldown[id] = amount;
     public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.ShapeshifterCooldown = TargetChangeTime;
 
-    public void OnMurderPlayerAsKiller(MurderInfo info)
+    public void OnCheckMurderAsKiller(MurderInfo info)
     {
         if (!info.IsSuicide)
         {

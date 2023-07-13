@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Http;
 using System.Linq;
 using System.Runtime.InteropServices;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY
 {
@@ -44,6 +45,7 @@ namespace TownOfHostY
         public static OptionItem VoiceReaderTan;
         public static OptionItem VoiceReaderCoral;
 
+        [PluginModuleInitializer]
         public static void Init()
         {
             LoadVoiceList();

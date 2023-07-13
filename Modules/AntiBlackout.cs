@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using AmongUs.GameOptions;
 using Hazel;
 
-using TownOfHost.Attributes;
+using TownOfHostY.Attributes;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles.Neutral;
 
