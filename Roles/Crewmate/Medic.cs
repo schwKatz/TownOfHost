@@ -50,12 +50,14 @@ public sealed class Medic : RoleBase
         AURoleOptions.EngineerInVentMaxTime = 1f;
     }
 
-    public static bool GuardPlayerCheckMurder(PlayerControl killer, PlayerControl target)
+    public static bool GuardPlayerCheckMurder(MurderInfo info)
     {
+        (var killer, var target) = info.AttemptTuple;
+
         // メディックに守られていなければなにもせず返す
         if (!IsGuard(target)) return true;
         // 直接キル出来る役職チェック
-        if (killer.Is(CustomRoles.Arsonist) || killer.Is(CustomRoles.PlatonicLover) || killer.Is(CustomRoles.Totocalcio) || killer.Is(CustomRoles.MadSheriff)) return true;
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
 
         killer.RpcGuardAndKill(target); //killer側のみ。斬られた側は見れない。
 
@@ -66,7 +68,8 @@ public sealed class Medic : RoleBase
                 medic.GuardPlayer = null; break;
             }
         }
-        return false;
+        info.CanKill = false;
+        return true;
     }
     public static bool IsGuard(PlayerControl target)
     {

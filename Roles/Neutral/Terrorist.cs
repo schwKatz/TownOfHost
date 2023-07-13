@@ -81,23 +81,19 @@ public sealed class Terrorist : RoleBase
     }
     public void Win()
     {
-        //foreach (var otherPlayer in Main.AllAlivePlayerControls)
-        //{
-        //    if (otherPlayer.Is(CustomRoles.Terrorist))
-        //    {
-        //        continue;
-        //    }
-        //    otherPlayer.SetRealKiller(Player);
-        //    otherPlayer.RpcMurderPlayer(otherPlayer);
-        //    var playerState = PlayerState.GetByPlayerId(otherPlayer.PlayerId);
-        //    playerState.DeathReason = CustomDeathReason.Bombed;
-        //    playerState.SetDead();
-        //}
-        GameManager.Instance.enabled = false;
-
+        foreach (var otherPlayer in Main.AllAlivePlayerControls)
+        {
+            if (otherPlayer.Is(CustomRoles.Terrorist))
+            {
+                continue;
+            }
+            otherPlayer.SetRealKiller(Player);
+            otherPlayer.RpcMurderPlayer(otherPlayer);
+            var playerState = PlayerState.GetByPlayerId(otherPlayer.PlayerId);
+            playerState.DeathReason = CustomDeathReason.Bombed;
+            playerState.SetDead();
+        }
         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Terrorist);
         CustomWinnerHolder.WinnerIds.Add(Player.PlayerId);
-        if (!AmongUsClient.Instance.AmHost) return;
-        GameEndChecker.StartEndGame(GameOverReason.ImpostorByKill);
     }
 }

@@ -253,7 +253,7 @@ namespace TownOfHostY
         public static AddonShowMode GetAddonShowModes() => (AddonShowMode)AddonShow.GetValue();
         public static readonly string[] nameChangeModes =
 {
-            "nameChangeMode.None", "nameChangeMode.Crew", "nameChangeMode.Color"
+            "nameChangeMode.None", /*"nameChangeMode.Crew", */"nameChangeMode.Color"
         };
         public static NameChange GetNameChangeModes() => (NameChange)NameChangeMode.GetValue();
 
@@ -315,30 +315,18 @@ namespace TownOfHostY
             // Impostor
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Impostor).Do(info =>
             {
-                switch (info.RoleName)
+                if (info.RoleName != CustomRoles.StrayWolf)
                 {
-                    case CustomRoles.Puppeteer:
-                    case CustomRoles.Witch:
-                    case CustomRoles.Vampire:
-                    case CustomRoles.Warlock:
-                    case CustomRoles.CursedWolf:
-                    case CustomRoles.EvilDiviner:
-                    case CustomRoles.StrayWolf:
-                        //0622不具合対応のため表示させない
-                        break;
-
-                    default:
-                        switch (info.RoleName)
-                        {
-                            case CustomRoles.Telepathisters:
-                                SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
-                                break;
-                            default:
-                                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                                break;
-                        }
-                        info.OptionCreator?.Invoke();
-                        break;
+                    switch (info.RoleName)
+                    {
+                        case CustomRoles.Telepathisters:
+                            SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
+                            break;
+                        default:
+                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                            break;
+                    }
+                    info.OptionCreator?.Invoke();
                 }
             });
 
@@ -355,12 +343,8 @@ namespace TownOfHostY
 
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Madmate).Do(info =>
             {
-                //0622不具合対応のため表示させない
-                if (info.RoleName is not CustomRoles.MadGuardian and not CustomRoles.MadSheriff)
-                {
-                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                    info.OptionCreator?.Invoke();
-                }
+                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                info.OptionCreator?.Invoke();
             });
 
             CanMakeMadmateCount = IntegerOptionItem.Create(91510, "CanMakeMadmateCount", new(0, 15, 1), 0, TabGroup.MadmateRoles, false)
@@ -385,20 +369,16 @@ namespace TownOfHostY
             // Crewmate
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Crewmate).Do(info =>
             {
-                //0622不具合対応のため表示させない
-                if (info.RoleName is not CustomRoles.SillySheriff and not CustomRoles.Sheriff and not CustomRoles.Medic)
+                switch (info.RoleName)
                 {
-                    switch (info.RoleName)
-                    {
-                        case CustomRoles.Sympathizer: //共鳴者は2人固定
-                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 2);
-                            break;
-                        default:
-                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                            break;
-                    }
-                    info.OptionCreator?.Invoke();
+                    case CustomRoles.Sympathizer: //共鳴者は2人固定
+                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 2);
+                        break;
+                    default:
+                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                        break;
                 }
+                info.OptionCreator?.Invoke();
             });
 
             // Neutral
@@ -408,24 +388,19 @@ namespace TownOfHostY
 
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Neutral).Do(info =>
             {
-                        //0622不具合対応のため表示させない
-                if (info.RoleName is not CustomRoles.Arsonist
-                    and not CustomRoles.SchrodingerCat
-                    and not CustomRoles.PlatonicLover
-                    and not CustomRoles.LoveCutter
-                    and not CustomRoles.Totocalcio)
+                switch (info.RoleName)
                 {
-                    switch (info.RoleName)
-                    {
-                        case CustomRoles.Jackal: //ジャッカルは1人固定
-                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
-                            break;
-                        default:
-                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                            break;
-                    }
-                    info.OptionCreator?.Invoke();
+                    case CustomRoles.Jackal: //ジャッカルは1人固定
+                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                        break;
+                    case CustomRoles.DarkHide: //ジャッカルは1人固定
+                        SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                        break;
+                    default:
+                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                        break;
                 }
+                info.OptionCreator?.Invoke();
             });
 
             // Add-Ons
@@ -445,7 +420,6 @@ namespace TownOfHostY
             Sending.SetupCustomOption();
             TieBreaker.SetupCustomOption();
             PlusVote.SetupCustomOption();
-            //0622不具合対応のため表示させない
             Guarding.SetupCustomOption();
             AddBait.SetupCustomOption();
             Refusing.SetupCustomOption();
@@ -757,11 +731,8 @@ namespace TownOfHostY
             Id += 10;
             foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsBuffAddOn()))
             {
-                //0622不具合対応のため表示させない
-                if (Addon == CustomRoles.Guarding) continue;
-
                 if (Addon == CustomRoles.Loyalty && PlayerRole is
-                    CustomRoles.MadSnitch or CustomRoles.JClient or CustomRoles.LastImpostor or CustomRoles.CompreteCrew) continue;
+                    CustomRoles.MadSnitch or CustomRoles.Jackal or CustomRoles.JClient or CustomRoles.LastImpostor or CustomRoles.CompreteCrew) continue;
                 if (Addon == CustomRoles.Revenger && PlayerRole is CustomRoles.MadNimrod) continue;
 
                 SetUpAddOnRoleOption(PlayerRole, tab, Addon, Id, false, AddOnBuffAssign[PlayerRole]);

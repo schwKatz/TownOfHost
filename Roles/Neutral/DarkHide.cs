@@ -66,7 +66,7 @@ namespace TownOfHostY.Roles.Neutral
                 (var killer, var target) = info.AttemptTuple;
 
                 var targetRole = target.GetCustomRole();
-                IsWinKill = targetRole.IsImpostor();
+                if (!IsWinKill) IsWinKill = targetRole.IsImpostor();
                 if (CanCountNeutralKiller && target.IsNeutralKiller()) IsWinKill = true;
 
                 foreach (var pc in Main.AllPlayerControls)

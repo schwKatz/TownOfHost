@@ -186,6 +186,8 @@ public sealed class Lawyer : RoleBase
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;
+        // 直接キル出来る役職チェック
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
 
         if (!Pursuers || GuardCount <= 0) return true;
         killer.RpcGuardAndKill(target);
@@ -194,7 +196,7 @@ public sealed class Lawyer : RoleBase
         GuardCount--;
 
         info.CanKill = false;
-        return false;
+        return true;
     }
 
     public override void OnExileWrapUp(GameData.PlayerInfo exiled, ref bool DecidedWinner)

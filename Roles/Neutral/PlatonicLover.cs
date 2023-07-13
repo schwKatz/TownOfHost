@@ -54,25 +54,23 @@ public sealed class PlatonicLover : RoleBase, IKiller
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(false);
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
-        if (Is(info.AttemptKiller) && !info.IsSuicide)
-        {
-            (var killer, var target) = info.AttemptTuple;
+        (var killer, var target) = info.AttemptTuple;
 
-            isMadeLover = true;
-            killer.RpcGuardAndKill(target);
-            target.RpcGuardAndKill(target);
-            Logger.Info($"{killer.GetNameWithRole()} : 恋人を作った", "PlatonicLover");
+        isMadeLover = true;
+        info.DoKill = false;
+        killer.RpcGuardAndKill(target);
+        target.RpcGuardAndKill(target);
+        Logger.Info($"{killer.GetNameWithRole()} : 恋人を作った", "PlatonicLover");
 
-            Main.LoversPlayers.Clear();
-            Main.isLoversDead = false;
-            killer.RpcSetCustomRole(CustomRoles.Lovers);
-            target.RpcSetCustomRole(CustomRoles.Lovers);
-            Main.LoversPlayers.Add(killer);
-            Main.LoversPlayers.Add(target);
-            RPC.SyncLoversPlayers();
+        Main.LoversPlayers.Clear();
+        Main.isLoversDead = false;
+        killer.RpcSetCustomRole(CustomRoles.Lovers);
+        target.RpcSetCustomRole(CustomRoles.Lovers);
+        Main.LoversPlayers.Add(killer);
+        Main.LoversPlayers.Add(target);
+        RPC.SyncLoversPlayers();
 
-            Utils.NotifyRoles();
-        }
+        Utils.NotifyRoles();
     }
 
     public bool OverrideKillButtonText(out string text)

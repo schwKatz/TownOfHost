@@ -1,5 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
 using AmongUs.GameOptions;
-using Hazel;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
@@ -27,8 +28,7 @@ public sealed class StrayWolf : RoleBase, IImpostor
     {
         KillCooldown = OptionKillCooldown.GetFloat();
         GuardByImpostor = OptionGuardByImpostor.GetBool();
-        useGuardTarget = false;
-        useGuardKiller = false;
+        useGuard = new();
     }
     private static OptionItem OptionKillCooldown;
     private static OptionItem OptionGuardByImpostor;
@@ -38,7 +38,7 @@ public sealed class StrayWolf : RoleBase, IImpostor
     }
     private static float KillCooldown;
     private static bool GuardByImpostor;
-    bool useGuardTarget, useGuardKiller;
+    List<byte> useGuard = new();
 
     public static void SetupOptionItem()
     {
@@ -50,8 +50,10 @@ public sealed class StrayWolf : RoleBase, IImpostor
 
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
+        if (!Is(info.AttemptKiller) || info.IsSuicide || !info.CanKill) return;
+
         (var killer, var target) = info.AttemptTuple;
-        if (!GuardByImpostor || useGuardKiller) return;   //ガードないのでそのままtrueで返す
+        if (!GuardByImpostor || useGuard.Contains(target.PlayerId)) return;   //ガードないのでそのままtrueで返す
         if (!target.Is(CustomRoleTypes.Impostor)) return;   //インポスターじゃないならそのままtrueで返す
 
         // ガード
@@ -60,8 +62,9 @@ public sealed class StrayWolf : RoleBase, IImpostor
         NameColorManager.Add(killer.PlayerId, target.PlayerId);
         NameColorManager.Add(target.PlayerId, killer.PlayerId);
 
-        useGuardKiller = true;
+        useGuard.Add(target.PlayerId);
         Logger.Info($"{killer.GetNameWithRole()} : インポスター({target.GetNameWithRole()})からのキルガード", "StrayWolf");
+        Utils.NotifyRoles();
 
         // 自身は斬られない
         info.DoKill = false;
@@ -70,7 +73,9 @@ public sealed class StrayWolf : RoleBase, IImpostor
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;
-        if (!GuardByImpostor || useGuardTarget) return true;  //ガードないのでそのままtrueで返す
+        // 直接キル出来る役職チェック
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
+        if (!GuardByImpostor || useGuard.Contains(killer.PlayerId)) return true;  //ガードないのでそのままtrueで返す
         if (!killer.Is(CustomRoleTypes.Impostor)) return true;  //インポスターじゃないならそのままtrueで返す
 
         // ガード
@@ -79,11 +84,12 @@ public sealed class StrayWolf : RoleBase, IImpostor
         NameColorManager.Add(killer.PlayerId, target.PlayerId);
         NameColorManager.Add(target.PlayerId, killer.PlayerId);
 
-        useGuardTarget = true;
+        useGuard.Add(killer.PlayerId);
         Logger.Info($"{target.GetNameWithRole()} : インポスター({killer.GetNameWithRole()})へのキルガード", "StrayWolf");
+        Utils.NotifyRoles();
 
         // 自身は斬られない
         info.CanKill = false;
-        return false;
+        return true;
     }
 }

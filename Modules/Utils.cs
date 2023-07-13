@@ -653,9 +653,9 @@ namespace TownOfHostY
                 sb.Append(GetString("Settings")).Append(":");
                 foreach (var role in Options.CustomRoleCounts)
                 {
-                    if (!role.Key.IsEnable()) continue;
+                    if (!role.Key.IsEnable() || role.Key is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
 
-                    if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse/* or CustomRoles.CompreteCrew*/)
+                    if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
                         sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
                     else
                         sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
@@ -989,6 +989,7 @@ namespace TownOfHostY
                     || seer.Is(CustomRoles.Medic)
                     || seer.Is(CustomRoles.GrudgeSheriff)
                     || seer.Is(CustomRoles.AntiComplete)
+                    || seer.Is(CustomRoles.Totocalcio)
                     || Duelist.CheckNotify(seer)
                     )
                 {

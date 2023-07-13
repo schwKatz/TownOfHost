@@ -38,13 +38,18 @@ public static class Guarding
     /// <summary>
     /// trueはキルが起こる
     /// </summary>
-    public static bool OnCheckMurder(PlayerControl killer, PlayerControl target)
+    public static bool OnCheckMurder(MurderInfo info)
     {
+        (var killer, var target) = info.AttemptTuple;
         if (!GuardingList.Contains(target.PlayerId)) return true;
+        // 直接キル出来る役職チェック
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
+
         killer.RpcGuardAndKill(target);
         GuardingList.Remove(target.PlayerId);
         Logger.Info($"{killer.GetNameWithRole()}->{target.GetNameWithRole()}:ガード", "Guarding");
-        return false;
+        info.CanKill = false;
+        return true;
     }
     public static bool IsEnable => playerIdList.Count > 0;
     public static bool IsThisRole(byte playerId) => playerIdList.Contains(playerId);

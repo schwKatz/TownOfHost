@@ -66,14 +66,12 @@ public sealed class MadSheriff : RoleBase, IKiller
     }
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
-        if (Is(info.AttemptKiller) && !info.IsSuicide)
-        {
-            (var killer, var target) = info.AttemptTuple;
+        if (!Is(info.AttemptKiller) || info.IsSuicide) return;
+        (var killer, var target) = info.AttemptTuple;
 
-            PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
-            killer.RpcMurderPlayerEx(killer);
+        PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
+        killer.RpcMurderPlayer(killer);
 
-            if (MisfireKillsTarget) killer.RpcMurderPlayerEx(target);
-        }
+        if (!MisfireKillsTarget) info.DoKill = false;
     }
 }

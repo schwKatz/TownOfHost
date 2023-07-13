@@ -86,18 +86,15 @@ public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(false);
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
-        if (Is(info.AttemptKiller) && !info.IsSuicide)
-        {
-            (var killer, var target) = info.AttemptTuple;
+        (var killer, var target) = info.AttemptTuple;
 
-            BetTarget = target;
-            BetTargetCount--;
-            killer.RpcGuardAndKill(target);
-            info.DoKill = false;
-            Logger.Info($"{killer.GetNameWithRole()} : {target.GetRealName()}に賭けた", "Totocalcio");
+        BetTarget = target;
+        BetTargetCount--;
+        killer.RpcGuardAndKill(target);
+        Logger.Info($"{killer.GetNameWithRole()} : {target.GetRealName()}に賭けた", "Totocalcio");
 
-            Utils.NotifyRoles();
-        }
+        Utils.NotifyRoles(SpecifySeer : killer);
+        info.DoKill = false;
     }
 
     public bool OverrideKillButtonText(out string text)

@@ -146,6 +146,8 @@ namespace TownOfHostY.Roles.Impostor
         }
         public void OnCheckMurderAsKiller(MurderInfo info)
         {
+            if (!info.CanKill) return;
+
             var (killer, target) = info.AttemptTuple;
             if (NowSwitchTrigger == SwitchTrigger.TriggerDouble)
             {

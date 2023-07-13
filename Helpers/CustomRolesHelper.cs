@@ -100,6 +100,14 @@ namespace TownOfHostY
                 CustomRoles.JSchrodingerCat or
                 CustomRoles.OSchrodingerCat;
         }
+        public static bool IsDirectKillRole(this CustomRoles role)
+        {
+            return role is
+                CustomRoles.Arsonist or
+                CustomRoles.PlatonicLover or
+                CustomRoles.Totocalcio or
+                CustomRoles.MadSheriff;
+        }
 
         public static CustomRoleTypes GetCustomRoleTypes(this CustomRoles role)
         {

@@ -30,7 +30,8 @@ namespace TownOfHostY
             Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.GuardianAngel, 0, 0);
 
             ImpostorSetNum = Main.NormalOptions.NumImpostors;
-            Main.NormalOptions.NumImpostors = ImpostorSetNum - CustomRoles.StrayWolf.GetCount();
+            if (CustomRoles.StrayWolf.GetCount() >= 2)
+                Main.NormalOptions.NumImpostors = ImpostorSetNum - CustomRoles.StrayWolf.GetCount();
 
             PlayerState.Clear();
 
@@ -207,7 +208,8 @@ namespace TownOfHostY
                 AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                if (CustomRoles.StrayWolf.GetCount() >= 2)
+                    AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 if (Opportunist.OptionCanKill.GetBool())
                     AssignDesyncRole(CustomRoles.Opportunist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
 
@@ -314,8 +316,8 @@ namespace TownOfHostY
 
                     if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
-                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal
-                        or CustomRoles.StrayWolf) continue;
+                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
+                    if (CustomRoles.StrayWolf.GetCount() >= 2 && role == CustomRoles.StrayWolf) continue;
                     if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
 
                     var baseRoleTypes = role.GetRoleTypes() switch
@@ -558,8 +560,8 @@ namespace TownOfHostY
             {
                 if (role is CustomRoles.Sheriff or CustomRoles.Arsonist
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
-                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal
-                        or CustomRoles.StrayWolf) continue;
+                        or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
+                if (CustomRoles.StrayWolf.GetCount() >= 2 && role == CustomRoles.StrayWolf) continue;
                 if (role == CustomRoles.Egoist && Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) <= 1) continue;
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role.GetRoleTypes() == roleTypes)

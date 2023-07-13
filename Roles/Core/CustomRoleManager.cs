@@ -63,14 +63,14 @@ public static class CustomRoleManager
                 // イビルディバイナーのみ占いのためここで先に処理
                 if (killerRole is EvilDiviner && !EvilDiviner.OnCheckMurder(attemptKiller, attemptTarget)) return;
                 // ガーディング属性によるガード
-                if (!Guarding.OnCheckMurder(attemptKiller, attemptTarget)) return;
+                if (!Guarding.OnCheckMurder(info)) return;
+                // メディックの対象プレイヤー
+                if (!Medic.GuardPlayerCheckMurder(info)) return;
                 // ターゲットのキルチェック処理実行
                 if (targetRole != null)
                 {
                     if (!targetRole.OnCheckMurderAsTarget(info)) return;
                 }
-                // メディックの対象プレイヤー
-                if (!Medic.GuardPlayerCheckMurder(attemptKiller, attemptTarget)) return;
             }
             // キラーのキルチェック処理実行
             killer.OnCheckMurderAsKiller(info);
@@ -81,7 +81,7 @@ public static class CustomRoleManager
         {
             //MurderPlayer用にinfoを保存
             CheckMurderInfos[appearanceKiller.PlayerId] = info;
-            appearanceKiller.RpcMurderPlayerEx(appearanceTarget);
+            appearanceKiller.RpcMurderPlayer(appearanceTarget);
         }
         else
         {

@@ -78,13 +78,17 @@ public sealed class AntiComplete : RoleBase
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;
+        // 直接キル出来る役職チェック
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
         if (GuardCount <= 0) return true;//普通にキル
 
         killer.RpcGuardAndKill(target);
         target.RpcGuardAndKill(target);
+        info.CanKill = false;
+
         GuardCount--;
         Logger.Info($"{target.GetNameWithRole()} : ガード残り{GuardCount}回", "AntiComp");
-        return false;
+        return true;
     }
     public override bool OnCompleteTask()
     {

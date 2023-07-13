@@ -85,4 +85,13 @@ namespace TownOfHostY
                 GameOptionsSender.SendAllGameOptions();
         }
     }
+    [HarmonyPatch(typeof(Constants), nameof(Constants.GetBroadcastVersion))]
+    class ConstantsVersionPatch
+    {
+        static void Postfix(ref int __result)
+        {
+            if(!GameStates.IsLocalGame)
+                __result = Constants.GetVersion(2222, 0, 0, 0);
+        }
+    }
 }

@@ -56,7 +56,6 @@ public sealed class Ambitioner : RoleBase, IImpostor
         KillCount = 0;
         Main.AllPlayerKillCooldown[Player.PlayerId] = KillCooldown;
     }
-    //public void OnCheckMurderAsKiller(MurderInfo info)
     public void OnMurderPlayerAsKiller(MurderInfo info)
     {
         if (!info.IsSuicide)

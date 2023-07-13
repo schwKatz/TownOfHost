@@ -24,13 +24,13 @@ namespace TownOfHostY
     {
         // == プログラム設定 / Program Config ==
         // modの名前 / Mod Name (Default: Town Of Host)
-        public static readonly string ModName = "Town Of Host_YS";
+        public static readonly string ModName = "Town Of Host_Y";
         // modの色 / Mod Color (Default: #00bfff)
         public static readonly string ModColor = "#ffff00";
         // 公開ルームを許可する / Allow Public Room (Default: true)
         public static readonly bool AllowPublicRoom = true;
         // フォークID / ForkId (Default: OriginalTOH)
-        public static readonly string ForkId = "TOH_YS";
+        public static readonly string ForkId = "TOH_Y";
         // Discordボタンを表示するか / Show Discord Button (Default: true)
         public static readonly bool ShowDiscordButton = true;
         // Discordサーバーの招待リンク / Discord Server Invite URL (Default: https://discord.gg/W5ug6hXB9V)
@@ -50,7 +50,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "502.12";
+        public const string PluginVersion = "502.13";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.7.11";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -292,6 +292,7 @@ namespace TownOfHostY
         Jackal = CustomRoles.Jackal,
 
         AntiComplete = CustomRoles.AntiComplete,
+        DarkHide = CustomRoles.DarkHide,
         NBakery = CustomRoles.Bakery,
         Workaholic = CustomRoles.Workaholic,
         LoveCutter = CustomRoles.LoveCutter,
@@ -352,7 +353,7 @@ namespace TownOfHostY
     public enum NameChange
     {
         None,
-        Crew,
+        //Crew,
         Color
     }
     public enum CustomColor

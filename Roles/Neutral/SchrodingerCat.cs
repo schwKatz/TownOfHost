@@ -54,79 +54,75 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner
     }
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
-        if (Is(info.AttemptTarget))
+        if (!Is(info.AttemptTarget) || info.IsSuicide) return true;
+
+        (var killer, var target) = info.AttemptTuple;
+        // 直接キル出来る役職チェック
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
+        //既に変化していたらスルー
+        if (!target.Is(CustomRoles.SchrodingerCat)) return true;
+
+        //シュレディンガーの猫が切られた場合の役職変化スタート
+        killer.RpcGuardAndKill(target);
+        info.CanKill = false;
+        switch (killer.GetCustomRole())
         {
-            (var killer, var target) = info.AttemptTuple;
-
-            //自殺ならスルー
-            if (info.IsSuicide) return true;
-            //既に変化していたらスルー
-            if (!target.Is(CustomRoles.SchrodingerCat)) return true;
-
-            //シュレディンガーの猫が切られた場合の役職変化スタート
-            killer.RpcGuardAndKill(target);
-            info.CanKill = false;
-            switch (killer.GetCustomRole())
-            {
-                case CustomRoles.BountyHunter:
-                    var bountyHunter = (BountyHunter)killer.GetRoleClass();
-                    if (bountyHunter.GetTarget() == target)
-                        bountyHunter.ResetTarget();//ターゲットの選びなおし
-                    break;
-                case CustomRoles.SerialKiller:
-                    var serialKiller = (SerialKiller)killer.GetRoleClass();
-                    serialKiller.SuicideTimer = null;
-                    break;
-                case CustomRoles.Sheriff:
-                case CustomRoles.Hunter:
-                case CustomRoles.SillySheriff:
-                    target.RpcSetCustomRole(CustomRoles.CSchrodingerCat);
-                    break;
-                case CustomRoles.Egoist:
-                    target.RpcSetCustomRole(CustomRoles.EgoSchrodingerCat);
-                    break;
-                case CustomRoles.Jackal:
-                    target.RpcSetCustomRole(CustomRoles.JSchrodingerCat);
-                    break;
-                case CustomRoles.DarkHide:
-                    target.RpcSetCustomRole(CustomRoles.DSchrodingerCat);
-                    break;
-                case CustomRoles.Opportunist:
-                    target.RpcSetCustomRole(CustomRoles.OSchrodingerCat);
-                    break;
-            }
-            if (killer.Is(CustomRoleTypes.Impostor))
-                target.RpcSetCustomRole(CustomRoles.MSchrodingerCat);
-
-            if (CanSeeKillableTeammate)
-            {
-                var roleType = killer.GetCustomRole().GetCustomRoleTypes();
-                System.Func<PlayerControl, bool> isTarget = roleType switch
-                {
-                    CustomRoleTypes.Impostor => (pc) => pc.GetCustomRole().GetCustomRoleTypes() == roleType,
-                    _ => (pc) => pc.GetCustomRole() == killer.GetCustomRole()
-                };
-                ;
-                var killerTeam = Main.AllPlayerControls.Where(pc => isTarget(pc));
-                foreach (var member in killerTeam)
-                {
-                    NameColorManager.Add(member.PlayerId, target.PlayerId, RoleInfo.RoleColorCode);
-                    NameColorManager.Add(target.PlayerId, member.PlayerId);
-                }
-            }
-            else
-            {
-                NameColorManager.Add(killer.PlayerId, target.PlayerId, RoleInfo.RoleColorCode);
-                NameColorManager.Add(target.PlayerId, killer.PlayerId);
-            }
-            Utils.NotifyRoles();
-            Utils.MarkEveryoneDirtySettings();
-            //シュレディンガーの猫の役職変化処理終了
-            //ニュートラルのキル能力持ちが追加されたら、その陣営を味方するシュレディンガーの猫の役職を作って上と同じ書き方で書いてください
-            return false;
-
+            case CustomRoles.BountyHunter:
+                var bountyHunter = (BountyHunter)killer.GetRoleClass();
+                if (bountyHunter.GetTarget() == target)
+                    bountyHunter.ResetTarget();//ターゲットの選びなおし
+                break;
+            case CustomRoles.SerialKiller:
+                var serialKiller = (SerialKiller)killer.GetRoleClass();
+                serialKiller.SuicideTimer = null;
+                break;
+            case CustomRoles.Sheriff:
+            case CustomRoles.Hunter:
+            case CustomRoles.SillySheriff:
+                target.RpcSetCustomRole(CustomRoles.CSchrodingerCat);
+                break;
+            case CustomRoles.Egoist:
+                target.RpcSetCustomRole(CustomRoles.EgoSchrodingerCat);
+                break;
+            case CustomRoles.Jackal:
+                target.RpcSetCustomRole(CustomRoles.JSchrodingerCat);
+                break;
+            case CustomRoles.DarkHide:
+                target.RpcSetCustomRole(CustomRoles.DSchrodingerCat);
+                break;
+            case CustomRoles.Opportunist:
+                target.RpcSetCustomRole(CustomRoles.OSchrodingerCat);
+                break;
         }
-        return true;
+        if (killer.Is(CustomRoleTypes.Impostor))
+            target.RpcSetCustomRole(CustomRoles.MSchrodingerCat);
+
+        if (CanSeeKillableTeammate)
+        {
+            var roleType = killer.GetCustomRole().GetCustomRoleTypes();
+            System.Func<PlayerControl, bool> isTarget = roleType switch
+            {
+                CustomRoleTypes.Impostor => (pc) => pc.GetCustomRole().GetCustomRoleTypes() == roleType,
+                _ => (pc) => pc.GetCustomRole() == killer.GetCustomRole()
+            };
+            ;
+            var killerTeam = Main.AllPlayerControls.Where(pc => isTarget(pc));
+            foreach (var member in killerTeam)
+            {
+                NameColorManager.Add(member.PlayerId, target.PlayerId, RoleInfo.RoleColorCode);
+                NameColorManager.Add(target.PlayerId, member.PlayerId);
+            }
+        }
+        else
+        {
+            NameColorManager.Add(killer.PlayerId, target.PlayerId, RoleInfo.RoleColorCode);
+            NameColorManager.Add(target.PlayerId, killer.PlayerId);
+        }
+        Utils.NotifyRoles();
+        Utils.MarkEveryoneDirtySettings();
+        //シュレディンガーの猫の役職変化処理終了
+        //ニュートラルのキル能力持ちが追加されたら、その陣営を味方するシュレディンガーの猫の役職を作って上と同じ書き方で書いてください
+        return false;
     }
     public static void ChangeTeam(PlayerControl player)
     {

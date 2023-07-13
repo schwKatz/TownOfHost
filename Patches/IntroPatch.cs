@@ -94,7 +94,7 @@ namespace TownOfHostY
     {
         public static void Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> teamToDisplay)
         {
-            if (PlayerControl.LocalPlayer.Is(CustomRoleTypes.Neutral))
+            if (PlayerControl.LocalPlayer.Is(CustomRoleTypes.Neutral) || PlayerControl.LocalPlayer.Is(CustomRoles.StrayWolf))
             {
                 //ぼっち役職
                 var soloTeam = new Il2CppSystem.Collections.Generic.List<PlayerControl>();
@@ -136,7 +136,7 @@ namespace TownOfHostY
                 switch (role)
                 {
                     case CustomRoles.Jackal:
-                    //case CustomRoles.JClient:
+                    case CustomRoles.JClient:
                         __instance.TeamTitle.text = Utils.GetRoleName(CustomRoles.Jackal);
                         __instance.TeamTitle.color = Utils.GetRoleColor(CustomRoles.Jackal);
                         __instance.ImpostorText.gameObject.SetActive(true);
@@ -182,6 +182,15 @@ namespace TownOfHostY
             }
             switch (role)
             {
+                case CustomRoles.StrayWolf:
+                    __instance.TeamTitle.text = GetString("Impostor");
+                    __instance.TeamTitle.color = Palette.ImpostorRed;
+                    __instance.ImpostorText.gameObject.SetActive(false);
+                    __instance.BackgroundBar.material.color = Palette.ImpostorRed;
+
+
+
+                    break;
                 case CustomRoles.Sheriff:
                 case CustomRoles.Hunter:
                 case CustomRoles.SillySheriff:

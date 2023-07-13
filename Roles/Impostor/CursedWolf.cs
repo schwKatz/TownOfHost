@@ -61,6 +61,8 @@ public sealed class CursedWolf : RoleBase, IImpostor
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;
+        // 直接キル出来る役職チェック
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
         if (SpellCount <= 0) return true;
 
         // ガード
@@ -72,10 +74,10 @@ public sealed class CursedWolf : RoleBase, IImpostor
 
         //切り返す
         PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Spell;
-        target.RpcMurderPlayerEx(killer);
+        target.RpcMurderPlayer(killer);
         // 自身は斬られない
         info.CanKill = false;
-        return false;
+        return true;
     }
     public override string GetProgressText(bool comms = false) => Utils.ColorString(Palette.ImpostorRed, $"({SpellCount})");
 }

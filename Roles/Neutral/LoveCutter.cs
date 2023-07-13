@@ -57,16 +57,19 @@ public sealed class LoveCutter : RoleBase
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;
+        // 直接キル出来る役職チェック
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
 
         killer.RpcGuardAndKill(target);
         target.RpcGuardAndKill(target);
         KilledCount++;
-        Utils.NotifyRoles(SpecifySeer: target);
         Logger.Info($"{target.GetNameWithRole()} : {KilledCount}回目", "LoveCutter");
         NameColorManager.Add(killer.PlayerId, target.PlayerId, RoleInfo.RoleColorCode);
+        Utils.NotifyRoles(SpecifySeer: target);
 
         if (KilledCount >= VictoryCutCount) Win();
-        return false;
+        info.CanKill = false;
+        return true;
     }
     public override bool OnCompleteTask()
     {
@@ -94,7 +97,7 @@ public sealed class LoveCutter : RoleBase
                 continue;
             }
             pc.SetRealKiller(Player);
-            pc.RpcMurderPlayerEx(pc);
+            pc.RpcMurderPlayer(pc);
             playerState.DeathReason = CustomDeathReason.Bombed;
             playerState.SetDead();
         }

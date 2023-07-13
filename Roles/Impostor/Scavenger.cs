@@ -37,7 +37,6 @@ public sealed class Scavenger : RoleBase, IImpostor
         OptionIgnoreBait = BooleanOptionItem.Create(RoleInfo, 10, OptionName.ScavengerIgnoreBait, false, false);
     }
 
-    //public void OnCheckMurderAsKiller(MurderInfo info)
     public void OnMurderPlayerAsKiller(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;

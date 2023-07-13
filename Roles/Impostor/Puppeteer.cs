@@ -69,6 +69,7 @@ public sealed class Puppeteer : RoleBase, IImpostor
     }
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
+        if (!info.CanKill) return; //キル出来ない相手には無効
         var (puppeteer, target) = info.AttemptTuple;
 
         Puppets[target.PlayerId] = this;
@@ -119,7 +120,7 @@ public sealed class Puppeteer : RoleBase, IImpostor
             {
                 RPC.PlaySoundRPC(Player.PlayerId, Sounds.KillSound);
                 target.SetRealKiller(Player);
-                puppet.RpcMurderPlayerEx(target);
+                puppet.RpcMurderPlayer(target);
                 Utils.MarkEveryoneDirtySettings();
                 Puppets.Remove(puppet.PlayerId);
                 SendRPC(puppet.PlayerId, 2);

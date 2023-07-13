@@ -63,7 +63,7 @@ public sealed class Warlock : RoleBase, IImpostor
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
         //自殺なら関係ない
-        if (info.IsSuicide) return;
+        if (info.IsSuicide || !info.CanKill) return;
 
         var (killer, target) = info.AttemptTuple;
         if (!Shapeshifting)
