@@ -357,8 +357,8 @@ namespace TownOfHostY
                 else
                 {
                     SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                    info.OptionCreator?.Invoke();
                 }
+                info.OptionCreator?.Invoke();
             });
 
             CanMakeMadmateCount = IntegerOptionItem.Create(91510, "CanMakeMadmateCount", new(0, 15, 1), 0, TabGroup.MadmateRoles, false)
@@ -398,8 +398,8 @@ namespace TownOfHostY
                             SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
                             break;
                     }
-                    info.OptionCreator?.Invoke();
                 }
+                info.OptionCreator?.Invoke();
             });
 
             // Neutral
@@ -428,8 +428,8 @@ namespace TownOfHostY
                             SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
                             break;
                     }
-                    info.OptionCreator?.Invoke();
                 }
+                info.OptionCreator?.Invoke();
             });
 
             // Add-Ons

@@ -7,6 +7,7 @@ namespace TownOfHostY
 {
     public static class SendDiscord
     {
+        //参考：https://github.com/Hyz-sui/TownOfHost-H
         public static string HostRandomName = "Randomer";
 
         public enum MassageType
