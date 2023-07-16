@@ -474,7 +474,8 @@ namespace TownOfHostY
         //FIXME: 役職クラス化のタイミングで、このメソッドは移動予定
         public static void LoversSuicide(byte deathId = 0x7f, bool isExiled = false)
         {
-            if (CustomRoles.Lovers.IsPresent() && Main.isLoversDead == false)
+            if ((CustomRoles.Lovers.IsPresent() || CustomRoles.PlatonicLover.IsPresent()) &&
+                Main.isLoversDead == false)
             {
                 foreach (var loversPlayer in Main.LoversPlayers)
                 {
@@ -489,8 +490,9 @@ namespace TownOfHostY
 
                         //残った恋人を全て殺す(2人以上可)
                         //生きていて死ぬ予定もない場合は心中
-                        if (partnerPlayer.PlayerId != deathId && !partnerPlayer.Data.IsDead)
+                        if (partnerPlayer.PlayerId != deathId && !partnerPlayer.Data.IsDead && !Main.AfterMeetingDeathPlayers.ContainsKey(partnerPlayer.PlayerId))
                         {
+                            Logger.Info($"ラバーズ道連れ name: {partnerPlayer?.name}, lover: {loversPlayer?.name}, exiled: {isExiled}", "LoversSuicide");
                             PlayerState.GetByPlayerId(partnerPlayer.PlayerId).DeathReason = CustomDeathReason.FollowingSuicide;
                             if (isExiled)
                                 MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, partnerPlayer.PlayerId);
