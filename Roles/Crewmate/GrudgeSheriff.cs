@@ -183,6 +183,11 @@ public sealed class GrudgeSheriff : RoleBase
             _ => false,
         };
     }
+    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    {
+        KillWaitPlayerSelect = null;
+        KillWaitPlayer = null;
+    }
 
     public override string GetLowerText(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false, bool isForHud = false)
     {
