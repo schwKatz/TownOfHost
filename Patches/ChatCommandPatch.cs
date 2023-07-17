@@ -304,10 +304,12 @@ namespace TownOfHostY
                         {
                             var name = VoiceReader.SetHostVoiceNo(voiceNo);
                             if (name != null && name != "")
-                                Utils.SendMessage($"ホスト の読上げを {name} に変更しました");
+                                Utils.SendMessage(string.Format(GetString("Message.VoiceChangeHost"), name), 0);
                         }
                         else
-                            Utils.SendMessage(VoiceReader.GetVoiceIdxMsg());
+                            Utils.SendMessage(VoiceReader.GetVoiceIdxMsg(), 0);
+                        break;
+
                         break;
 
                     default:
@@ -473,18 +475,18 @@ namespace TownOfHostY
                 case "/voice":
                     var color = Palette.GetColorName(player.Data.DefaultOutfit.ColorId);
                     if (VoiceReader.VoiceReaderMode == null || !VoiceReader.VoiceReaderMode.GetBool())
-                        Utils.SendMessage($"現在読上げは停止しています", player.PlayerId);
+                        Utils.SendMessage(string.Format(GetString("Message.VoiceNotAvailable")), player.PlayerId);
                     else if (args.Length > 1 && args[1] == "n")
-                        Utils.SendMessage($"{color} の現在の読上げは {VoiceReader.GetVoiceName(color)} です", player.PlayerId);
+                        Utils.SendMessage(string.Format(GetString("Message.VoiceNow"), color, VoiceReader.GetVoiceName(color)), player.PlayerId);
                     else if (args.Length > 1 && int.TryParse(args[1], out int voiceNo))
                     {
                         var name = VoiceReader.SetVoiceNo(color, voiceNo);
                         if (name != null && name != "")
                         {
-                            Utils.SendMessage($"{color} の読上げを {name} に変更しました", player.PlayerId);
+                            Utils.SendMessage(string.Format(GetString("Message.VoiceChange"), color, name), player.PlayerId);
                             break;
                         }
-                        Utils.SendMessage($"{color} の読上げを変更できませんでした", player.PlayerId);
+                        Utils.SendMessage(string.Format(GetString("Message.VoiceChangeFailed"), color), player.PlayerId);
                     }
                     else
                         Utils.SendMessage(VoiceReader.GetVoiceIdxMsg(), player.PlayerId);

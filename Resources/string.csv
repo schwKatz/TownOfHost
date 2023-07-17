@@ -824,6 +824,11 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "Message.isButton","The meeting was started by an emergency button.","緊急ボタンにより会議が開かれました。","会议以使用紧急按钮开始."
 "Message.RevengeText","{0} is exiled, and another is died by revenge. \nmurdered：{1}","{0}が追放され、道連れが発生しました。\n{1}が死亡しています。","{0} 被投出，另一人因复仇而死. \n凶杀：{1}"
 "Message.HelpRoleNone","/help roles (/h r) command is only available in Japanese.","/help roles [役職名] (/h r [役職名])\nを入力することでその役職の説明が表示されます。",
+"Message.VoiceChangeHost","Changed the reading of the host to {0}.","ホスト の読上げを {0} に変更しました",,,,
+"Message.VoiceNotAvailable","Read chat not available.","現在読上げは停止しています",,,,
+"Message.VoiceNow","Changed the reading of the {0} to {1}.","{0} の現在の読上げは {1} です",,,,
+"Message.VoiceChange","Changed the reading of the {0} to {1}.","{0} の読上げを {1} に変更しました",,,,
+"Message.VoiceChangeFailed","Failed to change {0} chat reading.","{0} の読上げを変更できませんでした",,,,
 
 "IsNimrodMeetingTitle","【The Nimrod's choice】","【ニムロッドの処刑選択】"
 "IsNimrodMeetingText","The Nimrod should choose who to execute.\nIt's time for others to wait quietly...","ニムロッドは処刑する人を選択してください。\n他の人は静かに待つ時間...",
