@@ -835,7 +835,12 @@ namespace TownOfHostY
         {
             if (!AmongUsClient.Instance.AmHost) return;
             if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
-            Main.MessagesToSend.Add((text.RemoveHtmlTags(), sendTo, title));
+            Main.MessagesToSend.Add((text.RemoveHtmlTags(), sendTo, title, false));
+        }
+        public static void SendMessageCustom(string text, byte sendTo = byte.MaxValue)
+        {
+            if (!AmongUsClient.Instance.AmHost) return;
+            Main.MessagesToSend.Add((text, sendTo, "", true));
         }
         public static void ApplySuffix()
         {

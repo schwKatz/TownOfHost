@@ -507,8 +507,15 @@ namespace TownOfHostY
             if (DoBlockChat) return;
             var player = Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).FirstOrDefault();
             if (player == null) return;
-            (string msg, byte sendTo, string title) = Main.MessagesToSend[0];
+            (string msg, byte sendTo, string title, bool custom) = Main.MessagesToSend[0];
             Main.MessagesToSend.RemoveAt(0);
+
+            if (custom)
+            {
+                SendCustomChat(msg, sendTo: sendTo);
+                return;
+            }
+
             int clientId = sendTo == byte.MaxValue ? -1 : Utils.GetPlayerById(sendTo).GetClientId();
             var name = player.Data.PlayerName;
             if (clientId == -1)
@@ -531,6 +538,33 @@ namespace TownOfHostY
             writer.EndMessage();
             writer.SendMessage();
             __instance.timeSinceLastMessage = 0f;
+        }
+        public static void SendCustomChat(string SendName, PlayerControl sender = null, byte sendTo = byte.MaxValue)
+        {
+            Logger.Info($"SendName: {SendName}, sender: {sender?.name}, sendTo: {sendTo}", "SendCustomChat");
+            string command = "\n\n";
+            if (sender == null) sender = PlayerControl.LocalPlayer;
+            string name = sender.Data?.PlayerName;
+            int clientId = sendTo == byte.MaxValue ? -1 : Utils.GetPlayerById(sendTo).GetClientId();
+            if (clientId == -1)
+            {
+                sender.SetName(SendName);
+                DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sender, command);
+                sender.SetName(name);
+            }
+            var writer = CustomRpcSender.Create("CustomSend");
+            writer.StartMessage(clientId);
+            writer.StartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(SendName)
+                .EndRpc()
+                .StartRpc(sender.NetId, (byte)RpcCalls.SendChat)
+                .Write(command)
+                .EndRpc()
+                .StartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(name)
+                .EndRpc()
+                .EndMessage()
+                .SendMessage();
         }
     }
 
