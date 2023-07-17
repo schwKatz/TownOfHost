@@ -896,6 +896,23 @@ namespace TownOfHostY
             cachedPlayers[playerId] = player;
             return player;
         }
+        public static PlayerControl GetPlayerByColorName(string colorName)
+        {
+            if (colorName == null) return null;
+            return Main.AllPlayerControls.Where(pc =>
+                    GetColorTypeName(pc.Data.DefaultOutfit.ColorId).ToLower() == colorName.ToLower() ||
+                    Palette.GetColorName(pc.Data.DefaultOutfit.ColorId).ToLower() == colorName.ToLower()).FirstOrDefault();
+        }
+        public static string GetColorTypeName(int colorId)
+        {
+            if (colorId >= 0 && colorId < Palette.ColorNames.Length)
+            {
+                var name = Palette.ColorNames[colorId].ToString();
+                return name.Substring(5, name.Length - 5);  //colorxxx のxxxの部分のみ（色名）
+            }
+            return "???";
+        }
+
         public static GameData.PlayerInfo GetPlayerInfoById(int PlayerId) =>
             GameData.Instance.AllPlayers.ToArray().Where(info => info.PlayerId == PlayerId).FirstOrDefault();
         private static StringBuilder SelfMark = new(20);
