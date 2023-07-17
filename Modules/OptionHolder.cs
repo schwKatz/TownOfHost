@@ -227,6 +227,14 @@ namespace TownOfHostY
         public static OptionItem HideGameSettings;
         public static OptionItem NameChangeMode;
         public static OptionItem ChangeNameToRoleInfo;
+        public static OptionItem SkinControle;
+        public static OptionItem NoHat;
+        public static OptionItem NoFullFaceHat;
+        public static OptionItem NoSkin;
+        public static OptionItem NoVisor;
+        public static OptionItem NoPet;
+        public static OptionItem NoDuplicateHat;
+        public static OptionItem NoDuplicateSkin;
         public static OptionItem RoleAssigningAlgorithm;
 
         public static OptionItem ApplyDenyNameList;
@@ -674,6 +682,22 @@ namespace TownOfHostY
             ChangeNameToRoleInfo = BooleanOptionItem.Create(1_002_005, "ChangeNameToRoleInfo", true, TabGroup.MainSettings, false);
             AddonShow = StringOptionItem.Create(1_002_006, "AddonShowMode", addonShowModes, 0, TabGroup.MainSettings, true);
             ChangeIntro = BooleanOptionItem.Create(1_002_007, "ChangeIntro", false, TabGroup.MainSettings, false);
+            SkinControle = BooleanOptionItem.Create(1_002_010, "SkinControle", false, TabGroup.MainSettings, false)
+                .SetGameMode(CustomGameMode.All);
+            NoHat = BooleanOptionItem.Create(1_002_011, "NoHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoFullFaceHat = BooleanOptionItem.Create(1_002_012, "NoFullFaceHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoSkin = BooleanOptionItem.Create(1_002_013, "NoSkin", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoVisor = BooleanOptionItem.Create(1_002_014, "NoVisor", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoPet = BooleanOptionItem.Create(1_002_015, "NoPet", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoDuplicateHat = BooleanOptionItem.Create(1_002_016, "NoDuplicateHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoDuplicateSkin = BooleanOptionItem.Create(1_002_017, "NoDuplicateSkin", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
             RoleAssigningAlgorithm = StringOptionItem.Create(1_002_008, "RoleAssigningAlgorithm", RoleAssigningAlgorithms, 0, TabGroup.MainSettings, true)
                 .RegisterUpdateValueEvent((object obj, OptionItem.UpdateValueEventArgs args) => IRandom.SetInstanceById(args.CurrentValue));
             VoiceReader.SetupCustomOption();

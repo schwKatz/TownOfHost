@@ -449,6 +449,14 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "SuffixMode.RoomHost","Room Host","部屋主","房主","房主","Хост Румы","Anfitrião"
 "SuffixMode.OriginalName","OriginalName","元の名前","玩家名称","玩家原名稱","Настоящий Никнейм","Nome Original"
 "ColorNameMode","Color Name Mode","色名前モード","显示颜色名称","名字將被顏色名稱替換","Режим: Никнейм соответствует цвету","Modo Nomes de Cores"
+"SkinControle","Skin Controle","スキン設定",,,,
+"NoHat","Prohibited hat","ハット禁止",,,,
+"NoFullFaceHat","Prohibited full face hat","フルフェイスハット禁止",,,,
+"NoSkin","Prohibited skin","スキン禁止",,,,
+"NoVisor","Prohibited visor","バイザー禁止",,,,
+"NoPet","Prohibited pet","ペット禁止",,,,
+"NoDuplicateHat","No duplicate hats","他の人と同じハット使用禁止",,,,
+"NoDuplicateSkin","No duplicate skins","他の人と同じスキン使用禁止",,,,
 "FixFirstKillCooldown","Normalize First Kill Cooldown","初期スポーン時のクールダウン修正","修正首刀冷却时间","修正開場時的殺人冷卻時間","Нормализовать откат убийства в начале Игры","Normalizar Tempo de Recarga do Primeiro Abate"
 GhostCanSeeOtherRoles,Ghost Can't See Other Roles,幽霊が他人の役職を見ることができない,幽灵不可见他人职业,幽靈不可以看見所有玩家職業,
 GhostCanSeeOtherVotes,Ghost Can't See Other Votes,幽霊が他人の投票先を見ることができない,幽灵不可见投票情况,幽靈不可以看見所有玩家的投票,
