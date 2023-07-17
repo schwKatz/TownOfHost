@@ -58,7 +58,7 @@ namespace TownOfHostY
             if (AmongUsClient.Instance.AmHost)
             {
                 Main.isChatCommand = true;
-                switch (args[0])
+                switch (args[0]?.ToLower())
                 {
                     case "/win":
                     case "/winner":
@@ -420,7 +420,7 @@ namespace TownOfHostY
             if (!AmongUsClient.Instance.AmHost) return;
             string[] args = text.Split(' ');
             string subArgs = "";
-            switch (args[0])
+            switch (args[0]?.ToLower())
             {
                 case "/l":
                 case "/lastresult":
