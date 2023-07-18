@@ -58,7 +58,7 @@ namespace TownOfHostY
             if (AmongUsClient.Instance.AmHost)
             {
                 Main.isChatCommand = true;
-                switch (args[0])
+                switch (args[0]?.ToLower())
                 {
                     case "/win":
                     case "/winner":
@@ -304,10 +304,66 @@ namespace TownOfHostY
                         {
                             var name = VoiceReader.SetHostVoiceNo(voiceNo);
                             if (name != null && name != "")
-                                Utils.SendMessage($"ホスト の読上げを {name} に変更しました");
+                                Utils.SendMessage(string.Format(GetString("Message.VoiceChangeHost"), name), 0);
                         }
                         else
-                            Utils.SendMessage(VoiceReader.GetVoiceIdxMsg());
+                            Utils.SendMessage(VoiceReader.GetVoiceIdxMsg(), 0);
+                        break;
+
+                    case "/modcheck":
+                    case "/modmsg":
+                        canceled = true;
+                        if (!Main.CanPublicRoom.Value)
+                        {
+                            Utils.SendMessage(string.Format(GetString("Message.ModCheckCommandInvalid")), 0);
+                            break;
+                        }
+                        var msgSend = args[0]?.ToLower() == "/modmsg";
+                        var allOK = true;
+                        var notOKColor = "";
+                        foreach (var pc in Main.AllPlayerControls.Where(x => x.PlayerId != PlayerControl.LocalPlayer.PlayerId))
+                        {
+                            var cl = pc.GetClient();
+                            if (cl != null　&& !Main.ConsentModUse.ContainsKey(cl.Id))
+                            {
+                                allOK = false;
+                                if (msgSend)
+                                    Utils.SendMessageCustom(string.Format(GetString("Message.AnnounceUsingOpenMOD"), Main.PluginVersion), pc.PlayerId);
+                                notOKColor = (notOKColor == "" ? "" : ",") + Palette.GetColorName(pc.Data.DefaultOutfit.ColorId);
+                            }
+                        }
+                        if (allOK)
+                            Utils.SendMessage(string.Format(GetString("Message.ModCheckAllOK")), 0);
+                        else
+                        {
+                            if (msgSend)
+                                Utils.SendMessage(string.Format(GetString("Message.ModCheckMessageSend")), 0);
+                            Utils.SendMessage(string.Format(GetString("Message.ModCheckNotOKColor"), notOKColor), 0);
+                        }
+
+                        break;
+
+                    case "/offhat":
+                    case "/offskin":
+                    case "/offvisor":
+                    case "/offpet":
+                    case "/offskinall":
+                        canceled = true;
+                        if (args.Length > 1)
+                        {
+                            var colorName = args[1];
+                            var skinTarget = Utils.GetPlayerByColorName(colorName);
+                            if (skinTarget != null)
+                            {
+                                var hat = args[0] == "/offhat" || args[0] == "/offskinall";
+                                var skin = args[0] == "/offskin" || args[0] == "/offskinall";
+                                var visor = args[0] == "/offvisor" || args[0] == "/offskinall";
+                                var pet = args[0] == "/offpet" || args[0] == "/offskinall";
+                                SkinControle.RpcSetSkin(skinTarget, hat, skin, visor, pet);
+                                Utils.SendMessage($"ホストにより {SkinControle.GetSetTypeName(hat, skin, visor, pet)} がリセットにされました", skinTarget.PlayerId);
+                            }
+                        }
+
                         break;
 
                     default:
@@ -418,7 +474,7 @@ namespace TownOfHostY
             if (!AmongUsClient.Instance.AmHost) return;
             string[] args = text.Split(' ');
             string subArgs = "";
-            switch (args[0])
+            switch (args[0]?.ToLower())
             {
                 case "/l":
                 case "/lastresult":
@@ -473,21 +529,26 @@ namespace TownOfHostY
                 case "/voice":
                     var color = Palette.GetColorName(player.Data.DefaultOutfit.ColorId);
                     if (VoiceReader.VoiceReaderMode == null || !VoiceReader.VoiceReaderMode.GetBool())
-                        Utils.SendMessage($"現在読上げは停止しています", player.PlayerId);
+                        Utils.SendMessage(string.Format(GetString("Message.VoiceNotAvailable")), player.PlayerId);
                     else if (args.Length > 1 && args[1] == "n")
-                        Utils.SendMessage($"{color} の現在の読上げは {VoiceReader.GetVoiceName(color)} です", player.PlayerId);
+                        Utils.SendMessage(string.Format(GetString("Message.VoiceNow"), color, VoiceReader.GetVoiceName(color)), player.PlayerId);
                     else if (args.Length > 1 && int.TryParse(args[1], out int voiceNo))
                     {
                         var name = VoiceReader.SetVoiceNo(color, voiceNo);
                         if (name != null && name != "")
                         {
-                            Utils.SendMessage($"{color} の読上げを {name} に変更しました", player.PlayerId);
+                            Utils.SendMessage(string.Format(GetString("Message.VoiceChange"), color, name), player.PlayerId);
                             break;
                         }
-                        Utils.SendMessage($"{color} の読上げを変更できませんでした", player.PlayerId);
+                        Utils.SendMessage(string.Format(GetString("Message.VoiceChangeFailed"), color), player.PlayerId);
                     }
                     else
                         Utils.SendMessage(VoiceReader.GetVoiceIdxMsg(), player.PlayerId);
+                    break;
+
+                case "/modok":
+                    Main.ConsentModUse[player.GetClient().Id] = player.name;
+                    Utils.SendMessage(string.Format(GetString("Message.ModCheckAgree"), player.name), player.PlayerId);
                     break;
 
                 default:
@@ -505,8 +566,15 @@ namespace TownOfHostY
             if (DoBlockChat) return;
             var player = Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).FirstOrDefault();
             if (player == null) return;
-            (string msg, byte sendTo, string title) = Main.MessagesToSend[0];
+            (string msg, byte sendTo, string title, bool custom) = Main.MessagesToSend[0];
             Main.MessagesToSend.RemoveAt(0);
+
+            if (custom)
+            {
+                SendCustomChat(msg, sendTo: sendTo);
+                return;
+            }
+
             int clientId = sendTo == byte.MaxValue ? -1 : Utils.GetPlayerById(sendTo).GetClientId();
             var name = player.Data.PlayerName;
             if (clientId == -1)
@@ -529,6 +597,33 @@ namespace TownOfHostY
             writer.EndMessage();
             writer.SendMessage();
             __instance.timeSinceLastMessage = 0f;
+        }
+        public static void SendCustomChat(string SendName, PlayerControl sender = null, byte sendTo = byte.MaxValue)
+        {
+            Logger.Info($"SendName: {SendName}, sender: {sender?.name}, sendTo: {sendTo}", "SendCustomChat");
+            string command = "\n\n";
+            if (sender == null) sender = PlayerControl.LocalPlayer;
+            string name = sender.Data?.PlayerName;
+            int clientId = sendTo == byte.MaxValue ? -1 : Utils.GetPlayerById(sendTo).GetClientId();
+            if (clientId == -1)
+            {
+                sender.SetName(SendName);
+                DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sender, command);
+                sender.SetName(name);
+            }
+            var writer = CustomRpcSender.Create("CustomSend");
+            writer.StartMessage(clientId);
+            writer.StartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(SendName)
+                .EndRpc()
+                .StartRpc(sender.NetId, (byte)RpcCalls.SendChat)
+                .Write(command)
+                .EndRpc()
+                .StartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(name)
+                .EndRpc()
+                .EndMessage()
+                .SendMessage();
         }
     }
 

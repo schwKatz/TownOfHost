@@ -93,11 +93,12 @@ namespace TownOfHostY
         public static List<byte> ResetCamPlayerList;
         public static List<byte> winnerList;
         public static List<int> clientIdList;
-        public static List<(string, byte, string)> MessagesToSend;
+        public static List<(string, byte, string, bool)> MessagesToSend;
         public static bool isChatCommand = false;
         public static List<PlayerControl> LoversPlayers = new();
         public static bool isLoversDead = true;
         public static Dictionary<byte, float> AllPlayerKillCooldown = new();
+        public static Dictionary<int, string> ConsentModUse = new();
 
         /// <summary>
         /// 基本的に速度の代入は禁止.スピードは増減で対応してください.
@@ -155,7 +156,7 @@ namespace TownOfHostY
 
             winnerList = new();
             VisibleTasksCount = false;
-            MessagesToSend = new List<(string, byte, string)>();
+            MessagesToSend = new List<(string, byte, string, bool)>();
 
             Preset1 = Config.Bind("Preset Name Options", "Preset1", "Preset_1");
             Preset2 = Config.Bind("Preset Name Options", "Preset2", "Preset_2");
