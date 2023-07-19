@@ -119,6 +119,7 @@ public sealed class BountyHunter : RoleBase, IImpostor
         {
             if (Player.IsAlive())
             {
+                if (GetTarget() == null) return;
                 var targetId = GetTarget().PlayerId;
                 if (ChangeTimer >= TargetChangeTime)//時間経過でターゲットをリセットする処理
                 {

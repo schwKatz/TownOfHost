@@ -22,6 +22,7 @@ namespace TownOfHostY
         private static PassiveButton twitterButton;
         private static PassiveButton wikiwikiButton;
         private static PassiveButton gitHubButton;
+        public static PassiveButton UpdateButton { get; private set; }
 
         [HarmonyPatch(nameof(MainMenuManager.Start)), HarmonyPostfix, HarmonyPriority(Priority.Normal)]
         public static void StartPostfix(MainMenuManager __instance)
@@ -79,6 +80,23 @@ namespace TownOfHostY
                     new(1.85f, 0.5f));
             }
 
+            //Updateボタンを生成
+            if (UpdateButton == null)
+            {
+                UpdateButton = CreateButton(
+                    "UpdateButton",
+                    new(0f, 0.8f, 1f),
+                    new(0, 202, 255, byte.MaxValue),
+                    new(60, 255, 255, byte.MaxValue),
+                    () =>
+                    {
+                        UpdateButton.gameObject.SetActive(false);
+                        ModUpdater.StartUpdate(ModUpdater.downloadUrl);
+                    },
+                    "ModUpdaterで上書き",
+                    new(4f, 0.6f));
+            }
+            UpdateButton.gameObject.SetActive(false);
 
 #if RELEASE
             // フリープレイの無効化

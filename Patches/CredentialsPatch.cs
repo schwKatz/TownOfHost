@@ -98,19 +98,28 @@ namespace TownOfHostY
                     SpecialEventText.text = "TOH_Yへようこそ！" +
                         "\n<size=55%>遂にシェリフ等役職が完全復活！" +
                         "\n全役職が最新バージョンで遊べるようになりました。(非公開ルームのみ)" +
-                        "\n公開ルームで遊びたい場合は設定(歯車)から[公開ルーム可能]をオンにした制限版で。" +
+                        "\n公開ルームはしばらくは我慢してください；；" +
                         "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
                     SpecialEventText.color = Color.yellow;
                 }
                 if (Main.CanPublicRoom.Value && Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
                 {
-                    SpecialEventText.text = "TOH_YSへようこそ！" +
-                        "\n<size=55%>制限版では公開ルーム/非公開ルームどちらでも使用できます。" +
-                        "\nただし、一部役職が使用できません。(非表示にしてあります)" +
-                        "\n非公開ルームで遊ぶ場合は設定(歯車)から[公開ルーム可能]をオフにした完全版で。" +
+                    SpecialEventText.text = "【TOH_YSはこのバージョンでは使用不可】" +
+                        "\n<size=55%>InnerSlothからのアナウンスにより、" +
+                        "\n公開ルームでプレイできない仕様に変更しています。" +
+                        "\n設定(歯車)から[公開ルーム可能]をクリックして、完全版に切替を。" +
                         "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
                     SpecialEventText.color = Color.yellow;
                 }
+                //if (Main.CanPublicRoom.Value && Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
+                //{
+                //    SpecialEventText.text = "TOH_YSへようこそ！" +
+                //        "\n<size=55%>制限版では公開ルーム/非公開ルームどちらでも使用できます。" +
+                //        "\nただし、一部役職が使用できません。(非表示にしてあります)" +
+                //        "\n非公開ルームで遊ぶ場合は設定(歯車)から[公開ルーム可能]をオフにした完全版で。" +
+                //        "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
+                //    SpecialEventText.color = Color.yellow;
+                //}
                 //if (Main.IsValentine)
                 //{
                 //    SpecialEventText.text = "♥happy Valentine♥";

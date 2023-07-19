@@ -30,7 +30,7 @@ namespace TownOfHostY
             }
             if (!Main.CanPublicRoom.Value)
             {
-                var message = GetString("DisabledBySetting");
+                var message = GetString("DisabledByProgram");
                 Logger.Info(message, "MakePublicPatch");
                 Logger.SendInGame(message);
                 return false;
@@ -59,9 +59,13 @@ namespace TownOfHostY
                 {
                     message = GetString("UnsupportedVersion");
                 }
+                else if (!Main.AllowPublicRoom)
+                {
+                    message = GetString("DisabledByProgram");
+                }
                 else if (!Main.CanPublicRoom.Value)
                 {
-                    message = GetString("DisabledBySetting1");
+                    message = GetString("DisabledByProgram");
                 }
                 textObj.text = $"<size=2>{Utils.ColorString(Color.red, message)}</size>";
             }

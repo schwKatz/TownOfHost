@@ -41,9 +41,9 @@ namespace TownOfHostY
                 if (date == DateTime.MinValue) continue;
                 var killerId = kvp.Value.GetRealKiller();
                 var targetId = kvp.Key;
-                sb.Append($"\n{date:T} {Main.AllPlayerNames[targetId]}({Utils.GetTrueRoleName(targetId, false)}{Utils.GetSubRolesText(targetId)}) [{Utils.GetVitalText(kvp.Key)}]");
+                sb.Append($"\n{date:T} {Main.AllPlayerNames[targetId]}({Utils.GetTrueRoleName(targetId, false, true)}) [{Utils.GetVitalText(kvp.Key)}]");
                 if (killerId != byte.MaxValue && killerId != targetId)
-                    sb.Append($"\n\t\t⇐ {Main.AllPlayerNames[killerId]}({Utils.GetTrueRoleName(killerId, false)}{Utils.GetSubRolesText(killerId)})");
+                    sb.Append($"\n\t\t⇐ {Main.AllPlayerNames[killerId]}({Utils.GetTrueRoleName(killerId, false, true)})");
             }
             KillLog = sb.ToString();
 
@@ -228,7 +228,8 @@ namespace TownOfHostY
             {
                 WinnerText.text = $"<color={CustomWinnerColor}>{CustomWinnerText}{AdditionalWinnerText}{GetString("Win")}</color>";
             }
-            LastWinsText = WinnerText.text.RemoveHtmlTags();
+            LastWinsText = WinnerText.text;
+            if (Options.DisableColorDisplay.GetBool()) LastWinsText = LastWinsText.RemoveHtmlTags();
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

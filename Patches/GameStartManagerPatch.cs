@@ -94,7 +94,7 @@ namespace TownOfHostY
                 if (!AmongUsClient.Instance.AmHost) return;
 
                 // Make Public Button
-                if (!Main.AllowPublicRoom || !Main.CanPublicRoom.Value || !VersionChecker.IsSupported)
+                if (!Main.AllowPublicRoom || /*todo!Main.CanPublicRoom.Value || */!VersionChecker.IsSupported)
                 {
                     __instance.MakePublicButton.color = Palette.DisabledClear;
                     __instance.privatePublicText.color = Palette.DisabledClear;

@@ -221,6 +221,7 @@ namespace TownOfHostY
 
         // プリセット対象外
         public static OptionItem NoGameEnd;
+        public static OptionItem DisableColorDisplay;
         public static OptionItem AutoDisplayLastResult;
         public static OptionItem AutoDisplayKillLog;
         public static OptionItem SuffixMode;
@@ -675,6 +676,7 @@ namespace TownOfHostY
             // その他
             NoGameEnd = BooleanOptionItem.Create(1_002_000, "NoGameEnd", false, TabGroup.MainSettings, false)
                 .SetHeader(true);
+            DisableColorDisplay = BooleanOptionItem.Create(1_002_008, "DisableColorDisplay", false, TabGroup.MainSettings, false);
             AutoDisplayLastResult = BooleanOptionItem.Create(1_002_001, "AutoDisplayLastResult", true, TabGroup.MainSettings, false);
             AutoDisplayKillLog = BooleanOptionItem.Create(1_002_002, "AutoDisplayKillLog", true, TabGroup.MainSettings, false);
             SuffixMode = StringOptionItem.Create(1_002_003, "SuffixMode", suffixModes, 0, TabGroup.MainSettings, true);
@@ -730,7 +732,9 @@ namespace TownOfHostY
                             or "ApplyDenyNameList"
                             or "KickPlayerFriendCodeNotExist"
                             or "ApplyBanList"
-                            or "ChangeIntro";
+                            or "ChangeIntro"
+                            or "DisableColorDisplay"
+                            or "AddonShowMode";
         }
         public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, CustomGameMode customGameMode = CustomGameMode.Standard, bool isPublic = false)
         {

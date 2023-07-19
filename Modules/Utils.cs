@@ -23,6 +23,7 @@ using TownOfHostY.Roles.AddOns.Crewmate;
 using static TownOfHostY.Translator;
 using TownOfHostY.Roles.Crewmate;
 using static UnityEngine.GraphicsBuffer;
+using LibCpp2IL.Elf;
 
 namespace TownOfHostY
 {
@@ -231,8 +232,10 @@ namespace TownOfHostY
         /// <param name="mainRole">表示する役職</param>
         /// <param name="subRolesList">表示する属性のList</param>
         /// <returns>RoleNameを構築する色とテキスト(Color, string)</returns>
-        public static (Color color, string text) GetRoleNameData(CustomRoles mainRole, List<CustomRoles> subRolesList, bool showSubRoleMarks = true, byte PlayerId = 255)
+        public static (Color color, string text) GetRoleNameData(CustomRoles mainRole, List<CustomRoles> subRolesList, bool showSubRoleMarks = true, byte PlayerId = 255, bool TOHSubRoleAll = false)
         {
+            var isTOHDisplay = Options.GetAddonShowModes() == AddonShowMode.TOH;
+            if (TOHSubRoleAll && isTOHDisplay) showSubRoleMarks = false;
             StringBuilder roleText = new();
             Color roleColor = Color.white;
 
@@ -261,12 +264,12 @@ namespace TownOfHostY
                     }
                 }
 
-                if (showSubRoleMarks && Options.GetAddonShowModes() != AddonShowMode.TOH)
+                if (showSubRoleMarks && !isTOHDisplay)
                 {
                     if (count >= 2 && Options.GetAddonShowModes() == AddonShowMode.Default)
                     {
                         //var text = roleText.ToString();
-                        roleText.Insert(0, ColorString(Color.white, "＋")/* + text*/);
+                        roleText.Insert(0, ColorString(Color.gray, "＋")/* + text*/);
                     }
                     else
                     {
@@ -297,7 +300,11 @@ namespace TownOfHostY
             }
 
             string subRoleMarks = string.Empty;
-            if (showSubRoleMarks && Options.GetAddonShowModes() == AddonShowMode.TOH)
+            if (TOHSubRoleAll && isTOHDisplay)
+            {
+                roleText.Append(GetSubRolesText(PlayerId)); //メイン役職の後に記載
+            }
+            else if (showSubRoleMarks && isTOHDisplay)
             {
                 subRoleMarks = GetSubRoleMarks(subRolesList);
                 if (roleText.ToString() != string.Empty && subRoleMarks != string.Empty)
@@ -345,19 +352,19 @@ namespace TownOfHostY
         /// </summary>
         /// <param name="playerId">見られる側のPlayerId</param>
         /// <returns>RoleNameを構築する色とテキスト(Color, string)</returns>
-        private static (Color color, string text) GetTrueRoleNameData(byte playerId, bool showSubRoleMarks = true)
+        private static (Color color, string text) GetTrueRoleNameData(byte playerId, bool showSubRoleMarks = true, bool TOHSubRoleAll = false)
         {
             var state = PlayerState.GetByPlayerId(playerId);
-            return GetRoleNameData(state.MainRole, state.SubRoles, showSubRoleMarks, playerId);
+            return GetRoleNameData(state.MainRole, state.SubRoles, showSubRoleMarks, playerId, TOHSubRoleAll);
         }
         /// <summary>
         /// 対象のRoleNameを全て正確に表示
         /// </summary>
         /// <param name="playerId">見られる側のPlayerId</param>
         /// <returns>構築したRoleName</returns>
-        public static string GetTrueRoleName(byte playerId, bool showSubRoleMarks = true)
+        public static string GetTrueRoleName(byte playerId, bool showSubRoleMarks = true, bool TOHSubRoleAll = false)
         {
-            var (color, text) = GetTrueRoleNameData(playerId, showSubRoleMarks);
+            var (color, text) = GetTrueRoleNameData(playerId, showSubRoleMarks, TOHSubRoleAll);
             return ColorString(color, text);
         }
         public static string GetRoleName(CustomRoles role)
@@ -401,20 +408,26 @@ namespace TownOfHostY
             if (!GameStates.IsInGame) return null;
 
             var sb = new StringBuilder();
-            var roleString = player.GetCustomRole().ToString();
-            if (player.GetCustomRole() == CustomRoles.Bakery && Bakery.IsNeutral(player))
-                roleString = "NBakery";
-            if (player.GetCustomRole() == CustomRoles.Lawyer && ((Lawyer)player.GetRoleClass()).IsPursuer())
-                roleString = "Pursuer";
-            sb.Append(GetString(roleString)).Append(player.GetRoleInfo(true));
+            var myRole = player.GetCustomRole();
+            var roleName = myRole.ToString();
+            if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
+                roleName = "NBakery";
+            if (myRole == CustomRoles.Lawyer && ((Lawyer)player.GetRoleClass()).IsPursuer())
+                roleName = "Pursuer";
+            var roleString = GetString(roleName);
+            if (!Options.DisableColorDisplay.GetBool()) roleString = $"<color={GetRoleColorCode(myRole)}>{roleString}</color>";
+                sb.Append(roleString).Append(player.GetRoleInfo(true));
 
             foreach (var subRole in player.GetCustomSubRoles())
             {
                 if (subRole != CustomRoles.NotAssigned)
                 {
-                    var RoleName = subRole.ToString();
+                    var subroleName = subRole.ToString();
+                    var subroleString = GetString(subroleName);
+                    if (!Options.DisableColorDisplay.GetBool()) subroleString = $"<color={GetRoleColorCode(subRole)}>{subroleString}</color>";
+
                     sb.Append("\n--------------------------------------------------------\n")
-                        .Append(GetString(RoleName)).Append(GetString($"{RoleName}InfoLong"));
+                        .Append(subroleString).Append(GetString($"{subroleName}InfoLong"));
                 }
             }
             return sb.ToString();
@@ -664,12 +677,21 @@ namespace TownOfHostY
                     if (Main.CanPublicRoom.Value && role.Key.IsCannotPublicRole()) continue;
 
                     if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
-                        sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
+                    {
+                        if (Options.DisableColorDisplay.GetBool()) sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
+                        else
+                            sb.Append($"\n〖<color={GetRoleColorCode(role.Key)}>{GetRoleName(role.Key)}</color>×{role.Key.GetCount()}〗\n");
+                    }
                     else
-                        sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
+                    {
+                        if (Options.DisableColorDisplay.GetBool()) sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
+                        else
+                            sb.Append($"\n【<color={GetRoleColorCode(role.Key)}>{GetRoleName(role.Key)}</color>×{role.Key.GetCount()}】\n");
+                    }
                     ShowChildrenSettings(Options.CustomRoleSpawnChances[role.Key], ref sb);
                     var text = sb.ToString();
-                    sb.Clear().Append(text.RemoveHtmlTags());
+                    if (Options.DisableColorDisplay.GetBool()) text = text.RemoveHtmlTags();
+                    sb.Clear().Append(text);
                 }
                 foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode)))
                 {
@@ -680,7 +702,8 @@ namespace TownOfHostY
                         sb.Append($"\n【{opt.GetName(true)}】\n");
                     ShowChildrenSettings(opt, ref sb);
                     var text = sb.ToString();
-                    sb.Clear().Append(text.RemoveHtmlTags());
+                    if (Options.DisableColorDisplay.GetBool()) text = text.RemoveHtmlTags();
+                    sb.Clear().Append(text);
                 }
             }
             SendMessage(sb.ToString(), PlayerId);
@@ -727,7 +750,11 @@ namespace TownOfHostY
                 return;
             }
             var sb = new StringBuilder(GetString("Roles")).Append(':');
-            sb.AppendFormat("\n{0}:{1}", GetRoleName(CustomRoles.GM), Options.EnableGM.GetString().RemoveHtmlTags());
+            {   //GM
+                if (Options.DisableColorDisplay.GetBool()) sb.AppendFormat("\n{0}:{1}", GetRoleName(CustomRoles.GM), Options.EnableGM.GetString().RemoveHtmlTags());
+                else
+                    sb.AppendFormat("\n{0}:{1}", $"<color={GetRoleColorCode(CustomRoles.GM)}>{GetRoleName(CustomRoles.GM)}</color>", Options.EnableGM.GetString());
+            }
             foreach (CustomRoles role in CustomRolesHelper.AllRoles)
             {
                 if (role is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
@@ -736,9 +763,17 @@ namespace TownOfHostY
                 if (role.IsEnable())
                 {
                     if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
-                        sb.AppendFormat("\n◆{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
+                    {
+                        if (Options.DisableColorDisplay.GetBool()) sb.AppendFormat("\n◆{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
+                        else
+                            sb.AppendFormat("\n◆{0}:{1}x{2}", $"<color={GetRoleColorCode(role)}>{GetRoleName(role)}</color>", $"{role.GetChance()}%", role.GetCount());
+                    }
                     else
-                        sb.AppendFormat("\n　{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
+                    {
+                        if (Options.DisableColorDisplay.GetBool()) sb.AppendFormat("\n　{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
+                        else
+                            sb.AppendFormat("\n　{0}:{1}x{2}", $"<color={GetRoleColorCode(role)}>{GetRoleName(role)}</color>", $"{role.GetChance()}%", role.GetCount());
+                    }
                 }
             }
             SendMessage(sb.ToString(), PlayerId);
@@ -781,12 +816,16 @@ namespace TownOfHostY
             sb.Append($"\n{SetEverythingUpPatch.LastWinsText}\n");
             foreach (var id in Main.winnerList)
             {
-                sb.Append($"\n★ ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
+                if (Options.DisableColorDisplay.GetBool()) sb.Append($"\n★ ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
+                else 
+                    sb.Append($"\n★ ").Append(EndGamePatch.SummaryText[id]);
                 cloneRoles.Remove(id);
             }
             foreach (var id in cloneRoles)
             {
-                sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
+                if (Options.DisableColorDisplay.GetBool()) sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
+                else
+                    sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id]);
             }
             SendMessage(sb.ToString(), PlayerId);
         }
@@ -810,7 +849,7 @@ namespace TownOfHostY
                             CustomRoles.LastImpostor) continue;
 
                 var RoleText = disableColor ? GetRoleName(role) : ColorString(GetRoleColor(role), GetRoleName(role));
-                sb.Append($"{ColorString(Color.white, " + ")}{RoleText}");
+                sb.Append($"{ColorString(Color.gray, " + ")}{RoleText}");
             }
 
             return sb.ToString();
@@ -835,7 +874,8 @@ namespace TownOfHostY
         {
             if (!AmongUsClient.Instance.AmHost) return;
             if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
-            Main.MessagesToSend.Add((text.RemoveHtmlTags(), sendTo, title, false));
+            if (Options.DisableColorDisplay.GetBool()) text = text.RemoveHtmlTags();
+            Main.MessagesToSend.Add((text, sendTo, title, false));
         }
         public static void SendMessageCustom(string text, byte sendTo = byte.MaxValue)
         {
@@ -1173,7 +1213,7 @@ namespace TownOfHostY
         {
             var RolePos = TranslationController.Instance.currentLanguage.languageID == SupportedLangs.English ? 47 : 37;
             string summary = showName ? $"{ColorString(Main.PlayerColors[id], Main.AllPlayerNames[id])}": $"{id}";
-            summary += $"<pos=22%>{GetProgressText(id)}</pos><pos=29%> {GetVitalText(id)}</pos><pos={RolePos}%> {GetTrueRoleName(id, false)}{GetSubRolesText(id)}</pos>";
+            summary += $"<pos=22%>{GetProgressText(id)}</pos><pos=29%> {GetVitalText(id)}</pos><pos={RolePos}%> {GetTrueRoleName(id, false, true)}</pos>";
             return disableColor ? summary.RemoveHtmlTags() : summary;
         }
         public static string RemoveHtmlTags(this string str) => Regex.Replace(str, "<[^>]*?>", "");

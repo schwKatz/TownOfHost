@@ -31,7 +31,7 @@ namespace TownOfHostY
 
                 foreach (var subRole in PlayerState.GetByPlayerId(PlayerControl.LocalPlayer.PlayerId).SubRoles)
                     __instance.RoleBlurbText.text += "\n" + Utils.ColorString(Utils.GetRoleColor(subRole), GetString($"{subRole}Info"));
-                __instance.RoleText.text += Utils.GetSubRolesText(PlayerControl.LocalPlayer.PlayerId);
+                __instance.RoleText.text = Utils.GetTrueRoleName(PlayerControl.LocalPlayer.PlayerId, false, true);
 
             }, 0.01f, "Override Role Text");
 

@@ -363,6 +363,34 @@ public class ModNewsHistory
             };
             AllModNews.Add(news);
         }
+        {
+            var news = new ModNews
+            {
+                Number = 100014,
+                //BeforeNumber = 0,
+                Title = "Town Of Host_Y v503.14",
+                SubTitle = "★★★★★v503.14アップデート★★★★★",
+                ShortTitle = "★TOH_Y v503.14",
+                Text = "Thank you for playing TownOfHost_Y!\n"
+                + "\n<b>チャットが豪華になりました。</b>"
+                + "\n　役職の色が反映されるようになりました！カラフル過ぎて元に戻したいときは「チャットのカラー表示を無効にする」を選んでね。\n"
+                + "\n<b>本家TOHの自動アップデート機能を復活させました。</b>"
+                + "\n　次バージョンからアップデートがある時は自動アップデートできるようになります！わざわざGitHub覗いたり、アップデートし忘れとかが減るね。"
+                + "\n　※本体アップデートの対応時など、自動アップデートが使用できない時もございます。\n"
+                + "\n<b>ホストの独断で、他人のスキンを脱がすことができるようになりました。</b>　By くろにゃんこ"
+                + "\n　わざわざ似たようなスキンを選んでいる人がいてややこしかったりするから言うこと聞かない人に対して使ってください。使う時あるかしらんけど\n"
+                + "\n<b>役職名の表示の調整を行いました。</b>"
+                + "\n　属性表示モードが「本家TOH」モードでない時は、本家TOHの属性表示と全て変えることにしました。統一感がなかったからね。\n"
+                + "\n<b>公開ルーム(野良)では使用できないようにしました。</b>"
+                + "\n　前バージョンでは制限版のみ使用できていましたが、InnerSlothからのアナウンスに則って使用不可にしました。\n"
+
+
+                + "\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
+                Date = "2023-07-19T00:00:00Z"
+
+            };
+            AllModNews.Add(news);
+        }
     }
 
     [HarmonyPatch(typeof(PlayerAnnouncementData), nameof(PlayerAnnouncementData.SetAnnouncements)), HarmonyPrefix]

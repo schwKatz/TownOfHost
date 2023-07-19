@@ -29,7 +29,7 @@ namespace TownOfHostY
         // modの色 / Mod Color (Default: #00bfff)
         public static readonly string ModColor = "#ffff00";
         // 公開ルームを許可する / Allow Public Room (Default: true)
-        public static readonly bool AllowPublicRoom = true;
+        public static readonly bool AllowPublicRoom = false;
         // フォークID / ForkId (Default: OriginalTOH)
         public static readonly string ForkId = "TOH_Y";
         // Discordボタンを表示するか / Show Discord Button (Default: true)
@@ -51,7 +51,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "503.13.1";
+        public const string PluginVersion = "503.14";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.7.11";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -183,7 +183,7 @@ namespace TownOfHostY
                     {CustomRoles.MSchrodingerCat, "#ff1919"},
                     {CustomRoles.SKMadmate, "#ff1919"},
                     //特殊クルー役職
-                    {CustomRoles.CSchrodingerCat, "#ffffff"}, //シュレディンガーの猫の派生
+                    {CustomRoles.CSchrodingerCat, "#8cffff"}, //シュレディンガーの猫の派生
                     //ニュートラル役職
                     {CustomRoles.EgoSchrodingerCat, "#5600ff"},
                     {CustomRoles.JSchrodingerCat, "#00b4eb"},
