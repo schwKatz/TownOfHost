@@ -679,7 +679,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "SabotageMasterFixesElectrical","Can Fix Lights With One Switch","停電に対して能力を使える","修理大师按一个按钮就可以修复照明破坏","修理工可以快速完成修理電燈","Может починить саботаж Света одним кликом","Pode Consertar Luzes Com um Botão"
 "SheriffCanKill%role%","Can Kill %role%","%role%をキルできる","警长可以执法%role%","警長可以槍死%role%","Может убить %role%","Pode Matar %role%"
 "SheriffCanKillNeutrals","Can Kill Neutrals","ニュートラルをキルできる","警长可以执法独立阵营","警長可以槍死中立","Может убить Нейтралов","Pode Matar Neutros"
-"SheriffCanKillAll","<color=#00fefe>All ON</color>","<color=#00fefe>全てオン</color>","<color=#00fefe>全开</color>","<color=#00fefe>全開</color>","<color=#00fefe>Все ВКЛ</color>","<color=#00fefe>Todos Ligados</color>"
+"SheriffCanKillAll","<color=#4cb3fe>All ON</color>","<color=#4cb3fe>全てオン</color>","<color=#4cb3fe>全开</color>","<color=#4cb3fe>全開</color>","<color=#4cb3fe>Все ВКЛ</color>","<color=#4cb3fe>Todos Ligados</color>"
 "SheriffCanKillSeparately","Individual Settings","個別に設定","个别设定","個別設定","Выбрать кого","Configuração Individual"
 "SheriffIsInfoPoor","Unable to Use Devices such as Admin,Camera,etc.","アドミン・カメラ等の機器が使用できない",
 "SheriffIsClumsy","Can Not Fix Lights And Fix Comms","停電・通信妨害が直せない",
