@@ -30,9 +30,6 @@ namespace TownOfHostY
         {
             Logger.Info("Options.Load Start", "Options");
             taskOptionsLoad = Task.Run(Load);
-
-            int chance = IRandom.Instance.Next(0, (int)CustomRoles._Max - 1);
-            SendDiscord.HostRandomName = Translator.GetString(((CustomRoles)chance).ToString());
         }
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start)), HarmonyPostfix]
         public static void WaitOptionsLoad()
