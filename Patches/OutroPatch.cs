@@ -18,7 +18,6 @@ namespace TownOfHostY
         public static Dictionary<byte, string> SummaryText = new();
         public static Dictionary<byte, string> SDSummaryText = new();
         public static string KillLog = "";
-        static Task taskSendDiscord;
         public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
         {
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,38 +100,6 @@ namespace TownOfHostY
 
                 TempData.winners.Add(new WinningPlayerData(pc.Data));
                 Main.winnerList.Add(pc.PlayerId);
-            }
-
-            if (PlayerControl.LocalPlayer.PlayerId == 0)
-            {
-                taskSendDiscord = Task.Run(() =>
-            {
-                if (CustomWinnerHolder.WinnerTeam == CustomWinner.Draw)
-                    Logger.Info("廃村のため試合結果の送信をキャンセル", "Webhook");
-                else
-                {
-                    //0:Imp 1:Mad 2:Crew 3:Neu
-                    bool[] isSend = { false, false, false, false };
-                    StringBuilder[] sendMasagge = { new StringBuilder(), new StringBuilder(), new StringBuilder(), new StringBuilder() };
-                    foreach (var IS in PlayerState.AllPlayerStates)
-                    {
-                        var id = IS.Key; var state = IS.Value;
-                        var role = state.MainRole;
-                        if (role.IsVanilla()) continue;
-                        int roleTypeNumber = (int)role.GetCustomRoleTypes();
-
-                        if (isSend[roleTypeNumber]) sendMasagge[roleTypeNumber].Append("/");
-                        if (Main.winnerList.Contains(id)) sendMasagge[roleTypeNumber].Append("★");
-                        sendMasagge[roleTypeNumber].Append(Utils.GetTrueRoleName(id).RemoveHtmlTags());
-                        isSend[roleTypeNumber] = true;
-                    }
-                    var hostName = SendDiscord.HostRandomName + ":arrow_forward:";
-                    for (int i = 0; i < 4; i++)
-                    {
-                        if (isSend[i]) SendDiscord.SendWebhook((SendDiscord.MassageType)i, hostName + sendMasagge[i].ToString());
-                    }
-                }
-            });
             }
 
             Main.VisibleTasksCount = false;
@@ -262,34 +229,6 @@ namespace TownOfHostY
             var RoleSummaryRectTransform = RoleSummary.GetComponent<RectTransform>();
             RoleSummaryRectTransform.anchoredPosition = new Vector2(Pos.x + 3.5f, Pos.y - 0.1f);
             RoleSummary.text = sb.ToString();
-
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-            //参考：https://github.com/Hyz-sui/TownOfHost-H
-
-            if (PlayerControl.LocalPlayer.PlayerId == 0)
-            {
-                if (CustomWinnerHolder.WinnerTeam == CustomWinner.Draw)
-                    Logger.Info("廃村のため試合結果の送信をキャンセル", "Webhook");
-                else
-                {
-                    var resultMessage = new StringBuilder();
-                    resultMessage.Append($">>> {Main.ForkId} {Main.PluginVersion} ");
-                    if (AmongUsClient.Instance.IsGamePublic) resultMessage.Append("◆");
-                    else if (GameStates.IsLocalGame) resultMessage.Append("▽");
-                    resultMessage.Append(SendDiscord.HostRandomName).Append($" {DateTime.Now.ToString("T")}------------\n");
-                    foreach (var id in Main.winnerList)
-                    {
-                        resultMessage.Append(SendDiscord.ColorIdToDiscordEmoji(Palette.PlayerColors.IndexOf(Main.PlayerColors[id]), !PlayerState.GetByPlayerId(id).IsDead)).Append(":star:").Append(EndGamePatch.SDSummaryText[id].RemoveHtmlTags()).Append("\n");
-                    }
-                    foreach (var id in cloneRoles)
-                    {
-                        resultMessage.Append(SendDiscord.ColorIdToDiscordEmoji(Palette.PlayerColors.IndexOf(Main.PlayerColors[id]), !PlayerState.GetByPlayerId(id).IsDead)).Append("\u3000").Append(EndGamePatch.SDSummaryText[id].RemoveHtmlTags()).Append("\n");
-                    }
-                    SendDiscord.SendWebhook(SendDiscord.MassageType.Result, resultMessage.ToString(), GetString("LastResult"));
-                }
-            }
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
             //Utils.ApplySuffix();
         }
