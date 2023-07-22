@@ -625,6 +625,7 @@ namespace TownOfHostY
             {
                 ret = roleClass.OnCompleteTask();
             }
+            //属性クラスの扱いを決定するまで仮置き
             ret &= Workhorse.OnCompleteTask(pc);
 
             if (Options.IsCCMode) CatchCat.CatPlayer.OnCompleteTask(pc, taskState);
