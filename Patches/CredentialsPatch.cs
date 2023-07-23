@@ -6,6 +6,7 @@ using UnityEngine;
 
 using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Templates;
 using static TownOfHostY.Translator;
 
 namespace TownOfHostY
@@ -55,15 +56,17 @@ namespace TownOfHostY
             static TextMeshPro SpecialEventText;
             static void Postfix(VersionShower __instance)
             {
+                TMPTemplate.SetBase(__instance.text);
                 Main.credentialsText = $"<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginVersion}";
 #if DEBUG
                 Main.credentialsText += $"\r\n<color={Main.ModColor}>{ThisAssembly.Git.Branch}({ThisAssembly.Git.Commit})</color>";
 #endif
-                var credentials = Object.Instantiate(__instance.text);
-                credentials.text = Main.credentialsText;
-                credentials.alignment = TextAlignmentOptions.Right;
+                var credentials = TMPTemplate.Create(
+                    Main.credentialsText,
+                    fontSize: 2f,
+                    alignment: TextAlignmentOptions.Right,
+                    setActive: true);
                 credentials.transform.position = new Vector3(1f, 2.65f, -2f);
-                credentials.fontSize = credentials.fontSizeMax = credentials.fontSizeMin = 2f;
 
                 ErrorText.Create(__instance.text);
                 if (Main.hasArgumentException && ErrorText.Instance != null)
@@ -75,10 +78,12 @@ namespace TownOfHostY
 
                 if (SpecialEventText == null && TohLogo != null)
                 {
-                    SpecialEventText = Object.Instantiate(__instance.text, TohLogo.transform);
+                    SpecialEventText = TMPTemplate.Create(
+                        "",
+                        Color.white,
+                        alignment: TextAlignmentOptions.Center,
+                        parent: TohLogo.transform);
                     SpecialEventText.name = "SpecialEventText";
-                    SpecialEventText.text = "";
-                    SpecialEventText.color = Color.white;
                     SpecialEventText.fontSizeMin = 3f;
                     SpecialEventText.alignment = TextAlignmentOptions.Center;
                     SpecialEventText.transform.localPosition = new Vector3(0f, -1.2f, 0f);
@@ -86,6 +91,7 @@ namespace TownOfHostY
                 if (SpecialEventText != null)
                 {
                     SpecialEventText.enabled = TitleLogoPatch.amongUsLogo != null;
+                    SpecialEventText.gameObject.SetActive(true);
                 }
                 if (Main.IsInitialRelease)
                 {
