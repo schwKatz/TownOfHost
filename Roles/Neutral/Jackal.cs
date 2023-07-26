@@ -18,6 +18,7 @@ namespace TownOfHostY.Roles.Neutral
                 SetupOptionItem,
                 "ジャッカル",
                 "#00b4eb",
+                true,
                 countType: CountTypes.Jackal
             );
         public Jackal(PlayerControl player)
