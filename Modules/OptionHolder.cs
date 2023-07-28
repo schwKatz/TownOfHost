@@ -210,6 +210,8 @@ namespace TownOfHostY
         // マップ改造
         public static OptionItem AirShipVariableElectrical;
         public static OptionItem DisableAirshipMovingPlatform;
+        public static OptionItem ResetDoorsEveryTurns;
+        public static OptionItem DoorsResetMode;
 
         // その他
         public static OptionItem FixFirstKillCooldown;
@@ -521,6 +523,9 @@ namespace TownOfHostY
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
             DisableAirshipMovingPlatform = BooleanOptionItem.Create(100530, "DisableAirshipMovingPlatform", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
+            ResetDoorsEveryTurns = BooleanOptionItem.Create(100540, "ResetDoorsEveryTurns", false, TabGroup.MainSettings, false)
+                .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
+            DoorsResetMode = StringOptionItem.Create(100541, "DoorsResetMode", EnumHelper.GetAllNames<DoorsReset.ResetMode>(), 0, TabGroup.MainSettings, false).SetParent(ResetDoorsEveryTurns).SetGameMode(CustomGameMode.All);
 
             TextOptionItem.Create(300101, "Head.Sabotage", TabGroup.MainSettings).SetColor(Color.magenta).SetGameMode(CustomGameMode.All);
             // リアクターの時間制御
