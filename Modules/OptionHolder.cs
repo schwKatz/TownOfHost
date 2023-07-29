@@ -195,6 +195,8 @@ namespace TownOfHostY
         public static OptionItem SabotageTimeControl;
         public static OptionItem PolusReactorTimeLimit;
         public static OptionItem AirshipReactorTimeLimit;
+
+        // サボタージュのクールダウン変更
         public static OptionItem ModifySabotageCooldown;
         public static OptionItem SabotageCooldown;
 
