@@ -27,10 +27,10 @@ namespace TownOfHostY
             if (Main.tempImpostorNum > 0) Main.NormalOptions.NumImpostors = Main.tempImpostorNum;
             SummaryText = new();
             foreach (var id in PlayerState.AllPlayerStates.Keys)
-            {
-                SummaryText[id] = Utils.SummaryTexts(id);
-            }
-            var sb = new StringBuilder(GetString("KillLog") + ":");
+                SummaryText[id] = Utils.SummaryTexts(id, disableColor: false);
+
+            var sb = new StringBuilder(GetString("KillLog"));
+            sb.Append("<size=70%>");
             foreach (var kvp in PlayerState.AllPlayerStates.OrderBy(x => x.Value.RealKiller.Item1.Ticks))
             {
                 var date = kvp.Value.RealKiller.Item1;
