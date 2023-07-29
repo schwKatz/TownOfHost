@@ -195,6 +195,8 @@ namespace TownOfHostY
         public static OptionItem SabotageTimeControl;
         public static OptionItem PolusReactorTimeLimit;
         public static OptionItem AirshipReactorTimeLimit;
+        public static OptionItem ModifySabotageCooldown;
+        public static OptionItem SabotageCooldown;
 
         // 停電の特殊設定
         public static OptionItem LightsOutSpecialSettings;
@@ -526,6 +528,12 @@ namespace TownOfHostY
             PolusReactorTimeLimit = FloatOptionItem.Create(100201, "PolusReactorTimeLimit", new(1f, 60f, 1f), 30f, TabGroup.MainSettings, false).SetParent(SabotageTimeControl)
                 .SetValueFormat(OptionFormat.Seconds).SetGameMode(CustomGameMode.All);
             AirshipReactorTimeLimit = FloatOptionItem.Create(100202, "AirshipReactorTimeLimit", new(1f, 90f, 1f), 60f, TabGroup.MainSettings, false).SetParent(SabotageTimeControl)
+                .SetValueFormat(OptionFormat.Seconds).SetGameMode(CustomGameMode.All);
+
+            // サボタージュのクールダウン変更
+            ModifySabotageCooldown = BooleanOptionItem.Create(100230, "ModifySabotageCooldown", false, TabGroup.MainSettings, false)
+                .SetColor(Color.magenta).SetGameMode(CustomGameMode.All);
+            SabotageCooldown = FloatOptionItem.Create(100231, "SabotageCooldown", new(1f, 60f, 1f), 30f, TabGroup.MainSettings, false).SetParent(ModifySabotageCooldown)
                 .SetValueFormat(OptionFormat.Seconds).SetGameMode(CustomGameMode.All);
 
             // 停電の特殊設定
