@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HarmonyLib;
 using UnityEngine;
 
+using TownOfHostY.Modules;
 using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Common;
@@ -305,6 +306,8 @@ namespace TownOfHostY
         public static void Load()
         {
             if (IsLoaded) return;
+            OptionSaver.Initialize();
+
             // プリセット
             _ = PresetOptionItem.Create(0, TabGroup.MainSettings)
                 .SetColor(new Color32(204, 204, 0, 255))
@@ -720,6 +723,8 @@ namespace TownOfHostY
                 .SetGameMode(CustomGameMode.All);
 
             DebugModeManager.SetupCustomOption();
+
+            OptionSaver.Load();
 
             IsLoaded = true;
         }
