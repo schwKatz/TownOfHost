@@ -343,10 +343,10 @@ namespace TownOfHostY
                             SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
                             break;
                         case CustomRoles.Telepathisters:
-                            SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
+                            SetupTelepathistersOptions(info);
                             break;
                         default:
-                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                            SetupRoleOptions(info);
                             break;
                     }
                 }
@@ -358,16 +358,29 @@ namespace TownOfHostY
                 .SetValueFormat(OptionFormat.Seconds);
             ImpostorOperateVisibility = BooleanOptionItem.Create(90110, "ImpostorOperateVisibility", false, TabGroup.ImpostorRoles, false);
 
-            // Madmate
-            sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Madmate).Do(info =>
+            // Madmate, Crewmate, Neutral
+            sortedRoleInfo.Where(role => role.CustomRoleType != CustomRoleTypes.Impostor).Do(info =>
             {
                 if (info.RoleName.IsCannotPublicRole())
                 {
-                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic : true);
+                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic: true);
                 }
                 else
                 {
-                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                    switch (info.RoleName)
+                    {
+                        case CustomRoles.Sympathizer: //共鳴者は1組で記載
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1, isPair: true);
+                            break;
+                        case CustomRoles.Jackal: //ジャッカルは1人固定
+                        case CustomRoles.DarkHide:
+                        case CustomRoles.PlatonicLover:
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                            break;
+                        default:
+                            SetupRoleOptions(info);
+                            break;
+                    }
                 }
                 info.OptionCreator?.Invoke();
             });
@@ -389,53 +402,7 @@ namespace TownOfHostY
                 .SetValueFormat(OptionFormat.Seconds);
             MadmateVentMaxTime = FloatOptionItem.Create(91529, "MadmateVentMaxTime", new(0f, 180f, 5f), 0f, TabGroup.MadmateRoles, false)
                 .SetValueFormat(OptionFormat.Seconds);
-
-            // Crewmate
-            sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Crewmate).Do(info =>
-            {
-                if (info.RoleName.IsCannotPublicRole())
-                {
-                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic : true);
-                }
-                else
-                {
-                    switch (info.RoleName)
-                    {
-                        case CustomRoles.Sympathizer: //共鳴者は1組で記載
-                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1, true);
-                            break;
-                        default:
-                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                            break;
-                    }
-                }
-                info.OptionCreator?.Invoke();
-            });
-
-            // Neutral
-            sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Neutral).Do(info =>
-            {
-                if (info.RoleName.IsCannotPublicRole())
-                {
-                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic : true);
-                }
-                else
-                {
-                    switch (info.RoleName)
-                    {
-                        case CustomRoles.Jackal: //ジャッカルは1人固定
-                        case CustomRoles.DarkHide:
-                        case CustomRoles.PlatonicLover:
-                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
-                            break;
-                        default:
-                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                            break;
-                    }
-                }
-                info.OptionCreator?.Invoke();
-            });
-
+            
             // Add-Ons
             TextOptionItem.Create(300050, "Head.ImpostorAddOn", TabGroup.Addons).SetColor(Palette.ImpostorRed);
             LastImpostor.SetupCustomOption();
@@ -746,6 +713,8 @@ namespace TownOfHostY
                             or "DisableColorDisplay"
                             or "AddonShowMode";
         }
+        public static void SetupRoleOptions(SimpleRoleInfo info) =>
+            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, info.AssignCountRule);
         public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, IntegerValueRule assignCountRule = null, CustomGameMode customGameMode = CustomGameMode.Standard)
         {
             if (role.IsVanilla()) return;
