@@ -480,8 +480,8 @@ namespace TownOfHostY
 
             // HideAndSeek
             /********************************************************************************/
-            SetupRoleOptions(200000, TabGroup.MainSettings, CustomRoles.HASFox, CustomGameMode.HideAndSeek);
-            SetupRoleOptions(200100, TabGroup.MainSettings, CustomRoles.HASTroll, CustomGameMode.HideAndSeek);
+            SetupRoleOptions(200000, TabGroup.MainSettings, CustomRoles.HASFox, customGameMode: CustomGameMode.HideAndSeek);
+            SetupRoleOptions(200100, TabGroup.MainSettings, CustomRoles.HASTroll, customGameMode: CustomGameMode.HideAndSeek);
             AllowCloseDoors = BooleanOptionItem.Create(201000, "AllowCloseDoors", false, TabGroup.MainSettings, false)
                 .SetHeader(true)
                 .SetGameMode(CustomGameMode.HideAndSeek);
@@ -746,18 +746,19 @@ namespace TownOfHostY
                             or "DisableColorDisplay"
                             or "AddonShowMode";
         }
-        public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, CustomGameMode customGameMode = CustomGameMode.Standard, bool isPublic = false)
+        public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, IntegerValueRule assignCountRule = null, CustomGameMode customGameMode = CustomGameMode.Standard)
         {
             if (role.IsVanilla()) return;
-            int MaxCount = 15;
-            if (role.IsImpostor()) MaxCount = 3;
+            assignCountRule ??= new(1, 15, 1);
 
-            var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false).SetColor(Utils.GetRoleColor(role))
+            var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false)
+                .SetColor(Utils.GetRoleColor(role))
                 .SetValueFormat(OptionFormat.Percent)
                 .SetHeader(true)
                 .SetIsPublicDontUse(isPublic)
                 .SetGameMode(customGameMode) as IntegerOptionItem;
-            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(1, MaxCount, 1), 1, tab, false).SetParent(spawnOption)
+            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", assignCountRule, assignCountRule.Step, tab, false)
+                .SetParent(spawnOption)
                 .SetValueFormat(OptionFormat.Players)
                 .SetGameMode(customGameMode);
 
