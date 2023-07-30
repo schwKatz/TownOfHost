@@ -216,40 +216,50 @@ class SelectRolesPatch
                 AllPlayers.Add(pc);
             }
 
-            if (Options.EnableGM.GetBool())
-            {
-                AllPlayers.RemoveAll(x => x == PlayerControl.LocalPlayer);
-                PlayerControl.LocalPlayer.RpcSetCustomRole(CustomRoles.GM);
-                PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
-                PlayerControl.LocalPlayer.Data.IsDead = true;
-            }
-            Dictionary<(byte, byte), RoleTypes> rolesMap = new();
-            if (!Main.CanPublicRoom.Value)
-            {
-                AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.SillySheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-            }
-            AssignDesyncRole(CustomRoles.Hunter, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-            AssignDesyncRole(CustomRoles.Jackal, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-            AssignDesyncRole(CustomRoles.DarkHide, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-            AssignedStrayWolf =
-                AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
-            if (Opportunist.OptionCanKill.GetBool())
-                AssignDesyncRole(CustomRoles.Opportunist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                if (Options.EnableGM.GetBool())
+                {
+                    AllPlayers.RemoveAll(x => x == PlayerControl.LocalPlayer);
+                    PlayerControl.LocalPlayer.RpcSetCustomRole(CustomRoles.GM);
+                    PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
+                    PlayerControl.LocalPlayer.Data.IsDead = true;
+                }
+                Dictionary<(byte, byte), RoleTypes> rolesMap = new();
+                foreach (var (role, info) in CustomRoleManager.AllRolesInfo)
+                {
+                    if (info.RequireResetCam)
+                    {
+                        
+                        switch(role)
+                        {
+                        case CustomRoles.Sheriff:
+                        case CustomRoles.SillySheriff:
+                        case CustomRoles.Arsonist:
+                        case CustomRoles.MadSheriff:
+                        case CustomRoles.PlatonicLover:
+                        case CustomRoles.Totocalcio:
+                            if(Main.CanPublicRoom.Value) continue;
+                            break;
+                        case CustomRoles.StrayWolf:
+                            AssignedStrayWolf = AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
+                            continue;
+                            break;
+                        case CustomRoles.Opportunist:
+                            if(!Opportunist.OptionCanKill.GetBool()) continue;
+                            break;
+                    }
 
-            MakeDesyncSender(senders, rolesMap);
+                        AssignDesyncRole(role, AllPlayers, senders, rolesMap, BaseRole: info.BaseRoleType.Invoke());
+                    }
+                }
+                MakeDesyncSender(senders, rolesMap);
+            }
+            //以下、バニラ側の役職割り当てが入る
         }
-        //以下、バニラ側の役職割り当てが入る
-    }
-    public static void Postfix()
-    {
-        if (!AmongUsClient.Instance.AmHost) return;
-        RpcSetRoleReplacer.Release(); //保存していたSetRoleRpcを一気に書く
-        RpcSetRoleReplacer.senders.Do(kvp => kvp.Value.SendMessage());
+        public static void Postfix()
+        {
+            if (!AmongUsClient.Instance.AmHost) return;
+            RpcSetRoleReplacer.Release(); //保存していたSetRoleRpcを一気に書く
+            RpcSetRoleReplacer.senders.Do(kvp => kvp.Value.SendMessage());
 
         // 不要なオブジェクトの削除
         RpcSetRoleReplacer.senders = null;
@@ -467,11 +477,10 @@ class SelectRolesPatch
                 if (role is CustomRoles.HASTroll or CustomRoles.HASFox || role.IsCCRole()/* || role.IsONRole()*/) continue;
                 if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
 
-                if (role is CustomRoles.Sheriff or CustomRoles.Arsonist 
-                    or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
-                    or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role == CustomRoles.StrayWolf && AssignedStrayWolf) continue;
+                if (role is not CustomRoles.Opportunist or not CustomRoles.StrayWolf && 
+                    CustomRoleManager.GetRoleInfo(role) is SimpleRoleInfo info && info.RequireResetCam) continue;
 
                 var baseRoleTypes = role.GetRoleTypes() switch
                 {
@@ -729,11 +738,10 @@ class SelectRolesPatch
         foreach (var role in CustomRolesHelper.AllRoles.Where(x => x < CustomRoles.NotAssigned))
         {
             if (role.IsCCRole()) continue;
-            if (role is CustomRoles.Sheriff or CustomRoles.Arsonist or CustomRoles.StrayWolf
-                    or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
-                    or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
-            if (role == CustomRoles.Egoist && Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) <= 1) continue;
             if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
+            if (role is not CustomRoles.Opportunist &&
+                CustomRoleManager.GetRoleInfo(role) is SimpleRoleInfo info && info.RequireResetCam) continue;
+            if (role == CustomRoles.Egoist && Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) <= 1) continue;
             if (role.GetRoleTypes() == roleTypes)
                 count += role.GetRealCount();
         }
