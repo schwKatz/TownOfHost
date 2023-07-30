@@ -15,7 +15,7 @@ namespace TownOfHostY.Roles.AddOns.Impostor
         public static OptionItem KillCooldown;
         public static void SetupCustomOption()
         {
-            SetupSingleRoleOptions(Id, TabGroup.Addons, CustomRoles.LastImpostor, 1);
+            SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.LastImpostor, new(1, 1, 1));
             IsChangeKillCooldown = BooleanOptionItem.Create(Id + 11, "LastImpostorChangeKillCooldown", true, TabGroup.Addons, false).SetParent(Options.CustomRoleSpawnChances[CustomRoles.LastImpostor]);
             KillCooldown = FloatOptionItem.Create(Id + 10, "KillCooldown", new(0f, 60f, 0.5f), 15f, TabGroup.Addons, false).SetParent(IsChangeKillCooldown)
                 .SetValueFormat(OptionFormat.Seconds);

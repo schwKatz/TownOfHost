@@ -734,35 +734,8 @@ namespace TownOfHostY
             CustomRoleSpawnChances.Add(role, spawnOption);
             CustomRoleCounts.Add(role, countOption);
         }
-        public static void SetupSingleRoleOptions(int id, TabGroup tab, CustomRoles role, int count, bool isPair = false, CustomGameMode customGameMode = CustomGameMode.Standard)
-        {
-            var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false).SetColor(Utils.GetRoleColor(role))
-                .SetValueFormat(OptionFormat.Percent)
-                .SetHeader(true)
-                .SetGameMode(customGameMode) as IntegerOptionItem;
-            // 初期値,最大値,最小値が同じで、stepが0のどうやっても変えることができない個数オプション
-            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(count, count, count), count, tab, false).SetParent(spawnOption)
-                //.SetHidden(true)
-                .SetFixValue(true)
-            .SetValueFormat(isPair ? OptionFormat.Pair : OptionFormat.Players)
-                .SetGameMode(customGameMode);
-
-            CustomRoleSpawnChances.Add(role, spawnOption);
-            CustomRoleCounts.Add(role, countOption);
-        }
-        private static void SetupTelepathistersOptions(int id, TabGroup tab, CustomRoles role)
-        {
-            var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false).SetColor(Utils.GetRoleColor(role))
-                .SetValueFormat(OptionFormat.Percent)
-                .SetHeader(true)
-                .SetGameMode(CustomGameMode.Standard) as IntegerOptionItem;
-            var countOption = IntegerOptionItem.Create(id + 1, "Maximum", new(2, 3, 1), 2, tab, false).SetParent(spawnOption)
-                .SetValueFormat(OptionFormat.Players)
-                .SetGameMode(CustomGameMode.Standard);
-
-            CustomRoleSpawnChances.Add(role, spawnOption);
-            CustomRoleCounts.Add(role, countOption);
-        }
+        
+        
         //AddOn
         public static void SetUpAddOnOptions(int Id, CustomRoles PlayerRole, TabGroup tab)
         {
