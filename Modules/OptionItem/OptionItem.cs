@@ -9,8 +9,10 @@ namespace TownOfHostY
     public abstract class OptionItem
     {
         #region static
-        public static IReadOnlyList<OptionItem> AllOptions => _allOptions;
-        private static List<OptionItem> _allOptions = new();
+        public static IReadOnlySet<OptionItem> AllOptions => _allOptions;
+        private static HashSet<OptionItem> _allOptions = new(1024);
+        public static IReadOnlyDictionary<int, OptionItem> FastOptions => _fastOptions;
+        private static Dictionary<int, OptionItem> _fastOptions = new(1024);
         public static int CurrentPreset { get; set; }
         #endregion
 
@@ -108,11 +110,14 @@ namespace TownOfHostY
                 }
             }
 
-            if (AllOptions.Any(op => op.Id == id))
+            if (!_fastOptions.TryAdd(id, this))
             {
                 Logger.Error($"ID:{id}が重複しています", "OptionItem");
             }
-            _allOptions.Add(this);
+            else
+            {
+                _allOptions.Add(this);
+            }
         }
 
         // Setter
