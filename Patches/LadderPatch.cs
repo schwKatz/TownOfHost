@@ -58,7 +58,7 @@ namespace TownOfHostY
                         var state = PlayerState.GetByPlayerId(player.PlayerId);
                         state.DeathReason = CustomDeathReason.Fall;
                         state.SetDead();
-                    }, 0.05f, "LadderFallTask");
+                    }, 0.30f, "LadderFallTask");
                 }
             }
         }
