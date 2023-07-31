@@ -88,7 +88,7 @@ namespace TownOfHostY
             Children = new();
 
             // デフォルト値に設定
-            if (Id == 0)
+            if (Id == PresetId)
             {
                 SingleValue = DefaultValue;
                 CurrentPreset = SingleValue;
@@ -208,8 +208,8 @@ namespace TownOfHostY
             }
             if (doSave)
             {
-            OptionSaver.Save();
-        }
+                OptionSaver.Save();
+            }
         }
         public virtual void SetValue(int afterValue, bool doSync = true)
         {
@@ -229,7 +229,7 @@ namespace TownOfHostY
         // 全体操作用
         public static void SwitchPreset(int newPreset)
         {
-            CurrentPreset = Math.Clamp(newPreset, 0, 4);
+            CurrentPreset = Math.Clamp(newPreset, 0, NumPresets - 1);
 
             foreach (var op in AllOptions)
                 op.Refresh();
@@ -274,6 +274,7 @@ namespace TownOfHostY
         }
 
         public const int NumPresets = 5;
+        public const int PresetId = 0;
     }
 
     public enum TabGroup

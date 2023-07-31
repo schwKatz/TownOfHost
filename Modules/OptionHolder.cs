@@ -40,8 +40,6 @@ namespace TownOfHostY
             taskOptionsLoad.Wait();
             Logger.Info("Options.Load End", "Options");
         }
-        // オプションId
-        public const int PresetId = 0;
 
         // プリセット
         private static readonly string[] presets =
