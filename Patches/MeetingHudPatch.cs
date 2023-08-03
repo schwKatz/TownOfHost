@@ -140,7 +140,7 @@ public static class MeetingHudPatch
                 {
                     string RoleInfoTitleString = $"{GetString("RoleInfoTitle")}";
                     string RoleInfoTitle = $"{Utils.ColorString(Utils.GetRoleColor(target.GetCustomRole()), RoleInfoTitleString)}";
-                    Utils.SendMessage(Utils.GetMyRoleInfo(target), sendTo: pva.TargetPlayerId, title: RoleInfoTitle);
+                    Utils.SendMessage(Utils.GetMyRoleInfo(target), pva.TargetPlayerId, RoleInfoTitle);
                 }
 
                 var sb = new StringBuilder();

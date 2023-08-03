@@ -216,15 +216,6 @@ namespace TownOfHostY
         public static OptionItem GhostIgnoreTasks;
         public static OptionItem CommsCamouflage;
 
-        // プリセット対象外
-        public static OptionItem NoGameEnd;
-        public static OptionItem DisableColorDisplay;
-        public static OptionItem AutoDisplayLastResult;
-        public static OptionItem AutoDisplayKillLog;
-        public static OptionItem SuffixMode;
-        public static OptionItem HideGameSettings;
-        public static OptionItem NameChangeMode;
-        public static OptionItem ChangeNameToRoleInfo;
         public static OptionItem SkinControle;
         public static OptionItem NoHat;
         public static OptionItem NoFullFaceHat;
@@ -233,6 +224,15 @@ namespace TownOfHostY
         public static OptionItem NoPet;
         public static OptionItem NoDuplicateHat;
         public static OptionItem NoDuplicateSkin;
+
+        // プリセット対象外
+        public static OptionItem NoGameEnd;
+        public static OptionItem AutoDisplayLastResult;
+        public static OptionItem AutoDisplayKillLog;
+        public static OptionItem SuffixMode;
+        public static OptionItem HideGameSettings;
+        public static OptionItem NameChangeMode;
+        public static OptionItem ChangeNameToRoleInfo;
         public static OptionItem RoleAssigningAlgorithm;
 
         public static OptionItem ApplyDenyNameList;
@@ -253,12 +253,12 @@ namespace TownOfHostY
         public static OptionItem ChangeIntro;
         public static OptionItem AddonShow;
         public static readonly string[] addonShowModes =
-{
+        {
             "addonShowModes.Default", "addonShowModes.All", "addonShowModes.TOH"
         };
         public static AddonShowMode GetAddonShowModes() => (AddonShowMode)AddonShow.GetValue();
         public static readonly string[] nameChangeModes =
-{
+        {
             "nameChangeMode.None", /*"nameChangeMode.Crew", */"nameChangeMode.Color"
         };
         public static NameChange GetNameChangeModes() => (NameChange)NameChangeMode.GetValue();
@@ -321,26 +321,26 @@ namespace TownOfHostY
             // Impostor
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Impostor).Do(info =>
             {
-                if (info.RoleName != CustomRoles.StrayWolf)
+                if (info.RoleName.IsCannotPublicRole())
                 {
-                    if (info.RoleName.IsCannotPublicRole())
-                    {
-                        SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic : true);
-                    }
-                    else
-                    {
-                        switch (info.RoleName)
-                        {
-                            case CustomRoles.Telepathisters:
-                                SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
-                                break;
-                            default:
-                                SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
-                                break;
-                        }
-                    }
-                    info.OptionCreator?.Invoke();
+                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic: true);
                 }
+                else
+                {
+                    switch (info.RoleName)
+                    {
+                        case CustomRoles.StrayWolf:
+                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
+                            break;
+                        case CustomRoles.Telepathisters:
+                            SetupTelepathistersOptions(info.ConfigId, info.Tab, info.RoleName);
+                            break;
+                        default:
+                            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName);
+                            break;
+                    }
+                }
+                info.OptionCreator?.Invoke();
             });
 
             DefaultShapeshiftCooldown = FloatOptionItem.Create(90100, "DefaultShapeshiftCooldown", new(5f, 999f, 5f), 15f, TabGroup.ImpostorRoles, false)
@@ -421,7 +421,6 @@ namespace TownOfHostY
                 }
                 else
                 {
-
                     switch (info.RoleName)
                     {
                         case CustomRoles.Jackal: //ジャッカルは1人固定
@@ -470,7 +469,10 @@ namespace TownOfHostY
                 .SetHeader(true)
                 .SetGameMode(CustomGameMode.Standard);
 
-            KillFlashDuration = FloatOptionItem.Create(100000, "KillFlashDuration", new(0.1f, 0.45f, 0.05f), 0.3f, TabGroup.MainSettings, false)
+            RoleAssigningAlgorithm = StringOptionItem.Create(1_000_001, "RoleAssigningAlgorithm", RoleAssigningAlgorithms, 0, TabGroup.MainSettings, true)
+                .RegisterUpdateValueEvent((object obj, OptionItem.UpdateValueEventArgs args) => IRandom.SetInstanceById(args.CurrentValue));
+
+            KillFlashDuration = FloatOptionItem.Create(1_000_002, "KillFlashDuration", new(0.1f, 0.45f, 0.05f), 0.3f, TabGroup.MainSettings, false)
                 .SetColor(Palette.ImpostorRed)
                 .SetValueFormat(OptionFormat.Seconds)
                 .SetGameMode(CustomGameMode.Standard);
@@ -643,6 +645,10 @@ namespace TownOfHostY
             AddedTheAirShip = BooleanOptionItem.Create(100504, "AddedTheAirShip", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode);
             // MapDleks = CustomOption.Create(100505, Color.white, "AddedDleks", false, RandomMapMode);
 
+            // 初手キルクール調整
+            FixFirstKillCooldown = BooleanOptionItem.Create(1_001_020, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
+                .SetColor(Palette.Orange);
+
             // 転落死
             LadderDeath = BooleanOptionItem.Create(100510, "LadderDeath", false, TabGroup.MainSettings, false)
                 .SetColor(Palette.Orange);
@@ -654,9 +660,25 @@ namespace TownOfHostY
             DisableAirshipMovingPlatform = BooleanOptionItem.Create(100530, "DisableAirshipMovingPlatform", false, TabGroup.MainSettings, false)
                 .SetColor(Palette.Orange);
 
-            // 初手キルクール調整
-            FixFirstKillCooldown = BooleanOptionItem.Create(1_001_020, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
-                .SetColor(Palette.Orange);
+            SkinControle = BooleanOptionItem.Create(1_002_010, "SkinControle", false, TabGroup.MainSettings, false)
+                .SetColor(Palette.CrewmateBlue)
+                .SetHeader(true)
+                .SetGameMode(CustomGameMode.All);
+            NoHat = BooleanOptionItem.Create(1_002_011, "NoHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoFullFaceHat = BooleanOptionItem.Create(1_002_012, "NoFullFaceHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoSkin = BooleanOptionItem.Create(1_002_013, "NoSkin", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoVisor = BooleanOptionItem.Create(1_002_014, "NoVisor", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoPet = BooleanOptionItem.Create(1_002_015, "NoPet", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoDuplicateHat = BooleanOptionItem.Create(1_002_016, "NoDuplicateHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            NoDuplicateSkin = BooleanOptionItem.Create(1_002_017, "NoDuplicateSkin", false, TabGroup.MainSettings, false).SetParent(SkinControle)
+                .SetGameMode(CustomGameMode.All);
+            VoiceReader.SetupCustomOption();
 
             //シンクロカラーモード
 
@@ -673,7 +695,6 @@ namespace TownOfHostY
             // その他
             NoGameEnd = BooleanOptionItem.Create(1_002_000, "NoGameEnd", false, TabGroup.MainSettings, false)
                 .SetHeader(true);
-            DisableColorDisplay = BooleanOptionItem.Create(1_002_008, "DisableColorDisplay", false, TabGroup.MainSettings, false);
             AutoDisplayLastResult = BooleanOptionItem.Create(1_002_001, "AutoDisplayLastResult", true, TabGroup.MainSettings, false);
             AutoDisplayKillLog = BooleanOptionItem.Create(1_002_002, "AutoDisplayKillLog", true, TabGroup.MainSettings, false);
             SuffixMode = StringOptionItem.Create(1_002_003, "SuffixMode", suffixModes, 0, TabGroup.MainSettings, true);
@@ -681,25 +702,6 @@ namespace TownOfHostY
             ChangeNameToRoleInfo = BooleanOptionItem.Create(1_002_005, "ChangeNameToRoleInfo", true, TabGroup.MainSettings, false);
             AddonShow = StringOptionItem.Create(1_002_006, "AddonShowMode", addonShowModes, 0, TabGroup.MainSettings, true);
             ChangeIntro = BooleanOptionItem.Create(1_002_007, "ChangeIntro", false, TabGroup.MainSettings, false);
-            SkinControle = BooleanOptionItem.Create(1_002_010, "SkinControle", false, TabGroup.MainSettings, false)
-                .SetGameMode(CustomGameMode.All);
-            NoHat = BooleanOptionItem.Create(1_002_011, "NoHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
-                .SetGameMode(CustomGameMode.All);
-            NoFullFaceHat = BooleanOptionItem.Create(1_002_012, "NoFullFaceHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
-                .SetGameMode(CustomGameMode.All);
-            NoSkin = BooleanOptionItem.Create(1_002_013, "NoSkin", false, TabGroup.MainSettings, false).SetParent(SkinControle)
-                .SetGameMode(CustomGameMode.All);
-            NoVisor = BooleanOptionItem.Create(1_002_014, "NoVisor", false, TabGroup.MainSettings, false).SetParent(SkinControle)
-                .SetGameMode(CustomGameMode.All);
-            NoPet = BooleanOptionItem.Create(1_002_015, "NoPet", false, TabGroup.MainSettings, false).SetParent(SkinControle)
-                .SetGameMode(CustomGameMode.All);
-            NoDuplicateHat = BooleanOptionItem.Create(1_002_016, "NoDuplicateHat", false, TabGroup.MainSettings, false).SetParent(SkinControle)
-                .SetGameMode(CustomGameMode.All);
-            NoDuplicateSkin = BooleanOptionItem.Create(1_002_017, "NoDuplicateSkin", false, TabGroup.MainSettings, false).SetParent(SkinControle)
-                .SetGameMode(CustomGameMode.All);
-            RoleAssigningAlgorithm = StringOptionItem.Create(1_002_008, "RoleAssigningAlgorithm", RoleAssigningAlgorithms, 0, TabGroup.MainSettings, true)
-                .RegisterUpdateValueEvent((object obj, OptionItem.UpdateValueEventArgs args) => IRandom.SetInstanceById(args.CurrentValue));
-            VoiceReader.SetupCustomOption();
 
             ApplyDenyNameList = BooleanOptionItem.Create(1_003_000, "ApplyDenyNameList", true, TabGroup.MainSettings, true)
                 .SetHeader(true)
@@ -787,7 +789,9 @@ namespace TownOfHostY
             foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsBuffAddOn()))
             {
                 if (Addon == CustomRoles.Loyalty && PlayerRole is
-                    CustomRoles.MadSnitch or CustomRoles.Jackal or CustomRoles.JClient or CustomRoles.LastImpostor or CustomRoles.CompreteCrew) continue;
+                    CustomRoles.CustomImpostor or CustomRoles.CustomCrewmate or
+                    CustomRoles.MadSnitch or CustomRoles.Jackal or CustomRoles.JClient or
+                    CustomRoles.LastImpostor or CustomRoles.CompreteCrew) continue;
                 if (Addon == CustomRoles.Revenger && PlayerRole is CustomRoles.MadNimrod) continue;
 
                 SetUpAddOnRoleOption(PlayerRole, tab, Addon, Id, false, AddOnBuffAssign[PlayerRole]);
@@ -804,8 +808,7 @@ namespace TownOfHostY
         public static void SetUpAddOnRoleOption(CustomRoles PlayerRole, TabGroup tab, CustomRoles role, int Id, bool defaultValue = false, OptionItem parent = null)
         {
             if (parent == null) parent = CustomRoleSpawnChances[PlayerRole];
-            var roleName = Utils.GetRoleName(role) + Utils.GetAddonAbilityInfo(role);
-            Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), roleName) } };
+            Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), Utils.GetRoleName(role)) + "  " + Utils.GetAddonAbilityInfo(role) } };
             AddOnRoleOptions[(PlayerRole, role)] = BooleanOptionItem.Create(Id, "AddOnAssign%role%", defaultValue, tab, false).SetParent(parent).SetIsPublicDontUse(role == CustomRoles.Guarding);
             AddOnRoleOptions[(PlayerRole, role)].ReplacementDictionary = replacementDic;
         }
@@ -826,19 +829,14 @@ namespace TownOfHostY
                 this.Role = role;
 
                 if(option == null) option = CustomRoleSpawnChances[role];
-                Dictionary<string, string> replacementDic = new() { { "%role%", Utils.GetRoleName(role) } };
                 doOverride = BooleanOptionItem.Create(idStart++, "doOverride", false, tab, false).SetParent(option)
                     .SetValueFormat(OptionFormat.None);
-                doOverride.ReplacementDictionary = replacementDic;
                 assignCommonTasks = BooleanOptionItem.Create(idStart++, "assignCommonTasks", true, tab, false).SetParent(doOverride)
                     .SetValueFormat(OptionFormat.None);
-                assignCommonTasks.ReplacementDictionary = replacementDic;
                 numLongTasks = IntegerOptionItem.Create(idStart++, "roleLongTasksNum", new(0, 99, 1), 3, tab, false).SetParent(doOverride)
                     .SetValueFormat(OptionFormat.Pieces);
-                numLongTasks.ReplacementDictionary = replacementDic;
                 numShortTasks = IntegerOptionItem.Create(idStart++, "roleShortTasksNum", new(0, 99, 1), 3, tab, false).SetParent(doOverride)
                     .SetValueFormat(OptionFormat.Pieces);
-                numShortTasks.ReplacementDictionary = replacementDic;
 
                 if (!AllData.ContainsKey(role)) AllData.Add(role, this);
                 else Logger.Warn("重複したCustomRolesを対象とするOverrideTasksDataが作成されました", "OverrideTasksData");

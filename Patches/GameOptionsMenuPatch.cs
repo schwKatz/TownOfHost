@@ -72,13 +72,13 @@ namespace TownOfHostY
                             tabName = "<color=#ffff00>Main Settings</color>";
                             break;
                         case TabGroup.ImpostorRoles:
-                            tabName = "<color=#ff0000>Impostor Settings</color>";
+                            tabName = "<color=#ff1919>Impostor Settings</color>";
                             break;
                         case TabGroup.MadmateRoles:
                             tabName = "<color=#ff4500>Madmate Settings</color>";
                             break;
                         case TabGroup.CrewmateRoles:
-                            tabName = "<color=#b6f0ff>Crewmate Settings</color>";
+                            tabName = "<color=#8cffff>Crewmate Settings</color>";
                             break;
                         case TabGroup.NeutralRoles:
                             tabName = "<color=#ffa500>Neutral Settings</color>";

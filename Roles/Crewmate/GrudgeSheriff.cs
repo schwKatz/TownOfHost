@@ -31,7 +31,7 @@ public sealed class GrudgeSheriff : RoleBase
     {
         ShotLimit = ShotLimitOpt.GetInt();
         KillCooldown = OptionKillCooldown.GetFloat();
-
+        TaskTrigger = OptionTaskTrigger.GetInt();
     }
 
     private static OptionItem OptionKillCooldown;
@@ -39,6 +39,8 @@ public sealed class GrudgeSheriff : RoleBase
     private static OptionItem ShotLimitOpt;
     private static OptionItem CanKillAllAlive;
     public static OptionItem CanKillNeutrals;
+    private static OptionItem OptionTaskTrigger;
+
     enum OptionName
     {
         SheriffMisfireKillsTarget,
@@ -46,6 +48,7 @@ public sealed class GrudgeSheriff : RoleBase
         SheriffCanKillAllAlive,
         SheriffCanKillNeutrals,
         SheriffCanKill,
+        TaskTrigger,
     }
     public static Dictionary<CustomRoles, OptionItem> KillTargetOptions = new();
     PlayerControl KillWaitPlayerSelect = null;
@@ -54,6 +57,7 @@ public sealed class GrudgeSheriff : RoleBase
 
     public int ShotLimit = 0;
     public static float KillCooldown = 30;
+    public static int TaskTrigger;
     public static readonly string[] KillOption =
     {
             "SheriffCanKillAll", "SheriffCanKillSeparately"
@@ -66,6 +70,8 @@ public sealed class GrudgeSheriff : RoleBase
         ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 12, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false)
             .SetValueFormat(OptionFormat.Times);
         CanKillAllAlive = BooleanOptionItem.Create(RoleInfo, 15, OptionName.SheriffCanKillAllAlive, true, false);
+        OptionTaskTrigger = IntegerOptionItem.Create(RoleInfo, 16, OptionName.TaskTrigger, new(0, 20, 1), 3, false)
+            .SetValueFormat(OptionFormat.Pieces);
         SetUpKillTargetOption(CustomRoles.Madmate, 13);
         CanKillNeutrals = StringOptionItem.Create(RoleInfo, 14, OptionName.SheriffCanKillNeutrals, KillOption, 0, false);
         SetUpNeutralOptions(30);
@@ -108,6 +114,7 @@ public sealed class GrudgeSheriff : RoleBase
     public bool CanUseKillButton()
         => Player.IsAlive()
         && (CanKillAllAlive.GetBool() || GameStates.AlreadyDied)
+        && MyTaskState.CompletedTasksCount >= TaskTrigger
         && ShotLimit > 0;
 
     public override bool OnEnterVent(PlayerPhysics physics, int ventId)

@@ -24,7 +24,6 @@ namespace TownOfHostY
             GameStates.InGame = false;
 
             Logger.Info("-----------ゲーム終了-----------", "Phase");
-            Main.NormalOptions.NumImpostors = ChangeRoleSettings.ImpostorSetNum;
             if (!GameStates.IsModHost) return;
             SummaryText = new();
             SDSummaryText = new();
@@ -42,7 +41,7 @@ namespace TownOfHostY
                 var targetId = kvp.Key;
                 sb.Append($"\n{date:T} {Main.AllPlayerNames[targetId]}({Utils.GetTrueRoleName(targetId, false, true)}) [{Utils.GetVitalText(kvp.Key)}]");
                 if (killerId != byte.MaxValue && killerId != targetId)
-                    sb.Append($"\n\t\t⇐ {Main.AllPlayerNames[killerId]}({Utils.GetTrueRoleName(killerId, false, true)})");
+                    sb.Append($"\n\t\t<size=75%>⇐ {Main.AllPlayerNames[killerId]}({Utils.GetTrueRoleName(killerId, false, true)})</size>");
             }
             KillLog = sb.ToString();
 
@@ -196,7 +195,7 @@ namespace TownOfHostY
                 WinnerText.text = $"<color={CustomWinnerColor}>{CustomWinnerText}{AdditionalWinnerText}{GetString("Win")}</color>";
             }
             LastWinsText = WinnerText.text;
-            if (Options.DisableColorDisplay.GetBool()) LastWinsText = LastWinsText.RemoveHtmlTags();
+            LastWinsText = LastWinsText.RemoveHtmlTags();
 
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

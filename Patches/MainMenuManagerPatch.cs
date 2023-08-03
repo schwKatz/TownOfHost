@@ -110,7 +110,6 @@ namespace TownOfHostY
             howToPlayButton.transform.SetLocalX(0);
 #endif
         }
-
         /// <summary>TOHロゴの子としてボタンを生成</summary>
         /// <param name="name">オブジェクト名</param>
         /// <param name="normalColor">普段のボタンの色</param>

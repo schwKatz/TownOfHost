@@ -59,7 +59,7 @@ public abstract class InitializerAttribute<T> : Attribute
         }
         foreach (var initializer in allInitializers)
         {
-            logger.Info($"初期化: {initializer.DeclaringType.Name}.{initializer.Name}");
+            //logger.Info($"初期化: {initializer.DeclaringType.Name}.{initializer.Name}");
             initializer.Invoke(null, null);
         }
     }

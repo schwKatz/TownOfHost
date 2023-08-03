@@ -33,6 +33,7 @@ public sealed class Psychic : RoleBase
     )
     {
         Cooldown = OptionCooldown.GetFloat();
+        TaskTrigger = OptionTaskTrigger.GetInt();
 
         VentSelect.Init();
     }
@@ -40,14 +41,17 @@ public sealed class Psychic : RoleBase
     public static OptionItem MaxCheckRole;
     public static OptionItem ConfirmCamp;
     public static OptionItem KillerOnly;
+    private static OptionItem OptionTaskTrigger;
     enum OptionName
     {
         PsychicMaxCheckRole,
         FortuneTellerConfirmCamp,
         FortuneTellerKillerOnly,
+        TaskTrigger,
     }
 
     public static float Cooldown = 30;
+    public static int TaskTrigger;
     int DivinationLeftCount = 0;
     bool IsCoolTimeOn = true;
 
@@ -55,6 +59,8 @@ public sealed class Psychic : RoleBase
     {
         OptionCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.Cooldown, new(0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
+        OptionTaskTrigger = IntegerOptionItem.Create(RoleInfo, 14, OptionName.TaskTrigger, new(0, 20, 1), 3, false)
+            .SetValueFormat(OptionFormat.Pieces);
         MaxCheckRole = IntegerOptionItem.Create(RoleInfo, 11, OptionName.PsychicMaxCheckRole, new(1, 15, 1), 3, false)
             .SetValueFormat(OptionFormat.Times);
         ConfirmCamp = BooleanOptionItem.Create(RoleInfo, 12, OptionName.FortuneTellerConfirmCamp, false, false);
@@ -78,7 +84,8 @@ public sealed class Psychic : RoleBase
     }
     public bool CanUseVent()
         => Player.IsAlive()
-        && DivinationLeftCount > 0;
+        && DivinationLeftCount > 0
+        && MyTaskState.CompletedTasksCount >= TaskTrigger;
 
     public override bool OnEnterVent(PlayerPhysics physics, int ventId)
     {

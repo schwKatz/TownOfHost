@@ -27,24 +27,35 @@ public sealed class StrayWolf : RoleBase, IImpostor
     )
     {
         KillCooldown = OptionKillCooldown.GetFloat();
-        GuardByImpostor = OptionGuardByImpostor.GetBool();
         useGuard = new();
     }
     private static OptionItem OptionKillCooldown;
-    private static OptionItem OptionGuardByImpostor;
+    private static OptionItem OptionKillByImpostor;
+
+    public static readonly string[] KillModes =
+{
+            "StrayWolfKillMode.Always", "StrayWolfKillMode.AfterCheck", "StrayWolfKillMode.None"
+        };
+    public static KillMode GetKillModes() => (KillMode)OptionKillByImpostor.GetValue();
+    public enum KillMode
+    {
+        Always,
+        AfterCheck,
+        None
+    }
+
     enum OptionName
     {
-        StrayWolfGuardByImpostor,
+        StrayWolfKillByImpostor,
     }
     private static float KillCooldown;
-    private static bool GuardByImpostor;
     List<byte> useGuard = new();
 
     public static void SetupOptionItem()
     {
         OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 20f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        OptionGuardByImpostor = BooleanOptionItem.Create(RoleInfo, 11, OptionName.StrayWolfGuardByImpostor, true, false);
+        OptionKillByImpostor = StringOptionItem.Create(RoleInfo, 11, OptionName.StrayWolfKillByImpostor, KillModes, 0, false);
     }
     public float CalculateKillCooldown() => KillCooldown;
 
@@ -53,8 +64,19 @@ public sealed class StrayWolf : RoleBase, IImpostor
         if (!Is(info.AttemptKiller) || info.IsSuicide || !info.CanKill) return;
 
         (var killer, var target) = info.AttemptTuple;
-        if (!GuardByImpostor || useGuard.Contains(target.PlayerId)) return;   //ガードないのでそのままtrueで返す
         if (!target.Is(CustomRoleTypes.Impostor)) return;   //インポスターじゃないならそのままtrueで返す
+        if (GetKillModes() == KillMode.Always) return;  //ガードしないのでそのままtrueで返す
+        if (useGuard.Contains(target.PlayerId))         //視認後
+        {
+            if(GetKillModes() == KillMode.None)
+            {
+                info.DoKill = false; return;    //キルが起こらない
+            }
+            else   //視認後
+            {
+                return;     //ガードしないのでそのままtrueで返す
+            }
+        }
 
         // ガード
         killer.RpcGuardAndKill(target);
@@ -66,8 +88,8 @@ public sealed class StrayWolf : RoleBase, IImpostor
         Logger.Info($"{killer.GetNameWithRole()} : インポスター({target.GetNameWithRole()})からのキルガード", "StrayWolf");
         Utils.NotifyRoles();
 
-        // 自身は斬られない
-        info.DoKill = false;
+        // 相手は斬られない
+        info.CanKill = false;
         return;
     }
     public override bool OnCheckMurderAsTarget(MurderInfo info)
@@ -75,8 +97,19 @@ public sealed class StrayWolf : RoleBase, IImpostor
         (var killer, var target) = info.AttemptTuple;
         // 直接キル出来る役職チェック
         if (killer.GetCustomRole().IsDirectKillRole()) return true;
-        if (!GuardByImpostor || useGuard.Contains(killer.PlayerId)) return true;  //ガードないのでそのままtrueで返す
         if (!killer.Is(CustomRoleTypes.Impostor)) return true;  //インポスターじゃないならそのままtrueで返す
+        if (GetKillModes() == KillMode.Always) return true;  //ガードしないのでそのままtrueで返す
+        if (useGuard.Contains(killer.PlayerId))         //視認後
+        {
+            if (GetKillModes() == KillMode.None)
+            {
+                info.DoKill = false; return false;    //キルが起こらない
+            }
+            else   //視認後
+            {
+                return true;     //ガードしないのでそのままtrueで返す
+            }
+        }
 
         // ガード
         killer.RpcGuardAndKill(target);

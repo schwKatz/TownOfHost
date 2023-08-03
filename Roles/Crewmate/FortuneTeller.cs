@@ -47,7 +47,7 @@ public sealed class FortuneTeller : RoleBase
     enum OptionName
     {
         FortuneTellerNumOfForecast,
-        FortuneTellerForecastTaskTrigger,
+        TaskTrigger,
         FortuneTellerCanForecastNoDeadBody,
         FortuneTellerConfirmCamp,
         FortuneTellerKillerOnly,
@@ -66,7 +66,7 @@ public sealed class FortuneTeller : RoleBase
     {
         OptionNumOfForecast = IntegerOptionItem.Create(RoleInfo, 10, OptionName.FortuneTellerNumOfForecast, new(1, 20, 1), 2, false)
             .SetValueFormat(OptionFormat.Times);
-        OptionForecastTaskTrigger = IntegerOptionItem.Create(RoleInfo, 11, OptionName.FortuneTellerForecastTaskTrigger, new(0, 20, 1), 5, false)
+        OptionForecastTaskTrigger = IntegerOptionItem.Create(RoleInfo, 11, OptionName.TaskTrigger, new(0, 20, 1), 5, false)
             .SetValueFormat(OptionFormat.Pieces);
         OptionCanForecastNoDeadBody = BooleanOptionItem.Create(RoleInfo, 12, OptionName.FortuneTellerCanForecastNoDeadBody, false, false);
         OptionConfirmCamp = BooleanOptionItem.Create(RoleInfo, 13, OptionName.FortuneTellerConfirmCamp, true, false);

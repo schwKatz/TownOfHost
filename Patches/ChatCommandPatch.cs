@@ -19,7 +19,7 @@ namespace TownOfHostY
 
         public static bool Prefix(ChatController __instance)
         {
-            if (__instance.freeChatField.textArea.text == "") return false;
+            if (__instance.freeChatField.textArea.text == "") return __instance.quickChatField.Visible;
             __instance.timeSinceLastMessage = 3f;
             var text = __instance.freeChatField.textArea.text;
             if (ChatHistory.Count == 0 || ChatHistory[^1] != text) ChatHistory.Add(text);
@@ -250,7 +250,9 @@ namespace TownOfHostY
                     case "/m":
                     case "/myrole":
                         canceled = true;
-                        HudManager.Instance.Chat.AddChat(PlayerControl.LocalPlayer, Utils.GetMyRoleInfo(PlayerControl.LocalPlayer));
+                        string RoleInfoTitleString = GetString("RoleInfoTitle");
+                        string RoleInfoTitle = Utils.ColorString(Utils.GetRoleColor(PlayerControl.LocalPlayer.GetCustomRole()), RoleInfoTitleString);
+                        Utils.SendMessage(Utils.GetMyRoleInfo(PlayerControl.LocalPlayer), PlayerControl.LocalPlayer.PlayerId, RoleInfoTitle);
                         break;
 
                     case "/t":
@@ -516,7 +518,9 @@ namespace TownOfHostY
 
                 case "/m":
                 case "/myrole":
-                    Utils.SendMessage(Utils.GetMyRoleInfo(player), player.PlayerId);
+                    string RoleInfoTitleString = GetString("RoleInfoTitle");
+                    string RoleInfoTitle = Utils.ColorString(Utils.GetRoleColor(player.GetCustomRole()), RoleInfoTitleString);
+                    Utils.SendMessage(Utils.GetMyRoleInfo(player), player.PlayerId, RoleInfoTitle);
                     break;
 
                 case "/t":

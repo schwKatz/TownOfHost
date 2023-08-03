@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Text;
 
 using AmongUs.GameOptions;
-
-using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Translator;
 
@@ -18,7 +16,7 @@ public sealed class Medic : RoleBase
             () => RoleTypes.Engineer,
             CustomRoleTypes.Crewmate,
             40900,
-            null,
+            SetupOptionItem,
             "メディック",
             "#6495ed",
             introSound: () => GetIntroSound(RoleTypes.Crewmate)
@@ -29,12 +27,25 @@ public sealed class Medic : RoleBase
         player
     )
     {
+        TaskTrigger = OptionTaskTrigger.GetInt();
     }
+
+    private static OptionItem OptionTaskTrigger;
+    enum OptionName
+    {
+        TaskTrigger,
+    }
+
     public static List<Medic> Medics = new();
+    public static int TaskTrigger;
 
     PlayerControl GuardPlayer = null;
-    bool UseVent = new();
-
+    bool UseVent = false;
+    private static void SetupOptionItem()
+    {
+        OptionTaskTrigger = IntegerOptionItem.Create(RoleInfo, 10, OptionName.TaskTrigger, new(0, 20, 1), 3, false)
+            .SetValueFormat(OptionFormat.Pieces);
+    }
     public override void Add()
     {
         Medics.Add(this);
@@ -46,9 +57,13 @@ public sealed class Medic : RoleBase
 
     public override void ApplyGameOptions(IGameOptions opt)
     {
-        AURoleOptions.EngineerCooldown = UseVent ? 0f : 255f;
+        AURoleOptions.EngineerCooldown = CanUseVent() ? 0f : 255f;
         AURoleOptions.EngineerInVentMaxTime = 1f;
     }
+    public bool CanUseVent()
+    => Player.IsAlive()
+    && UseVent
+    && MyTaskState.CompletedTasksCount >= TaskTrigger;
 
     public static bool GuardPlayerCheckMurder(MurderInfo info)
     {
@@ -82,7 +97,7 @@ public sealed class Medic : RoleBase
 
     public override bool OnEnterVent(PlayerPhysics physics, int ventId)
     {
-        if (!UseVent) return false;
+        if (!CanUseVent()) return false;
 
         GuardPlayer = Player.VentPlayerSelect(() =>
         {
@@ -109,7 +124,7 @@ public sealed class Medic : RoleBase
         //seenが省略の場合seer
         seen ??= seer;
         //seerおよびseenが自分である場合以外は関係なし
-        if (!Is(seer) || !Is(seen) || !UseVent || isForMeeting) return string.Empty;
+        if (!Is(seer) || !Is(seen) || !CanUseVent() || isForMeeting) return string.Empty;
 
         var str = new StringBuilder();
         if (GuardPlayer == null)

@@ -37,12 +37,17 @@ namespace TownOfHostY
                 if (Options.CurrentGameMode == CustomGameMode.Standard)
                 {
                     //有効な役職一覧
+                    if (Options.EnableGM.GetBool())
                     sb.Append($"<color={Utils.GetRoleColorCode(CustomRoles.GM)}>{Utils.GetRoleName(CustomRoles.GM)}:</color> {Options.EnableGM.GetString()}\n\n");
                     sb.Append(GetString("ActiveRolesList")).Append('\n');
                     foreach (var kvp in Options.CustomRoleSpawnChances)
-                        if ((kvp.Value.GameMode is CustomGameMode.Standard or CustomGameMode.All && kvp.Value.GetBool()) //スタンダードか全てのゲームモードで表示する役職
-                            && (!kvp.Value.IsPublicDontUse || kvp.Value.IsPublicDontUse != Main.CanPublicRoom.Value && kvp.Value.GetBool()))
-                            sb.Append($"{Utils.ColorString(Utils.GetRoleColor(kvp.Key), Utils.GetRoleName(kvp.Key))}: {kvp.Value.GetString()}×{kvp.Key.GetCount()}\n");
+                        if (!kvp.Value.IsHiddenOn(Options.CurrentGameMode) && kvp.Value.GetBool()) //スタンダードか全てのゲームモードで表示する役職
+                        {
+                            if (kvp.Key.IsAddOn() || kvp.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
+                                sb.Append($"○{Utils.ColorString(Utils.GetRoleColor(kvp.Key), Utils.GetRoleName(kvp.Key))}：{kvp.Value.GetString()}×{kvp.Key.GetCount()}\n");
+                            else
+                                sb.Append($"　{Utils.ColorString(Utils.GetRoleColor(kvp.Key), Utils.GetRoleName(kvp.Key))}：{kvp.Value.GetString()}×{kvp.Key.GetCount()}\n");
+                        }
                     pages.Add(sb.ToString() + "\n\n");
                     sb.Clear();
                 }

@@ -96,9 +96,9 @@ namespace TownOfHostY
                 if (!Main.CanPublicRoom.Value && Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
                 {
                     SpecialEventText.text = "TOH_Yへようこそ！" +
-                        "\n<size=55%>遂にシェリフ等役職が完全復活！" +
-                        "\n全役職が最新バージョンで遊べるようになりました。(非公開ルームのみ)" +
-                        "\n公開ルームはしばらくは我慢してください；；" +
+                        "\n<size=55%>仕様の質問や不具合報告はTOH_YのDiscordまで。" +
+                        "\n不具合報告の際、ログの提出をお願いしています。" +
+                        "\nCtrl＋F1でデスクトップにログを作成できますので何卒。" +
                         "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
                     SpecialEventText.color = Color.yellow;
                 }
@@ -108,7 +108,7 @@ namespace TownOfHostY
                         "\n<size=55%>InnerSlothからのアナウンスにより、" +
                         "\n公開ルームでプレイできない仕様に変更しています。" +
                         "\n設定(歯車)から[公開ルーム可能]をクリックして、完全版に切替を。" +
-                        "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
+                        "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n</size>";
                     SpecialEventText.color = Color.yellow;
                 }
                 //if (Main.CanPublicRoom.Value && Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")

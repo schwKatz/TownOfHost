@@ -390,6 +390,7 @@ public enum CustomRoles
     //Impostor
     NormalImpostor,
     NormalShapeshifter,
+    CustomImpostor,
     EvilWatcher,
     BountyHunter,
     FireWorks,
@@ -432,6 +433,7 @@ public enum CustomRoles
     //Crewmate
     NormalEngineer,
     NormalScientist,
+    CustomCrewmate,
     NiceWatcher,
     Bait,
     Lighter,

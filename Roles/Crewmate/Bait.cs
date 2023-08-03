@@ -14,7 +14,7 @@ public sealed class Bait : RoleBase
             CustomRoleTypes.Crewmate,
             30100,
             SetUpOptionItem,
-            "�x�C�g",
+            "ベイト",
             "#00f7ff"
         );
     public Bait(PlayerControl player)
@@ -25,7 +25,6 @@ public sealed class Bait : RoleBase
     {
         WaitTime = OptionWaitTime.GetFloat();
 
-        //�����_�p��Mark���\�b�h�o�^
         CustomRoleManager.MarkOthers.Add(GetMarkOthers);
     }
     private static OptionItem OptionWaitTime;

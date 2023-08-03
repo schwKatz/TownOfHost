@@ -374,7 +374,7 @@ namespace TownOfHostY
         public static string GetAddonAbilityInfo(CustomRoles role)
         {
             var text = role.ToString();
-            return ColorString(Color.white, $"　{GetString($"{text}Info1")}");
+            return GetString($"{text}Info1");
         }
         public static string GetDeathReason(CustomDeathReason status)
         {
@@ -402,37 +402,6 @@ namespace TownOfHostY
             if (!Main.customColors.TryGetValue(color, out var hexColor)) hexColor = "#ffffff";
             return hexColor;
         }
-
-        public static string GetMyRoleInfo(PlayerControl player)
-        {
-            if (!GameStates.IsInGame) return null;
-
-            var sb = new StringBuilder();
-            var myRole = player.GetCustomRole();
-            var roleName = myRole.ToString();
-            if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
-                roleName = "NBakery";
-            if (myRole == CustomRoles.Lawyer && ((Lawyer)player.GetRoleClass()).IsPursuer())
-                roleName = "Pursuer";
-            var roleString = GetString(roleName);
-            if (!Options.DisableColorDisplay.GetBool()) roleString = $"<color={GetRoleColorCode(myRole)}>{roleString}</color>";
-                sb.Append(roleString).Append(player.GetRoleInfo(true));
-
-            foreach (var subRole in player.GetCustomSubRoles())
-            {
-                if (subRole != CustomRoles.NotAssigned)
-                {
-                    var subroleName = subRole.ToString();
-                    var subroleString = GetString(subroleName);
-                    if (!Options.DisableColorDisplay.GetBool()) subroleString = $"<color={GetRoleColorCode(subRole)}>{subroleString}</color>";
-
-                    sb.Append("\n--------------------------------------------------------\n")
-                        .Append(subroleString).Append(GetString($"{subroleName}InfoLong"));
-                }
-            }
-            return sb.ToString();
-        }
-
         public static string GetVitalText(byte playerId, bool RealKillerColor = false)
         {
             var state = PlayerState.GetByPlayerId(playerId);
@@ -533,6 +502,7 @@ namespace TownOfHostY
                     switch (subRole)
                     {
                         case CustomRoles.Lovers:
+                        case CustomRoles.Archenemy:
                             //ラバーズはタスクを勝利用にカウントしない
                             hasTasks &= !ForRecompute;
                             break;
@@ -607,7 +577,6 @@ namespace TownOfHostY
             return ColorString(TextColor, $"({Completed}/{state.taskState.AllTasksCount})");
 
         }
-
         public static (int, int) GetTasksState() //Y-TM
         {
             var completed = 0;
@@ -622,6 +591,41 @@ namespace TownOfHostY
                 }
             }
             return (completed, all);
+        }
+
+        public static string GetMyRoleInfo(PlayerControl player)
+        {
+            if (!GameStates.IsInGame) return null;
+
+            var sb = new StringBuilder();
+            var myRole = player.GetCustomRole();
+            var roleName = myRole.ToString();
+            if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
+                roleName = "NBakery";
+            if (myRole == CustomRoles.Lawyer && ((Lawyer)player.GetRoleClass()).IsPursuer())
+                roleName = "Pursuer";
+            var roleString = GetString(roleName);
+            roleString = $"<color={GetRoleColorCode(myRole)}><size=95%>{roleString}</size></color>";
+            sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(player.GetRoleInfo(true)).Append("</line-height></size>");
+
+            //setting
+            sb.Append("\n<size=65%><line-height=1.5pic>");
+            ShowChildrenSettings(Options.CustomRoleSpawnChances[myRole], ref sb);
+            sb.Append("</size></line-height>");
+
+            foreach (var subRole in player.GetCustomSubRoles())
+            {
+                if (subRole != CustomRoles.NotAssigned)
+                {
+                    var subroleName = subRole.ToString();
+                    var subroleString = GetString(subroleName);
+                    subroleString = $"<color={GetRoleColorCode(subRole)}><size=95%>{subroleString}</size></color>";
+
+                    sb.Append("\n--------------------------------------------------------\n")
+                        .Append(subroleString).Append("<size=80%><line-height=1.8pic>").Append(GetString($"{subroleName}InfoLong")).Append("</line-height></size>");
+                }
+            }
+            return sb.ToString();
         }
         public static void ShowActiveSettingsHelp(byte PlayerId = byte.MaxValue)
         {
@@ -645,7 +649,19 @@ namespace TownOfHostY
                     if (role is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
                     if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
 
-                    if (role.IsEnable() && !role.IsVanilla()) SendMessage(GetRoleName(role) + GetString(Enum.GetName(typeof(CustomRoles), role) + "InfoLong"), PlayerId);
+                    if (role.IsEnable() && !role.IsVanilla())
+                    {
+                        var sb = new StringBuilder();
+                        sb.Append($"<color={GetRoleColorCode(role)}><size=95%>{GetRoleName(role)}</size></color>")
+                            .Append("<size=80%><line-height=1.8pic>").Append(GetString(Enum.GetName(typeof(CustomRoles), role) + "InfoLong")).Append("</line-height></size>");
+
+                        //setting
+                        sb.Append("\n<size=65%><line-height=1.5pic>");
+                        ShowChildrenSettings(Options.CustomRoleSpawnChances[role], ref sb);
+                        sb.Append("</size></line-height>");
+
+                        SendMessage(sb.ToString(), PlayerId);
+                    }
                 }
             }
             if (Options.NoGameEnd.GetBool()) { SendMessage(GetString("NoGameEndInfo"), PlayerId); }
@@ -670,28 +686,21 @@ namespace TownOfHostY
             }
             else
             {
-                sb.Append(GetString("Settings")).Append(':');
                 foreach (var role in Options.CustomRoleCounts)
                 {
                     if (!role.Key.IsEnable() || role.Key is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
                     if (Main.CanPublicRoom.Value && role.Key.IsCannotPublicRole()) continue;
 
                     if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
-                    {
-                        if (Options.DisableColorDisplay.GetBool()) sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
-                        else
-                            sb.Append($"\n〖<color={GetRoleColorCode(role.Key)}>{GetRoleName(role.Key)}</color>×{role.Key.GetCount()}〗\n");
-                    }
+                        sb.Append($"<size=75%>○</size><u><mark=#69696933><color={GetRoleColorCode(role.Key)}><b>{GetRoleName(role.Key)}</b></color></u></mark><size=70%>×</size><size=80%>{role.Key.GetCount()}</size>\n");
                     else
-                    {
-                        if (Options.DisableColorDisplay.GetBool()) sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
-                        else
-                            sb.Append($"\n【<color={GetRoleColorCode(role.Key)}>{GetRoleName(role.Key)}</color>×{role.Key.GetCount()}】\n");
-                    }
+                        sb.Append($"<size=75%>●</size><u><mark=#69696933><color={GetRoleColorCode(role.Key)}><b>{GetRoleName(role.Key)}</b></color></u></mark><size=70%>×</size><size=80%>{role.Key.GetCount()}</size>\n");
+                    sb.Append("<size=65%><line-height=1.5pic>");
                     ShowChildrenSettings(Options.CustomRoleSpawnChances[role.Key], ref sb);
+                    sb.Append("</size></line-height>");
                     var text = sb.ToString();
-                    if (Options.DisableColorDisplay.GetBool()) text = text.RemoveHtmlTags();
                     sb.Clear().Append(text);
+                    sb.Append("\n");
                 }
                 foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode)))
                 {
@@ -699,14 +708,16 @@ namespace TownOfHostY
                     //    sb.Append($"\n【{opt.GetName(true)}: {opt.GetString()}】\n");
                     //else
                     if (!Options.NotShowOption(opt.Name))
-                        sb.Append($"\n【{opt.GetName(true)}】\n");
+                        sb.Append($"<size=75%>◆</size><u>{opt.GetName(true)}</u>\n");
+                    sb.Append("<size=65%><line-height=1.5pic>");
                     ShowChildrenSettings(opt, ref sb);
+                    sb.Append("</size></line-height>");
                     var text = sb.ToString();
-                    if (Options.DisableColorDisplay.GetBool()) text = text.RemoveHtmlTags();
                     sb.Clear().Append(text);
+                    sb.Append("\n");
                 }
             }
-            SendMessage(sb.ToString(), PlayerId);
+            SendMessage(sb.ToString(), PlayerId, $"【{GetString("Settings")}】");
         }
         public static void CopyCurrentSettings()
         {
@@ -749,11 +760,10 @@ namespace TownOfHostY
                 SendMessage(GetString("Message.HideGameSettings"), PlayerId);
                 return;
             }
-            var sb = new StringBuilder(GetString("Roles")).Append(':');
+            var sb = new StringBuilder("【").Append(GetString("Roles")).Append("】");
+            if(Options.EnableGM.GetBool())
             {   //GM
-                if (Options.DisableColorDisplay.GetBool()) sb.AppendFormat("\n{0}:{1}", GetRoleName(CustomRoles.GM), Options.EnableGM.GetString().RemoveHtmlTags());
-                else
-                    sb.AppendFormat("\n{0}:{1}", $"<color={GetRoleColorCode(CustomRoles.GM)}>{GetRoleName(CustomRoles.GM)}</color>", Options.EnableGM.GetString());
+                sb.AppendFormat("\n<size=80%>{0} ：{1}</size>", $"<color={GetRoleColorCode(CustomRoles.GM)}>{GetRoleName(CustomRoles.GM)}</color>", Options.EnableGM.GetString());
             }
             foreach (CustomRoles role in CustomRolesHelper.AllRoles)
             {
@@ -762,21 +772,23 @@ namespace TownOfHostY
 
                 if (role.IsEnable())
                 {
+                    // 陣営ごとのマーク
                     if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
-                    {
-                        if (Options.DisableColorDisplay.GetBool()) sb.AppendFormat("\n◆{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
-                        else
-                            sb.AppendFormat("\n◆{0}:{1}x{2}", $"<color={GetRoleColorCode(role)}>{GetRoleName(role)}</color>", $"{role.GetChance()}%", role.GetCount());
-                    }
-                    else
-                    {
-                        if (Options.DisableColorDisplay.GetBool()) sb.AppendFormat("\n　{0}:{1}x{2}", GetRoleName(role), $"{role.GetChance()}%", role.GetCount());
-                        else
-                            sb.AppendFormat("\n　{0}:{1}x{2}", $"<color={GetRoleColorCode(role)}>{GetRoleName(role)}</color>", $"{role.GetChance()}%", role.GetCount());
-                    }
+                                                sb.Append("\n<size=80%><color=#ee82ee>○</color></size><size=80%>");
+                    else if (role.IsImpostor()) sb.Append("\n<size=80%><color=#ff1919>Ⓘ</color></size><size=90%>");
+                    else if (role.IsMadmate())  sb.Append("\n<size=80%><color=#ff4500>Ⓜ</color></size><size=90%>");
+                    else if (role.IsCrewmate()) sb.Append("\n<size=80%><color=#8cffff>Ⓒ</color></size><size=90%>");
+                    else if (role.IsNeutral())  sb.Append("\n<size=80%><color=#ffa500>Ⓝ</color></size><size=90%>");
+                    else                        sb.Append("\n　<size=80%>");
+
+                    // 役職名表示
+                    sb.Append($" <color={GetRoleColorCode(role)}>{GetRoleName(role)}</color></size>");
+
+                    // 確率＆人数
+                    sb.AppendFormat(" ：<size=70%>{0}×</size><size=80%>{1}</size>", $"{role.GetChance()}%", role.GetCount());
                 }
             }
-            SendMessage(sb.ToString(), PlayerId);
+            SendMessageCustom(sb.ToString(), PlayerId);
         }
         public static void ShowChildrenSettings(OptionItem option, ref StringBuilder sb, int deep = 0)
         {
@@ -792,13 +804,14 @@ namespace TownOfHostY
 
                 if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
                 if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;
+                if (opt.Value.Parent.Name == "SkinControle" && !opt.Value.GetBool()) continue;
 
                 if (deep > 0)
                 {
                     sb.Append(string.Concat(Enumerable.Repeat("┃", Mathf.Max(deep - 1, 0))));
                     sb.Append(opt.Index == option.Children.Count ? "┗ " : "┣ ");
                 }
-                sb.Append($"{opt.Value.GetName(true)}: {opt.Value.GetString()}\n");
+                sb.Append($"{opt.Value.GetName(true)} ：{opt.Value.GetString()}\n");
                 if (opt.Value.GetBool()) ShowChildrenSettings(opt.Value, ref sb, deep + 1);
             }
         }
@@ -816,16 +829,12 @@ namespace TownOfHostY
             sb.Append($"\n{SetEverythingUpPatch.LastWinsText}\n");
             foreach (var id in Main.winnerList)
             {
-                if (Options.DisableColorDisplay.GetBool()) sb.Append($"\n★ ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
-                else 
-                    sb.Append($"\n★ ").Append(EndGamePatch.SummaryText[id]);
+                sb.Append($"\n★ ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
                 cloneRoles.Remove(id);
             }
             foreach (var id in cloneRoles)
             {
-                if (Options.DisableColorDisplay.GetBool()) sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
-                else
-                    sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id]);
+                sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id].RemoveHtmlTags());
             }
             SendMessage(sb.ToString(), PlayerId);
         }
@@ -874,13 +883,12 @@ namespace TownOfHostY
         {
             if (!AmongUsClient.Instance.AmHost) return;
             if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
-            if (Options.DisableColorDisplay.GetBool()) text = text.RemoveHtmlTags();
-            Main.MessagesToSend.Add((text, sendTo, title, false));
+            Main.MessagesToSend.Add(($"<size=90%>{text}</size>", sendTo, title, false));
         }
         public static void SendMessageCustom(string text, byte sendTo = byte.MaxValue)
         {
             if (!AmongUsClient.Instance.AmHost) return;
-            Main.MessagesToSend.Add((text, sendTo, "", true));
+            Main.MessagesToSend.Add(($"<size=90%>{text}</size>", sendTo, "", true));
         }
         public static void ApplySuffix()
         {

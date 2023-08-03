@@ -112,7 +112,8 @@ namespace TownOfHostY
                         }
                         if (Duelist.ArchenemyCheckWin(pc))
                         {
-                            CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                            if(!CustomWinnerHolder.WinnerIds.Contains(pc.PlayerId))
+                                CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
                             CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Archenemy);
                         }
                     }
