@@ -119,12 +119,8 @@ public class ModNews
     [HarmonyPatch(typeof(PlayerAnnouncementData), nameof(PlayerAnnouncementData.SetAnnouncements)), HarmonyPrefix]
     public static bool SetModAnnouncements(PlayerAnnouncementData __instance, [HarmonyArgument(0)] ref Il2CppReferenceArray<Announcement> aRange)
     {
-        if (AllModNews.Count < 1)
-        {
-            Logger.Info("AllModNews:" + AllModNews.Count, "ModNews");
-
-            AllModNews.Sort((a1, a2) => { return DateTime.Compare(DateTime.Parse(a2.Date), DateTime.Parse(a1.Date)); });
-        }
+        Logger.Info("AllModNews:" + AllModNews.Count, "ModNews");
+        AllModNews.Sort((a1, a2) => { return DateTime.Compare(DateTime.Parse(a2.Date), DateTime.Parse(a1.Date)); });
 
         List<Announcement> FinalAllNews = new();
         AllModNews.Do(n => FinalAllNews.Add(n.ToAnnouncement()));
