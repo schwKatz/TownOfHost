@@ -25,6 +25,7 @@ namespace TownOfHostY
 
             Logger.Info("-----------ゲーム終了-----------", "Phase");
             if (!GameStates.IsModHost) return;
+            if (Main.tempImpostorNum > 0) Main.NormalOptions.NumImpostors = Main.tempImpostorNum;
             SummaryText = new();
             SDSummaryText = new();
             foreach (var id in PlayerState.AllPlayerStates.Keys)
