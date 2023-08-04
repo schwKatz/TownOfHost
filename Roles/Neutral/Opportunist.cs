@@ -19,7 +19,8 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
             50100,
             SetupOptionItem,
             "オポチュニスト",
-            "#00ff00"
+            "#00ff00",
+            true
         );
     public Opportunist(PlayerControl player)
     : base(

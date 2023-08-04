@@ -22,7 +22,8 @@ namespace TownOfHostY.Roles.Neutral
                 SetupOptionItem,
                 "ダークハイド",
                 "#483d8b",
-                countType : CountTypes.Crew
+                true,
+                countType: CountTypes.Crew
             );
         public DarkHide(PlayerControl player)
         : base(

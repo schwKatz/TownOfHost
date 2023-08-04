@@ -17,7 +17,8 @@ public sealed class PlatonicLover : RoleBase, IKiller
             60400,
             SetupOptionItem,
             "純愛者",
-            "#ff6be4"
+            "#ff6be4",
+            true
         );
     public PlatonicLover(PlayerControl player)
     : base(
