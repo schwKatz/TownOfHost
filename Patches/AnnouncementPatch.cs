@@ -110,7 +110,7 @@ public class ModNews
             for (var news = json["News"].First; news != null; news = news.Next)
             {
                 ModNews n = new(
-                    int.Parse(news["Number"].ToString()), news["Title"]?.ToString(), news["SubTitle"]?.ToString(), news["Short"]?.ToString(),
+                    int.Parse(news["Number"].ToString()), news["Title"]?.ToString(), news["Subtitle"]?.ToString(), news["Short"]?.ToString(),
                     news["Body"]?.ToString(), news["Date"]?.ToString());
             }
         }

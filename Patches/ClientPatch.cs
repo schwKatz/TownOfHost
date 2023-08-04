@@ -43,7 +43,7 @@ namespace TownOfHostY
     {
         public static void Postfix(MMOnlineManager __instance)
         {
-            if (VersionChecker.IsSupported && Main.CanPublicRoom.Value) return;
+            if (VersionChecker.IsSupported && Main.CanPublicRoom.Value && Main.AllowPublicRoom) return;
 
             var obj = GameObject.Find("FindGameButton");
             if (obj)
