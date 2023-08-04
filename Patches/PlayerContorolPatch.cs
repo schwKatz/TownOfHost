@@ -434,9 +434,7 @@ namespace TownOfHostY
                     //自分自身の名前の色を変更
                     if (target.AmOwner && AmongUsClient.Instance.IsGameStarted)
                     { //targetが自分自身
-                        if (target.Is(CustomRoles.Arsonist) && Arsonist.IsDouseDone(target))
-                            RealName = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Arsonist), GetString("EnterVentToWin"));
-                        else if (target.Is(CustomRoles.SeeingOff) || target.Is(CustomRoles.Sending))
+                        if (target.Is(CustomRoles.SeeingOff) || target.Is(CustomRoles.Sending))
                             RealName = Sending.RealNameChange(RealName);
                         else if (Options.IsCCMode)
                             RealName = Utils.ColorString(seer.GetRoleColor(), seer.GetRoleInfo());

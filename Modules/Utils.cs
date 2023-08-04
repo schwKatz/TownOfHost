@@ -1138,9 +1138,7 @@ namespace TownOfHostY
                 //else
                 SelfName = $"{ColorString(SelfNameColor, SeerRealName)}{SelfDeathReason}{SelfMark}";
 
-                if (Arsonist.IsDouseDone(seer))
-                    SelfName = $"</size>\r\n{ColorString(seer.GetRoleColor(), GetString("EnterVentToWin"))}";
-                else if (seer.Is(CustomRoles.SeeingOff) || seer.Is(CustomRoles.Sending))
+                if (seer.Is(CustomRoles.SeeingOff) || seer.Is(CustomRoles.Sending))
                     SelfName = Sending.RealNameChange(SelfName);
 
                 SelfName = SelfRoleName + "\r\n" + SelfName;
