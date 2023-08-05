@@ -62,6 +62,7 @@ namespace TownOfHostY
                 Main.credentialsText += $"\r\n<color={Main.ModColor}>{ThisAssembly.Git.Branch}({ThisAssembly.Git.Commit})</color>";
 #endif
                 var credentials = TMPTemplate.Create(
+                    "TOHCredentialsText",
                     Main.credentialsText,
                     fontSize: 2f,
                     alignment: TextAlignmentOptions.Right,
@@ -79,6 +80,7 @@ namespace TownOfHostY
                 if (SpecialEventText == null && TohLogo != null)
                 {
                     SpecialEventText = TMPTemplate.Create(
+                        "SpecialEventText",
                         "",
                         Color.white,
                         alignment: TextAlignmentOptions.Center,

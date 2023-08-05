@@ -226,14 +226,14 @@ namespace TownOfHostY
                 sb.Append($"\n　 ").Append(EndGamePatch.SummaryText[id]);
             }
             var RoleSummary = TMPTemplate.Create(
+                "RoleSummaryText",
                 sb.ToString(),
                 Color.white,
                 1.25f,
                 TMPro.TextAlignmentOptions.TopLeft,
                 setActive: true);
-            RoleSummary.transform.position = new Vector3(__instance.Navigation.ExitButton.transform.position.x + 0.1f, Pos.y - 0.1f, -15f);
+            RoleSummary.transform.position = new Vector3(__instance.Navigation.ExitButton.transform.position.x + -0.05f, Pos.y - 0.13f, -15f);
             RoleSummary.transform.localScale = new Vector3(1f, 1f, 1f);
-            RoleSummary.outlineWidth *= 1.2f;
 
             //var RoleSummaryRectTransform = RoleSummary.GetComponent<RectTransform>();
             //RoleSummaryRectTransform.anchoredPosition = new Vector2(Pos.x + 3.5f, Pos.y - 0.1f);
