@@ -57,6 +57,8 @@ namespace TownOfHostY
             //名前の記録
             Main.AllPlayerNames = new();
 
+            Main.tempImpostorNum = 0;
+
             var invalidColor = Main.AllPlayerControls.Where(p => p.Data.DefaultOutfit.ColorId < 0 || Palette.PlayerColors.Length <= p.Data.DefaultOutfit.ColorId);
             if (invalidColor.Any())
             {
@@ -123,6 +125,7 @@ namespace TownOfHostY
     [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
     class SelectRolesPatch
     {
+        private static bool AssignedStrayWolf = false;
         public static void Prefix()
         {
             if (!AmongUsClient.Instance.AmHost) return;
@@ -163,9 +166,9 @@ namespace TownOfHostY
                 Dictionary<(byte, byte), RoleTypes> rolesMap = new();
                 if (!Main.CanPublicRoom.Value)
                 {
-                    AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                     AssignDesyncRole(CustomRoles.SillySheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                    AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                     AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                     AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                     AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
@@ -173,8 +176,8 @@ namespace TownOfHostY
                 AssignDesyncRole(CustomRoles.Hunter, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.Jackal, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                 AssignDesyncRole(CustomRoles.DarkHide, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                if (Main.NormalOptions.NumImpostors < 3)
-                    AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                AssignedStrayWolf =
+                    AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
                 if (Opportunist.OptionCanKill.GetBool())
                     AssignDesyncRole(CustomRoles.Opportunist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
 
@@ -215,7 +218,7 @@ namespace TownOfHostY
                 var state = PlayerState.GetByPlayerId(pc.PlayerId);
                 if (state.MainRole != CustomRoles.NotAssigned) continue; //既にカスタム役職が割り当てられていればスキップ
                 var role = CustomRoles.NotAssigned;
-                switch (pc.Data.Role.Role)
+                switch (pc.Data.Role.Role) 
                 {
                     case RoleTypes.Crewmate:
                         Crewmates.Add(pc);
@@ -280,10 +283,11 @@ namespace TownOfHostY
                     if (role is CustomRoles.HASTroll or CustomRoles.HASFox) continue;
                     if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
 
-                    if (role is CustomRoles.Sheriff or CustomRoles.Arsonist or CustomRoles.StrayWolf
+                    if (role is CustomRoles.Sheriff or CustomRoles.Arsonist 
                         or CustomRoles.Hunter or CustomRoles.SillySheriff or CustomRoles.MadSheriff
                         or CustomRoles.DarkHide or CustomRoles.PlatonicLover or CustomRoles.Totocalcio or CustomRoles.Jackal) continue;
                     if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
+                    if (role == CustomRoles.StrayWolf && AssignedStrayWolf) continue;
 
                     var baseRoleTypes = role.GetRoleTypes() switch
                     {
@@ -397,12 +401,21 @@ namespace TownOfHostY
             Utils.SyncAllSettings();
             SetColorPatch.IsAntiGlitchDisabled = false;
         }
-        private static void AssignDesyncRole(CustomRoles role, List<PlayerControl> AllPlayers, Dictionary<byte, CustomRpcSender> senders, Dictionary<(byte, byte), RoleTypes> rolesMap, RoleTypes BaseRole, RoleTypes hostBaseRole = RoleTypes.Crewmate)
+        private static bool AssignDesyncRole(CustomRoles role, List<PlayerControl> AllPlayers, Dictionary<byte, CustomRpcSender> senders, Dictionary<(byte, byte), RoleTypes> rolesMap, RoleTypes BaseRole, RoleTypes hostBaseRole = RoleTypes.Crewmate, bool IsImpostorRole = false)
         {
-            if (!role.IsPresent()) return;
+            if (!role.IsPresent()) return false;
 
             var hostId = PlayerControl.LocalPlayer.PlayerId;
             var rand = IRandom.Instance;
+            var realAssigned = 0;
+
+            if (IsImpostorRole)
+            {
+                var impostorNum = Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors);
+                if (impostorNum == role.GetRealCount()) return false;
+                if (Main.tempImpostorNum == 0)
+                    Main.tempImpostorNum = impostorNum;
+            }
 
             for (var i = 0; i < role.GetRealCount(); i++)
             {
@@ -439,7 +452,14 @@ namespace TownOfHostY
                 //ホスト視点はロール決定
                 player.SetRole(othersRole);
                 player.Data.IsDead = true;
+                realAssigned++;
+
+                Logger.Info("役職設定(desync):" + player?.Data?.PlayerName + " = " + role.ToString(), "AssignRoles");
             }
+
+            if (IsImpostorRole) Main.NormalOptions.NumImpostors -= realAssigned;
+
+            return realAssigned > 0;
         }
         public static void MakeDesyncSender(Dictionary<byte, CustomRpcSender> senders, Dictionary<(byte, byte), RoleTypes> rolesMap)
         {

@@ -127,6 +127,8 @@ namespace TownOfHostY
 
         public static Main Instance;
 
+        public static int tempImpostorNum = 0;
+
         public override void Load()
         {
             Instance = this;
