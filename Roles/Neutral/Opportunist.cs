@@ -88,7 +88,7 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
         ShotLimit = reader.ReadInt32();
     }
     public float CalculateKillCooldown() => KillCooldown;
-    public bool CanUseKillButton() => Player.IsAlive() && ShotLimit > 0;
+    public bool CanUseKillButton() => CanKill && Player.IsAlive() && ShotLimit > 0;
     public override bool OnInvokeSabotage(SystemTypes systemType) => false;
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
     //public void OnCheckMurderAsKiller(MurderInfo info)
@@ -107,7 +107,7 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
     }
     public override string GetProgressText(bool comms = false)
     {
-        if (!CanKill) return null;
+        if (!CanKill) return string.Empty;
         return Utils.ColorString(CanUseKillButton() ? RoleInfo.RoleColor : Color.gray, $"({ShotLimit})");
     }
 }

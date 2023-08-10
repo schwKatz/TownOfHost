@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 using TownOfHostY.Roles.Core;
-using static TownOfHostY.Options;
-using Unity.Services.Authentication.Internal;
-using Hazel;
-using System.Linq;
 using TownOfHostY.Attributes;
+using static TownOfHostY.Options;
 
 namespace TownOfHostY.Roles.AddOns.Common;
 
@@ -29,6 +27,7 @@ public static class Guarding
     public static void Init()
     {
         playerIdList = new();
+        GuardingList = new();
     }
     public static void Add(byte playerId)
     {

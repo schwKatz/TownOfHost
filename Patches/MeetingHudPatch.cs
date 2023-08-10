@@ -43,6 +43,7 @@ public static class MeetingHudPatch
             GameStates.AlreadyDied |= !Utils.IsAllAlive;
             Main.AllPlayerControls.Do(x => ReportDeadBodyPatch.WaitReport[x.PlayerId].Clear());
             Sending.OnStartMeeting();
+            TargetDeadArrow.OnStartMeeting();
             MeetingStates.MeetingCalled = true;
         }
         public static void Postfix(MeetingHud __instance)

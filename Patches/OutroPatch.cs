@@ -16,7 +16,6 @@ namespace TownOfHostY
     class EndGamePatch
     {
         public static Dictionary<byte, string> SummaryText = new();
-        public static Dictionary<byte, string> SDSummaryText = new();
         public static string KillLog = "";
         public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
         {
@@ -27,11 +26,9 @@ namespace TownOfHostY
             if (!GameStates.IsModHost) return;
             if (Main.tempImpostorNum > 0) Main.NormalOptions.NumImpostors = Main.tempImpostorNum;
             SummaryText = new();
-            SDSummaryText = new();
             foreach (var id in PlayerState.AllPlayerStates.Keys)
             {
-                SummaryText[id] = Utils.SummaryTexts(true, id, disableColor: false);
-                SDSummaryText[id] = Utils.SummaryTexts(false, id, disableColor: false);
+                SummaryText[id] = Utils.SummaryTexts(id);
             }
             var sb = new StringBuilder(GetString("KillLog") + ":");
             foreach (var kvp in PlayerState.AllPlayerStates.OrderBy(x => x.Value.RealKiller.Item1.Ticks))

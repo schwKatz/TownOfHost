@@ -393,6 +393,9 @@ namespace TownOfHostY
 
         public static string GetRealName(this PlayerControl player, bool isMeeting = false)
         {
+            if (Options.GetNameChangeModes() == NameChange.Crew)
+                return isMeeting ? Main.AllPlayerNames[player.PlayerId] : GetString("CustomRoleTypes.Crewmate");
+
             return isMeeting ? player?.Data?.PlayerName : player?.name;
         }
         public static bool CanUseKillButton(this PlayerControl pc)

@@ -132,7 +132,7 @@ public sealed class Medic : RoleBase
         else
         {
             str.Append(GetString(isForHud ? "SelectPlayerTag" : "SelectPlayerTagMini"));
-            str.Append(GuardPlayer.GetRealName());
+            str.Append(GuardPlayer.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
         }
         return str.ToString();
     }

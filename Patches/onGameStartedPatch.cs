@@ -40,6 +40,7 @@ namespace TownOfHostY
 
             ReportDeadBodyPatch.CanReport = new();
             ReportDeadBodyPatch.CanReportByDeadBody = new();
+            ReportDeadBodyPatch.DontReportMark = new();
             MeetingHudPatch.RevengeTargetPlayer = new();
             Options.UsedButtonCount = 0;
             Main.RealOptionsData = new OptionBackupData(GameOptionsManager.Instance.CurrentGameOptions);
@@ -82,10 +83,13 @@ namespace TownOfHostY
             foreach (var pc in Main.AllPlayerControls)
             {
                 var colorId = pc.Data.DefaultOutfit.ColorId;
-                if (AmongUsClient.Instance.AmHost && Options.GetNameChangeModes() == NameChange.Color)
+                if (AmongUsClient.Instance.AmHost)
                 {
-                    if(pc.Is(CustomRoles.Rainbow)) pc.RpcSetName(GetString("RainbowColor"));
-                    else pc.RpcSetName(Palette.GetColorName(colorId));
+                    if (Options.GetNameChangeModes() == NameChange.Color)
+                    {
+                        if (pc.Is(CustomRoles.Rainbow)) pc.RpcSetName(GetString("RainbowColor"));
+                        else pc.RpcSetName(Palette.GetColorName(colorId));
+                    }
                 }
                 PlayerState.Create(pc.PlayerId);
                 Main.AllPlayerNames[pc.PlayerId] = pc?.Data?.PlayerName;
@@ -93,6 +97,7 @@ namespace TownOfHostY
                 Main.AllPlayerSpeed[pc.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod); //移動速度をデフォルトの移動速度に変更
                 ReportDeadBodyPatch.CanReport[pc.PlayerId] = true;
                 ReportDeadBodyPatch.CanReportByDeadBody[pc.PlayerId] = true;
+                ReportDeadBodyPatch.DontReportMark[pc.PlayerId] = false;
                 ReportDeadBodyPatch.WaitReport[pc.PlayerId] = new();
                 pc.cosmetics.nameText.text = pc.name;
 
@@ -166,9 +171,9 @@ namespace TownOfHostY
                 Dictionary<(byte, byte), RoleTypes> rolesMap = new();
                 if (!Main.CanPublicRoom.Value)
                 {
-                AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                    AssignDesyncRole(CustomRoles.Sheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                     AssignDesyncRole(CustomRoles.SillySheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-                AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
+                    AssignDesyncRole(CustomRoles.Arsonist, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                     AssignDesyncRole(CustomRoles.MadSheriff, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                     AssignDesyncRole(CustomRoles.PlatonicLover, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
                     AssignDesyncRole(CustomRoles.Totocalcio, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);

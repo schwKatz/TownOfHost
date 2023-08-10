@@ -126,30 +126,10 @@ public sealed class Hunter : RoleBase, IKiller
             }
 
             SendRPC();
-            Utils.NotifyRoles(SpecifySeer: killer);
+            NotifyRoles(SpecifySeer: killer);
             killer.ResetKillCooldown();
         }
     }
-    //public void OnCheckMurderAsKiller(MurderInfo info)
-    //{
-    //    if (Is(info.AttemptKiller) && !info.IsSuicide)
-    //    {
-    //        (var killer, var target) = info.AttemptTuple;
-
-    //        Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "Hunter");
-    //        if (ShotLimit <= 0)
-    //        {
-    //            info.DoKill = false;
-    //            return;
-    //        }
-    //        ShotLimit--;
-    //        if (target.Is(CustomRoleTypes.Impostor)) isImpostor = 1;
-    //        else if (target.Is(CustomRoleTypes.Neutral)) isImpostor = 2;
-    //        else isImpostor = 0;
-    //        SendRPC();
-    //        killer.ResetKillCooldown();
-    //    }
-    //}
     public override string GetProgressText(bool comms = false) => ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"({ShotLimit})");
 
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)

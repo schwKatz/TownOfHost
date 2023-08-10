@@ -63,7 +63,7 @@ namespace TownOfHostY
                     break;
                 case RpcCalls.SetRole: //SetNameRPC
                     var role = (RoleTypes)subReader.ReadUInt16();
-                    Logger.Info("役職:" + __instance.GetRealName() + " => " + role, "SetRole");
+                    Logger.Info("役職:" + __instance.GetRealName(Options.GetNameChangeModes() == NameChange.Crew) + " => " + role, "SetRole");
                     break;
                 case RpcCalls.SendChat:
                     var text = subReader.ReadString();

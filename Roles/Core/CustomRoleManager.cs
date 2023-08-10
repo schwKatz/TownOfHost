@@ -130,6 +130,8 @@ public static class CustomRoleManager
 
         //サブロール処理ができるまではラバーズをここで処理
         FixedUpdatePatch.LoversSuicide(attemptTarget.PlayerId);
+        //TargetDeadArrow
+        TargetDeadArrow.UpdateDeadBody();
 
         //以降共通処理
         var targetState = PlayerState.GetByPlayerId(attemptTarget.PlayerId);
@@ -464,6 +466,7 @@ public enum CustomRoles
     FortuneTeller,
     Psychic,
     Nimrod,
+    Detector,
     CSchrodingerCat,//クルー陣営のシュレディンガーの猫
     //Neutral
     Arsonist,

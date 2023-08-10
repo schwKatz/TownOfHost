@@ -221,6 +221,7 @@ namespace TownOfHostY
 
         public static Dictionary<byte, bool> CanReport;
         public static Dictionary<byte, bool> CanReportByDeadBody;
+        public static Dictionary<byte, bool> DontReportMark;
         public static Dictionary<byte, List<GameData.PlayerInfo>> WaitReport = new();
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
         {
@@ -231,10 +232,29 @@ namespace TownOfHostY
             if (Options.IsStandardHAS && target != null && __instance == target.Object) return true; //[StandardHAS] ボタンでなく、通報者と死体が同じなら許可
             if (Options.CurrentGameMode == CustomGameMode.HideAndSeek || Options.IsStandardHAS) return false;
             if (reporter.Object.Is(CustomRoles.NonReport) &&
-                target != null && !target.Object.Is(CustomRoles.Bait) && !target.Object.Is(CustomRoles.AddBait)) return false;
-
+                target != null && !target.Object.Is(CustomRoles.Bait) && !target.Object.Is(CustomRoles.AddBait))
+            {
+                DontReportMark[reporter.PlayerId] = true;
+                Utils.NotifyRoles(SpecifySeer: reporter.Object);
+                _ = new LateTask(() =>
+                {
+                    DontReportMark[reporter.PlayerId] = false;
+                    Utils.NotifyRoles(SpecifySeer: reporter.Object);
+                }, 5f, "NonReport DontReportMark");
+                return false;
+            }
             // Scavenger
-            if (target != null && !CanReportByDeadBody[target.PlayerId]) return false;
+            if (target != null && !CanReportByDeadBody[target.PlayerId])
+            {
+                DontReportMark[reporter.PlayerId] = true;
+                Utils.NotifyRoles(SpecifySeer: reporter.Object);
+                _ = new LateTask(() =>
+                {
+                    DontReportMark[reporter.PlayerId] = false;
+                    Utils.NotifyRoles(SpecifySeer: reporter.Object);
+                }, 5f, "Scavenger DontReportMark");
+                return false;
+            }
 
             if (!CanReport[__instance.PlayerId])
             {
@@ -316,6 +336,7 @@ namespace TownOfHostY
             if (!GameStates.IsModHost) return;
 
             TargetArrow.OnFixedUpdate(player);
+            TargetDeadArrow.OnFixedUpdate(player);
             VentSelect.OnFixedUpdate(player);
             CustomRoleManager.OnFixedUpdate(player);
 
@@ -435,15 +456,18 @@ namespace TownOfHostY
                     {
                         Mark.Append($"<color={Utils.GetRoleColorCode(CustomRoles.Lovers)}>♥</color>");
                     }
+                    //report
+                    if (seer == target && ReportDeadBodyPatch.DontReportMark[seer.PlayerId])
+                        Mark.Append(Utils.ColorString(Palette.Orange, "◀×"));
 
                     //seerに関わらず発動するLowerText
                     Suffix.Append(CustomRoleManager.GetLowerTextOthers(seer, target));
-
                     //seer役職が対象のSuffix
                     Suffix.Append(seerRole?.GetSuffix(seer, target));
-
                     //seerに関わらず発動するSuffix
                     Suffix.Append(CustomRoleManager.GetSuffixOthers(seer, target));
+                    //DeadTarget
+                    Suffix.Append(TargetDeadArrow.GetDeadBodiesArrow(seer, target));
 
                     /*if(main.AmDebugger.Value && main.BlockKilling.TryGetValue(target.PlayerId, out var isBlocked)) {
                         Mark = isBlocked ? "(true)" : "(false)";

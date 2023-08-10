@@ -259,7 +259,7 @@ namespace TownOfHostY
         public static AddonShowMode GetAddonShowModes() => (AddonShowMode)AddonShow.GetValue();
         public static readonly string[] nameChangeModes =
         {
-            "nameChangeMode.None", /*"nameChangeMode.Crew", */"nameChangeMode.Color"
+            "nameChangeMode.None", "nameChangeMode.Crew", "nameChangeMode.Color"
         };
         public static NameChange GetNameChangeModes() => (NameChange)NameChangeMode.GetValue();
 

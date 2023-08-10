@@ -92,7 +92,7 @@ public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
         BetTarget = target;
         BetTargetCount--;
         killer.RpcGuardAndKill(target);
-        Logger.Info($"{killer.GetNameWithRole()} : {target.GetRealName()}に賭けた", "Totocalcio");
+        Logger.Info($"{killer.GetNameWithRole()} : {target.GetRealName(Options.GetNameChangeModes() == NameChange.Crew)}に賭けた", "Totocalcio");
 
         Utils.NotifyRoles(SpecifySeer : killer);
         info.DoKill = false;

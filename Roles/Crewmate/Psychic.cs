@@ -267,32 +267,19 @@ public sealed class Psychic : RoleBase
             });
             return IsWatch;
         }
-        public static string GetCheckPlayerText(PlayerControl psychic, bool hud)
+        public static string GetCheckPlayerText(PlayerControl psychic, bool isForHud)
         {
             if (psychic == null) return "";
             var psychicId = psychic.PlayerId;
 
             var str = new StringBuilder();
             SelectPlayer.TryGetValue(psychicId, out var target);
-            if (hud)
-            {
-                if (target == null)
-                    str.Append(GetString("SelectPlayerTagBefore"));
-                else
-                {
-                    str.Append(GetString("SelectPlayerTag"));
-                    str.Append(target.GetRealName());
-                }
-            }
+            if (target == null)
+                str.Append(GetString(isForHud ? "SelectPlayerTagBefore" : "SelectPlayerTagMiniBefore"));
             else
             {
-                if (target == null)
-                    str.Append(GetString("SelectPlayerTagMiniBefore"));
-                else
-                {
-                    str.Append(GetString("SelectPlayerTagMini"));
-                    str.Append(target.GetRealName());
-                }
+                str.Append(GetString(isForHud ? "SelectPlayerTag" : "SelectPlayerTagMini"));
+                str.Append(target.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
             }
             return str.ToString();
         }

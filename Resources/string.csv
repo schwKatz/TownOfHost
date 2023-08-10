@@ -43,7 +43,7 @@
 "ShapeKiller","ShapeKiller","シェイプキラー",,,,
 "StrayWolf","Stray Wolf","はぐれ狼",
 
-"CustomImpostorInfo","I can now use abilities like that.","あんな能力も使えるようになりました。",
+"CustomImpostorInfo","I can now use abilities like that","あんな能力も使えるようになりました",
 "EvilWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
 "BountyHunterInfo","Eliminate your target","標的を確実に仕留めよう","猎杀你的赏金目标","將你的目標拿下","Охотьтесь за своей целью","Elimine o seu alvo"
 "MareInfo","Darkness aids you. Kill","闇の世界で暗殺せよ","在黑暗中作案","在黑暗中獵殺","Убивайте в темноте","O escuro está do seu lado. Mate"
@@ -95,7 +95,7 @@
 "EvilDivinerInfoLong","(Impostors)\nBy pressing the kill button once, the target's Role can be divined after one second. In that case, no kill occurs and the killcool is reset.\nWhen the kill button is double-clicked, it becomes a kill. When the number of divinations reaches 0, a kill is made by simply pressing the button once.","[インポスター陣営]\n1回キルボタンを押すことで、1秒後に対象者の役職を占うことが出来る。その場合、キルは起こらずにキルクールがリセットされる。\nキルボタンをダブルクリックした時、キルになる。なお占い回数が0になった時は、1回押すだけでキルになる。",
 "TelepathistersInfoLong","(Impostors)\nTelepathisters are Impostors that can only be set up by more than one person.\nThe arrows indicate the location of other Telepathisers.\nThe number of times the Telepathisters vent can be used is shared by all Telepathisters  and can only be used up to a set number.","[インポスター陣営]\n複数人でしか設定できないインポスター。\nテレパシスターズの相方(以下、シスターとする)の位置が矢印8方向で分かる。\n設定により、シスターのキルによるキルフラッシュが見えたり、会議時にシスターの最終位置を表示できたりする。\nなお、テレパシスターズのベント使用回数は全員で共有されており、設定数までしか使用できない。",
 "ShapeKillerInfoLong","(Impostors):\nShapeKiller can disguise reports.\nBy shape-shifting and reporting, ShapeKiller can report the shape-shifted target.","(インポスター陣営):\n通報を偽装できるインポスター。\nシェイプシフトして死体通報することでシェイプシフトした相手の通報にできる。",,,,
-"StrayWolfInfoLong","(Impostors):\n※Careful of the number of Impostors in the setting.\nAn Impostor in which the companions are not displayed. Winning conditions are the same as for a regular Impostor.\nCan be set up to kill each other with Impostors or not.","[インポスター陣営]\n※バニラ設定のインポスター数に注意。\n仲間が表示されないインポスター。勝利条件は通常インポスターと変わらない。\n[仲間斬り合い設定]\n・常時：仲間インポスターもそのままキル。仲間とずっと視認できない。\n・視認後：仲間を斬りそうな時or仲間から斬られそうになった時にガード、互いに視認できるようになる。その相手とはキルしあえる状態に。\n・なし：視認後はキルボタンが互いだけ反応しなくなる。"
+"StrayWolfInfoLong","(Impostors):\nAn Impostor in which the companions are not displayed. Winning conditions are the same as for a regular Impostor.\nCan be set up to kill each other with Impostors or not.","[インポスター陣営]\n仲間が表示されないインポスター。勝利条件は通常インポスターと変わらない。\n[仲間斬り合い設定]\n・常時：仲間インポスターもそのままキル。仲間とずっと視認できない。\n・視認後：仲間を斬りそうな時or仲間から斬られそうになった時にガード、互いに視認できるようになる。その相手とはキルしあえる状態に。\n・なし：視認後はキルボタンが互いだけ反応しなくなる。"
 
 "# マッドメイト系役職"
 "Madmate","Madmate","マッドメイト","叛徒","叛徒","Безумец","Tripulante Louco"
@@ -165,6 +165,7 @@
 "FortuneTeller","Fortune Teller","占い師",,,,
 "Psychic","Psychic","霊媒師",
 "Nimrod","Nimrod","ニムロッド",
+"Detector","Detector","ディテクター",
 
 "CustomCrewmateInfo","I can now use abilities like that.","あんな能力も使えるようになりました。",
 "NiceWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
@@ -198,6 +199,7 @@
 "FortuneTellerInfo","Forecast Other Player","役職を占おう",,,,
 "PsychicInfo","I wanted to use your ability","貴方の能力を使いたかった",
 "NimrodInfo","Let us go with you to the spirit world","あなたと共に霊界へ向かおう",
+"DetectorInfo","I'll find the body first","死体は私が見つけます"
 
 "CustomCrewmateInfoLong","(Crewmates):\Crewmate with the ability to Add-On to attributes set by the host.","[クルー陣営]\nホストによって設定された属性の能力をもつクルーメイト。",
 "NiceWatcherInfoLong","(Crewmates):\nYou can see everyone's votes even if anonymous voting is on.","(クルー陣営):\n全員の投票先を見ることができる。","(船员阵营:\n会议时窥视者可以看到所有人的投票。","(船員):\n會議時觀察者可以看到所有人的投票。","(Член Экипажа):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Tripulantes):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
@@ -220,6 +222,7 @@
 "RainbowInfoLong","(Crewmates)\nThe name of one's position is colorful. Also，the color of my body changes every second. You can tell that you are a Rainbow from all of you.","[クルー陣営]\n自分の役職名がカラフル。また、自分の体の色が1秒ごとに変わる。自分の全員から自分がにじいろスターだということが分かる。","(船员阵营)\n一个人的职位名称是丰富多彩的。而且，我身体的颜色每秒钟都在变化。你可以从你们所有人身上看出你是一道彩虹。",,
 "NekomataInfoLong","(Crewmates)\nWhen he is hanged，he takes one random person with him. ","[クルー陣営]\n自身が吊られた際、ランダムな1人を道連れにする。","(船员阵营)当他被绞死的时候，他会随机带走一个人。",,
 "ExpressInfoLong","(Crewmates)\nIt is just fast. From other viewpoints，they appear to be the same speed and out-of-sync warp. (Specification)","[クルー陣営]\nただ足が速い。他視点からは同じスピードで同期ズレワープのように見える。(仕様)","(船员阵营)\n它只是很快。从另一个角度来看，他们的速度是一样的，而且是不同步的曲速。(规范)",,
+"SeeingOffInfoLong","(Crewmates)\nYou will know if the person you have banished is an imposter or not.","[クルー陣営]\n追放した人がインポスターかそうでないかがわかる。","(船员阵营)\n你会知道你驱逐的人是否是内鬼。",,
 "ChairmanInfoLong","(Crewmates)\nWhen you enter a vent，you can open a meeting. During sabotage，entering a vent does not open a meeting. The vent button is consumed at the same time as the normal button count. (If you use the vent button first when you have one normal button count，you will not be able to use the normal button.) Voting for someone can immediately interrupt the meeting. You cannot vote normally except for skip/self-vote，which triggers the ability.","[クルー陣営]\n・ベントに入ると会議が開ける。サボタージュ中はベントに入っても会議を開けない。\n通常ボタン回数と同時に消費する。(通常ボタン回数1回の時、先にベントボタンを使うと、通常ボタンは使えなくなる。)\n・誰かに投票することでその会議を即中断できる(追放は起こらずスキップ扱い)。\nスキップ・自投票以外の普通の投票は出来ず、能力を発動してしまう。","(船员阵营)\n当你进入一个通风口时，你可以发起一个会议。在破坏过程中，进入通风口并不会开启会议。管道按钮与正常按钮计数同时消耗。(如果你在有一个正常按钮的情况下先使用管道按钮，你将不能使用正常按钮。)为某人投票会立即打断会议。你不能正常投票，除了跳过/自我投票，这会触发能力。",,
 "SillySheriffInfoLong","(Crewmates)\nIt is almost the same as a normal sheriff, but sometimes it does not recognize the camp correctly.","[クルー陣営]\n普通のシェリフとほとんど変わりないが、正しく陣営を認識できない時がある。(人外に向かって自爆・クルーをキルする時がある)","(船员阵营)\n它与普通的警长几乎一样，但有时它不能正确识别阵营。"
 "SympathizerInfoLong","(Crewmates)\nOnly two Sympathizer can be set up at any given time.\nWhen the number of tasks completed is reached, ◎ is placed on the other Sympathizer, which is visible only to the Sympathizer, and when both Sympathizers have exceeded the number of tasks set for each other, the other Sympathizer is also marked with ◎.","[クルー陣営]\n共鳴者は必ず2人でしか設定できない。\n設定タスク数まで完了させると自身にしか見えない◎がつく。2人ともタスクが互いに設定数を超えた時、相手にも◎が付きもう1人の共鳴者が誰か分かる。","(船员阵营)\n任何时候只能设置两个同情者。\n当需要完成的任务数量达到时，“◎”会被放在另一个同情者身上，只有同情者才能看到，当两个同情者都超过了为对方设定的任务数量时，另一个同情者也会被标记为“◎”。",
@@ -230,6 +233,7 @@
 "FortuneTellerInfoLong","(Crewmates):You can see other player's roles by forecast.\nBy voting for the player you want to forecast, you can see the roles at the next meeting.","(クルーメイト陣営):\n占うことで、他のプレイヤーの役職をみることができる。\n占いたい人に投票することで次の会議で占い結果が表示される。",,,,
 "PsychicInfoLong","(Crewmates)\nThe deceased can be selected by venting to see their Role.",[クルー陣営]\n死亡した人をベントで選択して役職を確認することができる。,
 "NimrodInfoLong","(Crewmates)\nWhen Nimrod is exiled, a meeting is held again for a vote on Nimrod. Here, only Nimrod is allowed to discuss the matter once exiled, and he may choose one person to be voted in and executed along the way.","[クルー陣営]\n自身が追放された時、再びニムロッド投票用の会議が開かれる。ここでは追放されたらニムロッド以外は議論するべからず。1人を投票で選択して道連れ処刑することができる。",
+"DetectorInfoLong","(Crewmates)\nUpon completion of a set amount of tasks, When a corpse is born, a kill flash will be visible and an arrow to the location of the corpse will appear.","[クルー陣営]\n設定タスク量を完了すると、死体が生まれた際にキルフラッシュが見えると共に死体の場所への矢印が表示されるようになる。",
 
 
 "# ニュートラル役職"
@@ -410,7 +414,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "GMInfoLong","(None):\nThe GM (Game Master) is an observer role.\nTheir presence has no effect on the game, and all players know who the GM is. The GM role will be assigned to the host, who will automatically become a ghost at the start of the game.","(なし):\nGM(ゲームマスター)はオブザーバー役職である。\nGMはゲーム自体には何の影響も与えず、すべてのプレイヤーは誰がGMであるかがわかる。必ずホストに割り当てられ、始めから幽霊状態になっている。","（无阵营）：\nGM(管理员)是房主专属的观察者职业。从游戏开始时便以幽灵状态在旁边观战。 \n该职业本身对游戏没有影响，且会议中对所有玩家可见。 ","（不屬於任何陣營）：\nGM(遊戲大師)是遊戲的觀察者, \nGM對遊戲進行過程沒有影響,所有玩家都知道GM是誰,該職業絕對會分配給房主。\nGM(遊戲大師)從開始遊戲時就處於死亡狀態。","(Никто):\nМастер Игры — это роль, которая наблюдает за игрой в роле призрака. \nОн не влияет на игру, и все игроки всегда знают кто Мастер Игры. Всегда назначается только хосту лобби и становится призраком в самом начале игры.","(Nenhum): \nO GM (Mestre do Jogo) é uma classe de observação. \nA sua presença não afeta o jogo, e todos os jogadores sabem quem é o GM. A classe de GM será dada ao anfitrião, que será um fantasma desde o começo do jogo."
 
 "# その他"
-"CustomRoleTypes.Crewmate","Crewmate","クルー","","","",""
+"CustomRoleTypes.Crewmate","Crewmate","クルー","船员","船員","Экипаж","Tripulante"
 "CustomRoleTypes.Impostor","Impostor","インポスター","","","",""
 "CustomRoleTypes.Neutral","Neutral","ニュートラル","","","",""
 "CustomRoleTypes.Madmate","Mad","マッド","","","",""
@@ -732,6 +736,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "LawyerTargetKnows","Lawyer target knows","依頼人は弁護されている事がわかる","律师的客户知道自己有律师",
 "LawyerKnowTargetRole","Lawyer know target role","弁護士は依頼人の役職が分かる","律师知道客户职业",
 "PursuerGuardNum","Pursuer guard count","追跡者のキルガード回数","起诉人自保次数",
+"PlatonicLoverLimitTurn","Have to Make Love at First Sight Turn","一目惚れしないといけないターン数",
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
@@ -1049,7 +1054,7 @@ PanAlive13,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "SelectPlayerTagMiniBefore","Select player in vent.","ベントでプレイヤーを選択",
 "NameChangeMode","Name Change Mode","名前変更モード",
 "nameChangeMode.None","None","なし",
-"nameChangeMode.Crew","Crewmate","クルーメイト","船员","船員","Член Экипажа","Tripulante"
+"nameChangeMode.Crew","Crewmate","クルー","船员","船員","Экипаж","Tripulante"
 "nameChangeMode.Color","Color","色名",
 "ExtendedChat","Extended Chat","拡張チャット",,,,
 

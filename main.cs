@@ -51,7 +51,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "503.00";
+        public const string PluginVersion = "503.16";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.7.11";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -88,8 +88,8 @@ namespace TownOfHostY
         public static Dictionary<(byte, byte), string> LastNotifyNames;
         public static Dictionary<byte, Color32> PlayerColors = new();
         public static Dictionary<byte, CustomDeathReason> AfterMeetingDeathPlayers = new();
-        public static Dictionary<CustomRoles, String> roleColors;
-        public static Dictionary<CustomColor, String> customColors;
+        public static Dictionary<CustomRoles, string> roleColors;
+        public static Dictionary<CustomColor, string> customColors;
         public static List<byte> ResetCamPlayerList;
         public static List<byte> winnerList;
         public static List<int> clientIdList;
@@ -355,7 +355,7 @@ namespace TownOfHostY
     public enum NameChange
     {
         None,
-        //Crew,
+        Crew,
         Color
     }
     public enum CustomColor

@@ -717,7 +717,7 @@ namespace TownOfHostY
                     sb.Append("\n");
                 }
             }
-            SendMessage(sb.ToString(), PlayerId, $"【{GetString("Settings")}】");
+            SendMessage(sb.ToString(), PlayerId, $"</color>【{GetString("Settings")}】");
         }
         public static void CopyCurrentSettings()
         {
@@ -760,7 +760,7 @@ namespace TownOfHostY
                 SendMessage(GetString("Message.HideGameSettings"), PlayerId);
                 return;
             }
-            var sb = new StringBuilder("【").Append(GetString("Roles")).Append("】");
+            var sb = new StringBuilder("</color>【").Append(GetString("Roles")).Append("】");
             if(Options.EnableGM.GetBool())
             {   //GM
                 sb.AppendFormat("\n<size=80%>{0} ：{1}</size>", $"<color={GetRoleColorCode(CustomRoles.GM)}>{GetRoleName(CustomRoles.GM)}</color>", Options.EnableGM.GetString());
@@ -883,12 +883,12 @@ namespace TownOfHostY
         {
             if (!AmongUsClient.Instance.AmHost) return;
             if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
-            Main.MessagesToSend.Add(($"<size=90%>{text}</size>", sendTo, title, false));
+            Main.MessagesToSend.Add(($"<align={"left"}><size=90%>{text}</size></align>", sendTo, title, false));
         }
         public static void SendMessageCustom(string text, byte sendTo = byte.MaxValue)
         {
             if (!AmongUsClient.Instance.AmHost) return;
-            Main.MessagesToSend.Add(($"<size=90%>{text}</size>", sendTo, "", true));
+            Main.MessagesToSend.Add(($"<align={"left"}><size=90%>{text}</size></align>", sendTo, "", true));
         }
         public static void ApplySuffix()
         {
@@ -897,12 +897,15 @@ namespace TownOfHostY
             if (Main.nickName != "") name = Main.nickName;
             if (AmongUsClient.Instance.IsGameStarted)
             {
-                if (Options.GetNameChangeModes() == NameChange.Color && Main.nickName == "")
+                if (Main.nickName == "")
                 {
-                    if(PlayerControl.LocalPlayer.Is(CustomRoles.Rainbow))
-                        name = GetString("RainbowColor");
-                    else
-                        name = Palette.GetColorName(Camouflage.PlayerSkins[PlayerControl.LocalPlayer.PlayerId].ColorId);
+                    if (Options.GetNameChangeModes() == NameChange.Color)
+                    {
+                        if (PlayerControl.LocalPlayer.Is(CustomRoles.Rainbow))
+                            name = GetString("RainbowColor");
+                        else
+                            name = Palette.GetColorName(Camouflage.PlayerSkins[PlayerControl.LocalPlayer.PlayerId].ColorId);
+                    }
                 }
             }
             else
@@ -1011,6 +1014,9 @@ namespace TownOfHostY
                 SelfMark.Append(seerRole?.GetMark(seer, isForMeeting: isForMeeting));
                 //seerに関わらず発動するMark
                 SelfMark.Append(CustomRoleManager.GetMarkOthers(seer, isForMeeting: isForMeeting));
+                //report
+                if (ReportDeadBodyPatch.DontReportMark[seer.PlayerId])
+                    SelfMark.Append(ColorString(Palette.Orange,"◀×"));
 
                 //ハートマークを付ける(自分に)
                 if (seer.Is(CustomRoles.Lovers)) SelfMark.Append(ColorString(GetRoleColor(CustomRoles.Lovers), "♥"));
@@ -1027,6 +1033,8 @@ namespace TownOfHostY
                 SelfSuffix.Append(seerRole?.GetSuffix(seer, isForMeeting: isForMeeting));
                 //seerに関わらず発動するSuffix
                 SelfSuffix.Append(CustomRoleManager.GetSuffixOthers(seer, isForMeeting: isForMeeting));
+                //TargetDeadArrow
+                SelfSuffix.Append(TargetDeadArrow.GetDeadBodiesArrow(seer, seer));
 
                 //RealNameを取得 なければ現在の名前をRealNamesに書き込む
                 string SeerRealName = seer.GetRealName(isForMeeting);
@@ -1067,6 +1075,7 @@ namespace TownOfHostY
                     || (IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())   //カモフラオプションがない時は通さない
                     || NoCache
                     || ForceLoop
+                    || Options.GetNameChangeModes() == NameChange.Crew
                     || (CustomRoles.Workaholic.IsEnable() && Workaholic.Seen)
                     || CustomRoles.Rainbow.IsEnable()
                     || (seer.Is(CustomRoles.FortuneTeller) && ((FortuneTeller)seer.GetRoleClass()).HasForecastResult())
@@ -1217,12 +1226,12 @@ namespace TownOfHostY
             };
             Process.Start(startInfo);
         }
-        public static string SummaryTexts(bool showName, byte id, bool disableColor = true)
+        public static string SummaryTexts(byte id)
         {
             var RolePos = TranslationController.Instance.currentLanguage.languageID == SupportedLangs.English ? 47 : 37;
-            string summary = showName ? $"{ColorString(Main.PlayerColors[id], Main.AllPlayerNames[id])}": $"{id}";
+            string summary = $"{ColorString(Main.PlayerColors[id], Main.AllPlayerNames[id])}";
             summary += $"<pos=22%>{GetProgressText(id)}</pos><pos=29%> {GetVitalText(id)}</pos><pos={RolePos}%> {GetTrueRoleName(id, false, true)}</pos>";
-            return disableColor ? summary.RemoveHtmlTags() : summary;
+            return summary;
         }
         public static string RemoveHtmlTags(this string str) => Regex.Replace(str, "<[^>]*?>", "");
         public static void FlashColor(Color color, float duration = 1f)

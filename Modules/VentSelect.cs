@@ -52,28 +52,28 @@ namespace TownOfHostY
                 if (i < NowSelectNumber[playerId])
                 {
                     i++;
-                    Logger.Info($"{ventedPlayer.name} {i} < {NowSelectNumber[playerId]}", "VentSelect");
+                    Logger.Info($"{Main.AllPlayerNames[playerId]} {i} < {NowSelectNumber[playerId]}", "VentSelect");
                     continue;
                 } //2人目以降、処理を飛ばす時
 
                 SelectTarget.Remove(playerId);
                 SelectTarget.Add(playerId, target.PlayerId);
 
-                Logger.Info($"{ventedPlayer.name} GuardPlayerSelectNow:{target.name}", "VentSelect");
+                Logger.Info($"{Main.AllPlayerNames[playerId]} GuardPlayerSelectNow:{target.name}", "VentSelect");
 
                 if (NowSelectNumber[playerId] + 2 >= Main.AllAlivePlayerControls.Count()) //もし最後のプレイヤーを設定した時、次が初めのプレイヤーになるようにセット
                 {
                     NowSelectNumber[playerId] = 0;
-                    Logger.Info($"{ventedPlayer.name} {NowSelectNumber[playerId] + 1} < {Main.AllAlivePlayerControls.Count()} ,{NowSelectNumber[playerId]}", "VentSelect");
+                    Logger.Info($"{Main.AllPlayerNames[playerId]} {NowSelectNumber[playerId] + 1} < {Main.AllAlivePlayerControls.Count()} ,{NowSelectNumber[playerId]}", "VentSelect");
                 }
                 else
                 {
                     NowSelectNumber[playerId]++;
-                    Logger.Info($"{ventedPlayer.name} {NowSelectNumber[playerId] + 1} < {Main.AllAlivePlayerControls.Count()} ,{NowSelectNumber[playerId]}", "VentSelect");
+                    Logger.Info($"{Main.AllPlayerNames[playerId]} {NowSelectNumber[playerId] + 1} < {Main.AllAlivePlayerControls.Count()} ,{NowSelectNumber[playerId]}", "VentSelect");
                 }
                 break;
             }
-            StandbyTimer.Add(ventedPlayer.PlayerId, 3f);
+            StandbyTimer.Add(playerId, 3f);
 
             return Utils.GetPlayerById(SelectTarget[playerId]);
         }
@@ -93,7 +93,7 @@ namespace TownOfHostY
             StandbyTimer[playerId] -= Time.fixedDeltaTime;
             if (StandbyTimer[playerId] <= 0)   //ガードプレイヤー確定、処理開始
             {
-                Logger.Info($"{player.name} DoVentSelect", "VentSelect");
+                Logger.Info($"{Main.AllPlayerNames[playerId]} DoVentSelect", "VentSelect");
                 SelectedAction[playerId]();
 
                 player.RpcGuardAndKill(); //設定完了のパリン

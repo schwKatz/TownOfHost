@@ -209,7 +209,7 @@ public sealed class GrudgeSheriff : RoleBase
         else
         {
             str.Append(GetString(isForHud ? "SelectPlayerTag" : "SelectPlayerTagMini"));
-            str.Append(KillWaitPlayerSelect.GetRealName());
+            str.Append(KillWaitPlayerSelect.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
         }
         return str.ToString();
     }

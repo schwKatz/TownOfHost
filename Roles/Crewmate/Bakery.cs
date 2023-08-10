@@ -50,7 +50,7 @@ public sealed class Bakery : RoleBase
 
     private static void SetupOptionItem()
     {
-        OptionChangeChances = FloatOptionItem.Create(RoleInfo, 10, OptionName.BakeryChangeChances, new(0, 20, 2), 10, false)
+        OptionChangeChances = IntegerOptionItem.Create(RoleInfo, 10, OptionName.BakeryChangeChances, new(0, 20, 2), 10, false)
             .SetValueFormat(OptionFormat.Percent);
     }
     public override void Add()
@@ -164,7 +164,7 @@ public sealed class Bakery : RoleBase
                     targetList.Add(p);
                 }
                 var TargetPlayer = targetList[rand.Next(targetList.Count)];
-                panMessage = string.Format(GetString("PanAlive12"), TargetPlayer.GetRealName());
+                panMessage = string.Format(GetString("PanAlive12"), TargetPlayer.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
             }
             else if (chance <= 100)
             {
@@ -176,7 +176,7 @@ public sealed class Bakery : RoleBase
                     targetList.Add(p);
                 }
                 var TargetPlayer = targetList[rand.Next(targetList.Count)];
-                panMessage = string.Format(GetString("PanAlive13"), TargetPlayer.GetRealName());
+                panMessage = string.Format(GetString("PanAlive13"), TargetPlayer.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
             }
 
             SendMessage(panMessage, title: BakeryTitle);
