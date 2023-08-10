@@ -678,7 +678,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "LighterTaskCompletedVision","Increased Vision","タスク完了時の視界","完成任务后的视野","做完任務的視野","Дальность обзора","Aumento de Visão"
 "LighterMaxVision","Max Vision","最大視界","完成任务后的视野","做完任務的視野","Дальность обзора","Aumento de Visão"
 "LighterTaskCompletedDisableLightOut","Ignore Fix Lights Effect","タスク完了時に停電を無効にする","完成任务的执灯人不受熄灯影响","完成任務的小燈人視野不受關燈影響","Имеет дальность Обзора Предателя","Ignorar Efeitos do Apagão"
-"LighterTriggerType","Ability activation condition","能力発動条件","","","",""
+"LighterTriggerType","Ability Activation Condition","能力発動条件","","","",""
 "LighterTaskTrigger","Tasks Until Boost Activated","効果を発動するタスク数","","","",""
 "SabotageMasterFixesDoors","Can Open Multiple Doors","1度に複数のﾄﾞｱを開けられる","修理大师打开多扇关闭的门","修理工可以一次性修理多扇門","Может открыть все двери","Pode Abrir Múltiplas Portas"
 "SabotageMasterFixesReactors","Can Fix Both Reactors","リアクターに対して能力を使える","修理大师可以一人修理核反应堆","修理工可以獨自修理兩邊的反應堆","Может починить саботаж Реактора","Pode Consertar Reatores"
