@@ -27,30 +27,39 @@ public sealed class MadSnitch : RoleBase
     {
         canVent = OptionCanVent.GetBool();
         canAlsoBeExposedToImpostor = OptionCanAlsoBeExposedToImpostor.GetBool();
+        TaskTrigger = OptionTaskTrigger.GetInt();
 
         CustomRoleManager.MarkOthers.Add(GetMarkOthers);
     }
 
     private static OptionItem OptionCanVent;
     private static OptionItem OptionCanAlsoBeExposedToImpostor;
+    /// <summary>能力発動タスク数</summary>
+    private static OptionItem OptionTaskTrigger;
     private static Options.OverrideTasksData Tasks;
     enum OptionName
     {
         MadSnitchCanAlsoBeExposedToImpostor,
+        MadSnitchTaskTrigger,
     }
 
     private static bool canVent;
     private static bool canAlsoBeExposedToImpostor;
+    private static int TaskTrigger;
 
     public static void SetupOptionItem()
     {
         OptionCanVent = BooleanOptionItem.Create(RoleInfo, 10, GeneralOption.CanVent, false, false);
         OptionCanAlsoBeExposedToImpostor = BooleanOptionItem.Create(RoleInfo, 11, OptionName.MadSnitchCanAlsoBeExposedToImpostor, false, false);
+        OptionTaskTrigger = IntegerOptionItem.Create(RoleInfo, 12, OptionName.MadSnitchTaskTrigger, new(1, 99, 1), 1, false);
         Tasks = Options.OverrideTasksData.Create(RoleInfo, 20);
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);
     }
 
-    public bool KnowsImpostor() => IsTaskFinished;
+    public bool KnowsImpostor()
+    {
+        return IsTaskFinished || MyTaskState.CompletedTasksCount >= TaskTrigger;
+    }
 
     public override bool OnCompleteTask()
     {
