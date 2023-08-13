@@ -40,6 +40,7 @@ namespace TownOfHostY
         SetEvilDiviner,
         SetLawyerTarget,
         SetRemoveLawyerTarget,
+        MareSync,
     }
     public enum Sounds
     {
