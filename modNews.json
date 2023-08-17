@@ -16,8 +16,46 @@
       "Body": "Thank you for playing TownOfHost_Y!\n\n 【対応】AU本体v2022.12.8・本家TOHv4.0.2\n 【新役職】グリーディア・アンビショナー・ブラインダー・純愛者\n 【新属性】ウォッチング・ライティング・サングラス・シーイング\n 【(予告)新要素】新ゲームモード『猫取合戦』\n ここはそれぞれ孤独な猫たちが集う場。いつも自身のタスクをこなしながら穏やかな日々を過ごしていた。或る日、この地の神がここの孤独な猫たちを見て、裏切り者が生まれた時に備えていくつか集団を作るべきと判断し、数名にリーダーを任命した。\n\n【注意】プレイの際は必ずTOH_Yであることを通知して下さい。",
       "Date": "2023-1-12T00:00:00Z"
     },
-
-
+    {
+      "Number": "100004",
+      "Title": "Town Of Host_Y v402.4",
+      "Subtitle": "★★★★★v402.4アップデート★★★★★",
+      "Short": "TOH_Y v402.4",
+      "Body": "Thank you for playing TownOfHost_Y!\n\n 【新要素】新ゲームモード『猫取合戦』\n ここはそれぞれ孤独な猫たちが集う場。いつも自身のタスクをこなしながら穏やかな日々を過ごしていた。或る日、この地の神がここの孤独な猫たちを見て、裏切り者が生まれた時に備えていくつか集団を作るべきと判断し、数名にリーダーを任命した。\n\n【注意】プレイの際は必ずTOH_Yであることを通知して下さい。本家TOHではないことを十分理解した上で(参加者にも理解させた上で)ご利用ください。特に公開部屋で遊ぶときは注意してください。自分の名前の上にTownOfHost_Yと表記されたり、参加者に自動的にお知らせが流れたりしますが、「TOHだよ！」と偽ったり「TOHの新バージョン」のように本家と区別がつかない言い方をするのはお辞めください。\n\nまた、本家TOHとTOH_Yの同時使用はできません。必ず1つのMODだけを使用するようにしてください。",
+      "Date": "2023-1-15T00:00:00Z"
+    },
+    {
+      "Number": "100005",
+      "Title": "Town Of Host_Y v402.5",
+      "Subtitle": "★★★★★v402.5アップデート★★★★★",
+      "Short": "TOH_Y v402.5",
+      "Body": "Thank you for playing TownOfHost_Y!\n\n 【新役職】弁護士(追跡者)・[属性]オートプシー\n 【新機能】シンクロカラーモード\n 　　　　-----クローン・50-50・三つ巴・ツイン\n スキンは勿論のこと、ペット、色、ネームプレート、プレイヤー、レベルまで何から何まで一緒なため、自分が会議の何番目にいるのかすらわからない時もある圧倒的お遊び系モード。\n\n【注意】プレイの際は必ずTOH_Yであることを通知して下さい。\n・野良でのwelcomeメッセージやYouTube、Twitter等を見ているとTOH_Yを使用しているにも関わらず、TownOfHost(無印)になっているのをよく見かけます。本家TOHと勘違いされるパターンも実際起こりますので充分お気を付けください。\n・特に公開ルームで部屋を立てる際も、何もわからずに参加してくる方にでも本家TOHでないことが伝わるような通知を心がけてください。\n何卒宜しくお願い致します。 ",
+      "Date": "2023-1-26T00:00:00Z"
+    },
+    {
+      "Number": "100006",
+      "Title": "Town Of Host_Y v402.6",
+      "Subtitle": "★★★★★v402.6アップデート★★★★★",
+      "Short": "TOH_Y v402.6",
+      "Body": "Thank you for playing TownOfHost_Y!\n\n 【新役職】クライアント\n 【新属性】VIP・クラムシー・リベンジャー\n 【新機能】既存役職の新オプションを12種追加\n 【新機能】「自身の役職説明自動表示」を含む新機能を5種追加\n 【期間限定役職】チョコレート屋～2/15\n\n【注意】プレイの際は必ずTOH_Yであることを通知して下さい。\n・野良でのwelcomeメッセージやYouTube、Twitter等を見ているとTOH_Yを使用しているにも関わらず、TownOfHost(無印)になっているのをよく見かけます。本家TOHと勘違いされるパターンも実際起こりますので充分お気を付けください。\n・特に公開ルームで部屋を立てる際も、何もわからずに参加してくる方にでも本家TOHでないことが伝わるような通知を心がけてください。\n何卒宜しくお願い致します。 ",
+      "Date": "2023-02-09T00:00:00Z"
+    },
+    {
+      "Number": "100007",
+      "Title": "Town Of Host_Y v411.7",
+      "Subtitle": "★★★★★v411.7アップデート★★★★★",
+      "Short": "TOH_Y v411.7",
+      "Body": "Thank you for playing TownOfHost_Y!\n\n<b>新MODゲームモード【ワンナイト】実装！</b>\n\n　一回の議論だけで人狼を探し出す「ワンナイト人狼」をAmong Usでアレンジして実装！一回の行動ターンと一回の会議で人狼を見つけて追放しましょう。\n　行動ターンの要素と、役職を基とした議論の要素と。どの視点で詰めていくかはお任せします。。。\n\n　詳しい説明は[/h n]コマンド、Discord、GitHub何れかから！\n\n<b>-【ワンナイトモードの役職】</b>\n　・人狼/大狼\n　・狂人/狂信者\n　・村人/占い師/怪盗/村長/狩人/パン屋/罠師\n　・吊人\n\n----------------------------------------------------------------\n　スタンダードモードもいくつかアップデート。\n\n<b>-【新役職】スカベンジャー</b>\n　スカベンジャーにキルされた死体は、通報することが出来なくなる。(通報ボタンを押しても反応しない)\n\n<b>-【新属性】マネジメント</b>\n　タスクマネージャーの属性版。全員の完了タスク合計数がわかる。(デフォルトは会議中のみ)\n\n<b>-【新機能】にじいろスター</b>\n　ネームプレートが虹色になるようになりました。また設定で、タスクターン中、他視点から役職名が表示されない設定を追加しました。\n\n<b>-【期間限定役職復刻】チョコレート屋</b> ～3/15\n　ホワイトデーでお返しを！チョコレート屋が帰ってきます。コメントを忘れずに確認してね！\n\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
+      "Date": "2023-03-09T00:00:00Z"
+    },
+    {
+      "Number": "100008",
+      "Title": "Town Of Host_Y v412.8",
+      "Subtitle": "★★★★★v412.8アップデート★★★★★",
+      "Short": "TOH_Y v412.8",
+      "Body": "Thank you for playing TownOfHost_Y!\n\n<b>エイプリルフールだ！Yで遊ばない？</b>\n\n　ポテンシャリストという意味の分からない役職が登場！\n　タスクを完了させるとランダムなクルー役職に変化、能力が開花しちゃいます。残念ながら期間限定なので今後また遊べるかはわかりません。。。\n----------------------------------------------------------------\n　その他アップデート内容↓↓↓\n\n<b>-【新役職】イビルディバイナー</b>\n　いわゆる占い師の能力が使えるインポスター。キルボタンを1回だけ押すと占うことができるけど、キルクールは消費してしまうので占うかキルか、迷いながら行動しよう。\n\n<b>-【新役職】テレパシスターズ</b>\n　イビルトラッカーの複数人版を、Ｙでアレンジしてみました。以心伝心でキルしていこう。新要素として、シスターズ同士のベント回数が共有されていたりします。\n\n<b>-【新役職】メディック</b>\n　ベントでプレイヤーを選択するという新たな機能が登場。このメディックは、選んだプレイヤーを一度キルガードします。\n\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
+      "Date": "2023-03-31T00:00:00Z"
+    },
     {
       "Number": "100009",
       "Title": "Town Of Host_Y v412.9",
@@ -25,6 +63,14 @@
       "Short": "TOH_Y v412.9",
       "Body": "Thank you for playing TownOfHost_Y!\n\n<b>なんと、なんと、新属性大量発生！</b>\n\n　マッド系役職でよく使われている(らしい)、属性が一斉に新登場！\n　ランダムで属性を付与する【ADD-ON Setting】以外にも、<b>ラストインポスター</b>や、今回の新登場属性<b>コンプリートクルー</b>にも属性を直接付与することができるのでぜひお試しあれ。\n----------------------------------------------------------------\n<b>-【新役職】シェイプキラー・グラージシェリフ・キャンドルライター・占い師・霊媒師・トトカルチョ</b>\n　クライアントの制作者、くろにゃんこ氏と再びコラボレーション！シェイプキラーと占い師はくろにゃんこ氏に開発していただきました！\n\n<b>-【新属性】インフォプアー・タイブレーカー・ノンレポート・センディング・ロイヤルティ・プラスボート・ガーディング・ベイティング・リフュージング・コンプリートクルー</b>\n　より能力の幅を広くするため、新属性の開発を行いました。マッドメイトをさらに強くするもよし、ランダムにデバフ属性のみを付与させて遊ぶもよし、色々な遊び方を試してみてください。\n\n<b>-【新機能】役職設定モード</b>（スタンダードモードのみ）\n　0%100%のみの設定方法から、オンオフの設定に切り替えました。本家TOH対応に向けての機能です。また、属性のみしか設定できない属性オンリーモードも作ってみました。議論がなかなか面白くなりそうな予感がします。\n\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
       "Date": "2023-05-5T00:00:00Z"
+    },
+    {
+      "Number": "100010",
+      "Title": "Town Of Host_YS v501.10.2",
+      "Subtitle": "★★★★★v501.10.2アップデート★★★★★",
+      "Short": "TOH_YS v501.10.2",
+      "Body": "Thank you for playing TownOfHost_Y!\n\n<b>対応までしばらくは制限版で、、、</b>\n\n　Among Usバニラ側の内部的仕様変更により、ホスト系MOD全てでキル関連に関する問題が発生しています。\n　それに伴い、以下役職が正常に使用できません。(キルがそのまま通る・部屋からBANされる等)\n----------------------------------------------------------------\n<b>-【インポスター】</b>パペッティア・ウィッチ・ヴァンパイア・ウォーロック・イビルディバイナー・呪狼</b>\n<b>-【マッド】</b>マッドガーディアン・マッドシェリフ</b>\n<b>-【クルー】</b>シェリフ/バカシェリフ・グラージシェリフ</b>\n<b>-【第三】</b>アーソニスト・シュレディンガーの猫・純愛者・トトカルチョ・ラブカッター・ダークハイド</b>\n<b>-【属性】</b>ガーディング</b>\n<b>-【一部機能不可】</b>アンチコンプリートガード・追跡者ガード</b>\n\n　また、TOH_YS未実装は上記と別に以下の通りです。\n----------------------------------------------------------------\n<b>-【インポスター】</b>シェイプキラー\n<b>-【クルー】</b>メディック・霊媒師\n<b>-【第三】</b>クライアント・弁護士\n<b>-【属性】</b>Yで追加したもの全て\n<b>-【機能未実装】</b>マッドメイト/ラストインポスターの属性直接付与設定\n\n　対応までご不便をおかけしますが、今後ともTOH_Yをよろしくお願いいたします。\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
+      "Date": "2023-06-22T00:00:00Z"
     },
     {
       "Number": "100011",
@@ -61,7 +107,7 @@
     {
       "Number": "100015",
       "Title": "『Yumeno-Stream-Ship』開催！",
-      "Subtitle": "【総勢30人】ゆめの主催TOH_Y配信者Among Us",
+      "Subtitle": "【総勢31人】ゆめの主催TOH_Y配信者Among Us",
       "Short": "TOH_Y配信者が勢揃い！",
       "Body": "<b>各参加者視点からぜひご視聴ください</b>\n　C船 最大12人、V船 最大15人の試合をゆめのがメイキング！夢のようなTOH_Y配信者だらけのAmong Usを8/5(土)、8/27(日)に開催します！\n　新役職「はぐれ狼」を初めとした新役職入りを予定しています(!?)\n\n　メンバーは下の青文字からチェック！(Twitter/X)\n　Ｃ船：8/5(土)19:00～23:00　<link=\"https://twitter.com/yumeno_AmongUs/status/1685819860834816002?s=20\">メンバー詳細</link>\n\n　Ｖ船：8/27(日)20:30～25:00　<link=\"https://twitter.com/yumeno_AmongUs/status/1685821718718468096?s=20\">メンバー詳細</link>\n\n----------------------------------------------------------------\n\n<b>Ｃ船メンバーのチャンネルはここから飛べるよ</b>\n　・Yumeno　<link=\"https://youtube.com/@Yumenopai\">Youtube</link>\n\n　・くろにゃんこch　<link=\"https://youtube.com/@SwKatz\">Youtube</link>\n\n　・カッツェ　<link=\"https://youtube.com/@katzech\">Youtube</link>\n\n　・虎タイガー　<link=\"https://youtube.com/@user-xm2vp4lo7h\">Youtube</link>\n\n　・あすちゃんねる　<link=\"https://youtube.com/@ASkunAS\">Youtube</link>\n\n　・ペルさん【ゆっくり実況】　<link=\"https://youtube.com/@aoon32_perusan\">Youtube</link>\n\n　・もわくん!　<link=\"https://youtube.com/@mowakundayo\">Youtube</link>\n\n　・クェルボ公爵　<link=\"https://youtube.com/@Duke_Cuervo\">Youtube</link>\n\n　・芹野ナツキ　<link=\"https://youtube.com/@NatsukiSerino\">Youtube</link>\n\n　・ラグドールP　<link=\"https://youtube.com/@ragdollPch\">Youtube</link>\n\n　・けーわい　<link=\"https://youtube.com/@MTGC_KY\">Youtube</link>\n\n　・Tミノ　<link=\"https://twitter.com/T_TETRIMINO\">Twitter/X</link>\n\n　・天狗のマクロバースト　<link=\"https://twitter.com/9s9NqnxkTmnzkKj\">Twitter/X</link>\n\n　・めーぷる　<link=\"https://twitter.com/meiple_meiple\">Twitter/X</link>\n\n　・りぃりぃ　<link=\"https://twitter.com/rixirixi0202\">Twitter/X</link>\n\n　・死神コナン　<link=\"https://twitter.com/kaMmmmda\">Twitter/X</link>\n\n\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
       "Date": "2023-08-3T00:00:01Z"
@@ -81,7 +127,15 @@
       "Short": "TOH_Y v503.16",
       "Body": "Thank you for playing TownOfHost_Y!\n\n<b>死体位置を察知！新役職『ディテクター』</b>\n　タスクを一定量終わらせると能力が発動できるタイプの役職になります。死体が生まれたらキルフラッシュが見えて、さらに死体場所が矢印で表示されます。嗅覚がいいのかな\n　ワンナイトモードにあるやつですね。ゲームモードもそろそろ復活？\n\n<b>はぐれ狼の設定方法を変更しました</b>\n　変に１減らして入れてってお願いしていたはぐれ狼の設定方法が、他のインポスター役職と同じようにいつも通り設定できるようになりました。また、色々な不具合もくろにゃんこ氏が修正してくれました。いつも助っ人ありがとう。\n\n<b>その他色々新機能も</b>\n　・スピードブースター、メアー、エクスプレスの速度設定を拡張。\n　・名前変更モードに「クルー」を追加。タスクターン中のみ全員名前が「クルー」に変化する。\n　・スカベンジャー/ノンレポートのできない死体に向けてレポートボタンを押した時、名前に5秒間レポート不可マーク「◀×」が表示されるように。\n　・純愛者に「一目惚れしないといけないターン数」を追加。\n　・システムメッセージが必ず左詰めで表示されるように変更。\n\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
       "Date": "2023-08-10T00:00:00Z"
-    }
+    },
+    {
+      "Number": "100018",
+      "Title": "『Yumeno-Stream-Ship』Ｖ船！",
+      "Subtitle": "【総勢31人】ゆめの主催TOH_Y配信者Among Us",
+      "Short": "TOH_Y配信者が勢揃い！",
+      "Body": "<b>各参加者視点からぜひご視聴ください</b>\n　誘える人を誘ったら20人になりました。V船 最大15人の試合をゆめのがメイキング！夢のようなTOH_Y配信者だらけのAmong Us、YSSのＶ船を8/27(日)に開催します！\n　新役職「ディテクター」を初めとして、猫取合戦がいよいよ復活？\n\n----------------------------------------------------------------\n\n<b>Ｖ船メンバーのチャンネルはここから飛べるよ</b>\n　・Yumeno　<link=\"https://youtube.com/@Yumenopai\">Youtube</link>\n\n　・くろにゃんこch　<link=\"https://youtube.com/@SwKatz\">Youtube</link>\n\n　・myurdo　<link=\"https://youtube.com/@kkizumyurdo\">Youtube</link>\n\n　・スラーズ　<link=\"https://youtube.com/@ch-nx8lk\">Youtube</link>\n\n　・さば納豆　<link=\"https://youtube.com/@ZABAKAN_yukkuri\">Youtube</link>\n\n　・ゆでたまご　<link=\"https://youtube.com/@user-ex1pj3fi8g\">Youtube</link>\n\n　・さくま坊主　<link=\"https://youtube.com/@Games-qo1mp\">Youtube</link>\n\n　・カッツェ　<link=\"https://youtube.com/@katzech\">Youtube</link>\n\n　・潮♂(Shio)　<link=\"https://youtube.com/@-Shio\">Youtube</link>\n\n　・ウルティマ(どうでしょうゲームズ)　<link=\"https://youtube.com/@user-tr5kz8dc9x\">Youtube</link>\n\n　・ふんばり。　<link=\"https://youtube.com/@FunBari.\">Youtube</link>\n\n　・ゔぃさん　<link=\"https://youtube.com/@vsannnn\">Youtube</link>\n\n　・チビサキ　<link=\"https://youtube.com/@chibisaki154\">Youtube</link>\n\n　・マー坊ch　<link=\"https://youtube.com/@maboch\">Youtube</link>\n\n　・まめぽすたぁ　<link=\"https://youtube.com/@mame_in_poster\">Youtube</link>\n\n　・りくみはる　<link=\"https://youtube.com/@rikumihal\">Youtube</link>\n\n　・芹野ナツキ　<link=\"https://youtube.com/@NatsukiSerino\">Youtube</link>\n\n　・皇 紫鶴音(すめらぎしずの)　<link=\"https://youtube.com/@user-st3pt8nv7d\">Youtube</link>\n\n　・ラグドールP　<link=\"https://youtube.com/@ragdollPch\">Youtube</link>\n\n　・黒猫零P　<link=\"https://youtube.com/@user-bw6fu8pb8c\">Youtube</link>\n\n\nなにか気になったことやバグ報告はTOH_YのDiscordまでご連絡ください。\n\nTown Of Host_Y：Yumeno",
+      "Date": "2023-08-17T00:00:01Z"
+    },
   ]
 }
 

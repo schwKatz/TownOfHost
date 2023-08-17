@@ -276,7 +276,7 @@ namespace TownOfHostY
                         int i = 0;
                         foreach (var subRole in subRolesList)
                         {
-                            if (subRole <= CustomRoles.CompreteCrew) continue;
+                            if (subRole is CustomRoles.LastImpostor or CustomRoles.CompreteCrew or CustomRoles.Archenemy) continue;
 
                             roleText.Append(ColorString(GetRoleColor(subRole), GetRoleName(subRole)));
                             i++;
@@ -320,7 +320,7 @@ namespace TownOfHostY
             {
                 foreach (var subRole in subRolesList)
                 {
-                    if (subRole <= CustomRoles.CompreteCrew) continue;
+                    if (subRole is CustomRoles.LastImpostor or CustomRoles.CompreteCrew or CustomRoles.Archenemy) continue;
                     switch (subRole)
                     {
                         case CustomRoles.AddWatch: sb.Append(AddWatch.SubRoleMark); break;
@@ -883,7 +883,7 @@ namespace TownOfHostY
         {
             if (!AmongUsClient.Instance.AmHost) return;
             if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
-            Main.MessagesToSend.Add(($"<align={"left"}><size=90%>{text}</size></align>", sendTo, title, false));
+            Main.MessagesToSend.Add(($"<align={"left"}><size=90%>{text}</size></align>", sendTo, $"<align={"left"}>{title}</align>", false));
         }
         public static void SendMessageCustom(string text, byte sendTo = byte.MaxValue)
         {
