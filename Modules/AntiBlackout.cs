@@ -6,6 +6,7 @@ using Hazel;
 
 using TownOfHostY.Attributes;
 using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY
@@ -35,8 +36,14 @@ namespace TownOfHostY
                 int numCrewmates = 0;
                 foreach (var pc in Main.AllPlayerControls)
                 {
-                    if (pc.Data.Role.IsImpostor) numImpostors++;
-                    else numCrewmates++;
+                    if (pc.Is(CustomRoleTypes.Impostor))
+                    {
+                        numImpostors++;
+                    }
+                    else
+                    {
+                        numCrewmates++;
+                    }
                 }
                 return numCrewmates - numImpostors;
             }
