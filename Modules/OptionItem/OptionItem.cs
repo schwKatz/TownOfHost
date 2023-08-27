@@ -105,13 +105,13 @@ namespace TownOfHostY
                 }
             }
 
-            if (!_fastOptions.TryAdd(id, this))
+            if (_fastOptions.TryAdd(id, this))
             {
-                Logger.Error($"ID:{id}が重複しています", "OptionItem");
+                _allOptions.Add(this);
             }
             else
             {
-                _allOptions.Add(this);
+                Logger.Error($"ID:{id}が重複しています", "OptionItem");
             }
         }
 
