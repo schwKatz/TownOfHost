@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using AmongUs.GameOptions;
 using Hazel;
 
 using TownOfHostY.Attributes;
 using TownOfHostY.Modules;
-using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY
