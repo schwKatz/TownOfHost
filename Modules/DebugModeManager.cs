@@ -29,7 +29,7 @@ namespace TownOfHostY
                 .SetHidden(!AmDebugger)
                 .RegisterUpdateValueEvent((obj, args) =>
                 {
-                    if (GameStates.IsLobby && Main.NormalOptions.NumImpostors == 0 && AmongUsClient.Instance.AmHost && !EnableDebugMode.GetBool())
+                    if (DestroyableSingleton<GameStartManager>.InstanceExists && Main.NormalOptions.NumImpostors == 0 && AmongUsClient.Instance.AmHost && !EnableDebugMode.GetBool())
                     {
                         Main.NormalOptions.NumImpostors = 1;
                     }
