@@ -12,6 +12,15 @@ using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.InteropTypes;
 using UnityEngine;
 
+using TownOfHost.Modules;
+using TownOfHost.Roles;
+using TownOfHost.Roles.Core;
+using TownOfHost.Roles.Core.Interfaces;
+using TownOfHost.Roles.Impostor;
+using TownOfHost.Roles.AddOns.Common;
+using TownOfHost.Roles.AddOns.Impostor;
+using TownOfHost.Roles.AddOns.Crewmate;
+using static TownOfHost.Translator;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
@@ -730,6 +739,14 @@ namespace TownOfHostY
                 //}
                 //else
                 {
+                    sb.AppendFormat("<size={0}>", ActiveSettingsSize);
+                    sb.Append("<size=100%>").Append(GetString("Settings")).Append('\n').Append("</size>");
+                    sb.AppendFormat("\n【{0}: {1}】\n", RoleAssignManager.OptionAssignMode.GetName(true), RoleAssignManager.OptionAssignMode.GetString());
+                    if (RoleAssignManager.OptionAssignMode.GetBool())
+                    {
+                        ShowChildrenSettings(RoleAssignManager.OptionAssignMode, ref sb);
+                    }
+
                     foreach (var role in Options.CustomRoleCounts.Keys)
                     {
                         if (!role.IsEnable() || role is CustomRoles.HASFox or CustomRoles.HASTroll
