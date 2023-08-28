@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Translator;
 
@@ -27,6 +28,7 @@ namespace TownOfHostY
             };
             //ゲームモードの表示
             sb.Append($"{Options.GameMode.GetName()}: {Options.GameMode.GetString()}\n\n");
+            sb.AppendFormat("{0}: {1}\n\n", RoleAssignManager.OptionAssignMode.GetName(), RoleAssignManager.OptionAssignMode.GetString());
             if (Options.HideGameSettings.GetBool() && !AmongUsClient.Instance.AmHost)
             {
                 sb.Append($"<color=#ff0000>{GetString("Message.HideGameSettings")}</color>");
@@ -59,11 +61,11 @@ namespace TownOfHostY
                             // 陣営ごとのマーク
                             // 陣営ごとのマーク
                             if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
-                                sb.Append("\n<size=85%><color=#ee82ee>○</color></size>");
-                            else if (role.IsImpostor()) sb.Append("\n<size=85%><color=#ff1919>Ⓘ</color></size>");
-                            else if (role.IsMadmate()) sb.Append("\n<size=85%><color=#ff4500>Ⓜ</color></size>");
-                            else if (role.IsCrewmate()) sb.Append("\n<size=85%><color=#8cffff>Ⓒ</color></size>");
-                            else if (role.IsNeutral()) sb.Append("\n<size=85%><color=#ffa500>Ⓝ</color></size>");
+                                sb.Append("<size=85%><color=#ee82ee>○</color></size>");
+                            else if (role.IsImpostor()) sb.Append("<size=85%><color=#ff1919>Ⓘ</color></size>");
+                            else if (role.IsMadmate()) sb.Append("<size=85%><color=#ff4500>Ⓜ</color></size>");
+                            else if (role.IsCrewmate()) sb.Append("<size=85%><color=#8cffff>Ⓒ</color></size>");
+                            else if (role.IsNeutral()) sb.Append("<size=85%><color=#ffa500>Ⓝ</color></size>");
                             else sb.Append('　');
 
                             sb.Append($"{Utils.ColorString(Utils.GetRoleColor(role), Utils.GetRoleName(role))}：{kvp.Value.GetString()}×{role.GetCount()}");
@@ -75,6 +77,11 @@ namespace TownOfHostY
                 }
                 //有効な役職と詳細設定一覧
                 pages.Add("");
+                if (RoleAssignManager.OptionAssignMode.GetBool())
+                {
+                    ShowChildren(RoleAssignManager.OptionAssignMode, ref sb, Color.white);
+                    sb.Append('\n');
+                }
                 nameAndValue(Options.EnableGM);
                 if(!Options.IsCCMode)
                     foreach (var kvp in Options.CustomRoleSpawnChances)
