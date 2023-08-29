@@ -24,28 +24,29 @@ public sealed class NormalShapeshifter : RoleBase, IImpostor
     )
     {
         shapeshiftDuration = OptionShapeshiftDuration.GetFloat();
-        shapeshifterLeaveSkin = OptionShapeshifterLeaveSkin.GetBool();
+        //shapeshifterLeaveSkin = OptionShapeshifterLeaveSkin.GetBool();
     }
     private static OptionItem OptionShapeshiftDuration;
-    private static OptionItem OptionShapeshifterLeaveSkin;
+    //private static OptionItem OptionShapeshifterLeaveSkin;
     enum OptionName
     {
         ShapeshiftDuration,
-        ShapeshifterLeaveSkin,
+        //ShapeshifterLeaveSkin,
     }
     private static float shapeshiftDuration;
-    private static bool shapeshifterLeaveSkin;
+    //private static bool shapeshifterLeaveSkin;
 
     public static void SetupOptionItem()
     {
         OptionShapeshiftDuration = FloatOptionItem.Create(RoleInfo, 3, OptionName.ShapeshiftDuration, new(0f, 180f, 5f), 15f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        OptionShapeshifterLeaveSkin = BooleanOptionItem.Create(RoleInfo, 4, OptionName.ShapeshifterLeaveSkin, false, false);
+        //OptionShapeshifterLeaveSkin = BooleanOptionItem.Create(RoleInfo, 4, OptionName.ShapeshifterLeaveSkin, false, false);
     }
 
     public override void ApplyGameOptions(IGameOptions opt)
     {
         AURoleOptions.ShapeshifterDuration = shapeshiftDuration;
-        AURoleOptions.ShapeshifterLeaveSkin = shapeshifterLeaveSkin;
+        AURoleOptions.ShapeshifterLeaveSkin = false;
+        //AURoleOptions.ShapeshifterLeaveSkin = shapeshifterLeaveSkin;
     }
 }

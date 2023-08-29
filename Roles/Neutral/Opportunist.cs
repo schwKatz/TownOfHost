@@ -108,6 +108,6 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
     public override string GetProgressText(bool comms = false)
     {
         if (!CanKill) return string.Empty;
-        return Utils.ColorString(CanUseKillButton() ? RoleInfo.RoleColor : Color.gray, $"({ShotLimit})");
+        return Utils.ColorString(CanUseKillButton() ? RoleInfo.RoleColor : Color.gray, $"〈{ShotLimit}〉");
     }
 }

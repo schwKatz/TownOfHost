@@ -54,6 +54,11 @@ namespace TownOfHostY
                 CustomRoles.Impostor or
                 CustomRoles.Shapeshifter;
         }
+
+        public static bool IsPairRole(this CustomRoles role)
+        {
+            return role is CustomRoles.Lovers or CustomRoles.Sympathizer;
+        }
         public static bool IsCannotPublicRole(this CustomRoles role)
         {
             return

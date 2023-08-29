@@ -168,7 +168,7 @@ public sealed class SillySheriff : RoleBase, IKiller
         }
         killer.ResetKillCooldown();
     }
-    public override string GetProgressText(bool comms = false) => Utils.ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"({ShotLimit})");
+    public override string GetProgressText(bool comms = false) => Utils.ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"〈{ShotLimit}〉");
     public static bool CanBeKilledBy(PlayerControl player)
     {
         var cRole = player.GetCustomRole();

@@ -55,10 +55,20 @@ namespace TownOfHostY
                     foreach (var kvp in Options.CustomRoleSpawnChances)
                         if (!kvp.Value.IsHiddenOn(Options.CurrentGameMode) && kvp.Value.GetBool()) //スタンダードか全てのゲームモードで表示する役職
                         {
-                            if (kvp.Key.IsAddOn() || kvp.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
-                                sb.Append($"○{Utils.ColorString(Utils.GetRoleColor(kvp.Key), Utils.GetRoleName(kvp.Key))}：{kvp.Value.GetString()}×{kvp.Key.GetCount()}\n");
-                            else
-                                sb.Append($"　{Utils.ColorString(Utils.GetRoleColor(kvp.Key), Utils.GetRoleName(kvp.Key))}：{kvp.Value.GetString()}×{kvp.Key.GetCount()}\n");
+                            var role = kvp.Key;
+                            // 陣営ごとのマーク
+                            // 陣営ごとのマーク
+                            if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
+                                sb.Append("\n<size=85%><color=#ee82ee>○</color></size>");
+                            else if (role.IsImpostor()) sb.Append("\n<size=85%><color=#ff1919>Ⓘ</color></size>");
+                            else if (role.IsMadmate()) sb.Append("\n<size=85%><color=#ff4500>Ⓜ</color></size>");
+                            else if (role.IsCrewmate()) sb.Append("\n<size=85%><color=#8cffff>Ⓒ</color></size>");
+                            else if (role.IsNeutral()) sb.Append("\n<size=85%><color=#ffa500>Ⓝ</color></size>");
+                            else sb.Append('　');
+
+                            sb.Append($"{Utils.ColorString(Utils.GetRoleColor(role), Utils.GetRoleName(role))}：{kvp.Value.GetString()}×{role.GetCount()}");
+                            if (role.IsPairRole()) sb.Append(GetString("Pair"));
+                            sb.Append('\n');
                         }
                     pages.Add(sb.ToString() + "\n\n");
                     sb.Clear();
@@ -71,7 +81,9 @@ namespace TownOfHostY
                     {
                         if (!kvp.Key.IsEnable() || kvp.Value.IsHiddenOn(Options.CurrentGameMode)) continue;
                         sb.Append('\n');
-                        sb.Append($"{Utils.ColorString(Utils.GetRoleColor(kvp.Key), Utils.GetRoleName(kvp.Key))}: {kvp.Value.GetString()}×{kvp.Key.GetCount()}\n");
+                        sb.Append($"{Utils.ColorString(Utils.GetRoleColor(kvp.Key), Utils.GetRoleName(kvp.Key))}: {kvp.Value.GetString()}×{kvp.Key.GetCount()}");
+                        if (kvp.Key.IsPairRole()) sb.Append(GetString("Pair"));
+                        sb.Append('\n');
                         ShowChildren(kvp.Value, ref sb, Utils.GetRoleColor(kvp.Key).ShadeColor(-0.5f), 1);
                         string rule = Utils.ColorString(Palette.ImpostorRed.ShadeColor(-0.5f), "┣ ");
                         string ruleFooter = Utils.ColorString(Palette.ImpostorRed.ShadeColor(-0.5f), "┗ ");
@@ -93,12 +105,16 @@ namespace TownOfHostY
                         }
                     }
 
-                foreach (var opt in OptionItem.AllOptions.Where(x => x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode) && x.Parent == null && !x.IsText))
+                foreach (var opt in OptionItem.AllOptions.Where(x => x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode) && x.Parent == null))
                 {
-                    if (opt.IsHeader) sb.Append('\n');
-                    sb.Append($"{opt.GetName()}: {opt.GetString()}\n");
-                    if (opt.GetBool())
-                        ShowChildren(opt, ref sb, Color.white, 1);
+                    if (opt.IsText) sb.Append('\n');
+                    else
+                    {
+                        if (opt.IsHeader) sb.Append('\n');
+                        sb.Append($"{opt.GetName()}: {opt.GetString()}\n");
+                        if (opt.GetBool())
+                            ShowChildren(opt, ref sb, Color.white, 1);
+                    }
                 }
                 //Onの時に子要素まで表示するメソッド
                 void nameAndValue(OptionItem o) => sb.Append($"{o.GetName()}: {o.GetString()}\n");

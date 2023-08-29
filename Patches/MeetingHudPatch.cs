@@ -9,6 +9,7 @@ using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
 using static TownOfHostY.Translator;
 using TownOfHostY.Roles.AddOns.Common;
+using System.Linq;
 
 namespace TownOfHostY;
 
@@ -43,6 +44,8 @@ public static class MeetingHudPatch
             GameStates.AlreadyDied |= !Utils.IsAllAlive;
             Main.AllPlayerControls.Do(x => ReportDeadBodyPatch.WaitReport[x.PlayerId].Clear());
             Sending.OnStartMeeting();
+            foreach (var tm in Main.AllAlivePlayerControls.Where(p=>p.Is(CustomRoles.TaskManager) || p.Is(CustomRoles.Management)))
+                Utils.NotifyRoles(true, tm);
             TargetDeadArrow.OnStartMeeting();
             MeetingStates.MeetingCalled = true;
         }
@@ -107,7 +110,7 @@ public static class MeetingHudPatch
             }
             if (Options.IsCCMode)
             {
-                GameModeUtils.CCMeetingInfomation();
+                CatchCat.Infomation.ShowMeeting();
             }
 
             if (MeetingStates.FirstMeeting) TemplateManager.SendTemplate("OnFirstMeeting", noErr: true);

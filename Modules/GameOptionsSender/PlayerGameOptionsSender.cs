@@ -98,7 +98,7 @@ namespace TownOfHostY.Modules
             }
             if (role.IsCCCatRoles())
             {
-                GameModeUtils.ApplyGameOptions(player, opt);
+                CatchCat.CatPlayer.ApplyGameOptions(player, opt);
             }
 
             var roleClass = player.GetRoleClass();

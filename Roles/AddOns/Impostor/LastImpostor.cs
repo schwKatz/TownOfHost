@@ -67,7 +67,7 @@ namespace TownOfHostY.Roles.AddOns.Impostor
                             if (AddOnRoleOptions.TryGetValue((CustomRoles.LastImpostor, Addon), out var option) && option.GetBool())
                             {
                                 pc.RpcSetCustomRole(Addon);
-                                CustomRoleManager.subRoleAdd(pc.PlayerId, Addon);
+                                CustomRoleManager.SubRoleAdd(pc.PlayerId, Addon);
                             }
                         }
                     }

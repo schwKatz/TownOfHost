@@ -153,7 +153,6 @@ namespace TownOfHostY
                             : __instance.ImpostorText.text = string.Format(DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.NumImpostorsP), numImpostors);
                         __instance.ImpostorText.text = __instance.ImpostorText.text.Replace("[FF1919FF]", "<color=#FF1919FF>").Replace("[]", "</color>");
                         break;
-                    
                 }
             }
             else
@@ -173,6 +172,7 @@ namespace TownOfHostY
                         };
                         __instance.BackgroundBar.material.color = Utils.GetRoleColor(role);
                         break;
+
                     case CustomRoleTypes.Madmate:
                         __instance.TeamTitle.text = GetString("Madmate");
                         __instance.TeamTitle.color = Utils.GetRoleColor(CustomRoles.Madmate);
@@ -188,10 +188,8 @@ namespace TownOfHostY
                     __instance.TeamTitle.color = Palette.ImpostorRed;
                     __instance.ImpostorText.gameObject.SetActive(false);
                     __instance.BackgroundBar.material.color = Palette.ImpostorRed;
-
-
-
                     break;
+
                 case CustomRoles.Sheriff:
                 case CustomRoles.Hunter:
                 case CustomRoles.SillySheriff:
@@ -210,7 +208,6 @@ namespace TownOfHostY
                     __instance.BackgroundBar.material.color = Utils.GetRoleColor(role);
                     __instance.ImpostorText.gameObject.SetActive(false);
                     break;
-
             }
             if (Options.IsCCMode)
             {
@@ -234,6 +231,7 @@ namespace TownOfHostY
                     __instance.BackgroundBar.material.color = Color.white;
 
                     __instance.RoleBlurbText.text = GetString("CCNoCatIntro2");
+                    PlayerControl.LocalPlayer.Data.Role.IntroSound = RoleManager.Instance.AllRoles.Where((role) => role.Role == RoleTypes.Crewmate).FirstOrDefault().IntroSound;
                 }
             }
             //else if (Options.IsONMode)

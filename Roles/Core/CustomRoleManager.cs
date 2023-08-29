@@ -11,7 +11,6 @@ using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Impostor;
 using TownOfHostY.Roles.AddOns.Common;
-using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHostY.Roles.Core;
 
@@ -80,8 +79,8 @@ public static class CustomRoleManager
         // CC
         if (Options.IsCCMode)
         {
-            GameModeUtils.OnCheckMurderByLeader(info);
-            GameModeUtils.OnCheckMurderByCat(info);
+            CatchCat.LeaderPlayer.OnCheckMurder(info);
+            CatchCat.CatPlayer.OnCheckMurder(info);
         }
         // ON
         //if (Options.IsONMode && attemptTarget.Is(CustomRoles.ONPhantomThief))
@@ -235,7 +234,7 @@ public static class CustomRoleManager
         {
             foreach (var subRole in player.GetCustomSubRoles())
             {
-                subRoleAdd(player.PlayerId, subRole);
+                SubRoleAdd(player.PlayerId, subRole);
             }
         }
         if (player.Data.Role.Role == RoleTypes.Shapeshifter)
@@ -243,7 +242,7 @@ public static class CustomRoleManager
             Main.CheckShapeshift.TryAdd(player.PlayerId, false);
         }
     }
-    public static void subRoleAdd(byte playerId, CustomRoles subRole)
+    public static void SubRoleAdd(byte playerId, CustomRoles subRole)
     {
         switch (subRole)
         {

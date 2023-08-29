@@ -548,6 +548,27 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "RandomMapsModeInfo","RandomMapsMode:\nA mode in which the map changes randomly.","ランダムマップモード:\nランダムにマップが変わるモード。(設定有)","随机地图:\n随机选择地图游玩的模式。(可以进行设置)","隨機地圖模式:\n該模式會隨機挑選地圖。 (可以設定)","Случайная Карта:\nРежим в котором карты случайным образом меняются в каждой игре. (в настройках)","Modo de Mapas Aleatórios:\nUm modo em que o mapa muda aleatoriamente a cada partida. (configurável)"
 "DisableDevicesInfo","DisableDevices:\nVarious devices can be disabled.","デバイスを無効化:\n各種機器を無効化することができる。","禁用设备:\n可以禁用各种设备。","禁用設備:\n可以禁用各種設備。","Отключенные Устройства:\nРазличные устройства могут быть отключены","Desativar Dispositivos:\nDiversos dispositivos podem ser desativados."
 
+"## オプション見出し"
+"Head.CommonImpostor","Impostor Common Setting","インポスター共通設定"
+"Head.CommonMadmate","Madmate Common Setting","マッドメイト共通設定"
+
+"Head.ImpostorAddOn","Impostor Add-On","インポスター属性"
+"Head.CrewmateAddOn","Crewmate Add-On","クルー属性"
+"Head.NeutralAddOn","Neutral Add-On","ニュートラル属性"
+"Head.BuffAddOn","Buff Add-On","バフ属性"
+"Head.DebuffAddOn","Debuff Add-On","デバフ属性"
+
+"Head.Sabotage","Sabotage Setting","サボタージュ設定"
+"Head.Meeting","Meeting Setting","会議設定"
+"Head.Revenge","Revenge Setting","道連れ設定"
+"Head.Task","Task Setting","タスク設定"
+"Head.Ghost","Ghost Setting","幽霊設定"
+"Head.Map","Map Setting","マップ設定"
+"Head.Other","Other Setting","その他設定"
+"Head.GameMode","GameMode Setting","ゲームモード設定"
+"Head.System","System Setting","システム設定"
+"Head.Participation","Participation Setting","参加設定"
+
 "## 詳細設定"
 "Cooldown","Cooldown","クールダウン","冷却时间","冷卻時間","Откат","Tempo de Recarga"
 "KillCooldown","Kill Cooldown","キルクール","击杀冷却时间","殺人冷卻時間","Откат убийства","Tempo de Recarga (abate)"
@@ -1021,6 +1042,8 @@ PanAlive13,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "Format.Multiplier","{0}x","{0}x","{0}x","{0}x","{0}x","{0}x"
 "Format.Votes","{0}","{0}票","{0}票","{0}票","{0}","{0}"
 "Format.Pieces","{0}","{0}個","{0}个","{0}個","{0}","{0}"
+"Format.Pair","{0} Pair","{0}組",
+"Pair","Pair","組",
 "KillButtonText","Kill","キル","击杀","殺死","Убить","Matar"
 "SniperSnipeButtonText","Snipe","狙撃","狙击","狙擊","Застрелить","Atirar"
 "FireWorksExplosionButtonText","Fire","爆破","引爆","引爆","Зажечь","Explodir"
@@ -1086,11 +1109,10 @@ CCRedWin,●Red Camp● Win!,●赤陣営● 勝利！,
 CCBlueWin,▲Blue Camp▲ Win!,▲青陣営▲ 勝利！,
 CCYellowWin,★Yellow Camp★ Win!,★黄陣営★ 勝利！,
 
-
 "CCInfo1LeaderHeader","［Leader's Rules］\n","［リーダーのルール］\n"
 "CCInfo1MakeCat","・Each leader can make a cat a member of his own camp by pressing the kill button toward a Neutral Cat.","・各リーダーは、無陣営の猫にキルボタンを押すことで自陣営の仲間に出来る。"
 "CCInfo1LeaderEachOther","\n・Leaders can kill each other.","\n・リーダー同士は、互いにキルができる。"
-"CCInfo1LeaderKillOneCat","However, you can't be killed until you get the cat into your camp.","ただし、猫を誰か仲間にするまではキルされることはない。"
+"CCInfo1LeaderKillAFewCat","However, you can't be killed until you get a few cat into your camp.","ただし、猫を何人か仲間にするまではキルされることはない。"
 "CCInfo1LeaderKillOneGuard","However, the leader can prevent a kill only once.","ただし、リーダーは一度だけキルを防ぐことができる。"
 "CCInfo1LeaderNotEachOther","\n・Leaders cannot kill each other.","\n・リーダー同士は、互いにキルができない。"
 "CCInfo1SameColorCat","\n・Each leader's point of view, the cat that has made its own camp is displayed in the same color as itself.","\n・各リーダー視点、自陣営にした猫は自身と同じ色で表示される。"
@@ -1105,8 +1127,9 @@ CCYellowWin,★Yellow Camp★ Win!,★黄陣営★ 勝利！,
 
 "CCInfo2CatHeader","［Cat Rules］\n","［猫のルール］\n"
 "CCInfo2BelongsCamp","・The first time a cat is killed, it prevents the kill and belongs to the camp of the leader who made the kill. Neutral Cat don't win, so go find the leader and belong. Once he are in a camp, run around to avoid being killed while praying for that camp's victory.","・猫は初めてキルされた時、キルを防いでそのキルをしてきた陣営に所属する。無陣営のままでは必ず勝利できないので、リーダーを探してキルされに行こう。陣営についたらその陣営の勝利を祈りながらキルされないように逃げ回ろう。"
-"CCInfo2CatTask","\n・The task can be done, but it doesn't matter.","\n・タスクはできるが関係ない。"
 "CCInfo2CatVision","\n・The cat's vision is set by crew vision. Now：x{0}","\n・猫の視界はクルービジョンで設定する。 現在の設定：x{0}"
+"CCInfo2TaskCompleteAbility","\n\nAbility By Progress Rate Of Tasks：","\n\n・タスクの進捗率によって能力を持つ。",
+"CCInfo2CatTask","\n・The task can be done, but it doesn't matter.","\n・タスクはできるが関係ない。"
 
 "CCInfo3DecisionHeader","［Decision of Victory］\n","［決着］\n"
 "CCInfo3WinMostMember","・When Neutral Cat is gone, the camp with the most member among the survivors wins.","・無陣営猫が居なくなった時、生存者の中で一番人数が多い陣営が勝利。"
@@ -1130,19 +1153,22 @@ CCLeaderIntro2,Find lonely cats and add more ally.,孤独な猫たちを見つ�
 CCNoCatIntro,<size=5>I became a lonely cat.</size>,<size=10>孤独な猫になった。</size>,<size=10>我成了一只孤独的猫</size>
 CCNoCatIntro2,Find a leader and belong to a camp.,リーダーを見つけ、陣営に所属しよう。,找到一个首领并加入一个阵营 
 
-IgnoreLeaderVent,Ignore Leader's Vent,リーダーのベントを無効にする,
+CCCommonSetting,Common Setting,共通の設定
 IgnoreReport,Ignore Report,死体レポートを無効にする,
-CCLeaderKillcool,Leaders Kill Cooldown,リーダーのキルクール,首领击杀冷却
+
+CCLeaderSetting,Leader Setting,リーダーの設定
+IgnoreLeaderVent,Ignore Leader's Vent,リーダーのベントを無効にする,
 CCLeaderKilled,Leaders Are Killed,リーダーはキルされる,首领被击杀
-CCLeaderKilledTiming,When Leader Starts To Be Killed,リーダーがキルされ始めるタイミング,
-TimingAlways,Always,常時,
-TimingOneCatBeYourCamp,One Cat Be Your Camp,猫を一人仲間にした後,
-TimingAfterUsingOneGuard,After Using One Guard,一回ガード使用後,
+CCLK_CatCount,A Few Cat Be Your Camp,猫を数人仲間にした後,
+CCLK_OneGuard,After Using One Guard,一回ガード使用後,
+
+CCCatSetting,Cat Setting,猫の設定
 CCWhenColorCatKilled,When ColorCat Are Killed,所属済みの猫がキルされる時,
 CCatJustKill,Just Kill,そのままキル,
 COtherCatKill,Only OtherCat Kill,他陣営猫のみキル,
 CCatOverride,Override Camp,陣営を上書き,
 CCatAlwaysGuard,Always Guard,常時ガード,
+CCColorCatShowSameCamp,Cat's Name In The Same Camp Are In The Same Color,同陣営の猫の名前を同色にする,
 
 CCMeetingDisplay,Information Displayed At The Meeting,会議時に表示される情報,
 CCM_LeaderRemain,,リーダーの残り人数
@@ -1151,10 +1177,10 @@ CCM_RemainCatShowName,,無陣営猫の名前表示
 CCM_RemainCatShowNameNum,,表示される無陣営猫の残り人数
 CCM_ColorCatCount,,陣営持ち猫の詳細人数
 
-CCTaskCompleteAbility,Ability By Progress Rate Of Tasks (0% is not activated),タスク進捗率による能力 (0%は発動なし),
+CCTaskCompleteAbility,Have the Ability By Progress Rate of Tasks,タスク進捗率による能力を持たせる,
 CCT_KnowAllLeader,Know All Leader,全陣営のリーダーがわかる,
 CCT_OneGuardOwn,One Guard Of Own,1回キルをガードする,
-CCT_CanUseVent,Can Use Vent,制限付きベントが使用できる,
+CCT_CanUseVent,Can Use Vent,ベントが使用できる,
 CCT_OwnLeaderKillcoolDecrease,Own Leader's Kill Cooldown Decrease For 1 Sec,自身のリーダーのキルクールを1秒減少させる,
 
 Leader,Leader,リーダー,首领

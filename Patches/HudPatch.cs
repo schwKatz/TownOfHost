@@ -71,7 +71,7 @@ namespace TownOfHostY
                     }
                     if (player.GetCustomRole().IsCCCatRoles())
                     {
-                        __instance.AbilityButton.ToggleVisible(GameModeUtils.CanUseVent(player) && GameStates.IsInTask);
+                        __instance.AbilityButton.ToggleVisible(CatchCat.CatPlayer.CanUseVent(player) && GameStates.IsInTask);
                     }
 
                     //バウンティハンターのターゲットテキスト

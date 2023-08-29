@@ -106,5 +106,5 @@ public sealed class LoveCutter : RoleBase
     }
 
     public override string GetProgressText(bool comms = false)
-    => Utils.ColorString(RoleInfo.RoleColor,$"({KilledCount}/{VictoryCutCount})");
+    => Utils.ColorString(RoleInfo.RoleColor,$"〔{KilledCount}/{VictoryCutCount}〕");
 }

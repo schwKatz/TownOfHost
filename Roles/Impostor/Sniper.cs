@@ -298,7 +298,7 @@ public sealed class Sniper : RoleBase, IImpostor
     }
     public override string GetProgressText(bool comms = false)
     {
-        return Utils.ColorString(Color.yellow, $"({BulletCount})");
+        return Utils.ColorString(Color.yellow, $"[{BulletCount}]");
     }
     public override string GetMark(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {

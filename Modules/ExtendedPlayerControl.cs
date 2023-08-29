@@ -412,7 +412,7 @@ namespace TownOfHostY
         {
             if (!pc.IsAlive() || pc.Data.Role.Role == RoleTypes.GuardianAngel) return false;
             // CC
-            if (pc.GetCustomRole().IsCCLeaderRoles()) return !GameModeUtils.IgnoreVent.GetBool();
+            if (pc.GetCustomRole().IsCCLeaderRoles()) return !CatchCat.Option.LeaderIgnoreVent.GetBool();
 
             return pc.GetCustomRole() switch
             {
@@ -429,7 +429,7 @@ namespace TownOfHostY
         {
             Main.AllPlayerKillCooldown[player.PlayerId] = (player.GetRoleClass() as IKiller)?.CalculateKillCooldown() ?? Options.DefaultKillCooldown; //キルクールをデフォルトキルクールに変更
             if (Options.IsCCMode && player.GetCustomRole().IsCCLeaderRoles())
-                Main.AllPlayerKillCooldown[player.PlayerId] = GameModeUtils.CalculateKillCooldown(player);
+                Main.AllPlayerKillCooldown[player.PlayerId] = CatchCat.LeaderPlayer.CalculateKillCooldown(player);
             if (player.PlayerId == LastImpostor.currentId)
                 LastImpostor.SetKillCooldown(player);
         }
@@ -581,7 +581,7 @@ namespace TownOfHostY
                     Info = role.IsVanilla() ? "Blurb" : "Info";
                     break;
             }
-            Info += (InfoLong ? "Long" : "");
+            Info += InfoLong ? "Long" : "";
             return GetString($"{Prefix}{text}{Info}");
         }
         public static void SetRealKiller(this PlayerControl target, PlayerControl killer, bool NotOverRide = false)

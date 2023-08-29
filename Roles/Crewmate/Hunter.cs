@@ -130,7 +130,7 @@ public sealed class Hunter : RoleBase, IKiller
             killer.ResetKillCooldown();
         }
     }
-    public override string GetProgressText(bool comms = false) => ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"({ShotLimit})");
+    public override string GetProgressText(bool comms = false) => ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"〈{ShotLimit}〉");
 
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
     {

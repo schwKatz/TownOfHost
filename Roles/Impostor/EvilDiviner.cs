@@ -77,7 +77,7 @@ public sealed class EvilDiviner : RoleBase, IImpostor
     }
 
     public float CalculateKillCooldown() => KillCooldown;
-    public override string GetProgressText(bool comms = false) => Utils.ColorString(DivinationCount > 0 ? Palette.ImpostorRed : Color.gray, $"({DivinationCount})");
+    public override string GetProgressText(bool comms = false) => Utils.ColorString(DivinationCount > 0 ? Palette.ImpostorRed : Color.gray, $"[{DivinationCount}]");
 
     public override void OverrideRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {

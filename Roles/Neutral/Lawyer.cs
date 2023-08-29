@@ -163,7 +163,7 @@ public sealed class Lawyer : RoleBase
     public override string GetProgressText(bool comms = false)
     {
         if (!Pursuers) return string.Empty;
-        return Utils.ColorString(CanUseGuard() ? Color.yellow : Color.gray, $"({GuardCount})");
+        return Utils.ColorString(CanUseGuard() ? Color.yellow : Color.gray, $"〔{GuardCount}〕");
     }
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool _ = false)
     {
@@ -194,7 +194,7 @@ public sealed class Lawyer : RoleBase
         target.RpcGuardAndKill(target);
         killer.SetKillCooldown();
         GuardCount--;
-
+        Utils.NotifyRoles(SpecifySeer: target);
         info.CanKill = false;
         return true;
     }

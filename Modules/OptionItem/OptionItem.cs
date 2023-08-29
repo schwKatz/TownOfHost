@@ -274,5 +274,6 @@ namespace TownOfHostY
         Multiplier,
         Votes,
         Pieces,
+        Pair,
     }
 }

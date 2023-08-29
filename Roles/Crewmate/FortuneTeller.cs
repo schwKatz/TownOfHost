@@ -130,8 +130,7 @@ public sealed class FortuneTeller : RoleBase
     public override string GetProgressText(bool comms = false)
     {
         if (MyTaskState.CompletedTasksCount < ForecastTaskTrigger) return string.Empty;
-
-        return ColorString(ForecastLimit > 0 ? RoleInfo.RoleColor : Color.gray, $"({ForecastLimit})");
+        return ColorString(ForecastLimit > 0 ? RoleInfo.RoleColor : Color.gray, $"[{ForecastLimit}]");
     }
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
     {

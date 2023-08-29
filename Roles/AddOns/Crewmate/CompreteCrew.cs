@@ -46,7 +46,7 @@ namespace TownOfHostY.Roles.AddOns.Crewmate
                         if (Options.AddOnRoleOptions.TryGetValue((CustomRoles.CompreteCrew, Addon), out var option) && option.GetBool())
                         {
                             pc.RpcSetCustomRole(Addon);
-                            CustomRoleManager.subRoleAdd(pc.PlayerId, Addon);
+                            CustomRoleManager.SubRoleAdd(pc.PlayerId, Addon);
                         }
                     }
                 }

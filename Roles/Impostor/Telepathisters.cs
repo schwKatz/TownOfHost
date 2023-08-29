@@ -134,7 +134,7 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
         var sb = new StringBuilder(80);
         if (TelepathistersId.Count > 0)
         {
-            sb.Append($"<color={Utils.GetRoleColorCode(CustomRoles.Impostor)}>");
+            sb.Append($"<color={GetRoleColorCode(CustomRoles.Impostor)}>");
             foreach (var impostorId in TelepathistersId)
             {
                 sb.Append(TargetArrow.GetArrows(Player, impostorId));
@@ -147,12 +147,12 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
     {
         if (!(CanSeeLastRoomInMeeting && IsTrackTarget(seen))) return "";
 
-        string text = Utils.ColorString(Palette.ImpostorRed, TargetArrow.GetArrows(Player, seen.PlayerId));
+        string text = ColorString(Palette.ImpostorRed, TargetArrow.GetArrows(Player, seen.PlayerId));
         var room = PlayerState.GetByPlayerId(seen.PlayerId).LastRoom;
-        if (room == null) text += Utils.ColorString(Color.gray, "@" + GetString("FailToTrack"));
+        if (room == null) text += ColorString(Color.gray, "@" + GetString("FailToTrack"));
         else
         {
-            text += Utils.ColorString(Palette.ImpostorRed, "@" + GetString(room.RoomId.ToString()));
+            text += ColorString(Palette.ImpostorRed, "@" + GetString(room.RoomId.ToString()));
         }
 
         return text;
@@ -163,7 +163,7 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
         int count;
         if (VentCountLimit < 0) count = 0;
         else count = VentCountLimit;
-        return Utils.ColorString(count > 0 ? Palette.ImpostorRed : Color.gray, $"({count})");
+        return ColorString(count > 0 ? Palette.ImpostorRed : Color.gray, $"[{count}]");
     }
 
 }

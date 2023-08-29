@@ -309,12 +309,15 @@ namespace TownOfHostY.Roles
             return candidateRoleList;
         }
         private static bool IsAssignable(this CustomRoles role)
-            => role switch
-            {
-                CustomRoles.Crewmate => false,
-                CustomRoles.Egoist => Main.RealOptionsData.GetInt(Int32OptionNames.NumImpostors) > 1,
-                _ => true,
-            };
+        {
+            if (Options.IsCCMode) return role.IsCCLeaderRoles();
+            return role switch
+               {
+                   CustomRoles.Crewmate => false,
+                   CustomRoles.Egoist => Main.RealOptionsData.GetInt(Int32OptionNames.NumImpostors) > 1,
+                   _ => !role.IsCCRole(),
+               };
+        }
         ///<summary>
         ///RoleOptionのKey => 実際にアサインされる役職の配列
         ///両陣営役職、コンビ役職向け

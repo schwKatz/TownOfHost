@@ -5,6 +5,8 @@ using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.Madmate;
 using TownOfHostY.Roles.Crewmate;
+using System.Diagnostics.Metrics;
+
 namespace TownOfHostY.Modules;
 
 public class MeetingVoteManager
@@ -92,7 +94,6 @@ public class MeetingVoteManager
                 logger.Info($"{role.Player.GetNameWithRole()} によって投票は取り消されます");
                 doVote = roleDoVote;
             }
-
         }
         numVotes = PlusVote.OnVote(voter, numVotes);
         TieBreaker.OnVote(voter, voteFor);
@@ -224,10 +225,13 @@ public class MeetingVoteManager
                     case VoteMode.SelfVote:
                         vote.ChangeVoteTarget(vote.Voter);
                         logger.Info($"無投票のため {voterName} に自投票させます");
-                        break;
+                        goto default;
                     case VoteMode.Skip:
                         vote.ChangeVoteTarget(Skip);
                         logger.Info($"無投票のため {voterName} にスキップさせます");
+                        goto default;
+                    default:
+                        Instance.AddVote(vote.Voter, vote.VotedFor);
                         break;
                 }
             }

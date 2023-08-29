@@ -68,7 +68,7 @@ public sealed class CursedWolf : RoleBase, IImpostor
         // ガード
         killer.RpcGuardAndKill(target);
         target.RpcGuardAndKill(target);
-        SpellCount -= 1;
+        SpellCount--;
         SendRPC();
         Logger.Info($"{target.GetNameWithRole()} : 残り{SpellCount}回", "CursedWolf");
 
@@ -79,5 +79,5 @@ public sealed class CursedWolf : RoleBase, IImpostor
         info.CanKill = false;
         return true;
     }
-    public override string GetProgressText(bool comms = false) => Utils.ColorString(Palette.ImpostorRed, $"({SpellCount})");
+    public override string GetProgressText(bool comms = false) => Utils.ColorString(Palette.ImpostorRed, $"〔{SpellCount}〕");
 }

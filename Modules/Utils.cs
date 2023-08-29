@@ -22,8 +22,6 @@ using TownOfHostY.Roles.AddOns.Impostor;
 using TownOfHostY.Roles.AddOns.Crewmate;
 using static TownOfHostY.Translator;
 using TownOfHostY.Roles.Crewmate;
-using static UnityEngine.GraphicsBuffer;
-using LibCpp2IL.Elf;
 
 namespace TownOfHostY
 {
@@ -280,7 +278,7 @@ namespace TownOfHostY
 
                             roleText.Append(ColorString(GetRoleColor(subRole), GetRoleName(subRole)));
                             i++;
-                            if (i % 2 == 0) roleText.Append("\n");
+                            if (i % 2 == 0) roleText.Append('\n');
                         }
                     }
                 }
@@ -394,7 +392,7 @@ namespace TownOfHostY
         public static Color GetCustomColor(CustomColor color)
         {
             if (!Main.customColors.TryGetValue(color, out var hexColor)) hexColor = "#ffffff";
-            ColorUtility.TryParseHtmlString(hexColor, out Color c);
+            _ = ColorUtility.TryParseHtmlString(hexColor, out Color c);
             return c;
         }
         public static string GetCustomColorCode(CustomColor color)
@@ -535,7 +533,7 @@ namespace TownOfHostY
             seer.GetRoleClass()?.OverrideProgressTextAsSeer(seen, ref enabled, ref text);
             if(Options.IsCCMode && seer == seen)
             {
-                text += GameModeUtils.GetMark(seer);
+                text += CatchCat.Common.GetMark(seer);
             }
 
             return enabled ? text : "";
@@ -646,7 +644,7 @@ namespace TownOfHostY
             }
             else if (Options.IsCCMode)
             {
-                GameModeUtils.CCSettingHelp(PlayerId);
+                CatchCat.Infomation.ShowSettingHelp(PlayerId);
             }
             else
             {
@@ -709,7 +707,7 @@ namespace TownOfHostY
             }
             else if(Options.IsCCMode)
             {
-                GameModeUtils.CCSetting(sb);
+                CatchCat.Infomation.ShowSetting(sb);
             }
             else
             {
@@ -743,9 +741,11 @@ namespace TownOfHostY
                         else if (role.IsMadmate())  sb.Append("<size=75%><color=#ff4500>Ⓜ</color></size>");
                         else if (role.IsCrewmate()) sb.Append("<size=75%><color=#6495ed>Ⓒ</color></size>");
                         else if (role.IsNeutral())  sb.Append("<size=75%><color=#ffa500>Ⓝ</color></size>");
-                        else sb.Append("　");
+                        else sb.Append('　');
 
-                        sb.Append($"<u><mark=#69696933><color={GetRoleColorCode(role)}><b>{GetRoleName(role)}</b></color></u></mark><size=70%>×</size><size=80%>{role.GetCount()}</size>\n");
+                        sb.Append($"<u><mark=#69696933><color={GetRoleColorCode(role)}><b>{GetRoleName(role)}</b></color></u></mark>");
+                        // 確率＆人数
+                        sb.AppendFormat(" ：<size=70%>{0}×</size><size=80%>{1}{2}</size>\n", $"{role.GetChance()}%", role.GetCount(), role.IsPairRole() ? GetString("Pair") : "");
 
                         sb.Append("<size=65%><line-height=1.5pic>");
                         ShowChildrenSettings(Options.CustomRoleSpawnChances[role], ref sb);
@@ -753,7 +753,7 @@ namespace TownOfHostY
                         sb.Append("\n</size>");
                     }
                 }
-                sb.Append("\n");
+                sb.Append('\n');
                 foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode)))
                 {
                     if (Options.NotShowOption(opt.Name)) continue;
@@ -768,7 +768,7 @@ namespace TownOfHostY
                     sb.Append("<size=65%><line-height=1.5pic>");
                     ShowChildrenSettings(opt, ref sb);
                     sb.Append("</size></line-height>");
-                    sb.Append("\n");
+                    sb.Append('\n');
                 }
             }
             SendMessage(sb.ToString(), PlayerId, $"</color>【{GetString("Settings")}】");
@@ -815,7 +815,7 @@ namespace TownOfHostY
                 SendMessage(GetString("Message.HideGameSettings"), PlayerId);
                 return;
             }
-            var sb = new StringBuilder("</color>【").Append(GetString("Roles")).Append("】");
+            var sb = new StringBuilder("</color>【").Append(GetString("Roles")).Append('】');
             //if (Options.IsONMode)
             //    sb.Append("\n").Append(GetString("ONInfoWarning")).Append("\n");
 
@@ -859,7 +859,7 @@ namespace TownOfHostY
                         sb.Append($" <color={GetRoleColorCode(role)}>{GetRoleName(role)}</color></size>");
 
                         // 確率＆人数
-                        sb.AppendFormat(" ：<size=70%>{0}×</size><size=80%>{1}</size>", $"{role.GetChance()}%", role.GetCount());
+                        sb.AppendFormat(" ：<size=70%>{0}×</size><size=80%>{1}{2}</size>", $"{role.GetChance()}%", role.GetCount(), role.IsPairRole() ? GetString("Pair") : "");
                     }
                 }
             }
@@ -1038,7 +1038,7 @@ namespace TownOfHostY
             if (colorId >= 0 && colorId < Palette.ColorNames.Length)
             {
                 var name = Palette.ColorNames[colorId].ToString();
-                return name.Substring(5, name.Length - 5);  //colorxxx のxxxの部分のみ（色名）
+                return name[5..];  //colorxxx のxxxの部分のみ（色名）
             }
             return "???";
         }
@@ -1118,7 +1118,7 @@ namespace TownOfHostY
                 //RealNameを取得 なければ現在の名前をRealNamesに書き込む
                 string SeerRealName = seer.GetRealName(isForMeeting);
 
-                if (!isForMeeting && (Options.IsCCMode || MeetingStates.FirstMeeting && Options.ChangeNameToRoleInfo.GetBool()))
+                if (!isForMeeting && (Options.IsCCMode || (MeetingStates.FirstMeeting && Options.ChangeNameToRoleInfo.GetBool())))
                     SeerRealName = seer.GetRoleInfo();
 
                 //seerの役職名とSelfTaskTextとseerのプレイヤー名とSelfMarkを合成

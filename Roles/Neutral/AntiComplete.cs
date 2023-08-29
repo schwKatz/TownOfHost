@@ -87,6 +87,7 @@ public sealed class AntiComplete : RoleBase
         info.CanKill = false;
 
         GuardCount--;
+        NotifyRoles(SpecifySeer: target);
         Logger.Info($"{target.GetNameWithRole()} : ガード残り{GuardCount}回", "AntiComp");
         return true;
     }
@@ -113,7 +114,7 @@ public sealed class AntiComplete : RoleBase
         return string.Empty;
     }
 
-    public override string GetProgressText(bool comms = false) => ColorString(GuardCount > 0 ? RoleInfo.RoleColor : Color.gray, $"({GuardCount})");
+    public override string GetProgressText(bool comms = false) => ColorString(GuardCount > 0 ? RoleInfo.RoleColor : Color.gray, $"〔{GuardCount}〕");
 
     public override (byte? votedForId, int? numVotes, bool doVote) OnVote(byte voterId, byte sourceVotedForId)
     {
