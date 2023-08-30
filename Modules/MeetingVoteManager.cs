@@ -199,7 +199,7 @@ public class MeetingVoteManager
         return new VoteResult(votes);
     }
     /// <summary>
-    /// スキップモードと無投票モードに応じて，投票を変更したりプレイヤーを死亡させたりします
+    /// スキップモードと無投票モードに応じて，投票を上書きしたりプレイヤーを死亡させたりします
     /// </summary>
     private void ApplySkipAndNoVoteMode()
     {
@@ -223,11 +223,11 @@ public class MeetingVoteManager
                         logger.Info($"無投票のため {voterName} を自殺させます");
                         break;
                     case VoteMode.SelfVote:
-                        vote.ChangeVoteTarget(vote.Voter);
+                        AddVote(vote.Voter, vote.Voter, isIntentional: false);
                         logger.Info($"無投票のため {voterName} に自投票させます");
                         goto default;
                     case VoteMode.Skip:
-                        vote.ChangeVoteTarget(Skip);
+                        AddVote(vote.Voter, Skip, isIntentional: false);
                         logger.Info($"無投票のため {voterName} にスキップさせます");
                         goto default;
                     default:
@@ -245,7 +245,7 @@ public class MeetingVoteManager
                         logger.Info($"スキップしたため {voterName} を自殺させます");
                         break;
                     case VoteMode.SelfVote:
-                        vote.ChangeVoteTarget(vote.Voter);
+                        AddVote(vote.Voter, vote.Voter, isIntentional: false);
                         logger.Info($"スキップしたため {voterName} に自投票させます");
                         break;
                 }
