@@ -42,7 +42,7 @@ public static class MeetingHudPatch
                 return false;
             }
 
-            MeetingVoteManager.Instance?.AddVote(srcPlayerId, suspectPlayerId);
+            MeetingVoteManager.Instance?.SetVote(srcPlayerId, suspectPlayerId);
             return true;
         }
     }

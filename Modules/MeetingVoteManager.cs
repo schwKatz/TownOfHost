@@ -56,13 +56,13 @@ public class MeetingVoteManager
         EndMeeting(false, antiCompId);
     }
     /// <summary>
-    /// 投票を追加します
+    /// 投票を行います．投票者が既に投票している場合は票を上書きします
     /// </summary>
     /// <param name="voter">投票者</param>
     /// <param name="voteFor">投票先</param>
     /// <param name="numVotes">票数</param>
     /// <param name="isIntentional">投票者自身の投票操作による自発的な投票かどうか</param>
-    public void AddVote(byte voter, byte voteFor, int numVotes = 1, bool isIntentional = true)
+    public void SetVote(byte voter, byte voteFor, int numVotes = 1, bool isIntentional = true)
     {
         if (!allVotes.TryGetValue(voter, out var vote))
         {
@@ -223,11 +223,11 @@ public class MeetingVoteManager
                         logger.Info($"無投票のため {voterName} を自殺させます");
                         break;
                     case VoteMode.SelfVote:
-                        AddVote(vote.Voter, vote.Voter, isIntentional: false);
+                        SetVote(vote.Voter, vote.Voter, isIntentional: false);
                         logger.Info($"無投票のため {voterName} に自投票させます");
                         goto default;
                     case VoteMode.Skip:
-                        AddVote(vote.Voter, Skip, isIntentional: false);
+                        SetVote(vote.Voter, Skip, isIntentional: false);
                         logger.Info($"無投票のため {voterName} にスキップさせます");
                         goto default;
                     default:
@@ -245,7 +245,7 @@ public class MeetingVoteManager
                         logger.Info($"スキップしたため {voterName} を自殺させます");
                         break;
                     case VoteMode.SelfVote:
-                        AddVote(vote.Voter, vote.Voter, isIntentional: false);
+                        SetVote(vote.Voter, vote.Voter, isIntentional: false);
                         logger.Info($"スキップしたため {voterName} に自投票させます");
                         break;
                 }
