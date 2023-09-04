@@ -95,12 +95,6 @@ namespace TownOfHostY
                             CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
                             CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Lovers);
                         }
-                        //Oppo猫
-                        if (pc.Is(CustomRoles.OSchrodingerCat) && pc.IsAlive())
-                        {
-                            CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.OSchrodingerCat);
-                        }
 
                         if (pc.GetRoleClass() is IAdditionalWinner additionalWinner)
                         {

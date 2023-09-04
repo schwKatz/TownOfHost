@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace TownOfHost.Templates;
+namespace TownOfHostY.Templates;
 
 public sealed class TMPTemplate
 {

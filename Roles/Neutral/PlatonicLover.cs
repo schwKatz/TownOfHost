@@ -19,7 +19,8 @@ public sealed class PlatonicLover : RoleBase, IKiller
             SetupOptionItem,
             "純愛者",
             "#ff6be4",
-            true
+            true,
+            assignCountRule: new(1, 1, 1)
         );
     public PlatonicLover(PlayerControl player)
     : base(

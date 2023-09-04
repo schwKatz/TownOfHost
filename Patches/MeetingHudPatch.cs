@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +5,12 @@ using HarmonyLib;
 using UnityEngine;
 
 using TownOfHostY.Modules;
-using TownOfHost.Roles;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Crewmate;
-using TownOfHost.Roles.Neutral;
+using TownOfHostY.Roles;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Common;
-using static TownOfHost.Translator;
+using static TownOfHostY.Translator;
 
 namespace TownOfHostY;
 

@@ -337,29 +337,11 @@ namespace TownOfHostY
             // Impostor
             sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Impostor).Do(info =>
             {
-                if (info.RoleName.IsCannotPublicRole())
-                {
-                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic: true);
-                }
-                else
-                {
-                    switch (info.RoleName)
-                    {
-                        case CustomRoles.StrayWolf:
-                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
-                            break;
-                        case CustomRoles.Telepathisters:
-                            SetupTelepathistersOptions(info);
-                            break;
-                        default:
-                            SetupRoleOptions(info);
-                            break;
-                    }
-                }
+                SetupRoleOptions(info);
                 info.OptionCreator?.Invoke();
             });
 
-            TextOptionItem.Create(300010, "Head.CommonImpostor", TabGroup.ImpostorRoles);
+            TextOptionItem.Create(10, "Head.CommonImpostor", TabGroup.ImpostorRoles);
             DefaultShapeshiftCooldown = FloatOptionItem.Create(90100, "DefaultShapeshiftCooldown", new(5f, 999f, 5f), 15f, TabGroup.ImpostorRoles, false)
                 .SetValueFormat(OptionFormat.Seconds);
             ImpostorOperateVisibility = BooleanOptionItem.Create(90110, "ImpostorOperateVisibility", false, TabGroup.ImpostorRoles, false);
@@ -367,27 +349,7 @@ namespace TownOfHostY
             // Madmate, Crewmate, Neutral
             sortedRoleInfo.Where(role => role.CustomRoleType != CustomRoleTypes.Impostor).Do(info =>
             {
-                if (info.RoleName.IsCannotPublicRole())
-                {
-                    SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, isPublic: true);
-                }
-                else
-                {
-                    switch (info.RoleName)
-                    {
-                        case CustomRoles.Sympathizer: //共鳴者は1組で記載
-                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1, isPair: true);
-                            break;
-                        case CustomRoles.Jackal: //ジャッカルは1人固定
-                        case CustomRoles.DarkHide:
-                        case CustomRoles.PlatonicLover:
-                            SetupSingleRoleOptions(info.ConfigId, info.Tab, info.RoleName, 1);
-                            break;
-                        default:
-                            SetupRoleOptions(info);
-                            break;
-                    }
-                }
+                SetupRoleOptions(info);
                 info.OptionCreator?.Invoke();
             });
 
@@ -403,25 +365,25 @@ namespace TownOfHostY
             MadmateCanSeeDeathReason = BooleanOptionItem.Create(91525, "MadmateCanSeeDeathReason", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
             MadmateRevengeCrewmate = BooleanOptionItem.Create(91526, "MadmateExileCrewmate", false, TabGroup.MadmateRoles, false).SetParent(CanMakeMadmateCount).SetGameMode(CustomGameMode.Standard);
 
-            TextOptionItem.Create(300011, "Head.CommonMadmate", TabGroup.MadmateRoles);
+            TextOptionItem.Create(11, "Head.CommonMadmate", TabGroup.MadmateRoles);
             MadmateVentCooldown = FloatOptionItem.Create(91528, "MadmateVentCooldown", new(0f, 180f, 5f), 0f, TabGroup.MadmateRoles, false)
                 .SetValueFormat(OptionFormat.Seconds);
             MadmateVentMaxTime = FloatOptionItem.Create(91529, "MadmateVentMaxTime", new(0f, 180f, 5f), 0f, TabGroup.MadmateRoles, false)
                 .SetValueFormat(OptionFormat.Seconds);
             
             // Add-Ons
-            TextOptionItem.Create(300050, "Head.ImpostorAddOn", TabGroup.Addons).SetColor(Palette.ImpostorRed);
+            TextOptionItem.Create(50, "Head.ImpostorAddOn", TabGroup.Addons).SetColor(Palette.ImpostorRed);
             LastImpostor.SetupCustomOption();
 
-            TextOptionItem.Create(300051, "Head.CrewmateAddOn", TabGroup.Addons).SetColor(Palette.CrewmateBlue);
+            TextOptionItem.Create(51, "Head.CrewmateAddOn", TabGroup.Addons).SetColor(Palette.CrewmateBlue);
             CompreteCrew.SetupCustomOption();
             Workhorse.SetupCustomOption();
 
-            TextOptionItem.Create(300052, "Head.NeutralAddOn", TabGroup.Addons).SetColor(Palette.Orange);
-            SetupSingleRoleOptions(73000, TabGroup.Addons, CustomRoles.Lovers, 1, true);
+            TextOptionItem.Create(52, "Head.NeutralAddOn", TabGroup.Addons).SetColor(Palette.Orange);
+            SetupRoleOptions(73000, TabGroup.Addons, CustomRoles.Lovers, (1, 1, 1));
             LoversAddWin = BooleanOptionItem.Create(73010, "LoversAddWin", false, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lovers]);
 
-            TextOptionItem.Create(300053, "Head.BuffAddOn", TabGroup.Addons).SetColor(Color.yellow);
+            TextOptionItem.Create(53, "Head.BuffAddOn", TabGroup.Addons).SetColor(Color.yellow);
             AddWatch.SetupCustomOption();
             AddLight.SetupCustomOption();
             AddSeer.SetupCustomOption();
@@ -436,7 +398,7 @@ namespace TownOfHostY
             AddBait.SetupCustomOption();
             Refusing.SetupCustomOption();
 
-            TextOptionItem.Create(300054, "Head.DebuffAddOn", TabGroup.Addons).SetColor(Palette.Purple);
+            TextOptionItem.Create(54, "Head.DebuffAddOn", TabGroup.Addons).SetColor(Palette.Purple);
             Sunglasses.SetupCustomOption();
             Clumsy.SetupCustomOption();
             InfoPoor.SetupCustomOption();
@@ -733,23 +695,22 @@ namespace TownOfHostY
         public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, IntegerValueRule assignCountRule = null, CustomGameMode customGameMode = CustomGameMode.Standard)
         {
             if (role.IsVanilla()) return;
-            assignCountRule ??= new(1, 15, 1);
 
             var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false)
                 .SetColor(Utils.GetRoleColor(role))
                 .SetValueFormat(OptionFormat.Percent)
                 .SetHeader(true)
-                .SetIsPublicDontUse(isPublic)
+                .SetIsPublicDontUse(role.IsCannotPublicRole())
                 .SetGameMode(customGameMode) as IntegerOptionItem;
             var countOption = IntegerOptionItem.Create(id + 1, "Maximum", assignCountRule, assignCountRule.Step, tab, false)
                 .SetParent(spawnOption)
-                .SetValueFormat(OptionFormat.Players)
+                .SetValueFormat(role.IsPairRole() ? OptionFormat.Pair: OptionFormat.Players)
+                .SetFixValue(role.IsFixCountRole())
                 .SetGameMode(customGameMode);
 
             CustomRoleSpawnChances.Add(role, spawnOption);
             CustomRoleCounts.Add(role, countOption);
         }
-        
         
         //AddOn
         public static void SetUpAddOnOptions(int Id, CustomRoles PlayerRole, TabGroup tab)

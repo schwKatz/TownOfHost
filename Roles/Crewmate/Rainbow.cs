@@ -76,7 +76,7 @@ public sealed class Rainbow : RoleBase
         colorchange += Time.fixedDeltaTime;
     }
 
-    public override void OverrideRoleNameAsSeen(PlayerControl seer, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    public override void OverrideDisplayRoleNameAsSeen(PlayerControl seer, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {
         if (!(!isMeeting && DontSeeTaskTurn)) enabled = true;
         if (!isMeeting) roleText = Translator.GetString("RainbowResize");

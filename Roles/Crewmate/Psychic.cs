@@ -109,7 +109,7 @@ public sealed class Psychic : RoleBase
             Utils.NotifyRoles(SpecifySeer: Player);
         }
     }
-    public override void OverrideRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {
         if (!VentSelect.IsShowTargetRole(Player, seen)) return;
         if (KillerOnly.GetBool() &&

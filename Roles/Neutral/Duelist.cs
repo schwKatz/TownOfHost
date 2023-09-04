@@ -42,9 +42,10 @@ public sealed class Duelist : RoleBase, IAdditionalWinner
     {
 
     }
-    public override (byte? votedForId, int? numVotes, bool doVote) OnVote(byte voterId, byte sourceVotedForId)
+    public override (byte? votedForId, int? numVotes, bool doVote) ModifyVote(byte voterId, byte sourceVotedForId, bool isIntentional)
     {
-        var (votedForId, numVotes, doVote) = base.OnVote(voterId, sourceVotedForId);
+        // 既定値
+        var (votedForId, numVotes, doVote) = base.ModifyVote(voterId, sourceVotedForId, isIntentional);
         if (MeetingStates.FirstMeeting && voterId == Player.PlayerId && Player.IsAlive())
         {
             if (sourceVotedForId != Player.PlayerId && sourceVotedForId < 253)

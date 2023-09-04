@@ -139,10 +139,6 @@ namespace TownOfHostY
                             case "jackal":
                                 GameManager.Instance.enabled = false;
                                 CustomWinnerHolder.WinnerTeam = CustomWinner.Jackal;
-                                foreach (var player in Main.AllPlayerControls.Where(pc => pc.Is(CustomRoles.Jackal) || pc.Is(CustomRoles.JSchrodingerCat)))
-                                {
-                                    CustomWinnerHolder.WinnerIds.Add(player.PlayerId);
-                                }
                                 GameEndChecker.StartEndGame(GameOverReason.ImpostorByKill);
                                 break;
 

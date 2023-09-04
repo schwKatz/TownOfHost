@@ -225,13 +225,10 @@ public class MeetingVoteManager
                     case VoteMode.SelfVote:
                         SetVote(vote.Voter, vote.Voter, isIntentional: false);
                         logger.Info($"無投票のため {voterName} に自投票させます");
-                        goto default;
+                        break;
                     case VoteMode.Skip:
                         SetVote(vote.Voter, Skip, isIntentional: false);
                         logger.Info($"無投票のため {voterName} にスキップさせます");
-                        goto default;
-                    default:
-                        Instance.AddVote(vote.Voter, vote.VotedFor);
                         break;
                 }
             }
@@ -263,7 +260,7 @@ public class MeetingVoteManager
             var voter = Utils.GetPlayerById(vote.Voter);
             if (!vote.IsSkip && !voter.Data.IsDead)
             {
-                vote.ChangeVoteTarget(Skip);
+                SetVote(vote.Voter, Skip, isIntentional: false);
                 logger.Info($"スキップ以外のため{voter.GetNameWithRole()}にスキップさせました");
             }
         }

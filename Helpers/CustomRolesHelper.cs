@@ -48,6 +48,15 @@ namespace TownOfHostY
         {
             return role is CustomRoles.Lovers or CustomRoles.Sympathizer;
         }
+        public static bool IsFixCountRole(this CustomRoles role)
+        {
+            return role is CustomRoles.Jackal
+                or CustomRoles.StrayWolf
+                or CustomRoles.Sympathizer
+                or CustomRoles.DarkHide
+                or CustomRoles.PlatonicLover
+                or CustomRoles.Lovers;
+        }
         public static bool IsCannotPublicRole(this CustomRoles role)
         {
             return
@@ -106,17 +115,6 @@ namespace TownOfHostY
                 CustomRoles.NonReport;
         }
 
-        public static bool IsKilledSchrodingerCat(this CustomRoles role)
-        {
-            return role is
-                CustomRoles.SchrodingerCat or
-                CustomRoles.MSchrodingerCat or
-                CustomRoles.CSchrodingerCat or
-                CustomRoles.EgoSchrodingerCat or
-                CustomRoles.DSchrodingerCat or
-                CustomRoles.JSchrodingerCat or
-                CustomRoles.OSchrodingerCat;
-        }
         public static bool IsDirectKillRole(this CustomRoles role)
         {
             return role is

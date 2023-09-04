@@ -22,7 +22,8 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
             CustomRoleTypes.Impostor,
             20700,
             SetupOptionItem,
-            "テレパシスターズ"
+            "テレパシスターズ",
+            assignCountRule: new(2, 3, 1)
         );
 
     public Telepathisters(PlayerControl player)

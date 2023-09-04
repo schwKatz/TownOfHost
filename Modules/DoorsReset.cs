@@ -1,6 +1,6 @@
-using TownOfHost.Attributes;
+using TownOfHostY.Attributes;
 
-namespace TownOfHost.Modules;
+namespace TownOfHostY.Modules;
 
 public static class DoorsReset
 {

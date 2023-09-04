@@ -51,7 +51,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "503.17";
+        public const string PluginVersion = "510.17.1";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.7.11";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -314,7 +314,6 @@ namespace TownOfHostY
     {
         None = -1,
         Opportunist = CustomRoles.Opportunist,
-        OSchrodingerCat = CustomRoles.OSchrodingerCat,
         SchrodingerCat = CustomRoles.SchrodingerCat,
         Executioner = CustomRoles.Executioner,
         Lovers = CustomRoles.Lovers,

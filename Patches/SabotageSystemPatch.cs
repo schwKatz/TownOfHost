@@ -1,5 +1,5 @@
 using HarmonyLib;
-using TownOfHost.Attributes;
+using TownOfHostY.Attributes;
 
 namespace TownOfHostY
 {

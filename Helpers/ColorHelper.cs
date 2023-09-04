@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace TownOfHost;
+namespace TownOfHostY;
 
 public static class ColorHelper
 {

@@ -16,7 +16,7 @@ namespace TownOfHostY.Roles.Neutral
                 CustomRoleTypes.Neutral,
                 50700,
                 SetupOptionItem,
-                "�W���b�J��",
+                "ジャッカル",
                 "#00b4eb",
                 true,
                 countType: CountTypes.Jackal,
@@ -62,7 +62,6 @@ namespace TownOfHostY.Roles.Neutral
             __instance.SabotageButton.ToggleVisible(isActive && CanUseSabotage);
         }
         public override bool OnInvokeSabotage(SystemTypes systemType) => CanUseSabotage;
-        public override bool CanSabotage(SystemTypes systemType) => CanUseSabotage;
         public void ApplySchrodingerCatOptions(IGameOptions option) => ApplyGameOptions(option);
     }
 }

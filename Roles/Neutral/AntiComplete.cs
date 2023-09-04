@@ -116,9 +116,10 @@ public sealed class AntiComplete : RoleBase
 
     public override string GetProgressText(bool comms = false) => ColorString(GuardCount > 0 ? RoleInfo.RoleColor : Color.gray, $"〔{GuardCount}〕");
 
-    public override (byte? votedForId, int? numVotes, bool doVote) OnVote(byte voterId, byte sourceVotedForId)
+    public override (byte? votedForId, int? numVotes, bool doVote) ModifyVote(byte voterId, byte sourceVotedForId, bool isIntentional)
     {
-        var (votedForId, numVotes, doVote) = base.OnVote(voterId, sourceVotedForId);
+        // 既定値
+        var (votedForId, numVotes, doVote) = base.ModifyVote(voterId, sourceVotedForId, isIntentional);
         var baseVote = (votedForId, numVotes, doVote);
         if (voterId != Player.PlayerId              // 投票者がアンチコンプ自身でない
             || sourceVotedForId == Player.PlayerId  // 投票先がアンチコンプ自身(自投票)

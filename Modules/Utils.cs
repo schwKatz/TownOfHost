@@ -12,25 +12,17 @@ using AmongUs.GameOptions;
 using Il2CppInterop.Runtime.InteropTypes;
 using UnityEngine;
 
-using TownOfHost.Modules;
-using TownOfHost.Roles;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
-using TownOfHost.Roles.Impostor;
-using TownOfHost.Roles.AddOns.Common;
-using TownOfHost.Roles.AddOns.Impostor;
-using TownOfHost.Roles.AddOns.Crewmate;
-using static TownOfHost.Translator;
 using TownOfHostY.Modules;
+using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Impostor;
+using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.AddOns.Impostor;
 using TownOfHostY.Roles.AddOns.Crewmate;
 using static TownOfHostY.Translator;
-using TownOfHostY.Roles.Crewmate;
 
 namespace TownOfHostY
 {
@@ -935,7 +927,7 @@ namespace TownOfHostY
             {
                 sb.Append($"\n　 ").Append(SummaryTexts(id, true));
             }
-            SendMessage(sb.ToString(), PlayerId, removeTags: false);
+            SendMessage(sb.ToString(), PlayerId);
         }
         public static void ShowKillLog(byte PlayerId = byte.MaxValue)
         {
@@ -1461,5 +1453,6 @@ namespace TownOfHostY
         public static bool IsAllAlive => PlayerState.AllPlayerStates.Values.All(state => state.CountType == CountTypes.OutOfGame || !state.IsDead);
         public static int PlayersCount(CountTypes countTypes) => PlayerState.AllPlayerStates.Values.Count(state => state.CountType == countTypes);
         public static int AlivePlayersCount(CountTypes countTypes) => Main.AllAlivePlayerControls.Count(pc => pc.Is(countTypes));
+        private const string ActiveSettingsSize = "90%";
     }
 }

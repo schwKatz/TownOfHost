@@ -18,7 +18,8 @@ public sealed class StrayWolf : RoleBase, IImpostor
             20900,
             SetupOptionItem,
             "はぐれ狼",
-            requireResetCam : true
+            requireResetCam : true,
+            assignCountRule: new(1, 1, 1)
         );
     public StrayWolf(PlayerControl player)
     : base(

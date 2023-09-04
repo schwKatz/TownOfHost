@@ -228,7 +228,6 @@ class SelectRolesPatch
                 {
                     if (info.RequireResetCam)
                     {
-                        
                         switch(role)
                         {
                         case CustomRoles.Sheriff:
@@ -242,7 +241,6 @@ class SelectRolesPatch
                         case CustomRoles.StrayWolf:
                             AssignedStrayWolf = AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
                             continue;
-                            break;
                         case CustomRoles.Opportunist:
                             if(!Opportunist.OptionCanKill.GetBool()) continue;
                             break;
@@ -479,7 +477,7 @@ class SelectRolesPatch
 
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role == CustomRoles.StrayWolf && AssignedStrayWolf) continue;
-                if (role is not CustomRoles.Opportunist or not CustomRoles.StrayWolf && 
+                if (role is not CustomRoles.Opportunist and not CustomRoles.StrayWolf && 
                     CustomRoleManager.GetRoleInfo(role) is SimpleRoleInfo info && info.RequireResetCam) continue;
 
                 var baseRoleTypes = role.GetRoleTypes() switch

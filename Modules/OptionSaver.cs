@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 
-namespace TownOfHost.Modules;
+namespace TownOfHostY.Modules;
 
 public static class OptionSaver
 {

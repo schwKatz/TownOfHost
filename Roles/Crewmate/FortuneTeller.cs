@@ -73,9 +73,10 @@ public sealed class FortuneTeller : RoleBase
         OptionKillerOnly = BooleanOptionItem.Create(RoleInfo, 14, OptionName.FortuneTellerKillerOnly, true, false);
     }
 
-    public override (byte? votedForId, int? numVotes, bool doVote) OnVote(byte voterId, byte sourceVotedForId)
+    public override (byte? votedForId, int? numVotes, bool doVote) ModifyVote(byte voterId, byte sourceVotedForId, bool isIntentional)
     {
-        var baseVote = base.OnVote(voterId, sourceVotedForId);
+        // 既定値
+        var baseVote = base.ModifyVote(voterId, sourceVotedForId, isIntentional);
         if (voterId == Player.PlayerId && sourceVotedForId != Player.PlayerId && sourceVotedForId < 253 && Player.IsAlive())
         {
             VoteForecastTarget(sourceVotedForId);
@@ -137,7 +138,7 @@ public sealed class FortuneTeller : RoleBase
         if (seen == null || !isForMeeting) return string.Empty;
         return ForecastResult.ContainsKey(seen.PlayerId) ? Utils.ColorString(RoleInfo.RoleColor, "★") : string.Empty;
     }
-    public override void OverrideRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {
         if (!isMeeting) return;
         if (!ForecastResult.ContainsKey(seen.PlayerId)) return;
