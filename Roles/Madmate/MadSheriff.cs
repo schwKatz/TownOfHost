@@ -13,7 +13,7 @@ public sealed class MadSheriff : RoleBase, IKiller
             CustomRoles.MadSheriff,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Madmate,
-            28600,
+            5600,
             SetupOptionItem,
             "マッドシェリフ",
             requireResetCam: true

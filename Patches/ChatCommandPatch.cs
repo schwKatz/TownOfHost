@@ -246,8 +246,6 @@ namespace TownOfHostY
                     case "/m":
                     case "/myrole":
                         canceled = true;
-                        if (!AmongUsClient.Instance.IsGameStarted) break;
-
                         string RoleInfoTitleString = GetString("RoleInfoTitle");
                         string RoleInfoTitle = Utils.ColorString(Utils.GetRoleColor(PlayerControl.LocalPlayer.GetCustomRole()), RoleInfoTitleString);
                         Utils.SendMessage(Utils.GetMyRoleInfo(PlayerControl.LocalPlayer), PlayerControl.LocalPlayer.PlayerId, RoleInfoTitle);
@@ -516,8 +514,6 @@ namespace TownOfHostY
 
                 case "/m":
                 case "/myrole":
-                    if (!AmongUsClient.Instance.IsGameStarted) break;
-
                     string RoleInfoTitleString = GetString("RoleInfoTitle");
                     string RoleInfoTitle = Utils.ColorString(Utils.GetRoleColor(player.GetCustomRole()), RoleInfoTitleString);
                     Utils.SendMessage(Utils.GetMyRoleInfo(player), player.PlayerId, RoleInfoTitle);
@@ -604,7 +600,7 @@ namespace TownOfHostY
         }
         public static void SendCustomChat(string SendName, PlayerControl sender = null, byte sendTo = byte.MaxValue)
         {
-            Logger.Info($"SendName: {SendName.RemoveHtmlTags()}, sender: {sender?.name}, sendTo: {sendTo}", "SendCustomChat");
+            Logger.Info($"SendName: {SendName}, sender: {sender?.name}, sendTo: {sendTo}", "SendCustomChat");
             string command = "\n\n";
             if (sender == null) sender = PlayerControl.LocalPlayer;
             string name = sender.Data?.PlayerName;

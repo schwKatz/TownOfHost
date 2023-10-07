@@ -9,7 +9,7 @@ using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Neutral
 {
-    public sealed class DarkHide : RoleBase, IKiller, ISchrodingerCatOwner
+    public sealed class DarkHide : RoleBase, IKiller
     {
         public static readonly SimpleRoleInfo RoleInfo =
             SimpleRoleInfo.Create(
@@ -53,8 +53,6 @@ namespace TownOfHostY.Roles.Neutral
 
         public bool IsWinKill = false;
 
-        public SchrodingerCat.TeamType SchrodingerCatChangeTo => SchrodingerCat.TeamType.DarkHide;
-
         private static void SetupOptionItem()
         {
             OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 30f, false)
@@ -87,7 +85,5 @@ namespace TownOfHostY.Roles.Neutral
         public float CalculateKillCooldown() => KillCooldown;
         public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
         public override bool OnInvokeSabotage(SystemTypes systemType) => false;
-
-        public void ApplySchrodingerCatOptions(IGameOptions option) => ApplyGameOptions(option);
     }
 }

@@ -57,6 +57,29 @@ namespace TownOfHostY
                 or CustomRoles.PlatonicLover
                 or CustomRoles.Lovers;
         }
+        public static bool IsCannotPublicRole(this CustomRoles role)
+        {
+            return
+                role is CustomRoles.Puppeteer
+                    or CustomRoles.BountyHunter
+                    or CustomRoles.Witch
+                    or CustomRoles.SerialKiller
+                    or CustomRoles.Vampire
+                    or CustomRoles.Warlock
+                    or CustomRoles.CursedWolf
+                    or CustomRoles.EvilDiviner
+                    or CustomRoles.MadGuardian
+                    or CustomRoles.MadSheriff
+                    or CustomRoles.SillySheriff
+                    or CustomRoles.Sheriff
+                    or CustomRoles.Medic
+                    or CustomRoles.Arsonist
+                    or CustomRoles.SchrodingerCat
+                    or CustomRoles.PlatonicLover
+                    or CustomRoles.LoveCutter
+                    or CustomRoles.Totocalcio
+                    or CustomRoles.Guarding;
+        }
 
         public static bool IsAddAddOn(this CustomRoles role)
         {

@@ -13,7 +13,7 @@ public sealed class MadGuardian : RoleBase
             CustomRoles.MadGuardian,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            28100,
+            5100,
             SetupOptionItem,
             "マッドガーディアン",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

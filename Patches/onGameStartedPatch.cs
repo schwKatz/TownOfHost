@@ -230,6 +230,14 @@ class SelectRolesPatch
                     {
                         switch(role)
                         {
+                        case CustomRoles.Sheriff:
+                        case CustomRoles.SillySheriff:
+                        case CustomRoles.Arsonist:
+                        case CustomRoles.MadSheriff:
+                        case CustomRoles.PlatonicLover:
+                        case CustomRoles.Totocalcio:
+                            if(Main.CanPublicRoom.Value) continue;
+                            break;
                         case CustomRoles.StrayWolf:
                             AssignedStrayWolf = AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
                             continue;
@@ -465,6 +473,7 @@ class SelectRolesPatch
             {
                 if (role.IsVanilla()) continue;
                 if (role is CustomRoles.HASTroll or CustomRoles.HASFox || role.IsCCRole()/* || role.IsONRole()*/) continue;
+                if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
 
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role == CustomRoles.StrayWolf && AssignedStrayWolf) continue;
@@ -499,7 +508,8 @@ class SelectRolesPatch
             AssignCustomSubRolesFromList(CustomRoles.TieBreaker, allPlayersbySub);
             AssignCustomSubRolesFromList(CustomRoles.NonReport, allPlayersbySub);
             AssignCustomSubRolesFromList(CustomRoles.PlusVote, allPlayersbySub);
-            AssignCustomSubRolesFromList(CustomRoles.Guarding, allPlayersbySub);
+            if (!Main.CanPublicRoom.Value)
+                AssignCustomSubRolesFromList(CustomRoles.Guarding, allPlayersbySub);
             AssignCustomSubRolesFromList(CustomRoles.AddBait, allPlayersbySub);
             AssignCustomSubRolesFromList(CustomRoles.Refusing, allPlayersbySub);
 

@@ -12,7 +12,7 @@ public sealed class Madmate : RoleBase
             CustomRoles.Madmate,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Madmate,
-            28000,
+            5000,
             SetupOptionItem,
             "マッドメイト",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

@@ -331,8 +331,7 @@ namespace TownOfHostY
         {
             if (!player) return null;
             var text = Utils.GetRoleName(player.GetCustomRole());
-            //text += player.GetSubRoleName();
-            text += Utils.GetSubRoleMarks(player.GetCustomSubRoles());  //Markに変更
+            text += player.GetSubRoleName();
             // Logでしか使用していないのでここにRemoveTag
             return text.RemoveHtmlTags();
         }

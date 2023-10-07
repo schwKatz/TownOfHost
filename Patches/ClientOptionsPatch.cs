@@ -9,6 +9,7 @@ namespace TownOfHostY
     {
         private static ClientActionItem ForceJapanese;
         private static ClientActionItem JapaneseRoleName;
+        private static ClientActionItem CanPublicRoom;
         private static ClientActionItem UnloadMod;
         private static ClientActionItem DumpLog;
 
@@ -27,6 +28,14 @@ namespace TownOfHostY
             {
                 JapaneseRoleName = ClientOptionItem.Create("JapaneseRoleName", Main.JapaneseRoleName, __instance);
             }
+            if (CanPublicRoom == null || CanPublicRoom.ToggleButton == null)
+            {
+                CanPublicRoom = ClientActionItem.Create("CanPublicRoom", Message01.Show, __instance);
+            }
+            //if (CanPublicRoom == null || CanPublicRoom.ToggleButton == null)
+            //{
+            //    CanPublicRoom = ClientOptionItem.Create("CanPublicRoom", Main.CanPublicRoom, __instance);
+            //}
             if (UnloadMod == null || UnloadMod.ToggleButton == null)
             {
                 UnloadMod = ClientActionItem.Create("UnloadMod", ModUnloaderScreen.Show, __instance);
@@ -39,6 +48,10 @@ namespace TownOfHostY
             if (ModUnloaderScreen.Popup == null)
             {
                 ModUnloaderScreen.Init(__instance);
+            }
+            if (Message01.Popup == null)
+            {
+                Message01.Init(__instance);
             }
         }
     }
@@ -53,6 +66,7 @@ namespace TownOfHostY
                 ClientActionItem.CustomBackground.gameObject.SetActive(false);
             }
             ModUnloaderScreen.Hide();
+            Message01.Hide();
         }
     }
 }

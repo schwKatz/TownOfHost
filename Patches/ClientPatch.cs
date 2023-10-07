@@ -28,13 +28,13 @@ namespace TownOfHostY
                 Logger.SendInGame(message);
                 return false;
             }
-            //if (!Main.CanPublicRoom.Value)
-            //{
-            //    var message = GetString("DisabledByProgram");
-            //    Logger.Info(message, "MakePublicPatch");
-            //    Logger.SendInGame(message);
-            //    return false;
-            //}
+            if (!Main.CanPublicRoom.Value)
+            {
+                var message = GetString("DisabledByProgram");
+                Logger.Info(message, "MakePublicPatch");
+                Logger.SendInGame(message);
+                return false;
+            }
             return true;
         }
     }
@@ -43,7 +43,7 @@ namespace TownOfHostY
     {
         public static void Postfix(MMOnlineManager __instance)
         {
-            if (VersionChecker.IsSupported /*&& Main.CanPublicRoom.Value */&& Main.AllowPublicRoom) return;
+            if (VersionChecker.IsSupported && Main.CanPublicRoom.Value && Main.AllowPublicRoom) return;
 
             var obj = GameObject.Find("FindGameButton");
             if (obj)
@@ -63,10 +63,10 @@ namespace TownOfHostY
                 {
                     message = GetString("DisabledByProgram");
                 }
-                //else if (!Main.CanPublicRoom.Value)
-                //{
-                //    message = GetString("DisabledByProgram");
-                //}
+                else if (!Main.CanPublicRoom.Value)
+                {
+                    message = GetString("DisabledByProgram");
+                }
                 textObj.text = $"<size=2>{Utils.ColorString(Color.red, message)}</size>";
             }
         }

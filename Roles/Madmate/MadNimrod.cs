@@ -14,7 +14,7 @@ public sealed class MadNimrod : RoleBase
             CustomRoles.MadNimrod,
             () => OptionCanVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            28700,
+            5700,
             SetupOptionItem,
             "マッドニムロッド",
             introSound: () => GetIntroSound(RoleTypes.Impostor)
