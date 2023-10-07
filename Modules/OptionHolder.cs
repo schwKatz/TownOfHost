@@ -8,6 +8,7 @@ using UnityEngine;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.AddOns.Impostor;
 using TownOfHostY.Roles.AddOns.Crewmate;
@@ -335,7 +336,7 @@ namespace TownOfHostY
                 .SetGameMode(CustomGameMode.All);
 
             // Impostor
-            sortedRoleInfo.Where(role => role.CustomRoleType == CustomRoleTypes.Impostor).Do(info =>
+            sortedRoleInfo.Where(role => role.CustomRoleType is CustomRoleTypes.Impostor or CustomRoleTypes.Madmate).Do(info =>
             {
                 SetupRoleOptions(info);
                 info.OptionCreator?.Invoke();
@@ -346,13 +347,7 @@ namespace TownOfHostY
                 .SetValueFormat(OptionFormat.Seconds);
             ImpostorOperateVisibility = BooleanOptionItem.Create(90110, "ImpostorOperateVisibility", false, TabGroup.ImpostorRoles, false);
 
-            // Madmate, Crewmate, Neutral
-            sortedRoleInfo.Where(role => role.CustomRoleType != CustomRoleTypes.Impostor).Do(info =>
-            {
-                SetupRoleOptions(info);
-                info.OptionCreator?.Invoke();
-            });
-
+            // Madmate
             CanMakeMadmateCount = IntegerOptionItem.Create(91510, "CanMakeMadmateCount", new(0, 15, 1), 0, TabGroup.MadmateRoles, false)
                 .SetColor(Palette.ImpostorRed)
                 .SetHeader(true)
@@ -370,7 +365,19 @@ namespace TownOfHostY
                 .SetValueFormat(OptionFormat.Seconds);
             MadmateVentMaxTime = FloatOptionItem.Create(91529, "MadmateVentMaxTime", new(0f, 180f, 5f), 0f, TabGroup.MadmateRoles, false)
                 .SetValueFormat(OptionFormat.Seconds);
-            
+
+            // SpecialEvent
+            SpecialEvent.SetupOptions();
+
+            // Impostor以外
+            sortedRoleInfo.Where(role => role.CustomRoleType is CustomRoleTypes.Crewmate or CustomRoleTypes.Neutral).Do(info =>
+            {
+                if (!SpecialEvent.IsEventRole(info.RoleName))
+                {
+                    SetupRoleOptions(info);
+                    info.OptionCreator?.Invoke();
+                }
+            });
             // Add-Ons
             TextOptionItem.Create(50, "Head.ImpostorAddOn", TabGroup.Addons).SetColor(Palette.ImpostorRed);
             LastImpostor.SetupCustomOption();
@@ -695,12 +702,12 @@ namespace TownOfHostY
         public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, IntegerValueRule assignCountRule = null, CustomGameMode customGameMode = CustomGameMode.Standard)
         {
             if (role.IsVanilla()) return;
+            assignCountRule ??= new(1, 15, 1);
 
             var spawnOption = IntegerOptionItem.Create(id, role.ToString(), new(0, 100, 10), 0, tab, false)
                 .SetColor(Utils.GetRoleColor(role))
                 .SetValueFormat(OptionFormat.Percent)
                 .SetHeader(true)
-                .SetIsPublicDontUse(role.IsCannotPublicRole())
                 .SetGameMode(customGameMode) as IntegerOptionItem;
             var countOption = IntegerOptionItem.Create(id + 1, "Maximum", assignCountRule, assignCountRule.Step, tab, false)
                 .SetParent(spawnOption)
@@ -740,7 +747,7 @@ namespace TownOfHostY
         {
             if (parent == null) parent = CustomRoleSpawnChances[PlayerRole];
             Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), Utils.GetRoleName(role)) + "  " + Utils.GetAddonAbilityInfo(role) } };
-            AddOnRoleOptions[(PlayerRole, role)] = BooleanOptionItem.Create(Id, "AddOnAssign%role%", defaultValue, tab, false).SetParent(parent).SetIsPublicDontUse(role == CustomRoles.Guarding);
+            AddOnRoleOptions[(PlayerRole, role)] = BooleanOptionItem.Create(Id, "AddOnAssign%role%", defaultValue, tab, false).SetParent(parent);
             AddOnRoleOptions[(PlayerRole, role)].ReplacementDictionary = replacementDic;
         }
 

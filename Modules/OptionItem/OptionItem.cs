@@ -27,7 +27,6 @@ namespace TownOfHostY
         public Color NameColor { get; protected set; }
         public OptionFormat ValueFormat { get; protected set; }
         public CustomGameMode GameMode { get; protected set; }
-        public bool IsPublicDontUse { get; protected set; }
         public bool IsHeader { get; protected set; }
         public bool IsHidden { get; protected set; }
         public bool IsFixValue { get; protected set; }
@@ -78,7 +77,6 @@ namespace TownOfHostY
             NameColor = Color.white;
             ValueFormat = OptionFormat.None;
             GameMode = CustomGameMode.Standard;
-            IsPublicDontUse = false;
             IsHeader = false;
             IsHidden = false;
             IsFixValue = false;
@@ -125,7 +123,6 @@ namespace TownOfHostY
         public OptionItem SetColor(Color value) => Do(i => i.NameColor = value);
         public OptionItem SetValueFormat(OptionFormat value) => Do(i => i.ValueFormat = value);
         public OptionItem SetGameMode(CustomGameMode value) => Do(i => i.GameMode = value);
-        public OptionItem SetIsPublicDontUse(bool value) => Do(i => i.IsPublicDontUse = value);
         public OptionItem SetHeader(bool value) => Do(i => i.IsHeader = value);
         public OptionItem SetHidden(bool value) => Do(i => i.IsHidden = value);
         public OptionItem SetFixValue(bool value) => Do(i => i.IsFixValue = value);
@@ -169,7 +166,7 @@ namespace TownOfHostY
         // 旧IsHidden関数
         public virtual bool IsHiddenOn(CustomGameMode mode)
         {
-            return IsHidden || (GameMode != CustomGameMode.All && GameMode != mode) || (IsPublicDontUse && IsPublicDontUse == Main.CanPublicRoom.Value);
+            return IsHidden || (GameMode != CustomGameMode.All && GameMode != mode);
         }
 
         public string ApplyFormat(string value)

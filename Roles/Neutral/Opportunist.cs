@@ -7,7 +7,7 @@ using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Neutral;
 
-public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
+public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner, ISchrodingerCatOwner
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -46,6 +46,8 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner
     public int ShotLimit = 0;
     public float KillCooldown = 30;
     private static bool HasImpostorVision;
+
+    public SchrodingerCat.TeamType SchrodingerCatChangeTo => SchrodingerCat.TeamType.Opportunist;
 
     private static void SetupOptionItem()
     {

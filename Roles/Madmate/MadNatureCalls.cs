@@ -12,7 +12,7 @@ public sealed class MadNatureCalls : RoleBase
             CustomRoles.MadNatureCalls,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Madmate,
-            5400,
+            28400,
             SetupOptionItem,
             "マッドネイチャコール",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

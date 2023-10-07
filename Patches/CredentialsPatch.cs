@@ -8,6 +8,7 @@ using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Templates;
 using static TownOfHostY.Translator;
+using TownOfHostY.Roles.Crewmate;
 
 namespace TownOfHostY
 {
@@ -97,13 +98,19 @@ namespace TownOfHostY
                 }
                 if (Main.IsInitialRelease)
                 {
+                    SpecialEventText.color = Color.yellow;
                     SpecialEventText.text = $"Happy Birthday to {Main.ModName}!";
-                    if (ColorUtility.TryParseHtmlString(Main.ModColor, out var col))
+                    if (CultureInfo.CurrentCulture.Name == "ja-JP")
                     {
-                        SpecialEventText.color = col;
+                        SpecialEventText.text += SpecialEvent.TitleText();
                     }
                 }
-                if (!Main.CanPublicRoom.Value && Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
+                else if (Main.IsChristmas && CultureInfo.CurrentCulture.Name == "ja-JP")
+                {
+                    SpecialEventText.text = "★Merry Christmas★\n<size=15%>\n\nTOH_Yからのプレゼントはありません。</size>";
+                    SpecialEventText.color = Color.yellow;
+                }
+                else if (Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
                 {
                     SpecialEventText.text = "TOH_Yへようこそ！" +
                         "\n<size=55%>仕様の質問や不具合報告はTOH_YのDiscordまで。" +
@@ -112,24 +119,6 @@ namespace TownOfHostY
                         "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
                     SpecialEventText.color = Color.yellow;
                 }
-                if (Main.CanPublicRoom.Value && Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
-                {
-                    SpecialEventText.text = "【TOH_YSはこのバージョンでは使用不可】" +
-                        "\n<size=55%>InnerSlothからのアナウンスにより、" +
-                        "\n公開ルームでプレイできない仕様に変更しています。" +
-                        "\n設定(歯車)から[公開ルーム可能]をクリックして、完全版に切替を。" +
-                        "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n</size>";
-                    SpecialEventText.color = Color.yellow;
-                }
-                //if (Main.CanPublicRoom.Value && Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
-                //{
-                //    SpecialEventText.text = "TOH_YSへようこそ！" +
-                //        "\n<size=55%>制限版では公開ルーム/非公開ルームどちらでも使用できます。" +
-                //        "\nただし、一部役職が使用できません。(非表示にしてあります)" +
-                //        "\n非公開ルームで遊ぶ場合は設定(歯車)から[公開ルーム可能]をオフにした完全版で。" +
-                //        "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
-                //    SpecialEventText.color = Color.yellow;
-                //}
                 //if (Main.IsValentine)
                 //{
                 //    SpecialEventText.text = "♥happy Valentine♥";
@@ -137,11 +126,6 @@ namespace TownOfHostY
                 //        SpecialEventText.text += "<size=60%>\n<color=#b58428>チョコレート屋で遊んでみてね。</size></color>";
                 //    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
                 //}
-                if (Main.IsChristmas && CultureInfo.CurrentCulture.Name == "ja-JP")
-                {
-                    SpecialEventText.text = "★Merry Christmas★\n<size=15%>\n\nTOH_Yからのプレゼントはありません。</size>";
-                    SpecialEventText.color = Color.yellow;
-                }
             }
         }
 
@@ -162,10 +146,7 @@ namespace TownOfHostY
                 logoTransform.parent = rightpanel;
                 logoTransform.localPosition = new(0f, 0.18f, 1f);
                 //logoTransform.localScale *= 1f;
-                if(!Main.CanPublicRoom.Value)
-                    TohLogo.sprite = Utils.LoadSprite("TownOfHost_Y.Resources.TownOfHostY-Logo.png", 300f);
-                else
-                    TohLogo.sprite = Utils.LoadSprite("TownOfHost_Y.Resources.TownOfHostYS-Logo.png", 300f);
+                TohLogo.sprite = Utils.LoadSprite("TownOfHost_Y.Resources.TownOfHostY-Logo.png", 300f);
             }
         }
         [HarmonyPatch(typeof(ModManager), nameof(ModManager.LateUpdate))]

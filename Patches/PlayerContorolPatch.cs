@@ -402,7 +402,7 @@ namespace TownOfHostY
                     else __instance.cosmetics.nameText.text = __instance?.Data?.PlayerName;
 
                     var client = __instance.GetClient();
-                    var consent = Main.CanPublicRoom.Value && client != null && Main.ConsentModUse.ContainsKey(client.Id) ? "<color=#ff00ff>ModOK</color>" : "";
+                    var consent = false && client != null && Main.ConsentModUse.ContainsKey(client.Id) ? "<color=#ff00ff>ModOK</color>" : "";
                     __instance.cosmetics.nameText.text += consent;
                 }
                 if (GameStates.IsInGame)
@@ -442,6 +442,11 @@ namespace TownOfHostY
 
                     //NameColorManager準拠の処理
                     RealName = RealName.ApplyNameColorData(seer, target, false);
+
+                    (Color c, string t) = (Color.clear, "");
+                    //trueRoleNameでColor上書きあればそれになる
+                    target.GetRoleClass()?.OverrideTrueRoleName(ref c, ref t);
+                    if(c != Color.clear) RealName.Color(c);
 
                     //seer役職が対象のMark
                     Mark.Append(seerRole?.GetMark(seer, target, false));
@@ -625,6 +630,7 @@ namespace TownOfHostY
             }
             //属性クラスの扱いを決定するまで仮置き
             ret &= Workhorse.OnCompleteTask(pc);
+            CompreteCrew.OnCompleteTask(pc);
 
             if (Options.IsCCMode) CatchCat.CatPlayer.OnCompleteTask(pc, taskState);
 

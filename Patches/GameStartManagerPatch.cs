@@ -27,9 +27,14 @@ namespace TownOfHostY
         {
             public static void Postfix(GameStartManager __instance, bool neverShow)
             {
-                if (!Main.CanPublicRoom.Value) return;
+                //現在MODOKコマンドを使用しないためリターン
+                //使用する時になればCanPublicRoomを変更しながら通るように使用する
+                return;
+
+                //if (!Main.CanPublicRoom.Value) return;
                 if (GameStartManager.Instance.startState != GameStartManager.StartingStates.Countdown) return;
-                Logger.Info($"CanPublicRoom: {Main.CanPublicRoom.Value}", "GameStartManagerStart");
+                //Logger.Info($"CanPublicRoom: {Main.CanPublicRoom.Value}", "GameStartManagerStart");
+
                 foreach (var pc in Main.AllPlayerControls.Where(x => x.PlayerId != PlayerControl.LocalPlayer.PlayerId))
                 {
                     var target = pc.GetClient();
@@ -40,9 +45,7 @@ namespace TownOfHostY
                         AmongUsClient.Instance.KickPlayer(target.Id, false);
                         Utils.SendMessage(string.Format(GetString("Message.ModCheckKick"), target.PlayerName));
                     }
-
                 }
-                return;
             }
         }
 

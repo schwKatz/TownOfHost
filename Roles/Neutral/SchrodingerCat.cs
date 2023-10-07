@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using UnityEngine;
-
 using AmongUs.GameOptions;
 using Hazel;
 
@@ -12,8 +10,7 @@ using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Neutral;
 
-// マッドが属性化したらマッド状態時の特別扱いを削除する
-public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSeeable, IKillFlashSeeable
+public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSeeable, IKillFlashSeeable//MAD時に使用
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -158,11 +155,19 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
     }
     public override void OverrideTrueRoleName(ref Color roleColor, ref string roleText)
     {
-        // 陣営変化前なら上書き不要
-        if (Team == TeamType.None)
+        switch(Team)
         {
-            return;
+            case TeamType.None:// 陣営変化前なら上書き不要
+                return;
+            case TeamType.Crew: roleText = "(Crew)" + roleText; break;
+            case TeamType.Mad: roleText = "(Impo)" + roleText; break;
+            case TeamType.Jackal: roleText = "(Jack)" + roleText; break;
+            case TeamType.Egoist: roleText = "(Ego)" + roleText; break;
+            case TeamType.DarkHide: roleText = "(Dark)" + roleText; break;
+            case TeamType.Opportunist: roleText = "(Oppo)" + roleText; break;
         }
+
+        // 色を変更
         roleColor = DisplayRoleColor;
     }
     public override void OnExileWrapUp(GameData.PlayerInfo exiled, ref bool DecidedWinner)
@@ -180,7 +185,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
     {
         var rand = IRandom.Instance;
         // 追加時にキャパ数を変更
-        List<TeamType> candidates = new(4)
+        List<TeamType> candidates = new(5)
         {
             TeamType.Crew,
             TeamType.Mad,
@@ -192,6 +197,10 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         if (CustomRoles.Jackal.IsPresent())
         {
             candidates.Add(TeamType.Jackal);
+        }
+        if (CustomRoles.DarkHide.IsPresent())
+        {
+            candidates.Add(TeamType.DarkHide);
         }
         var team = candidates[rand.Next(candidates.Count)];
         RpcSetTeam(team);
@@ -206,6 +215,8 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
             TeamType.Crew => CustomWinnerHolder.WinnerTeam == CustomWinner.Crewmate,
             TeamType.Jackal => CustomWinnerHolder.WinnerTeam == CustomWinner.Jackal,
             TeamType.Egoist => CustomWinnerHolder.WinnerTeam == CustomWinner.Egoist,
+            TeamType.DarkHide => CustomWinnerHolder.WinnerTeam == CustomWinner.DarkHide,
+            TeamType.Opportunist => Player.IsAlive(),
             _ => null,
         };
         if (!won.HasValue)
@@ -270,6 +281,14 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         /// エゴイスト陣営に所属する状態
         /// </summary>
         Egoist,
+        /// <summary>
+        /// ダークハイド陣営に所属する状態
+        /// </summary>
+        DarkHide,
+        /// <summary>
+        /// オポチュニスト陣営に所属する状態
+        /// </summary>
+        Opportunist,
     }
     public static Color GetCatColor(TeamType catType)
     {
@@ -280,6 +299,8 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
             TeamType.Crew => Utils.GetRoleColor(CustomRoles.Crewmate),
             TeamType.Jackal => Utils.GetRoleColor(CustomRoles.Jackal),
             TeamType.Egoist => Utils.GetRoleColor(CustomRoles.Egoist),
+            TeamType.DarkHide => Utils.GetRoleColor(CustomRoles.DarkHide),
+            TeamType.Opportunist => Utils.GetRoleColor(CustomRoles.Opportunist),
             _ => null,
         };
         if (!color.HasValue)
