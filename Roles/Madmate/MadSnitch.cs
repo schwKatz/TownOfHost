@@ -14,7 +14,7 @@ public sealed class MadSnitch : RoleBase
             CustomRoles.MadSnitch,
             () => OptionCanVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            5200,
+            28200,
             SetupOptionItem,
             "マッドスニッチ",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

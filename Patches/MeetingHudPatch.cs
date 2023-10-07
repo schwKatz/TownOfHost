@@ -177,6 +177,11 @@ public static class MeetingHudPatch
                     //    pva.NameText.color = Utils.GetRoleColor(seer.GetCustomRole());
                     //else
                         pva.NameText.text = pva.NameText.text.ApplyNameColorData(seer, target, true);
+
+                    (Color c,string t) = (pva.NameText.color, "");
+                    //trueRoleNameでColor上書きあればそれになる
+                    target.GetRoleClass()?.OverrideTrueRoleName(ref c, ref t);
+                    pva.NameText.color = c;
                 }
                 else
                 {

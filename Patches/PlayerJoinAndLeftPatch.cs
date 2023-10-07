@@ -120,7 +120,7 @@ namespace TownOfHostY
                 _ = new LateTask(() =>
                 {
                     if (client.Character == null) return;
-                    if (Main.CanPublicRoom.Value)
+                    if (false)
                     {
                         if (client.Character.PlayerId == PlayerControl.LocalPlayer.PlayerId)
                             Utils.SendMessageCustom(string.Format(GetString("Message.AnnounceUsingOpenMODAttention"), Main.PluginVersion), client.Character.PlayerId);

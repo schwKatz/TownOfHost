@@ -6,9 +6,10 @@ using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY.Roles.Crewmate;
-public sealed class SillySheriff : RoleBase, IKiller
+public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
 {
     public static readonly SimpleRoleInfo RoleInfo =
          SimpleRoleInfo.Create(
@@ -66,6 +67,8 @@ public sealed class SillySheriff : RoleBase, IKiller
             "Rate0",  "Rate5",  "Rate10", "Rate20", "Rate30", "Rate40",
             "Rate50", "Rate60", "Rate70", "Rate80", "Rate90", "Rate100",
     };
+
+    public SchrodingerCat.TeamType SchrodingerCatChangeTo => SchrodingerCat.TeamType.Crew;
 
     private static void SetupOptionItem()
     {

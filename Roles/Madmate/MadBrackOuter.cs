@@ -14,7 +14,7 @@ public sealed class MadBrackOuter : RoleBase
             CustomRoles.MadBrackOuter,
             () => RoleTypes.Engineer,
             CustomRoleTypes.Madmate,
-            5500,
+            28500,
             SetupOptionItem,
             "マッドブラックアウター",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

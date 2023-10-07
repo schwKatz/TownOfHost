@@ -12,6 +12,7 @@ using UnityEngine;
 
 using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
 
 [assembly: AssemblyFileVersionAttribute(TownOfHostY.Main.PluginVersion)]
 [assembly: AssemblyInformationalVersionAttribute(TownOfHostY.Main.PluginVersion)]
@@ -29,7 +30,7 @@ namespace TownOfHostY
         // modの色 / Mod Color (Default: #00bfff)
         public static readonly string ModColor = "#ffff00";
         // 公開ルームを許可する / Allow Public Room (Default: true)
-        public static readonly bool AllowPublicRoom = false;
+        public static readonly bool AllowPublicRoom = true;
         // フォークID / ForkId (Default: OriginalTOH)
         public static readonly string ForkId = "TOH_Y";
         // Discordボタンを表示するか / Show Discord Button (Default: true)
@@ -51,7 +52,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "510.17.1";
+        public const string PluginVersion = "511.18";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.7.11";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -68,7 +69,6 @@ namespace TownOfHostY
         public static ConfigEntry<string> HideColor { get; private set; }
         public static ConfigEntry<bool> ForceJapanese { get; private set; }
         public static ConfigEntry<bool> JapaneseRoleName { get; private set; }
-        public static ConfigEntry<bool> CanPublicRoom { get; private set; }
         public static ConfigEntry<float> MessageWait { get; private set; }
 
         public static Dictionary<byte, PlayerVersion> playerVersion = new();
@@ -95,7 +95,7 @@ namespace TownOfHostY
         public static List<int> clientIdList;
         public static List<(string, byte, string, bool)> MessagesToSend;
         public static bool isChatCommand = false;
-        public static List<PlayerControl> LoversPlayers = new();
+        public static List<PlayerControl> LoversPlayers = new(2);
         public static bool isLoversDead = true;
         public static Dictionary<byte, float> AllPlayerKillCooldown = new();
         public static Dictionary<int, string> ConsentModUse = new();
@@ -117,7 +117,7 @@ namespace TownOfHostY
         public static bool IsValentine = DateTime.Now.Month == 3 && DateTime.Now.Day is 9 or 10 or 11 or 12 or 13 or 14 or 15;
         public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 23 or 24 or 25 or 26;
         public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3;
-        public static bool IsInitialRelease = DateTime.Now.Month == 11 && DateTime.Now.Day is 2;
+        public static bool IsInitialRelease = SpecialEvent.IsEventDate();
         public static bool IsOneNightRelease = true;
         public const float RoleTextSize = 2f;
 
@@ -138,7 +138,6 @@ namespace TownOfHostY
             HideColor = Config.Bind("Client Options", "Hide Game Code Color", $"{ModColor}");
             ForceJapanese = Config.Bind("Client Options", "Force Japanese", false);
             JapaneseRoleName = Config.Bind("Client Options", "Japanese Role Name", true);
-            CanPublicRoom = Config.Bind("Client Options", "Can Public Room", false);
             DebugKeyInput = Config.Bind("Authentication", "Debug Key", "");
 
             Logger = BepInEx.Logging.Logger.CreateLogSource("TOH_Y");

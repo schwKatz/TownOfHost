@@ -121,7 +121,7 @@ namespace TownOfHostY.Modules
 
             if (Main.AllPlayerSpeed.TryGetValue(player.PlayerId, out var speed))
             {
-                AURoleOptions.PlayerSpeedMod = Mathf.Clamp(speed, Main.MinSpeed, Main.CanPublicRoom.Value? 3f : 10f);
+                AURoleOptions.PlayerSpeedMod = Mathf.Clamp(speed, Main.MinSpeed, 10f);
             }
 
             state.taskState.hasTasks = Utils.HasTasks(player.Data, false);

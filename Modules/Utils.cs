@@ -617,11 +617,13 @@ namespace TownOfHostY
             roleString = $"<color={GetRoleColorCode(myRole)}><size=95%>{roleString}</size></color>";
             sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(player.GetRoleInfo(true)).Append("</line-height></size>");
 
-            //setting
-            sb.Append("\n<size=65%><line-height=1.5pic>");
-            ShowChildrenSettings(Options.CustomRoleSpawnChances[myRole], ref sb);
-            sb.Append("</size></line-height>");
-
+            if (myRole is not CustomRoles.Crewmate and not CustomRoles.Impostor and not CustomRoles.Potentialist)
+            {
+                //setting
+                sb.Append("\n<size=65%><line-height=1.5pic>");
+                ShowChildrenSettings(Options.CustomRoleSpawnChances[myRole], ref sb);
+                sb.Append("</size></line-height>");
+            }
             foreach (var subRole in player.GetCustomSubRoles())
             {
                 if (subRole != CustomRoles.NotAssigned)
@@ -670,7 +672,6 @@ namespace TownOfHostY
                 foreach (var role in CustomRolesHelper.AllRoles)
                 {
                     if (role is CustomRoles.HASFox or CustomRoles.HASTroll || role.IsCCRole()) continue;
-                    if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
                     //if (Options.IsONMode && !role.IsONRole()) continue;
 
                     if (role.IsEnable() && !role.IsVanilla())
@@ -732,8 +733,7 @@ namespace TownOfHostY
                 //else
                 {
                     sb.AppendFormat("<size={0}>", ActiveSettingsSize);
-                    sb.Append("<size=100%>").Append(GetString("Settings")).Append('\n').Append("</size>");
-                    sb.AppendFormat("\n【{0}: {1}】\n", RoleAssignManager.OptionAssignMode.GetName(true), RoleAssignManager.OptionAssignMode.GetString());
+                    sb.AppendFormat("<size=65%>【{0}: {1}</size>】\n\n", RoleAssignManager.OptionAssignMode.GetName(true), RoleAssignManager.OptionAssignMode.GetString());
                     if (RoleAssignManager.OptionAssignMode.GetBool())
                     {
                         ShowChildrenSettings(RoleAssignManager.OptionAssignMode, ref sb);
@@ -743,7 +743,6 @@ namespace TownOfHostY
                     {
                         if (!role.IsEnable() || role is CustomRoles.HASFox or CustomRoles.HASTroll
                             || role.IsCCRole() /*|| role.Key.IsONRole()*/) continue;
-                        if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
 
                         // 陣営ごとのマーク
                         if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
@@ -755,6 +754,7 @@ namespace TownOfHostY
                         else sb.Append('　');
 
                         sb.Append($"<u><mark=#69696933><color={GetRoleColorCode(role)}><b>{GetRoleName(role)}</b></color></u></mark>");
+                        //sb.Append($"<u><b>{GetRoleName(role).Color(GetRoleColor(role)).Mark(Color.black, false)}</b></u>");
                         // 確率＆人数
                         sb.AppendFormat(" ：<size=70%>{0}×</size><size=80%>{1}{2}</size>\n", $"{role.GetChance()}%", role.GetCount(), role.IsPairRole() ? GetString("Pair") : "");
 
@@ -797,7 +797,6 @@ namespace TownOfHostY
             {
                 if (!role.Key.IsEnable() || role.Key is CustomRoles.HASFox or CustomRoles.HASTroll
                     || role.Key.IsCCRole() /*|| role.Key.IsONRole()*/) continue;
-                if (Main.CanPublicRoom.Value && role.Key.IsCannotPublicRole()) continue;
 
                 if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
                     sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
@@ -837,7 +836,6 @@ namespace TownOfHostY
             foreach (CustomRoles role in CustomRolesHelper.AllRoles)
             {
                 if (role is CustomRoles.HASFox or CustomRoles.HASTroll) continue;
-                if (Main.CanPublicRoom.Value && role.IsCannotPublicRole()) continue;
 
                 if (Options.IsCCMode)
                 {
@@ -1144,6 +1142,10 @@ namespace TownOfHostY
 
                 string SelfName = "";
                 Color SelfNameColor = seer.GetRoleColor();
+
+                string t = "";
+                //trueRoleNameでColor上書きあればそれにする
+                seer.GetRoleClass()?.OverrideTrueRoleName(ref SelfNameColor,ref t);
                 //if (Options.IsONMode && Main.DefaultRole[seer.PlayerId] != CustomRoles.ONPhantomThief)
                 //    SelfNameColor = GetRoleColor(Main.DefaultRole[seer.PlayerId]);
 

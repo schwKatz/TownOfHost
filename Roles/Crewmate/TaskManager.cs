@@ -37,7 +37,7 @@ public sealed class TaskManager : RoleBase
 
     private static void SetupOptionItem()
     {
-        OptionSeeNowtask = BooleanOptionItem.Create(RoleInfo, 10, OptionName.TaskmanagerSeeNowtask, false, false);
+        OptionSeeNowtask = BooleanOptionItem.Create(RoleInfo, 10, OptionName.TaskmanagerSeeNowtask, true, false);
     }
 
     public override string GetProgressText(bool comms = false)

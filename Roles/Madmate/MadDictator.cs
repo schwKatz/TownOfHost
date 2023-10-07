@@ -14,7 +14,7 @@ public sealed class MadDictator : RoleBase
             CustomRoles.MadDictator,
             () => OptionCanVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            5300,
+            28300,
             SetupOptionItem,
             "マッドディクテーター",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

@@ -477,6 +477,9 @@ public enum CustomRoles
     Psychic,
     Nimrod,
     Detector,
+
+
+    Potentialist,
     //Neutral
     Arsonist,
     Egoist,
