@@ -1161,6 +1161,15 @@ namespace TownOfHostY
                 SelfName += SelfSuffix.ToString() == "" ? "" : "\r\n " + SelfSuffix.ToString();
                 if (!isForMeeting) SelfName += "\r\n";
 
+                // バニラ視点にMOD名/Versionを記載
+                int seerHeight = (SelfSuffix.ToString() == "" && SelfRoleName == "") ? 6 : 5;
+                string ModNameAndVersion = $"<color={Main.ModColor}>TOH_Y</color> v{Main.PluginVersion}";
+                string seerPlusDisplay = $"<line-height={seerHeight}em><align={"left"}>{ModNameAndVersion}</align>\n</line-height>";
+                string seerAdjust = $"<line-height={seerHeight}em>\nㅤ</line-height>";
+
+                if (isForMeeting && seer == Main.AllAlivePlayerControls.ElementAt(2))
+                    SelfName = seerPlusDisplay + SelfName + seerAdjust;
+
                 //適用
                 seer.RpcSetNamePrivate(SelfName, true, force: NoCache);
 
@@ -1251,6 +1260,14 @@ namespace TownOfHostY
 
                         //全てのテキストを合成します。
                         string TargetName = $"{TargetRoleText}{TargetPlayerName}{TargetDeathReason}{TargetMark}{TargetSuffix}";
+
+                        // バニラ視点にMOD名/Versionを記載
+                        int targetHeight = (TargetSuffix.ToString() == "" && TargetRoleText == "") ? 6 : 5;
+                        string targetPlusDisplay = $"<line-height={targetHeight}em><align={"left"}>{ModNameAndVersion}</align>\n</line-height>";
+                        string targetAdjust = $"<line-height={targetHeight}em>\nㅤ</line-height>";
+
+                        if (isForMeeting && target == Main.AllAlivePlayerControls.ElementAt(2))
+                            TargetName = targetPlusDisplay + TargetName + targetAdjust;
 
                         //適用
                         target.RpcSetNamePrivate(TargetName, true, seer, force: NoCache);

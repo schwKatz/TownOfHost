@@ -21,6 +21,7 @@ namespace TownOfHostY
     [BepInPlugin(PluginGuid, "Town Of Host_Y", PluginVersion)]
     [BepInIncompatibility("jp.ykundesu.supernewroles")]
     [BepInIncompatibility("com.emptybottle.townofhost")]
+    [BepInIncompatibility("com.AsumuAkaguma.townofhostfore")]
     [BepInProcess("Among Us.exe")]
     public class Main : BasePlugin
     {
