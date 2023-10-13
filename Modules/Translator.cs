@@ -87,14 +87,48 @@ namespace TownOfHostY
             }
             if (langId == SupportedLangs.Japanese)
             {
-                //このソースコ―ドを見た人へ。口外しないでもらえると嬉しいです...
-                //To anyone who has seen this source code. I would appreciate it if you would keep your mouth shut...
-                if (Main.IsChristmas)
+                if (Main.IsInitialRelease)
                 {
                     res = str switch
                     {
-                        "Lovers" => "リア充",
-                        "LoversInfo" => "爆ぜろ",
+                        "Bakery" => "おにぎり屋",
+                        "NBakery" => "(第三)覚醒おにぎり屋",
+                        "BakeryInfo" => "みんなにおにぎりを配ろう",
+                        "BakeryInfoLong" => "[クルー陣営]\n生存中、会議はじめにおにぎり屋についてのコメントが流れる。レアコメントあり。\n低確率(設定)で試合途中、第三陣営に変化する。",
+                        "DeathReason.Poisoning" => "激辛死",
+
+                        "PanAliveMessageTitle" => "【おにぎり屋生存中】",
+                        "PanAlive"  => "\nおにぎり屋が誰かにおにぎりを渡しました。\nㅤ",
+                        "PanAlive1" => "\nおにぎり屋はおにぎりを握るのに夢中に。\nㅤ",
+                        "PanAlive2" => "\nおにぎり屋は梅入りおにぎりを渡しました。\nㅤ",
+                        "PanAlive3" => "\nおにぎり屋はツナマヨにぎりを渡しました。\nㅤ",
+                        "PanAlive4" => "\nおにぎり屋は鮭入りおにぎりを渡しました。\nㅤ",
+                        "PanAlive5" => "\nおにぎり屋は昆布おにぎりを渡しました。\nㅤ",
+                        "PanAlive6" => "\nおにぎり屋はエビマヨにぎりを渡しました。\nㅤ",
+                        "PanAlive7" => "\nﾊｲﾊﾟｰｵﾆｷﾞﾘﾔｻﾝﾄﾘﾌﾟﾙﾝﾙﾝﾗｯｷｰﾊﾋﾟﾈｽ!!!!\nㅤ",
+                        "PanAlive8" => "\nおにぎり屋はたらこおにぎりを渡しました。\nㅤ",
+                        "PanAlive9" => "\nおにぎり屋は誰かに塩にぎりを渡しました。\nㅤ",
+                        "PanAlive10" => "\nおにぎり屋はいくらおにぎりを渡しました。\nㅤ",
+                        "PanAlive11" => "\nおにぎり屋は明太子おにぎりを渡しました。\nㅤ",
+                        "PanAlive12" => "\nおにぎり屋はおかかおにぎりを渡しました。\nㅤ",
+                        "PanAlive13" => "\nおにぎり屋は鶏唐おにぎりを渡しました。\nㅤ",
+                        "PanAlive14" => "\nおにぎり屋は焼肉おにぎりを渡しました。\nㅤ",
+                        "PanAlive15" => "\nおにぎり屋はねぎとろにぎりを渡しました。\nㅤ",
+                        "PanAlive16" => "\nおにぎり屋はしらすおにぎりを渡しました。\nㅤ",
+                        "PanAlive17" => "\nﾊｲﾊﾟｰｵﾆｷﾞﾘﾔｻﾝﾄﾘﾌﾟﾙﾝﾙﾝﾗｯｷｰﾊﾋﾟﾈｽ!!!!\nㅤ",
+                        "PanAlive18" => "\nおにぎり屋はのり佃煮にぎりを渡しました。\nㅤ",
+                        "PanAlive19" => "\nおにぎり屋はエビ天にぎりを渡しました。\nㅤ",
+                        "PanAlive20" => "\nおにぎり屋は高菜おにぎりを渡しました。\nㅤ",
+                        "PanAlive21" => "\nおにぎり屋は角煮おにぎりを渡しました。\nㅤ",
+                        "PanAlive22" => "\nおにぎり屋はおにぎりよりおむすび派。\nㅤ",
+                        "PanAlive23" => "\nおにぎり屋はおにぎりよりお寿司派。\nㅤ",
+                        "PanAlive24" => "\nおにぎり屋は{0}におにぎり投げた。\nㅤ",
+                        "PanAlive25" => "\nおにぎり屋は{0}におにぎり投げた。\nㅤ",
+
+                        "BakeryChange" => "\nおにぎり屋が覚醒し、ㅤㅤㅤㅤㅤㅤㅤ\nㅤ激辛おにぎりを開発した。\n次ターン以降、覚醒おにぎり屋を追放しないと\nㅤ貰った人はあまりの辛さに死亡してしまう。\nㅤ",
+                        "BakeryChangeNow" => "\nおにぎり屋が覚醒し、ㅤㅤㅤㅤㅤㅤㅤ\nㅤ激辛おにぎりを渡した。\n覚醒おにぎり屋を追放しないと\nㅤ貰った人はあまりの辛さに死亡してしまう。\nㅤ",
+                        "BakeryChangeNONE" => "\nおにぎり屋は覚醒したにも関わらず\nこのターンの激辛おにぎり作りに失敗した。\nㅤ",
+
                         _ => res
                     };
                 }

@@ -7,8 +7,6 @@ using UnityEngine;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Crewmate;
-using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Common;
 using static TownOfHostY.Translator;
 
@@ -79,7 +77,6 @@ public static class MeetingHudPatch
                     = Utils.GetRoleNameAndProgressTextData(true, PlayerControl.LocalPlayer, pc);
                 roleTextMeeting.gameObject.name = "RoleTextMeeting";
                 roleTextMeeting.enableWordWrapping = false;
-
                 // 役職とサフィックスを同時に表示する必要が出たら要改修
                 var suffixBuilder = new StringBuilder(32);
                 if (myRole != null)
@@ -146,6 +143,9 @@ public static class MeetingHudPatch
                     ChatUpdatePatch.DoBlockChat = false;
                 }, 3f, "SetName To Chat");
             }
+
+            // MeetingDisplayText
+            bool isShow = false;
 
             foreach (var pva in __instance.playerStates)
             {
@@ -217,6 +217,12 @@ public static class MeetingHudPatch
                 //会議画面ではインポスター自身の名前にSnitchマークはつけません。
 
                 pva.NameText.text += sb.ToString();
+
+                if (!pva.AmDead && !isShow)
+                {
+                    pva.NameText.text = MeetingDisplayText.AddTextReftUpForClient(pva.NameText.text);
+                    isShow = true;
+                }
             }
         }
     }
