@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using Hazel;
 
@@ -117,6 +118,19 @@ public sealed class Bakery : RoleBase
         return string.Empty;
     }
 
+    public static string AddMeetingDisplay()
+    {
+        int aliveBakeryCount = Main.AllAlivePlayerControls.Where(p => p.Is(CustomRoles.Bakery)).Count();
+        // パン屋が居無ければ早期リターン
+        if (aliveBakeryCount == 0) return string.Empty;
+
+        string addText = $"<color={Utils.GetRoleColorCode(CustomRoles.Bakery)}><u>{GetString("PanAliveMessageTitle")}</color>";
+        if (aliveBakeryCount >= 2) addText += $"<color=#ffffff>x{aliveBakeryCount}</color>";
+        addText += "</u>";
+
+        return addText;
+    }
+
     public override void OnStartMeeting()
     {
         var PlayerId = Player.PlayerId;
@@ -142,19 +156,31 @@ public sealed class Bakery : RoleBase
                 panMessage = GetString("BakeryChange");
                 nBakeries.Add(this);
             }
-            else if (chance <= 77) panMessage = GetString("PanAlive");
-            else if (chance <= 79) panMessage = GetString("PanAlive1");
-            else if (chance <= 81) panMessage = GetString("PanAlive2");
-            else if (chance <= 82) panMessage = GetString("PanAlive3");
-            else if (chance <= 84) panMessage = GetString("PanAlive4");
-            else if (chance <= 86) panMessage = GetString("PanAlive5");
-            else if (chance <= 87) panMessage = GetString("PanAlive6");
-            else if (chance <= 88) panMessage = GetString("PanAlive7");
-            else if (chance <= 90) panMessage = GetString("PanAlive8");
-            else if (chance <= 92) panMessage = GetString("PanAlive9");
-            else if (chance <= 94) panMessage = GetString("PanAlive10");
-            else if (chance <= 96) panMessage = GetString("PanAlive11");
-            else if (chance <= 98)
+            else if (chance <= 75) panMessage = GetString("PanAlive");
+            else if (chance <= 76) panMessage = GetString("PanAlive1");
+            else if (chance <= 77) panMessage = GetString("PanAlive2");
+            else if (chance <= 78) panMessage = GetString("PanAlive3");
+            else if (chance <= 79) panMessage = GetString("PanAlive4");
+            else if (chance <= 80) panMessage = GetString("PanAlive5");
+            else if (chance <= 81) panMessage = GetString("PanAlive6");
+            else if (chance <= 82) panMessage = GetString("PanAlive7");
+            else if (chance <= 83) panMessage = GetString("PanAlive8");
+            else if (chance <= 84) panMessage = GetString("PanAlive9");
+            else if (chance <= 85) panMessage = GetString("PanAlive10");
+            else if (chance <= 86) panMessage = GetString("PanAlive11");
+            else if (chance <= 87) panMessage = GetString("PanAlive12");
+            else if (chance <= 88) panMessage = GetString("PanAlive13");
+            else if (chance <= 89) panMessage = GetString("PanAlive14");
+            else if (chance <= 90) panMessage = GetString("PanAlive15");
+            else if (chance <= 91) panMessage = GetString("PanAlive16");
+            else if (chance <= 92) panMessage = GetString("PanAlive17");
+            else if (chance <= 93) panMessage = GetString("PanAlive18");
+            else if (chance <= 94) panMessage = GetString("PanAlive19");
+            else if (chance <= 95) panMessage = GetString("PanAlive20");
+            else if (chance <= 96) panMessage = GetString("PanAlive21");
+            else if (chance <= 97) panMessage = GetString("PanAlive22");
+            else if (chance <= 98) panMessage = GetString("PanAlive23");
+            else if (chance <= 99)
             {
                 List<PlayerControl> targetList = new();
                 var rand = IRandom.Instance;
@@ -164,7 +190,7 @@ public sealed class Bakery : RoleBase
                     targetList.Add(p);
                 }
                 var TargetPlayer = targetList[rand.Next(targetList.Count)];
-                panMessage = string.Format(GetString("PanAlive12"), TargetPlayer.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
+                panMessage = string.Format(GetString("PanAlive24"), TargetPlayer.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
             }
             else if (chance <= 100)
             {
@@ -176,7 +202,7 @@ public sealed class Bakery : RoleBase
                     targetList.Add(p);
                 }
                 var TargetPlayer = targetList[rand.Next(targetList.Count)];
-                panMessage = string.Format(GetString("PanAlive13"), TargetPlayer.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
+                panMessage = string.Format(GetString("PanAlive25"), TargetPlayer.GetRealName(Options.GetNameChangeModes() == NameChange.Crew));
             }
 
             SendMessage(panMessage, title: BakeryTitle);
