@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using HarmonyLib;
 using TownOfHostY.Attributes;
+using TownOfHostY.Roles.Impostor;
 
 namespace TownOfHostY
 {
@@ -32,7 +33,7 @@ namespace TownOfHostY
     }
     public static class Camouflage
     {
-        static GameData.PlayerOutfit CamouflageOutfit = new GameData.PlayerOutfit().Set("", 15, "", "", "", "");
+        public static GameData.PlayerOutfit CamouflageOutfit = new GameData.PlayerOutfit().Set("", 15, "", "", "", "");
 
         public static bool IsCamouflage;
         public static Dictionary<byte, GameData.PlayerOutfit> PlayerSkins = new();
@@ -54,18 +55,18 @@ namespace TownOfHostY
             if (oldIsCamouflage != IsCamouflage)
             {
                 Main.AllPlayerControls.Do(pc =>
-                { if(!pc.Is(Roles.Core.CustomRoles.Rainbow)) RpcSetSkin(pc); });
+                { if(!pc.Is(Roles.Core.CustomRoles.Rainbow)) RpcSetSkin(IsCamouflage,pc, CamouflageOutfit); });
                 Utils.NotifyRoles(NoCache: true);
             }
         }
-        public static void RpcSetSkin(PlayerControl target, bool ForceRevert = false, bool RevertToDefault = false)
+        public static void RpcSetSkin(bool isCamouflage, PlayerControl target, GameData.PlayerOutfit camouflageOutfit = null, bool ForceRevert = false, bool RevertToDefault = false)
         {
-            if (!(AmongUsClient.Instance.AmHost && Options.CommsCamouflage.GetBool())) return;
+            if (!(AmongUsClient.Instance.AmHost && (Options.CommsCamouflage.GetBool() || EvilHacker.IsExistEvilWhiter()))) return;
             if (target == null) return;
 
             var id = target.PlayerId;
 
-            if (IsCamouflage)
+            if (isCamouflage)
             {
                 //コミュサボ中
 
@@ -73,9 +74,9 @@ namespace TownOfHostY
                 if (PlayerState.GetByPlayerId(id).IsDead) return;
             }
 
-            var newOutfit = CamouflageOutfit;
+            var newOutfit = camouflageOutfit;
 
-            if (!IsCamouflage || ForceRevert)
+            if (!isCamouflage || ForceRevert)
             {
                 //コミュサボ解除または強制解除
 
@@ -87,6 +88,7 @@ namespace TownOfHostY
 
                 newOutfit = PlayerSkins[id];
             }
+            if (newOutfit == null) return;
             Logger.Info($"newOutfit={newOutfit.GetString()}", "RpcSetSkin");
 
             var sender = CustomRpcSender.Create(name: $"Camouflage.RpcSetSkin({target.Data.PlayerName})");

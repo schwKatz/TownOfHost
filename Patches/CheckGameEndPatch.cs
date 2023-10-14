@@ -35,7 +35,7 @@ namespace TownOfHostY
             if (CustomWinnerHolder.WinnerTeam != CustomWinner.Default)
             {
                 //カモフラージュ強制解除
-                Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(pc, ForceRevert: true, RevertToDefault: true));
+                Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(false, pc, ForceRevert: true, RevertToDefault: true));
 
                 switch (CustomWinnerHolder.WinnerTeam)
                 {

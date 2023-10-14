@@ -137,7 +137,7 @@ namespace TownOfHostY
 
             if (RandomSpawn.CustomNetworkTransformPatch.NumOfTP.TryGetValue(__instance.PlayerId, out var num) && num > 2) RandomSpawn.CustomNetworkTransformPatch.NumOfTP[__instance.PlayerId] = 3;
             if (!target.protectedByGuardian)
-                Camouflage.RpcSetSkin(target, ForceRevert: true);
+                Camouflage.RpcSetSkin(Camouflage.IsCamouflage, target, ForceRevert: true);
         }
         public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
         {
@@ -171,7 +171,7 @@ namespace TownOfHostY
 
             if (!AmongUsClient.Instance.AmHost) return;
 
-            if (!shapeshifting) Camouflage.RpcSetSkin(__instance);
+            if (!shapeshifting) Camouflage.RpcSetSkin(Camouflage.IsCamouflage, __instance, Camouflage.CamouflageOutfit);
 
             // 変身したとき一番近い人をマッドメイトにする処理
             if (shapeshifter.CanMakeMadmate() && shapeshifting)
@@ -294,7 +294,7 @@ namespace TownOfHostY
 
             Main.AllPlayerControls
                 .Where(pc => Main.CheckShapeshift.ContainsKey(pc.PlayerId))
-                .Do(pc => Camouflage.RpcSetSkin(pc, RevertToDefault: true));
+                .Do(pc => Camouflage.RpcSetSkin(Camouflage.IsCamouflage, pc, RevertToDefault: true));
             MeetingTimeManager.OnReportDeadBody();
 
             Utils.NotifyRoles(isForMeeting: true, NoCache: true);
