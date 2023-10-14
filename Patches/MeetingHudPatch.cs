@@ -109,7 +109,6 @@ public static class MeetingHudPatch
                 {
                     Utils.SendMessage(string.Format(GetString("Message.RevengeText"), Exiled_Target.Item1.name, Exiled_Target.Item2.name));
                 }
-                RevengeTargetPlayer.Clear();
             }
 
             if (AntiBlackout.OverrideExiledPlayer && !Options.IsCCMode)
@@ -145,7 +144,7 @@ public static class MeetingHudPatch
             }
 
             // MeetingDisplayText
-            bool isShow = false;
+            int Showi = 0;
 
             foreach (var pva in __instance.playerStates)
             {
@@ -218,12 +217,23 @@ public static class MeetingHudPatch
 
                 pva.NameText.text += sb.ToString();
 
-                if (!pva.AmDead && !isShow)
+                if (!pva.AmDead && Showi == 0)
                 {
-                    pva.NameText.text = MeetingDisplayText.AddTextReftUpForClient(pva.NameText.text);
-                    isShow = true;
+                    pva.NameText.text = MeetingDisplayText.AddTextLeftUpForClient(pva.NameText.text);
+                    Showi++;
+                }
+                if (!pva.AmDead && Showi == 1)
+                {
+                    Showi++;
+                }
+                if (!pva.AmDead && Showi == 2)
+                {
+                    pva.NameText.text = MeetingDisplayText.AddTextRightUpForClient(pva.NameText.text);
+                    Showi++;
                 }
             }
+            // 道連れ記載情報破棄
+            RevengeTargetPlayer.Clear();
         }
     }
     [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.Update))]
@@ -285,7 +295,7 @@ public static class MeetingHudPatch
             RevengeOnExile(playerId, deathReason);
         }
     }
-    //道連れ
+    //道連れ(する側,される側)
     public static List<(PlayerControl, PlayerControl)> RevengeTargetPlayer;
     private static void RevengeOnExile(byte playerId, CustomDeathReason deathReason)
     {
