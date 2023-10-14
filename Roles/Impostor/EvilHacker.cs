@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using AmongUs.GameOptions;
 using Hazel;
-using TownOfHost.Modules;
-using TownOfHost.Roles.Core;
-using TownOfHost.Roles.Core.Interfaces;
+using TownOfHostY.Modules;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 using UnityEngine;
 
-namespace TownOfHost.Roles.Impostor;
+namespace TownOfHostY.Roles.Impostor;
 
 public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
 {
@@ -125,7 +125,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         {
             if (GameStates.IsInGame)
             {
-                Utils.SendMessage(message, Player.PlayerId, title, false);
+                Utils.SendMessage(message, Player.PlayerId, title);
             }
         }, 4f, "EvilHacker Admin Message");
         return;
