@@ -17,13 +17,13 @@
 "NormalScientist","Scientist","科学者","科学家","科學家","Ученый","Cientista"
 
 "# 特殊インポスター役職"
-"CustomImpostor","CustomImpostor","カスタムインポスター",
+"CustomImpostor","Custom Impostor","カスタムインポスター",
 "EvilWatcher","Evil Watcher","イビルウォッチャー","邪恶的窥视者","邪惡的觀察者","Злой Наблюдатель","Observador do Mal"
 "BountyHunter","Bounty Hunter","バウンティハンター","赏金猎人","賞金獵人","Охотник за головами","Caçador de Recompensas"
 "Mare","Mare","メアー","梦魇","獵夢者","Ночной","Mare"
 "FireWorks","Fireworker","花火職人","烟花商人","煙火工匠","Фейерверк","Fogos de Artifício"
 "SerialKiller","Serial Killer","シリアルキラー","嗜血杀手","嗜血殺手","Серийный Убийца","Serial Killer"
-"ShapeMaster","ShapeMaster","シェイプマスター","千面鬼","百變怪","Шпион","Metamorfo Mestre"
+"ShapeMaster","Shape Master","シェイプマスター","千面鬼","百變怪","Шпион","Metamorfo Mestre"
 "Vampire","Vampire","ヴァンパイア","吸血鬼","吸血鬼","Вампир","Vampiro"
 "Warlock","Warlock","ウォーロック","术士","術士","Колдун","Mago"
 "Witch","Witch","ウィッチ","女巫","女巫","Ведьма","Bruxo"
@@ -31,8 +31,7 @@
 "Puppeteer","Puppeteer","パペッティア","傀儡师","傀儡師","Кукловод","Marionetista"
 "TimeThief","Time Thief","タイムシーフ","蚀时者","時間竊賊","Вор Времени","Ladrão de Tempo"
 "Sniper","Sniper","スナイパー","狙击手","狙擊手","Снайпер","Sniper"
-"EvilTracker","EvilTracker","イビルトラッカー","邪恶的追踪者","邪惡的追蹤者","Злой Следопыт","Rastreador do Mal"
-"EvilHacker","EvilHacker","イビルハッカー","","","",""
+"EvilTracker","Evil Tracker","イビルトラッカー","邪恶的追踪者","邪惡的追蹤者","Злой Следопыт","Rastreador do Mal"
 "EvilNekomata","Evil Nekomata","イビル猫又","双尾妖猫",
 "AntiAdminer","Anti Adminer","アンチアドミナー","监管者",,
 "CursedWolf","Cursed Wolf","呪狼","被诅咒的狼",
@@ -41,7 +40,7 @@
 "Scavenger","Scavenger","スカベンジャー","清道夫",
 "EvilDiviner","Evil Diviner","イビルディバイナー",
 "Telepathisters","Telepathisters","テレパシスターズ",
-"ShapeKiller","ShapeKiller","シェイプキラー",,,,
+"ShapeKiller","Shape Killer","シェイプキラー",,,,
 "StrayWolf","Stray Wolf","はぐれ狼",
 
 "CustomImpostorInfo","I can now use abilities like that","あんな能力も使えるようになりました",
@@ -61,7 +60,6 @@
 "TimeThiefInfo","Kill to steal meeting time","敵を殺し、会議時間を奪おう","不仅夺走他们的性命，还有他们的时间","殺光你的敵人並將會議時間縮短","Убивайте игроков чтобы сократить время встречи","Mate para roubar tempo de reunião"
 "SniperInfo","Snipe","狙い撃つぜ","瞄准敌人，射击！","讓你的敵人在你的狙擊下死亡","Стреляйте в Членов Экипажа на расстоянии","Hora de atirar"
 "EvilTrackerInfo","Track others","プレイヤーを追跡しろ","让我看看，我的小目标在哪","你不要過來啊啊阿","Отслеживайте Игроков","Localize os outros"
-"EvilHackerInfo","Hack systems","システムをハッキングせよ","","","",""
 "EvilNekomataInfo","Let's get someone on the road","誰かを道連れにしよう","让我们在路上找一些人吧",,
 "AntiAdminerInfo","I wish Admin would just go away","アドミンなんて無くなればいい","我希望管理员能离开",,
 "CursedWolfInfo","It's foolish to kill me","私を斬るなんて愚かだ","杀我是愚蠢的",
@@ -88,7 +86,6 @@
 "TimeThiefInfoLong","(Impostors):\nEvery kill reduces discussion and voting time in meeting.\nIf you are voted out or killed, the lost time returns to meetings.","(インポスター陣営):\nキルを行うと会議時間が減少する。\nタイムシーフが追放または殺害されると、失われた会議時間が返ってきます。","(内鬼阵营):\n蚀时者每击杀一个人，会议时间就将减少一定时间。\n如果蚀时者死亡，被偷取的时间的会议时间将返还。","(狼人陣營):\n時間小偷每次殺人將會減少會議時間\n如果時間小偷被丟出或被殺死,減少的會議時間將會回來","(Предатель):\nКаждое убийство Вора Времени сокращает время обсуждения и голосования на собраниях. \nВ зависимости от настроек потерянное время возвращается после того, как он будет убит или изгнан.","(Impostores):\nCada morte reduz tempo de votação e discussão.\nSe você for exilado ou morto, o tempo perdido retorna para as reuniões."
 "SniperInfoLong","(Impostors):\nYou can shoot players from afar.\nYour line of fire continues as a straight line in the direction of the spot where you shapeshift to where you unshift.\nYou cannot perform normal kills until you use up all of your ammo.","(インポスター陣営):\n遠くの敵を狙撃できるインポスター。\nシェイプシフトした地点から解除した地点の延長線上の敵を一人撃ち抜く。\n撃ちきるまで通常キル出来ない。","(内鬼阵营):\n狙击手拥有远距离射杀的能力。\n方法为：变形的位置及解除变形位置的连线及其延长线上的一名玩家将被射杀。\n在狙击手的子弹耗尽前，狙击手无法进行常规击杀。","(狼人陣營):\n狙擊手\狙擊手可以進行遠程殺人\n他的子彈將從變形處延伸到取消變形處並往直線前進並殺死在這條線上非狼人陣營的人。\n在狙擊手用光子彈前,狙擊手無法正常殺人。","(Предатель):\nСнайпер может стрелять в игроков на расстоянии. \nОн убивает игрока который, находится с ним на одной линии, от точки Морфа до точки возвращения в свой облик. \nОн может совершать обычные убийства после того, как все его патроны закончатся.","(Impostor):\nVocê pode atirar em jogadores de longe.\nSua linha de fogo continua numa linha reta, do ponto que você se metamorfa ao ponto que você volta ao normal.\nVocê não pode fazer mortes normais até usar toda a sua munição."
 "EvilTrackerInfoLong","(Impostors):\nYou can see where others are.\nYou will see arrows pointing to the other impostors and anyone you shapeshift into.\nYou will see a ""kill flash"" when your fellow impostors kill.","(インポスター陣営):\n他人の位置が分かるインポスター。\n味方のインポスターとシェイプシフトで選んだ一人の位置が矢印で表示される。\n味方インポスターのキルによるキルフラッシュも見える。","(内鬼阵营):\n邪恶追踪者可以追踪其他内鬼以及其所变形的玩家。\n玩家名称下面的箭头代表着目标的方向。\n当内鬼队友杀人时，邪恶追踪者将会看到击杀闪烁提示。","(狼人陣營):\n邪惡的追蹤者:\他有一個箭頭指向他的隊友以及他變形的玩家,\n當他的隊友殺人時將出現閃光顯示。","(Предатель):\nЗлой Следопыт может отслеживать других игроков. \nОн может видеть стрелки, которые указывают на Предателей или на того, в кого он превратился. \nОн может видеть когда было совершено убийство с помощью вспышки убийства.","(Impostores):\nVocê consegue ver a posição de outros.\nÉ possível ver setas apontando para outros Impostores e qualquer um em que você se transforme.\nVocê também verá uma piscada de tela quando um aliado Impostor matar alguém."
-"EvilHackerInfoLong","(Impostors):\nThe EvilHacker can get the last-minute admin information at the meeting beginning.\nUnoccupied rooms are not shown.\nA "★" marks rooms with impostors.\nRooms with dead-bodies are marked with the number of bodies.\ne.g.)★Cafeteria: 3(DEAD×1)","(インポスター陣営):\n会議直前のアドミン情報を見ることができる。\n誰もいない部屋は省略される。\nインポスターがいる部屋には★印が付く。\n死体がある部屋には死体数が表記される。\n例)★カフェテリア: 3(死体×1)","","","",""
 "EvilNekomataInfoLong","(Impostors)\nWhen he is hanged，he takes one random person other than the imposter with him. (When the next discussion starts after he is hanged, he will be marked with an "X" without a corpse direction.)","[インポスター陣営]\n自身が吊られた際、インポスター以外のランダムな1人を道連れにする。(吊られた次の議論開始時に死体演出無しで×マークが付く)","(内鬼阵营)\n当他被绞死时，除了内鬼，他会随机带走一个人。(当他被绞死后的下一次会议开始时，他将被标记为“X”，但没有尸体的方向。)",,
 "AntiAdminerInfoLong","(Impostors)\nI can tell if someone is in front of the Admin，Door Log，or Vital equipment. It does not know if the person is actually using the equipment.","[インポスター陣営]\nアドミン・ドアログ・バイタル機器の前に人がいるか分かる。実際に機器を使用しているかは分からない。","(内鬼阵营)\n我可以告诉如果有人在管理地图，门日志，或重要设备的前面时。但它不知道这个人是否真的在使用设备。",,
 "CursedWolfInfoLong","(Impostors)\nWhen someone is about to be killed by someone else, Guard the kill from that person and Spell them to death.\nWhen the spell, its own killcool is set to half its usual level.","[インポスター陣営]\n誰かにキルされそうになった時、その人からキルをガードして呪殺する。(設定回数まで)\n呪殺した時、自身のキルクールは通常の半分にセットされる。","(内鬼阵营)\n当一个人要被别人杀死时。保护他不被那个人杀死。"
@@ -99,6 +96,19 @@
 "TelepathistersInfoLong","(Impostors)\nTelepathisters are Impostors that can only be set up by more than one person.\nThe arrows indicate the location of other Telepathisers.\nThe number of times the Telepathisters vent can be used is shared by all Telepathisters  and can only be used up to a set number.","[インポスター陣営]\n複数人でしか設定できないインポスター。\nテレパシスターズの相方(以下、シスターとする)の位置が矢印8方向で分かる。\n設定により、シスターのキルによるキルフラッシュが見えたり、会議時にシスターの最終位置を表示できたりする。\nなお、テレパシスターズのベント使用回数は全員で共有されており、設定数までしか使用できない。",
 "ShapeKillerInfoLong","(Impostors):\nShapeKiller can disguise reports.\nBy shape-shifting and reporting, ShapeKiller can report the shape-shifted target.","(インポスター陣営):\n通報を偽装できるインポスター。\nシェイプシフトして死体通報することでシェイプシフトした相手の通報にできる。",,,,
 "StrayWolfInfoLong","(Impostors):\nAn Impostor in which the companions are not displayed. Winning conditions are the same as for a regular Impostor.\nCan be set up to kill each other with Impostors or not.","[インポスター陣営]\n仲間が表示されないインポスター。勝利条件は通常インポスターと変わらない。\n[仲間斬り合い設定]\n・常時：仲間インポスターもそのままキル。仲間とずっと視認できない。\n・視認後：仲間を斬りそうな時or仲間から斬られそうになった時にガード、互いに視認できるようになる。その相手とはキルしあえる状態に。\n・なし：視認後はキルボタンが互いだけ反応しなくなる。"
+
+#イビルハッカ
+"EvilHackerName","Evil Replicator","イビルハッカー...?",
+"EvilHacker","Evil Hacker","イビルハッカー",
+"EvilWhiter","Evil Whiter","イビル白化",
+"EvilReder","Evil Reder","イビル真っ赤",
+"EvilFaller","Evil Faller","イビル落下",
+"EvilIgnitioner","Evil Ignitioner","イビル発火",
+"EvilExcellency","Evil Excellency","イビル閣下",
+"EvilHakka","Evil Hakka","イビルハッカ",
+"EvilWriter","Evil Writer","イビル作家",
+"EvilHackerInfo","First Anniversary!","一周年記念楽しんでね","","","",""
+"EvilHackerInfoLong","(Impostors):\nFirst Anniversary Role\nThis Role that becomes a random ability for each match. In Japanese, it is a pun.","[インポスター陣営]\nイビルハッカーになりたいインポスター。1ゲームごとに能力がランダム。イビルハッカー(本家TOH仕様)になれるのは約16%",
 
 "# マッドメイト系役職"
 "Madmate","Madmate","マッドメイト","叛徒","叛徒","Безумец","Tripulante Louco"
@@ -740,9 +750,9 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "FortuneTellerKillerOnly","Check only Killer",キルできる役職のみ確認できる,
 "PsychicMaxCheckRole","Role of The Deceased Can Be Checked Count","霊媒できる回数",
 
+"Head.LimitedTimeRole","Limited Time Role 11/2～11/8 (First Anniversary)","期間限定役職 11/2～11/8 (一周年記念)"
 ##"Potentialist","Potentialist","ポテンシャリスト",
 "Potentialist","Crewmate","クルーメイト",
-"Head.Potentialist","Limited Time Role 11/2～11/8 (First Anniversary)","期間限定役職 11/2～11/8 (一周年記念)"
 "PotentialistName","Potentialist</color>\n　…At first, Crewmate. Complete tasks and have random abilities.","ポテンシャリスト</color>\n　…初めはクルー。設定タスク完了でランダムな能力を持つ。",
 "PotentialistInfo","do your tasks","タスクを行う",
 "PotentialistInfoLong","do your tasks","タスクを行う",

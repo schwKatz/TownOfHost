@@ -335,11 +335,17 @@ namespace TownOfHostY
                 .SetHeader(true)
                 .SetGameMode(CustomGameMode.All);
 
+            // SpecialEvent
+            SpecialEvent.SetupOptions();
+
             // Impostor
             sortedRoleInfo.Where(role => role.CustomRoleType is CustomRoleTypes.Impostor or CustomRoleTypes.Madmate).Do(info =>
             {
-                SetupRoleOptions(info);
-                info.OptionCreator?.Invoke();
+                if (!SpecialEvent.IsEventRole(info.RoleName))
+                {
+                    SetupRoleOptions(info);
+                    info.OptionCreator?.Invoke();
+                }
             });
 
             TextOptionItem.Create(10, "Head.CommonImpostor", TabGroup.ImpostorRoles);
@@ -366,8 +372,6 @@ namespace TownOfHostY
             MadmateVentMaxTime = FloatOptionItem.Create(91529, "MadmateVentMaxTime", new(0f, 180f, 5f), 0f, TabGroup.MadmateRoles, false)
                 .SetValueFormat(OptionFormat.Seconds);
 
-            // SpecialEvent
-            SpecialEvent.SetupOptions();
 
             // Impostor以外
             sortedRoleInfo.Where(role => role.CustomRoleType is CustomRoleTypes.Crewmate or CustomRoleTypes.Neutral).Do(info =>

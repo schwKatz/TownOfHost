@@ -4,6 +4,7 @@ using UnityEngine;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Impostor;
 
 namespace TownOfHostY.Roles.Crewmate;
 public sealed class Potentialist : RoleBase
@@ -44,7 +45,7 @@ public sealed class Potentialist : RoleBase
     // 直接設置
     public static void SetupRoleOptions()
     {
-        TextOptionItem.Create(40, "Head.Potentialist", TabGroup.CrewmateRoles)
+        TextOptionItem.Create(40, "Head.LimitedTimeRole", TabGroup.CrewmateRoles)
             .SetColor(Color.yellow);
         var spawnOption = IntegerOptionItem.Create(RoleInfo.ConfigId, "PotentialistName", new(0, 100, 10), 0, TabGroup.CrewmateRoles, false)
             .SetColor(RoleInfo.RoleColor)
@@ -132,21 +133,25 @@ public sealed class Potentialist : RoleBase
 
 public static class SpecialEvent
 {
-    public static bool IsEventDate() => DateTime.Now.Month == 11 && DateTime.Now.Day is 2 or 3 or 4 or 5 or 6 or 7 or 8;
-    public static bool IsEventRole(CustomRoles role) => role == CustomRoles.Potentialist;
+    public static bool IsEventDate() => DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
+    public static bool IsEventRole(CustomRoles role) => role is CustomRoles.Potentialist or CustomRoles.EvilHacker;
 
     public static void SetupOptions()
     {
         if (Main.IsInitialRelease)
         {
+            EvilHacker.SetupRoleOptions();
+            EvilHacker.RoleInfo.OptionCreator?.Invoke();
             Potentialist.SetupRoleOptions();
             Potentialist.RoleInfo.OptionCreator?.Invoke();
         }
     }
 
     public static string TitleText() =>
-        "\n\n<size=55%>TOH_Yは一周年を迎えました！" +
-        "\n周年記念として、11/8まで期間限定役職「ポテンシャリスト」が再登場。" +
-        "\nタスクを早く完了させて、能力をゲットしよう。" +
+        "\n\n<size=50%>TOH_Yは一周年を迎えました！" +
+        "\n周年記念として、11/15まで期間限定役職が登場★" +
+        "\nパン屋が転職「おにぎり屋」(バレンタイン/ホワイトデー復刻)" +
+        "\n途中で役職変化!「ポテンシャリスト」(エイプリルフール復刻)" +
+        "\nインポスターも強くなりたい「イビルハッカー...?」新規登場" +
         "\nこれからもTOH_Yをよろしくお願いします！</size>";
 }

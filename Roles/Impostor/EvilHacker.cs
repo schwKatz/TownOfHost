@@ -61,8 +61,26 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         enumCount,
     }
     Role nowRole = Role.enumCount;
-    public static bool IsExistEvilWhiter()
-    { return instances.Where(ew => ew.nowRole == Role.EvilWhiter).Count() > 0; }
+    public static bool IsExistEvilWhiterOrReder()
+    { return instances.Where(e => e.nowRole is Role.EvilWhiter or Role.EvilReder).Count() > 0; }
+
+    // 直接設置
+    public static void SetupRoleOptions()
+    {
+        TextOptionItem.Create(41, "Head.LimitedTimeRole", TabGroup.ImpostorRoles)
+            .SetColor(Color.yellow);
+        var spawnOption = IntegerOptionItem.Create(RoleInfo.ConfigId, "EvilHackerName", new(0, 100, 10), 0, TabGroup.ImpostorRoles, false)
+            .SetColor(RoleInfo.RoleColor)
+            .SetValueFormat(OptionFormat.Percent)
+            .SetGameMode(CustomGameMode.Standard) as IntegerOptionItem;
+        var countOption = IntegerOptionItem.Create(RoleInfo.ConfigId + 1, "Maximum", new(1, 15, 1), 1, TabGroup.ImpostorRoles, false)
+            .SetParent(spawnOption)
+            .SetValueFormat(OptionFormat.Players)
+            .SetGameMode(CustomGameMode.Standard);
+
+        Options.CustomRoleSpawnChances.Add(RoleInfo.RoleName, spawnOption);
+        Options.CustomRoleCounts.Add(RoleInfo.RoleName, countOption);
+    }
 
     /// <summary>相方がキルした部屋を通知する設定がオンなら各プレイヤーに通知を行う</summary>
     private static void HandleMurderRoomNotify(MurderInfo info)

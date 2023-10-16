@@ -20,7 +20,7 @@ namespace TownOfHostY
             _ = new LateTask(() =>
             {
                 CustomRoles role = PlayerControl.LocalPlayer.GetCustomRole();
-                if (!role.IsVanilla() && !SpecialEvent.IsEventRole(role))
+                if (!role.IsVanilla() && role != CustomRoles.Potentialist)
                 {
                     __instance.YouAreText.color = Utils.GetRoleColor(role);
                     __instance.RoleText.text = Utils.GetRoleName(role);
