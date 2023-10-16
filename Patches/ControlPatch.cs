@@ -122,7 +122,8 @@ namespace TownOfHostY
             //自分自身の死体をレポート
             if (GetKeysDown(KeyCode.Return, KeyCode.M, KeyCode.RightShift) && GameStates.IsInGame)
             {
-                PlayerControl.LocalPlayer.NoCheckStartMeeting(PlayerControl.LocalPlayer.Data);
+                //PlayerControl.LocalPlayer.NoCheckStartMeeting(PlayerControl.LocalPlayer.Data);
+                PlayerControl.LocalPlayer.ReportDeadBody(PlayerControl.LocalPlayer.Data);
             }
             //自分自身を追放
             if (GetKeysDown(KeyCode.Return, KeyCode.E, KeyCode.LeftShift) && GameStates.IsInGame)

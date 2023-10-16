@@ -87,7 +87,7 @@ namespace TownOfHostY
             }
         }
         public static void Info(string text, string tag, bool escapeCRLF = true, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string fileName = "") =>
-            SendToFile(text, LogLevel.Info, tag, escapeCRLF, lineNumber, fileName);
+            SendToFile(text.RemoveHtmlTags(), LogLevel.Info, tag, escapeCRLF, lineNumber, fileName);
         public static void Warn(string text, string tag, bool escapeCRLF = true, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string fileName = "") =>
             SendToFile(text, LogLevel.Warning, tag, escapeCRLF, lineNumber, fileName);
         public static void Error(string text, string tag, bool escapeCRLF = true, [CallerLineNumber] int lineNumber = 0, [CallerFilePath] string fileName = "") =>

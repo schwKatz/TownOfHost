@@ -118,17 +118,17 @@ public sealed class Bakery : RoleBase
         return string.Empty;
     }
 
-    public static string AddMeetingDisplay()
+    public static (string, int) AddMeetingDisplay()
     {
         int aliveBakeryCount = Main.AllAlivePlayerControls.Where(p => p.Is(CustomRoles.Bakery)).Count();
         // パン屋が居無ければ早期リターン
-        if (aliveBakeryCount == 0) return string.Empty;
+        if (aliveBakeryCount == 0) return ("", 0);
 
-        string addText = $"<color={Utils.GetRoleColorCode(CustomRoles.Bakery)}><u>{GetString("PanAliveMessageTitle")}</color>";
+        string addText = $"<color={GetRoleColorCode(CustomRoles.Bakery)}><u>{GetString("PanAliveMessageTitle")}</color>";
         if (aliveBakeryCount >= 2) addText += $"<color=#ffffff>x{aliveBakeryCount}</color>";
-        addText += "</u>";
+        addText += "</u>\n";
 
-        return addText;
+        return (addText, 1);
     }
 
     public override void OnStartMeeting()

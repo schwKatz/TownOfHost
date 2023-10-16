@@ -54,7 +54,7 @@ public sealed class MadNimrod : RoleBase
 
         _ = new LateTask(() =>
         {
-            Utils.GetPlayerById(Exiled.PlayerId).NoCheckStartMeeting(Exiled);
+            Utils.GetPlayerById(Exiled.PlayerId).ReportDeadBody(Exiled);
             IsExecutionMeeting = Exiled.PlayerId;
         }, 15f, "NimrodExiled");
         return null;

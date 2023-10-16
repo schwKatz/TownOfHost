@@ -9,6 +9,7 @@ using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Common;
 using static TownOfHostY.Translator;
+using AmongUs.Data.Player;
 
 namespace TownOfHostY;
 
@@ -101,13 +102,15 @@ public static class MeetingHudPatch
                 if (ReportDeadBodyPatch.ReportTarget == null)
                     Utils.SendMessage(GetString("Message.isButton"));
                 else
-                    Utils.SendMessage(string.Format(GetString("Message.isReport"), ReportDeadBodyPatch.ReportTarget.PlayerName));
+                    Utils.SendMessage(string.Format(GetString("Message.isReport"),
+                        $"{ReportDeadBodyPatch.ReportTarget.PlayerName}{ReportDeadBodyPatch.ReportTarget.ColorName}"));
             }
             if (Options.ShowRevengeTarget.GetBool())
             {
                 foreach (var Exiled_Target in RevengeTargetPlayer)
                 {
-                    Utils.SendMessage(string.Format(GetString("Message.RevengeText"), Exiled_Target.Item1.name, Exiled_Target.Item2.name));
+                    Utils.SendMessage(string.Format(GetString("Message.RevengeText"),
+                        $"{Exiled_Target.exiled.PlayerName}{Exiled_Target.exiled.ColorName}", $"{Exiled_Target.revengeTarget.PlayerName}{Exiled_Target.revengeTarget.ColorName}"));
                 }
             }
 
@@ -217,18 +220,9 @@ public static class MeetingHudPatch
 
                 pva.NameText.text += sb.ToString();
 
-                if (!pva.AmDead && Showi == 0)
+                if (!pva.AmDead && Showi < 3)
                 {
-                    pva.NameText.text = MeetingDisplayText.AddTextLeftUpForClient(pva.NameText.text);
-                    Showi++;
-                }
-                if (!pva.AmDead && Showi == 1)
-                {
-                    Showi++;
-                }
-                if (!pva.AmDead && Showi == 2)
-                {
-                    pva.NameText.text = MeetingDisplayText.AddTextRightUpForClient(pva.NameText.text);
+                    pva.NameText.text = MeetingDisplayText.AddTextForClient(pva.NameText.text, Showi);
                     Showi++;
                 }
             }
@@ -296,7 +290,7 @@ public static class MeetingHudPatch
         }
     }
     //道連れ(する側,される側)
-    public static List<(PlayerControl, PlayerControl)> RevengeTargetPlayer;
+    public static List<(GameData.PlayerInfo exiled, GameData.PlayerInfo revengeTarget)> RevengeTargetPlayer;
     private static void RevengeOnExile(byte playerId, CustomDeathReason deathReason)
     {
         var player = Utils.GetPlayerById(playerId);
@@ -341,7 +335,9 @@ public static class MeetingHudPatch
         var rand = IRandom.Instance;
         var target = TargetList[rand.Next(TargetList.Count)];
         // 道連れする側とされる側をセットでリストに追加
-        RevengeTargetPlayer.Add((exiledplayer, target));
+        GameData.PlayerInfo exiledInfo = exiledplayer.Data;
+        GameData.PlayerInfo targetInfo = target.Data;
+        RevengeTargetPlayer.Add((exiledInfo, targetInfo));
         return target;
     }
 }
