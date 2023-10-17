@@ -28,16 +28,18 @@ public sealed class God : RoleBase
     )
     {
         taskCompleteToWin = OptionTaskCompleteToWin.GetBool();
+        viewVoteFor = OptionViewVoteFor.GetBool();
 
         if (Player != null)
         {
             foreach (var pc in Main.AllPlayerControls)
             {
                 NameColorManager.Add(Player.PlayerId, pc.PlayerId);
-    }
+            }
         }
     }
     private static OptionItem OptionTaskCompleteToWin;
+    private static OptionItem OptionViewVoteFor;
     private static Options.OverrideTasksData Tasks;
     enum OptionName
     {
@@ -45,10 +47,19 @@ public sealed class God : RoleBase
         GodViewVoteFor,
     }
     private static bool taskCompleteToWin;
+    private static bool viewVoteFor;
     public static void SetupOptionItem()
     {
         OptionTaskCompleteToWin = BooleanOptionItem.Create(RoleInfo, 10, OptionName.GodTaskCompleteToWin, true, false);
+        OptionViewVoteFor = BooleanOptionItem.Create(RoleInfo, 11, OptionName.GodViewVoteFor, false, false);
         Tasks = Options.OverrideTasksData.Create(RoleInfo, 20);
+    }
+    public override void ApplyGameOptions(IGameOptions opt)
+    {
+        if (viewVoteFor)
+        {
+            opt.SetBool(BoolOptionNames.AnonymousVotes, false);
+        }
     }
     public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {
