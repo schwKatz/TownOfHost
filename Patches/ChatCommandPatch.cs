@@ -607,6 +607,8 @@ namespace TownOfHostY
             Logger.Info($"SendName: {SendName}, sender: {sender?.name}, sendTo: {sendTo}", "SendCustomChat");
             string command = "\n\n";
             if (sender == null) sender = PlayerControl.LocalPlayer;
+            if (sender.Data.IsDead)
+                sender = PlayerControl.AllPlayerControls.ToArray().OrderBy(x => x.PlayerId).Where(x => !x.Data.IsDead).FirstOrDefault();
             string name = sender.Data?.PlayerName;
             int clientId = sendTo == byte.MaxValue ? -1 : Utils.GetPlayerById(sendTo).GetClientId();
             if (clientId == -1)
