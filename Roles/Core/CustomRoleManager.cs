@@ -499,6 +499,7 @@ public enum CustomRoles
     Lawyer,
     Totocalcio,
     Duelist,
+    God,
 
     //HideAndSeek
     HASFox,

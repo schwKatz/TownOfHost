@@ -273,6 +273,7 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "Pursuer","Pursuer","追跡者","起诉人",
 "Totocalcio","Totocalcio","トトカルチョ",
 "Duelist","Duelist","決闘者",
+"God","God","神","","","",""
 
 "ArsonistInfo","Burn them to crisps","燃やせ","火焰给我燃烧起来吧！","燒吧，燒吧，燃燒吧","Облейте и подожгите всех игроков","Queime tudo em pedacinhos"
 "JesterInfo","Get voted out","追放されよう","让他们把你这个假货投出去","想個辦法讓你被投出去","Заставь игроков изгнать себя","Seja exilado"
@@ -298,6 +299,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "PursuerInfo","I lost a client","依頼人いなくなっちゃった","我丢失了一个客户",
 "TotocalcioInfo","I leave my victory to you","私の勝利は貴方に任せる",
 "DuelistInfo","I decided on you, it's battle time!","貴方は因縁の相手、いざ勝負！",
+"GodInfo","You Are God!!","あなたは神だ","","","",""
 
 "ArsonistInfoLong","(Neutrals):\nWhen you use the kill button, you douse your target in oil.\nAfter dousing all living players, you set everything ablaze and win by venting.","(ニュートラル):\nキルボタンを使おうとすると、ターゲットに油を塗れる。\nすべてのクルーに油を塗ったら船を燃やして勝利する。","(独立阵营):\n纵火犯可以通过对玩家点击击杀按钮并在跟随其数秒来完成涂油行为。\n当所有存活玩家都被纵火犯涂油后，纵火犯可以通过跳通风管来点火，并单独获得胜利。","(中立):\n當縱火犯嘗試使用殺人鍵,它將對他身邊最近的一個人澆上油,\n當他對所有玩家澆上油之後,縱火縱火犯點火即勝利。","(Нейтрал):\nПоджигатель может обливать игроков, нажав на кнопку 'Убить' и находясь рядом с игроком в течение нескольких секунд. \nПосле того как он обольёт всех живых игроков Поджигатель сможет запрыгнуть в вентиляцию, чтобы поджечь всех игроков, что приводит к победе Поджигателя.","(Neutros):\nAo apertar o botão de matar, você encharca o seu inimigo em óleo.\nApós ter encharcado todos os jogadores vivos, você coloca tudo em chamas e ganha entrando na ventilação."
 "JesterInfoLong","(Neutrals):\nYou solo victory by getting voted out during a meeting.\nIf the game ends without you getting voted out, or if you are killed, you lose.","(ニュートラル):\n会議で追放された時に単独勝利できる。\n追放されず試合が終了orキルされると敗北。","(独立阵营):\n小丑被放逐则小丑单独游戏胜利。\n游戏结束时若小丑仍存活则小丑输掉游戏。","(中立):\n當小丑被丟出時即宣告小丑獲勝,\n但是小丑在遊戲結束時活下來或是在遊戲中被殺即宣告失敗","(Нейтрал):\nШут сможет выиграть игру, если за него проголосуют во время голосования и он будет изгнан.\nВ противном случае Шут проиграет.","(Neutros): \nVocê ganha sozinho ao ser exilado durante uma reunião. \nSe o jogo terminar com você não sendo votado, ou você for morto, você perde."
@@ -317,7 +319,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "PursuerInfoLong","(Neutrals):\nThe client died, so the lawyer became a pursuer.\nIf you yourself are still alive at the end of the game, you win an additional victory. It is also possible to prevent kills for a set number of times.","[ニュートラル]\n依頼人が死亡したので弁護士は追跡者になった。\n自身がゲーム終了時に生存していれば追加で勝利となる。また、設定回数分キルを防ぐことが可能。","(中立阵营):\n当客户死了 律师将会变成起诉人\n如果起诉人在游戏结束时还活着，它将单独获得胜利. 也可以在设定的次数内阻止死亡",
 "TotocalcioInfoLong","(Neutrals):\nThe kill button can be used to 'BET' on someone.If the BET player on the game wins, he can win an additional unconditional victory.","[ニュートラル]\nキルボタンを使用して、誰かに「賭ける」ことが可能。賭けた対象プレイヤーが勝利すると、無条件で自身も追加で勝利できる。\n「賭ける」先は設定により途中で変更することも可能。ただし生存人数が減るごとに「賭ける」クールタイムが長くなる。",,
 "DuelistInfoLong","(Neutrals):\nThe opponent who votes for the first meeting becomes the Duelist's own Archenemy.After the decision of the Archenemy, the name of the duelist is also displayed from the Archenemy's point of view, and the victory condition for the duelist and Archenemy is 'If you are alive when the victory is decided and your Archenemy dies, you win an additional victory.'","[ニュートラル]\n初手会議に投票した相手を自身の宿敵にする。初手会議の投票時、決闘者の投票先は全視点見えない。初手会議で宿敵を決定しないと自殺する。\n宿敵決定後、宿敵目線でも決闘者が誰か表示され、決闘者・宿敵の勝利条件は「勝利判定時に自身が生存、且つ宿敵(決闘者)が死亡で追加勝利」となる。",,
-
+"GodInfoLong","(Neutrals):\nEveryone's position is known.\nIf you survive to the end you take away the win.","(第三陣営):\n全員の役職がわかります。\n最後まで生き残っていると、勝利を奪い取ります。","","","",""
 
 "# HideAndSeek"
 "HASFox","Fox","狐","狐狸","狐妖","Лис","Raposa"
@@ -795,6 +797,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "LawyerKnowTargetRole","Lawyer know target role","弁護士は依頼人の役職が分かる","律师知道客户职业",
 "PursuerGuardNum","Pursuer guard count","追跡者のキルガード回数","起诉人自保次数",
 "PlatonicLoverLimitTurn","Have to Make Love at First Sight Turn","一目惚れしないといけないターン数",
+"GodTaskCompleteToWin","Task Complete To Win","タスクを終わらせないと勝利できない","","","",""
+"GodViewVoteFor","View Where To Vote","投票先が見える	","","","",""
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
