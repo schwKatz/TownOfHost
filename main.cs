@@ -302,6 +302,7 @@ namespace TownOfHostY
         Workaholic = CustomRoles.Workaholic,
         LoveCutter = CustomRoles.LoveCutter,
         Lawyer = CustomRoles.Lawyer,
+        God = CustomRoles.God,
 
         //CC
         RedL = CustomRoles.CCRedLeader,

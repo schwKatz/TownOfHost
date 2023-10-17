@@ -54,4 +54,10 @@ public sealed class God : RoleBase
     {
         enabled = true;
     }
+    public static bool CheckWin()
+    {
+        return Main.AllAlivePlayerControls.ToArray()
+                .Any(p => p.Is(CustomRoles.God) &&
+                          (!taskCompleteToWin || p.GetPlayerTaskState().IsTaskFinished));
+    }
 }

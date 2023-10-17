@@ -59,6 +59,13 @@ namespace TownOfHostY
                 }
                 if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw and not CustomWinner.None)
                 {
+                    if (God.CheckWin())
+                    {
+                        CustomWinnerHolder.ResetAndSetWinner(CustomWinner.God);
+                        Main.AllPlayerControls
+                            .Where(p => p.Is(CustomRoles.God) && p.IsAlive())
+                            .Do(p => CustomWinnerHolder.WinnerIds.Add(p.PlayerId));
+                    }
                     if (Main.LoversPlayers.Count > 0 && Main.LoversPlayers.ToArray().All(p => p.IsAlive())
                         && !reason.Equals(GameOverReason.HumansByTask) && !(Options.LoversAddWin.GetBool() || PlatonicLover.AddWin))
                     {
