@@ -28,6 +28,14 @@ public sealed class God : RoleBase
     )
     {
         taskCompleteToWin = OptionTaskCompleteToWin.GetBool();
+
+        if (Player != null)
+        {
+            foreach (var pc in Main.AllPlayerControls)
+            {
+                NameColorManager.Add(Player.PlayerId, pc.PlayerId);
+    }
+        }
     }
     private static OptionItem OptionTaskCompleteToWin;
     private static Options.OverrideTasksData Tasks;
@@ -41,5 +49,9 @@ public sealed class God : RoleBase
     {
         OptionTaskCompleteToWin = BooleanOptionItem.Create(RoleInfo, 10, OptionName.GodTaskCompleteToWin, true, false);
         Tasks = Options.OverrideTasksData.Create(RoleInfo, 20);
+    }
+    public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    {
+        enabled = true;
     }
 }
