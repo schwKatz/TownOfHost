@@ -5,12 +5,10 @@ using System.Text;
 using AmongUs.GameOptions;
 using HarmonyLib;
 using Hazel;
-using InnerNet;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using UnityEngine;
-using static TownOfHostY.Roles.Neutral.SchrodingerCat;
 
 namespace TownOfHostY.Roles.Impostor;
 
@@ -33,9 +31,18 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         player
     )
     {
-        int chance = IRandom.Instance.Next(0, (int)Role.enumCount);
-        nowRole = (Role)chance;
+        //int chance = IRandom.Instance.Next(0, (int)Role.enumCount);
+        //nowRole = (Role)chance;
+        nowRole = Role.EvilExcellency;
         Logger.Info($"EvilHackerRole : {nowRole}", "EvilHacker");
+        if (nowRole == Role.EvilExcellency)
+        {
+            foreach (var addon in sub)
+            {
+                player.RpcSetCustomRole(addon);
+                CustomRoleManager.SubRoleAdd(player.PlayerId, addon);
+            }
+        }
 
         CustomRoleManager.OnMurderPlayerOthers.Add(HandleMurderRoomNotify);
         instances.Add(this);
@@ -46,7 +53,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
     }
     private static HashSet<EvilHacker> instances = new(1);
     private HashSet<MurderNotify> activeNotifies = new(2);
-    
+    public static bool IsColorCamouflage = false;
     enum Role
     {
         EvilHacker,
@@ -56,13 +63,25 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         EvilIgnitioner,
         EvilExcellency,
         EvilHakka,
-        EvilWriter,
 
         enumCount,
     }
     Role nowRole = Role.enumCount;
     public static bool IsExistEvilWhiterOrReder()
     { return instances.Where(e => e.nowRole is Role.EvilWhiter or Role.EvilReder).Count() > 0; }
+    public static bool IsExistEvilFaller()
+    { return instances.Where(e => e.nowRole is Role.EvilFaller).Count() > 0; }
+
+    CustomRoles[] sub = new[]
+{
+        CustomRoles.AddLight,
+        CustomRoles.AddWatch,
+        CustomRoles.Autopsy,
+        CustomRoles.Management,
+        CustomRoles.AddSeer,
+        CustomRoles.TieBreaker,
+        CustomRoles.VIP,
+    };
 
     // 直接設置
     public static void SetupRoleOptions()
@@ -142,6 +161,14 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
                 }
             }, 4f, "EvilHacker Admin Message");
         }
+        else if(nowRole is Role.EvilWhiter or Role.EvilReder)
+        {
+            if (IsColorCamouflage && AmongUsClient.Instance.AmHost)
+            {
+                Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(false, pc));
+                Utils.NotifyRoles(NoCache: true);
+            }
+        }
     }
     // 7 = 白　0 = 赤
     public static GameData.PlayerOutfit CamouflageWhiteOutfit = new GameData.PlayerOutfit().Set("", 7, "", "", "", "");
@@ -166,6 +193,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
                 if (AmongUsClient.Instance.AmHost)
                 {
                     Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(true, pc, CamouflageWhiteOutfit));
+                    IsColorCamouflage = true;
                     Utils.NotifyRoles(NoCache: true);
                 }
                 _ = new LateTask(() =>
@@ -173,15 +201,17 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
                     if (AmongUsClient.Instance.AmHost)
                     {
                         Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(false, pc));
+                        IsColorCamouflage = false;
                         Utils.NotifyRoles(NoCache: true);
                     }
-                }, 5f, "EvilWhiter IsCamouflage");
+                }, 7f, "EvilWhiter IsCamouflage");
             }
             else if (nowRole == Role.EvilReder)
             {
                 if (AmongUsClient.Instance.AmHost)
                 {
                     Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(true, pc, CamouflageRedOutfit));
+                    IsColorCamouflage = true;
                     Utils.NotifyRoles(NoCache: true);
                 }
                 _ = new LateTask(() =>
@@ -189,13 +219,44 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
                     if (AmongUsClient.Instance.AmHost)
                     {
                         Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(false, pc));
+                        IsColorCamouflage = false;
                         Utils.NotifyRoles(NoCache: true);
                     }
-                }, 5f, "EvilWhiter IsCamouflage");
+                }, 7f, "EvilWhiter IsCamouflage");
             }
             else if (nowRole == Role.EvilFaller)
             {
                 PlayerState.GetByPlayerId(target.PlayerId).DeathReason = CustomDeathReason.Fall;
+            }
+            else if (nowRole == Role.EvilHakka)
+            {
+                PlayerState.GetByPlayerId(target.PlayerId).DeathReason = CustomDeathReason.etc;
+            }
+            else if (nowRole == Role.EvilIgnitioner)
+            {
+                //爆破処理はホストのみ
+                if (AmongUsClient.Instance.AmHost)
+                {
+                    (float d, PlayerControl pc) nearTarget = (2.5f, null);
+                    foreach (var fire in Main.AllAlivePlayerControls)
+                    {
+                        if (fire == killer || fire == target) continue;
+                        var pos = target.transform.position;
+                        var dis = Vector2.Distance(pos, fire.transform.position);
+
+                        if (dis < nearTarget.d)
+                        {
+                            nearTarget = (dis, fire);
+                        }
+                    }
+                    if (nearTarget.pc != null)
+                    {
+                        PlayerState.GetByPlayerId(nearTarget.pc.PlayerId).DeathReason = CustomDeathReason.Bombed;
+                        nearTarget.pc.SetRealKiller(killer);
+                        target.RpcMurderPlayerV2(nearTarget.pc);
+                        Player.MarkDirtySettings();
+                    }
+                }
             }
         }
     }

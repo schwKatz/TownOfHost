@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using UnityEngine;
 using AmongUs.GameOptions;
@@ -133,22 +134,25 @@ public sealed class Potentialist : RoleBase
 
 public static class SpecialEvent
 {
-    public static bool IsEventDate() => DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
+    public static bool IsEventDate() => true;//DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
     public static bool IsEventRole(CustomRoles role) => role is CustomRoles.Potentialist or CustomRoles.EvilHacker;
 
     public static void SetupOptions()
     {
         if (Main.IsInitialRelease)
         {
-            EvilHacker.SetupRoleOptions();
-            EvilHacker.RoleInfo.OptionCreator?.Invoke();
+            if (CultureInfo.CurrentCulture.Name == "ja-JP")
+            {
+                EvilHacker.SetupRoleOptions();
+                EvilHacker.RoleInfo.OptionCreator?.Invoke();
+            }
             Potentialist.SetupRoleOptions();
             Potentialist.RoleInfo.OptionCreator?.Invoke();
         }
     }
 
     public static string TitleText() =>
-        "\n\n<size=50%>TOH_Yは一周年を迎えました！" +
+        "\n<size=50%>TOH_Yは一周年を迎えました！" +
         "\n周年記念として、11/15まで期間限定役職が登場★" +
         "\nパン屋が転職「おにぎり屋」(バレンタイン/ホワイトデー復刻)" +
         "\n途中で役職変化!「ポテンシャリスト」(エイプリルフール復刻)" +

@@ -522,6 +522,11 @@ namespace TownOfHostY
             {
                 return false;
             }
+            if (EvilHacker.IsExistEvilFaller() &&
+                PlayerState.GetByPlayerId(seen.PlayerId).DeathReason == CustomDeathReason.Fall)
+            {
+                return true;
+            }
             // seerが死亡済で，霊界から死因が見える設定がON
             if (!seer.IsAlive() && Options.GhostCanSeeDeathReason.GetBool())
             {

@@ -106,9 +106,15 @@
 "EvilIgnitioner","Evil Ignitioner","イビル発火",
 "EvilExcellency","Evil Excellency","イビル閣下",
 "EvilHakka","Evil Hakka","イビルハッカ",
-"EvilWriter","Evil Writer","イビル作家",
-"EvilHackerInfo","First Anniversary!","一周年記念楽しんでね","","","",""
-"EvilHackerInfoLong","(Impostors):\nFirst Anniversary Role\nThis Role that becomes a random ability for each match. In Japanese, it is a pun.","[インポスター陣営]\nイビルハッカーになりたいインポスター。1ゲームごとに能力がランダム。イビルハッカー(本家TOH仕様)になれるのは約16%",
+"EvilHackerTInfo",,"会議時に直前のアドミン情報がチャットで見れる。",
+"EvilWhiterTInfo",,"自身がキルした時、7秒間全員の姿が白色のカモフラージュがかかる",
+"EvilRederTInfo",,"自身がキルした時、7秒間全員の姿が赤色のカモフラージュがかかる",
+"EvilFallerTInfo",,"自身がキルした死体の死因が「落下死」になる。\n全員視点、落下死の死体のみ死因が表示される。",
+"EvilIgnitionerTInfo",,"キル時に発火させる。そのキルされたプレイヤーの周り(目安視界x0.5範囲内)に誰かいた場合、一番近いプレイヤーを爆死させる。\n爆死は1人まで。",
+"EvilExcellencyTInfo",,"閣下なので属性能力を様々持つ。\n属性：ライティング、ウォッチング、オートプシー、マネジメント、シーイング、VIP、タイブレーカー",
+"EvilHakkaTInfo",,"キルボタンを押されたプレイヤーはハッカでスースーしすぎて死ぬ。特にそれ以外何もない。",
+"EvilHackerInfo","First Anniversary!","一周年記念楽しんでね",
+"EvilHackerInfoLong","(Impostors):\nFirst Anniversary Role\nThis Role that becomes a random ability for each match. In Japanese, it is a pun.","[インポスター陣営]\nイビルハッカーになりたいインポスター。1ゲームごとに能力がランダム。\nイビルハッカー(本家TOH仕様)になれるのは約16%",
 
 "# マッドメイト系役職"
 "Madmate","Madmate","マッドメイト","叛徒","叛徒","Безумец","Tripulante Louco"
@@ -844,7 +850,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DeathReason.Sniped","Sniped","狙撃","狙杀","被狙","Застрелен","Baleado"
 "DeathReason.Execution","Execution","処刑","处决","處刑","Казнен","Executado"
 "DeathReason.Disconnected","Disconnected","回線切断","断连","斷線","Вышел","Desconectado"
-"DeathReason.Fall","Fall","転落","摔死","摔死","Упал","Queda"
+"DeathReason.Fall","Fall","落下死","摔死","摔死","Упал","Queda"
 "DeathReason.Revenge","Revenge","道連れ","复仇","復仇","Месть",""
 "DeathReason.Win","hit","的中","猜着",
 "DeathReason.Poisoning","Poisoning","毒死","毒死",

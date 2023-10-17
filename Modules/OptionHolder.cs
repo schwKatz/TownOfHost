@@ -530,12 +530,12 @@ namespace TownOfHostY
 
             TextOptionItem.Create(300102, "Head.Meeting", TabGroup.MainSettings).SetColor(Color.cyan).SetGameMode(CustomGameMode.All);
             // 会議収集理由表示
-            ShowReportReason = BooleanOptionItem.Create(100300, "ShowReportReason", false, TabGroup.MainSettings, false)
+            ShowReportReason = BooleanOptionItem.Create(100300, "ShowReportReason", true, TabGroup.MainSettings, false)
                 .SetColor(Color.cyan)
                 .SetGameMode(CustomGameMode.All);
 
             // 初手会議に役職名表示
-            ShowRoleInfoAtFirstMeeting = BooleanOptionItem.Create(100320, "ShowRoleInfoAtFirstMeeting", false, TabGroup.MainSettings, false)
+            ShowRoleInfoAtFirstMeeting = BooleanOptionItem.Create(100320, "ShowRoleInfoAtFirstMeeting", true, TabGroup.MainSettings, false)
                 .SetColor(Color.cyan);
 
             // ボタン回数同期
@@ -572,7 +572,7 @@ namespace TownOfHostY
 
             TextOptionItem.Create(300103, "Head.Revenge", TabGroup.MainSettings).SetColor(Palette.Orange).SetGameMode(CustomGameMode.Standard);
             // 道連れ人表記
-            ShowRevengeTarget = BooleanOptionItem.Create(100310, "ShowRevengeTarget", false, TabGroup.MainSettings, false)
+            ShowRevengeTarget = BooleanOptionItem.Create(100310, "ShowRevengeTarget", true, TabGroup.MainSettings, false)
                 .SetColor(Color.cyan);
             RevengeMadByImpostor = BooleanOptionItem.Create(91500, "RevengeMadByImpostor", false, TabGroup.MainSettings, false)
                 .SetColor(Palette.ImpostorRed);

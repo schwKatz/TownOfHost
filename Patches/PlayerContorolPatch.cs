@@ -401,9 +401,12 @@ namespace TownOfHostY
                     }
                     else __instance.cosmetics.nameText.text = __instance?.Data?.PlayerName;
 
-                    var client = __instance.GetClient();
-                    var consent = false && client != null && Main.ConsentModUse.ContainsKey(client.Id) ? "<color=#ff00ff>ModOK</color>" : "";
-                    __instance.cosmetics.nameText.text += consent;
+                    if (false)
+                    {
+                        var client = __instance.GetClient();
+                        var consent = false && client != null && Main.ConsentModUse.ContainsKey(client.Id) ? "<color=#ff00ff>ModOK</color>" : "";
+                        __instance.cosmetics.nameText.text += consent;
+                    }
                 }
                 if (GameStates.IsInGame)
                 {
@@ -479,6 +482,8 @@ namespace TownOfHostY
                         Mark = isBlocked ? "(true)" : "(false)";
                     }*/
                     if (Utils.IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())
+                        RealName = $"<size=0>{RealName}</size> ";
+                    if (EvilHacker.IsColorCamouflage)
                         RealName = $"<size=0>{RealName}</size> ";
 
                     string DeathReason = seer.Data.IsDead && seer.KnowDeathReason(target) ? $"({Utils.ColorString(Utils.GetRoleColor(CustomRoles.Doctor), Utils.GetVitalText(target.PlayerId))})" : "";

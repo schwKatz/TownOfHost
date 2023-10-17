@@ -245,11 +245,11 @@ class SelectRolesPatch
             }
             //以下、バニラ側の役職割り当てが入る
         }
-        public static void Postfix()
-        {
-            if (!AmongUsClient.Instance.AmHost) return;
-            RpcSetRoleReplacer.Release(); //保存していたSetRoleRpcを一気に書く
-            RpcSetRoleReplacer.senders.Do(kvp => kvp.Value.SendMessage());
+    public static void Postfix()
+    {
+        if (!AmongUsClient.Instance.AmHost) return;
+        RpcSetRoleReplacer.Release(); //保存していたSetRoleRpcを一気に書く
+        RpcSetRoleReplacer.senders.Do(kvp => kvp.Value.SendMessage());
 
         // 不要なオブジェクトの削除
         RpcSetRoleReplacer.senders = null;
@@ -278,7 +278,7 @@ class SelectRolesPatch
             var state = PlayerState.GetByPlayerId(pc.PlayerId);
             if (state.MainRole != CustomRoles.NotAssigned) continue; //既にカスタム役職が割り当てられていればスキップ
             var role = CustomRoles.NotAssigned;
-            switch (pc.Data.Role.Role) 
+            switch (pc.Data.Role.Role)
             {
                 case RoleTypes.Crewmate:
                     Crewmates.Add(pc);
@@ -468,7 +468,7 @@ class SelectRolesPatch
 
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role == CustomRoles.StrayWolf && AssignedStrayWolf) continue;
-                if (role is not CustomRoles.Opportunist and not CustomRoles.StrayWolf && 
+                if (role is not CustomRoles.Opportunist and not CustomRoles.StrayWolf &&
                     CustomRoleManager.GetRoleInfo(role) is SimpleRoleInfo info && info.RequireResetCam) continue;
 
                 var baseRoleTypes = role.GetRoleTypes() switch

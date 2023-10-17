@@ -153,7 +153,7 @@ namespace TownOfHostY
 
             for (var i = 0; i < tabs.Count; i++)
             {
-                tabs[i].transform.position = new(0.7f * (i - 0.5f) - tabs.Count / 2f, tabs[i].transform.position.y, tabs[i].transform.position.z);
+                tabs[i].transform.localPosition = new(0.7f * (i - 0.5f) - tabs.Count / 3f, tabs[i].transform.localPosition.y, tabs[i].transform.localPosition.z);
                 var button = tabs[i].GetComponentInChildren<PassiveButton>();
                 if (button == null) continue;
                 var copiedIndex = i;

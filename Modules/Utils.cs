@@ -1181,6 +1181,7 @@ namespace TownOfHostY
                     || seer.IsNeutralKiller() //seerがキル出来るニュートラル
                     || (IsActive(SystemTypes.Electrical) && CustomRoles.Mare.IsEnable())    //メアーが入っていない時は通さない
                     || (IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())   //カモフラオプションがない時は通さない
+                    || EvilHacker.IsColorCamouflage    //カモフラがない時は通さない
                     || NoCache
                     || ForceLoop
                     || Options.IsCCMode
@@ -1250,6 +1251,8 @@ namespace TownOfHostY
                             TargetDeathReason = $"({ColorString(GetRoleColor(CustomRoles.Doctor), GetVitalText(target.PlayerId))})";
 
                         if (IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool() && !isForMeeting)
+                            TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";
+                        if (EvilHacker.IsColorCamouflage && !isForMeeting)
                             TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";
 
                         //全てのテキストを合成します。
