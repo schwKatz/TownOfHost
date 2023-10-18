@@ -910,7 +910,7 @@ namespace TownOfHostY
             var winnerColor = ((CustomRoles)CustomWinnerHolder.WinnerTeam).GetRoleInfo()?.RoleColor ?? Palette.DisabledGrey;
 
             sb.Append("""<align="center">""");
-            sb.Append("<size=150%>").Append(GetString("LastResult")).Append("</size>");
+            sb.Append("<size=120%>").Append(GetString("LastResult")).Append("</size>");
             sb.Append('\n').Append(SetEverythingUpPatch.LastWinsText.Mark(winnerColor, false));
             sb.Append("</align>");
 
@@ -1354,7 +1354,7 @@ namespace TownOfHostY
             var pos = Math.Min(((float)longestNameByteCount / 2) + 1.5f /* ★+末尾の半角空白 */ , 11.5f);
 
             var builder = new StringBuilder();
-            builder.Append(isForChat ? Main.AllPlayerNames[id] : ColorString(Main.PlayerColors[id], Main.AllPlayerNames[id]));
+            builder.Append(ColorString(Main.PlayerColors[id], Main.AllPlayerNames[id]));
             builder.AppendFormat("<pos={0}em>", pos).Append(isForChat ? GetProgressText(id).RemoveColorTags() : GetProgressText(id)).Append("</pos>");
             // "(00/00) " = 4em
             pos += 4f;
@@ -1363,7 +1363,7 @@ namespace TownOfHostY
             // "回線切断 " = 4.5em
             pos += DestroyableSingleton<TranslationController>.Instance.currentLanguage.languageID == SupportedLangs.English ? 8f : 4.5f;
             builder.AppendFormat("<pos={0}em>", pos);
-            builder.Append(isForChat ? GetTrueRoleName(id, false, true).RemoveColorTags() : GetTrueRoleName(id, false, true));
+            builder.Append(GetTrueRoleName(id, false, true));
             builder.Append("</pos>");
             return builder.ToString();
         }

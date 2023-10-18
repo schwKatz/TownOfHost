@@ -54,8 +54,8 @@ public sealed class MadNimrod : RoleBase
 
         _ = new LateTask(() =>
         {
-            Utils.GetPlayerById(Exiled.PlayerId).ReportDeadBody(Exiled);
             IsExecutionMeeting = Exiled.PlayerId;
+            Utils.GetPlayerById(Exiled.PlayerId).ReportDeadBody(Exiled);
         }, 15f, "NimrodExiled");
         return null;
     }
@@ -64,7 +64,15 @@ public sealed class MadNimrod : RoleBase
         if (IsExecutionMeeting == byte.MaxValue) return;
 
         Utils.SendMessage(Translator.GetString("IsNimrodMeetingText"),
-            title: $"<color={RoleInfo.RoleColorCode}>{Translator.GetString("IsNimrodMeetingTitle")}</color>");
+            title: $"<color={Utils.GetRoleColorCode(CustomRoles.Nimrod)}>{Translator.GetString("IsNimrodMeetingTitle")}</color>");
+    }
+    public static (string, int) AddMeetingDisplay()
+    {
+        if (IsExecutionMeeting == byte.MaxValue) return ("", 0);
+
+        string text = Translator.GetString("MDisplay.NimrodTitle").Color(Utils.GetRoleColor(CustomRoles.Nimrod));
+        text += "\n";
+        return (text, 1);
     }
 
     public override (byte? votedForId, int? numVotes, bool doVote) ModifyVote(byte voterId, byte sourceVotedForId, bool isIntentional)

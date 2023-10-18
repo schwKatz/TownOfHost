@@ -9,7 +9,7 @@ using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Common;
 using static TownOfHostY.Translator;
-using AmongUs.Data.Player;
+using TownOfHostY.Roles.Impostor;
 
 namespace TownOfHostY;
 
@@ -101,7 +101,7 @@ public static class MeetingHudPatch
             {
                 if (ReportDeadBodyPatch.ReportTarget == null)
                     Utils.SendMessage(GetString("Message.isButton"));
-                else
+                else if (!ReportDeadBodyPatch.SpecialMeeting)
                     Utils.SendMessage(string.Format(GetString("Message.isReport"),
                         $"{ReportDeadBodyPatch.ReportTarget.PlayerName}{ReportDeadBodyPatch.ReportTarget.ColorName}"));
             }
@@ -125,6 +125,8 @@ public static class MeetingHudPatch
 
             if (MeetingStates.FirstMeeting) TemplateManager.SendTemplate("OnFirstMeeting", noErr: true);
             TemplateManager.SendTemplate("OnMeeting", noErr: true);
+
+            EvilHacker.FirstMeetingText();
 
             if (AmongUsClient.Instance.AmHost)
             {

@@ -98,14 +98,14 @@
 "StrayWolfInfoLong","(Impostors):\nAn Impostor in which the companions are not displayed. Winning conditions are the same as for a regular Impostor.\nCan be set up to kill each other with Impostors or not.","[インポスター陣営]\n仲間が表示されないインポスター。勝利条件は通常インポスターと変わらない。\n[仲間斬り合い設定]\n・常時：仲間インポスターもそのままキル。仲間とずっと視認できない。\n・視認後：仲間を斬りそうな時or仲間から斬られそうになった時にガード、互いに視認できるようになる。その相手とはキルしあえる状態に。\n・なし：視認後はキルボタンが互いだけ反応しなくなる。"
 
 #イビルハッカ
-"EvilHackerName","Evil Replicator","イビルハッカー...?",
-"EvilHacker","Evil Hacker","イビルハッカー",
-"EvilWhiter","Evil Whiter","イビル白化",
-"EvilReder","Evil Reder","イビル真っ赤",
-"EvilFaller","Evil Faller","イビル落下",
-"EvilIgnitioner","Evil Ignitioner","イビル発火",
-"EvilExcellency","Evil Excellency","イビル閣下",
-"EvilHakka","Evil Hakka","イビルハッカ",
+"EvilHacker","Evil Replicator","イビルハッカー...?",
+"REvilHacker","Evil Hacker","イビルハッカー",
+"REvilWhiter","Evil Whiter","イビル白化",
+"REvilReder","Evil Reder","イビル真っ赤",
+"REvilFaller","Evil Faller","イビル落下",
+"REvilFire","Evil Fire","イビル発火",
+"REvilVipper","Evil Vipper","イビル閣下",
+"REvilHakka","Evil Hakka","イビルハッカ",
 "EvilHackerTInfo",,"会議時に直前のアドミン情報がチャットで見れる。",
 "EvilWhiterTInfo",,"自身がキルした時、7秒間全員の姿が白色のカモフラージュがかかる",
 "EvilRederTInfo",,"自身がキルした時、7秒間全員の姿が赤色のカモフラージュがかかる",
@@ -115,6 +115,11 @@
 "EvilHakkaTInfo",,"キルボタンを押されたプレイヤーはハッカでスースーしすぎて死ぬ。特にそれ以外何もない。",
 "EvilHackerInfo","First Anniversary!","一周年記念楽しんでね",
 "EvilHackerInfoLong","(Impostors):\nFirst Anniversary Role\nThis Role that becomes a random ability for each match. In Japanese, it is a pun.","[インポスター陣営]\nイビルハッカーになりたいインポスター。1ゲームごとに能力がランダム。\nイビルハッカー(本家TOH仕様)になれるのは約16%",
+
+"MDisplay.EHnowRoleText","In Here!","出現！",
+"MDisplay.EHText","Evil Hacker In Here!","イビルハッカー出現！",
+"MDisplay.EH?Text","Replicator In Here!","イビルハッカー、、？",
+"message.ReplicatorTitle","【Types of Replicator In This Game】","【今回のイビルハッカー】",
 
 "# マッドメイト系役職"
 "Madmate","Madmate","マッドメイト","叛徒","叛徒","Безумец","Tripulante Louco"
@@ -758,7 +763,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "FortuneTellerKillerOnly","Check only Killer",キルできる役職のみ確認できる,
 "PsychicMaxCheckRole","Role of The Deceased Can Be Checked Count","霊媒できる回数",
 
-"Head.LimitedTimeRole","Limited Time Role 11/2～11/8 (First Anniversary)","期間限定役職 11/2～11/8 (一周年記念)"
+"Head.LimitedTimeRole","Limited Time Role 11/2～11/15 (First Anniversary)","期間限定役職 11/2～11/15 (一周年記念)"
 ##"Potentialist","Potentialist","ポテンシャリスト",
 "Potentialist","Crewmate","クルーメイト",
 "PotentialistName","Potentialist</color>\n　…At first, Crewmate. Complete tasks and have random abilities.","ポテンシャリスト</color>\n　…初めはクルー。設定タスク完了でランダムな能力を持つ。",
@@ -905,9 +910,15 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "CantUse.lastresult","Unable to use /lastresult during a game.","試合中に/lastresultを使用することはできません。","不可以在游戏中使用/lastresult命令","不可以在遊戲中使用/lastresult指令","Нельзя использовать /lastresult во время игры","Impossível usar /lastresult durante um jogo."
 "CantUse.killlog","Unable to use /killlog during a game.","試合中に/killlogを使用することはできません。","不可以在游戏中使用/killlog命令","不可以在遊戲中使用/killlog指令","Нельзя использовать /killlog во время игры","Impossível usar /killlog durante um jogo."
 
+"MDisplay.Button","Emergency Button","緊急ボタンでの会議",
+"MDisplay.ReportBody","<size=90%>Report:{0}Body</size>","通報:{0}の死体",
+"MDisplay.RevengeHeader","Revenge","道連れ死亡",
+"MDisplay.RevengeMultiple","Multiple","複数発生しています",
+
 "## メッセージ"
 "Message.SetToSeconds","Set to {0} seconds.","{0}秒に設定されました","信息发送冷却时间为{0}秒","訊息發送冷卻已設定為{0}秒","Установлен на {0} секунды","Definido para {0} segundos."
 "Message.MessageWaitHelp","Specify the first argument in seconds.","第一引数を秒数で指定します。","指定一个数设定秒数","在指令後方指定一個數字來設定秒數","Укажите первый аргумент в секундах.","Especifique o primeiro argumento em segundos."
+
 "Message.TemplateNotFoundHost","No messages matching ""{0}"" were found.\nPlease add to template.txt like so:\n{0}:contents\n\nDefined Tags:\n{1}","「{0}」に該当するメッセージが見つかりませんでした。\n{0}:内容\nのようにtemplate.txtに追記してください。\n\n定義されているタグ:\n{1}","未找到与“{0}”对应的消息。 \n{0}: 内容\n 请添加到 template.txt。 \n\n标签定义：\n{1}","沒有找到與「{0}」相關的訊息,\n請將內容加入template.txt作為{0}的定義內容。\n\n定義標籤:\n{1}","Сообщения соответствующие ''{0}'' не найдены. \n{0}:Содержание\nПожалуйста добавьте в template.txt \n\nОпределенные теги:\n{1}","Nenhuma mensagem correspondente a ""{0}"" foi encontrada.\nPor favor, adicione ao ""template.txt"" da seguinte forma:\n{0}:conteúdo \n\nTags Definidas:\n{1}"
 "Message.TemplateNotFoundClient","No messages matching ""{0}"" were found.","「{0}」に該当するメッセージが見つかりませんでした。","未找到与“{0}”相关的消息。","沒有找到與「{0}」相關的訊息","Сообщения соответствующие ''{0}'' не найдены.","Nenhuma mensagem correspondente a ""{0}"" foi encontrada."
 "Message.SyncButtonLeft","There are {0} more emergency buttons left","緊急会議ボタンはあと{0}回使用できます","剩余紧急会议次数: {0}","全場拍桌數量還剩下{0}次可使用","Кнопку экстренной встречи можно использовать еще {0} раз","Existem {0} botões de emergência sobrando"
@@ -937,6 +948,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "Message.ModCheckAgree","I agree to use mods. Player: {0}\n\nPlease exit the room to cancel.","MODの使用に同意しました。\n　Player: {0}\n\n※取り消す場合は部屋を抜けてください",,,,
 "Message.ModCheckKick","{0} has been kicked due to lack of agreement to use mods.","{0} はMOD使用の同意がないためキックされました",,,,
 
+"MDisplay.NimrodTitle","The Nimrod's Choice","ニムロッドの処刑選択"
 "IsNimrodMeetingTitle","【The Nimrod's choice】","【ニムロッドの処刑選択】"
 "IsNimrodMeetingText","The Nimrod should choose who to execute.\nIt's time for others to wait quietly...","ニムロッドは処刑する人を選択してください。\n他の人は静かに待つ時間...",
 BakeryChange,"\nA Bakery awakens and develops a poisoned bread.\nAfter the next turn, if the awakened baker is not expelled, the person dealt to will be poisoned and die.\nㅤ","\nパン屋が覚醒し、毒入りパンを開発した。\n次ターン以降、覚醒パン屋を追放しないと\nㅤ配られた人は毒が回って死亡してしまう。\nㅤ","\n面包师醒来并做出了有毒的面包.\n下一局后，如果被唤醒的面包师没有被驱逐，被喂食的人的人将中毒并死亡\nㅤ"

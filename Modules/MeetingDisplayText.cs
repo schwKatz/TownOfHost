@@ -2,6 +2,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Madmate;
+using TownOfHostY.Roles.Impostor;
+using static TownOfHostY.Translator;
 
 namespace TownOfHostY.Modules;
 public static class MeetingDisplayText
@@ -33,19 +36,38 @@ public static class MeetingDisplayText
         if (Options.ShowReportReason.GetBool())
         {
             var dead = ReportDeadBodyPatch.ReportTarget;
+            // 緊急ボタンでの会議
             if (dead == null)
             {
-                addText.Append("<i>緊急ボタンでの会議</i>\n".Color(Color.white));
+                addText.Append($"<i>{GetString("MDisplay.Button")}</i>\n".Color(Color.white));
                 column += 1;
             }
-            else
+            // 通報:{0}の死体
+            else if (!ReportDeadBodyPatch.SpecialMeeting)
             {
                 var colorText = Palette.GetColorName(dead.DefaultOutfit.ColorId);
-
-                addText.Append($"<i>通報:{colorText.Color(dead.Color)}の死体</i>\n".Color(Color.white));
+                addText.Append("<color=#ffffff><i>");
+                addText.Append(string.Format(GetString("MDisplay.ReportBody"), colorText.Color(dead.Color)));
+                addText.Append("</i></color>\n");
                 column += 1;
             }
         }
+
+        return (addText.ToString(), column, height);
+    }
+    // 真ん中(2番)
+    private static (string, int, float) CenterUp()
+    {
+        StringBuilder addText = new();
+        int column = 0;
+        float height = 3.2f;
+
+        (string t, int c) = EvilHacker.AddMeetingDisplay();
+        addText.Append(t); column += c;
+        (t, c) = Nimrod.AddMeetingDisplay();
+        addText.Append(t); column += c;
+        (t, c) = MadNimrod.AddMeetingDisplay();
+        addText.Append(t); column += c;
 
         return (addText.ToString(), column, height);
     }
@@ -70,19 +92,20 @@ public static class MeetingDisplayText
             if (MeetingHudPatch.RevengeTargetPlayer.Count() >= 2)
             {
                 addText.Append("<line-height=0.12em>\n</line-height>")
-                    .Append($"<line-height=0.87em>道連れ死亡:\n</line-height>　複数発生しています\n".Color(Color.white));
+                    //.Append($"<line-height=0.87em>道連れ死亡:\n</line-height>　複数発生しています\n".Color(Color.white));
+                    .Append($"<line-height=0.87em>{GetString("MDisplay.RevengeHeader")}:\n</line-height>　{GetString("MDisplay.RevengeMultiple")}\n".Color(Color.white));
                 column += 2;
                 height = 0.8f;
             }
 
             foreach (var Exiled_Target in MeetingHudPatch.RevengeTargetPlayer)
             {
-                var colorT = Palette.GetColorName(Exiled_Target.revengeTarget.DefaultOutfit.ColorId);
-                var colorE = Palette.GetColorName(Exiled_Target.exiled.DefaultOutfit.ColorId);
+                var colorT = Palette.GetColorName(Exiled_Target.revengeTarget.DefaultOutfit.ColorId).Color(Exiled_Target.revengeTarget.Color);
+                var colorE = Palette.GetColorName(Exiled_Target.exiled.DefaultOutfit.ColorId).Color(Exiled_Target.exiled.Color);
 
                 addText.Append("<line-height=0.12em>\n</line-height>")
-                    .Append($"<line-height=0.87em>道連れ死亡:\n</line-height>")
-                    .Append($"{colorT.Color(Exiled_Target.revengeTarget.Color)}<={colorE.Color(Exiled_Target.exiled.Color)}\n".Color(Color.white));
+                    .Append($"<line-height=0.87em>{GetString("MDisplay.RevengeHeader")}:\n</line-height>")
+                    .Append($"{colorT}<={colorE}\n".Color(Color.white));
                 column += 2;
                 height = 0.8f;
             }
@@ -104,6 +127,11 @@ public static class MeetingDisplayText
         if (area == 0)
         {
             (addText, column, height) = LeftUp();
+        }
+        // 1 = 真ん中上(2番目)
+        else if (area == 1)
+        {
+            (addText, column, height) = CenterUp();
         }
         // 2 = 右上(3番目)
         else if (area == 2)
@@ -140,6 +168,12 @@ public static class MeetingDisplayText
         if (pc == Main.AllAlivePlayerControls.ElementAtOrDefault(0))
         {
             (addText, column, height) = LeftUp();
+            if (addText == "") return name;
+        }
+        // 1 = 真ん中上(2番目)
+        else if (pc == Main.AllAlivePlayerControls.ElementAtOrDefault(1))
+        {
+            (addText, column, height) = CenterUp();
             if (addText == "") return name;
         }
         // 2 = 右上(3番目)

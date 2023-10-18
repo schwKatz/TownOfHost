@@ -218,6 +218,7 @@ namespace TownOfHostY
     {
         public static GameData.PlayerInfo reporter;
         public static GameData.PlayerInfo ReportTarget;
+        public static bool SpecialMeeting = reporter == ReportTarget;
 
         public static Dictionary<byte, bool> CanReport;
         public static Dictionary<byte, bool> CanReportByDeadBody;
@@ -227,6 +228,7 @@ namespace TownOfHostY
         {
             reporter = __instance.Data;
             ReportTarget = target;
+            SpecialMeeting = reporter.PlayerId == ReportTarget.PlayerId;
             if (GameStates.IsMeeting) return false;
             Logger.Info($"{__instance.GetNameWithRole()} => {target?.Object?.GetNameWithRole() ?? "null"}", "ReportDeadBody");
             if (Options.IsStandardHAS && target != null && __instance == target.Object) return true; //[StandardHAS] ボタンでなく、通報者と死体が同じなら許可

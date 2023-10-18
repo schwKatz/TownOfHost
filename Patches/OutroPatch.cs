@@ -30,7 +30,7 @@ namespace TownOfHostY
             foreach (var id in PlayerState.AllPlayerStates.Keys)
                 SummaryText[id] = Utils.SummaryTexts(id, false);
 
-            var sb = new StringBuilder(GetString("KillLog"));
+            var sb = new StringBuilder($"<size=100%><align={"center"}>{GetString("KillLog")}</align></size>");
             sb.Append("<size=70%>");
             foreach (var kvp in PlayerState.AllPlayerStates.OrderBy(x => x.Value.RealKiller.Item1.Ticks))
             {

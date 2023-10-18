@@ -372,11 +372,18 @@ namespace TownOfHostY
             MadmateVentMaxTime = FloatOptionItem.Create(91529, "MadmateVentMaxTime", new(0f, 180f, 5f), 0f, TabGroup.MadmateRoles, false)
                 .SetValueFormat(OptionFormat.Seconds);
 
-
             // Impostor以外
             sortedRoleInfo.Where(role => role.CustomRoleType is CustomRoleTypes.Crewmate or CustomRoleTypes.Neutral).Do(info =>
             {
-                if (!SpecialEvent.IsEventRole(info.RoleName))
+                if (info.RoleName == CustomRoles.God)
+                {
+                    if (Main.IsGodRelease)
+                    {
+                        SetupRoleOptions(info);
+                        info.OptionCreator?.Invoke();
+                    }
+                }
+                else if (!SpecialEvent.IsEventRole(info.RoleName))
                 {
                     SetupRoleOptions(info);
                     info.OptionCreator?.Invoke();

@@ -31,11 +31,10 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         player
     )
     {
-        //int chance = IRandom.Instance.Next(0, (int)Role.enumCount);
-        //nowRole = (Role)chance;
-        nowRole = Role.EvilExcellency;
+        int chance = IRandom.Instance.Next(0, (int)Role.enumCount);
+        nowRole = (Role)chance;
         Logger.Info($"EvilHackerRole : {nowRole}", "EvilHacker");
-        if (nowRole == Role.EvilExcellency)
+        if (nowRole == Role.EvilVipper)
         {
             foreach (var addon in sub)
             {
@@ -60,17 +59,17 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         EvilWhiter,
         EvilReder,
         EvilFaller,
-        EvilIgnitioner,
-        EvilExcellency,
+        EvilFire,
+        EvilVipper,
         EvilHakka,
 
         enumCount,
     }
     Role nowRole = Role.enumCount;
     public static bool IsExistEvilWhiterOrReder()
-    { return instances.Where(e => e.nowRole is Role.EvilWhiter or Role.EvilReder).Count() > 0; }
+    { return instances.Where(e => e.nowRole is Role.EvilWhiter or Role.EvilReder).Any(); }
     public static bool IsExistEvilFaller()
-    { return instances.Where(e => e.nowRole is Role.EvilFaller).Count() > 0; }
+    { return instances.Where(e => e.nowRole is Role.EvilFaller).Any(); }
 
     CustomRoles[] sub = new[]
 {
@@ -88,7 +87,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
     {
         TextOptionItem.Create(41, "Head.LimitedTimeRole", TabGroup.ImpostorRoles)
             .SetColor(Color.yellow);
-        var spawnOption = IntegerOptionItem.Create(RoleInfo.ConfigId, "EvilHackerName", new(0, 100, 10), 0, TabGroup.ImpostorRoles, false)
+        var spawnOption = IntegerOptionItem.Create(RoleInfo.ConfigId, "EvilHacker", new(0, 100, 10), 0, TabGroup.ImpostorRoles, false)
             .SetColor(RoleInfo.RoleColor)
             .SetValueFormat(OptionFormat.Percent)
             .SetGameMode(CustomGameMode.Standard) as IntegerOptionItem;
@@ -232,7 +231,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
             {
                 PlayerState.GetByPlayerId(target.PlayerId).DeathReason = CustomDeathReason.etc;
             }
-            else if (nowRole == Role.EvilIgnitioner)
+            else if (nowRole == Role.EvilFire)
             {
                 //爆破処理はホストのみ
                 if (AmongUsClient.Instance.AmHost)
@@ -253,7 +252,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
                     {
                         PlayerState.GetByPlayerId(nearTarget.pc.PlayerId).DeathReason = CustomDeathReason.Bombed;
                         nearTarget.pc.SetRealKiller(killer);
-                        target.RpcMurderPlayerV2(nearTarget.pc);
+                        nearTarget.pc.RpcMurderPlayerV2(nearTarget.pc);
                         Player.MarkDirtySettings();
                     }
                 }
@@ -334,7 +333,48 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
     }
 
     public override void OverrideTrueRoleName(ref Color roleColor, ref string roleText)
-        => roleText = Translator.GetRoleString(nowRole.ToString());
+        => roleText = Translator.GetRoleString($"R{nowRole}");
+
+    public static (string, int) AddMeetingDisplay()
+    {
+        if (!MeetingStates.FirstMeeting || instances.Count == 0) return ("", 0);
+
+        string text = "";
+
+        if (instances.Count == 1)
+        {
+            var nowRoleText = Translator.GetRoleString($"R{instances.FirstOrDefault().nowRole}");
+
+            text = nowRoleText + Translator.GetString("MDisplay.EHnowRoleText")+ "\n";
+            text = text.Color(Palette.ImpostorRed);
+        }
+        else
+        {
+            if (instances.Where(e => e.nowRole is Role.EvilHacker).Any())
+            {
+                text = $"{Translator.GetString("MDisplay.EHText")}\n".Color(Palette.ImpostorRed);
+            }
+            else
+            {
+                text = $"{Translator.GetString("MDisplay.EH?Text")}\n".Color(Palette.ImpostorRed);
+            }
+        }
+        return (text, 1);
+    }
+    public static void FirstMeetingText()
+    {
+        if (!MeetingStates.FirstMeeting || instances.Count == 0) return;
+
+        string text = "";
+        string titleText = Translator.GetString("message.ReplicatorTitle").Color(Palette.ImpostorRed);
+        foreach (var evil in instances)
+        {
+            text = Translator.GetRoleString($"R{evil.nowRole}") + "\n" + Translator.GetString($"{evil.nowRole}TInfo");
+
+            Utils.SendMessage(text, title: titleText);
+        }
+    }
+
 
     public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {

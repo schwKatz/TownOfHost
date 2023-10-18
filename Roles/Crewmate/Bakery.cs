@@ -123,9 +123,10 @@ public sealed class Bakery : RoleBase
         int aliveBakeryCount = Main.AllAlivePlayerControls.Where(p => p.Is(CustomRoles.Bakery)).Count();
         // パン屋が居無ければ早期リターン
         if (aliveBakeryCount == 0) return ("", 0);
-
-        string addText = $"<color={GetRoleColorCode(CustomRoles.Bakery)}><u>{GetString("PanAliveMessageTitle")}</color>";
-        if (aliveBakeryCount >= 2) addText += $"<color=#ffffff>x{aliveBakeryCount}</color>";
+        string addText = "";
+        if (aliveBakeryCount >= 2) addText = "<size=90%>";
+        addText += $"<color={GetRoleColorCode(CustomRoles.Bakery)}><u>{GetString("PanAliveMessageTitle")}</color>";
+        if (aliveBakeryCount >= 2) addText += $"<color=#ffffff>x{aliveBakeryCount}</color></size>";
         addText += "</u>\n";
 
         return (addText, 1);
