@@ -65,6 +65,29 @@ public sealed class God : RoleBase
     {
         enabled = true;
     }
+    public override bool OnSabotage(PlayerControl player, SystemTypes systemType, byte amount)
+    {
+        if (!Is(player)) return true;
+
+        switch (systemType)
+        {
+            case SystemTypes.Reactor:
+            case SystemTypes.Laboratory:
+            case SystemTypes.LifeSupp:
+                return false;
+
+            case SystemTypes.Comms:
+                return !(amount is 0 or 16 or 17);
+
+            case SystemTypes.Electrical:
+                //停電サボタージュの開始は処理スキップ
+                if (amount.HasBit(SwitchSystem.DamageSystem)) return true;
+
+                return false;
+        }
+
+        return true;
+    }
     public static bool CheckWin()
     {
         return Main.AllAlivePlayerControls.ToArray()
