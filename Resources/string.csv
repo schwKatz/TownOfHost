@@ -804,6 +804,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "JClientAfterJackalDead","Client Mode After Jackal Dead","クライアントのジャッカル死亡後モード",,,,
 "JClientAfterJackalDeadMode.None","None","なし",,,,
 "JClientAfterJackalDeadMode.Following","Following","後追い",,,,
+"JClientAfterJackalDeadMode.Survival","Survive (3 or less)","生き残り(3人以下)","","","",""
 "LawyerTargetKnows","Lawyer target knows","依頼人は弁護されている事がわかる","律师的客户知道自己有律师",
 "LawyerKnowTargetRole","Lawyer know target role","弁護士は依頼人の役職が分かる","律师知道客户职业",
 "PursuerGuardNum","Pursuer guard count","追跡者のキルガード回数","起诉人自保次数",

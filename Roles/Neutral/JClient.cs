@@ -2,9 +2,10 @@ using System.Linq;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Neutral;
-public sealed class JClient : RoleBase
+public sealed class JClient : RoleBase, IAdditionalWinner
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -71,12 +72,14 @@ public sealed class JClient : RoleBase
     public enum AfterJackalDeadMode
     {
         None,
-        Following
+        Following,
+        Survival
     };
     private static readonly string[] AfterJackalDeadModeText =
     {
-    "JClientAfterJackalDeadMode.None",
-    "JClientAfterJackalDeadMode.Following",
+        "JClientAfterJackalDeadMode.None",
+        "JClientAfterJackalDeadMode.Following",
+        "JClientAfterJackalDeadMode.Survival",
     };
     public override void ApplyGameOptions(IGameOptions opt)
     {
@@ -129,5 +132,16 @@ public sealed class JClient : RoleBase
                 Logger.Info($"followingDead set:{Player.name}", "JClientDeadMode");
             }
         }
+    }
+    public bool CheckWin(out AdditionalWinners winnerType)
+    {
+        winnerType = AdditionalWinners.JClient;
+
+        if (AfterJackalDead != AfterJackalDeadMode.Survival) return false;
+        if (Player == null || !Player.IsAlive()) return false;
+        if (Main.AllAlivePlayerControls.ToArray().Any(pc => pc.Is(CustomRoles.Jackal))) return false;
+        if (Main.AllAlivePlayerControls.Count() > 3) return false;
+
+        return true;
     }
 }
