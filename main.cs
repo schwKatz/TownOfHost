@@ -324,6 +324,7 @@ namespace TownOfHostY
         Totocalcio = CustomRoles.Totocalcio,
         Duelist = CustomRoles.Duelist,
         Archenemy = CustomRoles.Archenemy,
+        JClient = CustomRoles.JClient,
         HASFox = CustomRoles.HASFox,
         //CC
         RedC = CustomRoles.CCRedCat,
