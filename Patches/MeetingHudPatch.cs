@@ -103,14 +103,14 @@ public static class MeetingHudPatch
                     Utils.SendMessage(GetString("Message.isButton"));
                 else if (!ReportDeadBodyPatch.SpecialMeeting)
                     Utils.SendMessage(string.Format(GetString("Message.isReport"),
-                        $"{ReportDeadBodyPatch.ReportTarget.PlayerName}{ReportDeadBodyPatch.ReportTarget.ColorName}"));
+                        $"{ReportDeadBodyPatch.ReportTarget.PlayerName}{ReportDeadBodyPatch.ReportTarget.ColorName.Color(ReportDeadBodyPatch.ReportTarget.Color)}"));
             }
             if (Options.ShowRevengeTarget.GetBool())
             {
                 foreach (var Exiled_Target in RevengeTargetPlayer)
                 {
                     Utils.SendMessage(string.Format(GetString("Message.RevengeText"),
-                        $"{Exiled_Target.exiled.PlayerName}{Exiled_Target.exiled.ColorName}", $"{Exiled_Target.revengeTarget.PlayerName}{Exiled_Target.revengeTarget.ColorName}"));
+                        $"{Exiled_Target.exiled.PlayerName}{Exiled_Target.exiled.ColorName.Color(Exiled_Target.exiled.Color)}", $"{Exiled_Target.revengeTarget.PlayerName}{Exiled_Target.revengeTarget.ColorName.Color(Exiled_Target.revengeTarget.Color)}"));
                 }
             }
 
