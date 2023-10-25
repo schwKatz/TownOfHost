@@ -131,12 +131,13 @@ namespace TownOfHostY
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
     class MurderPlayerPatch
     {
-        public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
+        public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, MurderResultFlags resultFlags)
         {
-            Logger.Info($"{__instance.GetNameWithRole()} => {target.GetNameWithRole()}{(target.protectedByGuardian ? "(Protected)" : "")}", "MurderPlayer");
+            Logger.Info($"{__instance.GetNameWithRole()} => {target.GetNameWithRole()}{(target.protectedByGuardianThisRound ? "(Protected)" : "")}", "MurderPlayer");
 
-            if (RandomSpawn.CustomNetworkTransformPatch.NumOfTP.TryGetValue(__instance.PlayerId, out var num) && num > 2) RandomSpawn.CustomNetworkTransformPatch.NumOfTP[__instance.PlayerId] = 3;
-            if (!target.protectedByGuardian)
+            //if (RandomSpawn.CustomNetworkTransformPatch.NumOfTP.TryGetValue(__instance.PlayerId, out var num) && num > 2)
+            //    RandomSpawn.CustomNetworkTransformPatch.NumOfTP[__instance.PlayerId] = 3;
+            if (target.protectedByGuardianThisRound)
                 Camouflage.RpcSetSkin(Camouflage.IsCamouflage, target, ForceRevert: true);
         }
         public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
@@ -538,7 +539,7 @@ namespace TownOfHostY
                             if (isExiled)
                                 MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, partnerPlayer.PlayerId);
                             else
-                                partnerPlayer.RpcMurderPlayerV2(partnerPlayer);
+                                partnerPlayer.RpcMurderPlayer(partnerPlayer, true);
                         }
                     }
                 }
@@ -572,7 +573,7 @@ namespace TownOfHostY
                 || (AmongUsClient.Instance.IsGameStarted && Options.IsCCMode))
             {
                 //ゲーム中に色を変えた場合
-                __instance.RpcMurderPlayerV2(__instance);
+                __instance.RpcMurderPlayer(__instance, true);
             }
             return true;
         }
@@ -727,6 +728,33 @@ namespace TownOfHostY
                 // 死者の最終位置にペットが残るバグ対応
                 __instance.RpcSetPet("");
             }
+        }
+    }
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckUseZipline))]
+    public static class PlayerControlCheckUseZiplinePatch
+    {
+        public static bool Prefix(PlayerControl target, ZiplineBehaviour ziplineBehaviour, bool fromTop)
+        {
+            if (AmongUsClient.Instance.AmHost)
+            {
+                if (Options.FungleCanUseZiplineFromTop.GetBool() && fromTop) return false;
+                if (Options.FungleCanUseZiplineFromUnder.GetBool() && !fromTop) return false;
+            }
+
+            return true;
+        }
+    }
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckSporeTrigger))]
+    public static class PlayerControlCheckSporeTriggerPatch
+    {
+        public static bool Prefix()
+        {
+            if (AmongUsClient.Instance.AmHost)
+            {
+                return !Options.FungleCanSporeTrigger.GetBool();
+            }
+
+            return true;
         }
     }
 }

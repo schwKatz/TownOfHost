@@ -35,7 +35,7 @@ public sealed class MadBrackOuter : RoleBase
     {
         if (!AmongUsClient.Instance.AmHost) return true;
 
-        MessageWriter SabotageFixWriter = AmongUsClient.Instance.StartRpcImmediately(ShipStatus.Instance.NetId, (byte)RpcCalls.RepairSystem, SendOption.Reliable, Player.GetClientId());
+        MessageWriter SabotageFixWriter = AmongUsClient.Instance.StartRpcImmediately(ShipStatus.Instance.NetId, (byte)RpcCalls.UpdateSystem, SendOption.Reliable, Player.GetClientId());
         SabotageFixWriter.Write((byte)SystemTypes.Electrical);
         SabotageFixWriter.WriteNetObject(Player);
         AmongUsClient.Instance.FinishRpcImmediately(SabotageFixWriter);
@@ -43,7 +43,7 @@ public sealed class MadBrackOuter : RoleBase
         foreach (var target in Main.AllPlayerControls)
         {
             if (target == Player || target.Data.Disconnected) continue;
-            SabotageFixWriter = AmongUsClient.Instance.StartRpcImmediately(ShipStatus.Instance.NetId, (byte)RpcCalls.RepairSystem, SendOption.Reliable, target.GetClientId());
+            SabotageFixWriter = AmongUsClient.Instance.StartRpcImmediately(ShipStatus.Instance.NetId, (byte)RpcCalls.UpdateSystem, SendOption.Reliable, target.GetClientId());
             SabotageFixWriter.Write((byte)SystemTypes.Electrical);
             SabotageFixWriter.WriteNetObject(target);
             AmongUsClient.Instance.FinishRpcImmediately(SabotageFixWriter);

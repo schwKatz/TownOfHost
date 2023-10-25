@@ -74,7 +74,7 @@ public sealed class CursedWolf : RoleBase, IImpostor
 
         //切り返す
         PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Spell;
-        target.RpcMurderPlayerV2(killer);
+        target.RpcMurderPlayer(killer, true);
         // 自身は斬られない
         info.CanKill = false;
         return true;

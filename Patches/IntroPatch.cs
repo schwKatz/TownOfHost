@@ -376,6 +376,7 @@ namespace TownOfHostY
                             map = new RandomSpawn.MiraHQSpawnMap();
                             Main.AllPlayerControls.Do(map.RandomTeleport);
                             break;
+                        //PolusとFungleは初期位置変えないため記入しない
                     }
                 }
 

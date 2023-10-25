@@ -33,7 +33,7 @@ namespace TownOfHostY
             }
         }
     }
-    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.RepairSystem))]
+    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.UpdateSystem), new Type[] { typeof(SystemTypes), typeof(PlayerControl), typeof(byte) })]
     class RepairSystemPatch
     {
         public static bool Prefix(ShipStatus __instance,
@@ -95,20 +95,20 @@ namespace TownOfHostY
         {
             Camouflage.CheckCamouflage();
         }
-        public static void CheckAndOpenDoorsRange(ShipStatus __instance, int amount, int min, int max)
+        public static void CheckAndOpenDoorsRange(ShipStatus __instance, byte amount, byte min, byte max)
         {
-            var Ids = new List<int>();
+            var Ids = new List<byte>();
             for (var i = min; i <= max; i++)
             {
                 Ids.Add(i);
             }
             CheckAndOpenDoors(__instance, amount, Ids.ToArray());
         }
-        private static void CheckAndOpenDoors(ShipStatus __instance, int amount, params int[] DoorIds)
+        private static void CheckAndOpenDoors(ShipStatus __instance, byte amount, params byte[] DoorIds)
         {
             if (DoorIds.Contains(amount)) foreach (var id in DoorIds)
                 {
-                    __instance.RpcRepairSystem(SystemTypes.Doors, id);
+                    __instance.RpcUpdateSystem(SystemTypes.Doors, id);
                 }
         }
         private static bool CanSabotage(PlayerControl player, SystemTypes systemType)

@@ -161,7 +161,7 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
         if ((CanBeKilledBy(target) && chance <= Chance) || (!CanBeKilledBy(target) && chance >= Chance))
         {
             // 自殺
-            killer.RpcMurderPlayerV2(killer);
+            killer.RpcMurderPlayer(killer, true);
             PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
             if (!MisfireKillsTarget.GetBool())
             {

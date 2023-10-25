@@ -99,6 +99,10 @@ public sealed class AntiAdminer : RoleBase, IImpostor
                         if (!DisableAirshipVital.GetBool())
                             Vital |= Vector2.Distance(PlayerPos, DisableDevice.DevicePos["AirshipVital"]) <= DisableDevice.UsableDistance();
                         break;
+                    case 5:
+                        //if (!DisableFungleVital.GetBool())
+                        //    Vital |= Vector2.Distance(PlayerPos, DisableDevice.DevicePos["FungleVital"]) <= DisableDevice.UsableDistance();
+                        break;
                 }
             }
             catch (Exception ex)

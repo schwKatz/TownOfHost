@@ -134,7 +134,6 @@ public sealed class Potentialist : RoleBase
 
 public static class SpecialEvent
 {
-    public static bool IsEventDate() => DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
     public static bool IsEventRole(CustomRoles role) => role is CustomRoles.Potentialist or CustomRoles.EvilHacker;
 
     public static void SetupOptions()

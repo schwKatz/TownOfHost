@@ -85,8 +85,8 @@ public sealed class SabotageMaster : RoleBase
                     //片方の入力が正解したタイミング
 
                     //Skeld、Miraは16だけでOK。Airshipは16,17とも必要
-                    shipStatus.RepairSystem(SystemTypes.Reactor, Player, 16);
-                    shipStatus.RepairSystem(SystemTypes.Reactor, Player, 17);
+                    shipStatus.UpdateSystem(SystemTypes.Reactor, Player, 16);
+                    shipStatus.UpdateSystem(SystemTypes.Reactor, Player, 17);
                     UsedSkillCount++;
                 }
                 break;
@@ -97,7 +97,7 @@ public sealed class SabotageMaster : RoleBase
                     //片方の入力がされたタイミング
 
                     //Polusラボは16だけで完了
-                    shipStatus.RepairSystem(SystemTypes.Laboratory, Player, 16);
+                    shipStatus.UpdateSystem(SystemTypes.Laboratory, Player, 16);
                     UsedSkillCount++;
                 }
                 break;
@@ -108,7 +108,7 @@ public sealed class SabotageMaster : RoleBase
                     //片方の入力が正解したタイミング
 
                     //Skeld,MiraのO2は16だけで完了
-                    shipStatus.RepairSystem(SystemTypes.LifeSupp, Player, 16);
+                    shipStatus.UpdateSystem(SystemTypes.LifeSupp, Player, 16);
                     UsedSkillCount++;
                 }
                 break;
@@ -126,7 +126,7 @@ public sealed class SabotageMaster : RoleBase
                     fixedComms = true;
                     //MiraHQのコミュは16,17がそろったとき完了。
                     //もう一方のパネルの完了報告
-                    shipStatus.RepairSystem(SystemTypes.Comms, Player, (byte)(16 | (~amount & 1)));
+                    shipStatus.UpdateSystem(SystemTypes.Comms, Player, (byte)(16 | (~amount & 1)));
                     UsedSkillCount++;
                 }
                 break;

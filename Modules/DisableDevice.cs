@@ -27,7 +27,9 @@ namespace TownOfHostY
             ["AirshipCockpitAdmin"] = new(-22.32f, 0.91f),
             ["AirshipRecordsAdmin"] = new(19.89f, 12.60f),
             ["AirshipCamera"] = new(8.10f, -9.63f),
-            ["AirshipVital"] = new(25.24f, -7.94f)
+            ["AirshipVital"] = new(25.24f, -7.94f),
+            ["FungleVital"] = new(-2.8f, -10.3f),
+            ["FungleTelescope"] = new(6.3f, 0.9f)
         };
         public static float UsableDistance()
         {
@@ -39,6 +41,7 @@ namespace TownOfHostY
                 MapNames.Polus => 1.8f,
                 //MapNames.Dleks => 1.5f,
                 MapNames.Airship => 1.8f,
+                MapNames.Fungle => 1.8f,
                 _ => 0.0f
             };
         }
@@ -115,6 +118,10 @@ namespace TownOfHostY
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["AirshipCamera"]) <= UsableDistance();
                                 if (Options.DisableAirshipVital.GetBool() || PcIsPoor)
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["AirshipVital"]) <= UsableDistance();
+                                break;
+                            case 5:
+                                //if (Options.DisableFungleVital.GetBool() || PcIsPoor)
+                                //    doComms |= Vector2.Distance(PlayerPos, DevicePos["FungleVital"]) <= UsableDistance();
                                 break;
                         }
                     }
@@ -199,6 +206,12 @@ namespace TownOfHostY
                         consoles.DoIf(x => x.name == "task_cams", x => x.gameObject.GetComponent<BoxCollider2D>().enabled = ignore);
                     if (Options.DisableAirshipVital.GetBool() || PcIsPoor)
                         consoles.DoIf(x => x.name == "panel_vitals", x => x.gameObject.GetComponent<CircleCollider2D>().enabled = ignore);
+                    break;
+                case 5:
+                    //if (Options.DisableFungleTelescope.GetBool() || PcIsPoor)
+                    //    consoles.DoIf(x => x.name == "task_cams", x => x.gameObject.GetComponent<BoxCollider2D>().enabled = ignore);
+                    //if (Options.DisableFungleVital.GetBool() || PcIsPoor)
+                    //    consoles.DoIf(x => x.name == "panel_vitals", x => x.gameObject.GetComponent<BoxCollider2D>().enabled = ignore);
                     break;
             }
         }

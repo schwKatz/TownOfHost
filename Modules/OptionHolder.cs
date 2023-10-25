@@ -63,6 +63,7 @@ namespace TownOfHostY
         public static bool IsActiveMiraHQ => AddedMiraHQ.GetBool() || Main.NormalOptions.MapId == 1;
         public static bool IsActivePolus => AddedPolus.GetBool() || Main.NormalOptions.MapId == 2;
         public static bool IsActiveAirship => AddedTheAirShip.GetBool() || Main.NormalOptions.MapId == 4;
+        public static bool IsActiveFungle => AddedTheFungle.GetBool() || Main.NormalOptions.MapId == 5;
 
         // 役職数・確率
         public static Dictionary<CustomRoles, OptionItem> CustomRoleCounts;
@@ -131,6 +132,9 @@ namespace TownOfHostY
         public static OptionItem DisableAirshipRecordsAdmin;
         public static OptionItem DisableAirshipCamera;
         public static OptionItem DisableAirshipVital;
+        //public static OptionItem DisableFungleDevices;
+        //public static OptionItem DisableFungleVital;
+        //public static OptionItem DisableFungleTelescope;
         public static OptionItem DisableDevicesIgnoreConditions;
         public static OptionItem DisableDevicesIgnoreImpostors;
         public static OptionItem DisableDevicesIgnoreMadmates;
@@ -144,11 +148,11 @@ namespace TownOfHostY
         public static OptionItem AddedMiraHQ;
         public static OptionItem AddedPolus;
         public static OptionItem AddedTheAirShip;
-        // public static OptionItem AddedDleks;
+        public static OptionItem AddedTheFungle;
 
         // ランダムスポーン
         public static OptionItem RandomSpawn;
-        public static OptionItem AirshipAdditionalSpawn;
+        public static OptionItem AdditionalSpawn;
 
         // 投票モード
         public static OptionItem VoteMode;
@@ -196,6 +200,7 @@ namespace TownOfHostY
         public static OptionItem SabotageTimeControl;
         public static OptionItem PolusReactorTimeLimit;
         public static OptionItem AirshipReactorTimeLimit;
+        public static OptionItem FungleReactorTimeLimit;
 
         // サボタージュのクールダウン変更
         public static OptionItem ModifySabotageCooldown;
@@ -213,6 +218,10 @@ namespace TownOfHostY
         public static OptionItem DisableAirshipMovingPlatform;
         public static OptionItem ResetDoorsEveryTurns;
         public static OptionItem DoorsResetMode;
+        public static OptionItem FungleCanUseZipline;
+        public static OptionItem FungleCanUseZiplineFromTop;
+        public static OptionItem FungleCanUseZiplineFromUnder;
+        public static OptionItem FungleCanSporeTrigger;
 
         // その他
         public static OptionItem FixFirstKillCooldown;
@@ -455,7 +464,7 @@ namespace TownOfHostY
             RandomSpawn = BooleanOptionItem.Create(100010, "RandomSpawn", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow)
                 .SetGameMode(CustomGameMode.All);
-            AirshipAdditionalSpawn = BooleanOptionItem.Create(100011, "AirshipAdditionalSpawn", false, TabGroup.MainSettings, false).SetParent(RandomSpawn)
+            AdditionalSpawn = BooleanOptionItem.Create(100011, "AdditionalSpawn", false, TabGroup.MainSettings, false).SetParent(RandomSpawn)
                 .SetGameMode(CustomGameMode.All);
 
             // デバイス無効化
@@ -481,6 +490,10 @@ namespace TownOfHostY
             DisableAirshipRecordsAdmin = BooleanOptionItem.Create(100142, "DisableAirshipRecordsAdmin", false, TabGroup.MainSettings, false).SetParent(DisableAirshipDevices).SetGameMode(CustomGameMode.All);
             DisableAirshipCamera = BooleanOptionItem.Create(100143, "DisableAirshipCamera", false, TabGroup.MainSettings, false).SetParent(DisableAirshipDevices).SetGameMode(CustomGameMode.All);
             DisableAirshipVital = BooleanOptionItem.Create(100144, "DisableAirshipVital", false, TabGroup.MainSettings, false).SetParent(DisableAirshipDevices).SetGameMode(CustomGameMode.All);
+            //DisableFungleDevices = BooleanOptionItem.Create(100150, "DisableFungleDevices", false, TabGroup.MainSettings, false).SetParent(DisableDevices)
+            //    .SetColor(Color.gray).SetGameMode(CustomGameMode.All);
+            //DisableFungleVital = BooleanOptionItem.Create(100151, "DisableFungleVital", false, TabGroup.MainSettings, false).SetParent(DisableFungleDevices).SetGameMode(CustomGameMode.All);
+            //DisableFungleTelescope = BooleanOptionItem.Create(100152, "DisableFungleTelescope", false, TabGroup.MainSettings, false).SetParent(DisableFungleDevices).SetGameMode(CustomGameMode.All);
             DisableDevicesIgnoreConditions = BooleanOptionItem.Create(100190, "IgnoreConditions", false, TabGroup.MainSettings, false).SetParent(DisableDevices)
                 .SetColor(Color.gray);
             DisableDevicesIgnoreImpostors = BooleanOptionItem.Create(100191, "IgnoreImpostors", false, TabGroup.MainSettings, false).SetParent(DisableDevicesIgnoreConditions);
@@ -497,6 +510,7 @@ namespace TownOfHostY
             AddedMiraHQ = BooleanOptionItem.Create(100502, "AddedMIRAHQ", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode).SetGameMode(CustomGameMode.All);
             AddedPolus = BooleanOptionItem.Create(100503, "AddedPolus", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode).SetGameMode(CustomGameMode.All);
             AddedTheAirShip = BooleanOptionItem.Create(100504, "AddedTheAirShip", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode).SetGameMode(CustomGameMode.All);
+            AddedTheFungle = BooleanOptionItem.Create(100505, "AddedTheFungle", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode).SetGameMode(CustomGameMode.All);
 
             // マップ改造
             AirShipVariableElectrical = BooleanOptionItem.Create(100520, "AirShipVariableElectrical", false, TabGroup.MainSettings, false)
@@ -506,6 +520,12 @@ namespace TownOfHostY
             ResetDoorsEveryTurns = BooleanOptionItem.Create(100540, "ResetDoorsEveryTurns", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
             DoorsResetMode = StringOptionItem.Create(100541, "DoorsResetMode", EnumHelper.GetAllNames<DoorsReset.ResetMode>(), 0, TabGroup.MainSettings, false).SetParent(ResetDoorsEveryTurns).SetGameMode(CustomGameMode.All);
+            FungleCanSporeTrigger = BooleanOptionItem.Create(100550, "FungleCanUseSpore", false, TabGroup.MainSettings, false)
+                .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
+            FungleCanUseZipline = BooleanOptionItem.Create(100560, "FungleCanUseZipline", false, TabGroup.MainSettings, false)
+                .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
+            FungleCanUseZiplineFromTop = BooleanOptionItem.Create(100561, "FungleCanUseZiplineFromTop", false, TabGroup.MainSettings, false).SetParent(FungleCanUseZipline).SetGameMode(CustomGameMode.All);
+            FungleCanUseZiplineFromUnder = BooleanOptionItem.Create(100562, "FungleCanUseZiplineFromUnder", true, TabGroup.MainSettings, false).SetParent(FungleCanUseZipline).SetGameMode(CustomGameMode.All);
 
             TextOptionItem.Create(300101, "Head.Sabotage", TabGroup.MainSettings).SetColor(Color.magenta).SetGameMode(CustomGameMode.All);
             // リアクターの時間制御
@@ -515,6 +535,8 @@ namespace TownOfHostY
             PolusReactorTimeLimit = FloatOptionItem.Create(100201, "PolusReactorTimeLimit", new(1f, 60f, 1f), 30f, TabGroup.MainSettings, false).SetParent(SabotageTimeControl)
                 .SetValueFormat(OptionFormat.Seconds).SetGameMode(CustomGameMode.All);
             AirshipReactorTimeLimit = FloatOptionItem.Create(100202, "AirshipReactorTimeLimit", new(1f, 90f, 1f), 60f, TabGroup.MainSettings, false).SetParent(SabotageTimeControl)
+                .SetValueFormat(OptionFormat.Seconds).SetGameMode(CustomGameMode.All);
+            FungleReactorTimeLimit = FloatOptionItem.Create(100203, "FungleReactorTimeLimit", new(1f, 60f, 1f), 50f, TabGroup.MainSettings, false).SetParent(SabotageTimeControl)
                 .SetValueFormat(OptionFormat.Seconds).SetGameMode(CustomGameMode.All);
 
             // サボタージュのクールダウン変更
@@ -581,9 +603,9 @@ namespace TownOfHostY
             // 道連れ人表記
             ShowRevengeTarget = BooleanOptionItem.Create(100310, "ShowRevengeTarget", true, TabGroup.MainSettings, false)
                 .SetColor(Color.cyan);
-            RevengeMadByImpostor = BooleanOptionItem.Create(91500, "RevengeMadByImpostor", false, TabGroup.MainSettings, false)
+            RevengeMadByImpostor = BooleanOptionItem.Create(100311, "RevengeMadByImpostor", false, TabGroup.MainSettings, false)
                 .SetColor(Palette.ImpostorRed);
-            RevengeNeutral = BooleanOptionItem.Create(95000, "RevengeNeutral", true, TabGroup.MainSettings, false)
+            RevengeNeutral = BooleanOptionItem.Create(100312, "RevengeNeutral", true, TabGroup.MainSettings, false)
                 .SetColor(Palette.Orange);
 
             TextOptionItem.Create(300104, "Head.Task", TabGroup.MainSettings).SetColor(Color.green).SetGameMode(CustomGameMode.All);
@@ -698,6 +720,7 @@ namespace TownOfHostY
                             or "AutoDisplayKillLog"
                             or "RoleAssigningAlgorithm"
                             or "IsReportShow"
+                            or "ShowReportReasonk"
                             or "ShowRoleInfoAtFirstMeeting"
                             or "ChangeNameToRoleInfo"
                             or "AddonShowDontOmit"

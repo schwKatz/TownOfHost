@@ -36,6 +36,7 @@ namespace TownOfHostY
             {
                 case SystemTypes.Electrical:
                     {
+                        if (mapId == 5) return false;
                         var SwitchSystem = ShipStatus.Instance.Systems[type].Cast<SwitchSystem>();
                         return SwitchSystem != null && SwitchSystem.IsActive;
                     }
@@ -67,7 +68,7 @@ namespace TownOfHostY
                     }
                 case SystemTypes.Comms:
                     {
-                        if (mapId == 1)
+                        if (mapId is 1 or 5)//Mira & Fungle
                         {
                             var HqHudSystemType = ShipStatus.Instance.Systems[type].Cast<HqHudSystemType>();
                             return HqHudSystemType != null && HqHudSystemType.IsActive;

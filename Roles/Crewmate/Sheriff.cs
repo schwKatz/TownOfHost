@@ -167,7 +167,7 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
         SendRPC();
         if (!CanBeKilledBy(target))
         {
-            killer.RpcMurderPlayerV2(killer);
+            killer.RpcMurderPlayer(killer, true);
             PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
             if (!MisfireKillsTarget.GetBool())
             {

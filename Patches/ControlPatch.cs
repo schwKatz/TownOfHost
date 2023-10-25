@@ -152,7 +152,7 @@ namespace TownOfHostY
             }
 
             //--以下フリープレイ用コマンド--//
-            if (!GameStates.IsFreePlay) return;
+            //if (!GameStates.IsFreePlay) return;
             //キルクールを0秒に設定
             if (Input.GetKeyDown(KeyCode.X))
             {
@@ -179,15 +179,18 @@ namespace TownOfHostY
             //エアシップのトイレのドアを全て開ける
             if (Input.GetKeyDown(KeyCode.P))
             {
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Doors, 79);
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Doors, 80);
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Doors, 81);
-                ShipStatus.Instance.RpcRepairSystem(SystemTypes.Doors, 82);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Doors, 79);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Doors, 80);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Doors, 81);
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Doors, 82);
             }
             //現在の座標を取得
             if (Input.GetKeyDown(KeyCode.I))
-                Logger.Info(PlayerControl.LocalPlayer.GetTruePosition().ToString(), "GetLocalPlayerPos");
-            //マスゲーム用コード
+            {
+                var pos = PlayerControl.LocalPlayer.GetTruePosition().ToString();
+                Logger.Info(pos, "GetLocalPlayerPos");
+                Logger.SendInGame($"position: {pos}");
+            }//マスゲーム用コード
             /*if (Input.GetKeyDown(KeyCode.C))
             {
                 foreach(var pc in PlayerControl.AllPlayerControls) {

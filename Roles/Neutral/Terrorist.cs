@@ -88,7 +88,7 @@ public sealed class Terrorist : RoleBase
                 continue;
             }
             otherPlayer.SetRealKiller(Player);
-            otherPlayer.RpcMurderPlayerV2(otherPlayer);
+            otherPlayer.RpcMurderPlayer(otherPlayer, true);
             var playerState = PlayerState.GetByPlayerId(otherPlayer.PlayerId);
             playerState.DeathReason = CustomDeathReason.Bombed;
             playerState.SetDead();

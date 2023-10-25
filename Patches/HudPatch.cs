@@ -275,9 +275,9 @@ namespace TownOfHostY
         public static bool TypingAmount = false;
 
         public static int SystemType;
-        public static int amount;
+        public static byte amount;
 
-        public static void Input(int num)
+        public static void Input(byte num)
         {
             if (!TypingAmount)
             {
@@ -307,7 +307,7 @@ namespace TownOfHostY
         }
         public static void Send()
         {
-            ShipStatus.Instance.RpcRepairSystem((SystemTypes)SystemType, amount);
+            ShipStatus.Instance.RpcUpdateSystem((SystemTypes)SystemType, amount);
             Reset();
         }
         public static void Reset()

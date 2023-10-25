@@ -77,22 +77,29 @@ namespace TownOfHostY
             }
             if (Options.RandomSpawn.GetBool())
             {
-                RandomSpawn.SpawnMap map;
-                switch (Main.NormalOptions.MapId)
+                _ = new LateTask(() =>
                 {
-                    case 0:
-                        map = new RandomSpawn.SkeldSpawnMap();
-                        Main.AllPlayerControls.Do(map.RandomTeleport);
-                        break;
-                    case 1:
-                        map = new RandomSpawn.MiraHQSpawnMap();
-                        Main.AllPlayerControls.Do(map.RandomTeleport);
-                        break;
-                    case 2:
-                        map = new RandomSpawn.PolusSpawnMap();
-                        Main.AllPlayerControls.Do(map.RandomTeleport);
-                        break;
-                }
+                    RandomSpawn.SpawnMap map;
+                    switch (Main.NormalOptions.MapId)
+                    {
+                        case 0:
+                            map = new RandomSpawn.SkeldSpawnMap();
+                            Main.AllPlayerControls.Do(map.RandomTeleport);
+                            break;
+                        case 1:
+                            map = new RandomSpawn.MiraHQSpawnMap();
+                            Main.AllPlayerControls.Do(map.RandomTeleport);
+                            break;
+                        case 2:
+                            map = new RandomSpawn.PolusSpawnMap();
+                            Main.AllPlayerControls.Do(map.RandomTeleport);
+                            break;
+                        case 5:
+                            map = new RandomSpawn.FungleSpawnMap();
+                            Main.AllPlayerControls.Do(map.RandomTeleport);
+                            break;
+                    }
+                }, 0.5f, "RandomSpawn");
             }
             FallFromLadder.Reset();
             Utils.CountAlivePlayers(true);
@@ -121,7 +128,22 @@ namespace TownOfHostY
                 {
                     Main.AfterMeetingDeathPlayers.Do(x =>
                     {
-                        REIKAITENSOU(x.Key, x.Value);
+                        (byte playerId, CustomDeathReason reason) = (x.Key, x.Value);
+
+                        var player = Utils.GetPlayerById(playerId);
+                        var roleClass = CustomRoleManager.GetByPlayerId(playerId);
+                        var requireResetCam = player?.GetCustomRole().GetRoleInfo()?.RequireResetCam;
+                        var state = PlayerState.GetByPlayerId(playerId);
+                        Logger.Info($"{player.GetNameWithRole()}を{reason}で死亡させました", "AfterMeetingDeath");
+                        state.DeathReason = reason;
+                        state.SetDead();
+                        player?.RpcExileV2();
+                        if (reason == CustomDeathReason.Suicide)
+                            player?.SetRealKiller(player, true);
+                        if (Main.ResetCamPlayerList.Contains(playerId) || (requireResetCam.HasValue && requireResetCam.Value))
+                            player?.ResetPlayerCam(1f);
+                        Executioner.ChangeRoleByTarget(playerId);
+                        Lawyer.ChangeRoleByTarget(player);
                     });
                     Main.AfterMeetingDeathPlayers.Clear();
                 }, 0.5f, "AfterMeetingDeathPlayers Task");
@@ -131,24 +153,6 @@ namespace TownOfHostY
             RemoveDisableDevicesPatch.UpdateDisableDevices();
             SoundManager.Instance.ChangeAmbienceVolume(DataManager.Settings.Audio.AmbienceVolume);
             Logger.Info("タスクフェイズ開始", "Phase");
-        }
-
-        public static void REIKAITENSOU(byte playerId, CustomDeathReason reason)
-        {
-            var player = Utils.GetPlayerById(playerId);
-            var roleClass = CustomRoleManager.GetByPlayerId(playerId);
-            var requireResetCam = player?.GetCustomRole().GetRoleInfo()?.RequireResetCam;
-            var state = PlayerState.GetByPlayerId(playerId);
-            Logger.Info($"{player.GetNameWithRole()}を{reason}で死亡させました", "AfterMeetingDeath");
-            state.DeathReason = reason;
-            state.SetDead();
-            player?.RpcExileV2();
-            if (reason == CustomDeathReason.Suicide)
-                player?.SetRealKiller(player, true);
-            if (Main.ResetCamPlayerList.Contains(playerId) || (requireResetCam.HasValue && requireResetCam.Value))
-                player?.ResetPlayerCam(1f);
-            Executioner.ChangeRoleByTarget(playerId);
-            Lawyer.ChangeRoleByTarget(player);
         }
     }
 

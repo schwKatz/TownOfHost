@@ -462,6 +462,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "AddedMIRAHQ","Include MIRAHQ","MIRAHQを追加","添加米拉总部地图","將MIRA HQ地圖列入選項","Добавить MiraHQ","Incluir MIRAHQ"
 "AddedPolus","Include Polus","Polusを追加","添加波鲁斯地图","將Polus地圖列入選項","Добавить Polus","Incluir Polus"
 "AddedTheAirShip","Include TheAirShip","TheAirShipを追加","添加飞艇地图","將The AirShip列入選項","Добавить TheAirship","Incluir TheAirShip"
+"AddedTheFungle","Include TheFungle","TheFungleを追加",
 "AllAliveMeeting","Meeting When No One is Dead","全員生存時の会議","全员存活时的会议设定","全員存活會議","Все живые на собрании","Reunião Com Todos Vivos"
 "AllAliveMeetingTime","Meeting Time When No One is Dead","全員生存時の会議時間","全员存活时的会议时间","全員存活會議時間","Время когда все живы на собрании","Tempo de Reunião Com Todos Vivos"
 "AdditionalEmergencyCooldown","Additional Emergency Cooldown","追加の緊急ボタンクールダウン","附加紧急会议冷却时间","附加緊急會議冷卻時間","Дополнительный откат Собраний","Tempo de Emergência Adicional"
@@ -523,6 +524,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DisableMiraHQDevices","Disable MiraHQ Device","ミラHQのデバイス無効化","禁用米拉总部设备","禁用Mira HQ中的設備","Отключить устройства на MiraHQ","Desativar Dispositivos de MiraHQ"
 "DisablePolusDevices","Disable Polus Device","ポーラスのデバイス無効化","禁用波鲁斯设备","禁用Polus中的設備","Отключить устройства на Polus","Desativar Dispositivos de Polus"
 "DisableAirshipDevices","Disable Airship Device","エアシップのデバイス無効化","禁用飞艇设备","禁用The Airship中的設備","Отключить устройства на Airship","Desativar Dispositivos de Airship"
+"DisableFungleDevices","Disable Fungle Device","ファングルのデバイス無効化"
 "DisableSkeldAdmin","Disable Admin","アドミン無効化","禁用管理室地图","禁用管理室地圖","Отключить Стол Администратора","Desativar Admin"
 "DisableMiraHQAdmin","Disable Admin","アドミン無効化","禁用管理室地图","禁用管理室地圖","Отключить Стол Администратора","Desativar Admin"
 "DisablePolusAdmin","Disable Admin","アドミン無効化","禁用管理室地图","禁用管理室地圖","Отключить Стол Администратора","Desativar Admin"
@@ -534,6 +536,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DisableMiraHQDoorLog","Disable DoorLog","ドアログ無効化","禁用米拉总部门禁记录","禁用米拉总部门禁日志","Отключить Журналы","Desativar Portaria"
 "DisablePolusVital","Disable Vital","バイタル無効化","禁用波鲁斯生命监测装置","禁用波鲁斯生命监测装置","Отключить Пульсы","Desativar Vitais"
 "DisableAirshipVital","Disable Vital","バイタル無効化","禁用飞艇生命监测装置","禁用飞艇生命监测装置","Отключить Пульсы","Desativar Vitais"
+"DisableFungleVital","Disable Vital","バイタル無効化","禁用飞艇生命监测装置","禁用飞艇生命监测装置","Отключить Пульсы","Desativar Vitais"
+"DisableFungleTelescope","Disable Telescope","望遠鏡無効化","禁用骷髅舰监控","禁用骷髅舰监控设备","Отключить Камеры","Desativar Câmeras"
 "IgnoreConditions","Ignore Conditions","除外条件","忽略条件","忽略條件","Игнорируют условия","Ignorar Condições"
 "IgnoreImpostors","Ignore Impostors","インポスターを除く","忽略内鬼","偽裝者陣營除外","Игнорируют Предатели","Ignorar Impostores"
 "IgnoreMadmates","Ignore Madmates","マッドメイト系を除く","忽略叛徒","叛徒職業除外","Игнорируют Безумцы","Ignorar Tripulantes Loucos"
@@ -546,15 +550,19 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DisableAirshipCargoLightsPanel","Disable Cargo Lights Panel(Airship)","貨物室の配電盤を無効化（エアシップ）","禁用货舱配电箱(飞艇地图)","關閉貨艙的配電箱 (Airship)","Отключить починку Света в Грузовом Отсеке (Airship)","Desativar Painel de Luzes das Cargas(Airship)"
 "BlockDisturbancesToSwitches","Block Disturbances To Switches","配電盤妨害を無効化","","","",""
 "MapModification","Map Modifications","マップ改造","地图修改","","Модификации карты",""
-"DisableAirshipMovingPlatform","Disable Moving Platform(Airship)","昇降機のリフトを無効化(エアシップ)","禁用升降机(飞艇地图)","","Отключить движущуюся платформу (Airship)",""
+"DisableAirshipMovingPlatform","Disable Moving Platform(Airship)","昇降機のリフトを無効化（エアシップ）","禁用升降机(飞艇地图)","","Отключить движущуюся платформу (Airship)",""
 "AirShipVariableElectrical","Variable Electrical(AirShip)","電気室の構造変化（エアシップ）","改变配电室构造(飞艇地图)","電力室構造變化 (Airship)","Двери в Электрощитовой меняются случайно (Airship)",""
-"ResetDoorsEveryTurns","Reset Doors After Meeting(Airship/Polus)","会議後にドア状況をリセットする(エアシップ・ポーラス)","","","",""
+"ResetDoorsEveryTurns","Reset Doors After Meeting(Airship/Polus/Fungle)","会議後にドア状況をリセットする（ポーラス・エアシップ・ファングル）","","","",""
 "DoorsResetMode","Reset Mode","リセットモード","","","",""
 "AllOpen","All Open","全て開放","","","",""
 "AllClosed","All Closed","全て閉鎖","","","",""
 "RandomByDoor","Random By Door","ドアごとにランダム","","","",""
+"FungleCanSporeTrigger","Can Spore Trigger(Fungle)","キノコ胞子モヤをなくす（ファングル）",
+"FungleCanUseZipline","Can Use Zipline(Fungle)","ジップラインの方向制限（ファングル）",
+"FungleCanUseZiplineFromTop","Can't Use From Top","上からの下降を禁止",
+"FungleCanUseZiplineFromUnder","Can't Use From Under","下からの上昇を禁止",
 "RandomSpawn","Random Spawn","ランダムスポーン","随机出生点","隨機出生點","Случайный спавн","Spawn Aleatório"
-"AirshipAdditionalSpawn","Additional Spawn(Airship)","追加スポーン位置(エアシップ)","额外出生点（飞艇地图）","額外出生點(The Airship地圖)","Дополнительный спавн(Airship)","Spawn Adicional(Airship)"
+"AdditionalSpawn","Additional Spawn(Airship,Fungle)","追加スポーン位置(エアシップ,ファングル)","额外出生点（飞艇地图,Fungle）","額外出生點(The Airship,Fungle)","Дополнительный спавн(Airship,Fungle)","Spawn Adicional(Airship,Fungle)"
 "CommsCamouflage","Camouflage During Comms","コミュサボ時のカモフラージュ","通信破坏时伪装","通訊破壞時所有玩家變成小灰人","Камуфляж при Саботаже Связи","Camuflagem Durante Comunicação"
 "EnableDebugMode","Enable Debug Mode","デバッグモードを有効化する","开启调试模式","啟用偵錯模式","Включить режим отладки","Ativar Modo de Depuração"
 "ChangeNameToRoleInfo","Show Role Descriptions to Unmodded Client","役職説明を非modクライアントにも表示する","对未安装本mod的玩家显示职业说明","對未安裝本模組的玩家顯示職業說明","Показать описания Ролей игрокам играющие без Мода","Mostrar Descrição de Classe para Clientes Não Modificados"
@@ -876,6 +884,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "SabotageTimeControl","Sabotage Duration Control","サボタージュの時間制御","更改修理时限","重新設定緊急任務時間","Изменить время Саботажа","Controle da Duração de Sabotagem"
 "PolusReactorTimeLimit","Polus Reactor Duration","ポーラスのリアクター制限時間","波鲁斯抗震稳定器修理时限","Polus地震抑制器破壞最大時間","Polus время саботажа Реактора","Duração do Reator em Polus"
 "AirshipReactorTimeLimit","Airship Reactor Duration","エアシップのリアクター制限時間","飞艇坠毁路线修理时限","Airship間隙室破壞最大時間","Airship время саботажа Реактора","Duração do Reator em Airship"
+"FungleReactorTimeLimit","Fungle Reactor Duration","ファングルのリアクター制限時間",
 
 "## サボタージュのクールダウン変更"
 "ModifySabotageCooldown","Sabotage Cooldown Control","サボタージュのクールダウン制御","","","",""

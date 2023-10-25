@@ -71,7 +71,7 @@ public sealed class MadSheriff : RoleBase, IKiller
         // ガード持ちに関わらず能力発動する直接キル役職
 
         PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
-        killer.RpcMurderPlayerV2(killer);
+        killer.RpcMurderPlayer(killer, true);
 
         if (!MisfireKillsTarget) info.DoKill = false;
     }

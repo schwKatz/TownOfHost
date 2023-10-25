@@ -178,7 +178,7 @@ namespace TownOfHostY
             if (killer.AmOwner)
             {
                 killer.ProtectPlayer(target, colorId);
-                killer.MurderPlayer(target);
+                killer.MurderPlayer(target, MurderResultFlags.DecisionByHost); //TODO:MurderResultFlags
             }
             // Other Clients
             if (killer.PlayerId != 0)
@@ -218,7 +218,7 @@ namespace TownOfHostY
             if (target == null) target = killer;
             if (killer.AmOwner)
             {
-                killer.MurderPlayer(target);
+                killer.MurderPlayer(target, MurderResultFlags.DecisionByHost); //TODO:MurderResultFlags
             }
             else
             {
@@ -268,7 +268,7 @@ namespace TownOfHostY
         }
         public static void RpcDesyncRepairSystem(this PlayerControl target, SystemTypes systemType, int amount)
         {
-            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(ShipStatus.Instance.NetId, (byte)RpcCalls.RepairSystem, SendOption.Reliable, target.GetClientId());
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(ShipStatus.Instance.NetId, (byte)RpcCalls.UpdateSystem, SendOption.Reliable, target.GetClientId());
             messageWriter.Write((byte)systemType);
             messageWriter.WriteNetObject(target);
             messageWriter.Write((byte)amount);
@@ -460,7 +460,7 @@ namespace TownOfHostY
             if (target == null) target = killer;
             if (AmongUsClient.Instance.AmClient)
             {
-                killer.MurderPlayer(target);
+                killer.MurderPlayer(target, MurderResultFlags.DecisionByHost); //TODO:MurderResultFlags
             }
             MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.None, -1);
             messageWriter.WriteNetObject(target);

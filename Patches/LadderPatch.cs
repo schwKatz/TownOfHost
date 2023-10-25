@@ -54,7 +54,7 @@ namespace TownOfHostY
                         .EndRpc();
                         sender.SendMessage();
                         player.NetTransform.SnapTo(targetPos);
-                        player.MurderPlayer(player);
+                        player.MurderPlayer(player,MurderResultFlags.DecisionByHost); //TODO:MurderResultFlags
                         var state = PlayerState.GetByPlayerId(player.PlayerId);
                         state.DeathReason = CustomDeathReason.Fall;
                         state.SetDead();

@@ -147,7 +147,7 @@ namespace TownOfHostY
                                 cancelVal = "/w";
                                 break;
                         }
-                        ShipStatus.Instance.RpcRepairSystem(SystemTypes.Admin, 0);
+                        ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Admin, 0);
                         break;
 
                     case "/dis":
@@ -170,7 +170,7 @@ namespace TownOfHostY
                                 cancelVal = "/dis";
                                 break;
                         }
-                        ShipStatus.Instance.RpcRepairSystem(SystemTypes.Admin, 0);
+                        ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Admin, 0);
                         break;
 
                     case "/h":
@@ -286,7 +286,7 @@ namespace TownOfHostY
                     case "/kill":
                         canceled = true;
                         if (args.Length < 2 || !int.TryParse(args[1], out int id2)) break;
-                        Utils.GetPlayerById(id2)?.RpcMurderPlayerV2(Utils.GetPlayerById(id2));
+                        Utils.GetPlayerById(id2)?.RpcMurderPlayer(Utils.GetPlayerById(id2), true);
                         break;
 
                     case "/vo":
@@ -661,7 +661,7 @@ namespace TownOfHostY
             if (AmongUsClient.Instance.AmClient && DestroyableSingleton<HudManager>.Instance)
                 DestroyableSingleton<HudManager>.Instance.Chat.AddChat(__instance, chatText);
             if (chatText.Contains("who", StringComparison.OrdinalIgnoreCase))
-                DestroyableSingleton<Telemetry>.Instance.SendWho();
+                DestroyableSingleton<UnityTelemetry>.Instance.SendWho();
             MessageWriter messageWriter = AmongUsClient.Instance.StartRpc(__instance.NetId, (byte)RpcCalls.SendChat, SendOption.None);
             messageWriter.Write(chatText);
             messageWriter.EndMessage();

@@ -6,35 +6,38 @@ namespace TownOfHostY
     //参考
     //https://github.com/Koke1024/Town-Of-Moss/blob/main/TownOfMoss/Patches/MeltDownBoost.cs
 
-    [HarmonyPatch(typeof(ReactorSystemType), nameof(ReactorSystemType.Detoriorate))]
+    [HarmonyPatch(typeof(ReactorSystemType), nameof(ReactorSystemType.Deteriorate))]
     public static class ReactorSystemTypePatch
     {
         public static void Prefix(ReactorSystemType __instance)
         {
-            if (!__instance.IsActive || !Options.SabotageTimeControl.GetBool())
-                return;
+            if (!__instance.IsActive || !Options.SabotageTimeControl.GetBool()) return;
+
             if (ShipStatus.Instance.Type == ShipStatus.MapType.Pb)
             {
                 if (__instance.Countdown >= Options.PolusReactorTimeLimit.GetFloat())
                     __instance.Countdown = Options.PolusReactorTimeLimit.GetFloat();
-                return;
             }
-            return;
+            else if (ShipStatus.Instance.Type == ShipStatus.MapType.Fungle)
+            {
+                if (__instance.Countdown >= Options.FungleReactorTimeLimit.GetFloat())
+                    __instance.Countdown = Options.FungleReactorTimeLimit.GetFloat();
+            }
         }
     }
-    [HarmonyPatch(typeof(HeliSabotageSystem), nameof(HeliSabotageSystem.Detoriorate))]
+    [HarmonyPatch(typeof(HeliSabotageSystem), nameof(HeliSabotageSystem.Deteriorate))]
     public static class HeliSabotageSystemPatch
     {
         public static void Prefix(HeliSabotageSystem __instance)
         {
-            if (!__instance.IsActive || !Options.SabotageTimeControl.GetBool())
-                return;
+            if (!__instance.IsActive || !Options.SabotageTimeControl.GetBool()) return;
+
             if (AirshipStatus.Instance != null)
                 if (__instance.Countdown >= Options.AirshipReactorTimeLimit.GetFloat())
                     __instance.Countdown = Options.AirshipReactorTimeLimit.GetFloat();
         }
     }
-    [HarmonyPatch(typeof(SwitchSystem), nameof(SwitchSystem.RepairDamage))]
+    [HarmonyPatch(typeof(SwitchSystem), nameof(SwitchSystem.UpdateSystem))]
     public static class SwitchSystemRepairDamagePatch
     {
         public static bool Prefix(SwitchSystem __instance, [HarmonyArgument(1)] byte amount)
@@ -86,7 +89,7 @@ namespace TownOfHostY
     }
 
     // サボタージュを発生させたときに呼び出されるメソッド
-    [HarmonyPatch(typeof(SabotageSystemType), nameof(SabotageSystemType.RepairDamage))]
+    [HarmonyPatch(typeof(SabotageSystemType), nameof(SabotageSystemType.UpdateSystem))]
     public static class SabotageSystemTypeRepairDamagePatch
     {
         private static bool isCooldownModificationEnabled;

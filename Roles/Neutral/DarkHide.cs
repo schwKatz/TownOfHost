@@ -76,7 +76,7 @@ namespace TownOfHostY.Roles.Neutral
                 foreach (var pc in Main.AllPlayerControls)
                 {
                     if (pc.Data.Disconnected) continue;
-                    MessageWriter SabotageFixWriter = AmongUsClient.Instance.StartRpcImmediately(ShipStatus.Instance.NetId, (byte)RpcCalls.RepairSystem, SendOption.Reliable, pc.GetClientId());
+                    MessageWriter SabotageFixWriter = AmongUsClient.Instance.StartRpcImmediately(ShipStatus.Instance.NetId, (byte)RpcCalls.UpdateSystem, SendOption.Reliable, pc.GetClientId());
                     SabotageFixWriter.Write((byte)SystemTypes.Electrical);
                     MessageExtensions.WriteNetObject(SabotageFixWriter, pc);
                     AmongUsClient.Instance.FinishRpcImmediately(SabotageFixWriter);
