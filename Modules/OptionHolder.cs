@@ -520,7 +520,7 @@ namespace TownOfHostY
             ResetDoorsEveryTurns = BooleanOptionItem.Create(100540, "ResetDoorsEveryTurns", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
             DoorsResetMode = StringOptionItem.Create(100541, "DoorsResetMode", EnumHelper.GetAllNames<DoorsReset.ResetMode>(), 0, TabGroup.MainSettings, false).SetParent(ResetDoorsEveryTurns).SetGameMode(CustomGameMode.All);
-            FungleCanSporeTrigger = BooleanOptionItem.Create(100550, "FungleCanUseSpore", false, TabGroup.MainSettings, false)
+            FungleCanSporeTrigger = BooleanOptionItem.Create(100550, "FungleCanSporeTrigger", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
             FungleCanUseZipline = BooleanOptionItem.Create(100560, "FungleCanUseZipline", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);

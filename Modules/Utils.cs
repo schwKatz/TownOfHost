@@ -886,6 +886,7 @@ namespace TownOfHostY
                 if (opt.Value.Name == "DisableAirshipDevices" && !Options.IsActiveAirship) continue;
                 if (opt.Value.Name == "PolusReactorTimeLimit" && !Options.IsActivePolus) continue;
                 if (opt.Value.Name == "AirshipReactorTimeLimit" && !Options.IsActiveAirship) continue;
+                if (opt.Value.Name == "FungleReactorTimeLimit" && !Options.IsActiveFungle) continue;
 
                 if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
                 if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;
@@ -1004,7 +1005,7 @@ namespace TownOfHostY
                     name = $"<color={Main.ModColor}>TOH_Y {GetString("CatchCat")}</color>\r\n" + name;
                 //else if (Options.IsONMode)
                 //    name = $"<color={GetRoleColorCode(CustomRoles.ONVillager)}>TOH_Y {GetString("OneNight")}</color>\r\n" + name;
-                else if(AmongUsClient.Instance.IsGamePublic)
+                else if(AmongUsClient.Instance.IsGamePublic || Main.ModNameLobbyDisplay.Value)
                     name = $"<color={Main.ModColor}>TownOfHost_Y v{Main.PluginVersion}</color>\r\n" + name;
                 switch (Options.GetSuffixMode())
                 {
