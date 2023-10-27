@@ -59,7 +59,7 @@ namespace TownOfHostY
                     exiled.Object?.ResetPlayerCam(1f);
 
                 exiled.IsDead = true;
-                if (role != CustomRoles.AntiComplete)
+                if (role != CustomRoles.AntiComplete || PlayerState.GetByPlayerId(exiled.PlayerId).DeathReason == CustomDeathReason.etc)
                     PlayerState.GetByPlayerId(exiled.PlayerId).DeathReason = CustomDeathReason.Vote;
 
                 foreach (var roleClass in CustomRoleManager.AllActiveRoles.Values)
@@ -99,7 +99,7 @@ namespace TownOfHostY
                             Main.AllPlayerControls.Do(map.RandomTeleport);
                             break;
                     }
-                }, 0.5f, "RandomSpawn");
+                }, 0.3f, "RandomSpawn");
             }
             FallFromLadder.Reset();
             Utils.CountAlivePlayers(true);

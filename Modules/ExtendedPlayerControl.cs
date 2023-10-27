@@ -178,7 +178,7 @@ namespace TownOfHostY
             if (killer.AmOwner)
             {
                 killer.ProtectPlayer(target, colorId);
-                killer.MurderPlayer(target, MurderResultFlags.DecisionByHost); //TODO:MurderResultFlags
+                killer.MurderPlayer(target, SuccessFlags);
             }
             // Other Clients
             if (killer.PlayerId != 0)
@@ -191,6 +191,7 @@ namespace TownOfHostY
                     .EndRpc();
                 sender.StartRpc(killer.NetId, (byte)RpcCalls.MurderPlayer)
                     .WriteNetObject((InnerNetObject)target)
+                    .Write((int)SuccessFlags)
                     .EndRpc();
                 sender.EndMessage();
                 sender.SendMessage();
@@ -218,12 +219,13 @@ namespace TownOfHostY
             if (target == null) target = killer;
             if (killer.AmOwner)
             {
-                killer.MurderPlayer(target, MurderResultFlags.DecisionByHost); //TODO:MurderResultFlags
+                killer.MurderPlayer(target, SuccessFlags);
             }
             else
             {
                 MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable, killer.GetClientId());
                 messageWriter.WriteNetObject(target);
+                messageWriter.Write((int)SuccessFlags);
                 AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
             }
         }
@@ -352,8 +354,12 @@ namespace TownOfHostY
         {
             if (pc == null || !AmongUsClient.Instance.AmHost || pc.AmOwner) return;
 
-            var systemtypes = SystemTypes.Reactor;
-            if (Main.NormalOptions.MapId == 2) systemtypes = SystemTypes.Laboratory;
+            var systemtypes = (MapNames)Main.NormalOptions.MapId switch
+            {
+                MapNames.Polus => SystemTypes.Laboratory,
+                MapNames.Airship => SystemTypes.HeliSabotage,
+                _ => SystemTypes.Reactor,
+            };
 
             _ = new LateTask(() =>
             {
@@ -375,10 +381,13 @@ namespace TownOfHostY
         public static void ReactorFlash(this PlayerControl pc, float delay = 0f)
         {
             if (pc == null) return;
-            int clientId = pc.GetClientId();
             // Logger.Info($"{pc}", "ReactorFlash");
-            var systemtypes = SystemTypes.Reactor;
-            if (Main.NormalOptions.MapId == 2) systemtypes = SystemTypes.Laboratory;
+            var systemtypes = (MapNames)Main.NormalOptions.MapId switch
+            {
+                MapNames.Polus => SystemTypes.Laboratory,
+                MapNames.Airship => SystemTypes.HeliSabotage,
+                _ => SystemTypes.Reactor,
+            };
             float FlashDuration = Options.KillFlashDuration.GetFloat();
 
             pc.RpcDesyncRepairSystem(systemtypes, 128);
@@ -455,15 +464,27 @@ namespace TownOfHostY
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.Exiled, SendOption.None, -1);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
+        public static void RpcMurderPlayer(this PlayerControl killer, PlayerControl target)
+        {
+            if (AmongUsClient.Instance.AmClient)
+            {
+                killer.MurderPlayer(target, SuccessFlags);
+            }
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable);
+            messageWriter.WriteNetObject(target);
+            messageWriter.Write((int)SuccessFlags);
+            AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
+        }
         public static void RpcMurderPlayerV2(this PlayerControl killer, PlayerControl target)
         {
             if (target == null) target = killer;
             if (AmongUsClient.Instance.AmClient)
             {
-                killer.MurderPlayer(target, MurderResultFlags.DecisionByHost); //TODO:MurderResultFlags
+                killer.MurderPlayer(target, SuccessFlags);
             }
             MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.None, -1);
             messageWriter.WriteNetObject(target);
+            messageWriter.Write((int)SuccessFlags);
             AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
             Utils.NotifyRoles();
         }
@@ -620,6 +641,8 @@ namespace TownOfHostY
             }
             return null;
         }
+        /// <summary>現在守護されているかどうか</summary>
+        public static bool IsProtected(this PlayerControl self) => self.protectedByGuardianId > -1;
 
         //汎用
         public static bool Is(this PlayerControl target, CustomRoles role) =>
@@ -646,5 +669,7 @@ namespace TownOfHostY
             }
             return !state.IsDead;
         }
+
+        public const MurderResultFlags SuccessFlags = MurderResultFlags.Succeeded | MurderResultFlags.DecisionByHost;
     }
 }

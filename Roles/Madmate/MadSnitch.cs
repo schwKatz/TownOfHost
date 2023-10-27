@@ -1,7 +1,9 @@
 using System.Linq;
-
+using UnityEngine;
 using AmongUs.GameOptions;
+using TownOfHostY.Roles.AddOns.Crewmate;
 using TownOfHostY.Roles.Core;
+using Epic.OnlineServices.Presence;
 
 namespace TownOfHostY.Roles.Madmate;
 
@@ -94,6 +96,22 @@ public sealed class MadSnitch : RoleBase
             return string.Empty;
         }
 
-        return Utils.ColorString(Utils.GetRoleColor(CustomRoles.MadSnitch), "★");
+        return Utils.ColorString(RoleInfo.RoleColor, "★");
+    }
+    public override void OverrideProgressTextAsSeer(PlayerControl seen, ref bool enabled, ref string text)
+    {
+        if (seen != Player) return;
+
+        var taskState = Player.GetPlayerTaskState();
+        if (taskState == null || !taskState.hasTasks) return;
+
+        Color TextColor = Color.white;
+        var TaskCompleteColor = RoleInfo.RoleColor.ShadeColor(0.5f); //タスク完了後の色
+        var NonCompleteColor = Color.white; //カウントされない人外は白色
+
+        TextColor = KnowsImpostor() ? TaskCompleteColor : NonCompleteColor;
+        int KnowTasksCount = taskState.AllTasksCount > TaskTrigger ? TaskTrigger : taskState.AllTasksCount;
+
+        text = Utils.ColorString(TextColor, $"({taskState.CompletedTasksCount}/{KnowTasksCount})");
     }
 }

@@ -5,6 +5,7 @@ using Hazel;
 
 using TownOfHostY.Attributes;
 using TownOfHostY.Modules;
+using TownOfHostY.Roles.Impostor;
 using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY
@@ -14,7 +15,7 @@ namespace TownOfHostY
         ///<summary>
         ///追放処理を上書きするかどうか
         ///</summary>
-        public static bool OverrideExiledPlayer => Options.NoGameEnd.GetBool() || Jackal.RoleInfo.IsEnable || Options.IsCCMode;
+        public static bool OverrideExiledPlayer => Options.NoGameEnd.GetBool() || Jackal.RoleInfo.IsEnable|| StrayWolf.RoleInfo.IsEnable || Options.IsCCMode;
 
         public static bool IsCached { get; private set; } = false;
         private static Dictionary<byte, (bool isDead, bool Disconnected)> isDeadCache = new();

@@ -1,5 +1,10 @@
 using HarmonyLib;
+using Hazel;
 using TownOfHostY.Attributes;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Neutral;
+using UnityEngine;
 
 namespace TownOfHostY
 {
@@ -37,14 +42,66 @@ namespace TownOfHostY
                     __instance.Countdown = Options.AirshipReactorTimeLimit.GetFloat();
         }
     }
+    [HarmonyPatch(typeof(HudOverrideSystemType), nameof(HudOverrideSystemType.UpdateSystem))]
+    public static class HudOverrideSystemTypeUpdateSystemPatch
+    {
+        public static bool Prefix([HarmonyArgument(0)] PlayerControl player, [HarmonyArgument(1)] MessageReader msgReader)
+        {
+            var reader = MessageReader.Get(msgReader);
+            var amount = reader.ReadByte();
+            var isMadmate =
+                player.Is(CustomRoleTypes.Madmate) ||
+                // マッド属性化時に削除
+                (player.GetRoleClass() is SchrodingerCat schrodingerCat && schrodingerCat.AmMadmate);
+            if (isMadmate)
+            {
+                //直せてしまったらキャンセル
+                return !(!Options.MadmateCanFixComms.GetBool() && amount is 0 or 16 or 17);
+            }
+            return true;
+        }
+    }
     [HarmonyPatch(typeof(SwitchSystem), nameof(SwitchSystem.UpdateSystem))]
     public static class SwitchSystemRepairDamagePatch
     {
-        public static bool Prefix(SwitchSystem __instance, [HarmonyArgument(1)] byte amount)
+        private static bool IsClumsy(this PlayerControl player)
+        {
+            return player.Is(CustomRoles.Clumsy) ||
+                (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool()) ||
+                (player.Is(CustomRoles.SillySheriff) && SillySheriff.IsClumsy.GetBool());
+        }
+
+        public static bool Prefix(SwitchSystem __instance, [HarmonyArgument(0)] PlayerControl player, [HarmonyArgument(1)] MessageReader msgReader)
         {
             if (!AmongUsClient.Instance.AmHost)
             {
                 return true;
+            }
+            var reader = MessageReader.Get(msgReader);
+            var amount = reader.ReadByte();
+
+            // 停電サボタージュが鳴らされた場合は関係なし(ホスト名義で飛んでくるため誤爆注意)
+            if (amount.HasBit(SwitchSystem.DamageSystem))
+            {
+                return true;
+            }
+
+            var isMadmate =
+                player.Is(CustomRoles.SKMadmate) ||
+                // マッド属性化時に削除
+                (player.GetRoleClass() is SchrodingerCat schrodingerCat && schrodingerCat.AmMadmate);
+            if ((isMadmate && !Options.MadmateCanFixLightsOut.GetBool()) || IsClumsy(player))
+            {
+                return false;
+            }
+
+            //Airshipの特定の停電を直せないならキャンセル
+            if (Main.NormalOptions.MapId == 4)
+            {
+                var truePosition = player.GetTruePosition();
+                if (Options.DisableAirshipViewingDeckLightsPanel.GetBool() && Vector2.Distance(truePosition, new(-12.93f, -11.28f)) <= 2f) return false;
+                if (Options.DisableAirshipGapRoomLightsPanel.GetBool() && Vector2.Distance(truePosition, new(13.92f, 6.43f)) <= 2f) return false;
+                if (Options.DisableAirshipCargoLightsPanel.GetBool() && Vector2.Distance(truePosition, new(30.56f, 2.12f)) <= 2f) return false;
             }
 
             // サボタージュによる破壊ではない && 配電盤を下げられなくするオプションがオン
@@ -102,6 +159,34 @@ namespace TownOfHostY
             modifiedCooldownSec = Options.SabotageCooldown.GetFloat();
         }
 
+        public static bool Prefix(SabotageSystemType __instance, [HarmonyArgument(0)] PlayerControl player, [HarmonyArgument(1)] MessageReader msgReader)
+        {
+            var newReader = MessageReader.Get(msgReader);
+            var amount = newReader.ReadByte();
+            var nextSabotage = (SystemTypes)amount;
+            Logger.Info("Sabotage" + ", PlayerName: " + player.GetNameWithRole() + ", SabotageType: " + nextSabotage.ToString(), "RepairSystem");
+            //HASモードではサボタージュ不可
+            if (Options.CurrentGameMode == CustomGameMode.HideAndSeek || Options.IsStandardHAS) return false;
+            if (Options.IsCCMode) return false;
+            var roleClass = player.GetRoleClass();
+            if (roleClass != null)
+            {
+                return roleClass.OnInvokeSabotage(nextSabotage);
+            }
+            else
+            {
+                return CanSabotage(player, nextSabotage);
+            }
+        }
+        private static bool CanSabotage(PlayerControl player, SystemTypes systemType)
+        {
+            //サボタージュ出来ないキラー役職はサボタージュ自体をキャンセル
+            if (!player.Is(CustomRoleTypes.Impostor))
+            {
+                return false;
+            }
+            return true;
+        }
         public static void Postfix(SabotageSystemType __instance)
         {
             if (!isCooldownModificationEnabled || !AmongUsClient.Instance.AmHost)
@@ -110,6 +195,34 @@ namespace TownOfHostY
             }
             __instance.Timer = modifiedCooldownSec;
             __instance.IsDirty = true;
+        }
+
+        [HarmonyPatch(typeof(SecurityCameraSystemType), nameof(SecurityCameraSystemType.UpdateSystem))]
+        public static class SecurityCameraSystemTypeUpdateSystemPatch
+        {
+            public static bool Prefix([HarmonyArgument(1)] MessageReader msgReader)
+            {
+                var newReader = MessageReader.Get(msgReader);
+                var amount = newReader.ReadByte();
+                // カメラ無効時，バニラプレイヤーはカメラを開けるので点滅させない
+                if (amount == SecurityCameraSystemType.IncrementOp)
+                {
+                    var camerasDisabled = (MapNames)Main.NormalOptions.MapId switch
+                    {
+                        MapNames.Skeld => Options.DisableSkeldCamera.GetBool(),
+                        MapNames.Polus => Options.DisablePolusCamera.GetBool(),
+                        MapNames.Airship => Options.DisableAirshipCamera.GetBool(),
+                        _ => false,
+                    };
+                    return !camerasDisabled;
+                }
+                return true;
+            }
+            public static void Postfix([HarmonyArgument(0)] PlayerControl player, [HarmonyArgument(1)] MessageReader msgReader)
+            {
+                var newReader = MessageReader.Get(msgReader);
+                var amount = newReader.ReadByte();
+            }
         }
     }
 }

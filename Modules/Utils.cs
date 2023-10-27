@@ -45,8 +45,7 @@ namespace TownOfHostY
                         if (mapId == 2) return false;
                         else if (mapId == 4)
                         {
-                            var HeliSabotageSystem = ShipStatus.Instance.Systems[type].Cast<HeliSabotageSystem>();
-                            return HeliSabotageSystem != null && HeliSabotageSystem.IsActive;
+                            return IsActive(SystemTypes.HeliSabotage);
                         }
                         else
                         {
@@ -79,6 +78,10 @@ namespace TownOfHostY
                             return HudOverrideSystemType != null && HudOverrideSystemType.IsActive;
                         }
                     }
+                case SystemTypes.HeliSabotage:
+                    var HeliSabotageSystem = ShipStatus.Instance.Systems[type].Cast<HeliSabotageSystem>();
+                    return HeliSabotageSystem != null && HeliSabotageSystem.IsActive;
+
                 default:
                     return false;
             }
@@ -156,9 +159,13 @@ namespace TownOfHostY
         {
             //キルフラッシュ(ブラックアウト+リアクターフラッシュ)の処理
             bool ReactorCheck = false; //リアクターフラッシュの確認
-            if (Main.NormalOptions.MapId == 2) ReactorCheck = IsActive(SystemTypes.Laboratory);
-            else ReactorCheck = IsActive(SystemTypes.Reactor);
-
+            var systemtypes = (MapNames)Main.NormalOptions.MapId switch
+            {
+                MapNames.Polus => SystemTypes.Laboratory,
+                MapNames.Airship => SystemTypes.HeliSabotage,
+                _ => SystemTypes.Reactor,
+            };
+            ReactorCheck = IsActive(systemtypes);
             var Duration = Options.KillFlashDuration.GetFloat();
             if (ReactorCheck) Duration += 0.2f; //リアクター中はブラックアウトを長くする
 
@@ -771,16 +778,16 @@ namespace TownOfHostY
                     if (Options.NotShowOption(opt.Name)) continue;
 
                     if (opt.Name is "NameChangeMode" && Options.GetNameChangeModes() != NameChange.None)
-                        sb.Append($"<size=75%>◆</size><u>{opt.GetName(true)}</u> ：{opt.GetString()}\n");
+                        sb.Append($"<size=60%>◆<u><size=72%>{opt.GetName(true)}</size></u> ：<size=68%>{opt.GetString()}</size>\n</size>");
                     //if (opt.Name is "SyncColorMode" && Options.GetSyncColorMode() != SyncColorMode.None)
                     //    sb.Append($"【{opt.GetName(true)}: {opt.GetString()}】\n");
                     else
-                        sb.Append($"<size=75%>◆</size><u>{opt.GetName(true)}</u>\n");
+                        sb.Append($"<size=60%>◆<u><size=72%>{opt.GetName(true)}</size></u>\n</size>");
 
                     sb.Append("<size=65%><line-height=1.5pic>");
                     ShowChildrenSettings(opt, ref sb);
-                    sb.Append("</size></line-height>");
-                    sb.Append('\n');
+                    sb.Append("</line-height>");
+                    sb.Append("\n</size>");
                 }
             }
             SendMessage(sb.ToString(), PlayerId, $"</color>【{GetString("Settings")}】");
@@ -1005,7 +1012,7 @@ namespace TownOfHostY
                     name = $"<color={Main.ModColor}>TOH_Y {GetString("CatchCat")}</color>\r\n" + name;
                 //else if (Options.IsONMode)
                 //    name = $"<color={GetRoleColorCode(CustomRoles.ONVillager)}>TOH_Y {GetString("OneNight")}</color>\r\n" + name;
-                else if(AmongUsClient.Instance.IsGamePublic || Main.ModNameLobbyDisplay.Value)
+                else if(AmongUsClient.Instance.IsGamePublic)
                     name = $"<color={Main.ModColor}>TownOfHost_Y v{Main.PluginVersion}</color>\r\n" + name;
                 switch (Options.GetSuffixMode())
                 {

@@ -38,7 +38,7 @@ namespace TownOfHostY
             }
             if (ModNameLobbyDisplay == null || ModNameLobbyDisplay.ToggleButton == null)
             {
-                ModNameLobbyDisplay = ClientOptionItem.Create("TOHYLobbyDisplay", Main.ModNameLobbyDisplay, __instance);
+                ModNameLobbyDisplay = ClientOptionItem.Create("ModNameLobbyDisplay", Main.ModNameLobbyDisplay, __instance);
             }
 
             if (ModUnloaderScreen.Popup == null)

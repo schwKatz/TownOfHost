@@ -21,17 +21,7 @@
 		<Reference Include="C:\Program Files (x86)\Steam\steamapps\common\Among Us_TOH_Y - dev_1024\BepInEx\core\*.dll" />
 		<Reference Include="C:\Program Files (x86)\Steam\steamapps\common\Among Us_TOH_Y - dev_1024\BepInEx\interop\*.dll" />
 		<EmbeddedResource Include=".\Resources\*.png" />
-		<None Remove="Resources\RS_airship.png" />
-		<None Remove="Resources\RS_fungle.png" />
-		<None Remove="Resources\RS_mira.png" />
-		<None Remove="Resources\RS_polus.png" />
-		<None Remove="Resources\RS_skeld.png" />
 		<EmbeddedResource Include=".\Resources\string.csv" />
-		<EmbeddedResource Include="Resources\RS_airship.png" />
-		<EmbeddedResource Include="Resources\RS_fungle.png" />
-		<EmbeddedResource Include="Resources\RS_mira.png" />
-		<EmbeddedResource Include="Resources\RS_polus.png" />
-		<EmbeddedResource Include="Resources\RS_skeld.png" />
 	</ItemGroup>
 
 	<ItemGroup>
