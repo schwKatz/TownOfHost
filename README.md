@@ -1,12 +1,10 @@
 # Town Of Host_Y
 
-## 9/1更新 TOH_Yは更新休止期間に入ります。
-以前からDiscordの方でお知らせしておりましたが、先日リリースのv17をもちましてTOH_Yの更新を休止させていただきます。
-
-休止期間中、AmongUsの本体アップデートがあった場合は対応版をリリースする予定でございますのでご安心ください。
+## 10/27更新 TOH_Yは更新休止期間です。
+TOH_Yの更新は本体アプデやTOHアプデ、不具合修正などを除き休止させていただいております。
 
 なお、不具合などの報告は引き続きdiscordで受け付けております。発見した際は #不具合報告 まで提出してください。
-休止期間中はゆめのの手によっては修正されませんが、お手伝いさんが不具合修正などのアップデートをする可能性はあります。
+休止期間中でもお手伝いさんによってアップデートされる可能性はあります。
 
 開発再開は2024年春～夏頃を予定していますが、ゆめのの就職活動の期間によって前後します。
 引き続き末永くTOH_Yをよろしくお願い致します。
@@ -54,7 +52,7 @@ TOH_Y：TownOfHost[v5.1.1](https://github.com/tukasa0001/TownOfHost/releases/tag
 - [くろにゃんこ](https://github.com/schwKatz) ([Twitter](https://twitter.com/KatzeSw), [Youtube](https://www.youtube.com/@SwKatz))
 
 ## クレジット
-
+- SPECIALTHANKS [本家TOH](https://github.com/tukasa0001/TownOfHost)・[TOH_H](https://github.com/Hyz-sui/TownOfHost-H)
 - MODクライアント視点霊界での視界拡大縮小 [TownOfPlus](https://github.com/tugaru1975/TownOfPlus)
 - 猫又系役職の道連れ・純愛者・神 [SuperNewRoles](https://github.com/ykundesu/SuperNewRoles)
 - サングラス・弁護士・VIP・タイブレーカー [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles)
