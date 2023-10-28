@@ -22,17 +22,26 @@ public static class MushroomMixupUpdateSystemPatch
             TargetPlayers.Add(pc);
         }
 
+        var name = "<color=#00000000>.";
         foreach (PlayerControl pc in Main.AllAlivePlayerControls)
         {
             var role = pc.GetRoleClass();
-            if (role is IKiller && role is not IImpostor &&
+            if (pc.PlayerId != PlayerControl.LocalPlayer.PlayerId &&
+                role is IKiller && role is not IImpostor &&
                 !pc.Is(CustomRoles.Egoist) &&
                 !(pc.Is(CustomRoles.Jackal) && Jackal.CanSeeNameMushroomMixup))
             {
                 ChangedPlayers.Add(pc);
                 foreach (PlayerControl target in TargetPlayers)
                 {
-                    target.RpcSetNamePrivate("<color=#00000000>.", seer: pc, force: true);
+                    if (target.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+                    {
+                        _ = new LateTask(() => target.RpcSetNamePrivate(name, seer: pc, force: true), 1f, "MushroomMixupSetName");
+                    }
+                    else
+                    {
+                        target.RpcSetNamePrivate(name, seer: pc, force: true);
+                    }
                 }
             }
         }
@@ -46,14 +55,39 @@ public static class MushroomMixupDeterioratePatch
         if (!__instance.IsActive) return;
         if ((double)__instance.currentSecondsUntilHeal - deltaTime > 0.0) return;
 
+        RestorName();
+    }
+    public static void RestorName()
+    {
+        var lateTask = false;
         foreach (var changed in MushroomMixupUpdateSystemPatch.ChangedPlayers.Where(x => x != null))
         {
             foreach (var target in MushroomMixupUpdateSystemPatch.TargetPlayers.Where(x => x != null))
             {
-                target.RpcSetNamePrivate(Main.AllPlayerNames[target.PlayerId], seer: changed, force: true);
+                var name = Main.AllPlayerNames[target.PlayerId];
+                if (target.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+                {
+                    _ = new LateTask(() => target.RpcSetNamePrivate(name, seer: changed, force: true), 0.1f, "MushroomMixupRestoreName");
+                    lateTask = true;
+                }
+                else
+                {
+                    target.RpcSetNamePrivate(name, seer: changed, force: true);
+                }
             }
         }
-        Utils.NotifyRoles();
+
+        MushroomMixupUpdateSystemPatch.TargetPlayers.Clear();
+        MushroomMixupUpdateSystemPatch.ChangedPlayers.Clear();
+
+        if (lateTask)
+        {
+            _ = new LateTask(() => Utils.NotifyRoles(NoCache: true), 0.3f, "MushroomMixupRestoreNotifyRoles");
+        }
+        else
+        {
+            Utils.NotifyRoles(NoCache: true);
+        }
     }
 }
 
