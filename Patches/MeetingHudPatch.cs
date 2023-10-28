@@ -50,6 +50,7 @@ public static class MeetingHudPatch
         public static void Prefix()
         {
             Logger.Info("------------会議開始------------", "Phase");
+            VentilationSystemPatch.ClearVent();
             ChatUpdatePatch.DoBlockChat = true;
             GameStates.AlreadyDied |= !Utils.IsAllAlive;
             Main.AllPlayerControls.Do(x => ReportDeadBodyPatch.WaitReport[x.PlayerId].Clear());
