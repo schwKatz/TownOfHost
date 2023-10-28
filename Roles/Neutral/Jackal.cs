@@ -33,16 +33,23 @@ namespace TownOfHostY.Roles.Neutral
             CanVent = OptionCanVent.GetBool();
             CanUseSabotage = OptionCanUseSabotage.GetBool();
             HasImpostorVision = OptionHasImpostorVision.GetBool();
+            CanSeeNameMushroomMixup = OptionCanSeeNameMushroomMixup.GetBool();
         }
 
         private static OptionItem OptionKillCooldown;
         public static OptionItem OptionCanVent;
         public static OptionItem OptionCanUseSabotage;
         private static OptionItem OptionHasImpostorVision;
+        private static OptionItem OptionCanSeeNameMushroomMixup;
+        enum OptionName
+        {
+            JackalCanSeeNameMushroomMixup,
+        }
         private static float KillCooldown;
         public static bool CanVent;
         public static bool CanUseSabotage;
         private static bool HasImpostorVision;
+        public static bool CanSeeNameMushroomMixup;
 
         public SchrodingerCat.TeamType SchrodingerCatChangeTo => SchrodingerCat.TeamType.Jackal;
 
@@ -53,6 +60,7 @@ namespace TownOfHostY.Roles.Neutral
             OptionCanVent = BooleanOptionItem.Create(RoleInfo, 11, GeneralOption.CanVent, true, false);
             OptionCanUseSabotage = BooleanOptionItem.Create(RoleInfo, 12, GeneralOption.CanUseSabotage, false, false);
             OptionHasImpostorVision = BooleanOptionItem.Create(RoleInfo, 13, GeneralOption.ImpostorVision, true, false);
+            OptionCanSeeNameMushroomMixup = BooleanOptionItem.Create(RoleInfo, 14, OptionName.JackalCanSeeNameMushroomMixup, true, false);
             Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, RoleInfo.RoleName, RoleInfo.Tab);
         }
         public float CalculateKillCooldown() => KillCooldown;

@@ -4,6 +4,7 @@ using HarmonyLib;
 using Hazel;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY;
 
@@ -25,7 +26,8 @@ public static class MushroomMixupUpdateSystemPatch
         {
             var role = pc.GetRoleClass();
             if (role is IKiller && role is not IImpostor &&
-                !pc.Is(CustomRoles.Egoist))
+                !pc.Is(CustomRoles.Egoist) &&
+                !(pc.Is(CustomRoles.Jackal) && Jackal.CanSeeNameMushroomMixup))
             {
                 ChangedPlayers.Add(pc);
                 foreach (PlayerControl target in TargetPlayers)
