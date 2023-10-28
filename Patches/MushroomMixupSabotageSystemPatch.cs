@@ -11,6 +11,9 @@ namespace TownOfHostY;
 [HarmonyPatch(typeof(MushroomMixupSabotageSystem), nameof(MushroomMixupSabotageSystem.UpdateSystem))]
 public static class MushroomMixupUpdateSystemPatch
 {
+    public static bool InSabotageName => instance != null && instance.IsActive && NameChanged;
+    public static bool NameChanged = false;
+    private static MushroomMixupSabotageSystem instance;
     public static List<PlayerControl> TargetPlayers = new();
     public static List<PlayerControl> ChangedPlayers = new();
     public static void Prefix(MushroomMixupSabotageSystem __instance, PlayerControl player, MessageReader msgReader)
@@ -45,6 +48,8 @@ public static class MushroomMixupUpdateSystemPatch
                 }
             }
         }
+        instance = __instance;
+        NameChanged = true;
     }
 }
 [HarmonyPatch(typeof(MushroomMixupSabotageSystem), nameof(MushroomMixupSabotageSystem.Deteriorate))]
@@ -79,6 +84,7 @@ public static class MushroomMixupDeterioratePatch
 
         MushroomMixupUpdateSystemPatch.TargetPlayers.Clear();
         MushroomMixupUpdateSystemPatch.ChangedPlayers.Clear();
+        MushroomMixupUpdateSystemPatch.NameChanged = false;
 
         if (lateTask)
         {
