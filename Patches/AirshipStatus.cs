@@ -1,6 +1,7 @@
 using HarmonyLib;
 
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Patches;
 
 namespace TownOfHostY
 {
@@ -10,7 +11,11 @@ namespace TownOfHostY
     {
         public static bool Prefix()
         {
-            return !PlayerControl.LocalPlayer.Is(CustomRoles.GM); // GMは湧き画面をスキップ
+            if (PlayerControl.LocalPlayer.Is(CustomRoles.GM) && // GMは湧き画面をスキップ
+                RandomSpawn.CustomNetworkTransformPatch.NumOfTP[PlayerControl.LocalPlayer.PlayerId] != 0)
+            return false;
+
+            return true;
         }
     }
 }
