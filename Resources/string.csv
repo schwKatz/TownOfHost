@@ -803,6 +803,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "TotocalcioBetChangeCount","'BET'Change Count","「賭ける」の変更できる回数",
 "TotocalcioInitialCoolDown","'BET'Initial Ability Cooldown","「賭ける」の初期クールタイム",
 "TotocalcioFinalCoolDown","'BET'Final Ability Cooldown","「賭ける」の最終クールタイム",
+"JackalCanSeeNameMushroomMixup","Can See Name in MushroomMixup","キノコカオス中に名前が見える",,,,
 "JClientCanVent","Client Can Vent","クライアントがベントを使える",,,,
 "JClientImpostorVision","Client Impostor Vision","クライアントがインポスター視界を持つ",,,,
 "JClientVentCooldown","Client Vent Cooldown","クライアントのベントクールダウン",,,,

@@ -1080,6 +1080,8 @@ namespace TownOfHostY
             //ミーティング中の呼び出しは不正
             if (GameStates.IsMeeting) return;
 
+            if (MushroomMixupUpdateSystemPatch.InSabotageName) return; //キノコカオス中は無効
+
             var caller = new System.Diagnostics.StackFrame(1, false);
             var callerMethod = caller.GetMethod();
             string callerMethodName = callerMethod.Name;
