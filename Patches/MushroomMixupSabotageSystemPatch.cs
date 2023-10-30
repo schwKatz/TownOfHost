@@ -11,7 +11,7 @@ namespace TownOfHostY;
 [HarmonyPatch(typeof(MushroomMixupSabotageSystem), nameof(MushroomMixupSabotageSystem.UpdateSystem))]
 public static class MushroomMixupUpdateSystemPatch
 {
-    public static bool InSabotageName => instance != null && instance.IsActive && NameChanged;
+    public static bool InSabotage => instance != null && instance.IsActive && NameChanged;
     public static bool NameChanged = false;
     private static MushroomMixupSabotageSystem instance;
     public static List<PlayerControl> TargetPlayers = new();
