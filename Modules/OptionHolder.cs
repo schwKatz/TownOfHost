@@ -114,6 +114,14 @@ namespace TownOfHostY
         public static OptionItem DisableUploadData;
         public static OptionItem DisableStartReactor;
         public static OptionItem DisableResetBreaker;
+        public static OptionItem DisableRewindTapes;
+        public static OptionItem DisableVentCleaning;
+        public static OptionItem DisableBuildSandcastle;
+        public static OptionItem DisableTestFrisbee;
+        public static OptionItem DisableWaterPlants;
+        public static OptionItem DisableCatchFish;
+        public static OptionItem DisableHelpCritter;
+        public static OptionItem DisableTuneRadio;
 
         //デバイスブロック
         public static OptionItem DisableDevices;
@@ -212,8 +220,13 @@ namespace TownOfHostY
         public static OptionItem DisableAirshipGapRoomLightsPanel;
         public static OptionItem DisableAirshipCargoLightsPanel;
         public static OptionItem BlockDisturbancesToSwitches;
+        // キノコカオスサボ時のボタン無効
+        public static OptionItem DisableButtonInMushroomMixup;
 
         // マップ改造
+        private static OptionItem MapModificationAirship;
+        private static OptionItem MapModificationFungle;
+
         public static OptionItem AirShipVariableElectrical;
         public static OptionItem DisableAirshipMovingPlatform;
         public static OptionItem ResetDoorsEveryTurns;
@@ -232,7 +245,6 @@ namespace TownOfHostY
         public static OptionItem GhostCanSeeDeathReason;
         public static OptionItem GhostIgnoreTasks;
         public static OptionItem CommsCamouflage;
-        public static OptionItem DisableButtonInMushroomMixup;
 
         public static OptionItem SkinControle;
         public static OptionItem NoHat;
@@ -393,7 +405,7 @@ namespace TownOfHostY
                         info.OptionCreator?.Invoke();
                     }
                 }
-                else if (!SpecialEvent.IsEventRole(info.RoleName))
+                else if (!SpecialEvent.IsEventRole(info.RoleName) && info.RoleName != CustomRoles.VentManager)
                 {
                     SetupRoleOptions(info);
                     info.OptionCreator?.Invoke();
@@ -514,17 +526,23 @@ namespace TownOfHostY
             AddedTheFungle = BooleanOptionItem.Create(100505, "AddedTheFungle", false, TabGroup.MainSettings, false).SetParent(RandomMapsMode).SetGameMode(CustomGameMode.All);
 
             // マップ改造
-            AirShipVariableElectrical = BooleanOptionItem.Create(100520, "AirShipVariableElectrical", false, TabGroup.MainSettings, false)
-                .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
-            DisableAirshipMovingPlatform = BooleanOptionItem.Create(100530, "DisableAirshipMovingPlatform", false, TabGroup.MainSettings, false)
-                .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
             ResetDoorsEveryTurns = BooleanOptionItem.Create(100540, "ResetDoorsEveryTurns", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
             DoorsResetMode = StringOptionItem.Create(100541, "DoorsResetMode", EnumHelper.GetAllNames<DoorsReset.ResetMode>(), 0, TabGroup.MainSettings, false).SetParent(ResetDoorsEveryTurns).SetGameMode(CustomGameMode.All);
-            FungleCanSporeTrigger = BooleanOptionItem.Create(100550, "FungleCanSporeTrigger", false, TabGroup.MainSettings, false)
+
+            MapModificationAirship = BooleanOptionItem.Create(100525, "MapModificationAirship", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
-            FungleCanUseZipline = BooleanOptionItem.Create(100560, "FungleCanUseZipline", false, TabGroup.MainSettings, false)
+            AirShipVariableElectrical = BooleanOptionItem.Create(100520, "AirShipVariableElectrical", false, TabGroup.MainSettings, false).SetParent(MapModificationAirship)
+                .SetGameMode(CustomGameMode.All);
+            DisableAirshipMovingPlatform = BooleanOptionItem.Create(100530, "DisableAirshipMovingPlatform", false, TabGroup.MainSettings, false).SetParent(MapModificationAirship)
+                .SetGameMode(CustomGameMode.All);
+
+            MapModificationFungle = BooleanOptionItem.Create(100555, "MapModificationFungle", false, TabGroup.MainSettings, false)
                 .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
+            FungleCanSporeTrigger = BooleanOptionItem.Create(100550, "FungleCanSporeTrigger", false, TabGroup.MainSettings, false).SetParent(MapModificationFungle)
+                .SetGameMode(CustomGameMode.All);
+            FungleCanUseZipline = BooleanOptionItem.Create(100560, "FungleCanUseZipline", false, TabGroup.MainSettings, false).SetParent(MapModificationFungle)
+                .SetColor(Color.gray).SetGameMode(CustomGameMode.All);
             FungleCanUseZiplineFromTop = BooleanOptionItem.Create(100561, "FungleCanUseZiplineFromTop", false, TabGroup.MainSettings, false).SetParent(FungleCanUseZipline).SetGameMode(CustomGameMode.All);
             FungleCanUseZiplineFromUnder = BooleanOptionItem.Create(100562, "FungleCanUseZiplineFromUnder", true, TabGroup.MainSettings, false).SetParent(FungleCanUseZipline).SetGameMode(CustomGameMode.All);
 
@@ -553,13 +571,15 @@ namespace TownOfHostY
             DisableAirshipGapRoomLightsPanel = BooleanOptionItem.Create(100212, "DisableAirshipGapRoomLightsPanel", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
             DisableAirshipCargoLightsPanel = BooleanOptionItem.Create(100213, "DisableAirshipCargoLightsPanel", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
             BlockDisturbancesToSwitches = BooleanOptionItem.Create(100214, "BlockDisturbancesToSwitches", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
-            // キノコカオスの特殊設定
-            DisableButtonInMushroomMixup = BooleanOptionItem.Create(100240, "DisableButtonInMushroomMixup", false, TabGroup.MainSettings, false)
-                .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
+
             // コミュサボカモフラージュ
             CommsCamouflage = BooleanOptionItem.Create(100220, "CommsCamouflage", false, TabGroup.MainSettings, false)
                 .SetColor(Color.magenta)
                 .SetGameMode(CustomGameMode.All);
+
+            // キノコカオスサボ時のボタン無効
+            DisableButtonInMushroomMixup = BooleanOptionItem.Create(100240, "DisableButtonInMushroomMixup", false, TabGroup.MainSettings, false)
+                .SetColor(Color.magenta).SetGameMode(CustomGameMode.All);
 
             TextOptionItem.Create(300102, "Head.Meeting", TabGroup.MainSettings).SetColor(Color.cyan).SetGameMode(CustomGameMode.All);
             // 会議収集理由表示
@@ -623,6 +643,14 @@ namespace TownOfHostY
             DisableUploadData = BooleanOptionItem.Create(100404, "DisableUploadDataTask", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
             DisableStartReactor = BooleanOptionItem.Create(100405, "DisableStartReactorTask", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
             DisableResetBreaker = BooleanOptionItem.Create(100406, "DisableResetBreakerTask", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
+            DisableRewindTapes = BooleanOptionItem.Create(100407, "DisableRewindTapes", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
+            DisableVentCleaning = BooleanOptionItem.Create(100408, "DisableVentCleaning", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
+            DisableBuildSandcastle = BooleanOptionItem.Create(100409,"DisableBuildSandcastle", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
+            DisableTestFrisbee = BooleanOptionItem.Create(100410, "DisableTestFrisbee", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
+            DisableWaterPlants = BooleanOptionItem.Create(100411, "DisableWaterPlants", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
+            DisableCatchFish = BooleanOptionItem.Create(100412, "DisableCatchFish", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
+            DisableHelpCritter = BooleanOptionItem.Create(100413, "DisableHelpCritter", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
+            DisableTuneRadio = BooleanOptionItem.Create(100414, "DisableTuneRadio", false, TabGroup.MainSettings, false).SetParent(DisableTasks).SetGameMode(CustomGameMode.All);
 
             // タスク勝利無効化
             DisableTaskWin = BooleanOptionItem.Create(1_001_000, "DisableTaskWin", false, TabGroup.MainSettings, false)

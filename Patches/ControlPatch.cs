@@ -120,7 +120,7 @@ namespace TownOfHostY
                 OptionItem.AllOptions.ToArray().Where(x => x.Id > 0).Do(x => x.SetValue(x.DefaultValue));
             }
             //自分自身の死体をレポート
-            if (GetKeysDown(KeyCode.Return, KeyCode.M, KeyCode.RightShift) && GameStates.IsInGame)
+            if (GetKeysDown(KeyCode.Return, KeyCode.M, KeyCode.RightShift) && GameStates.IsInTask)
             {
                 var pc = PlayerControl.LocalPlayer;
                 if (pc.IsAlive()) pc.ReportDeadBody(pc.Data);

@@ -5,6 +5,8 @@ using Il2CppInterop.Runtime.InteropTypes.Arrays;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Crewmate;
+using TownOfHostY.Roles.Crewmate;
+using System.Linq;
 
 namespace TownOfHostY
 {
@@ -26,7 +28,16 @@ namespace TownOfHostY
                 if (task.TaskType == TaskTypes.UnlockSafe && Options.DisableUnlockSafe.GetBool()) disabledTasks.Add(task);//金庫タスク
                 if (task.TaskType == TaskTypes.UploadData && Options.DisableUploadData.GetBool()) disabledTasks.Add(task);//アップロードタスク
                 if (task.TaskType == TaskTypes.StartReactor && Options.DisableStartReactor.GetBool()) disabledTasks.Add(task);//リアクターの3x3タスク
-                if (task.TaskType == TaskTypes.ResetBreakers && Options.DisableResetBreaker.GetBool()) disabledTasks.Add(task);//レバータスク
+                if (task.TaskType == TaskTypes.ResetBreakers && Options.DisableResetBreaker.GetBool()) disabledTasks.Add(task);//ブレーカータスク
+
+                if (task.TaskType == TaskTypes.RewindTapes && Options.DisableRewindTapes.GetBool()) disabledTasks.Add(task);//テープタスク
+                if (task.TaskType == TaskTypes.VentCleaning && Options.DisableVentCleaning.GetBool()) disabledTasks.Add(task);//ベントタスク
+                if (task.TaskType == TaskTypes.BuildSandcastle && Options.DisableBuildSandcastle.GetBool()) disabledTasks.Add(task);//砂の城タスク
+                if (task.TaskType == TaskTypes.TestFrisbee && Options.DisableTestFrisbee.GetBool()) disabledTasks.Add(task);//フリスビータスク
+                if (task.TaskType == TaskTypes.WaterPlants && Options.DisableWaterPlants.GetBool()) disabledTasks.Add(task);//水やりタスク
+                if (task.TaskType == TaskTypes.CatchFish && Options.DisableCatchFish.GetBool()) disabledTasks.Add(task);//魚釣りタスク
+                if (task.TaskType == TaskTypes.HelpCritter && Options.DisableHelpCritter.GetBool()) disabledTasks.Add(task);//卵孵化タスク
+                if (task.TaskType == TaskTypes.TuneRadio && Options.DisableTuneRadio.GetBool()) disabledTasks.Add(task);//通信修復タスク
             }
             foreach (var task in disabledTasks)
             {
@@ -75,7 +86,7 @@ namespace TownOfHostY
 
             if (taskTypeIds.Count == 0) hasCommonTasks = false; //タスク再配布時はコモンを0に
             if (!hasCommonTasks && NumLongTasks == 0 && NumShortTasks == 0) NumShortTasks = 1; //タスク0対策
-            if (hasCommonTasks && NumLongTasks == Main.NormalOptions.NumLongTasks && NumShortTasks == Main.NormalOptions.NumShortTasks) return; //変更点がない場合
+            if (!pc.Is(CustomRoles.VentManager) && hasCommonTasks && NumLongTasks == Main.NormalOptions.NumLongTasks && NumShortTasks == Main.NormalOptions.NumShortTasks) return; //変更点がない場合
 
             //割り当て可能なタスクのIDが入ったリスト
             //本来のRpcSetTasksの第二引数のクローン
@@ -108,6 +119,18 @@ namespace TownOfHostY
             foreach (var task in ShipStatus.Instance.ShortTasks)
                 ShortTasks.Add(task);
             Shuffle<NormalPlayerTask>(ShortTasks);
+
+            if (pc.Is(CustomRoles.VentManager))
+            {
+                TasksList.Clear();
+                ShortTasks.Clear();
+
+                var task = ShipStatus.Instance.ShortTasks.FirstOrDefault(task => task.TaskType == TaskTypes.VentCleaning);
+                ShortTasks.Add(task);
+
+                NumLongTasks = 0; // 割り当てるロングタスクの数
+                NumShortTasks = pc.GetPlayerTaskState().AllTasksCount; //VentManager.TaskCount.GetInt(); // 割り当てるショートタスクの数
+            }
 
             //実際にAmong Us側で使われているタスクを割り当てる関数を使う。
             ShipStatus.Instance.AddTasksFromList(
