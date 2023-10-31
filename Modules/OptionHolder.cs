@@ -232,6 +232,7 @@ namespace TownOfHostY
         public static OptionItem GhostCanSeeDeathReason;
         public static OptionItem GhostIgnoreTasks;
         public static OptionItem CommsCamouflage;
+        public static OptionItem DisableButtonInMushroomMixup;
 
         public static OptionItem SkinControle;
         public static OptionItem NoHat;
@@ -552,6 +553,9 @@ namespace TownOfHostY
             DisableAirshipGapRoomLightsPanel = BooleanOptionItem.Create(100212, "DisableAirshipGapRoomLightsPanel", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
             DisableAirshipCargoLightsPanel = BooleanOptionItem.Create(100213, "DisableAirshipCargoLightsPanel", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
             BlockDisturbancesToSwitches = BooleanOptionItem.Create(100214, "BlockDisturbancesToSwitches", false, TabGroup.MainSettings, false).SetParent(LightsOutSpecialSettings).SetGameMode(CustomGameMode.All);
+            // キノコカオスの特殊設定
+            DisableButtonInMushroomMixup = BooleanOptionItem.Create(100240, "DisableButtonInMushroomMixup", false, TabGroup.MainSettings, false)
+                .SetColor(Color.yellow).SetGameMode(CustomGameMode.All);
             // コミュサボカモフラージュ
             CommsCamouflage = BooleanOptionItem.Create(100220, "CommsCamouflage", false, TabGroup.MainSettings, false)
                 .SetColor(Color.magenta)
