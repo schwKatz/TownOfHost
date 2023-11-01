@@ -13,7 +13,7 @@ namespace TownOfHostY
         {
             if (PlayerControl.LocalPlayer.Is(CustomRoles.GM) && // GMは湧き画面をスキップ
                 RandomSpawn.CustomNetworkTransformPatch.NumOfTP[PlayerControl.LocalPlayer.PlayerId] != 0)
-            return false;
+                return false;
 
             return true;
         }

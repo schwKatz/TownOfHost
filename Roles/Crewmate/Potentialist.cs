@@ -72,6 +72,7 @@ public sealed class Potentialist : RoleBase
     public override bool OnCompleteTask()
     {
         var playerId = Player.PlayerId;
+        var player = Player;
         if (Player.IsAlive()
             && !isPotentialistChanged
             && MyTaskState.HasCompletedEnoughCountOfTasks(TaskTrigger))
@@ -86,7 +87,6 @@ public sealed class Potentialist : RoleBase
                     CustomRoles.Bait,
                     CustomRoles.Lighter,
                     CustomRoles.Mayor,
-                    CustomRoles.SabotageMaster,
                     CustomRoles.Snitch,
                     CustomRoles.SpeedBooster,
                     CustomRoles.Doctor,
@@ -116,11 +116,22 @@ public sealed class Potentialist : RoleBase
                 Rand.Add(CustomRoles.AntiComplete);
                 Rand.Add(CustomRoles.LoveCutter);
             }
+            if ((MapNames)Main.NormalOptions.MapId is not MapNames.Polus and not MapNames.Fungle)
+            {
+                Rand.Add(CustomRoles.VentManager);
+            }
             var Role = Rand[rand.Next(Rand.Count)];
             Player.RpcSetCustomRole(Role);
 
             isPotentialistChanged = true;
-            Logger.Info(Player.GetRealName() + " 役職変更先:" + Role, "Potentialist");
+            Logger.Info(player.GetRealName() + " 役職変更先:" + Role, "Potentialist");
+
+            if (AmongUsClient.Instance.AmHost && Role == CustomRoles.VentManager)
+            {
+                GameData.Instance.RpcSetTasks(playerId, Array.Empty<byte>()); //タスクを再配布
+                player.SyncSettings();
+                Utils.NotifyRoles();
+            }
         }
         return true;
     }

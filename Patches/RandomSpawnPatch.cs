@@ -18,7 +18,7 @@ namespace TownOfHostY
             public static void Postfix(CustomNetworkTransform __instance, [HarmonyArgument(0)] Vector2 position)
             {
                 if (!AmongUsClient.Instance.AmHost) return;
-                //if (position == new Vector2(-25f, 40f)) return; //最初の湧き地点ならreturn
+                if (position == new Vector2(-25f, 40f)) return; //最初の湧き地点ならreturn
                 if (GameStates.IsInTask)
                 {
                     var player = Main.AllPlayerControls.Where(p => p.NetTransform == __instance).FirstOrDefault();
@@ -44,11 +44,7 @@ namespace TownOfHostY
         }
         public static void TP(CustomNetworkTransform nt, Vector2 location)
         {
-            //if (AmongUsClient.Instance.AmHost) nt.SnapTo(location);
-            //MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(nt.NetId, (byte)RpcCalls.SnapTo, SendOption.Reliable);
-            //NetHelpers.WriteVector2(location, writer);
-            //writer.Write(nt.lastSequenceId);
-            //AmongUsClient.Instance.FinishRpcImmediately(writer);
+            //nt.SnapTo(location);
 
             //Modded
             var playerLastSequenceId = nt.lastSequenceId + 8;

@@ -31,7 +31,7 @@ namespace TownOfHostY
         // modの色 / Mod Color (Default: #00bfff)
         public static readonly string ModColor = "#ffff00";
         // 公開ルームを許可する / Allow Public Room (Default: true)
-        public static readonly bool AllowPublicRoom = true;
+        public static readonly bool AllowPublicRoom = false;
         // フォークID / ForkId (Default: OriginalTOH)
         public static readonly string ForkId = "TOH_Y";
         // Discordボタンを表示するか / Show Discord Button (Default: true)
@@ -53,7 +53,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "511.18.3";
+        public const string PluginVersion = "511.18.4";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.10.24";
         public Harmony Harmony { get; } = new Harmony(PluginGuid);

@@ -477,6 +477,15 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "DisableUploadDataTask","Disable UploadData Tasks","ダウンロードタスク","禁用上传数据任务","禁用上傳任務","Отключить Задание ''Загрузка Данных''","Desativar Tarefas de Baixar Dados"
 "DisableStartReactorTask","Disable StartReactor Tasks","原子炉起動タスク","禁用启动反应堆任务","禁用啟動反應堆任務","Отключить Задание ''Запустить Реактор''","Desativar Tarefas de Acionar Reator"
 "DisableResetBreakerTask","Disable ResetBreaker Tasks","ブレーカーリセットタスク","禁用重置反应堆任务","禁用重置斷路器任務","Отключить Задание ''Рычаги(Airship)''","Desativar Reiniciar Disjuntores"
+"DisableRewindTapes","Disable RewindTapes Tasks","テープ回しタスク",
+"DisableVentCleaning","Disable VentCleaning Tasks","ベント掃除タスク",
+"DisableBuildSandcastle","Disable BuildSandcastle Tasks","砂の城タスク",
+"DisableTestFrisbee","Disable TestFrisbee Tasks","フリスビー投げタスク",
+"DisableWaterPlants","Disable WaterPlants Tasks","植物の水やりタスク",
+"DisableCatchFish","Disable CatchFish Tasks","魚釣りタスク",
+"DisableHelpCritter","Disable HelpCritter Tasks","卵の孵化タスク",
+"DisableTuneRadio","Disable FindSignal Tasks","電波探しタスク",
+
 "SuffixMode","Suffix","名前の二行目","附加标签","名字標籤","Суффикс","Sufixo"
 "SuffixMode.None","None","なし","无","無","Ничего","Nenhum"
 "SuffixMode.Version","Version","バージョン","版本","版本","Версия","Versão"
@@ -550,16 +559,17 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DisableAirshipCargoLightsPanel","Disable Cargo Lights Panel(Airship)","貨物室の配電盤を無効化（エアシップ）","禁用货舱配电箱(飞艇地图)","關閉貨艙的配電箱 (Airship)","Отключить починку Света в Грузовом Отсеке (Airship)","Desativar Painel de Luzes das Cargas(Airship)"
 "BlockDisturbancesToSwitches","Block Disturbances To Switches","配電盤妨害を無効化","","","",""
 "DisableButtonInMushroomMixup","Disable Button In MushroomMixup","キノコカオス中のボタンを無効化","","","",""
-"MapModification","Map Modifications","マップ改造","地图修改","","Модификации карты",""
-"DisableAirshipMovingPlatform","Disable Moving Platform(Airship)","昇降機のリフトを無効化（エアシップ）","禁用升降机(飞艇地图)","","Отключить движущуюся платформу (Airship)",""
-"AirShipVariableElectrical","Variable Electrical(AirShip)","電気室の構造変化（エアシップ）","改变配电室构造(飞艇地图)","電力室構造變化 (Airship)","Двери в Электрощитовой меняются случайно (Airship)",""
+"MapModificationAirship","Map Modifications(Airship)","マップ改造（エアシップ）",
+"DisableAirshipMovingPlatform","Disable Moving Platform","昇降機のリフトを無効化","禁用升降机","","Отключить движущуюся платформу",""
+"AirShipVariableElectrical","Variable Electrical","電気室の構造変化","改变配电室构造","電力室構造變化","Двери в Электрощитовой меняются случайно",""
 "ResetDoorsEveryTurns","Reset Doors After Meeting(Airship/Polus/Fungle)","会議後にドア状況をリセットする（ポーラス・エアシップ・ファングル）","","","",""
 "DoorsResetMode","Reset Mode","リセットモード","","","",""
 "AllOpen","All Open","全て開放","","","",""
 "AllClosed","All Closed","全て閉鎖","","","",""
 "RandomByDoor","Random By Door","ドアごとにランダム","","","",""
-"FungleCanSporeTrigger","Can Spore Trigger(Fungle)","キノコ胞子モヤをなくす（ファングル）",
-"FungleCanUseZipline","Can Use Zipline(Fungle)","ジップラインの方向制限（ファングル）",
+"MapModificationFungle","Map Modifications(Fungle)","マップ改造（ファングル）",
+"FungleCanSporeTrigger","Can Spore Trigger","キノコ胞子モヤをなくす",
+"FungleCanUseZipline","Can Use Zipline","ジップラインの方向制限",
 "FungleCanUseZiplineFromTop","Can't Use From Top","上からの下降を禁止",
 "FungleCanUseZiplineFromUnder","Can't Use From Under","下からの上昇を禁止",
 "RandomSpawn","Random Spawn","ランダムスポーン","随机出生点","隨機出生點","Случайный спавн","Spawn Aleatório"
@@ -780,6 +790,10 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "PotentialistInfoLong","do your tasks","タスクを行う",
 "poTask","Task Count that Becomes Can Use Ability","能力開花するタスク数",
 "poNeutral","Role To Be Changed May Be Neutral Role","ニュートラル役職の可能性がある",
+
+"VentManager","Vent Manager","ベントマネージャー",
+"VentManagerInfo","Vent,Vent,Vent!","ベント、ベント、ベント！",
+"VentManagerInfoLong","(Crewmates)\nclean Vent.","[クルー陣営]\nおめでとう。あなたは見事シークレット役職を引き当てました。\nベントを掃除しよう。ただそれだけです。",
 
 # ニュートラル
 "CanBeforeSchrodingerCatWinTheCrewmate","Can Win With Crewmates If No Team","役職変化前であれば、クルー陣営と勝利できる","薛定谔的猫未加入其他阵营前可以跟随船员阵营获胜","薛定諤的貓的陣營轉變前可以隨船員一起獲勝","Без команды он может победить с Членами Экипажа","Pode Ganhar Com Tripulantes"
