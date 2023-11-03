@@ -210,6 +210,7 @@ public static class Options
     public static OptionItem PolusReactorTimeLimit;
     public static OptionItem AirshipReactorTimeLimit;
     public static OptionItem FungleReactorTimeLimit;
+    public static OptionItem FungleMushroomMixupDuration;
 
     // サボタージュのクールダウン変更
     public static OptionItem ModifySabotageCooldown;
@@ -541,6 +542,9 @@ public static class Options
             .SetValueFormat(OptionFormat.Seconds).SetGameMode(CustomGameMode.All);
         FungleReactorTimeLimit = FloatOptionItem.Create((int)offsetId.FeatSabotage + 103, "FungleReactorTimeLimit", new(1f, 60f, 1f), 50f, TabGroup.MainSettings, false).SetParent(SabotageTimeControl)
             .SetValueFormat(OptionFormat.Seconds).SetGameMode(CustomGameMode.All);
+        FungleMushroomMixupDuration = FloatOptionItem.Create((int)offsetId.FeatSabotage + 104, "FungleMushroomMixupDuration", new(1f, 20f, 1f), 10f, TabGroup.MainSettings, false).SetParent(SabotageTimeControl)
+            .SetValueFormat(OptionFormat.Seconds)
+            .SetGameMode(CustomGameMode.Standard).SetGameMode(CustomGameMode.All);
 
         // サボタージュのクールダウン変更
         ModifySabotageCooldown = BooleanOptionItem.Create((int)offsetId.FeatSabotage + 200, "ModifySabotageCooldown", false, TabGroup.MainSettings, false)

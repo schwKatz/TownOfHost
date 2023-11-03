@@ -1017,6 +1017,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "PolusReactorTimeLimit","Polus Reactor Duration","ポーラスのリアクター制限時間","波鲁斯抗震稳定器修理时限","Polus地震抑制器破壞最大時間","Polus время саботажа Реактора","Duração do Reator em Polus"
 "AirshipReactorTimeLimit","Airship Reactor Duration","エアシップのリアクター制限時間","飞艇坠毁路线修理时限","Airship間隙室破壞最大時間","Airship время саботажа Реактора","Duração do Reator em Airship"
 "FungleReactorTimeLimit","Fungle Reactor Duration","ファングルのリアクター制限時間",
+"FungleMushroomMixupDuration","Fungle Mushroom Mixup Duration","ファングルのキノコカオス効果時間","","","","",""
 
 "## サボタージュのクールダウン変更"
 "ModifySabotageCooldown","Sabotage Cooldown Control","サボタージュのクールダウン制御","","","",""
