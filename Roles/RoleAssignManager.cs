@@ -153,7 +153,7 @@ namespace TownOfHostY.Roles
 
             foreach (var roleType in CustomRolesHelper.AllRoleTypes)
             {
-                var count = AssignRoleList.Count(role => role.GetCustomRoleTypes() == roleType);
+                var count = AssignRoleList.Count(role => role.GetAssignRoleType() == roleType);
                 AssignCount.Add(roleType, count);
             }
         }
@@ -228,13 +228,13 @@ namespace TownOfHostY.Roles
                 //アサイン枠が足りてない場合
                 if (CustomRolesHelper.AllRoleTypes.Any(
                     type => assignCount.TryGetValue(type, out var count) &&
-                    targetRoles.Count(role => role.GetCustomRoleTypes() == type) > count
+                    targetRoles.Count(role => role.GetAssignRoleType() == type) > count
                 )) continue;
 
                 foreach (var targetRole in targetRoles)
                 {
                     AssignRoleList.Add(targetRole);
-                    var targetRoleType = targetRole.GetCustomRoleTypes();
+                    var targetRoleType = targetRole.GetAssignRoleType();
                     if (assignCount.ContainsKey(targetRoleType))
                         assignCount[targetRoleType]--;
                 }
@@ -262,18 +262,17 @@ namespace TownOfHostY.Roles
                 var targetRoles = selectedTicket.Item1.GetAssignUnitRolesArray();
                 Logger.Info($"{targetRoles}", "SetRandomAssignRoleList");
                 //アサイン枠が足りていれば追加
-                if (CustomRolesHelper.AllRoleTypes.Where(type => type != CustomRoleTypes.Unit).All(type => targetRoles.Count(role => role.GetCustomRoleTypes() == type) <= assignCount[type]))
+                if (CustomRolesHelper.AllRoleTypes.Where(type => type != CustomRoleTypes.Unit).All(type => targetRoles.Count(role => role.GetAssignRoleType() == type) <= assignCount[type]))
                 {
                     foreach (var targetRole in targetRoles)
                     {
                         AssignRoleList.Add(targetRole);
-                        assignCount[targetRole.GetCustomRoleTypes()]--;
+                        assignCount[targetRole.GetAssignRoleType()]--;
                     }
                 }
                 //1-9個ある同じチケットを削除
                 randomRoleTicketPool.RemoveAll(x => x == selectedTicket);
             }
-
         }
         ///<summary>
         ///属性のアサイン抽選
@@ -309,8 +308,10 @@ namespace TownOfHostY.Roles
         }
         private static RoleAssignInfo GetRoleAssignInfo(this CustomRoles role) =>
             CustomRoleManager.GetRoleInfo(role)?.AssignInfo;
+        private static CustomRoleTypes GetAssignRoleType(this CustomRoles role) =>
+            role.GetRoleAssignInfo()?.AssignRoleType ?? role.GetCustomRoleTypes();
         private static bool IsAssignable(this CustomRoles role)
-    => role.GetRoleAssignInfo()?.IsInitiallyAssignable ?? true;
+            => role.GetRoleAssignInfo()?.IsInitiallyAssignable ?? true;
         /// <summary>
         /// アサインの抽選回数
         /// </summary>
