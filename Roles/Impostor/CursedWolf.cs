@@ -66,15 +66,15 @@ public sealed class CursedWolf : RoleBase, IImpostor
         if (SpellCount <= 0) return true;
 
         // ガード
-        killer.RpcGuardAndKill(target);
-        target.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
+        target.RpcProtectedMurderPlayer(target);
         SpellCount--;
         SendRPC();
         Logger.Info($"{target.GetNameWithRole()} : 残り{SpellCount}回", "CursedWolf");
 
         //切り返す
         PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Spell;
-        target.RpcMurderPlayer(killer, true);
+        target.RpcMurderPlayerV2(killer);
         // 自身は斬られない
         info.CanKill = false;
         return true;

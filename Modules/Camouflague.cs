@@ -54,8 +54,14 @@ namespace TownOfHostY
 
             if (oldIsCamouflage != IsCamouflage)
             {
-                Main.AllPlayerControls.Do(pc =>
-                { if(!pc.Is(Roles.Core.CustomRoles.Rainbow)) RpcSetSkin(IsCamouflage,pc, CamouflageOutfit); });
+                foreach (var pc in Main.AllPlayerControls)
+                {
+                    if (!pc.Is(Roles.Core.CustomRoles.Rainbow))
+                        RpcSetSkin(IsCamouflage, pc, CamouflageOutfit);
+
+                    // バニラのペットバグの対応
+                    if (!IsCamouflage && !pc.IsAlive()) pc.RpcSetPet("");
+                }
                 Utils.NotifyRoles(NoCache: true);
             }
         }
@@ -88,7 +94,8 @@ namespace TownOfHostY
 
                 newOutfit = PlayerSkins[id];
             }
-            if (newOutfit == null) return;
+            //if (newOutfit == null) return;
+            if (newOutfit.Compare(target.Data.DefaultOutfit)) return;
             Logger.Info($"newOutfit={newOutfit.GetString()}", "RpcSetSkin");
 
             var sender = CustomRpcSender.Create(name: $"Camouflage.RpcSetSkin({target.Data.PlayerName})");

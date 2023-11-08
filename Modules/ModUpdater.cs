@@ -34,8 +34,8 @@ namespace TownOfHostY
             {
                 CheckRelease(Main.BetaBuildURL.Value != "").GetAwaiter().GetResult();
             }
-            MainMenuManagerPatch.UpdateButton.gameObject.SetActive(hasUpdate);
-            MainMenuManagerPatch.UpdateButton.transform.Find("FontPlacer/Text_TMP").GetComponent<TMPro.TMP_Text>().SetText($"TOH_Y　UPDATE　[ {latestTitle} ]");
+            MainMenuManagerPatch.UpdateButton.Button.gameObject.SetActive(hasUpdate);
+            MainMenuManagerPatch.UpdateButton.Button.transform.Find("FontPlacer/Text_TMP").GetComponent<TMPro.TMP_Text>().SetText($"TOH_Y　UPDATE　[ {latestTitle} ]");
         }
         public static async Task<bool> CheckRelease(bool beta = false)
         {

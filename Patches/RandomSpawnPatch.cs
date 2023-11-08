@@ -14,7 +14,7 @@ namespace TownOfHostY
         [HarmonyPatch(typeof(CustomNetworkTransform), nameof(CustomNetworkTransform.SnapTo), typeof(Vector2), typeof(ushort))]
         public class CustomNetworkTransformPatch
         {
-            public static Dictionary<byte, int> NumOfTP = new();
+            public static Dictionary<byte, bool> FirstTP = new();
             public static void Postfix(CustomNetworkTransform __instance, [HarmonyArgument(0)] Vector2 position)
             {
                 if (!AmongUsClient.Instance.AmHost) return;
@@ -28,10 +28,9 @@ namespace TownOfHostY
                         return;
                     }
                     if (player.Is(CustomRoles.GM)) return; //GMは対象外に
-
-                    if (NumOfTP[player.PlayerId] == 0)
+                    if (FirstTP[player.PlayerId])
                     {
-                        NumOfTP[player.PlayerId] = 1;
+                        FirstTP[player.PlayerId] = false;
                         if (Main.NormalOptions.MapId != 4) return; //マップがエアシップじゃなかったらreturn
                         player.RpcResetAbilityCooldown();
                         if (Options.FixFirstKillCooldown.GetBool() && !MeetingStates.MeetingCalled)
@@ -72,39 +71,48 @@ namespace TownOfHostY
         {
             public Dictionary<string, Vector2> positions = new()
             {
+                ["Weapons"] = new(9.3f, 1.0f),
+                ["Admin"] = new(4.5f, -7.9f),
+                ["MedBay"] = new(-9.0f, -4.0f),
                 ["Cafeteria"] = new(-1.0f, 3.0f),
                 ["Navigation"] = new(16.5f, -4.8f),
                 ["Storage"] = new(-1.5f, -15.5f),
                 ["UpperEngine"] = new(-17.0f, -1.3f),
                 ["LowerEngine"] = new(-17.0f, -13.5f),
-                ["Weapons"] = new(9.3f, 1.0f),
                 ["O2"] = new(6.5f, -3.8f),
                 ["Shields"] = new(9.3f, -12.3f),
                 ["Communications"] = new(4.0f, -15.5f),
-                ["Admin"] = new(4.5f, -7.9f),
                 ["Electrical"] = new(-7.5f, -8.8f),
                 ["Security"] = new(-13.5f, -5.5f),
-                ["Reactor"] = new(-20.5f, -5.5f),
-                ["MedBay"] = new(-9.0f, -4.0f)
+                ["Reactor"] = new(-20.5f, -5.5f)
             };
             public override Vector2 GetLocation()
             {
-                return Options.AdditionalSpawn.GetBool()
-                    ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[0..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                if (Options.DisableNearButton.GetBool())
+                {
+                    return Options.AdditionalSpawn.GetBool()
+                        ? positions.ToArray()[4..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
+                        : positions.ToArray()[4..4].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
+                else
+                {
+                    return Options.AdditionalSpawn.GetBool()
+                        ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
+                        : positions.ToArray()[3..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
             }
         }
         public class MiraHQSpawnMap : SpawnMap
         {
             public Dictionary<string, Vector2> positions = new()
             {
+                ["Balcony"] = new(24.0f, -2.0f),
+                ["Storage"] = new(19.5f, 4.0f),
                 ["Cafeteria"] = new(25.5f, 2.0f),
                 ["MedBay"] = new(15.5f, -0.5f),
                 ["Reactor"] = new(2.5f, 10.5f),
                 ["Launchpad"] = new(-4.5f, 2.0f),
                 ["Admin"] = new(21.0f, 17.5f),
-                ["Balcony"] = new(24.0f, -2.0f),
-                ["Storage"] = new(19.5f, 4.0f),
                 ["ThreeWay"] = new(17.8f, 11.5f),
                 ["Communications"] = new(15.3f, 3.8f),
                 ["LockerRoom"] = new(9.0f, 1.0f),
@@ -115,23 +123,32 @@ namespace TownOfHostY
             };
             public override Vector2 GetLocation()
             {
-                return Options.AdditionalSpawn.GetBool()
+                if (Options.DisableNearButton.GetBool())
+                {
+                    return Options.AdditionalSpawn.GetBool()
+                    ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
+                    : positions.ToArray()[3..4].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
+                else
+                {
+                    return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[0..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[2..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
             }
         }
         public class PolusSpawnMap : SpawnMap
         {
             public Dictionary<string, Vector2> positions = new()
             {
+                ["Admin"] = new(24.0f, -22.5f),
+                ["Office2"] = new(26.0f, -17.0f),
+                ["Office1"] = new(19.5f, -18.0f),
                 ["Dropship"] = new(16.7f, -3.0f),
                 ["Security"] = new(3.0f, -12.0f),
                 ["O2"] = new(2.0f, -17.5f),
-                ["Office1"] = new(19.5f, -18.0f),
                 ["Weapons"] = new(12.0f, -23.5f),
                 ["Laboratory"] = new(36.5f, -7.5f),
-                ["Office2"] = new(26.0f, -17.0f),
-                ["Admin"] = new(24.0f, -22.5f),
                 ["Communications"] = new(12.5f, -16.0f),
                 ["BoilerRoom"] = new(2.3f, -24.0f),
                 ["Electrical"] = new(9.5f, -12.5f),
@@ -142,15 +159,26 @@ namespace TownOfHostY
             };
             public override Vector2 GetLocation()
             {
-                return Options.AdditionalSpawn.GetBool()
+                if (Options.DisableNearButton.GetBool())
+                {
+                    return Options.AdditionalSpawn.GetBool()
+                    ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
+                    : positions.ToArray()[3..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
+                else
+                {
+                    return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[0..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[2..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
             }
         }
         public class AirshipSpawnMap : SpawnMap
         {
             public Dictionary<string, Vector2> positions = new()
             {
+                ["MeetingRoom"] = new(17.1f, 14.9f),
+                ["GapRoom"] = new(12.0f, 8.5f),
                 ["Brig"] = new(-0.7f, 8.5f),
                 ["Engine"] = new(-0.7f, -1.0f),
                 ["Kitchen"] = new(-7.0f, -11.5f),
@@ -158,8 +186,6 @@ namespace TownOfHostY
                 ["Records"] = new(20.0f, 10.5f),
                 ["MainHall"] = new(15.5f, 0.0f),
                 ["NapRoom"] = new(6.3f, 2.5f),
-                ["MeetingRoom"] = new(17.1f, 14.9f),
-                ["GapRoom"] = new(12.0f, 8.5f),
                 ["Vault"] = new(-8.9f, 12.2f),
                 ["Communications"] = new(-13.3f, 1.3f),
                 ["Cockpit"] = new(-23.5f, -1.6f),
@@ -173,36 +199,54 @@ namespace TownOfHostY
             };
             public override Vector2 GetLocation()
             {
-                return Options.AdditionalSpawn.GetBool()
+                if (Options.DisableNearButton.GetBool())
+                {
+                    return Options.AdditionalSpawn.GetBool()
+                    ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
+                    : positions.ToArray()[3..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
+                else
+                {
+                    return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[0..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[2..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
             }
         }
         public class FungleSpawnMap : SpawnMap
         {
             public Dictionary<string, Vector2> positions = new()
             {
+                ["Bonfire"] = new(-7.4f, 1.4f),
+                ["MeetingRoom"] = new(-4.0f, -0.9f),
+                ["TheDorm"] = new(2.6f, -1.7f),
                 ["SplashZone"] = new(-14.7f, -0.9f),
                 ["Dropship"] = new(-8.0f, 9.8f),
-                ["TheDorm"] = new(2.6f, -1.7f),
                 ["Greenhouse"] = new(9.4f, -12.2f),
                 ["Communications"] = new(21.5f, 13.4f),
                 ["Lookout"] = new(9.1f, 3.6f),
                 ["Cafeteria"] = new(-16.4f, 4.6f),
                 ["Kitchen"] = new(-15.4f, -7.8f),
                 ["Strage"] = new(1.1f, 3.9f),
-                ["MeetingRoom"] = new(-4.0f, -0.9f),
                 ["Laboratory"] = new(-4.2f, -8.8f),
                 ["Reactor"] = new(22.0f, -7.7f),
                 ["MiningPit"] = new(12.5f, 9.5f),
-                ["UpperEngine"] = new(21.7f, 2.6f),
-                ["FirstSpawn"] = new(-7.4f, 1.4f)
+                ["UpperEngine"] = new(21.7f, 2.6f)
             };
             public override Vector2 GetLocation()
             {
-                return Options.AdditionalSpawn.GetBool()
+                if (Options.DisableNearButton.GetBool())
+                {
+                    return Options.AdditionalSpawn.GetBool()
+                    ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
+                    : positions.ToArray()[3..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
+                else
+                {
+                    return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[0..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[2..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                }
             }
         }
     }

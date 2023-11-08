@@ -60,7 +60,7 @@ namespace TownOfHostY
                             var role = kvp.Key;
                             // 陣営ごとのマーク
                             // 陣営ごとのマーク
-                            if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
+                            if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompleteCrew)
                                 sb.Append("<size=85%><color=#ee82ee>○</color></size>");
                             else if (role.IsImpostor()) sb.Append("<size=85%><color=#ff1919>Ⓘ</color></size>");
                             else if (role.IsMadmate()) sb.Append("<size=85%><color=#ff4500>Ⓜ</color></size>");

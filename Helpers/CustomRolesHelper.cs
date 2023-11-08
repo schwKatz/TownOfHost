@@ -1,3 +1,4 @@
+using System.Linq;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
@@ -8,6 +9,17 @@ namespace TownOfHostY
     {
         public static readonly CustomRoles[] AllRoles = EnumHelper.GetAllValues<CustomRoles>();
         public static readonly CustomRoleTypes[] AllRoleTypes = EnumHelper.GetAllValues<CustomRoleTypes>();
+
+        /// <summary>すべてのメイン役職(ゲームモードも含む、属性は含まない)</summary>
+        public static readonly CustomRoles[] AllMainRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role < CustomRoles.StartAddon).ToArray();
+        /// <summary>すべての属性</summary>
+        public static readonly CustomRoles[] AllAddOnRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role > CustomRoles.StartAddon).ToArray();
+        /// <summary>スタンダードモードのメイン役職</summary>
+        public static readonly CustomRoles[] AllStandardRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role < CustomRoles.MaxMain).ToArray();
+        /// <summary>HASモードのメイン役職</summary>
+        public static readonly CustomRoles[] AllHASRoles = { CustomRoles.HASFox, CustomRoles.HASTroll };
+        /// <summary>CCモードのメイン役職</summary>
+        public static readonly CustomRoles[] AllCCRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role.IsCCRole()).ToArray();
 
         public static bool IsImpostor(this CustomRoles role)
         {
@@ -42,6 +54,17 @@ namespace TownOfHostY
                 CustomRoles.GuardianAngel or
                 CustomRoles.Impostor or
                 CustomRoles.Shapeshifter;
+        }
+        public static CustomRoles IsVanillaRoleConversion(this CustomRoles role)
+        {
+            return role switch
+            {
+                CustomRoles.NormalImpostor => CustomRoles.Impostor,
+                CustomRoles.NormalShapeshifter => CustomRoles.Shapeshifter,
+                CustomRoles.NormalEngineer => CustomRoles.Engineer,
+                CustomRoles.NormalScientist => CustomRoles.Scientist,
+                _ => role
+            };
         }
 
         public static bool IsPairRole(this CustomRoles role)
@@ -90,6 +113,15 @@ namespace TownOfHostY
                 CustomRoles.Clumsy or
                 CustomRoles.InfoPoor or
                 CustomRoles.NonReport;
+        }
+        public static bool IsOtherAddOn(this CustomRoles role)
+        {
+            return
+                role is
+                CustomRoles.LastImpostor or
+                CustomRoles.Workhorse or
+                CustomRoles.CompleteCrew or
+                CustomRoles.Lovers;
         }
 
         public static bool IsDirectKillRole(this CustomRoles role)

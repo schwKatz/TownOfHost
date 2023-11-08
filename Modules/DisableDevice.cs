@@ -28,7 +28,7 @@ namespace TownOfHostY
             ["AirshipRecordsAdmin"] = new(19.89f, 12.60f),
             ["AirshipCamera"] = new(8.10f, -9.63f),
             ["AirshipVital"] = new(25.24f, -7.94f),
-            ["FungleVital"] = new(-2.8f, -10.3f),
+            ["FungleVital"] = new(-2.765f, -9.819f),
             ["FungleTelescope"] = new(6.3f, 0.9f)
         };
         public static float UsableDistance()
@@ -84,21 +84,21 @@ namespace TownOfHostY
 
                     if (pc.IsAlive() && !Utils.IsActive(SystemTypes.Comms))
                     {
-                        switch (Main.NormalOptions.MapId)
+                        switch ((MapNames)Main.NormalOptions.MapId)
                         {
-                            case 0:
+                            case MapNames.Skeld:
                                 if (Options.DisableSkeldAdmin.GetBool() || PcIsPoor)
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["SkeldAdmin"]) <= UsableDistance();
                                 if (Options.DisableSkeldCamera.GetBool() || PcIsPoor)
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["SkeldCamera"]) <= UsableDistance();
                                 break;
-                            case 1:
+                            case MapNames.Mira:
                                 if (Options.DisableMiraHQAdmin.GetBool() || PcIsPoor)
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["MiraHQAdmin"]) <= UsableDistance();
                                 if (Options.DisableMiraHQDoorLog.GetBool() || PcIsPoor)
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["MiraHQDoorLog"]) <= UsableDistance();
                                 break;
-                            case 2:
+                            case MapNames.Polus:
                                 if (Options.DisablePolusAdmin.GetBool() || PcIsPoor)
                                 {
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["PolusLeftAdmin"]) <= UsableDistance();
@@ -109,7 +109,7 @@ namespace TownOfHostY
                                 if (Options.DisablePolusVital.GetBool() || PcIsPoor)
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["PolusVital"]) <= UsableDistance();
                                 break;
-                            case 4:
+                            case MapNames.Airship:
                                 if (Options.DisableAirshipCockpitAdmin.GetBool() || PcIsPoor)
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["AirshipCockpitAdmin"]) <= UsableDistance();
                                 if (Options.DisableAirshipRecordsAdmin.GetBool() || PcIsPoor)
@@ -119,9 +119,9 @@ namespace TownOfHostY
                                 if (Options.DisableAirshipVital.GetBool() || PcIsPoor)
                                     doComms |= Vector2.Distance(PlayerPos, DevicePos["AirshipVital"]) <= UsableDistance();
                                 break;
-                            case 5:
-                                //if (Options.DisableFungleVital.GetBool() || PcIsPoor)
-                                //    doComms |= Vector2.Distance(PlayerPos, DevicePos["FungleVital"]) <= UsableDistance();
+                            case MapNames.Fungle:
+                                if (Options.DisableFungleVital.GetBool() || PcIsPoor)
+                                    doComms |= Vector2.Distance(PlayerPos, DevicePos["FungleVital"]) <= UsableDistance();
                                 break;
                         }
                     }
@@ -131,15 +131,15 @@ namespace TownOfHostY
                         if (!DesyncComms.Contains(pc.PlayerId))
                             DesyncComms.Add(pc.PlayerId);
 
-                        pc.RpcDesyncRepairSystem(SystemTypes.Comms, 128);
+                        pc.RpcDesyncUpdateSystem(SystemTypes.Comms, 128);
                     }
                     else if (!Utils.IsActive(SystemTypes.Comms) && DesyncComms.Contains(pc.PlayerId))
                     {
                         DesyncComms.Remove(pc.PlayerId);
-                        pc.RpcDesyncRepairSystem(SystemTypes.Comms, 16);
+                        pc.RpcDesyncUpdateSystem(SystemTypes.Comms, 16);
 
-                        if (Main.NormalOptions.MapId == 1)
-                            pc.RpcDesyncRepairSystem(SystemTypes.Comms, 17);
+                        if ((MapNames)Main.NormalOptions.MapId is MapNames.Mira or MapNames.Fungle)
+                            pc.RpcDesyncUpdateSystem(SystemTypes.Comms, 17);
                     }
                 }
                 catch (Exception ex)
@@ -173,21 +173,21 @@ namespace TownOfHostY
             var admins = GameObject.FindObjectsOfType<MapConsole>(true);
             var consoles = GameObject.FindObjectsOfType<SystemConsole>(true);
             if (admins == null || consoles == null) return;
-            switch (Main.NormalOptions.MapId)
+            switch ((MapNames)Main.NormalOptions.MapId)
             {
-                case 0:
+                case MapNames.Skeld:
                     if (Options.DisableSkeldAdmin.GetBool() || PcIsPoor)
                         admins[0].gameObject.GetComponent<CircleCollider2D>().enabled = ignore;
                     if (Options.DisableSkeldCamera.GetBool() || PcIsPoor)
                         consoles.DoIf(x => x.name == "SurvConsole", x => x.gameObject.GetComponent<PolygonCollider2D>().enabled = ignore);
                     break;
-                case 1:
+                case MapNames.Mira:
                     if (Options.DisableMiraHQAdmin.GetBool() || PcIsPoor)
                         admins[0].gameObject.GetComponent<CircleCollider2D>().enabled = ignore;
                     if (Options.DisableMiraHQDoorLog.GetBool() || PcIsPoor)
                         consoles.DoIf(x => x.name == "SurvLogConsole", x => x.gameObject.GetComponent<BoxCollider2D>().enabled = ignore);
                     break;
-                case 2:
+                case MapNames.Polus:
                     if (Options.DisablePolusAdmin.GetBool() || PcIsPoor)
                         admins.Do(x => x.gameObject.GetComponent<BoxCollider2D>().enabled = ignore);
                     if (Options.DisablePolusCamera.GetBool() || PcIsPoor)
@@ -195,7 +195,7 @@ namespace TownOfHostY
                     if (Options.DisablePolusVital.GetBool() || PcIsPoor)
                         consoles.DoIf(x => x.name == "panel_vitals", x => x.gameObject.GetComponent<BoxCollider2D>().enabled = ignore);
                     break;
-                case 4:
+                case MapNames.Airship:
                     admins.Do(x =>
                     {
                         if (((Options.DisableAirshipCockpitAdmin.GetBool() || PcIsPoor) && x.name == "panel_cockpit_map") ||
@@ -207,11 +207,11 @@ namespace TownOfHostY
                     if (Options.DisableAirshipVital.GetBool() || PcIsPoor)
                         consoles.DoIf(x => x.name == "panel_vitals", x => x.gameObject.GetComponent<CircleCollider2D>().enabled = ignore);
                     break;
-                case 5:
+                case MapNames.Fungle:
                     //if (Options.DisableFungleTelescope.GetBool() || PcIsPoor)
                     //    consoles.DoIf(x => x.name == "task_cams", x => x.gameObject.GetComponent<BoxCollider2D>().enabled = ignore);
-                    //if (Options.DisableFungleVital.GetBool() || PcIsPoor)
-                    //    consoles.DoIf(x => x.name == "panel_vitals", x => x.gameObject.GetComponent<BoxCollider2D>().enabled = ignore);
+                    if (Options.DisableFungleVital.GetBool() || PcIsPoor)
+                        consoles.DoIf(x => x.name == "VitalsConsole", x => x.GetComponent<Collider2D>().enabled = ignore);
                     break;
             }
         }

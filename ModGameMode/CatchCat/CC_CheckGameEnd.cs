@@ -43,21 +43,21 @@ class GameEndPredicate : TownOfHostY.GameEndPredicate
             if (counts[0] == 1)
             {
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.RedL);
-                CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.RedC);
+                CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.CCRedCat);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCRedLeader);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCRedCat);
             }
             else if (counts[1] == 1)
             {
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.BlueL);
-                CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.BlueC);
+                CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.CCBlueCat);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCBlueLeader);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCBlueCat);
             }
             else if (counts[2] == 1)
             {
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.YellowL);
-                CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.YellowC);
+                CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.CCYellowCat);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCYellowLeader);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCYellowCat);
             }
@@ -69,21 +69,21 @@ class GameEndPredicate : TownOfHostY.GameEndPredicate
             if (RedTeam > BlueTeam && RedTeam > YellowTeam)
             {
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.RedL);
-                CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.RedC);
+                CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.CCRedCat);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCRedLeader);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCRedCat);
             }
             else if (RedTeam < BlueTeam && BlueTeam > YellowTeam)
             {
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.BlueL);
-                CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.BlueC);
+                CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.CCBlueCat);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCBlueLeader);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCBlueCat);
             }
             else if (RedTeam < YellowTeam && BlueTeam < YellowTeam)
             {
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.YellowL);
-                CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.YellowC);
+                CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.CCYellowCat);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCYellowLeader);
                 CustomWinnerHolder.WinnerRoles.Add(CustomRoles.CCYellowCat);
             }

@@ -10,7 +10,11 @@ public sealed class GuardianAngel : RoleBase
         SimpleRoleInfo.CreateForVanilla(
             typeof(GuardianAngel),
             player => new GuardianAngel(player),
-            RoleTypes.GuardianAngel
+            RoleTypes.GuardianAngel,
+            assignInfo: new RoleAssignInfo(CustomRoles.GuardianAngel, CustomRoleTypes.Crewmate)
+            {
+                IsInitiallyAssignableCallBack = () => false
+            }
         );
     public GuardianAngel(PlayerControl player)
     : base(
@@ -18,6 +22,4 @@ public sealed class GuardianAngel : RoleBase
         player
     )
     { }
-
-    public override string GetAbilityButtonText() => StringNames.ProtectAbility.ToString();
 }

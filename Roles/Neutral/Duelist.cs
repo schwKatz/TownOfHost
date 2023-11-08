@@ -83,9 +83,8 @@ public sealed class Duelist : RoleBase, IAdditionalWinner
         return string.Empty;
     }
 
-    public bool CheckWin(out AdditionalWinners winnerType)
+    public bool CheckWin(ref CustomRoles winnerRole)
     {
-        winnerType = AdditionalWinners.Duelist;
         return Player.IsAlive() && !Archenemy.IsAlive();
     }
 

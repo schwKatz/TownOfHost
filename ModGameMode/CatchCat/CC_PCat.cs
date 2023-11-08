@@ -48,8 +48,8 @@ static class CatPlayer
         }
 
         // 互いにパリン
-        killer.RpcGuardAndKill(target);
-        target.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
+        target.RpcProtectedMurderPlayer(target);
         info.CanKill = false;
 
         if (targetRole.IsCCColorCatRoles()) //所属済みの猫

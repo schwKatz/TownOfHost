@@ -190,8 +190,8 @@ public sealed class Lawyer : RoleBase
         if (killer.GetCustomRole().IsDirectKillRole()) return true;
 
         if (!Pursuers || GuardCount <= 0) return true;
-        killer.RpcGuardAndKill(target);
-        target.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
+        target.RpcProtectedMurderPlayer(target);
         killer.SetKillCooldown();
         GuardCount--;
         Utils.NotifyRoles(SpecifySeer: target);
@@ -246,7 +246,7 @@ public sealed class Lawyer : RoleBase
                     else
                     {
                         CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                        CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Lawyer);
+                        CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Lawyer);
                     }
                 }
             }
@@ -257,7 +257,7 @@ public sealed class Lawyer : RoleBase
                 if (pc.IsAlive())
                 {
                     CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                    CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Pursuer);
+                    CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Lawyer);
                 }
             }
         }

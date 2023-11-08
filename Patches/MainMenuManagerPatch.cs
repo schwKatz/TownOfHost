@@ -1,36 +1,25 @@
 using System;
-using System.Collections.Generic;
 using HarmonyLib;
-using TMPro;
+using TownOfHostY.Templates;
 using UnityEngine;
-using AmongUs.Data;
-using Assets.InnerNet;
-using AmongUs.Data.Player;
-using System.Collections;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
-using BepInEx.Unity.IL2CPP.Utils.Collections;
-
-using Object = UnityEngine.Object;
 
 namespace TownOfHostY
 {
     [HarmonyPatch(typeof(MainMenuManager))]
     public class MainMenuManagerPatch
     {
-        private static PassiveButton template;
-        private static PassiveButton discordButton;
-        private static PassiveButton twitterButton;
-        private static PassiveButton wikiwikiButton;
-        private static PassiveButton gitHubButton;
-        public static PassiveButton UpdateButton { get; private set; }
+        private static SimpleButton discordButton;
+        private static SimpleButton twitterButton;
+        private static SimpleButton wikiwikiButton;
+        private static SimpleButton gitHubButton;
+        public static SimpleButton UpdateButton { get; private set; }
 
         [HarmonyPatch(nameof(MainMenuManager.Start)), HarmonyPostfix, HarmonyPriority(Priority.Normal)]
         public static void StartPostfix(MainMenuManager __instance)
         {
-            if (template == null) template = __instance.quitButton;
-            if (template == null) return;
+            SimpleButton.SetBase(__instance.quitButton);
             //Discordボタンを生成
-            if (discordButton == null)
+            if (SimpleButton.IsNullOrDestroyed(discordButton))
             {
                 discordButton = CreateButton(
                     "DiscordButton",
@@ -39,12 +28,12 @@ namespace TownOfHostY
                     new(173, 179, 244, byte.MaxValue),
                     () => Application.OpenURL(Main.DiscordInviteUrl),
                     "Discord",
-                    new(1.85f, 0.5f));
+                    new(1.85f, 0.5f),
+                    isActive: Main.ShowDiscordButton);
             }
-            discordButton.gameObject.SetActive(Main.ShowDiscordButton);
 
             // Twitterボタンを生成
-            if (twitterButton == null)
+            if (SimpleButton.IsNullOrDestroyed(twitterButton))
             {
                 twitterButton = CreateButton(
                     "TwitterButton",
@@ -56,7 +45,7 @@ namespace TownOfHostY
                     new(1.85f, 0.5f));
             }
             // WIKIWIKIボタンを生成
-            if (wikiwikiButton == null)
+            if (SimpleButton.IsNullOrDestroyed(wikiwikiButton))
             {
                 wikiwikiButton = CreateButton(
                     "WikiwikiButton",
@@ -68,7 +57,7 @@ namespace TownOfHostY
                     new(1.85f, 0.5f));
             }
             // GitHubボタンを生成
-            if (gitHubButton == null)
+            if (SimpleButton.IsNullOrDestroyed(gitHubButton))
             {
                 gitHubButton = CreateButton(
                     "GitHubButton",
@@ -81,7 +70,7 @@ namespace TownOfHostY
             }
 
             //Updateボタンを生成
-            if (UpdateButton == null)
+            if (SimpleButton.IsNullOrDestroyed(UpdateButton))
             {
                 UpdateButton = CreateButton(
                     "UpdateButton",
@@ -90,13 +79,13 @@ namespace TownOfHostY
                     new(60, 255, 255, byte.MaxValue),
                     () =>
                     {
-                        UpdateButton.gameObject.SetActive(false);
+                        UpdateButton.Button.gameObject.SetActive(false);
                         ModUpdater.StartUpdate(ModUpdater.downloadUrl);
                     },
                     "ModUpdaterで上書き",
-                    new(4f, 0.6f));
+                    new(4f, 0.6f),
+                    isActive: false);
             }
-            UpdateButton.gameObject.SetActive(false);
 
 #if RELEASE
             // フリープレイの無効化
@@ -117,42 +106,19 @@ namespace TownOfHostY
         /// <param name="action">押したときに発火するアクション</param>
         /// <param name="label">ボタンのテキスト</param>
         /// <param name="scale">ボタンのサイズ 変更しないなら不要</param>
-        private static PassiveButton CreateButton(string name, Vector3 localPosition, Color32 normalColor, Color32 hoverColor, Action action, string label, Vector2? scale = null)
+        private static SimpleButton CreateButton(
+                    string name,
+                    Vector3 localPosition,
+                    Color32 normalColor,
+                    Color32 hoverColor,
+                    Action action,
+                    string label,
+                    Vector2? scale = null,
+                    bool isActive = true)
         {
-            var button = Object.Instantiate(template, CredentialsPatch.TohLogo.transform);
-            button.name = name;
-            Object.Destroy(button.GetComponent<AspectPosition>());
-            button.transform.localPosition = localPosition;
+            var button = new SimpleButton(CredentialsPatch.TohLogo.transform, name, localPosition, normalColor, hoverColor, action, label, isActive);
 
-            button.OnClick = new();
-            button.OnClick.AddListener(action);
-
-            var buttonText = button.transform.Find("FontPlacer/Text_TMP").GetComponent<TMP_Text>();
-            buttonText.DestroyTranslator();
-            buttonText.fontSize = buttonText.fontSizeMax = buttonText.fontSizeMin = 3.7f;
-            buttonText.enableWordWrapping = false;
-            buttonText.text = label;
-            var normalSprite = button.inactiveSprites.GetComponent<SpriteRenderer>();
-            var hoverSprite = button.activeSprites.GetComponent<SpriteRenderer>();
-            normalSprite.color = normalColor;
-            hoverSprite.color = hoverColor;
-
-            // ラベルをセンタリング
-            var container = buttonText.transform.parent;
-            Object.Destroy(container.GetComponent<AspectPosition>());
-            Object.Destroy(buttonText.GetComponent<AspectPosition>());
-            container.SetLocalX(0f);
-            buttonText.transform.SetLocalX(0f);
-            buttonText.horizontalAlignment = HorizontalAlignmentOptions.Center;
-
-            var buttonCollider = button.GetComponent<BoxCollider2D>();
-            if (scale.HasValue)
-            {
-                normalSprite.size = hoverSprite.size = buttonCollider.size = scale.Value;
-            }
-            // 当たり判定のズレを直す
-            buttonCollider.offset = new(0f, 0f);
-
+            if (scale.HasValue) button.Scale = scale.Value;
             return button;
         }
 

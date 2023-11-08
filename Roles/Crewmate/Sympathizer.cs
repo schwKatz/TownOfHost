@@ -18,8 +18,11 @@ public sealed class Sympathizer : RoleBase
             "共鳴者",
             "#f08080",
             introSound: () => DestroyableSingleton<HudManager>.Instance.TaskUpdateSound,
-            assignCountRule: new(1, 1, 1),
-            assignUnitRoles: new CustomRoles[2] { CustomRoles.Sympathizer, CustomRoles.Sympathizer }
+            assignInfo: new RoleAssignInfo(CustomRoles.Sympathizer, CustomRoleTypes.Crewmate)
+            {
+                AssignCountRule = new(1, 1, 1),
+                AssignUnitRoles = new CustomRoles[2] { CustomRoles.Sympathizer, CustomRoles.Sympathizer }
+            }
         );
     public Sympathizer(PlayerControl player)
     : base(

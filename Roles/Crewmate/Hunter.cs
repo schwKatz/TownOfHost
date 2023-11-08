@@ -79,10 +79,6 @@ public sealed class Hunter : RoleBase, IKiller, ISchrodingerCatOwner
         var playerId = Player.PlayerId;
         CurrentKillCooldown = KillCooldown.GetFloat();
         isImpostor = 0;
-
-        if (!Main.ResetCamPlayerList.Contains(playerId))
-            Main.ResetCamPlayerList.Add(playerId);
-
         ShotLimit = ShotLimitOpt.GetInt();
         Logger.Info($"{GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "Hunter");
     }
@@ -104,7 +100,7 @@ public sealed class Hunter : RoleBase, IKiller, ISchrodingerCatOwner
         => Player.IsAlive()
         && (CanKillAllAlive.GetBool() || GameStates.AlreadyDied)
         && ShotLimit > 0;
-    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
+    public bool CanUseImpostorVentButton() => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
         opt.SetVision(false);

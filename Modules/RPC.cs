@@ -12,9 +12,9 @@ namespace TownOfHostY
 {
     public enum CustomRPC
     {
-        VersionCheck = 60,
-        RequestRetryVersionCheck = 61,
-        SyncCustomSettings = 80,
+        VersionCheck = 80,
+        RequestRetryVersionCheck = 81,
+        SyncCustomSettings = 100,
         SetDeathReason,
         EndGame,
         PlaySound,
@@ -138,7 +138,7 @@ namespace TownOfHostY
                     foreach (var co in OptionItem.AllOptions)
                     {
                         //すべてのカスタムオプションについてインデックス値で受信
-                        co.SetValue(reader.ReadInt32());
+                        co.SetValue(reader.ReadPackedInt32());
                     }
                     break;
                 case CustomRPC.SetDeathReason:
@@ -183,11 +183,11 @@ namespace TownOfHostY
         public static void SyncCustomSettingsRPC()
         {
             if (!AmongUsClient.Instance.AmHost) return;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, 80, Hazel.SendOption.Reliable, -1);
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SyncCustomSettings, Hazel.SendOption.Reliable, -1);
             foreach (var co in OptionItem.AllOptions)
             {
                 //すべてのカスタムオプションについてインデックス値で送信
-                writer.Write(co.GetValue());
+                writer.WritePacked(co.GetValue());
             }
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
@@ -268,12 +268,12 @@ namespace TownOfHostY
                 CustomRoleManager.CreateInstance(role, player);
             }
 
-            if (role < CustomRoles.NotAssigned)
+            if (role < CustomRoles.StartAddon)
             {
                 PlayerState.GetByPlayerId(targetId).SetMainRole(role);
                 CustomRoleManager.CreateInstance(role, Utils.GetPlayerById(targetId));
             }
-            else if (role >= CustomRoles.NotAssigned)   //500:NoSubRole 501~:SubRole
+            else if (role > CustomRoles.StartAddon)
             {
                 PlayerState.GetByPlayerId(targetId).SetSubRole(role);
             }

@@ -23,7 +23,10 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
             20700,
             SetupOptionItem,
             "テレパシスターズ",
-            assignCountRule: new(2, 3, 1)
+            assignInfo: new RoleAssignInfo(CustomRoles.Telepathisters, CustomRoleTypes.Impostor)
+            {
+                AssignCountRule = new(2, 3, 1),
+            }
         );
 
     public Telepathisters(PlayerControl player)
@@ -83,6 +86,7 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
     }
 
     public float CalculateKillCooldown() => KillCooldown;
+    public bool CanUseImpostorVentButton() => VentCountLimit > 0;
     public override bool OnEnterVent(PlayerPhysics physics, int ventId)
     {
         if (VentCountLimit <= 0) return false;

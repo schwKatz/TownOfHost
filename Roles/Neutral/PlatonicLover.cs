@@ -20,7 +20,10 @@ public sealed class PlatonicLover : RoleBase, IKiller
             "純愛者",
             "#ff6be4",
             true,
-            assignCountRule: new(1, 1, 1)
+            assignInfo: new RoleAssignInfo(CustomRoles.PlatonicLover, CustomRoleTypes.Neutral)
+            {
+                AssignCountRule = new(1, 1, 1)
+            }
         );
     public PlatonicLover(PlayerControl player)
     : base(
@@ -55,13 +58,10 @@ public sealed class PlatonicLover : RoleBase, IKiller
     {
         var playerId = Player.PlayerId;
         isMadeLover = false;
-
-        if (!Main.ResetCamPlayerList.Contains(playerId))
-            Main.ResetCamPlayerList.Add(playerId);
     }
     public float CalculateKillCooldown() => CanUseKillButton() ? 0.1f : 0f;
     public bool CanUseKillButton() => Player.IsAlive() && !isMadeLover;
-    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
+    public bool CanUseImpostorVentButton() => false;
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(false);
 
     public override void OnStartMeeting() => TurnNumber++;
@@ -88,8 +88,8 @@ public sealed class PlatonicLover : RoleBase, IKiller
 
         isMadeLover = true;
         info.DoKill = false;
-        killer.RpcGuardAndKill(target);
-        target.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
+        target.RpcProtectedMurderPlayer(target);
         Logger.Info($"{killer.GetNameWithRole()} : 恋人を作った", "PlatonicLover");
 
         Main.LoversPlayers.Clear();

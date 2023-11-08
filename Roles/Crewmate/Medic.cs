@@ -77,7 +77,7 @@ public sealed class Medic : RoleBase
         // 直接キル出来る役職チェック
         if (killer.GetCustomRole().IsDirectKillRole()) return false;
 
-        killer.RpcGuardAndKill(target); //killer側のみ。斬られた側は見れない。
+        killer.RpcProtectedMurderPlayer(target); //killer側のみ。斬られた側は見れない。
 
         foreach (var medic in Medics)
         {

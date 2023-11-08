@@ -3,7 +3,7 @@ using HarmonyLib;
 namespace TownOfHostY.Patches;
 
 [HarmonyPatch(typeof(Constants), nameof(Constants.GetBroadcastVersion))]
-class GetBroadcastVersionPatch
+public static class ConstantsGetBroadcastVersionPatch
 {
     static void Postfix(ref int __result)
     {
@@ -13,8 +13,9 @@ class GetBroadcastVersionPatch
     }
 }
 
+// AU side bug?
 [HarmonyPatch(typeof(Constants), nameof(Constants.IsVersionModded))]
-public static class IsVersionModdedPatch
+public static class ConstantsIsVersionModdedPatch
 {
     public static bool Prefix(ref bool __result)
     {

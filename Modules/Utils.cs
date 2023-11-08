@@ -31,43 +31,36 @@ namespace TownOfHostY
         public static bool IsActive(SystemTypes type)
         {
             //Logger.Info($"SystemTypes:{type}", "IsActive");
-            int mapId = Main.NormalOptions.MapId;
+            var map = (MapNames)Main.NormalOptions.MapId;
             switch (type)
             {
                 case SystemTypes.Electrical:
                     {
-                        if (mapId == 5) return false;
+                        if (map is MapNames.Fungle) return false;
                         var SwitchSystem = ShipStatus.Instance.Systems[type].Cast<SwitchSystem>();
                         return SwitchSystem != null && SwitchSystem.IsActive;
                     }
                 case SystemTypes.Reactor:
                     {
-                        if (mapId == 2) return false;
-                        else if (mapId == 4)
-                        {
-                            return IsActive(SystemTypes.HeliSabotage);
-                        }
-                        else
-                        {
-                            var ReactorSystemType = ShipStatus.Instance.Systems[type].Cast<ReactorSystemType>();
-                            return ReactorSystemType != null && ReactorSystemType.IsActive;
-                        }
+                        if (map is MapNames.Polus or MapNames.Airship) return false;
+                        var ReactorSystemType = ShipStatus.Instance.Systems[type].Cast<ReactorSystemType>();
+                        return ReactorSystemType != null && ReactorSystemType.IsActive;
                     }
                 case SystemTypes.Laboratory:
                     {
-                        if (mapId != 2) return false;
+                        if (map is not MapNames.Polus) return false;
                         var ReactorSystemType = ShipStatus.Instance.Systems[type].Cast<ReactorSystemType>();
                         return ReactorSystemType != null && ReactorSystemType.IsActive;
                     }
                 case SystemTypes.LifeSupp:
                     {
-                        if (mapId is 2 or 4) return false;
+                        if (map is not MapNames.Skeld and not MapNames.Mira) return false;
                         var LifeSuppSystemType = ShipStatus.Instance.Systems[type].Cast<LifeSuppSystemType>();
                         return LifeSuppSystemType != null && LifeSuppSystemType.IsActive;
                     }
                 case SystemTypes.Comms:
                     {
-                        if (mapId is 1 or 5)//Mira & Fungle
+                        if (map is MapNames.Mira or MapNames.Fungle)
                         {
                             var HqHudSystemType = ShipStatus.Instance.Systems[type].Cast<HqHudSystemType>();
                             return HqHudSystemType != null && HqHudSystemType.IsActive;
@@ -79,13 +72,27 @@ namespace TownOfHostY
                         }
                     }
                 case SystemTypes.HeliSabotage:
-                    var HeliSabotageSystem = ShipStatus.Instance.Systems[type].Cast<HeliSabotageSystem>();
-                    return HeliSabotageSystem != null && HeliSabotageSystem.IsActive;
-
+                    {
+                        if (map is not MapNames.Airship) return false;
+                        var HeliSabotageSystem = ShipStatus.Instance.Systems[type].Cast<HeliSabotageSystem>();
+                        return HeliSabotageSystem != null && HeliSabotageSystem.IsActive;
+                    }
+                case SystemTypes.MushroomMixupSabotage:
+                    {
+                        if (map is not MapNames.Fungle) return false;
+                        var mushroomMixupSabotageSystem = ShipStatus.Instance.Systems[type].TryCast<MushroomMixupSabotageSystem>();
+                        return mushroomMixupSabotageSystem != null && mushroomMixupSabotageSystem.IsActive;
+                    }
                 default:
                     return false;
             }
         }
+        public static SystemTypes GetCriticalSabotageSystemType() => (MapNames)Main.NormalOptions.MapId switch
+        {
+            MapNames.Polus => SystemTypes.Laboratory,
+            MapNames.Airship => SystemTypes.HeliSabotage,
+            _ => SystemTypes.Reactor,
+        };
         public static void SetVision(this IGameOptions opt, bool HasImpVision)
         {
             if (HasImpVision)
@@ -158,14 +165,8 @@ namespace TownOfHostY
         public static void KillFlash(this PlayerControl player)
         {
             //キルフラッシュ(ブラックアウト+リアクターフラッシュ)の処理
-            bool ReactorCheck = false; //リアクターフラッシュの確認
-            var systemtypes = (MapNames)Main.NormalOptions.MapId switch
-            {
-                MapNames.Polus => SystemTypes.Laboratory,
-                MapNames.Airship => SystemTypes.HeliSabotage,
-                _ => SystemTypes.Reactor,
-            };
-            ReactorCheck = IsActive(systemtypes);
+            bool ReactorCheck = IsActive(GetCriticalSabotageSystemType());
+
             var Duration = Options.KillFlashDuration.GetFloat();
             if (ReactorCheck) Duration += 0.2f; //リアクター中はブラックアウトを長くする
 
@@ -215,7 +216,7 @@ namespace TownOfHostY
         /// <param name="seer">見る側</param>
         /// <param name="seen">見られる側</param>
         /// <returns>構築されたRoleName</returns>
-        private static string GetDisplayRoleName(bool isMeeting, PlayerControl seer, PlayerControl seen = null)
+        public static string GetDisplayRoleName(bool isMeeting, PlayerControl seer, PlayerControl seen = null)
         {
             seen ??= seer;
             //デフォルト値
@@ -260,8 +261,8 @@ namespace TownOfHostY
                             roleText.Append(ColorString(Palette.ImpostorRed, GetRoleString("Last-")));
                             count--;
                             break;
-                        case CustomRoles.CompreteCrew:
-                            roleText.Append(ColorString(Color.yellow, GetRoleString("Comprete-")));
+                        case CustomRoles.CompleteCrew:
+                            roleText.Append(ColorString(Color.yellow, GetRoleString("Complete-")));
                             count--;
                             break;
                         case CustomRoles.Archenemy:
@@ -283,7 +284,7 @@ namespace TownOfHostY
                         int i = 0;
                         foreach (var subRole in subRolesList)
                         {
-                            if (subRole is CustomRoles.LastImpostor or CustomRoles.CompreteCrew or CustomRoles.Archenemy) continue;
+                            if (subRole is CustomRoles.LastImpostor or CustomRoles.CompleteCrew or CustomRoles.Archenemy) continue;
 
                             roleText.Append(ColorString(GetRoleColor(subRole), GetRoleName(subRole)));
                             i++;
@@ -293,7 +294,7 @@ namespace TownOfHostY
                 }
             }
 
-            if (mainRole < CustomRoles.NotAssigned)
+            if (mainRole < CustomRoles.StartAddon)
             {
                 roleText.Append(GetRoleName(mainRole));
                 roleColor = GetRoleColor(mainRole);
@@ -327,7 +328,7 @@ namespace TownOfHostY
             {
                 foreach (var subRole in subRolesList)
                 {
-                    if (subRole is CustomRoles.LastImpostor or CustomRoles.CompreteCrew or CustomRoles.Archenemy) continue;
+                    if (subRole is CustomRoles.LastImpostor or CustomRoles.CompleteCrew or CustomRoles.Archenemy) continue;
                     switch (subRole)
                     {
                         case CustomRoles.AddWatch: sb.Append(AddWatch.SubRoleMark); break;
@@ -526,15 +527,7 @@ namespace TownOfHostY
         private static string GetProgressText(PlayerControl seer, PlayerControl seen = null)
         {
             seen ??= seer;
-            var comms = false;
-            foreach (PlayerTask task in PlayerControl.LocalPlayer.myTasks)
-            {
-                if (task.TaskType == TaskTypes.FixComms)
-                {
-                    comms = true;
-                    break;
-                }
-            }
+            var comms = IsActive(SystemTypes.Comms);
             bool enabled = seer == seen
                         || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCanSeeOtherTasks.GetBool())
                         || (seen.Is(CustomRoles.Workaholic) && Workaholic.Seen && Workaholic.TaskSeen);
@@ -622,7 +615,7 @@ namespace TownOfHostY
             if (myRole == CustomRoles.Lawyer && ((Lawyer)player.GetRoleClass()).IsPursuer())
                 roleName = "Pursuer";
             var roleString = GetString(roleName);
-            roleString = $"<color={GetRoleColorCode(myRole)}><size=95%>{roleString}</size></color>";
+            roleString = $"<size=95%>{roleString}</size>".Color(GetRoleColor(myRole).ToReadableColor());
             sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(player.GetRoleInfo(true)).Append("</line-height></size>");
 
             if (myRole is not CustomRoles.Crewmate and not CustomRoles.Impostor and not CustomRoles.Potentialist)
@@ -638,7 +631,7 @@ namespace TownOfHostY
                 {
                     var subroleName = subRole.ToString();
                     var subroleString = GetString(subroleName);
-                    subroleString = $"<color={GetRoleColorCode(subRole)}><size=95%>{subroleString}</size></color>";
+                    subroleString = $"<size=95%>{subroleString}</size>".Color(GetRoleColor(subRole).ToReadableColor());
 
                     sb.Append("\n--------------------------------------------------------\n")
                         .Append(subroleString).Append("<size=80%><line-height=1.8pic>").Append(GetString($"{subroleName}InfoLong")).Append("</line-height></size>");
@@ -646,6 +639,7 @@ namespace TownOfHostY
             }
             return sb.ToString();
         }
+        // Help Now
         public static void ShowActiveSettingsHelp(byte PlayerId = byte.MaxValue)
         {
             if (Options.CurrentGameMode == CustomGameMode.HideAndSeek)
@@ -671,34 +665,71 @@ namespace TownOfHostY
                 //else
                 SendMessage(GetString("CurrentActiveSettingsHelp") + ":", PlayerId);
 
-                if (Options.DisableDevices.GetBool()) { SendMessage(GetString("DisableDevicesInfo"), PlayerId); }
-                if (Options.SyncButtonMode.GetBool()) { SendMessage(GetString("SyncButtonModeInfo"), PlayerId); }
-                if (Options.SabotageTimeControl.GetBool()) { SendMessage(GetString("SabotageTimeControlInfo"), PlayerId); }
-                if (Options.RandomMapsMode.GetBool()) { SendMessage(GetString("RandomMapsModeInfo"), PlayerId); }
+                //if (Options.DisableDevices.GetBool()) { SendMessage(GetString("DisableDevicesInfo"), PlayerId); }
+                //if (Options.SyncButtonMode.GetBool()) { SendMessage(GetString("SyncButtonModeInfo"), PlayerId); }
+                //if (Options.SabotageTimeControl.GetBool()) { SendMessage(GetString("SabotageTimeControlInfo"), PlayerId); }
+                //if (Options.RandomMapsMode.GetBool()) { SendMessage(GetString("RandomMapsModeInfo"), PlayerId); }
                 if (Options.IsStandardHAS) { SendMessage(GetString("StandardHASInfo"), PlayerId); }
                 if (Options.EnableGM.GetBool()) { SendMessage(GetRoleName(CustomRoles.GM) + GetString("GMInfoLong"), PlayerId); }
-                foreach (var role in CustomRolesHelper.AllRoles)
+                foreach (var role in CustomRolesHelper.AllStandardRoles) // OneNight追加時にワンナイト役職も含める
                 {
-                    if (role is CustomRoles.HASFox or CustomRoles.HASTroll || role.IsCCRole()) continue;
                     //if (Options.IsONMode && !role.IsONRole()) continue;
+                    if (!role.IsEnable() || role.IsVanilla()) continue;
+                    if (role is CustomRoles.NormalImpostor) continue;
 
-                    if (role.IsEnable() && !role.IsVanilla())
-                    {
-                        var sb = new StringBuilder();
-                        sb.Append($"<color={GetRoleColorCode(role)}><size=95%>{GetRoleName(role)}</size></color>")
-                            .Append("<size=80%><line-height=1.8pic>").Append(GetString(Enum.GetName(typeof(CustomRoles), role) + "InfoLong")).Append("</line-height></size>");
+                    string infoLongText = "";
+                    if (role is CustomRoles.NormalShapeshifter or CustomRoles.NormalEngineer or CustomRoles.NormalScientist)
+                        infoLongText = GetString(Enum.GetName(typeof(CustomRoles), role.IsVanillaRoleConversion()) + "BlurbLong");
+                    else
+                        infoLongText = GetString(Enum.GetName(typeof(CustomRoles), role) + "InfoLong");
 
-                        //setting
-                        sb.Append("\n<size=65%><line-height=1.5pic>");
-                        ShowChildrenSettings(Options.CustomRoleSpawnChances[role], ref sb);
-                        sb.Append("</size></line-height>");
+                    var sb = new StringBuilder();
+                    sb.Append($"<size=95%>{GetRoleName(role)}</size>".Color(GetRoleColor(role).ToReadableColor()))
+                        .Append("<size=80%><line-height=1.8pic>").Append(infoLongText).Append("</line-height></size>");
 
-                        SendMessage(sb.ToString(), PlayerId);
-                    }
+                    //setting
+                    sb.Append("\n<size=65%><line-height=1.5pic>");
+                    ShowChildrenSettings(Options.CustomRoleSpawnChances[role], ref sb);
+                    sb.Append("</size></line-height>");
+
+                    SendMessage(sb.ToString(), PlayerId);
+
                 }
+                foreach (var role in CustomRolesHelper.AllAddOnRoles.Where(role => role.IsOtherAddOn()))
+                {
+                    if (!role.IsEnable()) continue;
+                    var addonName = role.ToString();
+                    var sb = new StringBuilder();
+
+                    sb.Append($"<size=95%>{GetRoleName(role)}</size>".Color(GetRoleColor(role).ToReadableColor()))
+                        .Append("<size=80%><line-height=1.8pic>").Append(GetString($"{addonName}InfoLong")).Append("</line-height></size>");
+
+                    //setting
+                    sb.Append("\n<size=65%><line-height=1.5pic>");
+                    ShowChildrenSettings(Options.CustomRoleSpawnChances[role], ref sb);
+                    sb.Append("</size></line-height>");
+
+                    SendMessage(sb.ToString(), PlayerId);
+                }
+                var addonLongTextBuilder = new StringBuilder();
+                bool multipleRole = false;
+                foreach (var role in CustomRolesHelper.AllAddOnRoles.Where(role => role.IsAddOn()))
+                {
+                    if (!role.IsEnable()) continue;
+                    var addonName = role.ToString();
+
+                    if (multipleRole) addonLongTextBuilder.Append("\n--------------------------------------------------------\n");
+                    addonLongTextBuilder.Append($"<size=95%>{GetRoleName(role)}</size>".Color(GetRoleColor(role).ToReadableColor()))
+                        .Append("<size=80%><line-height=1.8pic>").Append(GetString($"{addonName}InfoLong")).Append("</line-height></size>");
+
+                    multipleRole = true;
+                }
+                if(addonLongTextBuilder.Length != 0)
+                    SendMessage(addonLongTextBuilder.ToString(), PlayerId);
             }
             if (Options.NoGameEnd.GetBool()) { SendMessage(GetString("NoGameEndInfo"), PlayerId); }
         }
+        // Now
         public static void ShowActiveSettings(byte PlayerId = byte.MaxValue)
         {
             var mapId = Main.NormalOptions.MapId;
@@ -741,11 +772,12 @@ namespace TownOfHostY
                 //else
                 {
                     sb.AppendFormat("<size={0}>", ActiveSettingsSize);
-                    sb.AppendFormat("<size=65%>【{0}: {1}</size>】\n\n", RoleAssignManager.OptionAssignMode.GetName(true), RoleAssignManager.OptionAssignMode.GetString());
+                    sb.AppendFormat("<size=65%>【{0}: {1}】\n<line-height=1.5pic>", RoleAssignManager.OptionAssignMode.GetName(true), RoleAssignManager.OptionAssignMode.GetString());
                     if (RoleAssignManager.OptionAssignMode.GetBool())
                     {
                         ShowChildrenSettings(RoleAssignManager.OptionAssignMode, ref sb);
                     }
+                    sb.Append("\n</line-height></size>");
 
                     foreach (var role in Options.CustomRoleCounts.Keys)
                     {
@@ -753,16 +785,15 @@ namespace TownOfHostY
                             || role.IsCCRole() /*|| role.Key.IsONRole()*/) continue;
 
                         // 陣営ごとのマーク
-                        if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
-                            sb.Append("\n<size=75%><color=#c71585>○</color>");
+                        if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompleteCrew)
+                            sb.Append("<size=75%><color=#c71585>○</color>"); //改行を消す
                         else if (role.IsImpostor()) sb.Append("<size=75%><color=#ff1919>Ⓘ</color></size>");
                         else if (role.IsMadmate())  sb.Append("<size=75%><color=#ff4500>Ⓜ</color></size>");
                         else if (role.IsCrewmate()) sb.Append("<size=75%><color=#6495ed>Ⓒ</color></size>");
                         else if (role.IsNeutral())  sb.Append("<size=75%><color=#ffa500>Ⓝ</color></size>");
                         else sb.Append('　');
 
-                        sb.Append($"<u><mark=#69696933><color={GetRoleColorCode(role)}><b>{GetRoleName(role)}</b></color></u></mark>");
-                        //sb.Append($"<u><b>{GetRoleName(role).Color(GetRoleColor(role)).Mark(Color.black, false)}</b></u>");
+                        sb.Append($"<u><b>{GetRoleName(role)}</b></u>".Color(GetRoleColor(role).ToReadableColor()));
                         // 確率＆人数
                         sb.AppendFormat(" ：<size=70%>{0}×</size><size=80%>{1}{2}</size>\n", $"{role.GetChance()}%", role.GetCount(), role.IsPairRole() ? GetString("Pair") : "");
 
@@ -806,7 +837,7 @@ namespace TownOfHostY
                 if (!role.Key.IsEnable() || role.Key is CustomRoles.HASFox or CustomRoles.HASTroll
                     || role.Key.IsCCRole() /*|| role.Key.IsONRole()*/) continue;
 
-                if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
+                if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompleteCrew)
                     sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
                 else
                     sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
@@ -826,6 +857,7 @@ namespace TownOfHostY
             sb.Append($"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
             ClipboardHelper.PutClipboardString(sb.ToString());
         }
+        // Now Role
         public static void ShowActiveRoles(byte PlayerId = byte.MaxValue)
         {
             if (Options.HideGameSettings.GetBool() && PlayerId != byte.MaxValue)
@@ -850,7 +882,7 @@ namespace TownOfHostY
                     if(role.IsCCLeaderRoles() && role.IsEnable())
                     {
                         // 役職名表示
-                        sb.Append($"\n <size=80%><color={GetRoleColorCode(role)}>{GetRoleName(role)}</color>");
+                        sb.Append($"\n <size=80%>{GetRoleName(role)}".Color(GetRoleColor(role)));
                         // 確率＆人数
                         sb.Append($" ：<size=70%>×</size>{role.GetCount()}</size>");
                     }
@@ -864,8 +896,8 @@ namespace TownOfHostY
                     if (role.IsEnable() && !role.IsCCRole() /*&& !role.IsONRole()*/)
                     {
                         // 陣営ごとのマーク
-                        if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompreteCrew)
-                            sb.Append("\n<size=80%><color=#ee82ee>○</color></size><size=80%>");
+                        if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompleteCrew)
+                            sb.Append("\n<size=70%><color=#ee82ee>○</color></size><size=80%>");
                         else if (role.IsImpostor()) sb.Append("\n<size=80%><color=#ff1919>Ⓘ</color></size><size=90%>");
                         else if (role.IsMadmate()) sb.Append("\n<size=80%><color=#ff4500>Ⓜ</color></size><size=90%>");
                         else if (role.IsCrewmate()) sb.Append("\n<size=80%><color=#8cffff>Ⓒ</color></size><size=90%>");
@@ -873,7 +905,7 @@ namespace TownOfHostY
                         else sb.Append("\n　<size=80%>");
 
                         // 役職名表示
-                        sb.Append($" <color={GetRoleColorCode(role)}>{GetRoleName(role)}</color></size>");
+                        sb.Append($" {GetRoleName(role)}</size>".Color(GetRoleColor(role)));
 
                         // 確率＆人数
                         sb.AppendFormat(" ：<size=70%>{0}×</size><size=80%>{1}{2}</size>", $"{role.GetChance()}%", role.GetCount(), role.IsPairRole() ? GetString("Pair") : "");
@@ -898,6 +930,8 @@ namespace TownOfHostY
                 if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
                 if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;
                 if (opt.Value.Parent.Name == "SkinControle" && !opt.Value.GetBool()) continue;
+                if (opt.Value.Parent.Name == "DisableTasks" && !opt.Value.GetBool()) continue;
+                if (opt.Value.Parent.Name == "EvilHackerFixedRole" && !opt.Value.GetBool()) continue;
 
                 if (deep > 0)
                 {

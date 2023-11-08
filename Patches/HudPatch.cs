@@ -202,29 +202,9 @@ namespace TownOfHostY
             if (!isActive) return;
 
             var player = PlayerControl.LocalPlayer;
-            if (player == null) return;
-            switch (player.GetCustomRole())
-            {
-                case CustomRoles.Arsonist:
-                case CustomRoles.Sheriff:
-                case CustomRoles.SillySheriff:
-                case CustomRoles.MadSheriff:
-                case CustomRoles.Hunter:
-                case CustomRoles.DarkHide:
-                case CustomRoles.PlatonicLover:
-                case CustomRoles.Totocalcio:
-                case CustomRoles.Opportunist:
-                case CustomRoles.CCRedLeader:
-                case CustomRoles.CCBlueLeader:
-                case CustomRoles.CCYellowLeader:
-                    __instance.SabotageButton.ToggleVisible(false);
-                    break;
-                case CustomRoles.Jackal:
-                    Jackal.SetHudActive(__instance, isActive);
-                    break;
-            }
             __instance.KillButton.ToggleVisible(player.CanUseKillButton());
             __instance.ImpostorVentButton.ToggleVisible(player.CanUseImpostorVentButton());
+            __instance.SabotageButton.ToggleVisible(player.CanUseSabotageButton());
         }
     }
     [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.Show))]
@@ -237,7 +217,7 @@ namespace TownOfHostY
             if (opts.Mode is MapOptions.Modes.Normal or MapOptions.Modes.Sabotage)
             {
                 var player = PlayerControl.LocalPlayer;
-                if (player.Is(CustomRoleTypes.Impostor) || (player.Is(CustomRoles.Jackal) && Jackal.CanUseSabotage) || player.Is(CustomRoles.Egoist))
+                if (player.GetRoleClass() is IKiller killer && killer.CanUseSabotageButton())
                     opts.Mode = MapOptions.Modes.Sabotage;
                 else
                     opts.Mode = MapOptions.Modes.Normal;

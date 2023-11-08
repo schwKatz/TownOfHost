@@ -31,7 +31,20 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         player
     )
     {
-        int chance = IRandom.Instance.Next(0, (int)Role.enumCount);
+        int chance = 0;
+        if (OptionEvilHackerFixed.GetBool())
+        {
+            List<Role> selectRole = new();
+            foreach(var role in SetRoleDic.Keys)
+            {
+                if (SetRoleDic[role].GetBool()) selectRole.Add(role);
+            }
+            chance = IRandom.Instance.Next(0, selectRole.Count());
+        }
+        else
+        {
+            chance = IRandom.Instance.Next(0, (int)Role.enumCount);
+        }
         nowRole = (Role)chance;
         Logger.Info($"EvilHackerRole : {nowRole}", "EvilHacker");
         if (nowRole == Role.EvilVipper)
@@ -82,6 +95,15 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         CustomRoles.VIP,
     };
 
+    private static OptionItem OptionEvilHackerFixed;
+    private static Dictionary<Role, OptionItem> SetRoleDic = new();
+    enum OptionName
+    {
+        EvilHackerFixedRole,
+        SetEHRole,
+    }
+
+
     // 直接設置
     public static void SetupRoleOptions()
     {
@@ -98,6 +120,29 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
 
         Options.CustomRoleSpawnChances.Add(RoleInfo.RoleName, spawnOption);
         Options.CustomRoleCounts.Add(RoleInfo.RoleName, countOption);
+
+        OptionEvilHackerFixed = BooleanOptionItem.Create(RoleInfo, 10, OptionName.EvilHackerFixedRole, false, false);
+
+        SetUpHackerRoleOptions(20);
+    }
+    private static void SetUpHackerRoleOptions(int idOffset)
+    {
+        foreach (var role in EnumHelper.GetAllValues<Role>())
+        {
+            if (role is Role.enumCount) continue;
+
+            SetUpHROption(role, idOffset, true, OptionEvilHackerFixed);
+            idOffset++;
+        }
+    }
+    private static void SetUpHROption(Role role, int idOffset, bool defaultValue = true, OptionItem parent = null)
+    {
+        var id = RoleInfo.ConfigId + idOffset;
+        if (parent == null) parent = RoleInfo.RoleOption;
+        var roleName = Translator.GetRoleString($"R{role}");
+        Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Palette.ImpostorRed, roleName) } };
+        SetRoleDic[role] = BooleanOptionItem.Create(id, OptionName.SetEHRole + "%role%", defaultValue, RoleInfo.Tab, false).SetParent(parent);
+        SetRoleDic[role].ReplacementDictionary = replacementDic;
     }
 
     /// <summary>相方がキルした部屋を通知する設定がオンなら各プレイヤーに通知を行う</summary>

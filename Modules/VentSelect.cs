@@ -96,7 +96,7 @@ namespace TownOfHostY
                 Logger.Info($"{Main.AllPlayerNames[playerId]} DoVentSelect", "VentSelect");
                 SelectedAction[playerId]();
 
-                player.RpcGuardAndKill(); //設定完了のパリン
+                player.RpcProtectedMurderPlayer(); //設定完了のパリン
 
                 StandbyTimer.Remove(playerId);
                 SelectTarget.Remove(playerId);

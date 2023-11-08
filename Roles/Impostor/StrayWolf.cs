@@ -18,8 +18,11 @@ public sealed class StrayWolf : RoleBase, IImpostor
             20900,
             SetupOptionItem,
             "はぐれ狼",
-            requireResetCam : true,
-            assignCountRule: new(1, 1, 1)
+            isDesyncImpostor : true,
+            assignInfo: new RoleAssignInfo(CustomRoles.StrayWolf, CustomRoleTypes.Impostor)
+            {
+                AssignCountRule = new(1, 1, 1)
+            }
         );
     public StrayWolf(PlayerControl player)
     : base(
@@ -80,8 +83,8 @@ public sealed class StrayWolf : RoleBase, IImpostor
         }
 
         // ガード
-        killer.RpcGuardAndKill(target);
-        target.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
+        target.RpcProtectedMurderPlayer(target);
         NameColorManager.Add(killer.PlayerId, target.PlayerId);
         NameColorManager.Add(target.PlayerId, killer.PlayerId);
 
@@ -113,8 +116,8 @@ public sealed class StrayWolf : RoleBase, IImpostor
         }
 
         // ガード
-        killer.RpcGuardAndKill(target);
-        target.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
+        target.RpcProtectedMurderPlayer(target);
         NameColorManager.Add(killer.PlayerId, target.PlayerId);
         NameColorManager.Add(target.PlayerId, killer.PlayerId);
 

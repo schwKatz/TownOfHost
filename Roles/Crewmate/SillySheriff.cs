@@ -114,10 +114,6 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
     {
         var playerId = Player.PlayerId;
         CurrentKillCooldown = KillCooldown.GetFloat();
-
-        if (!Main.ResetCamPlayerList.Contains(playerId))
-            Main.ResetCamPlayerList.Add(playerId);
-
         ShotLimit = ShotLimitOpt.GetInt();
         Logger.Info($"{Utils.GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "SillySheriff");
     }
@@ -137,7 +133,7 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
         => Player.IsAlive()
         && (CanKillAllAlive.GetBool() || GameStates.AlreadyDied)
         && ShotLimit > 0;
-    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
+    public bool CanUseImpostorVentButton() => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
         opt.SetVision(false);

@@ -29,7 +29,7 @@ namespace TownOfHostY
             {
                 //現在MODOKコマンドを使用しないためリターン
                 //使用する時になればCanPublicRoomを変更しながら通るように使用する
-                return;
+#if false
 
                 //if (!Main.CanPublicRoom.Value) return;
                 if (GameStartManager.Instance.startState != GameStartManager.StartingStates.Countdown) return;
@@ -46,6 +46,7 @@ namespace TownOfHostY
                         Utils.SendMessage(string.Format(GetString("Message.ModCheckKick"), target.PlayerName));
                     }
                 }
+#endif
             }
         }
 
@@ -97,7 +98,7 @@ namespace TownOfHostY
                 if (!AmongUsClient.Instance.AmHost) return;
 
                 // Make Public Button
-                if (!Main.AllowPublicRoom || !VersionChecker.IsSupported)
+                if (!Main.AllowPublicRoom || ModUpdater.hasUpdate || !VersionChecker.IsSupported || !Main.IsPublicAvailableOnThisVersion)
                 {
                     __instance.MakePublicButton.color = Palette.DisabledClear;
                     __instance.privatePublicText.color = Palette.DisabledClear;

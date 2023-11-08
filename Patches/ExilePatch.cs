@@ -55,7 +55,7 @@ namespace TownOfHostY
                 var role = exiled.GetCustomRole();
                 var info = role.GetRoleInfo();
                 //霊界用暗転バグ対処
-                if (!AntiBlackout.OverrideExiledPlayer && (Main.ResetCamPlayerList.Contains(exiled.PlayerId) || (info?.RequireResetCam ?? false)))
+                if (!AntiBlackout.OverrideExiledPlayer && info?.IsDesyncImpostor == true)
                     exiled.Object?.ResetPlayerCam(1f);
 
                 exiled.IsDead = true;
@@ -78,21 +78,21 @@ namespace TownOfHostY
             if (Options.RandomSpawn.GetBool())
             {
                 RandomSpawn.SpawnMap map;
-                switch (Main.NormalOptions.MapId)
+                switch ((MapNames)Main.NormalOptions.MapId)
                 {
-                    case 0:
+                    case MapNames.Skeld:
                         map = new RandomSpawn.SkeldSpawnMap();
                         Main.AllPlayerControls.Do(map.RandomTeleport);
                         break;
-                    case 1:
+                    case MapNames.Mira:
                         map = new RandomSpawn.MiraHQSpawnMap();
                         Main.AllPlayerControls.Do(map.RandomTeleport);
                         break;
-                    case 2:
+                    case MapNames.Polus:
                         map = new RandomSpawn.PolusSpawnMap();
                         Main.AllPlayerControls.Do(map.RandomTeleport);
                         break;
-                    case 5:
+                    case MapNames.Fungle:
                         map = new RandomSpawn.FungleSpawnMap();
                         Main.AllPlayerControls.Do(map.RandomTeleport);
                         break;
@@ -129,7 +129,7 @@ namespace TownOfHostY
 
                         var player = Utils.GetPlayerById(playerId);
                         var roleClass = CustomRoleManager.GetByPlayerId(playerId);
-                        var requireResetCam = player?.GetCustomRole().GetRoleInfo()?.RequireResetCam;
+                        var requireResetCam = player?.GetCustomRole().GetRoleInfo()?.IsDesyncImpostor == true;
                         var state = PlayerState.GetByPlayerId(playerId);
                         Logger.Info($"{player.GetNameWithRole()}を{reason}で死亡させました", "AfterMeetingDeath");
                         state.DeathReason = reason;
@@ -137,7 +137,7 @@ namespace TownOfHostY
                         player?.RpcExileV2();
                         if (reason == CustomDeathReason.Suicide)
                             player?.SetRealKiller(player, true);
-                        if (Main.ResetCamPlayerList.Contains(playerId) || (requireResetCam.HasValue && requireResetCam.Value))
+                        if (requireResetCam)
                             player?.ResetPlayerCam(1f);
                         Executioner.ChangeRoleByTarget(playerId);
                         Lawyer.ChangeRoleByTarget(player);

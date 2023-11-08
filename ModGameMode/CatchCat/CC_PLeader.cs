@@ -57,8 +57,8 @@ static class LeaderPlayer
         }
         if (isGuard)    // ガード処理
         {
-            killer.RpcGuardAndKill(target);
-            target.RpcGuardAndKill(target);
+            killer.RpcProtectedMurderPlayer(target);
+            target.RpcProtectedMurderPlayer(target);
             info.CanKill = false;
         }
     }

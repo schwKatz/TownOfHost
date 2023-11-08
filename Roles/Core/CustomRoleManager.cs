@@ -31,7 +31,7 @@ public static class CustomRoleManager
     /// </summary>
     /// <param name="attemptKiller">実際にキルを行ったプレイヤー 不変</param>
     /// <param name="attemptTarget">>Killerが実際にキルを行おうとしたプレイヤー 不変</param>
-    public static void OnCheckMurder(PlayerControl attemptKiller, PlayerControl attemptTarget)
+    public static bool OnCheckMurder(PlayerControl attemptKiller, PlayerControl attemptTarget)
         => OnCheckMurder(attemptKiller, attemptTarget, attemptKiller, attemptTarget);
     /// <summary>
     ///
@@ -40,7 +40,7 @@ public static class CustomRoleManager
     /// <param name="attemptTarget">>Killerが実際にキルを行おうとしたプレイヤー 不変</param>
     /// <param name="appearanceKiller">見た目上でキルを行うプレイヤー 可変</param>
     /// <param name="appearanceTarget">見た目上でキルされるプレイヤー 可変</param>
-    public static void OnCheckMurder(PlayerControl attemptKiller, PlayerControl attemptTarget, PlayerControl appearanceKiller, PlayerControl appearanceTarget)
+    public static bool OnCheckMurder(PlayerControl attemptKiller, PlayerControl attemptTarget, PlayerControl appearanceKiller, PlayerControl appearanceTarget)
     {
         Logger.Info($"Attempt  :{attemptKiller.GetNameWithRole()} => {attemptTarget.GetNameWithRole()}", "CheckMurder");
         if (appearanceKiller != attemptKiller || appearanceTarget != attemptTarget)
@@ -51,7 +51,7 @@ public static class CustomRoleManager
         appearanceKiller.ResetKillCooldown();
 
         // 無効なキルをブロックする処理 必ず最初に実行する
-        if (!CheckMurderPatch.CheckForInvalidMurdering(info)) return;
+        if (!CheckMurderPatch.CheckForInvalidMurdering(info)) return false;
 
         var killerRole = attemptKiller.GetRoleClass();
         var targetRole = attemptTarget.GetRoleClass();
@@ -62,7 +62,7 @@ public static class CustomRoleManager
             if (killer.IsKiller)
             {
                 // イビルディバイナーのみ占いのためここで先に処理
-                if (killerRole is EvilDiviner && !EvilDiviner.OnCheckMurder(info)) return;
+                if (killerRole is EvilDiviner && !EvilDiviner.OnCheckMurder(info)) return false;
                 // ガーディング属性によるガード
                 if (Guarding.OnCheckMurder(info)) { }
                 // メディックの対象プレイヤー
@@ -70,7 +70,7 @@ public static class CustomRoleManager
                 // ターゲットのキルチェック処理実行
                 else if (targetRole != null)
                 {
-                    if (!targetRole.OnCheckMurderAsTarget(info)) return;
+                    if (!targetRole.OnCheckMurderAsTarget(info)) return false;
                 }
             }
             // キラーのキルチェック処理実行
@@ -94,11 +94,13 @@ public static class CustomRoleManager
             //MurderPlayer用にinfoを保存
             CheckMurderInfos[appearanceKiller.PlayerId] = info;
             appearanceKiller.RpcMurderPlayer(appearanceTarget, true);
+            return true;
         }
         else
         {
             if (!info.CanKill) Logger.Info($"{appearanceTarget.GetNameWithRole()}をキル出来ない。", "CheckMurder");
             if (!info.DoKill) Logger.Info($"{appearanceKiller.GetNameWithRole()}はキルしない。", "CheckMurder");
+            return false;
         }
     }
     /// <summary>
@@ -188,19 +190,15 @@ public static class CustomRoleManager
     /// </summary>
     public static HashSet<Action<PlayerControl>> OnFixedUpdateOthers = new();
 
-    public static bool OnSabotage(PlayerControl player, SystemTypes systemType, byte amount)
+    public static bool OnSabotage(PlayerControl player, SystemTypes systemType)
     {
         bool cancel = false;
         foreach (var roleClass in AllActiveRoles.Values)
         {
-            if (!roleClass.OnSabotage(player, systemType, amount))
+            if (!roleClass.OnSabotage(player, systemType))
             {
                 cancel = true;
             }
-        }
-        if (!RepairSystemPatch.OnSabotage(player, systemType, amount))
-        {
-            cancel = true;
         }
         return !cancel;
     }
@@ -395,6 +393,8 @@ public class MurderInfo
 
 public enum CustomRoles
 {
+    NotAssigned = -1,
+
     //Default
     Crewmate = 0,
     //Impostor(Vanilla)
@@ -501,11 +501,18 @@ public enum CustomRoles
     Duelist,
     God,
 
-    //HideAndSeek
-    HASFox,
-    HASTroll,
+    GM,
+    MaxMain,
+    /************/
+
+    //ON
+    ONStart = 400,
+
+    MaxON,
+    /************/
 
     //CC
+    CCStart = 480,
     CCRedLeader,
     CCBlueLeader,
     CCYellowLeader,
@@ -514,15 +521,21 @@ public enum CustomRoles
     CCBlueCat,
     CCYellowCat,
 
-    //GM
-    GM,
+    MaxCC,
+    /************/
 
-    _Max,
+    //HideAndSeek
+    HASStart = 490,
+    HASFox,
+    HASTroll,
 
-    // Sub-roll after 500
-    NotAssigned = 500,
+    MaxHAS,
+    /************/
+
+    // Addon
+    StartAddon = 500,
     LastImpostor,
-    CompreteCrew,
+    CompleteCrew,
     Lovers,
     Workhorse,
     AddWatch,
@@ -544,6 +557,8 @@ public enum CustomRoles
     InfoPoor,
     NonReport,
     Archenemy,
+
+    MaxAddon,
 }
 public enum CustomRoleTypes
 {

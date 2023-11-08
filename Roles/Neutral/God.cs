@@ -3,10 +3,10 @@ using UnityEngine;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
-
+using TownOfHostY.Roles.Core.Interfaces;
 namespace TownOfHostY.Roles.Neutral;
 
-public sealed class God : RoleBase
+public sealed class God : RoleBase, ISystemTypeUpdateHook
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -65,33 +65,42 @@ public sealed class God : RoleBase
     {
         enabled = true;
     }
-    public override bool OnSabotage(PlayerControl player, SystemTypes systemType, byte amount)
-    {
-        if (!Is(player)) return true;
-
-        switch (systemType)
-        {
-            case SystemTypes.Reactor:
-            case SystemTypes.Laboratory:
-            case SystemTypes.LifeSupp:
-                return false;
-
-            case SystemTypes.Comms:
-                return !(amount is 0 or 16 or 17);
-
-            case SystemTypes.Electrical:
-                //停電サボタージュの開始は処理スキップ
-                if (amount.HasBit(SwitchSystem.DamageSystem)) return true;
-
-                return false;
-        }
-
-        return true;
-    }
     public static bool CheckWin()
     {
         return Main.AllAlivePlayerControls.ToArray()
                 .Any(p => p.Is(CustomRoles.God) &&
                           (!taskCompleteToWin || p.GetPlayerTaskState().IsTaskFinished));
+    }
+
+    // コミュ
+    bool ISystemTypeUpdateHook.UpdateHudOverrideSystem(HudOverrideSystemType switchSystem, byte amount)
+    {
+        if ((amount & HudOverrideSystemType.DamageBit) <= 0) return false;
+        return true;
+    }
+    bool ISystemTypeUpdateHook.UpdateHqHudSystem(HqHudSystemType hqHudSystemType, byte amount)
+    {
+        var tags = (HqHudSystemType.Tags)(amount & HqHudSystemType.TagMask);
+        if (tags == HqHudSystemType.Tags.FixBit) return false;
+        return true;
+    }
+    // 停電
+    bool ISystemTypeUpdateHook.UpdateSwitchSystem(SwitchSystem switchSystem, byte amount)
+    {
+        return false;
+    }
+    // O2
+    bool ISystemTypeUpdateHook.UpdateLifeSuppSystem(LifeSuppSystemType switchSystem, byte amount)
+    {
+        return false;
+    }
+    // リアクター
+    bool ISystemTypeUpdateHook.UpdateReactorSystem(ReactorSystemType switchSystem, byte amount)
+    {
+        return false;
+    }
+    bool ISystemTypeUpdateHook.UpdateHeliSabotageSystem(HeliSabotageSystem switchSystem, byte amount)
+    {
+        return false;
     }
 }

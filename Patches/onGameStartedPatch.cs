@@ -34,7 +34,6 @@ class ChangeRoleSettings
         Main.SKMadmateNowCount = 0;
 
         Main.AfterMeetingDeathPlayers = new();
-        Main.ResetCamPlayerList = new();
         Main.clientIdList = new();
 
         Main.CheckShapeshift = new();
@@ -49,7 +48,7 @@ class ChangeRoleSettings
 
         Main.introDestroyed = false;
 
-        RandomSpawn.CustomNetworkTransformPatch.NumOfTP = new();
+        RandomSpawn.CustomNetworkTransformPatch.FirstTP = new();
 
         Main.DefaultCrewmateVision = Main.RealOptionsData.GetFloat(FloatOptionNames.CrewLightMod);
         Main.DefaultImpostorVision = Main.RealOptionsData.GetFloat(FloatOptionNames.ImpostorLightMod);
@@ -103,7 +102,7 @@ class ChangeRoleSettings
             ReportDeadBodyPatch.WaitReport[pc.PlayerId] = new();
             pc.cosmetics.nameText.text = pc.name;
 
-            RandomSpawn.CustomNetworkTransformPatch.NumOfTP.Add(pc.PlayerId, 0);
+            RandomSpawn.CustomNetworkTransformPatch.FirstTP.Add(pc.PlayerId, true);
             var outfit = pc.Data.DefaultOutfit;
             Camouflage.PlayerSkins[pc.PlayerId] = new GameData.PlayerOutfit().Set(outfit.PlayerName, outfit.ColorId, outfit.HatId, outfit.SkinId, outfit.VisorId, outfit.PetId);
             Main.clientIdList.Add(pc.GetClientId());
@@ -226,7 +225,7 @@ class SelectRolesPatch
                 Dictionary<(byte, byte), RoleTypes> rolesMap = new();
                 foreach (var (role, info) in CustomRoleManager.AllRolesInfo)
                 {
-                    if (info.RequireResetCam)
+                    if (info.IsDesyncImpostor)
                     {
                         switch(role)
                         {
@@ -379,10 +378,6 @@ class SelectRolesPatch
                     new PlayerGameOptionsSender(pc)
                 );
             }
-
-            // ResetCamが必要なプレイヤーのリストにクラス化が済んでいない役職のプレイヤーを追加
-            Main.ResetCamPlayerList.AddRange(PlayerControl.AllPlayerControls.ToArray().Where(p =>
-            p.GetCustomRole().IsCCLeaderRoles()).Select(p => p.PlayerId));
         }
         //else if (Options.IsONMode)
         //{
@@ -461,15 +456,14 @@ class SelectRolesPatch
         //}
         else
         {
-            foreach (var role in CustomRolesHelper.AllRoles.Where(x => x < CustomRoles.NotAssigned))
+            foreach (var role in CustomRolesHelper.AllStandardRoles)
             {
                 if (role.IsVanilla()) continue;
-                if (role is CustomRoles.HASTroll or CustomRoles.HASFox || role.IsCCRole()/* || role.IsONRole()*/) continue;
 
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
                 if (role == CustomRoles.StrayWolf && AssignedStrayWolf) continue;
                 if (role is not CustomRoles.Opportunist and not CustomRoles.StrayWolf &&
-                    CustomRoleManager.GetRoleInfo(role) is SimpleRoleInfo info && info.RequireResetCam) continue;
+                    CustomRoleManager.GetRoleInfo(role)?.IsDesyncImpostor == true) continue;
 
                 var baseRoleTypes = role.GetRoleTypes() switch
                 {
@@ -521,7 +515,7 @@ class SelectRolesPatch
                 if (pc.GetCustomRole().IsAddAddOn()
                     && (Options.AddOnBuffAssign[pc.GetCustomRole()].GetBool() || Options.AddOnDebuffAssign[pc.GetCustomRole()].GetBool()))
                 {
-                    foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsAddOn()))
+                    foreach (var Addon in CustomRolesHelper.AllAddOnRoles)
                     {
                         if (Options.AddOnRoleOptions.TryGetValue((pc.GetCustomRole(), Addon), out var option) && option.GetBool())
                         {
@@ -723,12 +717,11 @@ class SelectRolesPatch
     public static int GetRoleTypesCount(RoleTypes roleTypes)
     {
         int count = 0;
-        foreach (var role in CustomRolesHelper.AllRoles.Where(x => x < CustomRoles.NotAssigned))
+        foreach (var role in CustomRolesHelper.AllStandardRoles)
         {
-            if (role.IsCCRole()) continue;
             if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
             if (role is not CustomRoles.Opportunist &&
-                CustomRoleManager.GetRoleInfo(role) is SimpleRoleInfo info && info.RequireResetCam) continue;
+                CustomRoleManager.GetRoleInfo(role)?.IsDesyncImpostor == true) continue;
             if (role == CustomRoles.Egoist && Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) <= 1) continue;
             if (role.GetRoleTypes() == roleTypes)
                 count += role.GetRealCount();

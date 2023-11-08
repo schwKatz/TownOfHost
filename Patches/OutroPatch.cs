@@ -10,6 +10,7 @@ using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Templates;
 using static TownOfHostY.Translator;
+using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY
 {
@@ -88,7 +89,7 @@ namespace TownOfHostY
                         else if (role == CustomRoles.HASFox && CustomWinnerHolder.WinnerTeam != CustomWinner.HASTroll && !pc.Data.IsDead)
                         {
                             winner.Add(pc);
-                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.HASFox);
+                            CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.HASFox);
                         }
                     }
                 }
@@ -186,10 +187,9 @@ namespace TownOfHostY
                     break;
             }
 
-            foreach (var additionalWinners in CustomWinnerHolder.AdditionalWinnerTeams)
+            foreach (var addWinnerRole in CustomWinnerHolder.AdditionalWinnerRoles)
             {
-                var addWinnerRole = (CustomRoles)additionalWinners;
-                var addWinnerName = (additionalWinners == AdditionalWinners.Pursuer) ? GetString("Pursuer") : Utils.GetRoleName(addWinnerRole);
+                var addWinnerName = Utils.GetRoleName(addWinnerRole);
                 AdditionalWinnerText += "＆" + Utils.ColorString(Utils.GetRoleColor(addWinnerRole), addWinnerName);
             }
             if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw and not CustomWinner.None)

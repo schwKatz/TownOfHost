@@ -24,7 +24,10 @@ namespace TownOfHostY.Roles.Neutral
                 "#483d8b",
                 true,
                 countType: CountTypes.Crew,
-                assignCountRule: new(1, 1, 1)
+                assignInfo: new RoleAssignInfo(CustomRoles.DarkHide, CustomRoleTypes.Neutral)
+                {
+                    AssignCountRule = new(1, 1, 1)
+                }
             );
         public DarkHide(PlayerControl player)
         : base(
@@ -86,8 +89,7 @@ namespace TownOfHostY.Roles.Neutral
 
         public float CalculateKillCooldown() => KillCooldown;
         public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
-        public override bool OnInvokeSabotage(SystemTypes systemType) => false;
-
+        public bool CanUseImpostorVentButton() => false;
         public void ApplySchrodingerCatOptions(IGameOptions option) => ApplyGameOptions(option);
     }
 }

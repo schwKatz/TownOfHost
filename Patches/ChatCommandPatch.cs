@@ -413,7 +413,7 @@ namespace TownOfHostY
                 roleCommands.Add(CustomRoles.LastImpostor, "ラストインポスター");
                 roleCommands.Add(CustomRoles.Lovers, "ラバーズ");
                 roleCommands.Add(CustomRoles.Workhorse, "ワークホース");
-                roleCommands.Add(CustomRoles.CompreteCrew, "コンプリートクルー");
+                roleCommands.Add(CustomRoles.CompleteCrew, "コンプリートクルー");
                 roleCommands.Add(CustomRoles.AddWatch, "ウォッチング");
                 roleCommands.Add(CustomRoles.Sunglasses, "サングラス");
                 roleCommands.Add(CustomRoles.AddLight, "ライティング");

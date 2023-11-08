@@ -120,6 +120,7 @@ namespace TownOfHostY
                 _ = new LateTask(() =>
                 {
                     if (client.Character == null) return;
+#if false
                     if (false)
                     {
                         if (client.Character.PlayerId == PlayerControl.LocalPlayer.PlayerId)
@@ -128,6 +129,7 @@ namespace TownOfHostY
                             Utils.SendMessageCustom(string.Format(GetString("Message.AnnounceUsingOpenMOD"), Main.PluginVersion), client.Character.PlayerId);
                     }
                     else
+#endif
                     {
                         if (client.Character.PlayerId == PlayerControl.LocalPlayer.PlayerId) return;
                         if (AmongUsClient.Instance.IsGamePublic) Utils.SendMessage(string.Format(GetString("Message.AnnounceUsingTOH"), Main.PluginVersion), client.Character.PlayerId);

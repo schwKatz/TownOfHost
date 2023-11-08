@@ -85,7 +85,7 @@ namespace TownOfHostY
         public static OptionItem DefaultShapeshiftCooldown;
         public static OptionItem ImpostorOperateVisibility;
         public static OptionItem CanMakeMadmateCount;
-        public static OptionItem MadmateCanFixLightsOut; // TODO:mii-47 マッド役職統一
+        public static OptionItem MadmateCanFixLightsOut;
         public static OptionItem MadmateCanFixComms;
         public static OptionItem MadmateHasImpostorVision;
         public static OptionItem MadmateCanSeeKillFlash;
@@ -140,8 +140,8 @@ namespace TownOfHostY
         public static OptionItem DisableAirshipRecordsAdmin;
         public static OptionItem DisableAirshipCamera;
         public static OptionItem DisableAirshipVital;
-        //public static OptionItem DisableFungleDevices;
-        //public static OptionItem DisableFungleVital;
+        public static OptionItem DisableFungleDevices;
+        public static OptionItem DisableFungleVital;
         //public static OptionItem DisableFungleTelescope;
         public static OptionItem DisableDevicesIgnoreConditions;
         public static OptionItem DisableDevicesIgnoreImpostors;
@@ -161,6 +161,8 @@ namespace TownOfHostY
         // ランダムスポーン
         public static OptionItem RandomSpawn;
         public static OptionItem AdditionalSpawn;
+        public static OptionItem DisableNearButton;
+        public static OptionItem FirstFixedSpawn;
 
         // 投票モード
         public static OptionItem VoteMode;
@@ -479,6 +481,10 @@ namespace TownOfHostY
                 .SetGameMode(CustomGameMode.All);
             AdditionalSpawn = BooleanOptionItem.Create(100011, "AdditionalSpawn", false, TabGroup.MainSettings, false).SetParent(RandomSpawn)
                 .SetGameMode(CustomGameMode.All);
+            DisableNearButton = BooleanOptionItem.Create(100012, "DisableNearButton", false, TabGroup.MainSettings, false).SetParent(RandomSpawn)
+                .SetGameMode(CustomGameMode.All);
+            FirstFixedSpawn = BooleanOptionItem.Create(100013, "FirstFixedSpawn", true, TabGroup.MainSettings, false).SetParent(RandomSpawn)
+                .SetGameMode(CustomGameMode.All);
 
             // デバイス無効化
             DisableDevices = BooleanOptionItem.Create(100100, "DisableDevices", false, TabGroup.MainSettings, false)
@@ -503,9 +509,9 @@ namespace TownOfHostY
             DisableAirshipRecordsAdmin = BooleanOptionItem.Create(100142, "DisableAirshipRecordsAdmin", false, TabGroup.MainSettings, false).SetParent(DisableAirshipDevices).SetGameMode(CustomGameMode.All);
             DisableAirshipCamera = BooleanOptionItem.Create(100143, "DisableAirshipCamera", false, TabGroup.MainSettings, false).SetParent(DisableAirshipDevices).SetGameMode(CustomGameMode.All);
             DisableAirshipVital = BooleanOptionItem.Create(100144, "DisableAirshipVital", false, TabGroup.MainSettings, false).SetParent(DisableAirshipDevices).SetGameMode(CustomGameMode.All);
-            //DisableFungleDevices = BooleanOptionItem.Create(100150, "DisableFungleDevices", false, TabGroup.MainSettings, false).SetParent(DisableDevices)
-            //    .SetColor(Color.gray).SetGameMode(CustomGameMode.All);
-            //DisableFungleVital = BooleanOptionItem.Create(100151, "DisableFungleVital", false, TabGroup.MainSettings, false).SetParent(DisableFungleDevices).SetGameMode(CustomGameMode.All);
+            DisableFungleDevices = BooleanOptionItem.Create(100150, "DisableFungleDevices", false, TabGroup.MainSettings, false).SetParent(DisableDevices)
+                .SetColor(Color.gray).SetGameMode(CustomGameMode.All);
+            DisableFungleVital = BooleanOptionItem.Create(100151, "DisableFungleVital", false, TabGroup.MainSettings, false).SetParent(DisableFungleDevices).SetGameMode(CustomGameMode.All);
             //DisableFungleTelescope = BooleanOptionItem.Create(100152, "DisableFungleTelescope", false, TabGroup.MainSettings, false).SetParent(DisableFungleDevices).SetGameMode(CustomGameMode.All);
             DisableDevicesIgnoreConditions = BooleanOptionItem.Create(100190, "IgnoreConditions", false, TabGroup.MainSettings, false).SetParent(DisableDevices)
                 .SetColor(Color.gray);
@@ -765,7 +771,7 @@ namespace TownOfHostY
                             or "AddonShowMode";
         }
         public static void SetupRoleOptions(SimpleRoleInfo info) =>
-            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, info.AssignCountRule);
+            SetupRoleOptions(info.ConfigId, info.Tab, info.RoleName, info.AssignInfo.AssignCountRule);
         public static void SetupRoleOptions(int id, TabGroup tab, CustomRoles role, IntegerValueRule assignCountRule = null, CustomGameMode customGameMode = CustomGameMode.Standard)
         {
             if (role.IsVanilla()) return;
@@ -796,7 +802,7 @@ namespace TownOfHostY
                 if (Addon == CustomRoles.Loyalty && PlayerRole is
                     CustomRoles.CustomImpostor or CustomRoles.CustomCrewmate or
                     CustomRoles.MadSnitch or CustomRoles.Jackal or CustomRoles.JClient or
-                    CustomRoles.LastImpostor or CustomRoles.CompreteCrew) continue;
+                    CustomRoles.LastImpostor or CustomRoles.CompleteCrew) continue;
                 if (Addon == CustomRoles.Revenger && PlayerRole is CustomRoles.MadNimrod) continue;
 
                 SetUpAddOnRoleOption(PlayerRole, tab, Addon, Id, false, AddOnBuffAssign[PlayerRole]);

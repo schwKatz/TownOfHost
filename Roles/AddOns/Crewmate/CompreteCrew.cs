@@ -12,8 +12,8 @@ namespace TownOfHostY.Roles.AddOns.Crewmate
         public static List<byte> playerIdList = new();
         public static void SetupCustomOption()
         {
-            Options.SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.CompreteCrew);
-            Options.SetUpAddOnOptions(Id + 10, CustomRoles.CompreteCrew, TabGroup.Addons);
+            Options.SetupRoleOptions(Id, TabGroup.Addons, CustomRoles.CompleteCrew);
+            Options.SetUpAddOnOptions(Id + 10, CustomRoles.CompleteCrew, TabGroup.Addons);
         }
         public static void Init()
         {
@@ -33,17 +33,17 @@ namespace TownOfHostY.Roles.AddOns.Crewmate
 
         public static void OnCompleteTask(PlayerControl pc)
         {
-            if (!CustomRoles.CompreteCrew.IsEnable() || playerIdList.Count >= CustomRoles.CompreteCrew.GetCount()) return;
+            if (!CustomRoles.CompleteCrew.IsEnable() || playerIdList.Count >= CustomRoles.CompleteCrew.GetCount()) return;
             if (!CanBeCompreteCrew(pc)) return;
 
-            pc.RpcSetCustomRole(CustomRoles.CompreteCrew);
+            pc.RpcSetCustomRole(CustomRoles.CompleteCrew);
             if (AmongUsClient.Instance.AmHost)
             {
-                if (Options.AddOnBuffAssign[CustomRoles.CompreteCrew].GetBool() || Options.AddOnDebuffAssign[CustomRoles.CompreteCrew].GetBool())
+                if (Options.AddOnBuffAssign[CustomRoles.CompleteCrew].GetBool() || Options.AddOnDebuffAssign[CustomRoles.CompleteCrew].GetBool())
                 {
                     foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsAddOn()))
                     {
-                        if (Options.AddOnRoleOptions.TryGetValue((CustomRoles.CompreteCrew, Addon), out var option) && option.GetBool())
+                        if (Options.AddOnRoleOptions.TryGetValue((CustomRoles.CompleteCrew, Addon), out var option) && option.GetBool())
                         {
                             pc.RpcSetCustomRole(Addon);
                             CustomRoleManager.SubRoleAdd(pc.PlayerId, Addon);

@@ -16,7 +16,7 @@ public sealed class MadSheriff : RoleBase, IKiller
             28600,
             SetupOptionItem,
             "マッドシェリフ",
-            requireResetCam: true
+            isDesyncImpostor: true
         );
     public MadSheriff(PlayerControl player)
     : base(
@@ -53,13 +53,10 @@ public sealed class MadSheriff : RoleBase, IKiller
     public override void Add()
     {
         var playerId = Player.PlayerId;
-
-        if (!Main.ResetCamPlayerList.Contains(playerId))
-            Main.ResetCamPlayerList.Add(playerId);
     }
     public float CalculateKillCooldown() => CanUseKillButton() ? KillCooldown : 0f;
     public bool CanUseKillButton() => Player.IsAlive();
-    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
+    public bool CanUseImpostorVentButton() => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
         opt.SetVision(Options.AddOnRoleOptions[(CustomRoles.MadSheriff, CustomRoles.AddLight)].GetBool());

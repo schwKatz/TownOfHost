@@ -363,26 +363,33 @@ namespace TownOfHostY
                     PlayerControl.LocalPlayer.RpcExile();
                     PlayerState.GetByPlayerId(PlayerControl.LocalPlayer.PlayerId).SetDead();
                 }
-                if (Options.RandomSpawn.GetBool())
+                if (Options.RandomSpawn.GetBool() && !Options.FirstFixedSpawn.GetBool())
                 {
                     RandomSpawn.SpawnMap map;
-                    switch (Main.NormalOptions.MapId)
+                    switch ((MapNames)Main.NormalOptions.MapId)
                     {
-                        case 0:
+                        case MapNames.Skeld:
                             map = new RandomSpawn.SkeldSpawnMap();
                             Main.AllPlayerControls.Do(map.RandomTeleport);
                             break;
-                        case 1:
+                        case MapNames.Mira:
                             map = new RandomSpawn.MiraHQSpawnMap();
                             Main.AllPlayerControls.Do(map.RandomTeleport);
                             break;
-                        //PolusとFungleは初期位置変えないため記入しない
+                        case MapNames.Polus:
+                            map = new RandomSpawn.PolusSpawnMap();
+                            Main.AllPlayerControls.Do(map.RandomTeleport);
+                            break;
+                        case MapNames.Fungle:
+                            map = new RandomSpawn.FungleSpawnMap();
+                            Main.AllPlayerControls.Do(map.RandomTeleport);
+                            break;
                     }
                 }
 
                 // そのままだとホストのみDesyncImpostorの暗室内での視界がクルー仕様になってしまう
                 var roleInfo = PlayerControl.LocalPlayer.GetCustomRole().GetRoleInfo();
-                var amDesyncImpostor = roleInfo?.RequireResetCam == true || Main.ResetCamPlayerList.Contains(PlayerControl.LocalPlayer.PlayerId);
+                var amDesyncImpostor = roleInfo?.IsDesyncImpostor == true;
                 if (amDesyncImpostor)
                 {
                     PlayerControl.LocalPlayer.Data.Role.AffectedByLightAffectors = false;

@@ -53,9 +53,11 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "511.18.4";
+        public const string PluginVersion = "513.19";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.10.24";
+        // このバージョンのみで公開ルームを無効にする場合
+        public static readonly bool IsPublicAvailableOnThisVersion = false;
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;
@@ -92,7 +94,6 @@ namespace TownOfHostY
         public static Dictionary<byte, CustomDeathReason> AfterMeetingDeathPlayers = new();
         public static Dictionary<CustomRoles, string> roleColors;
         public static Dictionary<CustomColor, string> customColors;
-        public static List<byte> ResetCamPlayerList;
         public static List<byte> winnerList;
         public static List<int> clientIdList;
         public static List<(string, byte, string, bool)> MessagesToSend;
@@ -196,7 +197,7 @@ namespace TownOfHostY
                     {CustomRoles.LastImpostor, "#ff1919"},
                     {CustomRoles.Lovers, "#ff6be4"},
                     {CustomRoles.Workhorse, "#00ffff"},
-                    {CustomRoles.CompreteCrew, "#ffff00"},
+                    {CustomRoles.CompleteCrew, "#ffff00"},
                     {CustomRoles.AddWatch, "#800080"},
                     {CustomRoles.Sunglasses, "#883fd1"},
                     {CustomRoles.AddLight, "#eee5be"},
@@ -313,25 +314,6 @@ namespace TownOfHostY
         YellowL = CustomRoles.CCYellowLeader,
 
         HASTroll = CustomRoles.HASTroll,
-    }
-    public enum AdditionalWinners
-    {
-        None = -1,
-        Opportunist = CustomRoles.Opportunist,
-        SchrodingerCat = CustomRoles.SchrodingerCat,
-        Executioner = CustomRoles.Executioner,
-        Lovers = CustomRoles.Lovers,
-        Lawyer = CustomRoles.Lawyer,
-        Pursuer = CustomRoles.Lawyer,
-        Totocalcio = CustomRoles.Totocalcio,
-        Duelist = CustomRoles.Duelist,
-        Archenemy = CustomRoles.Archenemy,
-        JClient = CustomRoles.JClient,
-        HASFox = CustomRoles.HASFox,
-        //CC
-        RedC = CustomRoles.CCRedCat,
-        BlueC = CustomRoles.CCBlueCat,
-        YellowC = CustomRoles.CCYellowCat,
     }
     /*public enum CustomRoles : byte
     {

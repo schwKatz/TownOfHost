@@ -60,8 +60,8 @@ public sealed class LoveCutter : RoleBase
         // 直接キル出来る役職チェック
         if (killer.GetCustomRole().IsDirectKillRole()) return true;
 
-        killer.RpcGuardAndKill(target);
-        target.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
+        target.RpcProtectedMurderPlayer(target);
         KilledCount++;
         Logger.Info($"{target.GetNameWithRole()} : {KilledCount}回目", "LoveCutter");
         NameColorManager.Add(killer.PlayerId, target.PlayerId, RoleInfo.RoleColorCode);
@@ -97,7 +97,7 @@ public sealed class LoveCutter : RoleBase
                 continue;
             }
             pc.SetRealKiller(Player);
-            pc.RpcMurderPlayer(pc, true);
+            pc.RpcMurderPlayerV2(pc);
             playerState.DeathReason = CustomDeathReason.Bombed;
             playerState.SetDead();
         }

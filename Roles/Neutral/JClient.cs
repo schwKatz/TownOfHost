@@ -135,10 +135,8 @@ public sealed class JClient : RoleBase, IAdditionalWinner
             }
         }
     }
-    public bool CheckWin(out AdditionalWinners winnerType)
+    public bool CheckWin(ref CustomRoles winnerRole)
     {
-        winnerType = AdditionalWinners.JClient;
-
         if (AfterJackalDead != AfterJackalDeadMode.Survival) return false;
         if (Player == null || !Player.IsAlive()) return false;
         if (Main.AllAlivePlayerControls.ToArray().Any(pc => pc.Is(CustomRoles.Jackal))) return false;

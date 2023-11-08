@@ -252,7 +252,7 @@ public sealed class Psychic : RoleBase
 
             Logger.Info($"{player.name} PlayerDecision:{SelectPlayer[playerId].name}", "player");
 
-            player.RpcGuardAndKill();   //設定完了のパリン
+            player.RpcProtectedMurderPlayer();   //設定完了のパリン
             player.RpcResetAbilityCooldown();
 
             return true;

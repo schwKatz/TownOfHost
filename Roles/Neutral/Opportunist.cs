@@ -59,9 +59,8 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner, ISchrodi
         OptionHasImpostorVision = BooleanOptionItem.Create(RoleInfo, 12, GeneralOption.ImpostorVision, false, false, OptionCanKill);
     }
 
-    public bool CheckWin(out AdditionalWinners winnerType)
+    public bool CheckWin(ref CustomRoles winnerRole)
     {
-        winnerType = AdditionalWinners.Opportunist;
         return Player.IsAlive();
     }
 
@@ -71,10 +70,6 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner, ISchrodi
 
         var playerId = Player.PlayerId;
         KillCooldown = OptionKillCooldown.GetFloat();
-
-        if (!Main.ResetCamPlayerList.Contains(playerId))
-            Main.ResetCamPlayerList.Add(playerId);
-
         ShotLimit = ShotLimitOpt.GetInt();
         Logger.Info($"{Utils.GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "Oppo");
     }
@@ -91,7 +86,7 @@ public sealed class Opportunist : RoleBase, IKiller, IAdditionalWinner, ISchrodi
     }
     public float CalculateKillCooldown() => KillCooldown;
     public bool CanUseKillButton() => CanKill && Player.IsAlive() && ShotLimit > 0;
-    public override bool OnInvokeSabotage(SystemTypes systemType) => false;
+    public bool CanUseImpostorVentButton() => false;
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
     //public void OnCheckMurderAsKiller(MurderInfo info)
     public void OnMurderPlayerAsKiller(MurderInfo info)

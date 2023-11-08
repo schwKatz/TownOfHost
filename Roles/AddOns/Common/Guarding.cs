@@ -47,7 +47,7 @@ public static class Guarding
         // 直接キル出来る役職チェック
         if (killer.GetCustomRole().IsDirectKillRole()) return false;
 
-        killer.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
         GuardingList.Remove(target.PlayerId);
         Logger.Info($"{killer.GetNameWithRole()}->{target.GetNameWithRole()}:ガード", "Guarding");
 

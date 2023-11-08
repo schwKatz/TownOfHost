@@ -60,7 +60,11 @@ namespace TownOfHostY
             if (!AmongUsClient.Instance.AmHost) return false;
 
             // 処理は全てCustomRoleManager側で行う
-            CustomRoleManager.OnCheckMurder(__instance, target);
+            if (!CustomRoleManager.OnCheckMurder(__instance, target))
+            {
+                // キル失敗
+                __instance.RpcMurderPlayer(target, false);
+            }
 
             return false;
         }
@@ -131,20 +135,61 @@ namespace TownOfHostY
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.MurderPlayer))]
     class MurderPlayerPatch
     {
-        public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, [HarmonyArgument(1)] MurderResultFlags resultFlags)
+        private static readonly LogHandler logger = Logger.Handler(nameof(PlayerControl.MurderPlayer));
+        public static void Prefix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, [HarmonyArgument(1)] MurderResultFlags resultFlags, ref bool __state /* 成功したキルかどうか */ )
         {
-            Logger.Info($"{__instance.GetNameWithRole()} => {target.GetNameWithRole()}{(target.IsProtected() ? "(Protected)" : "")}", "MurderPlayer");
+            logger.Info($"{__instance.GetNameWithRole()} => {target.GetNameWithRole()}({resultFlags})");
+            var isProtectedByClient = resultFlags.HasFlag(MurderResultFlags.DecisionByHost) && target.IsProtected();
+            var isProtectedByHost = resultFlags.HasFlag(MurderResultFlags.FailedProtected);
+            var isFailed = resultFlags.HasFlag(MurderResultFlags.FailedError);
+            var isSucceeded = __state = !isProtectedByClient && !isProtectedByHost && !isFailed;
+            if (isProtectedByClient)
+            {
+                logger.Info("守護されているため，キルは失敗します");
+            }
+            if (isProtectedByHost)
+            {
+                logger.Info("守護されているため，キルはホストによってキャンセルされました");
+            }
+            if (isFailed)
+            {
+                logger.Info("キルはホストによってキャンセルされました");
+            }
 
-            //if (RandomSpawn.CustomNetworkTransformPatch.NumOfTP.TryGetValue(__instance.PlayerId, out var num) && num > 2)
-            //    RandomSpawn.CustomNetworkTransformPatch.NumOfTP[__instance.PlayerId] = 3;
-            if (target.IsProtected())
-                Camouflage.RpcSetSkin(Camouflage.IsCamouflage, target, ForceRevert: true);
+            if (isSucceeded)
+            {
+                if (target.shapeshifting)
+                {
+                    //シェイプシフトアニメーション中
+                    //アニメーション時間を考慮して1s、加えてクライアントとのラグを考慮して+0.5s遅延する
+                    _ = new LateTask(
+                        () =>
+                        {
+                            if (GameStates.IsInTask)
+                            {
+                                target.RpcShapeshift(target, false);
+                            }
+                        },
+                        1.5f, "RevertShapeshift");
+                }
+                else
+                {
+                    if (Main.CheckShapeshift.TryGetValue(target.PlayerId, out var shapeshifting) && shapeshifting)
+                    {
+                        //シェイプシフト強制解除
+                        target.RpcShapeshift(target, false);
+                    }
+                }
+                Camouflage.RpcSetSkin(Camouflage.IsCamouflage, target, ForceRevert: true, RevertToDefault: true);
+            }
         }
-        public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target)
+        public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] PlayerControl target, bool __state)
         {
+            if (!__state) return; // キルが成功していない場合，何もしない
+
             if (target.AmOwner) RemoveDisableDevicesPatch.UpdateDisableDevices();
             if (!target.Data.IsDead || !AmongUsClient.Instance.AmHost) return;
-            //以降ホストしか処理しない
+            // 以降ホストしか処理しない
             // 処理は全てCustomRoleManager側で行う
             CustomRoleManager.OnMurderPlayer(__instance, target);
         }
@@ -352,7 +397,7 @@ namespace TownOfHostY
 
             if (AmongUsClient.Instance.AmHost)
             {//実行クライアントがホストの場合のみ実行
-                if (GameStates.IsLobby && (!Main.AllowPublicRoom || !VersionChecker.IsSupported) && AmongUsClient.Instance.IsGamePublic)
+                if (GameStates.IsLobby && (!Main.AllowPublicRoom || ModUpdater.hasUpdate || !VersionChecker.IsSupported || !Main.IsPublicAvailableOnThisVersion) && AmongUsClient.Instance.IsGamePublic)
                     AmongUsClient.Instance.ChangeGamePublic(false);
 
                 if (GameStates.IsInTask && ReportDeadBodyPatch.CanReport[__instance.PlayerId] && ReportDeadBodyPatch.WaitReport[__instance.PlayerId].Count > 0)
@@ -409,13 +454,14 @@ namespace TownOfHostY
                         else __instance.cosmetics.nameText.text = $"<color=#ff0000><size=1.2>v{ver.version}</size>\n{__instance?.name}</color>";
                     }
                     else __instance.cosmetics.nameText.text = __instance?.Data?.PlayerName;
-
+#if false
                     if (false)
                     {
                         var client = __instance.GetClient();
                         var consent = false && client != null && Main.ConsentModUse.ContainsKey(client.Id) ? "<color=#ff00ff>ModOK</color>" : "";
                         __instance.cosmetics.nameText.text += consent;
                     }
+#endif
                 }
                 if (GameStates.IsInGame)
                 {
@@ -685,14 +731,12 @@ namespace TownOfHostY
             if (!ShipStatus.Instance.enabled) return true;
             if (roleType is RoleTypes.CrewmateGhost or RoleTypes.ImpostorGhost)
             {
-                var targetRequireResetCam = target.GetCustomRole().GetRoleInfo()?.RequireResetCam ?? false;
-                var targetIsKiller = target.Is(CustomRoleTypes.Impostor) || Main.ResetCamPlayerList.Contains(target.PlayerId) || targetRequireResetCam;
+                var targetIsKiller = target.GetRoleClass() is IKiller;
                 var ghostRoles = new Dictionary<PlayerControl, RoleTypes>();
                 foreach (var seer in Main.AllPlayerControls)
                 {
                     var self = seer.PlayerId == target.PlayerId;
-                    var seerRequireResetCam = seer.GetCustomRole().GetRoleInfo()?.RequireResetCam ?? false;
-                    var seerIsKiller = seer.Is(CustomRoleTypes.Impostor) || Main.ResetCamPlayerList.Contains(seer.PlayerId) || seerRequireResetCam;
+                    var seerIsKiller = seer.GetRoleClass() is IKiller;
 
                     if ((self && targetIsKiller) || (!seerIsKiller && target.Is(CustomRoleTypes.Impostor)))
                     {
@@ -755,12 +799,7 @@ namespace TownOfHostY
     {
         public static bool Prefix()
         {
-            if (AmongUsClient.Instance.AmHost)
-            {
-                return !Options.FungleCanSporeTrigger.GetBool();
-            }
-
-            return true;
+            return !Options.FungleCanSporeTrigger.GetBool();
         }
     }
 }

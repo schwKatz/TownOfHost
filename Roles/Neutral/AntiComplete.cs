@@ -82,8 +82,8 @@ public sealed class AntiComplete : RoleBase
         if (killer.GetCustomRole().IsDirectKillRole()) return true;
         if (GuardCount <= 0) return true;//普通にキル
 
-        killer.RpcGuardAndKill(target);
-        target.RpcGuardAndKill(target);
+        killer.RpcProtectedMurderPlayer(target);
+        target.RpcProtectedMurderPlayer(target);
         info.CanKill = false;
 
         GuardCount--;

@@ -34,39 +34,34 @@ namespace TownOfHostY
         }
     }
 
-    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.UpdateSystem), typeof(SystemTypes), typeof(PlayerControl), typeof(MessageReader))]
-    public static class MessageReaderUpdateSystemPatch
-    {
-        public static void Postfix(ShipStatus __instance, [HarmonyArgument(0)] SystemTypes systemType, [HarmonyArgument(1)] PlayerControl player, [HarmonyArgument(2)] MessageReader reader)
-        {
-            RepairSystemPatch.Postfix();
-        }
-    }
+    //[HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.UpdateSystem), typeof(SystemTypes), typeof(PlayerControl), typeof(MessageReader))]
+    //public static class MessageReaderUpdateSystemPatch
+    //{
+    //    public static void Postfix(ShipStatus __instance, [HarmonyArgument(0)] SystemTypes systemType, [HarmonyArgument(1)] PlayerControl player, [HarmonyArgument(2)] MessageReader reader)
+    //    {
+    //        ShipStatusUpdateSystemPatch.Postfix();
+    //    }
+    //}
     [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.UpdateSystem), typeof(SystemTypes), typeof(PlayerControl), typeof(byte))]
-    class RepairSystemPatch
+    class ShipStatusUpdateSystemPatch
     {
-        public static bool Prefix(ShipStatus __instance,
+        public static void Prefix(ShipStatus __instance,
             [HarmonyArgument(0)] SystemTypes systemType,
             [HarmonyArgument(1)] PlayerControl player,
             [HarmonyArgument(2)] byte amount)
         {
-            Logger.Info("SystemType: " + systemType.ToString() + ", PlayerName: " + player.GetNameWithRole() + ", amount: " + amount, "RepairSystem");
+            if (systemType != SystemTypes.Sabotage)
+                Logger.Info("SystemType: " + systemType.ToString() + ", PlayerName: " + player.GetNameWithRole() + ", amount: " + amount, "UpdateSystem");
 
             if (RepairSender.enabled && AmongUsClient.Instance.NetworkMode != NetworkModes.OnlineGame)
             {
                 Logger.SendInGame("SystemType: " + systemType.ToString() + ", PlayerName: " + player.GetNameWithRole() + ", amount: " + amount);
             }
-            if (!AmongUsClient.Instance.AmHost) return true; //以下、ホストのみ実行
-            else
-            {
-                //return CustomRoleManager.OnSabotage(player, systemType, amount);
-            }
-            return true;
         }
-        public static void Postfix()
-        {
-            Camouflage.CheckCamouflage();
-        }
+        //public static void Postfix()
+        //{
+        //    Camouflage.CheckCamouflage();
+        //}
         public static void CheckAndOpenDoorsRange(ShipStatus __instance, byte amount, byte min, byte max)
         {
             var Ids = new List<byte>();

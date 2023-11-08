@@ -100,22 +100,23 @@ namespace TownOfHostY
                             && (Options.LoversAddWin.GetBool() || PlatonicLover.AddWin))
                         {
                             CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Lovers);
+                            CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Lovers);
                         }
 
                         if (pc.GetRoleClass() is IAdditionalWinner additionalWinner)
                         {
-                            if (additionalWinner.CheckWin(out var winnerType))
+                            var winnerRole = pc.GetCustomRole();
+                            if (additionalWinner.CheckWin(ref winnerRole))
                             {
                                 CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                                CustomWinnerHolder.AdditionalWinnerTeams.Add(winnerType);
+                                CustomWinnerHolder.AdditionalWinnerRoles.Add(winnerRole);
                             }
                         }
                         if (Duelist.ArchenemyCheckWin(pc))
                         {
                             if(!CustomWinnerHolder.WinnerIds.Contains(pc.PlayerId))
                                 CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                            CustomWinnerHolder.AdditionalWinnerTeams.Add(AdditionalWinners.Archenemy);
+                            CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Archenemy);
                         }
                     }
                     //弁護士且つ追跡者
