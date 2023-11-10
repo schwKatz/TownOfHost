@@ -7,15 +7,15 @@ namespace TownOfHostY
 {
     static class CustomRolesHelper
     {
-        public static readonly CustomRoles[] AllRoles = EnumHelper.GetAllValues<CustomRoles>();
+        public static readonly CustomRoles[] AllRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => !role.IsNotAssignedRoles()).ToArray();
         public static readonly CustomRoleTypes[] AllRoleTypes = EnumHelper.GetAllValues<CustomRoleTypes>();
 
         /// <summary>すべてのメイン役職(ゲームモードも含む、属性は含まない)</summary>
-        public static readonly CustomRoles[] AllMainRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role < CustomRoles.StartAddon).ToArray();
+        public static readonly CustomRoles[] AllMainRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role < CustomRoles.StartAddon && !role.IsNotAssignedRoles()).ToArray();
         /// <summary>すべての属性</summary>
-        public static readonly CustomRoles[] AllAddOnRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role > CustomRoles.StartAddon).ToArray();
+        public static readonly CustomRoles[] AllAddOnRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role > CustomRoles.StartAddon && !role.IsNotAssignedRoles()).ToArray();
         /// <summary>スタンダードモードのメイン役職</summary>
-        public static readonly CustomRoles[] AllStandardRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role < CustomRoles.MaxMain).ToArray();
+        public static readonly CustomRoles[] AllStandardRoles = EnumHelper.GetAllValues<CustomRoles>().Where(role => role < CustomRoles.MaxMain && !role.IsNotAssignedRoles()).ToArray();
         /// <summary>HASモードのメイン役職</summary>
         public static readonly CustomRoles[] AllHASRoles = { CustomRoles.HASFox, CustomRoles.HASTroll };
         /// <summary>CCモードのメイン役職</summary>
@@ -71,7 +71,7 @@ namespace TownOfHostY
         {
             return role is CustomRoles.Lovers or CustomRoles.Sympathizer;
         }
-        public static bool IsFixCountRole(this CustomRoles role)
+        public static bool IsFixedCountRole(this CustomRoles role)
         {
             return role is CustomRoles.Jackal
                 or CustomRoles.StrayWolf
@@ -151,6 +151,22 @@ namespace TownOfHostY
                 CustomRoles.CCRedCat or
                 CustomRoles.CCYellowCat or
                 CustomRoles.CCBlueCat;
+        }
+
+        public static bool IsNotAssignedRoles(this CustomRoles role)
+        {
+            return
+                role is
+                CustomRoles.NotAssigned or
+                CustomRoles.MaxMain or
+                CustomRoles.ONStart or
+                CustomRoles.MaxON or
+                CustomRoles.CCStart or
+                CustomRoles.MaxCC or
+                CustomRoles.HASStart or
+                CustomRoles.MaxHAS or
+                CustomRoles.StartAddon or
+                CustomRoles.MaxAddon;
         }
 
         public static CustomRoleTypes GetCustomRoleTypes(this CustomRoles role)

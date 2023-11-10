@@ -13,8 +13,7 @@ public sealed class Crewmate : RoleBase
             "#8cffff",
             assignInfo: new RoleAssignInfo(CustomRoles.Crewmate, CustomRoleTypes.Crewmate)
             {
-                IsInitiallyAssignableCallBack =
-                    () => false
+                IsInitiallyAssignableCallBack = () => false
             }
         );
     public Crewmate(PlayerControl player)

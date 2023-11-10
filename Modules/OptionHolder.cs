@@ -272,7 +272,7 @@ namespace TownOfHostY
         public static OptionItem ApplyBanList;
 
         // ModGameMode
-        public static bool IsHSMode => CurrentGameMode == CustomGameMode.HideAndSeek;
+        public static bool IsHASMode => CurrentGameMode == CustomGameMode.HideAndSeek;
         public static bool IsCCMode => CurrentGameMode == CustomGameMode.CatchCat;
         //public static bool IsONMode => CurrentGameMode == CustomGameMode.OneNight;
 
@@ -399,15 +399,7 @@ namespace TownOfHostY
             // Impostor以外
             sortedRoleInfo.Where(role => role.CustomRoleType is CustomRoleTypes.Crewmate or CustomRoleTypes.Neutral).Do(info =>
             {
-                if (info.RoleName == CustomRoles.God)
-                {
-                    if (Main.IsGodRelease)
-                    {
-                        SetupRoleOptions(info);
-                        info.OptionCreator?.Invoke();
-                    }
-                }
-                else if (!SpecialEvent.IsEventRole(info.RoleName) && info.RoleName != CustomRoles.VentManager)
+                if (!SpecialEvent.IsEventRole(info.RoleName) && info.RoleName is not CustomRoles.VentManager and not CustomRoles.PlatonicLover)
                 {
                     SetupRoleOptions(info);
                     info.OptionCreator?.Invoke();
@@ -421,9 +413,9 @@ namespace TownOfHostY
             CompreteCrew.SetupCustomOption();
             Workhorse.SetupCustomOption();
 
-            TextOptionItem.Create(52, "Head.NeutralAddOn", TabGroup.Addons).SetColor(Palette.Orange);
-            SetupRoleOptions(73000, TabGroup.Addons, CustomRoles.Lovers, (1, 1, 1));
-            LoversAddWin = BooleanOptionItem.Create(73010, "LoversAddWin", false, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lovers]);
+            //TextOptionItem.Create(52, "Head.NeutralAddOn", TabGroup.Addons).SetColor(Palette.Orange);
+            //SetupRoleOptions(73000, TabGroup.Addons, CustomRoles.Lovers, (1, 1, 1));
+            //LoversAddWin = BooleanOptionItem.Create(73010, "LoversAddWin", false, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lovers]);
 
             TextOptionItem.Create(53, "Head.BuffAddOn", TabGroup.Addons).SetColor(Color.yellow);
             AddWatch.SetupCustomOption();
@@ -785,7 +777,7 @@ namespace TownOfHostY
             var countOption = IntegerOptionItem.Create(id + 1, "Maximum", assignCountRule, assignCountRule.Step, tab, false)
                 .SetParent(spawnOption)
                 .SetValueFormat(role.IsPairRole() ? OptionFormat.Pair: OptionFormat.Players)
-                .SetFixValue(role.IsFixCountRole())
+                .SetFixValue(role.IsFixedCountRole())
                 .SetGameMode(customGameMode);
 
             CustomRoleSpawnChances.Add(role, spawnOption);

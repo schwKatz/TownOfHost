@@ -298,6 +298,7 @@ namespace TownOfHostY.Roles
             foreach (var role in AllMainRoles)
             {
                 if (!role.IsAssignable()) continue;
+                if (!Options.IsCCMode && role.IsCCLeaderRoles()) continue;
 
                 var chance = role.GetChance();
                 var count = role.GetAssignCount();

@@ -18,7 +18,11 @@ public sealed class JClient : RoleBase, IAdditionalWinner
             SetupOptionItem,
             "クライアント",
             "#00b4eb",
-            introSound: () => GetIntroSound(RoleTypes.Impostor)
+            introSound: () => GetIntroSound(RoleTypes.Impostor),
+            assignInfo: new(CustomRoles.JClient, CustomRoleTypes.Neutral)
+            {
+                IsInitiallyAssignableCallBack = () => CustomRoles.Jackal.IsEnable()
+            }
         );
     public JClient(PlayerControl player)
     : base(
@@ -57,7 +61,6 @@ public sealed class JClient : RoleBase, IAdditionalWinner
     private static bool CanAlsoBeExposedToJackal;
     private static AfterJackalDeadMode AfterJackalDead;
 
-    static int addOption = Main.IsGodRelease ? 3 : 2;
     public static void SetupOptionItem()
     {
         OptionCanVent = BooleanOptionItem.Create(RoleInfo, 10, OptionName.JClientCanVent, false, false);
@@ -66,7 +69,7 @@ public sealed class JClient : RoleBase, IAdditionalWinner
         OptionVentMaxTime = FloatOptionItem.Create(RoleInfo, 12, OptionName.JClientVentMaxTime, new(0f, 180f, 5f), 0f, false)
             .SetValueFormat(OptionFormat.Seconds);
         OptionCanAlsoBeExposedToJackal = BooleanOptionItem.Create(RoleInfo, 13, OptionName.JClientCanAlsoBeExposedToJackal, false, false);
-        OptionAfterJackalDead = StringOptionItem.Create(RoleInfo, 14, OptionName.JClientAfterJackalDead, AfterJackalDeadModeText[0..addOption], 0, false);
+        OptionAfterJackalDead = StringOptionItem.Create(RoleInfo, 14, OptionName.JClientAfterJackalDead, AfterJackalDeadModeText[0..3], 0, false);
         Tasks = Options.OverrideTasksData.Create(RoleInfo, 20);
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);
     }

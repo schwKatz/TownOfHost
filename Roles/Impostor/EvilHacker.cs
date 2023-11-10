@@ -31,21 +31,26 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
         player
     )
     {
-        int chance = 0;
         if (OptionEvilHackerFixed.GetBool())
         {
             List<Role> selectRole = new();
-            foreach(var role in SetRoleDic.Keys)
+            foreach (var role in SetRoleDic.Keys)
             {
                 if (SetRoleDic[role].GetBool()) selectRole.Add(role);
             }
-            chance = IRandom.Instance.Next(0, selectRole.Count());
+
+            if (selectRole.Count == 0) nowRole = Role.EvilHakka;
+            else
+            {
+                int chance = IRandom.Instance.Next(0, selectRole.Count);
+                nowRole = selectRole[chance];
+            }
         }
         else
         {
-            chance = IRandom.Instance.Next(0, (int)Role.enumCount);
+            int chance = IRandom.Instance.Next(0, (int)Role.enumCount);
+            nowRole = (Role)chance;
         }
-        nowRole = (Role)chance;
         Logger.Info($"EvilHackerRole : {nowRole}", "EvilHacker");
         if (nowRole == Role.EvilVipper)
         {
@@ -78,7 +83,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
 
         enumCount,
     }
-    Role nowRole = Role.enumCount;
+    Role nowRole = Role.EvilHacker;
     public static bool IsExistEvilWhiterOrReder()
     { return instances.Where(e => e.nowRole is Role.EvilWhiter or Role.EvilReder).Any(); }
     public static bool IsExistEvilFaller()
@@ -281,7 +286,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
                 //爆破処理はホストのみ
                 if (AmongUsClient.Instance.AmHost)
                 {
-                    (float d, PlayerControl pc) nearTarget = (2.5f, null);
+                    (float d, PlayerControl pc) nearTarget = (2.3f, null);
                     foreach (var fire in Main.AllAlivePlayerControls)
                     {
                         if (fire == killer || fire == target) continue;

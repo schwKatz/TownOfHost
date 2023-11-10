@@ -215,35 +215,35 @@ class SelectRolesPatch
                 AllPlayers.Add(pc);
             }
 
-                if (Options.EnableGM.GetBool())
+            if (Options.EnableGM.GetBool())
+            {
+                AllPlayers.RemoveAll(x => x == PlayerControl.LocalPlayer);
+                PlayerControl.LocalPlayer.RpcSetCustomRole(CustomRoles.GM);
+                PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
+                PlayerControl.LocalPlayer.Data.IsDead = true;
+            }
+            Dictionary<(byte, byte), RoleTypes> rolesMap = new();
+            foreach (var (role, info) in CustomRoleManager.AllRolesInfo)
+            {
+                if (info.IsDesyncImpostor)
                 {
-                    AllPlayers.RemoveAll(x => x == PlayerControl.LocalPlayer);
-                    PlayerControl.LocalPlayer.RpcSetCustomRole(CustomRoles.GM);
-                    PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
-                    PlayerControl.LocalPlayer.Data.IsDead = true;
-                }
-                Dictionary<(byte, byte), RoleTypes> rolesMap = new();
-                foreach (var (role, info) in CustomRoleManager.AllRolesInfo)
-                {
-                    if (info.IsDesyncImpostor)
+                    switch (role)
                     {
-                        switch(role)
-                        {
                         case CustomRoles.StrayWolf:
                             AssignedStrayWolf = AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
                             continue;
                         case CustomRoles.Opportunist:
-                            if(!Opportunist.OptionCanKill.GetBool()) continue;
+                            if (!Opportunist.OptionCanKill.GetBool()) continue;
                             break;
                     }
 
-                        AssignDesyncRole(role, AllPlayers, senders, rolesMap, BaseRole: info.BaseRoleType.Invoke());
-                    }
+                    AssignDesyncRole(role, AllPlayers, senders, rolesMap, BaseRole: info.BaseRoleType.Invoke());
                 }
-                MakeDesyncSender(senders, rolesMap);
             }
-            //以下、バニラ側の役職割り当てが入る
+            MakeDesyncSender(senders, rolesMap);
         }
+        //以下、バニラ側の役職割り当てが入る
+    }
     public static void Postfix()
     {
         if (!AmongUsClient.Instance.AmHost) return;

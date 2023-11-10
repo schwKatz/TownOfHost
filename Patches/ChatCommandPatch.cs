@@ -604,7 +604,8 @@ namespace TownOfHostY
         }
         public static void SendCustomChat(string SendName, PlayerControl sender = null, byte sendTo = byte.MaxValue)
         {
-            Logger.Info($"SendName: {SendName}, sender: {sender?.name}, sendTo: {sendTo}", "SendCustomChat");
+            //Logger.Info($"SendName: {SendName}, sender: {sender?.name}, sendTo: {sendTo}", "SendCustomChat");
+            Logger.Info($"sender: {sender?.name}, sendTo: {sendTo}", "SendCustomChat");
             string command = "\n\n";
             if (sender == null) sender = PlayerControl.LocalPlayer;
             if (sender.Data.IsDead)
