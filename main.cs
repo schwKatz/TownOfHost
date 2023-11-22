@@ -53,7 +53,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "513.19.1";
+        public const string PluginVersion = "513.19.2";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.10.24";
         // このバージョンのみで公開ルームを無効にする場合
@@ -72,7 +72,6 @@ namespace TownOfHostY
         public static ConfigEntry<string> HideColor { get; private set; }
         public static ConfigEntry<bool> ForceJapanese { get; private set; }
         public static ConfigEntry<bool> JapaneseRoleName { get; private set; }
-        public static ConfigEntry<bool> ModNameLobbyDisplay { get; private set; }
         public static ConfigEntry<float> MessageWait { get; private set; }
 
         public static Dictionary<byte, PlayerVersion> playerVersion = new();
@@ -118,7 +117,7 @@ namespace TownOfHostY
         public static float DefaultCrewmateVision;
         public static float DefaultImpostorVision;
         public static bool IsValentine = DateTime.Now.Month == 3 && DateTime.Now.Day is 9 or 10 or 11 or 12 or 13 or 14 or 15;
-        public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 23 or 24 or 25 or 26;
+        public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 23 or 24 or 25;
         public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3;
         public static bool IsInitialRelease = DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
         public static bool IsOneNightRelease = true;
@@ -141,7 +140,6 @@ namespace TownOfHostY
             HideColor = Config.Bind("Client Options", "Hide Game Code Color", $"{ModColor}");
             ForceJapanese = Config.Bind("Client Options", "Force Japanese", false);
             JapaneseRoleName = Config.Bind("Client Options", "Japanese Role Name", true);
-            ModNameLobbyDisplay = Config.Bind("Client Options", "ModName Lobby Display", true);
             DebugKeyInput = Config.Bind("Authentication", "Debug Key", "");
 
             Logger = BepInEx.Logging.Logger.CreateLogSource("TOH_Y");

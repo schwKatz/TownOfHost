@@ -87,7 +87,7 @@ namespace TownOfHostY
             }
             if (langId == SupportedLangs.Japanese)
             {
-                if (Main.IsInitialRelease)
+                if (Main.IsChristmas)
                 {
                     res = str switch
                     {

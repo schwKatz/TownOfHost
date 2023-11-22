@@ -1,11 +1,13 @@
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Modules;
 using UnityEngine;
+using static Il2CppSystem.Uri;
 
 namespace TownOfHostY.CatchCat;
 
 static class Option
 {
-    public static readonly int Id = 210000;
+    public static readonly int Id = (int)Options.offsetId.GModeCC;
     public static OptionItem IgnoreReport;
 
     public static OptionItem LeaderIgnoreVent;

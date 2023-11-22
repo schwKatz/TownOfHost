@@ -11,7 +11,6 @@ namespace TownOfHostY
         private static ClientActionItem JapaneseRoleName;
         private static ClientActionItem UnloadMod;
         private static ClientActionItem DumpLog;
-        private static ClientActionItem ModNameLobbyDisplay;
 
         public static void Postfix(OptionsMenuBehaviour __instance)
         {
@@ -35,10 +34,6 @@ namespace TownOfHostY
             if (DumpLog == null || DumpLog.ToggleButton == null)
             {
                 DumpLog = ClientActionItem.Create("DumpLog", Utils.DumpLog, __instance);
-            }
-            if (ModNameLobbyDisplay == null || ModNameLobbyDisplay.ToggleButton == null)
-            {
-                ModNameLobbyDisplay = ClientOptionItem.Create("ModNameLobbyDisplay", Main.ModNameLobbyDisplay, __instance);
             }
 
             if (ModUnloaderScreen.Popup == null)

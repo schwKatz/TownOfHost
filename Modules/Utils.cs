@@ -1215,7 +1215,12 @@ public static class Utils
             SelfName += SelfSuffix.ToString() == "" ? "" : "\r\n " + SelfSuffix.ToString();
             if (!isForMeeting) SelfName += "\r\n";
 
-            // バニラ視点にMOD名/Versionを記載
+            //lobby中のバニラ視点にMOD名/Versionを記載
+            //if (GameStates.IsLobby)
+            //    SelfName = $"{$"<color={Main.ModColor}>TownOfHost_Y</color> v{Main.PluginVersion}\n\n".Color(Color.white)}</align>"
+            //     + $"<line-height=6em>\n</line-height>" + SelfName + "<line-height=6em>\n</line-height>ㅤ";
+
+            // ミーティングテキスト
             SelfName = MeetingDisplayText.AddTextForVanilla(seer, SelfName, SelfSuffix.ToString(), SelfRoleName, isForMeeting);
 
             //適用

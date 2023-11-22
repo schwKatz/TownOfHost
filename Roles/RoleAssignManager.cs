@@ -10,7 +10,7 @@ namespace TownOfHostY.Roles
 {
     public static class RoleAssignManager
     {
-        private static readonly int idStart = 500;
+        private static readonly int idStart = (int)Options.offsetId.FeatSpecial + 200;
         class RandomAssignOptions
         {
             public int Min => min();

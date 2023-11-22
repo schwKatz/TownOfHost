@@ -11,7 +11,7 @@ namespace TownOfHostY
 {
     class VoiceReader
     {
-        private static readonly int Id = 191600;
+        private static readonly int Id = (int)Options.offsetId.FeatOther + 500;
 
         private enum Mode { Log, Boyomi, VoiceVox }
         private static Mode ReadMode = Mode.Boyomi;
@@ -55,46 +55,46 @@ namespace TownOfHostY
             if (!InitFinished) return;
             if (VoiceType.Count == 0) return;
 
-            VoiceReaderMode = BooleanOptionItem.Create(Id, "VoiceReaderMode", false, TabGroup.MainSettings, false)
+            VoiceReaderMode = BooleanOptionItem.Create(Id, "VoiceReaderMode", false, TabGroup.MainSettings, true)
                 .SetColor(Palette.CrewmateBlue)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderHost = StringOptionItem.Create(Id + 11, "VoiceReaderHost", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderHost = StringOptionItem.Create(Id + 11, "VoiceReaderHost", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderRed = StringOptionItem.Create(Id + 21, "VoiceReaderRed", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderRed = StringOptionItem.Create(Id + 21, "VoiceReaderRed", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderBlue = StringOptionItem.Create(Id + 22, "VoiceReaderBlue", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderBlue = StringOptionItem.Create(Id + 22, "VoiceReaderBlue", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderGreen = StringOptionItem.Create(Id + 23, "VoiceReaderGreen", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderGreen = StringOptionItem.Create(Id + 23, "VoiceReaderGreen", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderPink = StringOptionItem.Create(Id + 24, "VoiceReaderPink", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderPink = StringOptionItem.Create(Id + 24, "VoiceReaderPink", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderOrange = StringOptionItem.Create(Id + 25, "VoiceReaderOrange", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderOrange = StringOptionItem.Create(Id + 25, "VoiceReaderOrange", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderYellow = StringOptionItem.Create(Id + 26, "VoiceReaderYellow", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderYellow = StringOptionItem.Create(Id + 26, "VoiceReaderYellow", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderBlack = StringOptionItem.Create(Id + 27, "VoiceReaderBlack", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderBlack = StringOptionItem.Create(Id + 27, "VoiceReaderBlack", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderWhite = StringOptionItem.Create(Id + 28, "VoiceReaderWhite", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderWhite = StringOptionItem.Create(Id + 28, "VoiceReaderWhite", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderPurple = StringOptionItem.Create(Id + 29, "VoiceReaderPurple", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderPurple = StringOptionItem.Create(Id + 29, "VoiceReaderPurple", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderBrown = StringOptionItem.Create(Id + 30, "VoiceReaderBrown", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderBrown = StringOptionItem.Create(Id + 30, "VoiceReaderBrown", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderCyan = StringOptionItem.Create(Id + 31, "VoiceReaderCyan", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderCyan = StringOptionItem.Create(Id + 31, "VoiceReaderCyan", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderLime = StringOptionItem.Create(Id + 32, "VoiceReaderLime", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderLime = StringOptionItem.Create(Id + 32, "VoiceReaderLime", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderMaroon = StringOptionItem.Create(Id + 33, "VoiceReaderMaroon", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderMaroon = StringOptionItem.Create(Id + 33, "VoiceReaderMaroon", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderRose = StringOptionItem.Create(Id + 34, "VoiceReaderRose", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderRose = StringOptionItem.Create(Id + 34, "VoiceReaderRose", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderBanana = StringOptionItem.Create(Id + 35, "VoiceReaderBanana", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderBanana = StringOptionItem.Create(Id + 35, "VoiceReaderBanana", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderGray = StringOptionItem.Create(Id + 36, "VoiceReaderGray", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderGray = StringOptionItem.Create(Id + 36, "VoiceReaderGray", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderTan = StringOptionItem.Create(Id + 37, "VoiceReaderTan", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderTan = StringOptionItem.Create(Id + 37, "VoiceReaderTan", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
-            VoiceReaderCoral = StringOptionItem.Create(Id + 38, "VoiceReaderCoral", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, false).SetParent(VoiceReaderMode)
+            VoiceReaderCoral = StringOptionItem.Create(Id + 38, "VoiceReaderCoral", VoiceName.Values.ToArray(), 0, TabGroup.MainSettings, true).SetParent(VoiceReaderMode)
                 .SetGameMode(CustomGameMode.All);
         }
         private static readonly string VOICE_LIST_PATH = @"./TOH_DATA/VoiceList.txt";

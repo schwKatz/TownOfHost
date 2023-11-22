@@ -8,7 +8,7 @@ namespace TownOfHostY.Roles.AddOns.Crewmate
 {
     public static class CompreteCrew
     {
-        private static readonly int Id = 72000;
+        private static readonly int Id = (int)Options.offsetId.AddonCrew + 100;
         public static List<byte> playerIdList = new();
         public static void SetupCustomOption()
         {

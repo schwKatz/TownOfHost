@@ -7,7 +7,9 @@ using InnerNet;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
+using UnityEngine;
 using static TownOfHostY.Translator;
 
 namespace TownOfHostY
@@ -60,7 +62,7 @@ namespace TownOfHostY
             {
                 AmongUsClient.Instance.KickPlayer(client.Id, false);
                 Logger.SendInGame(string.Format(GetString("Message.KickedByNoFriendCode"), client.PlayerName));
-                Logger.Info($"フレンドコードがないプレイヤーを{client?.PlayerName}をキックしました。", "Kick");
+                Logger.Info($"フレンドコードがないプレイヤー{client?.PlayerName}をキックしました。", "Kick");
             }
             if (DestroyableSingleton<FriendsListManager>.Instance.IsPlayerBlockedUsername(client.FriendCode) && AmongUsClient.Instance.AmHost)
             {

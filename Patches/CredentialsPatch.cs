@@ -105,10 +105,14 @@ namespace TownOfHostY
                         SpecialEventText.text += SpecialEvent.TitleText();
                     }
                 }
-                else if (Main.IsChristmas && CultureInfo.CurrentCulture.Name == "ja-JP")
+                else if (Main.IsChristmas)
                 {
-                    SpecialEventText.text = "★Merry Christmas★\n<size=15%>\n\nTOH_Yからのプレゼントはありません。</size>";
                     SpecialEventText.color = Color.yellow;
+                    SpecialEventText.text = "★Merry Christmas★";
+                    if (CultureInfo.CurrentCulture.Name == "ja-JP")
+                    {
+                        SpecialEventText.text += SpecialEvent.TitleText();
+                    }
                 }
                 else if (Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
                 {

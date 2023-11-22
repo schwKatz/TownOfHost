@@ -92,13 +92,13 @@ namespace TownOfHostY
                 {
                     return Options.AdditionalSpawn.GetBool()
                         ? positions.ToArray()[4..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                        : positions.ToArray()[4..4].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                        : positions.ToArray()[4..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
                 else
                 {
                     return Options.AdditionalSpawn.GetBool()
                         ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                        : positions.ToArray()[3..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                        : positions.ToArray()[3..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
             }
         }
@@ -127,13 +127,13 @@ namespace TownOfHostY
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[3..4].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[3..7].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
                 else
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[2..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[2..7].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
             }
         }
@@ -163,13 +163,13 @@ namespace TownOfHostY
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[3..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[3..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
                 else
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[2..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[2..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
             }
         }
@@ -203,13 +203,13 @@ namespace TownOfHostY
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[3..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[3..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
                 else
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[2..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[2..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
             }
         }
@@ -239,13 +239,13 @@ namespace TownOfHostY
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[3..5].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[3..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
                 else
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
-                    : positions.ToArray()[2..6].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
+                    : positions.ToArray()[2..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
             }
         }
