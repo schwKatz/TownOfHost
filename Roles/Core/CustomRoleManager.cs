@@ -429,6 +429,7 @@ public enum CustomRoles
     Telepathisters,
     ShapeKiller,
     StrayWolf,
+    EvilFire,
     //Madmate
     MadGuardian,
     Madmate,
