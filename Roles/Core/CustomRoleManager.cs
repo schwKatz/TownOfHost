@@ -93,7 +93,7 @@ public static class CustomRoleManager
         {
             //MurderPlayer用にinfoを保存
             CheckMurderInfos[appearanceKiller.PlayerId] = info;
-            appearanceKiller.RpcMurderPlayer(appearanceTarget, true);
+            appearanceKiller.RpcMurderPlayer(appearanceTarget);
             return true;
         }
         else

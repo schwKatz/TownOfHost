@@ -38,7 +38,6 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
     }
 
     private static OptionItem KillCooldown;
-    private static OptionItem MisfireKillsTarget;
     private static OptionItem ShotLimitOpt;
     public static OptionItem IsInfoPoor;
     public static OptionItem IsClumsy;
@@ -46,7 +45,6 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
     public static OptionItem CanKillNeutrals;
     enum OptionName
     {
-        SheriffMisfireKillsTarget,
         SheriffShotLimit,
         SheriffIsInfoPoor,
         SheriffIsClumsy,
@@ -69,7 +67,6 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
     {
         KillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(0f, 180f, 0.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        MisfireKillsTarget = BooleanOptionItem.Create(RoleInfo, 11, OptionName.SheriffMisfireKillsTarget, false, false);
         ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 12, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false)
             .SetValueFormat(OptionFormat.Times);
         IsInfoPoor = BooleanOptionItem.Create(RoleInfo, 16, OptionName.SheriffIsInfoPoor, false, false);
@@ -111,9 +108,9 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
         var id = RoleInfo.ConfigId + idOffset;
         parent ??= RoleInfo.RoleOption;
         // (%team%陣営)
-        //var inTeam = GetString("In%team%", new Dictionary<string, string>() { ["%team%"] = GetRoleString(catType.ToString()) });
+        var inTeam = GetString("In%team%", new Dictionary<string, string>() { ["%team%"] = GetRoleString(catType.ToString()) });
         // シュレディンガーの猫(%team%陣営)
-        var catInTeam = Utils.ColorString(SchrodingerCat.GetCatColor(catType), Utils.GetRoleName(CustomRoles.SchrodingerCat)/* + inTeam*/);
+        var catInTeam = Utils.ColorString(SchrodingerCat.GetCatColor(catType), Utils.GetRoleName(CustomRoles.SchrodingerCat) + inTeam);
         Dictionary<string, string> replacementDic = new() { ["%role%"] = catInTeam };
         SchrodingerCatKillTargetOptions[catType] = BooleanOptionItem.Create(id, OptionName.SheriffCanKill + "%role%", defaultValue, RoleInfo.Tab, false).SetParent(parent);
         SchrodingerCatKillTargetOptions[catType].ReplacementDictionary = replacementDic;
@@ -161,13 +158,11 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
         SendRPC();
         if (!CanBeKilledBy(target))
         {
-            killer.RpcMurderPlayer(killer, true);
+            killer.RpcMurderPlayer(killer);
             PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
-            if (!MisfireKillsTarget.GetBool())
-            {
-                info.DoKill = false;
-                return;
-            }
+
+            info.DoKill = false;
+            return;
         }
         killer.ResetKillCooldown();
     }

@@ -302,7 +302,7 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
                     {
                         PlayerState.GetByPlayerId(nearTarget.pc.PlayerId).DeathReason = CustomDeathReason.Bombed;
                         nearTarget.pc.SetRealKiller(killer);
-                        nearTarget.pc.RpcMurderPlayer(nearTarget.pc, true);
+                        nearTarget.pc.RpcMurderPlayer(nearTarget.pc);
                         Player.MarkDirtySettings();
                     }
                 }

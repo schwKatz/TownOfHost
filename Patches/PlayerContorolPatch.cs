@@ -591,7 +591,7 @@ namespace TownOfHostY
                             if (isExiled)
                                 MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, partnerPlayer.PlayerId);
                             else
-                                partnerPlayer.RpcMurderPlayer(partnerPlayer, true);
+                                partnerPlayer.RpcMurderPlayer(partnerPlayer);
                         }
                     }
                 }
@@ -625,7 +625,7 @@ namespace TownOfHostY
                 || (AmongUsClient.Instance.IsGameStarted && Options.IsCCMode))
             {
                 //ゲーム中に色を変えた場合
-                __instance.RpcMurderPlayer(__instance, true);
+                __instance.RpcMurderPlayer(__instance);
             }
             return true;
         }
