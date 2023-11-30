@@ -36,11 +36,14 @@ namespace TownOfHostY
             }
             if (AmongUsClient.Instance.AmHost)
             {
-                var roleClass = player.GetRoleClass();
-                if (roleClass != null)
+                if (role < CustomRoles.NotAssigned)
                 {
-                    roleClass.Dispose();
-                    CustomRoleManager.CreateInstance(role, player);
+                    var roleClass = player.GetRoleClass();
+                    if (roleClass != null)
+                    {
+                        roleClass.Dispose();
+                        CustomRoleManager.CreateInstance(role, player);
+                    }
                 }
 
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetCustomRole, Hazel.SendOption.Reliable, -1);
