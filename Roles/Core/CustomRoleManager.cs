@@ -430,6 +430,7 @@ public enum CustomRoles
     ShapeKiller,
     StrayWolf,
     EvilFire,
+    Escalationer,
     //Madmate
     MadGuardian,
     Madmate,
