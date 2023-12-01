@@ -27,18 +27,22 @@ public sealed class Escalationer : RoleBase, IImpostor
         KillCooldown = OptionKillCooldown.GetFloat();
         SpeedUpRate = OptionSpeedUpRate.GetFloat();
         KillCoolDecrease = OptionKillCoolDecrease.GetFloat();
+        SpeedAndCoolReset = OptionSpeedAndCoolReset.GetBool();
     }
     private static OptionItem OptionKillCooldown;
     private static OptionItem OptionSpeedUpRate;
     private static OptionItem OptionKillCoolDecrease;
+    private static OptionItem OptionSpeedAndCoolReset;
     enum OptionName
     {
         EscalationerSpeedUpRate,
         EscalationerKillCoolDecrease,
+        EscalationerSpeedAndCoolReset,
     }
     private static float KillCooldown;
     private static float SpeedUpRate;
     private static float KillCoolDecrease;
+    private static bool SpeedAndCoolReset;
     float nowKillcool = 0f;
 
     public static void SetupOptionItem()
@@ -49,6 +53,7 @@ public sealed class Escalationer : RoleBase, IImpostor
             .SetValueFormat(OptionFormat.Seconds);
         OptionSpeedUpRate = FloatOptionItem.Create(RoleInfo, 12, OptionName.EscalationerSpeedUpRate, new(0.1f, 2f, 0.05f), 0.15f, false)
             .SetValueFormat(OptionFormat.Multiplier);
+        OptionSpeedAndCoolReset = BooleanOptionItem.Create(RoleInfo, 13, OptionName.EscalationerSpeedAndCoolReset, false, false);
     }
     public override void Add()
     {
@@ -76,5 +81,19 @@ public sealed class Escalationer : RoleBase, IImpostor
             }
             Utils.SyncAllSettings();
         }
+    }
+
+    public override void AfterMeetingTasks()
+    {
+        if (!SpeedAndCoolReset) return;
+
+        nowKillcool = KillCooldown;
+        Player.ResetKillCooldown();
+
+        foreach (var player in Main.AllPlayerControls)
+        {
+            Main.AllPlayerSpeed[player.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod);
+        }
+        Utils.SyncAllSettings();
     }
 }

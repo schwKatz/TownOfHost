@@ -780,6 +780,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "EvilFireIsCanBombTarget","Everyone Can See Bombed Target","全員視点で爆死したプレイヤーが分かる",
 "EscalationerSpeedUpRate","Speed Up with Each Kill(+)","キル毎の速度上昇(+)",
 "EscalationerKillCoolDecrease","Killcool Decrease with Each Kill(-)","キル毎のキルクール減少(-)",
+"EscalationerSpeedAndCoolReset","Speed And KillCool Reset After Every Meeting.","会議毎にスピードとキルクールをリセットする"
 "EvilDyerDyeTime","Time of Appearance Change","姿が変わる時間",
 "BestieWolfKillCooldownSeveral","Kill Cooldown During Multiple Impostors","複数インポスター時のキルクール",
 "BestieWolfKillCooldownSingle","Kill Cooldown During a Single Impostor","単独インポスター時のキルクール",
