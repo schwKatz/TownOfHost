@@ -1025,14 +1025,14 @@ public static class Utils
         if (!AmongUsClient.Instance.AmHost) return;
         if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
 
-        Logger.Info($"[MessagesToSend.Add]{text.ToArray()[..8]} sendTo: {sendTo}", "SendMessage");
+        Logger.Info($"[MessagesToSend.Add] sendTo: {sendTo}", "SendMessage");
         Main.MessagesToSend.Add(($"<align={"left"}><size=90%>{text}</size></align>", sendTo, $"<align={"left"}>{title}</align>", false));
     }
     public static void SendMessageCustom(string text, byte sendTo = byte.MaxValue)
     {
         if (!AmongUsClient.Instance.AmHost) return;
 
-        Logger.Info($"[MessagesToSend.Add]{text.ToArray()[..8]} sendTo: {sendTo}", "SendMessageCustom");
+        Logger.Info($"[MessagesToSend.Add] sendTo: {sendTo}", "SendMessageCustom");
         Main.MessagesToSend.Add(($"<align={"left"}><size=90%>{text}</size></align>", sendTo, "", true));
     }
     public static void ApplySuffix()
