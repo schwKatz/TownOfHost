@@ -213,9 +213,17 @@ namespace TownOfHostY
                 return false;
             }
             // 役職の処理
-            if (__instance.GetRoleClass()?.OnCheckShapeshift(target, shouldAnimate) == false)
+            var role = __instance.GetRoleClass();
+            if (role?.OnCheckShapeshift(target, shouldAnimate) == false)
             {
-                __instance.RpcRejectShapeshift();
+                if (role.CanDesyncShapeshift)
+                {
+                    __instance.RpcSpecificRejectShapeshift(target, shouldAnimate);
+                }
+                else
+                {
+                    __instance.RpcRejectShapeshift();
+                }
                 return false;
             }
 
