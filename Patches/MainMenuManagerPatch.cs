@@ -74,16 +74,16 @@ namespace TownOfHostY
             {
                 UpdateButton = CreateButton(
                     "UpdateButton",
-                    new(0f, 0.8f, 1f),
-                    new(0, 202, 255, byte.MaxValue),
-                    new(60, 255, 255, byte.MaxValue),
+                    new(0f, -0.6f, -10f),
+                    new(255, 255, 60, byte.MaxValue),
+                    new(255, 255, 224, byte.MaxValue),
                     () =>
                     {
                         UpdateButton.Button.gameObject.SetActive(false);
                         ModUpdater.StartUpdate(ModUpdater.downloadUrl);
                     },
                     "ModUpdaterで上書き",
-                    new(4f, 0.6f),
+                    new(5f, 3f),
                     isActive: false);
             }
 
