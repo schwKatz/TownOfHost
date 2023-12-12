@@ -88,7 +88,9 @@ namespace TownOfHostY
                         LowerInfoText.fontSizeMax = 2.0f;
                     }
 
-                    LowerInfoText.text = roleClass?.GetLowerText(player, isForMeeting: GameStates.IsMeeting, isForHud: true) ?? "";
+                    LowerInfoText.text = VentEnterTask.GetLowerText(player, isForMeeting: GameStates.IsMeeting, isForHud: true);
+                    LowerInfoText.text += LowerInfoText.text != "" ? '\n' : "";
+                    LowerInfoText.text += roleClass?.GetLowerText(player, isForMeeting: GameStates.IsMeeting, isForHud: true) ?? "";
                     LowerInfoText.enabled = LowerInfoText.text != "";
 
                     if (!AmongUsClient.Instance.IsGameStarted && AmongUsClient.Instance.NetworkMode != NetworkModes.FreePlay)
