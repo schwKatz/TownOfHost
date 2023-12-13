@@ -44,6 +44,7 @@
 "StrayWolf","Stray Wolf","はぐれ狼",
 "EvilFire","Evil Ignition","イビルイグニッション",
 "Escalationer","Escalationer","エスカレーショナー",
+"EvilDyer","Evil Dyer","イビル真っ赤",
 
 "CustomImpostorInfo","I can now use abilities like that","あんな能力も使えるようになりました",
 "EvilWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
@@ -74,6 +75,7 @@
 "StrayWolfInfo","Where are my mates?","仲間、、おるかな、、",
 "EvilFireInfo","Why are you two together?","寄り添うものならば、私が発火します",
 "EscalationerInfo","Get more impatient","キルする度に焦っていく",
+"EvilDyerInfo","Let's going to dye them all red","皆を赤色に染めてやるんだ",
 
 "CustomImpostorInfoLong","(Impostors):\nImpostor with the ability to Add-On to attributes set by the host.","[インポスター陣営]\nホストによって設定された属性の能力をもつインポスター。",
 "EvilWatcherInfoLong","(Impostors):\nYou can see everyone's votes even if anonymous voting is on.","(インポスター陣営):\n全員の投票先を見ることができる。","(内鬼阵营):\n会议时窥视者可以看到所有人的投票。","(狼人陣營):\n會議時觀察者可以看到所有人的投票。","(Предатель):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Impostores):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
@@ -102,6 +104,7 @@
 "StrayWolfInfoLong","(Impostors):\nAn Impostor in which the companions are not displayed. Winning conditions are the same as for a regular Impostor.\nCan be set up to kill each other with Impostors or not.","[インポスター陣営]\n仲間が表示されないインポスター。勝利条件は通常インポスターと変わらない。\n[仲間斬り合い設定]\n・常時：仲間インポスターもそのままキル。仲間とずっと視認できない。\n・視認後：仲間を斬りそうな時or仲間から斬られそうになった時にガード、互いに視認できるようになる。その相手とはキルしあえる状態に。\n・なし：視認後はキルボタンが互いだけ反応しなくなる。"
 "EvilFireInfoLong","(Impostors):\nWhen the kill button is clicked once, the kill target is ignited.If there is anyone around the player (within an approximate range of x0.5 visibility), the nearest player is killed by the bomb.\nWhen the kill button is double clicked, it becomes a normal kill. When the number of fires reaches zero, a single click will result in a normal kill.","[インポスター陣営]\nキルボタンを1回クリックした時、キル対象を発火させる。そのプレイヤーの周り(目安視界x0.5範囲内)に誰かいた場合、一番近いプレイヤー1人を爆死させる。\nキルボタンをダブルクリックした時、通常のキルになる。なお発火回数が0になった時は、1回押すだけで通常キルになる。"
 "EscalationerInfoLong","(Impostors):\n","[インポスター陣営]\n自身がキルすると、全員のプレイヤースピードが上昇する。また、自身のみキルする度にキルクールが短くなる。"
+"EvilDyerInfoLong","(Impostors):\nWhen he kills someone, everyone turns red for a certain period of time.","[インポスター陣営]\n自身が誰かキルすると全員が一定時間、赤色の姿になる。",
 
 #イビルハッカ
 "EvilHacker","Evil Replicator","イビルハッカー...?",
@@ -729,7 +732,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "EvilFireIsCanBombTarget","Everyone Can See Bombed Target","全員視点で爆死したプレイヤーが分かる",
 "EscalationerSpeedUpRate","Speed Up with Each Kill(+)","キル毎の速度上昇(+)",
 "EscalationerKillCoolDecrease","Killcool Decrease with Each Kill(-)","キル毎のキルクール減少(-)",
-
+"EvilDyerDyeTime","Time of Appearance Change","姿が変わる時間",
 
 # マッドメイト
 "CanMakeMadmateCount","Sidekick Madmate Max Count","サイドキックマッドメイト","变形者可以招募叛徒的数量","變形者招募叛徒最大人數","Максимум союзников Безумца","Máximo de Tripulantes Loucos Ajudantes"
