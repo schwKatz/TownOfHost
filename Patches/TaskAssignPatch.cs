@@ -7,6 +7,7 @@ using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Crewmate;
 using TownOfHostY.Roles.Crewmate;
 using System.Linq;
+using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY
 {
@@ -81,12 +82,16 @@ namespace TownOfHostY
                 NumShortTasks = data.numShortTasks.GetInt(); // 割り当てるショートタスクの数
                                                              // ロングとショートは常時再割り当てが行われる。
             }
+
+            if (pc.Is(CustomRoles.FoxSpirit))
+                (hasCommonTasks, NumLongTasks, NumShortTasks) = FoxSpirit.TaskData;
             if (pc.Is(CustomRoles.Workhorse))
                 (hasCommonTasks, NumLongTasks, NumShortTasks) = Workhorse.TaskData;
 
             if (taskTypeIds.Count == 0) hasCommonTasks = false; //タスク再配布時はコモンを0に
             if (!hasCommonTasks && NumLongTasks == 0 && NumShortTasks == 0) NumShortTasks = 1; //タスク0対策
-            if (!pc.Is(CustomRoles.VentManager) && hasCommonTasks && NumLongTasks == Main.NormalOptions.NumLongTasks && NumShortTasks == Main.NormalOptions.NumShortTasks) return; //変更点がない場合
+            if (!pc.Is(CustomRoles.VentManager) && !pc.Is(CustomRoles.FoxSpirit)
+                && hasCommonTasks && NumLongTasks == Main.NormalOptions.NumLongTasks && NumShortTasks == Main.NormalOptions.NumShortTasks) return; //変更点がない場合
 
             //割り当て可能なタスクのIDが入ったリスト
             //本来のRpcSetTasksの第二引数のクローン
@@ -120,7 +125,7 @@ namespace TownOfHostY
                 ShortTasks.Add(task);
             Shuffle<NormalPlayerTask>(ShortTasks);
 
-            if (pc.Is(CustomRoles.VentManager))
+            if (pc.Is(CustomRoles.VentManager) || pc.Is(CustomRoles.FoxSpirit))
             {
                 TasksList.Clear();
                 ShortTasks.Clear();
@@ -129,7 +134,8 @@ namespace TownOfHostY
                 ShortTasks.Add(task);
 
                 NumLongTasks = 0; // 割り当てるロングタスクの数
-                NumShortTasks = pc.GetPlayerTaskState().AllTasksCount; //VentManager.TaskCount.GetInt(); // 割り当てるショートタスクの数
+                if (pc.Is(CustomRoles.VentManager))
+                    NumShortTasks = pc.GetPlayerTaskState().AllTasksCount; //VentManager.TaskCount.GetInt(); // 割り当てるショートタスクの数
             }
 
             //実際にAmong Us側で使われているタスクを割り当てる関数を使う。

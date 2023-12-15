@@ -145,6 +145,14 @@ namespace TownOfHostY
                         __instance.ImpostorText.text = GetString("TeamJackal");
                         __instance.BackgroundBar.material.color = Utils.GetRoleColor(CustomRoles.Jackal);
                         break;
+                    case CustomRoles.FoxSpirit:
+                    case CustomRoles.Immoralist:
+                        __instance.TeamTitle.text = Utils.GetRoleName(CustomRoles.FoxSpirit);
+                        __instance.TeamTitle.color = Utils.GetRoleColor(CustomRoles.FoxSpirit);
+                        __instance.ImpostorText.gameObject.SetActive(true);
+                        __instance.ImpostorText.text = GetString("TeamFoxSpirit");
+                        __instance.BackgroundBar.material.color = Utils.GetRoleColor(CustomRoles.FoxSpirit);
+                        break;
                     
                     case CustomRoles.MadSheriff:
                         __instance.ImpostorText.gameObject.SetActive(true);

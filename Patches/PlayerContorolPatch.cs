@@ -285,7 +285,7 @@ namespace TownOfHostY
                 Logger.Info("DisableButton InMushroomMixup", "ReportDeadBody");
                 return false;
             }
-            if (reporter.Object.Is(CustomRoles.NonReport) &&
+            if ((reporter.Object.Is(CustomRoles.NonReport) || reporter.Object.Is(CustomRoles.FoxSpirit)) &&
                 target != null && !target.Object.Is(CustomRoles.Bait) && !target.Object.Is(CustomRoles.AddBait))
             {
                 DontReportMark[reporter.PlayerId] = true;

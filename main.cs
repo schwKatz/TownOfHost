@@ -304,6 +304,7 @@ namespace TownOfHostY
         LoveCutter = CustomRoles.LoveCutter,
         Lawyer = CustomRoles.Lawyer,
         God = CustomRoles.God,
+        FoxSpirit = CustomRoles.FoxSpirit,
 
         //CC
         RedL = CustomRoles.CCRedLeader,

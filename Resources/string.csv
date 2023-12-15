@@ -300,6 +300,8 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "Totocalcio","Totocalcio","トトカルチョ",
 "Duelist","Duelist","決闘者",
 "God","God","神","","","",""
+"FoxSpirit","Fox Spirit","妖狐",
+"Immoralist","Immoralist","背徳者",
 
 "ArsonistInfo","Burn them to crisps","燃やせ","火焰给我燃烧起来吧！","燒吧，燒吧，燃燒吧","Облейте и подожгите всех игроков","Queime tudo em pedacinhos"
 "JesterInfo","Get voted out","追放されよう","让他们把你这个假货投出去","想個辦法讓你被投出去","Заставь игроков изгнать себя","Seja exilado"
@@ -326,6 +328,8 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "TotocalcioInfo","I leave my victory to you","私の勝利は貴方に任せる",
 "DuelistInfo","I decided on you, it's battle time!","貴方は因縁の相手、いざ勝負！",
 "GodInfo","You Are God!!","あなたは神だ","","","",""
+"FoxSpiritInfo","Survive and intercept the victory","生き残って勝利を横取りしよう",
+"ImmoralistInfo","Help the FoxSpirit","妖狐の援助をし、勝利へ導こう",
 
 "ArsonistInfoLong","(Neutrals):\nWhen you use the kill button, you douse your target in oil.\nAfter dousing all living players, you set everything ablaze and win by venting.","(ニュートラル):\nキルボタンを使おうとすると、ターゲットに油を塗れる。\nすべてのクルーに油を塗ったら船を燃やして勝利する。","(独立阵营):\n纵火犯可以通过对玩家点击击杀按钮并在跟随其数秒来完成涂油行为。\n当所有存活玩家都被纵火犯涂油后，纵火犯可以通过跳通风管来点火，并单独获得胜利。","(中立):\n當縱火犯嘗試使用殺人鍵,它將對他身邊最近的一個人澆上油,\n當他對所有玩家澆上油之後,縱火縱火犯點火即勝利。","(Нейтрал):\nПоджигатель может обливать игроков, нажав на кнопку 'Убить' и находясь рядом с игроком в течение нескольких секунд. \nПосле того как он обольёт всех живых игроков Поджигатель сможет запрыгнуть в вентиляцию, чтобы поджечь всех игроков, что приводит к победе Поджигателя.","(Neutros):\nAo apertar o botão de matar, você encharca o seu inimigo em óleo.\nApós ter encharcado todos os jogadores vivos, você coloca tudo em chamas e ganha entrando na ventilação."
 "JesterInfoLong","(Neutrals):\nYou solo victory by getting voted out during a meeting.\nIf the game ends without you getting voted out, or if you are killed, you lose.","(ニュートラル):\n会議で追放された時に単独勝利できる。\n追放されず試合が終了orキルされると敗北。","(独立阵营):\n小丑被放逐则小丑单独游戏胜利。\n游戏结束时若小丑仍存活则小丑输掉游戏。","(中立):\n當小丑被丟出時即宣告小丑獲勝,\n但是小丑在遊戲結束時活下來或是在遊戲中被殺即宣告失敗","(Нейтрал):\nШут сможет выиграть игру, если за него проголосуют во время голосования и он будет изгнан.\nВ противном случае Шут проиграет.","(Neutros): \nVocê ganha sozinho ao ser exilado durante uma reunião. \nSe o jogo terminar com você não sendo votado, ou você for morto, você perde."
@@ -334,7 +338,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "SchrodingerCatInfoLong","(Neutrals):\nWhen you are killed, you block the kill and join the attacker's team.","(ニュートラル):\nキルされると、キルを防いでキルをしてきた陣営に所属する。","(独立阵营):游戏开始时薛定谔的猫没有胜利条件。\n薛定谔的猫被击杀后，其会复活且加入凶手阵营，获得与凶手所在阵营相同的胜利条件。\n 注:1.被放逐的薛定谔的猫死亡并不再变更胜利条件。\n2.被术士击杀的薛定谔的猫死亡并不再变更胜利条件。\n3.除吸血鬼的击杀外，一切显示为玩家自杀的情况内薛定谔的猫死亡并不再变更胜利条件。","(中立陣營):\n當薛定諤的貓第一次被殺時，他將轉入殺他的那個陣營。\n(P.S:1.薛定諤的貓如果被丟出則陣營不更改(可以在設定中更改)\n2.薛定諤的貓如果被術士下咒對象咒死時則陣營不更改\n3.如果薛定諤的貓有戀人且戀人死亡受到戀人共死影響自殺則陣營不更改)","(Нейтрал):\nКогда Пленника пытаются убить, он предотвращает убийство и переходит к команде убийцы.","(Neutros): \nQuando morto, você bloqueia a morte e se junta ao time do seu assassino."
 "OpportunistInfoLong","(Neutrals):\nSo long as you are alive at the end of the game, you will win alongside whoever the victor is.","(ニュートラル):\n試合終了時に生存していれば追加勝利となる。","(独立阵营):\n若投机者在游戏结束时存活，则投机者跟随获胜玩家一同获得胜利。","(中立):\n如果投機主義者活到最後,他將跟著遊戲結束獲勝的陣營一起獲勝。","(Нейтрал):\nВыживший выигрывает игру с любыми другими ролями, но только если он выжил.","(Neutros): \nContanto que você esteja vivo no final do jogo, você dividirá a vitória ao lado do vencedor."
 "EgoistInfoLong","(Neutrals):\nWhen all impostors are dead, you solo victory by fulfilling impostor victory conditions.\nYou and the impostors know who each other are.","(ニュートラル):\n味方がすべて死んだ状態でインポスターが勝つと単独勝利する。\nインポスターは誰がエゴイストか分かる。エゴイストも、誰がインポスターか分かる。","(独立阵营):\n原则上野心家属于内鬼阵营。野心家与内鬼阵营玩家互认但不可以击杀对方。\n当其他内鬼阵营玩家全部死亡后，若野心家存活且内鬼阵营达成胜利条件，则野心家单独获得胜利。","(中立陣營):\n如果所有的偽裝者都死亡，且利己主義者存活，利己主義者將獨自獲勝。\n(偽裝者和利己主義者互相知道對方但是不可以互刀對方)","(Нейтрал):\nПосле того, как все Предатели умрут то Эгоист побеждает вместо Предателей. \nПредатели и Эгоист видят друг друга.","(Neutros): \nQuando todos os Impostores morrerem, você ganha sozinho assumindo o papel de Impostor. \nVocê e os Impostores sabem quem são uns aos outros."
-"JackalInfoLong","(Neutrals):\nJackal can kill all Crewmates, Impostors and Neutrals.\nTeam Jackal wins when living Jackal outnumbers living Crewmates and when there are no Impostors alive.","(ニュートラル):\nジャッカルはすべてのプレイヤーを殺すことができる。\nインポスターが残っておらず、生き残っているジャッカルの人数がクルーと同じかそれ以上でジャッカルが勝利する。","(独立阵营):\n豺狼需要击杀所有人。\n存活的玩家只剩豺狼和一名其他船员时，豺狼获得胜利。","(中立):\n豺狼需要殺死所有人來獲得勝利,\n如果場上存活的玩家只剩下豺狼和另一名不帶刀職業時,豺狼將獲勝。","(Нейтрал):\nШакал может убить всех Членов Экипажа, Нейтралов и Предателей тоже. \nШакал может победить, когда в живых остался только 1 Шакал и 1 Член Экипажа.","(Neutros): \nVocê pode matar todos os jogadores. \nGanhe quando não existirem mais Impostores, e o número de Chacais for maior que o de Tripulantes."
+"JackalInfoLong","(Neutrals):\nJackal can kill all Crewmates, Impostors and Neutrals.\nTeam Jackal wins when living Jackal outnumbers living Crewmates and when there are no Impostors alive.","(ジャッカル陣営):\nジャッカルはすべてのプレイヤーを殺すことができる。\nインポスターが残っておらず、生き残っているジャッカルの人数がクルーと同じかそれ以上でジャッカルが勝利する。","(独立阵营):\n豺狼需要击杀所有人。\n存活的玩家只剩豺狼和一名其他船员时，豺狼获得胜利。","(中立):\n豺狼需要殺死所有人來獲得勝利,\n如果場上存活的玩家只剩下豺狼和另一名不帶刀職業時,豺狼將獲勝。","(Нейтрал):\nШакал может убить всех Членов Экипажа, Нейтралов и Предателей тоже. \nШакал может победить, когда в живых остался только 1 Шакал и 1 Член Экипажа.","(Neutros): \nVocê pode matar todos os jogadores. \nGanhe quando não existirem mais Impostores, e o número de Chacais for maior que o de Tripulantes."
 "JClientInfoLong","(Neutrals):\nCrewmate, but they belong to team Jackal, one type of Jackal's Madmates.\nThey can see who is the Jackal after finishing all their tasks.\nDepending on option, they can use vents.","(ジャッカル陣営):\nクルーだがジャッカルの味方をする。\nジャッカルと互いに認識できないが、タスクを全て完了させるとジャッカルを認識できるようになる。",,,,
 "AntiCompleteInfoLong","(Neutrals)\nDuring the meeting, you can vote for your favorite person only once in the entire meeting. If that person has already completed the task,，he or she wins alone. If you select someone who has no task or who has not completed a task，you die and lose. When the AntiComplete selects someone，the meeting is forced to end.","[ニュートラル]\n会議中、全体で1回のみ好きな人を投票で選択出来る。その人がタスクを既に完了させていたら単独勝利。タスクがない人、タスクが終わってない人を選ぶと死亡し敗北。\nアンチコンプが誰か選択した時、会議は強制終了する。","(中立阵营)\n在整个会议中，您只能投票给您喜欢的人一次。如果这个人已经完成了任务，它独自获胜。如果你选择了一个没有任务或者没有完成任务的人，你就会失败。当防成者选择某人时，会议将被迫结束。",,
 "WorkaholicInfoLong","(Neutrals)\nWhen you complete a task，you win alone. The amount of tasks is very large. Even if you die，you win when you finish the task. Vent is possible.","[ニュートラル]\nタスクを完了させた時、単独勝利。タスク量はとても多い。死亡しても関係なく、タスクが終わると勝利。霊界からでも終わらそう。ベント可。","(中立阵营)\n当你完成一项任务时，你独自获胜。任务的数量非常大。即使你死了，当你完成任务时你就赢了。钻管是可能的。",,
@@ -346,6 +350,8 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "TotocalcioInfoLong","(Neutrals):\nThe kill button can be used to 'BET' on someone.If the BET player on the game wins, he can win an additional unconditional victory.","[ニュートラル]\nキルボタンを使用して、誰かに「賭ける」ことが可能。賭けた対象プレイヤーが勝利すると、無条件で自身も追加で勝利できる。\n「賭ける」先は設定により途中で変更することも可能。ただし生存人数が減るごとに「賭ける」クールタイムが長くなる。",,
 "DuelistInfoLong","(Neutrals):\nThe opponent who votes for the first meeting becomes the Duelist's own Archenemy.After the decision of the Archenemy, the name of the duelist is also displayed from the Archenemy's point of view, and the victory condition for the duelist and Archenemy is 'If you are alive when the victory is decided and your Archenemy dies, you win an additional victory.'","[ニュートラル]\n初手会議に投票した相手を自身の宿敵にする。初手会議の投票時、決闘者の投票先は全視点見えない。初手会議で宿敵を決定しないと自殺する。\n宿敵決定後、宿敵目線でも決闘者が誰か表示され、決闘者・宿敵の勝利条件は「勝利判定時に自身が生存、且つ宿敵(決闘者)が死亡で追加勝利」となる。",,
 "GodInfoLong","(Neutrals):\nEveryone's position is known.\nIf you survive to the end you take away the win.\nGod cannot fix all sabotage.","(第三陣営):\n全員の役職がわかります。\n最後まで生き残っていると、勝利を奪い取ります。\n神はすべてのサボタージュが直せません。","","","",""
+"FoxSpiritInfoLong","(Neutrals):\nAfter completing the task, when the Impostor or Crewmate achieve the victory conditions while FoxSpirit is still alive, win.\nAlways have a shield and never get killed. All tasks are vent tasks only. Reactor and O2 sabotage is not repairable. Cannot report a dead body.","[妖狐陣営]\nタスク完了後に自身が生存している状態で、インポスター及びクルーが勝利条件を達成した時、横取りで勝利する。\n常にバリアを所持し、妖狐にキルボタンが押された時に互いにバリアが見える。タスクは全てベント掃除タスク。リアクター・Ｏ２サボの修理、死体通報ができない。",
+"ImmoralistInfoLong","(Neutrals):\nCrewmate, but they belong to team FoxSpirit, one type of FoxSpirit's Madmates.\nWhen the FoxSpirit dies, Immoralist also dies. When Immoralist is exiled，they takes one random person other than FoxSpirit and impostor with them. Power outages and communication sabotage cannot be repaired.","[妖狐陣営]\nクルーだが妖狐の味方をする。\n妖狐と互いに認識できないが、タスクを全て完了させると妖狐を認識できるようになる。妖狐が死亡すると背徳者は後追い自殺する。自身が追放された際、クルーを道ずれする(妖狐、インポスターは道連れしない)。停電、コミュサボの修理ができない。",
 
 "# HideAndSeek"
 "HASFox","Fox","狐","狐狸","狐妖","Лис","Raposa"
@@ -463,6 +469,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "TeamImpostor","Team Impostors","インポスター陣営","内鬼阵营","幫助偽裝者","Команда Предателей","Time Impostor"
 "TeamEgoist","Team Egoist","エゴイスト陣営","野心家阵营","利己主義者陣營","Команда Эгоистов","Time Egoísta"
 "TeamJackal","Team Jackal","ジャッカル陣営","豺狼阵营","豺狼陣營","Команда Шакалов","Time Chacal"
+"TeamFoxSpirit","Team FoxSpirit","妖狐陣営",
 
 "Neutral","Neutral","ニュートラル","独立阵营","中立陣營","Нейтрал","Neutro"
 "NeutralInfo","Independent forces unaffiliated with any other teams","他のどの陣営にも属さない孤高の陣営","不属于其他阵营的独立阵营","你屬於一個獨立陣營且不受其他陣營或職業的獲勝條件引響","Команда которая не принадлежит ни к каким другим командам","Forças independentes que não pertencem a nenhuma outra equipe"
@@ -866,6 +873,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "PlatonicLoverLimitTurn","Have to Make Love at First Sight Turn","一目惚れしないといけないターン数",
 "GodTaskCompleteToWin","Task Complete To Win","タスクを終わらせないと勝利できない","","","",""
 "GodViewVoteFor","View Where To Vote","投票先が見える	","","","",""
+"FoxSpiritTaskCount","Clean Vent Task Count","ベント掃除のタスク数",
+"ImmoralistCanAlsoBeExposedToFox","Immoralist Also Exposed To FoxSpirit","背徳者が妖狐からも視認できる",
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"

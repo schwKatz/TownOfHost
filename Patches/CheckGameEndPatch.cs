@@ -59,6 +59,13 @@ namespace TownOfHostY
                 }
                 if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw and not CustomWinner.None)
                 {
+                    if (FoxSpirit.CheckWin())
+                    {
+                        CustomWinnerHolder.ResetAndSetWinner(CustomWinner.FoxSpirit);
+                        Main.AllPlayerControls
+                            .Where(p => p.Is(CustomRoles.FoxSpirit) && p.IsAlive())
+                            .Do(p => CustomWinnerHolder.WinnerIds.Add(p.PlayerId));
+                    }
                     if (God.CheckWin())
                     {
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.God);

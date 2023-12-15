@@ -876,6 +876,7 @@ public static class Options
         // Neutral
         NeuSpecial = 50000,
         NeuJackal = 51000,
+        NeuFox = 51800,
         NeuTOH = 52000,
         NeuY = 60000,
 

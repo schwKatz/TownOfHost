@@ -504,6 +504,8 @@ public enum CustomRoles
     Totocalcio,
     Duelist,
     God,
+    FoxSpirit,
+    Immoralist,
 
     GM,
     MaxMain,
