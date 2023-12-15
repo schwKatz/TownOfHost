@@ -78,7 +78,8 @@ namespace TownOfHostY
                 or CustomRoles.Sympathizer
                 or CustomRoles.DarkHide
                 or CustomRoles.PlatonicLover
-                or CustomRoles.Lovers;
+                or CustomRoles.Lovers
+                or CustomRoles.FoxSpirit;
         }
 
         public static bool IsAddAddOn(this CustomRoles role)
