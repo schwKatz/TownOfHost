@@ -205,6 +205,7 @@
 "Psychic","Psychic","霊媒師",
 "Nimrod","Nimrod","ニムロッド",
 "Detector","Detector","ディテクター",
+"LoyalDoggy","Loyal Doggy","ロイヤルドギー",
 
 "CustomCrewmateInfo","I can now use abilities like that.","あんな能力も使えるようになりました。",
 "NiceWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
@@ -238,7 +239,8 @@
 "FortuneTellerInfo","Forecast Other Player","役職を占おう",,,,
 "PsychicInfo","I wanted to use your ability","貴方の能力を使いたかった",
 "NimrodInfo","Let us go with you to the spirit world","あなたと共に霊界へ向かおう",
-"DetectorInfo","I'll find the body first","死体は私が見つけます"
+"DetectorInfo","I'll find the body first","死体は私が見つけます",
+"LoyalDoggyInfo","How are you doing? Master!","調子はどうですか？ご主人様！",
 
 "CustomCrewmateInfoLong","(Crewmates):\Crewmate with the ability to Add-On to attributes set by the host.","[クルー陣営]\nホストによって設定された属性の能力をもつクルーメイト。",
 "NiceWatcherInfoLong","(Crewmates):\nYou can see everyone's votes even if anonymous voting is on.","(クルー陣営):\n全員の投票先を見ることができる。","(船员阵营:\n会议时窥视者可以看到所有人的投票。","(船員):\n會議時觀察者可以看到所有人的投票。","(Член Экипажа):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Tripulantes):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
@@ -273,6 +275,7 @@
 "PsychicInfoLong","(Crewmates)\nThe deceased can be selected by venting to see their Role.",[クルー陣営]\n死亡した人をベントで選択して役職を確認することができる。,
 "NimrodInfoLong","(Crewmates)\nWhen Nimrod is exiled, a meeting is held again for a vote on Nimrod. Here, only Nimrod is allowed to discuss the matter once exiled, and he may choose one person to be voted in and executed along the way.","[クルー陣営]\n自身が追放された時、再びニムロッド投票用の会議が開かれる。ここでは追放されたらニムロッド以外は議論するべからず。1人を投票で選択して道連れ処刑することができる。",
 "DetectorInfoLong","(Crewmates)\nUpon completion of a set amount of tasks, When a corpse is born, a kill flash will be visible and an arrow to the location of the corpse will appear.","[クルー陣営]\n設定タスク量を完了すると、死体が生まれた際にキルフラッシュが見えると共に死体の場所への矢印が表示されるようになる。",
+"LoyalDoggyInfoLong","(Crewmates)\nVote for one person of your choice at the very first meeting and nominate them as Master. (Votes are not shown).\nThe position of the master can be detected by the sense of smell. When the master is killed, the arrow will no longer be displayed. By setting, the task disappears after the Master's death.","[クルー陣営]\n一番初めの会議で1人好きな人に投票して、ご主人として指名する。(票は表示されない)\nその人の場所を嗅覚により探知できる。ご主人がキルされた時、ご主人への矢印はなくなる。設定により、ご主人の死亡後はタスクが無くなる。",
 
 
 "# ニュートラル役職"
@@ -819,6 +822,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "FortuneTellerConfirmCamp","Make it a Camp Confirmation, Not Role",役職でなく陣営確認にする,
 "FortuneTellerKillerOnly","Check only Killer",キルできる役職のみ確認できる,
 "PsychicMaxCheckRole","Role of The Deceased Can Be Checked Count","霊媒できる回数",
+"LoyalDoggyMasterSeeMasterMark","Master Finds Himself Master","ご主人は自身がご主人だと分かる",
+"LoyalDoggyIgnoreTaskAfterDeadMaster","After the Death of Master, Task Be Lost","ご主人死亡後はタスクが無くなる",
 
 "Head.LimitedTimeRole","Limited Time Role 12/23～12/25","期間限定役職 12/23～12/25"
 ##"Potentialist","Potentialist","ポテンシャリスト",
@@ -1224,7 +1229,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "nameChangeMode.Color","Color","色名",
 "ExtendedChat","Extended Chat","拡張チャット",,,,
 "SelectGuardPlayer","Select Guard Player","ガード対象を選択",
-
+"SelectMaster","Select Master","ご主人を選べ"
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,
