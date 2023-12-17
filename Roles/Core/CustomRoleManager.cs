@@ -478,6 +478,7 @@ public enum CustomRoles
     Psychic,
     Nimrod,
     Detector,
+    LoyalDoggy,
     VentManager,
 
     Potentialist,

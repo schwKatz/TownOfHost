@@ -484,6 +484,10 @@ public static class Utils
             {
                 return false;
             }
+            if (LoyalDoggy.IgnoreTask(p))
+            {
+                return false;
+            }
             var role = States.MainRole;
             var roleClass = CustomRoleManager.GetByPlayerId(p.PlayerId);
             if (roleClass != null)
@@ -1258,6 +1262,7 @@ public static class Utils
                 || seer.Is(CustomRoles.GrudgeSheriff)
                 || seer.Is(CustomRoles.AntiComplete)
                 || seer.Is(CustomRoles.Totocalcio)
+                || seer.Is(CustomRoles.LoyalDoggy)
                 || Duelist.CheckNotify(seer)
                 )
             {
