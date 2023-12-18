@@ -215,6 +215,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
             TeamType.Jackal => CustomWinnerHolder.WinnerTeam == CustomWinner.Jackal,
             TeamType.Egoist => CustomWinnerHolder.WinnerTeam == CustomWinner.Egoist,
             TeamType.DarkHide => CustomWinnerHolder.WinnerTeam == CustomWinner.DarkHide,
+            TeamType.Ogre => CustomWinnerHolder.AdditionalWinnerRoles.Contains(CustomRoles.Ogre),
             TeamType.Opportunist => Player.IsAlive(),
             _ => null,
         };
@@ -288,6 +289,10 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         /// オポチュニスト陣営に所属する状態
         /// </summary>
         Opportunist,
+        /// <summary>
+        /// 鬼陣営に所属する状態
+        /// </summary>
+        Ogre,
     }
     public static Color GetCatColor(TeamType catType)
     {

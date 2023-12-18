@@ -510,6 +510,7 @@ public enum CustomRoles
     God,
     FoxSpirit,
     Immoralist,
+    Ogre,
 
     GM,
     MaxMain,
