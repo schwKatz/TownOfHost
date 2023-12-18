@@ -622,7 +622,8 @@ public static class Utils
         roleString = $"<size=95%>{roleString}</size>".Color(GetRoleColor(myRole).ToReadableColor());
         sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(player.GetRoleInfo(true)).Append("</line-height></size>");
 
-        if (myRole is not CustomRoles.Crewmate and not CustomRoles.Impostor and not CustomRoles.Potentialist)
+        if (myRole is not CustomRoles.Crewmate and not CustomRoles.Impostor and not CustomRoles.Potentialist
+            and not CustomRoles.Counselor and not CustomRoles.MadDilemma)
         {
             //setting
             sb.Append("\n<size=65%><line-height=1.5pic>");
@@ -790,6 +791,7 @@ public static class Utils
                     // 陣営ごとのマーク
                     if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompleteCrew)
                         sb.Append("<size=75%><color=#c71585>○</color>"); //改行を消す
+                    else if (role.GetCustomRoleTypes() == CustomRoleTypes.Unit) sb.Append("<color=#7fff00>Ⓤ</color>");
                     else if (role.IsImpostor()) sb.Append("<size=75%><color=#ff1919>Ⓘ</color></size>");
                     else if (role.IsMadmate())  sb.Append("<size=75%><color=#ff4500>Ⓜ</color></size>");
                     else if (role.IsCrewmate()) sb.Append("<size=75%><color=#6495ed>Ⓒ</color></size>");
@@ -902,7 +904,8 @@ public static class Utils
 
                 sb.Append("\n<size=80%>");
                 // 陣営ごとのマーク
-                if (role.IsImpostor()) sb.Append("<color=#ff1919>Ⓘ</color>");
+                if (role.GetCustomRoleTypes() == CustomRoleTypes.Unit) sb.Append("<color=#7fff00>Ⓤ</color>");
+                else if (role.IsImpostor()) sb.Append("<color=#ff1919>Ⓘ</color>");
                 else if (role.IsMadmate()) sb.Append("<color=#ff4500>Ⓜ</color>");
                 else if (role.IsCrewmate()) sb.Append("<color=#8cffff>Ⓒ</color>");
                 else if (role.IsNeutral()) sb.Append("<color=#ffa500>Ⓝ</color>");
@@ -1216,7 +1219,7 @@ public static class Utils
             //else
             SelfName = $"{ColorString(SelfNameColor, SeerRealName)}{SelfDeathReason}{SelfMark}";
 
-            if (seer.Is(CustomRoles.SeeingOff) || seer.Is(CustomRoles.Sending))
+            if (seer.Is(CustomRoles.SeeingOff) || seer.Is(CustomRoles.Sending) || seer.Is(CustomRoles.MadDilemma))
                 SelfName = Sending.RealNameChange(SelfName);
 
             SelfName = SelfRoleName + "\r\n" + SelfName;
@@ -1353,6 +1356,7 @@ public static class Utils
     {
         foreach (var roleClass in CustomRoleManager.AllActiveRoles.Values)
             roleClass.AfterMeetingTasks();
+        Counselor.AfterMeetingTask();
         if (Options.AirShipVariableElectrical.GetBool())
             AirShipElectricalDoors.Initialize();
         DoorsReset.ResetDoors();

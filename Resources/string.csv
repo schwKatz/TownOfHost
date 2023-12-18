@@ -359,6 +359,19 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "ImmoralistInfoLong","(Neutrals):\nCrewmate, but they belong to team FoxSpirit, one type of FoxSpirit's Madmates.\nWhen the FoxSpirit dies, Immoralist also dies. When Immoralist is exiled，they takes one random person other than FoxSpirit and impostor with them. Power outages and communication sabotage cannot be repaired.","[妖狐陣営]\nクルーだが妖狐の味方をする。\n妖狐と互いに認識できないが、タスクを全て完了させると妖狐を認識できるようになる。妖狐が死亡すると背徳者は後追い自殺する。自身が追放された際、クルーを道ずれする(妖狐、インポスターは道連れしない)。停電、コミュサボの修理ができない。",
 "OgreInfoLong","(Neutrals):\nAdditional victory is awarded if the impostor survives Ogre with at least one impostor remaining at the end of the game.\nIt has a kill button and can kill, but the probability of a successful kill decreases with each successful kill.\nWhen about to be killed by an impostor, it will guard the kill with a set probability. If the kill is from a non-impostor, it will guard the kill with a set probability and rebound to kill.","[ニュートラル]:\nゲーム決着時に、インポスターが1人以上残った状態で自身が生存していると追加で勝利する。\nキルボタンを持ちキルできるが、キル成功確率はキルに成功する毎に下がる。\nインポスターからキルされそうになった時、設定確率でキルガードする。インポスター以外からのキルの場合、設定確率でキルガードし、はね返してキルする。",
 
+# Unit-Role
+"CounselorAndMadDilemma","<color=#ffc0cb>Counselor</color>＆<color=#ff1919>MadDilemma</color>","<color=#ffc0cb>カウンセラー</color>＆<color=#ff1919>マッドジレンマ</color>",
+"Counselor","Counselor","カウンセラー",
+"MadDilemma","Mad Dilemma","マッドジレンマ",
+
+"CounselorAndMadDilemmaInfo","Unit","ユニット",
+"CounselorInfo","Isn't it time for a change of heart?","そろそろ改心しませんか？",
+"MadDilemmaInfo","I'm trying to help Impostor..!","私はインポスターを助けるんだ、、！",
+
+"CounselorAndMadDilemmaInfoLong","(Unit):\n\nCounselor(Crewmates)\nCounseling is available when the counselor is alive and has completed certain tasks.\nWhen Counselor votes for a MadDilemma at the time of the meeting, MadDilemma can be made to be the crewmate's.\n\nMad Dilemma(Impostors):\nJust a Madmate for unit positions. Customize the attributes from the settings. ","[ユニット]\n\nカウンセラー[クルー陣営]\nカウンセラーが生存している且つ、一定タスク完了した時からカウンセリングを行うことが可能。\n会議時にカウンセラーの投票した先がマッドジレンマの時、マッドジレンマをクルー陣営にさせることができる。\n\nマッドジレンマ[インポスター陣営]\nユニット役職用のただのマッドメイト。属性を設定からカスタマイズしよう。",
+"CounselorInfoLong","(Crewmates)\nCounseling is available when the counselor is alive and has completed certain tasks.\nWhen Counselor votes for a MadDilemma at the time of the meeting, MadDilemma can be made to be the crewmate's.","[クルー陣営]\nカウンセラーが生存している且つ、一定タスク完了した時からカウンセリングを行うことが可能。\n会議時にカウンセラーの投票した先がマッドジレンマの時、マッドジレンマをクルー陣営にさせることができる。",
+"MadDilemmaInfoLong","(Impostors):\nJust a Madmate for unit positions. Customize the attributes from the settings.","[インポスター陣営]\nユニット役職用のただのマッドメイト。属性を設定からカスタマイズしよう。",
+
 "# HideAndSeek"
 "HASFox","Fox","狐","狐狸","狐妖","Лис","Raposa"
 "HASTroll","Troll","トロール","猎人","誘捕者","Тролль","Troll"
@@ -894,6 +907,12 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "OgreKillSuccessRate","Percentage Reduction in the Rate of Successful Kill(*)","キル成功確率が減少する割合(×)",
 "OgreKilledGuardRate","Killed Guard Rate","キルされる時にガードする確率",
 
+# Unit
+"CounselorTaskTrigger","Counselor Trigger Tasks","カウンセラーの能力が使用できるタスク数",
+"CounselorChallengeMaxCount","Counselor Voting with Ability Count","カウンセラーの能力投票できる回数",
+"MadDilemmaResetAddonChangeCrew","MadDilemma Resets Addon After Change to Crewmate","マッドジレンマがクルーに改心後、属性をリセットする",
+
+
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
 "LoversAddWin","Make the Win an Additional Win","勝利を追加勝利にする","以胜利为追加胜利",
@@ -1237,6 +1256,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "ExtendedChat","Extended Chat","拡張チャット",,,,
 "SelectGuardPlayer","Select Guard Player","ガード対象を選択",
 "SelectMaster","Select Master","ご主人を選べ"
+"DoCounsel","Do Counsel","投票でカウンセル",
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,
