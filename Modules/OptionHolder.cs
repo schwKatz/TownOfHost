@@ -364,7 +364,7 @@ public static class Options
 
         sortedRoleInfo.Where(role => role.CustomRoleType is CustomRoleTypes.Impostor or CustomRoleTypes.Madmate).Do(info =>
         {
-            if (!SpecialEvent.IsEventRole(info.RoleName))
+            if (!SpecialEvent.IsEventRole(info.RoleName) && info.RoleName != CustomRoles.MadCostomer)
             {
                 SetupRoleOptions(info);
                 info.OptionCreator?.Invoke();

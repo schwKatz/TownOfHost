@@ -1269,7 +1269,7 @@ Jungle_RightDown,Jungle_Right Down,ジャングル右下,
 SplashZone,Splash Zone,スプラッシュゾーン,
 Dropship_Left,Dropship_Left,ドロップシップ外左,
 
-"VentEnterTaskMaxCount","VentEnter Task Count","ベント選択タスクのタスク数(1ターン最大1個可能)",
+"VentEnterTaskMaxCount","VentEnter Task Count","タスク数 [ベント選択Only](1ターン最大1個可能)",
 
 ##猫取合戦
 CatchCat,CatchCat Battle,猫取合戦,抓猫大赛
