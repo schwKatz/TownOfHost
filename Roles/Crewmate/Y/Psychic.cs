@@ -114,7 +114,7 @@ public sealed class Psychic : RoleBase
         if (!VentSelect.IsShowTargetRole(Player, seen)) return;
         if (KillerOnly.GetBool() &&
             !(seen.GetCustomRole().IsImpostor() || seen.IsNeutralKiller() || seen.IsCrewKiller()
-            || seen.Is(CustomRoles.MadSheriff)|| seen.Is(CustomRoles.GrudgeSheriff))) return;
+            || seen.Is(CustomRoles.MadSheriff)|| seen.Is(CustomRoles.GrudgeSheriff) || seen.Is(CustomRoles.MadCostomer))) return;
 
         enabled = true;
 
@@ -143,7 +143,7 @@ public sealed class Psychic : RoleBase
         if (!ConfirmCamp.GetBool()) return false;   //役職表示
         if (KillerOnly.GetBool() &&
         !(target.GetCustomRole().IsImpostor() || target.IsNeutralKiller() || target.IsCrewKiller()
-        || target.Is(CustomRoles.MadSheriff) || target.Is(CustomRoles.GrudgeSheriff))) return false;
+        || target.Is(CustomRoles.MadSheriff) || target.Is(CustomRoles.GrudgeSheriff) || target.Is(CustomRoles.MadCostomer))) return false;
         return true;
     }
 
