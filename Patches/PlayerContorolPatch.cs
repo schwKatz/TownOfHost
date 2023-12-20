@@ -16,7 +16,6 @@ using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.AddOns.Crewmate;
 using static TownOfHostY.Translator;
 using TownOfHostY.Roles.Impostor;
-using TownOfHostY.Roles.Madmate;
 
 namespace TownOfHostY
 {
@@ -643,7 +642,6 @@ namespace TownOfHostY
                     __instance.RpcBootFromVent(id);
 
                 if ((!user.GetRoleClass()?.OnEnterVent(__instance, id) ?? false) ||
-                    !VentEnterTask.OnEnterVent(__instance, id) ||
                     (user.GetCustomRole().IsCCCatRoles() && !CatchCat.CatPlayer.CanUseVent(user)) ||
                     (user.Data.Role.Role != RoleTypes.Engineer && //エンジニアでなく
                     !user.CanUseImpostorVentButton()) //インポスターベントも使えない

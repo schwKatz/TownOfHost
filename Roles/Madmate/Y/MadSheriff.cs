@@ -50,8 +50,13 @@ public sealed class MadSheriff : RoleBase, IKiller
         OptionCanVent = BooleanOptionItem.Create(RoleInfo, 12, GeneralOption.CanVent, false, false);
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, RoleInfo.RoleName, RoleInfo.Tab);
     }
-    public float CalculateKillCooldown() => KillCooldown;
-    public bool CanUseImpostorVentButton() => CanVent;
+    public override void Add()
+    {
+        var playerId = Player.PlayerId;
+    }
+    public float CalculateKillCooldown() => CanUseKillButton() ? KillCooldown : 0f;
+    public bool CanUseKillButton() => Player.IsAlive();
+    public bool CanUseImpostorVentButton() => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
         opt.SetVision(Options.AddOnRoleOptions[(CustomRoles.MadSheriff, CustomRoles.AddLight)].GetBool());

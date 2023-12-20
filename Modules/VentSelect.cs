@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-using TownOfHostY.Attributes;
+using UnityEngine;
 
 namespace TownOfHostY
 {
@@ -16,7 +15,6 @@ namespace TownOfHostY
         public static Dictionary<byte, Action> SelectedAction = new();
         public static Dictionary<byte, int> NowSelectNumber = new();
 
-        [GameModuleInitializer]
         public static void Init()
         {
             PlayerIdList = new();

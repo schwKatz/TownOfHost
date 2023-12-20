@@ -4,8 +4,6 @@ using UnityEngine;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Neutral;
-using TownOfHostY.Roles.Madmate;
-
 namespace TownOfHostY
 {
     [HarmonyPatch(typeof(Console), nameof(Console.CanUse))]
