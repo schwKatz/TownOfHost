@@ -549,6 +549,7 @@ public static class Utils
         var role = State.MainRole;
         var roleClass = CustomRoleManager.GetByPlayerId(playerId);
         ProgressText.Append(GetTaskProgressText(playerId, comms));
+        ProgressText.Append(VentEnterTask.GetProgressText(playerId, comms));
         if (roleClass != null)
         {
             ProgressText.Append(roleClass.GetProgressText(comms));
@@ -600,7 +601,8 @@ public static class Utils
                 all += taskState.AllTasksCount;
             }
         }
-        return (completed, all);
+        (int vtComp, int vtTotal) = VentEnterTask.TaskWinCountData();
+        return (completed + vtComp, all + vtTotal);
     }
 
     public static string GetMyRoleInfo(PlayerControl player)
@@ -1175,6 +1177,8 @@ public static class Utils
             //Markとは違い、改行してから追記されます。
             SelfSuffix.Clear();
 
+            // ベントタスクの対象ベント表示
+            SelfSuffix.Append(VentEnterTask.GetLowerText(seer, isForMeeting: isForMeeting));
             //seer役職が対象のLowerText
             SelfSuffix.Append(seerRole?.GetLowerText(seer, isForMeeting: isForMeeting));
             //seerに関わらず発動するLowerText
@@ -1258,6 +1262,7 @@ public static class Utils
                 || seer.Is(CustomRoles.GrudgeSheriff)
                 || seer.Is(CustomRoles.AntiComplete)
                 || seer.Is(CustomRoles.Totocalcio)
+                || seer.Is(CustomRoles.MadCostomer)
                 || Duelist.CheckNotify(seer)
                 )
             {
@@ -1347,6 +1352,7 @@ public static class Utils
     {
         foreach (var roleClass in CustomRoleManager.AllActiveRoles.Values)
             roleClass.AfterMeetingTasks();
+        VentEnterTask.AfterMeetingTasks();
         if (Options.AirShipVariableElectrical.GetBool())
             AirShipElectricalDoors.Initialize();
         DoorsReset.ResetDoors();
