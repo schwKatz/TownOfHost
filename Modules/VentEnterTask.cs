@@ -121,7 +121,7 @@ static class VentEnterTask
         if (taskCountNow[id] >= taskCountMax[id]) text = "";
         else if (nowTurnFinish[id]) text = "Task：Next Turn";
 
-        var color = taskWinCount[id] ? Color.yellow : Color.white;
+        var color = taskWinCount[id] ? Color.white : GetRoleColor(seer.GetCustomRole());
         return text.Color(color);
     }
 
