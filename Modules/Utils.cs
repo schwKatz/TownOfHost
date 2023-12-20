@@ -1258,6 +1258,7 @@ public static class Utils
                 || seer.Is(CustomRoles.GrudgeSheriff)
                 || seer.Is(CustomRoles.AntiComplete)
                 || seer.Is(CustomRoles.Totocalcio)
+                || seer.Is(CustomRoles.Immoralist)
                 || Duelist.CheckNotify(seer)
                 )
             {

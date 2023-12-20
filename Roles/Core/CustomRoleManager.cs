@@ -10,6 +10,7 @@ using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Impostor;
+using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Common;
 
 namespace TownOfHostY.Roles.Core;
@@ -67,6 +68,8 @@ public static class CustomRoleManager
                 if (Guarding.OnCheckMurder(info)) { }
                 // メディックの対象プレイヤー
                 else if (Medic.GuardPlayerCheckMurder(info)) { }
+                // 背徳者の対象プレイヤー
+                else if (Immoralist.GuardPlayerCheckMurder(info)) { }
                 // ターゲットのキルチェック処理実行
                 else if (targetRole != null)
                 {

@@ -34,17 +34,22 @@ public sealed class FoxSpirit : RoleBase, ISystemTypeUpdateHook
         () => HasTask.ForRecompute
     )
     {
+        KilledAfterFinishTask = OptionKilledAfterFinishTask.GetBool();
     }
     private static OptionItem OptionTaskCount;
+    private static OptionItem OptionKilledAfterFinishTask;
+    private bool KilledAfterFinishTask;
     private enum OptionName
     {
         FoxSpiritTaskCount,
+        FoxSpiritKilledAfterFinishTask,
     }
 
     private static void SetupOptionItem()
     {
         OptionTaskCount = IntegerOptionItem.Create(RoleInfo, 10, OptionName.FoxSpiritTaskCount, new(1, 50, 1), 10, false)
                 .SetValueFormat(OptionFormat.Pieces);
+        OptionKilledAfterFinishTask = BooleanOptionItem.Create(RoleInfo, 11, OptionName.FoxSpiritKilledAfterFinishTask, true, false);
     }
     public static (bool, int, int) TaskData => (false, 0, OptionTaskCount.GetInt());
     public static bool CheckWin()
@@ -58,6 +63,8 @@ public sealed class FoxSpirit : RoleBase, ISystemTypeUpdateHook
         (var killer, var target) = info.AttemptTuple;
         // 直接キル出来る役職チェック
         if (killer.GetCustomRole().IsDirectKillRole()) return true;
+        // タスク完了していたらキルされる
+        if (KilledAfterFinishTask && IsTaskFinished) return true;
 
         killer.RpcProtectedMurderPlayer(target); //常にバリアする、互いに分かる
         target.RpcProtectedMurderPlayer(target);

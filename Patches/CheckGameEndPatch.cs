@@ -59,7 +59,7 @@ namespace TownOfHostY
                 }
                 if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw and not CustomWinner.None)
                 {
-                    if (FoxSpirit.CheckWin())
+                    if (FoxSpirit.CheckWin() && !reason.Equals(GameOverReason.ImpostorBySabotage))
                     {
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.FoxSpirit);
                         Main.AllPlayerControls

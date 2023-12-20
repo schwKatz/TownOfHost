@@ -874,7 +874,13 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "GodTaskCompleteToWin","Task Complete To Win","タスクを終わらせないと勝利できない","","","",""
 "GodViewVoteFor","View Where To Vote","投票先が見える	","","","",""
 "FoxSpiritTaskCount","Clean Vent Task Count","ベント掃除のタスク数",
+"FoxSpiritKilledAfterFinishTask","Killed After Finish Task","タスク全完了後はキルが通る",
 "ImmoralistCanAlsoBeExposedToFox","Immoralist Also Exposed To FoxSpirit","背徳者が妖狐からも視認できる",
+"ImmoralistOptionAddGuard","Provides Guard","他者へガードを付与できる",
+"ImmoralistOptionAddGuardTiming","Selection Method","選択方法",
+"SelectFirstMeeting","First Meeting","一回目の会議",
+"SelectTaskFinish","After Task Finish","タスク全完了後の会議",
+"SelectRandom","Random Provide","ランダム付与",
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
@@ -1217,6 +1223,8 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "nameChangeMode.Crew","Crewmate","クルー","船员","船員","Экипаж","Tripulante"
 "nameChangeMode.Color","Color","色名",
 "ExtendedChat","Extended Chat","拡張チャット",,,,
+"SelectGuardPlayer","Select Guard Player","ガード対象を選択",
+
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,
