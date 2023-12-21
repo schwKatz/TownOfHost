@@ -824,6 +824,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "PsychicMaxCheckRole","Role of The Deceased Can Be Checked Count","霊媒できる回数",
 "LoyalDoggyMasterSeeMasterMark","Master Finds Himself Master","ご主人は自身がご主人だと分かる",
 "LoyalDoggyIgnoreTaskAfterDeadMaster","After the Death of Master, Task Be Lost","ご主人死亡後はタスクが無くなる",
+"LoyalDoggyIsInfoPoor","After the Death of Master, Unable to Use Devices such as Admin,Camera,etc.","ご主人死亡後、アドミン・カメラ等の機器が使用できない",
+"LoyalDoggyIsClumsy","After the Death of Master, Cannot Fix Lights And Fix Comms","ご主人死亡後、停電・通信妨害が直せない",
 
 "Head.LimitedTimeRole","Limited Time Role 12/23～12/25","期間限定役職 12/23～12/25"
 ##"Potentialist","Potentialist","ポテンシャリスト",

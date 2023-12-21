@@ -51,10 +51,15 @@ public sealed class LoyalDoggy : RoleBase
 
     private static OptionItem OptionMasterSeeMasterMark;
     private static OptionItem OptionIgnoreTaskAfterDeadMaster;
+    private static OptionItem OptionIsInfoPoor;
+    private static OptionItem OptionIsClumsy;
+
     enum OptionName
     {
         LoyalDoggyMasterSeeMasterMark,
-        LoyalDoggyIgnoreTaskAfterDeadMaster
+        LoyalDoggyIgnoreTaskAfterDeadMaster,
+        LoyalDoggyIsInfoPoor,
+        LoyalDoggyIsClumsy,
     }
     private static bool MasterSeeMasterMark;
     private static bool IgnoreTaskAfterDeadMaster;
@@ -63,6 +68,8 @@ public sealed class LoyalDoggy : RoleBase
     {
         OptionMasterSeeMasterMark = BooleanOptionItem.Create(RoleInfo, 10, OptionName.LoyalDoggyMasterSeeMasterMark, false, false);
         OptionIgnoreTaskAfterDeadMaster = BooleanOptionItem.Create(RoleInfo, 11, OptionName.LoyalDoggyIgnoreTaskAfterDeadMaster, true, false);
+        OptionIsInfoPoor = BooleanOptionItem.Create(RoleInfo, 12, OptionName.LoyalDoggyIsInfoPoor, false, false).SetParent(OptionIgnoreTaskAfterDeadMaster);
+        OptionIsClumsy = BooleanOptionItem.Create(RoleInfo, 13, OptionName.LoyalDoggyIsClumsy, false, false).SetParent(OptionIgnoreTaskAfterDeadMaster);
     }
 
     public override (byte? votedForId, int? numVotes, bool doVote) ModifyVote(byte voterId, byte sourceVotedForId, bool isIntentional)
@@ -89,7 +96,12 @@ public sealed class LoyalDoggy : RoleBase
 
     public override void AfterMeetingTasks()
     {
-        if (masterDecision && !Master.IsAlive()) masterIsDead = true;
+        if (masterDecision && !Master.IsAlive() && !masterIsDead)
+        {
+            masterIsDead = true;
+            if (OptionIsInfoPoor.GetBool()) Player.RpcSetCustomRole(CustomRoles.InfoPoor);
+            if (OptionIsClumsy.GetBool()) Player.RpcSetCustomRole(CustomRoles.Clumsy);
+        }
     }
     public static bool IgnoreTask(GameData.PlayerInfo p)
     {
