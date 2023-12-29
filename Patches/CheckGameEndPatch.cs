@@ -243,9 +243,10 @@ namespace TownOfHostY
 
                 int Imp = Utils.AlivePlayersCount(CountTypes.Impostor);
                 int Jackal = Utils.AlivePlayersCount(CountTypes.Jackal);
+                int Pirate = Utils.AlivePlayersCount(CountTypes.Pirate);
                 int Crew = Utils.AlivePlayersCount(CountTypes.Crew);
 
-                if (Imp == 0 && Crew == 0 && Jackal == 0) //全滅
+                if (Imp == 0 && Crew == 0 && Jackal == 0 && Pirate == 0) //全滅
                 {
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.None);
@@ -255,19 +256,25 @@ namespace TownOfHostY
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lovers);
                 }
-                else if (Jackal == 0 && Crew <= Imp) //インポスター勝利
+                else if (Jackal == 0 && Pirate == 0 && Crew <= Imp) //インポスター勝利
                 {
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Impostor);
                 }
-                else if (Imp == 0 && Crew <= Jackal) //ジャッカル勝利
+                else if (Imp == 0 && Pirate == 0 && Crew <= Jackal) //ジャッカル勝利
                 {
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Jackal);
                     CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Jackal);
                     CustomWinnerHolder.WinnerRoles.Add(CustomRoles.JClient);
                 }
-                else if (Jackal == 0 && Imp == 0) //クルー勝利
+                else if (Imp == 0 && Jackal == 0 && Crew <= Pirate) //海賊勝利
+                {
+                    reason = GameOverReason.ImpostorByKill;
+                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Pirate);
+                    CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Pirate);
+                }
+                else if (Jackal == 0 && Pirate == 0 && Imp == 0) //クルー勝利
                 {
                     reason = GameOverReason.HumansByVote;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Crewmate);

@@ -12,6 +12,7 @@ using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.AddOns.Impostor;
 using TownOfHostY.Roles.AddOns.Crewmate;
+using TownOfHostY.CatchCat;
 
 namespace TownOfHostY;
 
@@ -769,11 +770,21 @@ public static class Options
     }
     
     //AddOn
-    public static void SetUpAddOnOptions(int Id, CustomRoles PlayerRole, TabGroup tab, CustomRoles parentRole = CustomRoles.NotAssigned)
+    public static void SetUpAddOnOptions(int Id, CustomRoles PlayerRole, TabGroup tab, CustomRoles parentRole = CustomRoles.NotAssigned, bool addRoleName = false)
     {
         if (parentRole == CustomRoles.NotAssigned) parentRole = PlayerRole;
 
-        AddOnBuffAssign[PlayerRole] = BooleanOptionItem.Create(Id, "AddOnBuffAssign", false, tab, false).SetParent(CustomRoleSpawnChances[parentRole]);
+        if (!addRoleName)
+        {
+            AddOnBuffAssign[PlayerRole] = BooleanOptionItem.Create(Id, "AddOnBuffAssign", false, tab, false).SetParent(CustomRoleSpawnChances[parentRole]);
+        }
+        else
+        {
+            var roleName = Utils.GetRoleName(PlayerRole);
+            Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(PlayerRole), roleName) } };
+            AddOnBuffAssign[PlayerRole] = BooleanOptionItem.Create(Id, "AddOnBuffAssign%role%", false, tab, false).SetParent(CustomRoleSpawnChances[parentRole]);
+            AddOnBuffAssign[PlayerRole].ReplacementDictionary = replacementDic;
+        }
         Id += 10;
         foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsBuffAddOn()))
         {
@@ -786,7 +797,18 @@ public static class Options
             SetUpAddOnRoleOption(PlayerRole, tab, Addon, Id, false, AddOnBuffAssign[PlayerRole]);
             Id++;
         }
-        AddOnDebuffAssign[PlayerRole] = BooleanOptionItem.Create(Id, "AddOnDebuffAssign", false, tab, false).SetParent(CustomRoleSpawnChances[parentRole]);
+
+        if (!addRoleName)
+        {
+            AddOnDebuffAssign[PlayerRole] = BooleanOptionItem.Create(Id, "AddOnDebuffAssign", false, tab, false).SetParent(CustomRoleSpawnChances[parentRole]);
+        }
+        else
+        {
+            var roleName = Utils.GetRoleName(PlayerRole);
+            Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(PlayerRole), roleName) } };
+            AddOnDebuffAssign[PlayerRole] = BooleanOptionItem.Create(Id, "AddOnDebuffAssign%role%", false, tab, false).SetParent(CustomRoleSpawnChances[parentRole]);
+            AddOnDebuffAssign[PlayerRole].ReplacementDictionary = replacementDic;
+        }
         Id += 10;
         foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsDebuffAddOn()))
         {
@@ -812,14 +834,25 @@ public static class Options
         public OptionItem numLongTasks;
         public OptionItem numShortTasks;
 
-        public OverrideTasksData(int idStart, TabGroup tab, CustomRoles role, OptionItem option = null)
+        public OverrideTasksData(int idStart, TabGroup tab, CustomRoles role, OptionItem option = null, bool addRoleName = false)
         {
             this.IdStart = idStart;
             this.Role = role;
 
             if(option == null) option = CustomRoleSpawnChances[role];
-            doOverride = BooleanOptionItem.Create(idStart++, "doOverride", false, tab, false).SetParent(option)
-                .SetValueFormat(OptionFormat.None);
+            if (!addRoleName)
+            {
+                doOverride = BooleanOptionItem.Create(idStart++, "doOverride", false, tab, false).SetParent(option)
+                    .SetValueFormat(OptionFormat.None);
+            }
+            else
+            {
+                var roleName = Utils.GetRoleName(role);
+                Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), roleName) } };
+                doOverride = BooleanOptionItem.Create(idStart++, "doOverride%role%", false, tab, false).SetParent(option);
+                doOverride.ReplacementDictionary = replacementDic;
+            }
+
             assignCommonTasks = BooleanOptionItem.Create(idStart++, "assignCommonTasks", true, tab, false).SetParent(doOverride)
                 .SetValueFormat(OptionFormat.None);
             numLongTasks = IntegerOptionItem.Create(idStart++, "roleLongTasksNum", new(0, 99, 1), 3, tab, false).SetParent(doOverride)
@@ -834,9 +867,13 @@ public static class Options
         {
             return new OverrideTasksData(idStart, tab, role);
         }
-        public static OverrideTasksData Create(SimpleRoleInfo roleInfo, int idOffset, OptionItem option = null)
+        public static OverrideTasksData Create(SimpleRoleInfo roleInfo, int idOffset, OptionItem option = null, CustomRoles setRole = CustomRoles.NotAssigned)
         {
-            return new OverrideTasksData(roleInfo.ConfigId + idOffset, roleInfo.Tab, roleInfo.RoleName, option);
+            bool addRoleName = false;
+            if (setRole == CustomRoles.NotAssigned) setRole = roleInfo.RoleName;
+            else addRoleName = true;
+
+            return new OverrideTasksData(roleInfo.ConfigId + idOffset, roleInfo.Tab, setRole, option, addRoleName);
         }
     }
 

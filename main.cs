@@ -53,7 +53,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "513.19.3.1";
+        public const string PluginVersion = "513.19.3.6";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.10.24";
         // このバージョンのみで公開ルームを無効にする場合
@@ -305,6 +305,7 @@ namespace TownOfHostY
         Lawyer = CustomRoles.Lawyer,
         God = CustomRoles.God,
         FoxSpirit = CustomRoles.FoxSpirit,
+        Pirate = CustomRoles.Pirate,
 
         //CC
         RedL = CustomRoles.CCRedLeader,

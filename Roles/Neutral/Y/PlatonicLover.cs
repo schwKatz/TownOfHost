@@ -67,8 +67,7 @@ public sealed class PlatonicLover : RoleBase, IKiller
     public override void OnStartMeeting() => TurnNumber++;
     public override string GetProgressText(bool comms = false)
     {
-        if (limitTurn > TurnNumber) return string.Empty;
-        if (!Player.IsAlive() || isMadeLover) return string.Empty;
+        if (limitTurn < TurnNumber || !Player.IsAlive() || isMadeLover) return string.Empty;
 
         return Utils.ColorString(RoleInfo.RoleColor, $"[{TurnNumber}/{limitTurn}]");
     }

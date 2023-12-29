@@ -746,6 +746,7 @@ namespace TownOfHostY
                     {
                         ghostRoles[seer] = RoleTypes.CrewmateGhost;
                     }
+                    if (Pirate.TargetSetGhostAndTask(target)) ghostRoles[seer] = RoleTypes.CrewmateGhost;
                 }
                 if (ghostRoles.All(kvp => kvp.Value == RoleTypes.CrewmateGhost))
                 {

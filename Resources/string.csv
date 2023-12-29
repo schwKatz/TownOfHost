@@ -306,6 +306,8 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "FoxSpirit","Fox Spirit","妖狐",
 "Immoralist","Immoralist","背徳者",
 "Ogre","Ogre","鬼",
+"Pirate","Pirate","海賊",
+"Gang","Gang","一味",
 
 "ArsonistInfo","Burn them to crisps","燃やせ","火焰给我燃烧起来吧！","燒吧，燒吧，燃燒吧","Облейте и подожгите всех игроков","Queime tudo em pedacinhos"
 "JesterInfo","Get voted out","追放されよう","让他们把你这个假货投出去","想個辦法讓你被投出去","Заставь игроков изгнать себя","Seja exilado"
@@ -335,6 +337,8 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "FoxSpiritInfo","Survive and intercept the victory","生き残って勝利を横取りしよう",
 "ImmoralistInfo","Help the FoxSpirit","妖狐の援助をし、勝利へ導こう",
 "OgreInfo","I held the club!","金棒を持たせたな？",
+"PirateInfo","I am the captain of the pirates","海賊団船長とはこの私だ",
+"GangInfo","As Gang, we're going to make sure the captain wins","一味として船長を勝たせるんだ",
 
 "ArsonistInfoLong","(Neutrals):\nWhen you use the kill button, you douse your target in oil.\nAfter dousing all living players, you set everything ablaze and win by venting.","(ニュートラル):\nキルボタンを使おうとすると、ターゲットに油を塗れる。\nすべてのクルーに油を塗ったら船を燃やして勝利する。","(独立阵营):\n纵火犯可以通过对玩家点击击杀按钮并在跟随其数秒来完成涂油行为。\n当所有存活玩家都被纵火犯涂油后，纵火犯可以通过跳通风管来点火，并单独获得胜利。","(中立):\n當縱火犯嘗試使用殺人鍵,它將對他身邊最近的一個人澆上油,\n當他對所有玩家澆上油之後,縱火縱火犯點火即勝利。","(Нейтрал):\nПоджигатель может обливать игроков, нажав на кнопку 'Убить' и находясь рядом с игроком в течение нескольких секунд. \nПосле того как он обольёт всех живых игроков Поджигатель сможет запрыгнуть в вентиляцию, чтобы поджечь всех игроков, что приводит к победе Поджигателя.","(Neutros):\nAo apertar o botão de matar, você encharca o seu inimigo em óleo.\nApós ter encharcado todos os jogadores vivos, você coloca tudo em chamas e ganha entrando na ventilação."
 "JesterInfoLong","(Neutrals):\nYou solo victory by getting voted out during a meeting.\nIf the game ends without you getting voted out, or if you are killed, you lose.","(ニュートラル):\n会議で追放された時に単独勝利できる。\n追放されず試合が終了orキルされると敗北。","(独立阵营):\n小丑被放逐则小丑单独游戏胜利。\n游戏结束时若小丑仍存活则小丑输掉游戏。","(中立):\n當小丑被丟出時即宣告小丑獲勝,\n但是小丑在遊戲結束時活下來或是在遊戲中被殺即宣告失敗","(Нейтрал):\nШут сможет выиграть игру, если за него проголосуют во время голосования и он будет изгнан.\nВ противном случае Шут проиграет.","(Neutros): \nVocê ganha sozinho ao ser exilado durante uma reunião. \nSe o jogo terminar com você não sendo votado, ou você for morto, você perde."
@@ -358,6 +362,8 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "FoxSpiritInfoLong","(Neutrals):\nAfter completing the task, when the Impostor or Crewmate achieve the victory conditions while FoxSpirit is still alive, win.\nAlways have a shield and never get killed. All tasks are vent tasks only. Reactor and O2 sabotage is not repairable. Cannot report a dead body.\n※Not available：Polus,Fungle","[妖狐陣営]\nタスク完了後に自身が生存している状態で、インポスター及びクルーが勝利条件を達成した時、横取りで勝利する。\n常にバリアを所持し、妖狐にキルボタンが押された時に互いにバリアが見える。タスクは全てベント掃除タスク。リアクター・Ｏ２サボの修理、死体通報ができない。\n※使用できません：Polus,Fungle",
 "ImmoralistInfoLong","(Neutrals):\nCrewmate, but they belong to team FoxSpirit, one type of FoxSpirit's Madmates.\nWhen the FoxSpirit dies, Immoralist also dies. When Immoralist is exiled，they takes one random person other than FoxSpirit and impostor with them. Power outages and communication sabotage cannot be repaired.","[妖狐陣営]\nクルーだが妖狐の味方をする。\n妖狐と互いに認識できないが、タスクを全て完了させると妖狐を認識できるようになる。妖狐が死亡すると背徳者は後追い自殺する。自身が追放された際、クルーを道ずれする(妖狐、インポスターは道連れしない)。停電、コミュサボの修理ができない。",
 "OgreInfoLong","(Neutrals):\nAdditional victory is awarded if the impostor survives Ogre with at least one impostor remaining at the end of the game.\nIt has a kill button and can kill, but the probability of a successful kill decreases with each successful kill.\nWhen about to be killed by an impostor, it will guard the kill with a set probability. If the kill is from a non-impostor, it will guard the kill with a set probability and rebound to kill.","[ニュートラル]:\nゲーム決着時に、インポスターが1人以上残った状態で自身が生存していると追加で勝利する。\nキルボタンを持ちキルできるが、キル成功確率はキルに成功する毎に下がる。\nインポスターからキルされそうになった時、設定確率でキルガードする。インポスター以外からのキルの場合、設定確率でキルガードし、はね返してキルする。",
+"PirateInfoLong","(Neutrals):\n","[ニュートラル]\n",
+"GangInfoLong","(Neutrals):\n","[ニュートラル]\n",
 
 # Unit-Role
 "CounselorAndMadDilemma","<color=#ffc0cb>Counselor</color>＆<color=#ff1919>MadDilemma</color>","<color=#ffc0cb>カウンセラー</color>＆<color=#ff1919>マッドジレンマ</color>",
@@ -895,6 +901,13 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "PursuerGuardNum","Pursuer guard count","追跡者のキルガード回数","起诉人自保次数",
 "PlatonicLoverLimitTurn","Have to Make Love at First Sight Turn","一目惚れしないといけないターン数",
 "GodTaskCompleteToWin","Task Complete To Win","タスクを終わらせないと勝利できない","","","",""
+"GodViewVoteFor","View Where To Vote","投票先が見える	","","","",""
+"PirateLimitTurn","Turn Required To Create Gang","一味を作成しないといけないターン数",
+"PirateImpostorCanBeGang","Impostor Can Be Gang","インポスターが一味になれる",
+"PirateMadmateCanBeGang","Madmate Can Be Gang","マッドメイトが一味になれる",
+"PirateNeutralCanBeGang","Neutral Can Be Gang","ニュートラルが一味になれる",
+"PirateBuffAddonAssignTarget","Buff Add-On To Be Granted (Gang Task 75%)","一味のタスク75%で付与するバフ属性",
+"Random","Random","ランダム","随机",
 "GodViewVoteFor","View Where To Vote","投票先が見える","","","",""
 "FoxSpiritTaskCount","Clean Vent Task Count","ベント掃除のタスク数",
 "FoxSpiritKilledAfterFinishTask","Killed After Finish Task","タスク全完了後はキルが通る",
@@ -906,12 +919,17 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "SelectRandom","Random Provide","ランダム付与",
 "OgreKillSuccessRate","Percentage Reduction in the Rate of Successful Kill(*)","キル成功確率が減少する割合(×)",
 "OgreKilledGuardRate","Killed Guard Rate","キルされる時にガードする確率",
+"PirateLimitTurn","Turn Required To Create Gang","一味を作成しないといけないターン数",
+"PirateImpostorCanBeGang","Impostor Can Be Gang","インポスターが一味になれる",
+"PirateMadmateCanBeGang","Madmate Can Be Gang","マッドメイトが一味になれる",
+"PirateNeutralCanBeGang","Neutral Can Be Gang","ニュートラルが一味になれる",
+"PirateBuffAddonAssignTarget","Buff Add-On To Be Granted (Gang Task 75%)","一味のタスク75%で付与するバフ属性",
+"Random","Random","ランダム","随机",
 
 # Unit
 "CounselorTaskTrigger","Counselor Trigger Tasks","カウンセラーの能力が使用できるタスク数",
 "CounselorChallengeMaxCount","Counselor Voting with Ability Count","カウンセラーの能力投票できる回数",
 "MadDilemmaResetAddonChangeCrew","MadDilemma Resets Addon After Change to Crewmate","マッドジレンマがクルーに改心後、属性をリセットする",
-
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
@@ -928,7 +946,9 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "ManagementSeeNowtask"," - Watch now all task count"," - 会議時以外でもタスク数が見える"," - 现在观看所有的任务计数",,
 
 "AddOnBuffAssign","Assign Buff Add-On","バフ属性を付与する","分配加强效果"
+"AddOnBuffAssign%role%","%role% Assign Buff Add-On","%role%にバフ属性を付与する","%role% 分配加强效果"
 "AddOnDebuffAssign","Assign Debuff Add-On","デバフ属性を付与する","分配弱化效果"
+"AddOnDebuffAssign%role%","%role% Assign Debuff Add-On","%role%にデバフ属性を付与する","%role% 分配弱化效果"
 "AddOnAssign%role%","%role%","%role%","%role%","%role%"
 "AddonShowMode","Add-On Show Style","属性の表示方法",
 "addonShowModes.Default","Default","デフォルト",
@@ -1202,6 +1222,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "PressTabToNextPage","Press Tab or Number for Next Page...","Tabキーまたは数字キーを押して次のページへ...","按下tab键查看更多...","按下Tab以顯示下一頁...","Нажмите Tab или Цифру чтобы перейти на следующую страницу...","Aperte Tab ou Números para Passar a Página..."
 "RoleSummaryText","Game End Player-Roles List:","ゲーム終了時の役職一覧:","游戏结束时玩家的职业:","遊戲結束時玩家的職業:","Игроки и роли в конце игры:","Lista de Classes dos Jogadores ao Final do Jogo:"
 "doOverride","Override Tasks","タスク上書き(1以上)","特别设置任务数","特別設定任務","Изменить задания","Ignorar Tarefas (Mínimo1)"
+"doOverride%role%","%role% Override Tasks","%role%のタスク上書き(1以上)","%role% 特别设置任务数","%role% 特別設定任務",
 "assignCommonTasks","Common Tasks","通常タスク","普通任务","普通任務","имеет общие задания","Dar Tarefas Comuns"
 "roleLongTasksNum","Long Tasks","ロングタスク","长任务数","長任務數量","долгие задания","Dar Tarefas Longas"
 "roleShortTasksNum","Short Tasks","ショートタスク","短任务数","短任務數量","короткие задания","Dar Tarefas Curtas"

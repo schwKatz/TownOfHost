@@ -513,6 +513,8 @@ public enum CustomRoles
     FoxSpirit,
     Immoralist,
     Ogre,
+    Pirate,
+    Gang,
 
     GM,
     CounselorAndMadDilemma,

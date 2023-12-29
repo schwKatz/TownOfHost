@@ -80,6 +80,7 @@ namespace TownOfHostY
             return role is CustomRoles.Jackal
                 or CustomRoles.StrayWolf
                 or CustomRoles.DarkHide
+                or CustomRoles.Pirate
                 or CustomRoles.PlatonicLover
                 or CustomRoles.FoxSpirit;;
         }
@@ -264,5 +265,6 @@ namespace TownOfHostY
         Crew,
         Impostor,
         Jackal,
+        Pirate,
     }
 }
