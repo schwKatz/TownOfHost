@@ -594,6 +594,10 @@ namespace TownOfHostY
                     if (Bakery.IsNeutral(player))
                         text = "NBakery";
                     break;
+                case CustomRoles.BestieWolf:
+                    if (InfoLong) break;
+                    Prefix = Main.AliveImpostorCount >= 2 ? "" : "After";
+                    break;
             }
             Info = role.IsVanilla() ? "Blurb" : "Info";
             Info += InfoLong ? "Long" : "";

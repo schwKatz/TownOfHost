@@ -145,6 +145,8 @@ public static class Utils
         {
             if (subRole == CustomRoles.VIP) return true;
         }
+        if (target == BestieWolf.EnableKillFrash) return true;
+
         if (seer.Data.IsDead || killer == seer || target == seer) return false;
 
         if (seer.GetRoleClass() is IKillFlashSeeable killFlashSeeable)
