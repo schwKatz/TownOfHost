@@ -145,8 +145,6 @@ public static class CustomRoleManager
         FixedUpdatePatch.LoversSuicide(attemptTarget.PlayerId);
         //TargetDeadArrow
         TargetDeadArrow.UpdateDeadBody();
-        //WinTask
-        VentEnterTask.TaskWinCountAllComplete(attemptTarget.PlayerId);
 
         //以降共通処理
         var targetState = PlayerState.GetByPlayerId(attemptTarget.PlayerId);

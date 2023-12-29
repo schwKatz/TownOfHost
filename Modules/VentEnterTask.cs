@@ -48,7 +48,6 @@ static class VentEnterTask
     public static bool NowTurnFinish(byte id) => nowTurnFinish[id];
     public static int NowTaskCountNow(byte id) => taskCountNow[id];
     public static Vent NowVentTaskData(byte id) => nowVTask[id];
-
     public static (int complete, int total) TaskWinCountData()
     {
         int comp = 0;
@@ -62,21 +61,6 @@ static class VentEnterTask
             }
         }
         return (comp, total);
-    }
-    public static void TaskWinCountAllComplete(byte id)
-    {
-        if (!PlayerIdList.Contains(id)) return;
-
-        if (taskWinCount[id])
-        {
-            taskCountNow[id] = taskCountMax[id];
-        }
-    }
-    public static void TaskRemove(byte id)
-    {
-        if (!PlayerIdList.Contains(id)) return;
-
-        PlayerIdList.Remove(id);
     }
 
     public static bool OnEnterVent(PlayerPhysics physics, int ventId)
