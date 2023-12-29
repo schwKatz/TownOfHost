@@ -1219,10 +1219,10 @@ UpperEngine,Upper Engine,上部エンジン,
 Security,Security,セキュリティルーム,
 MedBay,Med Bay,医務室,
 Weapons,Weapons,ウェポンルーム,
-Reactor_Lower,Reactor_Lower,原子炉下部,
+Reactor_Lower,Reactor_Lower,リアクター下部,
 LowerEngine,Lower Engine,下部エンジン,
 Shields,Shields,シールドルーム,
-Reactor_Upper,Reactor_Upper,原子炉上部,
+Reactor_Upper,Reactor_Upper,リアクター上部,
 Navigation_Upper,Navigation_Upper,ナビゲーション上部,
 Navigation_Lower,Navigation_Lower,ナビゲーション下部,
 
@@ -1275,7 +1275,7 @@ Jungle_RightDown,Jungle_Right Down,ジャングル右下,
 SplashZone,Splash Zone,スプラッシュゾーン,
 Dropship_Left,Dropship_Left,ドロップシップ外左,
 
-"VentEnterTaskMaxCount","VentEnter Task Count","タスク数 [ベント選択タスクOnly](1ターン最大1個可能)",
+"VentEnterTaskMaxCount","VentEnter Task Count","タスク数 [ベント選択Only](1ターン最大1個可能)",
 
 ##猫取合戦
 CatchCat,CatchCat Battle,猫取合戦,抓猫大赛
