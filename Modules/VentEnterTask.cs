@@ -99,8 +99,8 @@ static class VentEnterTask
 
         var info = GetPlayerInfoById(id);
         var role = info.GetCustomRole();
-        var TaskCompleteColor = taskWinCount[id] ? Color.green : GetRoleColor(role).ShadeColor(0.5f); //タスク完了後の色
-        var NonCompleteColor = taskWinCount[id] ? Color.yellow : Color.white; //カウントされない人外は白色
+        var TaskCompleteColor = role.IsCrewmate() ? Color.green : GetRoleColor(role).ShadeColor(0.5f); //タスク完了後の色
+        var NonCompleteColor = role.IsCrewmate() ? Color.yellow : Color.white; //カウントされない人外は白色
 
         var NormalColor = taskCountNow[id] >= taskCountMax[id] ? TaskCompleteColor : NonCompleteColor;
         Color TextColor = comms ? Color.gray : NormalColor;
@@ -121,8 +121,7 @@ static class VentEnterTask
         if (taskCountNow[id] >= taskCountMax[id]) text = "";
         else if (nowTurnFinish[id]) text = "Task：Next Turn";
 
-        var color = taskWinCount[id] ? Color.yellow : Color.white;
-        return text.Color(color);
+        return text;
     }
 
     private static Vent SetTask(PlayerControl pc)

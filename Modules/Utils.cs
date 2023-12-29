@@ -1262,7 +1262,7 @@ public static class Utils
                 || seer.Is(CustomRoles.GrudgeSheriff)
                 || seer.Is(CustomRoles.AntiComplete)
                 || seer.Is(CustomRoles.Totocalcio)
-                || VentEnterTask.HaveTask(seer)
+                || seer.Is(CustomRoles.MadCostomer)
                 || Duelist.CheckNotify(seer)
                 )
             {

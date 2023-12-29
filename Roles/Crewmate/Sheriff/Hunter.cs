@@ -44,12 +44,10 @@ public sealed class Hunter : RoleBase, IKiller, ISchrodingerCatOwner
     private static OptionItem CanKillAllAlive;
     private static OptionItem KnowTargetIsImpostor;
     private static OptionItem OpKnowTargetMadIsImpostor;
-    private static OptionItem VentEnterTaskMaxCount;
     private static bool KnowTargetMadIsImpostor;
 
     enum OptionName
     {
-        VentEnterTaskMaxCount,
         SheriffShotLimit,
         SheriffCanKillAllAlive,
         HunterKnowTargetIsImpostor,
@@ -68,8 +66,6 @@ public sealed class Hunter : RoleBase, IKiller, ISchrodingerCatOwner
 
     private static void SetupOptionItem()
     {
-        VentEnterTaskMaxCount = IntegerOptionItem.Create(RoleInfo, 15, OptionName.VentEnterTaskMaxCount, new(0, 30, 1), 5, false)
-            .SetValueFormat(OptionFormat.Pieces);
         KillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
         ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 11, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false)
@@ -85,9 +81,6 @@ public sealed class Hunter : RoleBase, IKiller, ISchrodingerCatOwner
         isImpostor = 0;
         ShotLimit = ShotLimitOpt.GetInt();
         Logger.Info($"{GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "Hunter");
-
-        if (VentEnterTaskMaxCount.GetInt() > 0)
-            VentEnterTask.Add(Player, VentEnterTaskMaxCount.GetInt(), true, false);
     }
     private void SendRPC()
     {
