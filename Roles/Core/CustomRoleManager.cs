@@ -438,8 +438,6 @@ public enum CustomRoles
     MadNatureCalls,
     MadBrackOuter,
     MadNimrod,
-    MadCostomer,
-
     SKMadmate,
     //Crewmate(Vanilla)
     Engineer,
