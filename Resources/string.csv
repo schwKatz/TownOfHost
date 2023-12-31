@@ -206,6 +206,7 @@
 "Nimrod","Nimrod","ニムロッド",
 "Detector","Detector","ディテクター",
 "LoyalDoggy","Loyal Doggy","ロイヤルドギー",
+"Rabbit","Rabbit","ラビット",
 
 "CustomCrewmateInfo","I can now use abilities like that.","あんな能力も使えるようになりました。",
 "NiceWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
@@ -241,6 +242,7 @@
 "NimrodInfo","Let us go with you to the spirit world","あなたと共に霊界へ向かおう",
 "DetectorInfo","I'll find the body first","死体は私が見つけます",
 "LoyalDoggyInfo","How are you doing? Master!","調子はどうですか？ご主人様！",
+"RabbitInfo","I have a good ear, so.","耳がいいので探知できるんだ",
 
 "CustomCrewmateInfoLong","(Crewmates):\Crewmate with the ability to Add-On to attributes set by the host.","[クルー陣営]\nホストによって設定された属性の能力をもつクルーメイト。",
 "NiceWatcherInfoLong","(Crewmates):\nYou can see everyone's votes even if anonymous voting is on.","(クルー陣営):\n全員の投票先を見ることができる。","(船员阵营:\n会议时窥视者可以看到所有人的投票。","(船員):\n會議時觀察者可以看到所有人的投票。","(Член Экипажа):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Tripulantes):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
@@ -276,6 +278,7 @@
 "NimrodInfoLong","(Crewmates)\nWhen Nimrod is exiled, a meeting is held again for a vote on Nimrod. Here, only Nimrod is allowed to discuss the matter once exiled, and he may choose one person to be voted in and executed along the way.","[クルー陣営]\n自身が追放された時、再びニムロッド投票用の会議が開かれる。ここでは追放されたらニムロッド以外は議論するべからず。1人を投票で選択して道連れ処刑することができる。",
 "DetectorInfoLong","(Crewmates)\nUpon completion of a set amount of tasks, When a corpse is born, a kill flash will be visible and an arrow to the location of the corpse will appear.","[クルー陣営]\n設定タスク量を完了すると、死体が生まれた際にキルフラッシュが見えると共に死体の場所への矢印が表示されるようになる。",
 "LoyalDoggyInfoLong","(Crewmates)\nVote for one person of your choice at the very first meeting and nominate them as Master. (Votes are not shown).\nThe position of the master can be detected by the sense of smell. When the master is killed, the arrow will no longer be displayed. By setting, the task disappears after the Master's death.","[クルー陣営]\n一番初めの会議で1人好きな人に投票して、ご主人として指名する。(票は表示されない)\nその人の場所を嗅覚により探知できる。ご主人がキルされた時、ご主人への矢印はなくなる。設定により、ご主人の死亡後はタスクが無くなる。",
+"RabbitInfoLong","(Crewmates)\nWhen a set number of tasks are completed, an arrow will indicate for 5 seconds in which direction a random 1 Impostor is at that time for each task completed.\nEven after all tasks have been completed, uncounted tasks will appear and the ability will be available for each completed task.","[クルー陣営]\n設定タスク完了すると、タスクを1つ完了させる毎にその時のランダムな1インポスターがどの方向にいるかが矢印で5秒間表示される。\nタスク全完了後もカウントされないタスクが発生し、完了するごとに能力を使用できる。",
 
 
 "# ニュートラル役職"
@@ -365,6 +368,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "PirateInfoLong","(Neutrals):\nFirst, someone kills.The killed Crew member dies, but becomes a member of the pirate Gang and the victory condition changes to Pirate Victory.\nThe gang has a task, and the pirate's ability is expanded according to the gang's completion of the task.\nIf the Impostor is wiped out and the number of pirates equals or exceeds the number of crew members, wins alone.\n[task]\n25%：Can Vent\n50%：Can Kill\n75%：Grant Buff-Add-On\n100%：Know Impostor","[ニュートラル]\nはじめに誰かキルする。そのキルされた人は死亡するが、海賊の一味となり勝利条件が「海賊の勝利」に変化する。\n一味はタスクを持ち、一味のタスク完了度により海賊の能力が拡大する。\nインポスターの全滅かつ、海賊の数がクルーと同数または上回ると単独で勝利する。\n[タスク]\n25%完了：ベント使用可能\n50%完了：キル可能\n75%完了：バフ属性の付与\n100%完了：インポスターが誰か分かる",
 "GangInfoLong","(Neutrals):\nLet's aim for a pirate victory. The gang has a task, and the pirate's ability is expanded according to the gang's completion of the task.\n[task]\n25%：Can Vent\n50%：Can Kill\n75%：Grant Buff-Add-On\n100%：Know Impostor","[ニュートラル]\n海賊の勝利を目指そう。一味のタスク完了度により海賊の能力が拡大する。\n[タスク]\n25%完了：ベント使用可能\n50%完了：キル可能\n75%完了：バフ属性の付与\n100%完了：インポスターが誰か分かる",
 
+
 # Unit-Role
 "CounselorAndMadDilemma","<color=#ffc0cb>Counselor</color>＆<color=#ff1919>MadDilemma</color>","<color=#ffc0cb>カウンセラー</color>＆<color=#ff1919>マッドジレンマ</color>",
 "Counselor","Counselor","カウンセラー",
@@ -377,6 +381,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "CounselorAndMadDilemmaInfoLong","(Unit):\n\nCounselor(Crewmates)\nCounseling is available when the counselor is alive and has completed certain tasks.\nWhen Counselor votes for a MadDilemma at the time of the meeting, MadDilemma can be made to be the crewmate's.\n\nMad Dilemma(Impostors):\nJust a Madmate for unit positions. Let's take the Impostor's side. Customize the attributes from the settings.\nAfter being counseled by a counselor, a person becomes a crewmate. Even if you become a crewmate, they can use their attributes as they are.","[ユニット]\n\nカウンセラー[クルー陣営]\nカウンセラーが生存している且つ、一定タスク完了した時からカウンセリングを行うことが可能。\n会議時にカウンセラーの投票した先がマッドジレンマの時、マッドジレンマをクルー陣営にさせることができる。\n\nマッドジレンマ[インポスター陣営]\nユニット役職用のただのマッドメイト。属性のカスタマイズ可能。\nカウンセラーによりカウンセリングを受けるとクルーメイトになる。クルーになっても属性はそのまま使用出来る。",
 "CounselorInfoLong","(Crewmates)\nCounseling is available when the counselor is alive and has completed certain tasks.\nWhen Counselor votes for a MadDilemma at the time of the meeting, MadDilemma can be made to be the crewmate's.","[クルー陣営]\nユニット役職の片割れ。カウンセラーが生存している且つ、一定タスク完了した時からカウンセリングを行うことが可能。\n会議時にカウンセラーの投票した先がマッドジレンマの時、マッドジレンマをクルー陣営にさせることができる。",
 "MadDilemmaInfoLong","(Impostors):\nJust a Madmate for unit positions. Let's take the Impostor's side. Customize the attributes from the settings.\nAfter being counseled by a counselor, a person becomes a crewmate. Even if you become a crewmate, they can use their attributes as they are.","[インポスター陣営]\nユニット役職の片割れ。ただのマッドメイト。属性のカスタマイズ可能。\nカウンセラーによりカウンセリングを受けるとクルーメイトになる。クルーになっても属性はそのまま使用出来る。",
+
 
 "# HideAndSeek"
 "HASFox","Fox","狐","狐狸","狐妖","Лис","Raposa"
@@ -848,6 +853,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "LoyalDoggyIgnoreTaskAfterDeadMaster","After the Death of Master, Task Be Lost","ご主人死亡後はタスクが無くなる",
 "LoyalDoggyIsInfoPoor","After the Death of Master, Unable to Use Devices such as Admin,Camera,etc.","ご主人死亡後、アドミン・カメラ等の機器が使用できない",
 "LoyalDoggyIsClumsy","After the Death of Master, Cannot Fix Lights And Fix Comms","ご主人死亡後、停電・通信妨害が直せない",
+"RabbitRedistributionLongTasks","Long Task Count to be redistributed","再配布されるロングタスク数",
+"RabbitRedistributionShortTasks","Short Task Count to be redistributed","再配布されるショートタスク数",
 
 "Head.LimitedTimeRole","Limited Time Role 12/23～12/25","期間限定役職 12/23～12/25"
 ##"Potentialist","Potentialist","ポテンシャリスト",

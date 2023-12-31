@@ -487,6 +487,7 @@ public enum CustomRoles
     Nimrod,
     Detector,
     LoyalDoggy,
+    Rabbit,
     VentManager,
     Counselor,
 

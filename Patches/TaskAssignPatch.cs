@@ -87,6 +87,8 @@ namespace TownOfHostY
                 (hasCommonTasks, NumLongTasks, NumShortTasks) = FoxSpirit.TaskData;
             if (pc.Is(CustomRoles.Workhorse))
                 (hasCommonTasks, NumLongTasks, NumShortTasks) = Workhorse.TaskData;
+            if (pc.Is(CustomRoles.Rabbit) && Rabbit.IsFinish(pc))
+                (hasCommonTasks, NumLongTasks, NumShortTasks) = Rabbit.TaskData;
 
             if (taskTypeIds.Count == 0) hasCommonTasks = false; //タスク再配布時はコモンを0に
             if (!hasCommonTasks && NumLongTasks == 0 && NumShortTasks == 0) NumShortTasks = 1; //タスク0対策

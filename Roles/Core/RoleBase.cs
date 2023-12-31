@@ -351,5 +351,6 @@ public abstract class RoleBase : IDisposable
         CanCreateMadmate,
         VentCooldown,
         VentMaxTime,
+        TaskTrigger,
     }
 }
