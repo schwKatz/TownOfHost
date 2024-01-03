@@ -96,8 +96,6 @@ public static class Options
     public static OptionItem MadmateVentCooldown;
     public static OptionItem MadmateVentMaxTime;
 
-    public static OptionItem LoversAddWin;
-
     public static OptionItem KillFlashDuration;
 
     // HideAndSeek
@@ -288,6 +286,7 @@ public static class Options
     public static OptionItem RevengeNeutral;
     public static OptionItem RevengeMadByImpostor;
 
+    public static OptionItem HostGhostIgnoreTasks;
     public static OptionItem ChangeIntro;
     public static OptionItem AddonShow;
     public static readonly string[] addonShowModes =
@@ -401,9 +400,8 @@ public static class Options
         CompreteCrew.SetupCustomOption();
         Workhorse.SetupCustomOption();
 
-        //TextOptionItem.Create((int)offsetId.Text + 12, "Head.NeutralAddOn", TabGroup.Addons).SetColor(Palette.Orange);
-        //SetupRoleOptions((int)offsetId.AddonNeu + 0, TabGroup.Addons, CustomRoles.Lovers, (1, 1, 1));
-        //LoversAddWin = BooleanOptionItem.Create((int)offsetId.AddonNeu + 10, "LoversAddWin", false, TabGroup.Addons, false).SetParent(CustomRoleSpawnChances[CustomRoles.Lovers]);
+        TextOptionItem.Create((int)offsetId.Text + 12, "Head.NeutralAddOn", TabGroup.Addons).SetColor(Palette.Orange);
+        Lovers.SetupCustomOption();
 
         TextOptionItem.Create((int)offsetId.Text + 13, "Head.BuffAddOn", TabGroup.Addons).SetColor(Color.yellow);
         AddLight.SetupCustomOption();
@@ -640,11 +638,15 @@ public static class Options
         // タスク勝利無効化
         DisableTaskWin = BooleanOptionItem.Create((int)offsetId.FeatTask + 200, "DisableTaskWin", false, TabGroup.MainSettings, false)
             .SetColor(Color.green);
+        //ホストの死後タスク免除
+        HostGhostIgnoreTasks = BooleanOptionItem.Create((int)offsetId.FeatTask + 300, "HostGhostIgnoreTasks", false, TabGroup.MainSettings, true)
+            .SetColor(Color.green);
+        //タスク免除
+        GhostIgnoreTasks = BooleanOptionItem.Create((int)offsetId.FeatGhost + 100, "GhostIgnoreTasks", false, TabGroup.MainSettings, true)
+            .SetColor(Color.green);
 
         TextOptionItem.Create((int)offsetId.FeatGhost, "Head.Ghost", TabGroup.MainSettings).SetColor(Palette.LightBlue).SetGameMode(CustomGameMode.All);
         // 幽霊
-        GhostIgnoreTasks = BooleanOptionItem.Create((int)offsetId.FeatGhost + 100, "GhostIgnoreTasks", false, TabGroup.MainSettings, true)
-            .SetColor(Palette.LightBlue);
         GhostCanSeeOtherRoles = BooleanOptionItem.Create((int)offsetId.FeatGhost + 200, "GhostCanSeeOtherRoles", false, TabGroup.MainSettings, true)
             .SetColor(Palette.LightBlue)
             .SetGameMode(CustomGameMode.All);
@@ -739,6 +741,7 @@ public static class Options
                         or "RoleAssigningAlgorithm"
                         or "ShowReportReason"
                         or "ShowRoleInfoAtFirstMeeting"
+                        or "HostGhostIgnoreTasks"
                         or "RevengeNeutral"
                         or "ChangeNameToRoleInfo"
                         or "ApplyDenyNameList"

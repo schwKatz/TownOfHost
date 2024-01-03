@@ -165,6 +165,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
             case TeamType.Egoist: roleText = "(Ego)" + roleText; break;
             case TeamType.DarkHide: roleText = "(Dark)" + roleText; break;
             case TeamType.Opportunist: roleText = "(Oppo)" + roleText; break;
+            case TeamType.Ogre: roleText = "(Ogre)" + roleText; break;
         }
 
         // 色を変更
@@ -305,6 +306,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
             TeamType.Egoist => Utils.GetRoleColor(CustomRoles.Egoist),
             TeamType.DarkHide => Utils.GetRoleColor(CustomRoles.DarkHide),
             TeamType.Opportunist => Utils.GetRoleColor(CustomRoles.Opportunist),
+            TeamType.Ogre => Utils.GetRoleColor(CustomRoles.Ogre),
             _ => null,
         };
         if (!color.HasValue)

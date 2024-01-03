@@ -15,7 +15,7 @@ public sealed class Nekomata : RoleBase
             (int)Options.offsetId.CrewY + 200,
             null,
             "猫又",
-            "#00ffff"
+            "#e27dfd"
         );
     public Nekomata(PlayerControl player)
     : base(

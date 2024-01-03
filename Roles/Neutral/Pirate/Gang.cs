@@ -16,10 +16,10 @@ public sealed class Gang : RoleBase, IAdditionalWinner
             CustomRoles.Gang,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Neutral,
-            (int)Options.offsetId.NeuY + 900,//使用しない
+            (int)Options.offsetId.NeuY + 1000,//使用しない
             null,
             "一味",
-            "#ca3c28"
+            "#cc4b33"
         );
     public Gang(PlayerControl player)
     : base(
@@ -81,6 +81,7 @@ public sealed class Gang : RoleBase, IAdditionalWinner
 
         foreach (var gang in Gangs)
         {
+            if (seer != seen) continue;
             if (seer != Pirate.PirateOfGang(gang.Player) && seer != gang.Player) continue;
 
             if (gang.canUseVent) mark += "Ｖ".Color(Color.cyan);

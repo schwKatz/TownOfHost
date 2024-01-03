@@ -48,6 +48,6 @@ public sealed class CounselorAndMadDilemma : RoleBase
             .SetValueFormat(OptionFormat.Times);
         //OptionResetAddonChangeCrew = BooleanOptionItem.Create(RoleInfo, 12, OptionName.MadDilemmaResetAddonChangeCrew, false, false);
 
-        Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, CustomRoles.MadDilemma, RoleInfo.Tab, RoleInfo.RoleName);
+        Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, CustomRoles.MadDilemma, RoleInfo.Tab, RoleInfo.RoleName, true);
     }
 }

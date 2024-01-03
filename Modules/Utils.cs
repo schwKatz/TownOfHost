@@ -482,7 +482,7 @@ public static class Utils
         else
         {
             // 死んでいて，死人のタスク免除が有効なら確定でfalse
-            if (p.IsDead && Options.GhostIgnoreTasks.GetBool())
+            if (p.IsDead && Options.GhostIgnoreTasks.GetBool() && !p.Object.Is(CustomRoles.Gang))
             {
                 return false;
             }
@@ -791,7 +791,7 @@ public static class Utils
                         || role.IsCCRole() /*|| role.Key.IsONRole()*/) continue;
 
                     // 陣営ごとのマーク
-                    if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompleteCrew)
+                    if (role.IsAddOn() || role.IsOtherAddOn())
                         sb.Append("<size=75%><color=#c71585>○</color>"); //改行を消す
                     else if (role.GetCustomRoleTypes() == CustomRoleTypes.Unit) sb.Append("<color=#7fff00>Ⓤ</color>");
                     else if (role.IsImpostor()) sb.Append("<size=75%><color=#ff1919>Ⓘ</color></size>");
@@ -844,7 +844,7 @@ public static class Utils
             if (!role.Key.IsEnable() || role.Key is CustomRoles.HASFox or CustomRoles.HASTroll
                 || role.Key.IsCCRole() /*|| role.Key.IsONRole()*/) continue;
 
-            if (role.Key.IsAddOn() || role.Key is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompleteCrew)
+            if (role.Key.IsAddOn() || role.Key.IsOtherAddOn())
                 sb.Append($"\n〖{GetRoleName(role.Key)}×{role.Key.GetCount()}〗\n");
             else
                 sb.Append($"\n【{GetRoleName(role.Key)}×{role.Key.GetCount()}】\n");
@@ -1174,12 +1174,11 @@ public static class Utils
             SelfMark.Append(seerRole?.GetMark(seer, isForMeeting: isForMeeting));
             //seerに関わらず発動するMark
             SelfMark.Append(CustomRoleManager.GetMarkOthers(seer, isForMeeting: isForMeeting));
+            //Lovers
+            SelfMark.Append(Lovers.GetMark(seer));
             //report
             if (ReportDeadBodyPatch.DontReportMark[seer.PlayerId])
                 SelfMark.Append(ColorString(Palette.Orange,"◀×"));
-
-            //ハートマークを付ける(自分に)
-            if (seer.Is(CustomRoles.Lovers)) SelfMark.Append(ColorString(GetRoleColor(CustomRoles.Lovers), "♥"));
 
             //Markとは違い、改行してから追記されます。
             SelfSuffix.Clear();
@@ -1285,17 +1284,8 @@ public static class Utils
                     TargetMark.Append(seerRole?.GetMark(seer, target, isForMeeting));
                     //seerに関わらず発動するMark
                     TargetMark.Append(CustomRoleManager.GetMarkOthers(seer, target, isForMeeting));
-
-                    //ハートマークを付ける(相手に)
-                    if (seer.Is(CustomRoles.Lovers) && target.Is(CustomRoles.Lovers))
-                    {
-                        TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.Lovers)}>♥</color>");
-                    }
-                    //霊界からラバーズ視認
-                    else if (seer.Data.IsDead && !seer.Is(CustomRoles.Lovers) && target.Is(CustomRoles.Lovers))
-                    {
-                        TargetMark.Append($"<color={GetRoleColorCode(CustomRoles.Lovers)}>♥</color>");
-                    }
+                    //Lovers
+                    TargetMark.Append(Lovers.GetMark(seer, target));
 
                     //他人の役職とタスクは幽霊が他人の役職を見れるようになっていてかつ、seerが死んでいる場合のみ表示されます。それ以外の場合は空になります。
                     var targetRoleData = GetRoleNameAndProgressTextData(isForMeeting, seer, target);

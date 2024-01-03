@@ -6,6 +6,7 @@ using InnerNet;
 
 using TownOfHostY.Modules;
 using TownOfHostY.Roles;
+using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
@@ -91,10 +92,9 @@ namespace TownOfHostY
             if (GameStates.IsInGame)
             {
                 if (data.Character.Is(CustomRoles.Lovers) && !data.Character.Data.IsDead)
-                    foreach (var lovers in Main.LoversPlayers.ToArray())
+                    foreach (var lovers in Lovers.playersList)
                     {
-                        Main.isLoversDead = true;
-                        Main.LoversPlayers.Remove(lovers);
+                        Lovers.playersList.Remove(lovers);
                         PlayerState.GetByPlayerId(lovers.PlayerId).RemoveSubRole(CustomRoles.Lovers);
                     }
                 var state = PlayerState.GetByPlayerId(data.Character.PlayerId);

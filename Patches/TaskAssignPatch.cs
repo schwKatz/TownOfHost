@@ -83,6 +83,8 @@ namespace TownOfHostY
                                                              // ロングとショートは常時再割り当てが行われる。
             }
 
+            if (pc.Is(CustomRoles.VentManager))
+                (hasCommonTasks, NumLongTasks, NumShortTasks) = VentManager.TaskData;
             if (pc.Is(CustomRoles.FoxSpirit))
                 (hasCommonTasks, NumLongTasks, NumShortTasks) = FoxSpirit.TaskData;
             if (pc.Is(CustomRoles.Workhorse))
@@ -134,10 +136,6 @@ namespace TownOfHostY
 
                 var task = ShipStatus.Instance.ShortTasks.FirstOrDefault(task => task.TaskType == TaskTypes.VentCleaning);
                 ShortTasks.Add(task);
-
-                NumLongTasks = 0; // 割り当てるロングタスクの数
-                if (pc.Is(CustomRoles.VentManager))
-                    NumShortTasks = pc.GetPlayerTaskState().AllTasksCount; //VentManager.TaskCount.GetInt(); // 割り当てるショートタスクの数
             }
 
             //実際にAmong Us側で使われているタスクを割り当てる関数を使う。

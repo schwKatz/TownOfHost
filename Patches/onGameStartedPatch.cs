@@ -478,7 +478,8 @@ class SelectRolesPatch
             }
 
             // Random-Addon
-            if (!CustomRoles.PlatonicLover.IsEnable()) AssignLoversRolesFromList(allPlayersbySub);
+            if (!CustomRoles.PlatonicLover.IsEnable() && CustomRoles.Lovers.IsEnable())
+                AssignCustomSubRolesFromList(CustomRoles.Lovers, allPlayersbySub, 2);
             AssignCustomSubRolesFromList(CustomRoles.AddWatch, allPlayersbySub);
             AssignCustomSubRolesFromList(CustomRoles.Sunglasses, allPlayersbySub);
             AssignCustomSubRolesFromList(CustomRoles.AddLight, allPlayersbySub);
@@ -520,7 +521,6 @@ class SelectRolesPatch
                         if (Options.AddOnRoleOptions.TryGetValue((pc.GetCustomRole(), Addon), out var option) && option.GetBool())
                         {
                             pc.RpcSetCustomRole(Addon);
-                            CustomRoleManager.SubRoleAdd(pc.PlayerId, Addon);
                         }
                     }
                 }
@@ -694,24 +694,11 @@ class SelectRolesPatch
         {
             var player = allPlayersbySub[rand.Next(0, allPlayersbySub.Count)];
             AssignedPlayers.Add(player);
-            if (role == CustomRoles.Lovers) Main.LoversPlayers.Add(player);
             allPlayersbySub.Remove(player);
             PlayerState.GetByPlayerId(player.PlayerId).SetSubRole(role);
             Logger.Info("属性設定:" + player?.Data?.PlayerName + " = " + player.GetCustomRole().ToString() + " + " + role.ToString(), "AssignSubRoles");
         }
-        if (role == CustomRoles.Lovers) RPC.SyncLoversPlayers();
-
         return AssignedPlayers;
-    }
-    private static List<PlayerControl> AssignLoversRolesFromList(List<PlayerControl> allPlayersbySub)
-    {
-        if (!CustomRoles.Lovers.IsEnable()) return null;
-            //Loversを初期化
-            Main.LoversPlayers.Clear();
-            Main.isLoversDead = false;
-            //ランダムに2人選出
-            //AssignLoversRoles(2);
-            return AssignCustomSubRolesFromList(CustomRoles.Lovers, allPlayersbySub, 2);
     }
 
     public static int GetRoleTypesCount(RoleTypes roleTypes)

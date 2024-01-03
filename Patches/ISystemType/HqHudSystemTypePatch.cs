@@ -27,7 +27,9 @@ public static class HqHudSystemTypeUpdateSystemPatch
             (playerRole is SchrodingerCat schrodingerCat && schrodingerCat.AmMadmate);
         if (tags == HqHudSystemType.Tags.FixBit && ((isMadmate && !Options.MadmateCanFixComms.GetBool())
                                                     || player.Is(CustomRoles.Clumsy)
-                                                    || (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool())))
+                                                    || (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool())
+                                                    || (player.Is(CustomRoles.SillySheriff) && SillySheriff.IsClumsy.GetBool())
+                                                    || (player.Is(CustomRoles.Hunter) && Hunter.IsClumsy.GetBool())))
         {
             return false;
         }

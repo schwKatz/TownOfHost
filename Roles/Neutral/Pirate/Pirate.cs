@@ -16,11 +16,11 @@ public sealed class Pirate : RoleBase, IKiller
             CustomRoles.Pirate,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Neutral,
-            (int)Options.offsetId.NeuSpecial + 0,
-            //(int)Options.offsetId.NeuY + 900,
+            (int)Options.offsetId.NeuSpecial + 300,
+            //(int)Options.offsetId.NeuY + 1000,
             SetupOptionItem,
             "海賊",
-            "#ca3c28",
+            "#cc4b33",
             true,
             countType: CountTypes.Pirate,
             assignInfo: new RoleAssignInfo(CustomRoles.Pirate, CustomRoleTypes.Neutral)
@@ -208,6 +208,7 @@ public sealed class Pirate : RoleBase, IKiller
 
         return string.Empty;
     }
+    public override void OnStartMeeting() => TurnNumber++;
     public override string GetProgressText(bool comms = false)
     {
         if (LimitTurn < TurnNumber || !Player.IsAlive() || isMadeGang) return string.Empty;

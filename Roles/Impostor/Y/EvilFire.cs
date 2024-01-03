@@ -16,7 +16,7 @@ public sealed class EvilFire : RoleBase, IImpostor
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
             //(int)Options.offsetId.ImpY + 1000,
-            (int)Options.offsetId.ImpSpecial + 0,
+            (int)Options.offsetId.ImpSpecial + 100,
             SetupOptionItem,
             "イビルイグニッション"
         );

@@ -14,11 +14,11 @@ namespace TownOfHostY.Roles.Neutral
                 CustomRoles.Ogre,
                 () => RoleTypes.Impostor,
                 CustomRoleTypes.Neutral,
-                (int)Options.offsetId.NeuSpecial + 0,
-                //(int)Options.offsetId.NeuY + 200,
+                (int)Options.offsetId.NeuSpecial + 200,
+                //(int)Options.offsetId.NeuY + 900,
                 SetupOptionItem,
                 "鬼",
-                "#daa520",
+                "#fe8b04",
                 true,
                 countType: CountTypes.Crew
             );

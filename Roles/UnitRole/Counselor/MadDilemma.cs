@@ -14,7 +14,7 @@ public sealed class MadDilemma : RoleBase
             CustomRoles.MadDilemma,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            (int)Options.offsetId.UnitMix + 0,
+            (int)Options.offsetId.UnitMix + 0,//使用しない
             null,
             "マッドジレンマ",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

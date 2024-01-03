@@ -207,15 +207,13 @@ public static class MeetingHudPatch
 
                 sb.Append(seerRole?.GetMark(seer, target, true));
                 sb.Append(CustomRoleManager.GetMarkOthers(seer, target, true));
+                //Lovers
+                sb.Append(Lovers.GetMark(seer, target));
 
                 foreach (var subRole in target.GetCustomSubRoles())
                 {
                     switch (subRole)
                     {
-                        case CustomRoles.Lovers:
-                            if (seer.Is(CustomRoles.Lovers) || seer.Data.IsDead)
-                                sb.Append(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Lovers), "♥"));
-                            break;
                     }
                 }
 
@@ -285,10 +283,8 @@ public static class MeetingHudPatch
     {
         foreach (var playerId in playerIds)
         {
-            //Loversの後追い
-            if ((CustomRoles.Lovers.IsPresent() || CustomRoles.PlatonicLover.IsPresent()) &&
-                !Main.isLoversDead && Main.LoversPlayers.Find(lp => lp.PlayerId == playerId) != null)
-                FixedUpdatePatch.LoversSuicide(playerId, true);
+            //Lovers
+            Lovers.VoteSuicide(playerId);
             //道連れチェック
             RevengeOnExile(playerId, deathReason);
         }

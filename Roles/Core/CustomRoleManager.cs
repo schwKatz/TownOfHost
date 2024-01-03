@@ -143,9 +143,8 @@ public static class CustomRoleManager
             onMurderPlayer(info);
         }
         AddBait.OnMurderPlayer(info);
+        Lovers.KillSuicide(attemptTarget.PlayerId);
 
-        //サブロール処理ができるまではラバーズをここで処理
-        FixedUpdatePatch.LoversSuicide(attemptTarget.PlayerId);
         //TargetDeadArrow
         TargetDeadArrow.UpdateDeadBody();
 
@@ -159,6 +158,14 @@ public static class CustomRoleManager
 
         targetState.SetDead();
         attemptTarget.SetRealKiller(attemptKiller, true);
+
+        //ホストの死後タスク免除
+        if (attemptTarget == PlayerControl.LocalPlayer && Options.HostGhostIgnoreTasks.GetBool()
+            && !attemptTarget.Is(CustomRoles.Gang))
+        {
+            var task = attemptTarget.GetPlayerTaskState();
+            task.CompletedTasksCount = task.AllTasksCount;
+        }
 
         Utils.CountAlivePlayers(true);
 
@@ -247,6 +254,8 @@ public static class CustomRoleManager
     {
         switch (subRole)
         {
+            case CustomRoles.Lovers: Lovers.Add(playerId); break;
+
             case CustomRoles.AddWatch: AddWatch.Add(playerId); break;
             case CustomRoles.AddLight: AddLight.Add(playerId); break;
             case CustomRoles.AddSeer: AddSeer.Add(playerId); break;
@@ -446,6 +455,8 @@ public enum CustomRoles
     MadBrackOuter,
     MadNimrod,
     MadScientist,
+    MadJester,
+
     MadDilemma,
     SKMadmate,
     //Crewmate(Vanilla)

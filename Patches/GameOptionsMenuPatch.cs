@@ -90,7 +90,7 @@ namespace TownOfHostY
                             tabName = "<color=#ffa500>Neutral Settings</color>";
                             break;
                         case TabGroup.UnitRoles:
-                            tabName = "<color=#7fff00>Unit-Role Settings</color>";
+                            tabName = "<color=#7fff00>Combination-Role Settings</color>";
                             break;
                         case TabGroup.Addons:
                             tabName = "<color=#ee82ee>Add-Ons Settings</color>";
@@ -205,7 +205,7 @@ namespace TownOfHostY
                         tabName = "<color=#ffa500>Neutral Settings</color>";
                         break;
                     case TabGroup.UnitRoles:
-                        tabName = "<color=#7fff00>Unit-Role Settings</color>";
+                        tabName = "<color=#7fff00>Combination-Role Settings</color>";
                         break;
                     case TabGroup.Addons:
                         tabName = "<color=#ee82ee>Add-Ons Settings</color>";

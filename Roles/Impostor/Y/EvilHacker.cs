@@ -57,7 +57,6 @@ public sealed class EvilHacker : RoleBase, IImpostor, IKillFlashSeeable
             foreach (var addon in sub)
             {
                 player.RpcSetCustomRole(addon);
-                CustomRoleManager.SubRoleAdd(player.PlayerId, addon);
             }
         }
 

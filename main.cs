@@ -53,7 +53,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "513.19.3.6";
+        public const string PluginVersion = "513.20";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2023.10.24";
         // このバージョンのみで公開ルームを無効にする場合
@@ -97,8 +97,6 @@ namespace TownOfHostY
         public static List<int> clientIdList;
         public static List<(string, byte, string, bool)> MessagesToSend;
         public static bool isChatCommand = false;
-        public static List<PlayerControl> LoversPlayers = new(2);
-        public static bool isLoversDead = true;
         public static Dictionary<byte, float> AllPlayerKillCooldown = new();
         public static Dictionary<int, string> ConsentModUse = new();
 
@@ -120,7 +118,6 @@ namespace TownOfHostY
         public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 23 or 24 or 25;
         public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3;
         public static bool IsInitialRelease = DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
-        public static bool IsOneNightRelease = true;
         public const float RoleTextSize = 2f;
 
         public static IEnumerable<PlayerControl> AllPlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null);

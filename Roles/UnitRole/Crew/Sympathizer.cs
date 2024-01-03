@@ -13,10 +13,11 @@ public sealed class Sympathizer : RoleBase
             CustomRoles.Sympathizer,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewY + 700,
+            (int)Options.offsetId.UnitCrew + 0,
             SetupOptionItem,
             "共鳴者",
             "#f08080",
+            tab: TabGroup.UnitRoles,
             introSound: () => DestroyableSingleton<HudManager>.Instance.TaskUpdateSound,
             assignInfo: new RoleAssignInfo(CustomRoles.Sympathizer, CustomRoleTypes.Crewmate)
             {

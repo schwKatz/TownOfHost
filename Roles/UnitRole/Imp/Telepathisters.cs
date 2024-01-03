@@ -20,9 +20,10 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
             CustomRoles.Telepathisters,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpY + 700,
+            (int)Options.offsetId.UnitImp + 0,
             SetupOptionItem,
             "テレパシスターズ",
+            tab: TabGroup.UnitRoles,
             assignInfo: new RoleAssignInfo(CustomRoles.Telepathisters, CustomRoleTypes.Impostor)
             {
                 AssignCountRule = new(2, 3, 1),

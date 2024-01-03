@@ -13,8 +13,8 @@ public sealed class Escalationer : RoleBase, IImpostor
             CustomRoles.Escalationer,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpSpecial + 100,
-            //(int)Options.offsetId.ImpY + 1000,
+            (int)Options.offsetId.ImpSpecial + 300,
+            //(int)Options.offsetId.ImpY + 1200,
             SetupOptionItem,
             "エスカレーショナー"
         );
@@ -47,7 +47,7 @@ public sealed class Escalationer : RoleBase, IImpostor
             .SetValueFormat(OptionFormat.Seconds);
         OptionKillCoolDecrease = FloatOptionItem.Create(RoleInfo, 11, OptionName.EscalationerKillCoolDecrease, new(0f, 60f, 0.5f), 1.0f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        OptionSpeedUpRate = FloatOptionItem.Create(RoleInfo, 12, OptionName.EscalationerSpeedUpRate, new(0f, 2f, 0.05f), 0.15f, false)
+        OptionSpeedUpRate = FloatOptionItem.Create(RoleInfo, 12, OptionName.EscalationerSpeedUpRate, new(0.1f, 2f, 0.05f), 0.15f, false)
             .SetValueFormat(OptionFormat.Multiplier);
     }
     public override void Add()

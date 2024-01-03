@@ -17,11 +17,11 @@ public sealed class LoyalDoggy : RoleBase
             CustomRoles.LoyalDoggy,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewSpecial + 0,
+            (int)Options.offsetId.CrewSpecial + 100,
             //(int)Options.offsetId.CrewY + 1500,
             SetupOptionItem,
             "ロイヤルドギー",
-            "#ff6347"
+            "#ffcc29"
         );
     public LoyalDoggy(PlayerControl player)
     : base(

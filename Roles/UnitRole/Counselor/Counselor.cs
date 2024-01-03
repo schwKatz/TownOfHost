@@ -16,7 +16,7 @@ public sealed class Counselor : RoleBase
             CustomRoles.Counselor,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.UnitMix + 0,
+            (int)Options.offsetId.UnitMix + 0,//使用しない
             null,
             "カウンセラー",
             "#ffc0cb"

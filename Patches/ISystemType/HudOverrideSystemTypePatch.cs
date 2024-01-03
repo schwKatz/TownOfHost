@@ -26,7 +26,9 @@ public static class HudOverrideSystemTypeUpdateSystemPatch
             (playerRole is SchrodingerCat schrodingerCat && schrodingerCat.AmMadmate);
         if ((amount & HudOverrideSystemType.DamageBit) <= 0 && ((isMadmate && !Options.MadmateCanFixComms.GetBool())
                                                                 || player.Is(CustomRoles.Clumsy)
-                                                                || (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool())))
+                                                                || (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool())
+                                                                || (player.Is(CustomRoles.SillySheriff) && SillySheriff.IsClumsy.GetBool())
+                                                                || (player.Is(CustomRoles.Hunter) && Hunter.IsClumsy.GetBool())))
         {
             return false;
         }

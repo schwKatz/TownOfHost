@@ -88,8 +88,7 @@ namespace TownOfHostY
         public static bool IsDontShowOptionRole(this CustomRoles role)
         {
             return role is CustomRoles.Counselor or CustomRoles.MadDilemma
-                or CustomRoles.VentManager
-                or CustomRoles.PlatonicLover
+                or CustomRoles.Gang
                 
                 or CustomRoles.Potentialist or CustomRoles.EvilHacker;
         }

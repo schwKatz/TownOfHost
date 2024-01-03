@@ -54,6 +54,19 @@ namespace TownOfHostY
         [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
         class VersionShowerStartPatch
         {
+            static string[] mainManuText = {
+                "このコメントは10種類らしい",
+                "これからも沢山遊んでね",
+                "【今日のおすすめ役職】\nマッドニムロッド",
+                "ランダムな文が\n表示されるって\nなんかいいよね",
+                "今日もマッドシェリフ？\nハンター使ってみない？",
+                "とくになし",
+                "祝！v20",
+                "暫く新役職のリリースは\nないと思うたぶん",
+                "バカシェリフが\nもっとバカに\nなったらしい",
+                "属性を一つ足すだけで\n一気にゲームが変わります",
+            };
+
             static TextMeshPro SpecialEventText;
             static void Postfix(VersionShower __instance)
             {
@@ -114,13 +127,10 @@ namespace TownOfHostY
                         SpecialEventText.text += SpecialEvent.TitleText();
                     }
                 }
-                else if (Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
+                else if (CultureInfo.CurrentCulture.Name == "ja-JP")
                 {
-                    SpecialEventText.text = "TOH_Yへようこそ！" +
-                        "\n<size=55%>仕様の質問や不具合報告はTOH_YのDiscordまで。" +
-                        "\n不具合報告の際、ログの提出をお願いしています。" +
-                        "\nCtrl＋F1でデスクトップにログを作成できますので何卒。" +
-                        "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
+                    var num = IRandom.Instance.Next(mainManuText.Length);
+                    SpecialEventText.text = $"★TOH_Yへようこそ！★\n<size=55%>{mainManuText[num]}</size>";
                     SpecialEventText.color = Color.yellow;
                 }
                 //if (Main.IsValentine)

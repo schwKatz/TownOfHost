@@ -20,7 +20,7 @@ public sealed class Immoralist : RoleBase, IAdditionalWinner, ISystemTypeUpdateH
             //(int)Options.offsetId.NeuFox + 100,
             SetupOptionItem,
             "背徳者",
-            "#d11aff",
+            "#ad6ce0",
             introSound: () => GetIntroSound(RoleTypes.Shapeshifter),
             assignInfo: new(CustomRoles.Immoralist, CustomRoleTypes.Neutral)
             {

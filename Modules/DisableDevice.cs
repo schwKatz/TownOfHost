@@ -49,6 +49,7 @@ namespace TownOfHostY
         {
             return ((pc.Is(CustomRoles.Sheriff) && Sheriff.IsInfoPoor.GetBool())
                     || (pc.Is(CustomRoles.SillySheriff) && SillySheriff.IsInfoPoor.GetBool())
+                    || (pc.Is(CustomRoles.Hunter) && Hunter.IsInfoPoor.GetBool())
                     || pc.Is(CustomRoles.InfoPoor));
         }
         public static bool IsPoorEnable()

@@ -16,8 +16,8 @@ public sealed class Rabbit : RoleBase
             CustomRoles.Rabbit,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewSpecial + 0,
-            //(int)Options.offsetId.CrewY + 200,
+            (int)Options.offsetId.CrewSpecial + 200,
+            //(int)Options.offsetId.CrewY + 1600,
             SetupOptionItem,
             "Rabbit",
             "#88d2ff"

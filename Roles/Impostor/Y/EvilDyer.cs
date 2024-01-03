@@ -14,7 +14,8 @@ public sealed class EvilDyer : RoleBase, IImpostor
             CustomRoles.EvilDyer,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpSpecial + 0,
+            (int)Options.offsetId.ImpSpecial + 200,
+            //(int)Options.offsetId.ImpY + 1100,
             SetupOptionItem,
             "イビル真っ赤"
         );
@@ -39,7 +40,7 @@ public sealed class EvilDyer : RoleBase, IImpostor
     float dyerTime;
     enum OptionName
     {
-        EvilDyerDyeTime,//これの登録まだ
+        EvilDyerDyeTime,
     }
     private static void SetupOptionItem()
     {

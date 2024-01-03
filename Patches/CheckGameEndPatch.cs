@@ -3,7 +3,7 @@ using System.Linq;
 using AmongUs.GameOptions;
 using HarmonyLib;
 using Hazel;
-
+using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Crewmate;
@@ -73,8 +73,8 @@ namespace TownOfHostY
                             .Where(p => p.Is(CustomRoles.God) && p.IsAlive())
                             .Do(p => CustomWinnerHolder.WinnerIds.Add(p.PlayerId));
                     }
-                    if (Main.LoversPlayers.Count > 0 && Main.LoversPlayers.ToArray().All(p => p.IsAlive())
-                        && !reason.Equals(GameOverReason.HumansByTask) && !(Options.LoversAddWin.GetBool() || PlatonicLover.AddWin))
+                    if (Lovers.playersList.Count > 0 && Lovers.playersList.ToArray().All(p => p.IsAlive())
+                        && !reason.Equals(GameOverReason.HumansByTask) && !(Lovers.LoversAddWin.GetBool() || PlatonicLover.AddWin))
                     {
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lovers);
                         Main.AllPlayerControls
@@ -104,7 +104,7 @@ namespace TownOfHostY
                     {
                         //Lover追加勝利
                         if (pc.Is(CustomRoles.Lovers) && pc.IsAlive()
-                            && (Options.LoversAddWin.GetBool() || PlatonicLover.AddWin))
+                            && (Lovers.LoversAddWin.GetBool() || PlatonicLover.AddWin))
                         {
                             CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
                             CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Lovers);

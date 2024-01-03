@@ -82,7 +82,10 @@ namespace TownOfHostY
                 SubRoles.ToArray().Do(role => SubRoles.Remove(role));
 
             if (!SubRoles.Contains(role))
+            {
                 SubRoles.Add(role);
+                CustomRoleManager.SubRoleAdd(PlayerId, role);
+            }
         }
         public void RemoveSubRole(CustomRoles role)
         {

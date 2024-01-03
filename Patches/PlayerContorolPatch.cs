@@ -416,8 +416,6 @@ namespace TownOfHostY
                     FallFromLadder.FixedUpdate(player);
                 }
 
-                if (GameStates.IsInGame) LoversSuicide();
-
                 if (GameStates.IsInGame && player.AmOwner)
                     DisableDevice.FixedUpdate();
 
@@ -510,16 +508,9 @@ namespace TownOfHostY
                     Mark.Append(seerRole?.GetMark(seer, target, false));
                     //seerに関わらず発動するMark
                     Mark.Append(CustomRoleManager.GetMarkOthers(seer, target, false));
+                    //Lovers
+                    Mark.Append(Lovers.GetMark(seer, target));
 
-                    //ハートマークを付ける(会議中MOD視点)
-                    if (__instance.Is(CustomRoles.Lovers) && PlayerControl.LocalPlayer.Is(CustomRoles.Lovers))
-                    {
-                        Mark.Append($"<color={Utils.GetRoleColorCode(CustomRoles.Lovers)}>♥</color>");
-                    }
-                    else if (__instance.Is(CustomRoles.Lovers) && PlayerControl.LocalPlayer.Data.IsDead)
-                    {
-                        Mark.Append($"<color={Utils.GetRoleColorCode(CustomRoles.Lovers)}>♥</color>");
-                    }
                     //report
                     if (seer == target && ReportDeadBodyPatch.DontReportMark[seer.PlayerId])
                         Mark.Append(Utils.ColorString(Palette.Orange, "◀×"));
@@ -562,38 +553,6 @@ namespace TownOfHostY
                 {
                     //役職テキストの座標を初期値に戻す
                     RoleText.transform.SetLocalY(0.3f);
-                }
-            }
-        }
-        //FIXME: 役職クラス化のタイミングで、このメソッドは移動予定
-        public static void LoversSuicide(byte deathId = 0x7f, bool isExiled = false)
-        {
-            if ((CustomRoles.Lovers.IsPresent() || CustomRoles.PlatonicLover.IsPresent()) &&
-                Main.isLoversDead == false)
-            {
-                foreach (var loversPlayer in Main.LoversPlayers)
-                {
-                    //生きていて死ぬ予定でなければスキップ
-                    if (!loversPlayer.Data.IsDead && loversPlayer.PlayerId != deathId) continue;
-
-                    Main.isLoversDead = true;
-                    foreach (var partnerPlayer in Main.LoversPlayers)
-                    {
-                        //本人ならスキップ
-                        if (loversPlayer.PlayerId == partnerPlayer.PlayerId) continue;
-
-                        //残った恋人を全て殺す(2人以上可)
-                        //生きていて死ぬ予定もない場合は心中
-                        if (partnerPlayer.PlayerId != deathId && !partnerPlayer.Data.IsDead && !Main.AfterMeetingDeathPlayers.ContainsKey(partnerPlayer.PlayerId))
-                        {
-                            Logger.Info($"ラバーズ道連れ name: {partnerPlayer?.name}, lover: {loversPlayer?.name}, exiled: {isExiled}", "LoversSuicide");
-                            PlayerState.GetByPlayerId(partnerPlayer.PlayerId).DeathReason = CustomDeathReason.FollowingSuicide;
-                            if (isExiled)
-                                MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, partnerPlayer.PlayerId);
-                            else
-                                partnerPlayer.RpcMurderPlayer(partnerPlayer);
-                        }
-                    }
                 }
             }
         }

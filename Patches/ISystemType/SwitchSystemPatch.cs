@@ -34,7 +34,9 @@ public static class SwitchSystemUpdateSystemPatch
             // マッド属性化時に削除
             (player.GetRoleClass() is SchrodingerCat schrodingerCat && schrodingerCat.AmMadmate);
         if ((isMadmate && !Options.MadmateCanFixLightsOut.GetBool()) || player.Is(CustomRoles.Clumsy)
-            || (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool()))
+            || (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool())
+            || (player.Is(CustomRoles.SillySheriff) && SillySheriff.IsClumsy.GetBool())
+            || (player.Is(CustomRoles.Hunter) && Hunter.IsClumsy.GetBool()))
         {
             // 直せないならキャンセル
             return false;

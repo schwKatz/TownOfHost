@@ -1,6 +1,6 @@
 using System.Linq;
 using AmongUs.GameOptions;
-
+using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 
@@ -50,7 +50,7 @@ public sealed class PlatonicLover : RoleBase, IKiller
 
     private static void SetupOptionItem()
     {
-        OptionLimitTurn = IntegerOptionItem.Create(RoleInfo, 11, OptionName.PlatonicLoverLimitTurn, new(1, 30, 1), 1, false);
+        OptionLimitTurn = IntegerOptionItem.Create(RoleInfo, 11, OptionName.PlatonicLoverLimitTurn, new(1, 30, 1), 3, false);
         OptionAddWin = BooleanOptionItem.Create(RoleInfo, 10, OptionName.LoversAddWin, false, false);
     }
 
@@ -91,13 +91,9 @@ public sealed class PlatonicLover : RoleBase, IKiller
         target.RpcProtectedMurderPlayer(target);
         Logger.Info($"{killer.GetNameWithRole()} : 恋人を作った", "PlatonicLover");
 
-        Main.LoversPlayers.Clear();
-        Main.isLoversDead = false;
+        Lovers.playersList.Clear();
         killer.RpcSetCustomRole(CustomRoles.Lovers);
         target.RpcSetCustomRole(CustomRoles.Lovers);
-        Main.LoversPlayers.Add(killer);
-        Main.LoversPlayers.Add(target);
-        RPC.SyncLoversPlayers();
 
         Utils.NotifyRoles();
     }
