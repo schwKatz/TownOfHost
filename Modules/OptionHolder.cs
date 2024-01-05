@@ -666,10 +666,10 @@ public static class Options
             .SetColor(Palette.ImpostorRed)
             .SetValueFormat(OptionFormat.Seconds);
         // 強制守護天使表示の無効化
-        DisableForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 500, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
+        DisableForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 500, "DisableForceProtect", false, TabGroup.MainSettings, false)
             .SetColor(Palette.CrewmateBlue);
         // 初手キルクール調整
-        FixFirstKillCooldown = BooleanOptionItem.Create((int)offsetId.FeatOther + 200, "DisableForceProtect", false, TabGroup.MainSettings, false)
+        FixFirstKillCooldown = BooleanOptionItem.Create((int)offsetId.FeatOther + 200, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
             .SetColor(Palette.CrewmateBlue);
 
         // 転落死
