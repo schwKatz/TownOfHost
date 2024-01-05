@@ -41,7 +41,7 @@ public sealed class MadJester : RoleBase
     private static void SetupOptionItem()
     {
         OptionCanVent = BooleanOptionItem.Create(RoleInfo, 10, GeneralOption.CanVent, false, false);
-        OptionTaskCompWin = BooleanOptionItem.Create(RoleInfo, 11, OptionName.MadJesterTaskCompWin, false, false);
+        OptionTaskCompWin = BooleanOptionItem.Create(RoleInfo, 11, OptionName.MadJesterTaskCompWin, true, false);
         Tasks = Options.OverrideTasksData.Create(RoleInfo, 20, OptionTaskCompWin);
 
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);

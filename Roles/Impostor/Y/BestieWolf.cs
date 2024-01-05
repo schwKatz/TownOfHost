@@ -114,7 +114,12 @@ public sealed class BestieWolf : RoleBase, IImpostor
     }
 
     public float CalculateKillCooldown() => Main.AliveImpostorCount >= 2 ? KillCooldownSeveral : KillCooldownSingle;
+    public override string GetProgressText(bool comms = false)
+    {
+        if (!Player.IsAlive() || Main.AliveImpostorCount <= 1 || killCount > 5) return string.Empty;
 
+        return Utils.ColorString(Palette.ImpostorRed, $"[{killCount}]");
+    }
     public void OnMurderPlayerAsKiller(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;

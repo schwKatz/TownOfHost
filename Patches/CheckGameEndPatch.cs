@@ -273,6 +273,8 @@ namespace TownOfHostY
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Pirate);
                     CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Pirate);
+                    CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Gang);
+                    CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Gang);
                 }
                 else if (Jackal == 0 && Pirate == 0 && Imp == 0) //クルー勝利
                 {

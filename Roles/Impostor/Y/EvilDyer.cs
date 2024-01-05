@@ -30,7 +30,7 @@ public sealed class EvilDyer : RoleBase, IImpostor
 
         IsColorCamouflage = false;
     }
-    private static bool IsColorCamouflage = false;
+    public static bool IsColorCamouflage = false;
     // 0 = 赤
     private static GameData.PlayerOutfit CamouflageRedOutfit = new GameData.PlayerOutfit().Set("", 0, "", "", "", "");
 

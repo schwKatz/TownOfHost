@@ -277,6 +277,7 @@ namespace TownOfHostY
             SpecialMeeting = reporter?.PlayerId == ReportTarget?.PlayerId;
             if (GameStates.IsMeeting) return false;
             Logger.Info($"{__instance.GetNameWithRole()} => {target?.Object?.GetNameWithRole() ?? "null"}", "ReportDeadBody");
+            if (SpecialMeeting) return true;
             if (Options.IsStandardHAS && target != null && __instance == target.Object) return true; //[StandardHAS] ボタンでなく、通報者と死体が同じなら許可
             if (Options.CurrentGameMode == CustomGameMode.HideAndSeek || Options.IsStandardHAS) return false;
             if (Options.IsCCMode && CatchCat.Option.IgnoreReport.GetBool() && target != null) return false;
@@ -339,6 +340,12 @@ namespace TownOfHostY
             //=============================================
             //以下、ボタンが押されることが確定したものとする。
             //=============================================
+            foreach (var pc in Main.AllAlivePlayerControls)
+            {
+                var state = PlayerState.GetByPlayerId(pc.PlayerId);
+                state.IsBlackOut = true; //ブラックアウト
+                pc.MarkDirtySettings();
+            }
             MushroomMixupDeterioratePatch.RestorName();
 
             foreach (var role in CustomRoleManager.AllActiveRoles.Values)
@@ -530,6 +537,8 @@ namespace TownOfHostY
                     if (Utils.IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())
                         RealName = $"<size=0>{RealName}</size> ";
                     if (EvilHacker.IsColorCamouflage)
+                        RealName = $"<size=0>{RealName}</size> ";
+                    if (EvilDyer.IsColorCamouflage)
                         RealName = $"<size=0>{RealName}</size> ";
 
                     string DeathReason = seer.Data.IsDead && seer.KnowDeathReason(target) ? $"({Utils.ColorString(Utils.GetRoleColor(CustomRoles.Doctor), Utils.GetVitalText(target.PlayerId))})" : "";

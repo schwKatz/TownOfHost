@@ -111,6 +111,18 @@ public sealed class Medic : RoleBase
         return true;
     }
 
+    public override bool OnCompleteTask()
+    {
+        if (!Player.IsAlive()) return true;
+
+        if (MyTaskState.CompletedTasksCount == TaskTrigger || IsTaskFinished)
+        {
+            Player.MarkDirtySettings();
+        }
+
+        return true;
+    }
+
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
     {
         //seenが省略の場合seer

@@ -1,4 +1,7 @@
+using System.Linq;
 using HarmonyLib;
+using TownOfHostY.Roles.Core;
+
 namespace TownOfHostY.Patches;
 
 // reference :: TOH-H Patches/SpawnInMinigamePatch.cs
@@ -13,6 +16,10 @@ public static class SpawnInMinigameSpawnAtPatch
             if (Options.FixFirstKillCooldown.GetBool() && !MeetingStates.MeetingCalled)
             {
                 PlayerControl.LocalPlayer.SetKillCooldown(Main.AllPlayerKillCooldown[PlayerControl.LocalPlayer.PlayerId]);
+            }
+            if (Main.isProtectRoleExist)
+            {
+                PlayerControl.LocalPlayer.RpcProtectedMurderPlayer();
             }
             if (Options.RandomSpawn.GetBool())
             {

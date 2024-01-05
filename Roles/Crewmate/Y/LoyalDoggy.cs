@@ -129,18 +129,23 @@ public sealed class LoyalDoggy : RoleBase
     }
     public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
-        //矢印表示する必要がなければ無し
-        if (!masterDecision || isForMeeting || masterIsDead) return string.Empty;
         //seenが省略の場合seer
-        seen ??= seer; 
+        seen ??= seer;
         //seerおよびseenが自分である場合以外は関係なし
         if (!Is(seer) || !Is(seen)) return "";
+        if (isForMeeting && MeetingStates.FirstMeeting)
+        {
+            // FirstMeeting Only
+            return Translator.GetString("SelectMaster").Color(RoleInfo.RoleColor);
+        }
+
+        //矢印表示する必要がなければ無し
+        if (!masterDecision || isForMeeting || masterIsDead) return string.Empty;
 
         var arrow = TargetArrow.GetArrows(seer, Master.PlayerId);
         var color = Master.IsAlive() ? RoleInfo.RoleColor : Palette.ImpostorRed;
 
-        arrow = arrow.Color(color);
-        return arrow;
+        return arrow == "" ? string.Empty : arrow.Color(color);
     }
     public string GetMarkOthers(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
@@ -150,16 +155,5 @@ public sealed class LoyalDoggy : RoleBase
         if (seer == Master && seen == Master)
             return Utils.ColorString(RoleInfo.RoleColor, "ω");
         return string.Empty;
-    }
-    // FirstMeeting Only
-    public override string GetLowerText(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false, bool isForHud = false)
-    {
-        if (!isForMeeting || !MeetingStates.FirstMeeting) return string.Empty;
-        //seenが省略の場合seer
-        seen ??= seer;
-        //seeおよびseenが自分である場合以外は関係なし
-        if (!Is(seer) || !Is(seen)) return "";
-
-        return Translator.GetString("SelectMaster").Color(RoleInfo.RoleColor);
     }
 }

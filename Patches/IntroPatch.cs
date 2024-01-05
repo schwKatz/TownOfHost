@@ -359,6 +359,10 @@ namespace TownOfHostY
                 if (Main.NormalOptions.MapId != 4)
                 {
                     Main.AllPlayerControls.Do(pc => pc.RpcResetAbilityCooldown());
+                    if(Main.isProtectRoleExist)
+                    {
+                        PlayerControl.LocalPlayer.RpcProtectedMurderPlayer();
+                    }
                     if (Options.FixFirstKillCooldown.GetBool())
                         _ = new LateTask(() =>
                         {

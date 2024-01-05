@@ -561,7 +561,7 @@ class SelectRolesPatch
                 );
             }
         }
-
+        Main.isProtectRoleExist = CustomRolesHelper.AllRoles.Where(role => role.IsPresent() && role.IsProtectRole()).Any() && !Options.DisableForceProtect.GetBool();
         /*
         //インポスターのゴーストロールがクルーになるバグ対策
         foreach (var pc in PlayerControl.AllPlayerControls)

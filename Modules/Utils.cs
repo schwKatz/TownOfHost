@@ -486,6 +486,11 @@ public static class Utils
             {
                 return false;
             }
+            // 死んでいて，妖狐がいるなら確定でfalse
+            if (p.IsDead && CustomRoles.FoxSpirit.IsPresent() && !p.Object.Is(CustomRoles.Gang))
+            {
+                return false;
+            }
             if (LoyalDoggy.IgnoreTask(p))
             {
                 return false;
@@ -624,8 +629,7 @@ public static class Utils
         roleString = $"<size=95%>{roleString}</size>".Color(GetRoleColor(myRole).ToReadableColor());
         sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(player.GetRoleInfo(true)).Append("</line-height></size>");
 
-        if (myRole is not CustomRoles.Crewmate and not CustomRoles.Impostor and not CustomRoles.Potentialist
-            and not CustomRoles.Counselor and not CustomRoles.MadDilemma)
+        if (!myRole.IsDontShowOptionRole())
         {
             //setting
             sb.Append("\n<size=65%><line-height=1.5pic>");
@@ -1254,6 +1258,7 @@ public static class Utils
                 || (IsActive(SystemTypes.Electrical) && CustomRoles.Mare.IsEnable())    //メアーが入っていない時は通さない
                 || (IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())   //カモフラオプションがない時は通さない
                 || EvilHacker.IsColorCamouflage    //カモフラがない時は通さない
+                || EvilDyer.IsColorCamouflage    //カモフラがない時は通さない
                 || NoCache
                 || ForceLoop
                 || Options.IsCCMode
@@ -1319,6 +1324,8 @@ public static class Utils
                         TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";
                     if (EvilHacker.IsColorCamouflage && !isForMeeting)
                         TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";
+                    if (EvilDyer.IsColorCamouflage && !isForMeeting)
+                        TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";
 
                     //全てのテキストを合成します。
                     string TargetName = $"{TargetRoleText}{TargetPlayerName}{TargetDeathReason}{TargetMark}{TargetSuffix}";
@@ -1346,6 +1353,11 @@ public static class Utils
     }
     public static void AfterMeetingTasks()
     {
+        foreach (var pc in Main.AllAlivePlayerControls)
+        {
+            var state = PlayerState.GetByPlayerId(pc.PlayerId);
+            state.IsBlackOut = false; //ブラックアウト解除
+        }
         foreach (var roleClass in CustomRoleManager.AllActiveRoles.Values)
             roleClass.AfterMeetingTasks();
         Counselor.AfterMeetingTask();

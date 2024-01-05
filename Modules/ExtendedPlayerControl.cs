@@ -174,13 +174,14 @@ namespace TownOfHostY
             if (!killer.IsAlive()) return;
 
             if (target == null) target = killer;
-            // Host
-            if (killer.AmOwner)
-            {
-                killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
-            }
+            killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
+            //// Host
+            //if (killer.AmOwner)
+            //{
+
+            //}
             // Other Clients
-            if (killer.PlayerId != 0)
+            //if (killer.PlayerId != 0)
             {
                 var writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable);
                 writer.WriteNetObject(target);

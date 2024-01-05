@@ -123,6 +123,11 @@ namespace TownOfHostY
                 }, 0.5f, "Restore IsDead Task");
                 _ = new LateTask(() =>
                 {
+                    if (Main.isProtectRoleExist)
+                    {
+                        PlayerControl.LocalPlayer.RpcProtectedMurderPlayer();
+                    }
+
                     Main.AfterMeetingDeathPlayers.Do(x =>
                     {
                         (byte playerId, CustomDeathReason reason) = (x.Key, x.Value);

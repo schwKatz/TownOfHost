@@ -287,6 +287,7 @@ public static class Options
     public static OptionItem RevengeMadByImpostor;
 
     public static OptionItem HostGhostIgnoreTasks;
+    public static OptionItem DisableForceProtect;
     public static OptionItem ChangeIntro;
     public static OptionItem AddonShow;
     public static readonly string[] addonShowModes =
@@ -664,8 +665,11 @@ public static class Options
         KillFlashDuration = FloatOptionItem.Create((int)offsetId.FeatOther + 100, "KillFlashDuration", new(0.1f, 0.45f, 0.05f), 0.3f, TabGroup.MainSettings, true)
             .SetColor(Palette.ImpostorRed)
             .SetValueFormat(OptionFormat.Seconds);
+        // 強制守護天使表示の無効化
+        DisableForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 500, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
+            .SetColor(Palette.CrewmateBlue);
         // 初手キルクール調整
-        FixFirstKillCooldown = BooleanOptionItem.Create((int)offsetId.FeatOther + 200, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
+        FixFirstKillCooldown = BooleanOptionItem.Create((int)offsetId.FeatOther + 200, "DisableForceProtect", false, TabGroup.MainSettings, false)
             .SetColor(Palette.CrewmateBlue);
 
         // 転落死

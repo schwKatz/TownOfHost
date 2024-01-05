@@ -90,7 +90,36 @@ namespace TownOfHostY
             return role is CustomRoles.Counselor or CustomRoles.MadDilemma
                 or CustomRoles.Gang
                 
-                or CustomRoles.Potentialist or CustomRoles.EvilHacker;
+                or CustomRoles.Potentialist or CustomRoles.EvilHacker
+                or CustomRoles.Impostor or CustomRoles.Crewmate;
+        }
+
+        public static bool IsProtectRole(this CustomRoles role)
+        {
+            return role is CustomRoles.AntiComplete
+                or CustomRoles.CursedWolf
+                or CustomRoles.FoxSpirit
+                or CustomRoles.Guarding
+                or CustomRoles.Immoralist
+                or CustomRoles.Lawyer
+                or CustomRoles.LoveCutter
+                or CustomRoles.Medic
+                or CustomRoles.Ogre
+                or CustomRoles.Pirate
+                or CustomRoles.PlatonicLover
+                or CustomRoles.Psychic
+                or CustomRoles.SchrodingerCat
+                or CustomRoles.Sniper
+                or CustomRoles.StrayWolf
+                or CustomRoles.Totocalcio
+                //VentSelect
+                or CustomRoles.Medic
+                or CustomRoles.GrudgeSheriff
+                //DoubleClick
+                or CustomRoles.EvilDiviner
+                or CustomRoles.Scavenger
+                or CustomRoles.EvilFire
+                or CustomRoles.Witch;
         }
 
         public static bool IsAddAddOn(this CustomRoles role)

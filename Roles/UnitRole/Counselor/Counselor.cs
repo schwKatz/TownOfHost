@@ -95,7 +95,7 @@ public sealed class Counselor : RoleBase
 
         return $"[{counselCount}]".Color(RoleInfo.RoleColor);
     }
-    public override string GetLowerText(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false, bool isForHud = false)
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
         if (!CanAbilityVote() || !isForMeeting) return string.Empty;
         
