@@ -222,7 +222,6 @@ namespace TownOfHostY.Roles
             List<(CustomRoles, int)> randomRoleTicketPool = new(); //ランダム抽選時のプール
             var rand = IRandom.Instance;
             var assignCount = new Dictionary<CustomRoleTypes, int>(AssignCount); //アサイン枠のDictionary
-            Logger.Info("11111111111111111111111", "SetRandomAssignRoleList");
             foreach (var role in GetCandidateRoleList(100).OrderBy(x => Guid.NewGuid()))
             {
                 var targetRoles = role.GetAssignUnitRolesArray();
@@ -240,10 +239,7 @@ namespace TownOfHostY.Roles
                         assignCount[targetRoleType]--;
                 }
             }
-            Logger.Info("2222222222222222222222", "SetRandomAssignRoleList");
-
             if (assignCount.All(kvp => kvp.Value <= 0)) return;
-            Logger.Info("3333333333333333333333", "SetRandomAssignRoleList");
 
             foreach (var role in AllMainRoles.OrderBy(x => Guid.NewGuid())) //確定枠が偏らないようにシャッフル
             {
@@ -256,14 +252,11 @@ namespace TownOfHostY.Roles
                 //確率がそのまま追加枚数に
                 for (var i = 0; i < count; i++)
                     randomRoleTicketPool.AddRange(Enumerable.Repeat((role, i), chance / 10).ToList());
-
             }
-            Logger.Info("44444444444444444444", "SetRandomAssignRoleList");
 
             //確定分では足りない場合に抽選を行う
             while (assignCount.Any(kvp => kvp.Value > 0) && randomRoleTicketPool.Count > 0)
             {
-
                 var selectedTicket = randomRoleTicketPool[rand.Next(randomRoleTicketPool.Count)];
                 Logger.Info($"{selectedTicket.Item1}", "SetRandomAssignRoleList");
                 var targetRoles = selectedTicket.Item1.GetAssignUnitRolesArray();
@@ -280,7 +273,6 @@ namespace TownOfHostY.Roles
                 //1-9個ある同じチケットを削除
                 randomRoleTicketPool.RemoveAll(x => x == selectedTicket);
             }
-            Logger.Info("5555555555555555555555", "SetRandomAssignRoleList");
 
         }
         ///<summary>
