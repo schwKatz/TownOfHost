@@ -140,8 +140,8 @@ public sealed class AntiComplete : RoleBase
         else                            // タスク未完了/タスク未所持
             MyState.DeathReason = CustomDeathReason.Suicide;
 
-        // 変更後の投票先 = 元の投票先  変更後の票数 = 1  投票カウント = しない
-        return (votedForId, numVotes, false);
+        // 変更後の投票先 = 自身  変更後の票数 = 1  投票カウント = しない
+        return (voterId, numVotes, false);
     }
 
     public override void OnExileWrapUp(GameData.PlayerInfo exiled, ref bool DecidedWinner)

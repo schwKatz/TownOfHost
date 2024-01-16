@@ -19,7 +19,7 @@ public sealed class Rabbit : RoleBase
             (int)Options.offsetId.CrewSpecial + 200,
             //(int)Options.offsetId.CrewY + 1600,
             SetupOptionItem,
-            "Rabbit",
+            "ラビット",
             "#88d2ff"
         );
     public Rabbit(PlayerControl player)

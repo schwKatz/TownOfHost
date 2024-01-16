@@ -87,6 +87,19 @@ public static class Utils
                 return false;
         }
     }
+    public static bool IsActiveDontOpenMeetingSabotage()
+    {
+        SystemTypes[] Sabotage = { SystemTypes.Electrical, SystemTypes.Comms,
+            SystemTypes.Reactor, SystemTypes.Laboratory,
+            SystemTypes.LifeSupp,  SystemTypes.HeliSabotage };
+
+        foreach (SystemTypes type in Sabotage)
+        {
+            if(IsActive(type)) return true;
+        }
+
+        return false;
+    }
     public static SystemTypes GetCriticalSabotageSystemType() => (MapNames)Main.NormalOptions.MapId switch
     {
         MapNames.Polus => SystemTypes.Laboratory,
@@ -1364,6 +1377,15 @@ public static class Utils
         if (Options.AirShipVariableElectrical.GetBool())
             AirShipElectricalDoors.Initialize();
         DoorsReset.ResetDoors();
+    }
+    public static void ProtectedFirstPlayer()
+    {
+        foreach (var pc in Main.AllAlivePlayerControls)
+        {
+            pc.RpcProtectedMurderPlayer();
+            pc.ResetKillCooldown();
+            break;//一人目だけでBreak
+        }
     }
 
     public static void ChangeInt(ref int ChangeTo, int input, int max)

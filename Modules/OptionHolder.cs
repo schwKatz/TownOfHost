@@ -666,7 +666,7 @@ public static class Options
             .SetColor(Palette.ImpostorRed)
             .SetValueFormat(OptionFormat.Seconds);
         // 強制守護天使表示の無効化
-        DisableForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 500, "DisableForceProtect", false, TabGroup.MainSettings, false)
+        DisableForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 600, "DisableForceProtect", false, TabGroup.MainSettings, false)
             .SetColor(Palette.CrewmateBlue);
         // 初手キルクール調整
         FixFirstKillCooldown = BooleanOptionItem.Create((int)offsetId.FeatOther + 200, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
@@ -689,7 +689,7 @@ public static class Options
         NoPet = BooleanOptionItem.Create((int)offsetId.FeatOther + 405, "NoPet", false, TabGroup.MainSettings, true).SetParent(SkinControle).SetGameMode(CustomGameMode.All);
         NoDuplicateHat = BooleanOptionItem.Create((int)offsetId.FeatOther + 410, "NoDuplicateHat", false, TabGroup.MainSettings, true).SetParent(SkinControle).SetGameMode(CustomGameMode.All);
         NoDuplicateSkin = BooleanOptionItem.Create((int)offsetId.FeatOther + 411, "NoDuplicateSkin", false, TabGroup.MainSettings, true).SetParent(SkinControle).SetGameMode(CustomGameMode.All);
-        VoiceReader.SetupCustomOption();
+        VoiceReader.SetupCustomOption((int)Options.offsetId.FeatOther + 500);
 
         TextOptionItem.Create((int)offsetId.GModeAdd, "Head.GameMode", TabGroup.MainSettings).SetColor(Color.yellow).SetGameMode(CustomGameMode.Standard);
         // シンクロカラーモード100

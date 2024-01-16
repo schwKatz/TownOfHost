@@ -31,12 +31,14 @@ namespace TownOfHostY.Roles.Neutral
         {
             KillCooldown = OptionKillCooldown.GetFloat();
             HasImpostorVision = OptionHasImpostorVision.GetBool();
+            CanVent = OptionCanVent.GetBool();
             KillSuccessRate = OptionKillSuccessRate.GetInt();
             KilledGuardRate = OptionKilledGuardRate.GetInt();
         }
 
         private static OptionItem OptionKillCooldown;
         private static OptionItem OptionHasImpostorVision;
+        public static OptionItem OptionCanVent;
         public static OptionItem OptionKillSuccessRate;
         public static OptionItem OptionKilledGuardRate;
         enum OptionName
@@ -46,6 +48,7 @@ namespace TownOfHostY.Roles.Neutral
         }
         private static float KillCooldown;
         private static bool HasImpostorVision;
+        private static bool CanVent;
         private static int KillSuccessRate;
         private static int KilledGuardRate;
 
@@ -58,9 +61,10 @@ namespace TownOfHostY.Roles.Neutral
             OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 30f, false)
                 .SetValueFormat(OptionFormat.Seconds);
             OptionHasImpostorVision = BooleanOptionItem.Create(RoleInfo, 11, GeneralOption.ImpostorVision, false, false);
-            OptionKillSuccessRate = IntegerOptionItem.Create(RoleInfo, 12, OptionName.OgreKillSuccessRate, new(5, 100, 5), 20, false)
+            OptionCanVent = BooleanOptionItem.Create(RoleInfo, 12, GeneralOption.CanVent, false, false);
+            OptionKillSuccessRate = IntegerOptionItem.Create(RoleInfo, 13, OptionName.OgreKillSuccessRate, new(5, 100, 5), 20, false)
                 .SetValueFormat(OptionFormat.Percent);
-            OptionKilledGuardRate = IntegerOptionItem.Create(RoleInfo, 13, OptionName.OgreKilledGuardRate, new(5, 100, 5), 30, false)
+            OptionKilledGuardRate = IntegerOptionItem.Create(RoleInfo, 14, OptionName.OgreKilledGuardRate, new(5, 100, 5), 30, false)
                 .SetValueFormat(OptionFormat.Percent);
         }
         public override void Add()
@@ -118,7 +122,7 @@ namespace TownOfHostY.Roles.Neutral
         public override string GetProgressText(bool comms = false) => $"[{nowKillRate}%]".Color(RoleInfo.RoleColor);
         public float CalculateKillCooldown() => KillCooldown;
         public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
-        public bool CanUseImpostorVentButton() => false;
+        public bool CanUseImpostorVentButton() => CanVent;
         public void ApplySchrodingerCatOptions(IGameOptions option) => ApplyGameOptions(option);
     }
 }

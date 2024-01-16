@@ -11,8 +11,6 @@ namespace TownOfHostY
 {
     class VoiceReader
     {
-        private static readonly int Id = (int)Options.offsetId.FeatOther + 500;
-
         private enum Mode { Log, Boyomi, VoiceVox }
         private static Mode ReadMode = Mode.Boyomi;
         private static bool InitFinished = false;
@@ -50,7 +48,7 @@ namespace TownOfHostY
         {
             LoadVoiceList();
         }
-        public static void SetupCustomOption()
+        public static void SetupCustomOption(int Id)
         {
             if (!InitFinished) return;
             if (VoiceType.Count == 0) return;

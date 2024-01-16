@@ -317,6 +317,10 @@ namespace TownOfHostY
                 Logger.Warn($"{__instance.GetNameWithRole()}:通報禁止中のため可能になるまで待機します", "ReportDeadBody");
                 return false;
             }
+
+            //サボタージュ中に呼び出しを受けない
+            if (Utils.IsActiveDontOpenMeetingSabotage()) return false;
+
             if (!AmongUsClient.Instance.AmHost) return true;
 
             //通報者が死んでいる場合、本処理で会議がキャンセルされるのでここで止める

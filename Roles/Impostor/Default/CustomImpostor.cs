@@ -52,5 +52,5 @@ public sealed class CustomImpostor : RoleBase, IImpostor
         __instance.SabotageButton.ToggleVisible(isActive && CanUseSabotage);
     }
     public override bool OnInvokeSabotage(SystemTypes systemType) => CanUseSabotage;
-
+    public bool CanUseImpostorVentButton() => CanVent;
 }

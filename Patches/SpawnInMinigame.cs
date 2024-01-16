@@ -17,10 +17,7 @@ public static class SpawnInMinigameSpawnAtPatch
             {
                 PlayerControl.LocalPlayer.SetKillCooldown(Main.AllPlayerKillCooldown[PlayerControl.LocalPlayer.PlayerId]);
             }
-            if (Main.isProtectRoleExist)
-            {
-                PlayerControl.LocalPlayer.RpcProtectedMurderPlayer();
-            }
+            if (Main.isProtectRoleExist) Utils.ProtectedFirstPlayer();
             if (Options.RandomSpawn.GetBool())
             {
                 new RandomSpawn.AirshipSpawnMap().RandomTeleport(PlayerControl.LocalPlayer);

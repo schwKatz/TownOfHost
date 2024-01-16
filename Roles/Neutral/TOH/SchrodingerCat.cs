@@ -102,7 +102,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         //自殺ならスルー
         if (info.IsSuicide) return true;
 
-        if (Team == TeamType.None)
+        if (Team == TeamType.None && !killer.Is(CustomRoles.Pirate))
         {
             info.CanKill = false;
             ChangeTeamOnKill(killer);
@@ -202,6 +202,10 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         if (CustomRoles.DarkHide.IsPresent())
         {
             candidates.Add(TeamType.DarkHide);
+        }
+        if (CustomRoles.Ogre.IsPresent())
+        {
+            candidates.Add(TeamType.Ogre);
         }
         var team = candidates[rand.Next(candidates.Count)];
         RpcSetTeam(team);
