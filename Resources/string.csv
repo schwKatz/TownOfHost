@@ -1304,6 +1304,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "AbilityVote","Ability Vote","投票で能力発動",
 "DictatorVote","Ability Vote","投票で独裁投票",
 "DictatorVote","Ability Vote","投票で独裁投票",
+"ChairmanVote","Ability Vote","他人投票で強制SKIP",
 "ForecastVote","Ability Vote","投票で占う",
 "DuelistVote","Decide Archenemy","投票で宿敵を決めろ",
 
