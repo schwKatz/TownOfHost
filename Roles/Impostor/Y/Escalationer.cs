@@ -13,8 +13,7 @@ public sealed class Escalationer : RoleBase, IImpostor
             CustomRoles.Escalationer,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpSpecial + 300,
-            //(int)Options.offsetId.ImpY + 1200,
+            (int)Options.offsetId.ImpY + 1200,
             SetupOptionItem,
             "エスカレーショナー"
         );

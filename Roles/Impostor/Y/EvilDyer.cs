@@ -14,8 +14,7 @@ public sealed class EvilDyer : RoleBase, IImpostor
             CustomRoles.EvilDyer,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpSpecial + 200,
-            //(int)Options.offsetId.ImpY + 1100,
+            (int)Options.offsetId.ImpY + 1100,
             SetupOptionItem,
             "イビル真っ赤"
         );

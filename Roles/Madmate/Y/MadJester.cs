@@ -12,8 +12,7 @@ public sealed class MadJester : RoleBase
             CustomRoles.MadJester,
             () => OptionCanVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            (int)Options.offsetId.MadSpecial + 100,
-            //(int)Options.offsetId.MadY + 600,
+            (int)Options.offsetId.MadY + 600,
             SetupOptionItem,
             "マッドジェスター",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

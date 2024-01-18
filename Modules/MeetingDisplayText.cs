@@ -64,7 +64,7 @@ public static class MeetingDisplayText
 
         (string t, int c) = EvilHacker.AddMeetingDisplay();
         addText.Append(t); column += c;
-        (t, c) = EvilFire.AddMeetingDisplay();
+        (t, c) = EvilIgnition.AddMeetingDisplay();
         addText.Append(t); column += c;
         (t, c) = Nimrod.AddMeetingDisplay();
         addText.Append(t); column += c;

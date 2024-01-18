@@ -17,8 +17,7 @@ public sealed class LoyalDoggy : RoleBase
             CustomRoles.LoyalDoggy,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewSpecial + 100,
-            //(int)Options.offsetId.CrewY + 1500,
+            (int)Options.offsetId.CrewY + 1500,
             SetupOptionItem,
             "ロイヤルドギー",
             "#ffcc29"

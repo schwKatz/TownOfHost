@@ -15,8 +15,7 @@ public sealed class VentManager : RoleBase
             CustomRoles.VentManager,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewSpecial + 300,
-            //(int)Options.offsetId.CrewY + 1700,
+            (int)Options.offsetId.CrewY + 1700,
             SetupOptionItem,
             "ベントマネージャー",
             "#00ffff"

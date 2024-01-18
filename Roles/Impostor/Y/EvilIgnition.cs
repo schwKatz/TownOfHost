@@ -6,21 +6,20 @@ using TownOfHostY.Roles.Core.Interfaces;
 using System.Linq;
 
 namespace TownOfHostY.Roles.Impostor;
-public sealed class EvilFire : RoleBase, IImpostor
+public sealed class EvilIgnition : RoleBase, IImpostor
 {
     public static readonly SimpleRoleInfo RoleInfo =
          SimpleRoleInfo.Create(
-            typeof(EvilFire),
-            player => new EvilFire(player),
-            CustomRoles.EvilFire,
+            typeof(EvilIgnition),
+            player => new EvilIgnition(player),
+            CustomRoles.EvilIgnition,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            //(int)Options.offsetId.ImpY + 1000,
-            (int)Options.offsetId.ImpSpecial + 100,
+            (int)Options.offsetId.ImpY + 1000,
             SetupOptionItem,
             "イビルイグニッション"
         );
-    public EvilFire(PlayerControl player)
+    public EvilIgnition(PlayerControl player)
     : base(
         RoleInfo,
         player
@@ -70,7 +69,7 @@ public sealed class EvilFire : RoleBase, IImpostor
     public override string GetProgressText(bool comms = false) => Utils.ColorString(IgnitionCount > 0 ? Palette.ImpostorRed : Color.gray, $"[{IgnitionCount}]");
     public static bool CanBombTarget()
     {
-        if (Main.AllPlayerControls.Where(pc=> pc.Is(CustomRoles.EvilFire)).Any())
+        if (Main.AllPlayerControls.Where(pc=> pc.Is(CustomRoles.EvilIgnition)).Any())
         {
             return IsCanBombTarget;
         }

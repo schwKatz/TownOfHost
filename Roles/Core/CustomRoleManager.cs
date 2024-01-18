@@ -441,7 +441,7 @@ public enum CustomRoles
     Telepathisters,
     ShapeKiller,
     StrayWolf,
-    EvilFire,
+    EvilIgnition,
     Escalationer,
     EvilDyer,
     BestieWolf,

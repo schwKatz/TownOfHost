@@ -11,8 +11,7 @@ public sealed class MadScientist : RoleBase
             CustomRoles.MadScientist,
             () => RoleTypes.Scientist,
             CustomRoleTypes.Madmate,
-            (int)Options.offsetId.MadSpecial + 0,
-            //(int)Options.offsetId.MadY + 500,
+            (int)Options.offsetId.MadY + 500,
             SetupOptionItem,
             "マッド科学者",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

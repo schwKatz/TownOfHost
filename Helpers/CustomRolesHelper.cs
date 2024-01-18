@@ -118,7 +118,7 @@ namespace TownOfHostY
                 //DoubleClick
                 or CustomRoles.EvilDiviner
                 or CustomRoles.Scavenger
-                or CustomRoles.EvilFire
+                or CustomRoles.EvilIgnition
                 or CustomRoles.Witch;
         }
 

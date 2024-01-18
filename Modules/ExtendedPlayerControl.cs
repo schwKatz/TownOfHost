@@ -547,7 +547,7 @@ namespace TownOfHostY
             {
                 return true;
             }
-            if (EvilFire.CanBombTarget() &&
+            if (EvilIgnition.CanBombTarget() &&
                 PlayerState.GetByPlayerId(seen.PlayerId).DeathReason == CustomDeathReason.Bombed)
             {
                 return true;

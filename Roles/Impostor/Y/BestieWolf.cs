@@ -17,8 +17,7 @@ public sealed class BestieWolf : RoleBase, IImpostor
             CustomRoles.BestieWolf,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpSpecial + 400,
-            //(int)Options.offsetId.ImpY + 1300,
+            (int)Options.offsetId.ImpY + 1300,
             SetupOptionItem,
             "ベスティーウルフ"
         );
