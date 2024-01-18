@@ -113,7 +113,21 @@ namespace TownOfHostY
                     SpecialEventText.enabled = TitleLogoPatch.amongUsLogo != null;
                     SpecialEventText.gameObject.SetActive(true);
                 }
-                if (Main.IsInitialRelease)
+                if (Main.IsValentine)
+                {
+                    SpecialEventText.text = "♥happy Valentine♥";
+                    if (CultureInfo.CurrentCulture.Name == "ja-JP")
+                        SpecialEventText.text += "<size=60%>\n<color=#b58428>チョコレート屋が\n一年ぶりに帰ってきた！</size></color>";
+                    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
+                }
+                else if (Main.IsWhiteDay)
+                {
+                    SpecialEventText.text = "♥happy WhiteDay♥";
+                    if (CultureInfo.CurrentCulture.Name == "ja-JP")
+                        SpecialEventText.text += "<size=60%>\n<color=#b58428>チョコレート屋でお返しを。</size></color>";
+                    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
+                }
+                else if (Main.IsInitialRelease)
                 {
                     SpecialEventText.color = Color.yellow;
                     SpecialEventText.text = $"Happy Birthday to {Main.ModName}!";
@@ -137,13 +151,6 @@ namespace TownOfHostY
                     SpecialEventText.text = $"★TOH_Yへようこそ！★\n<size=55%>{mainManuText[num]}</size>";
                     SpecialEventText.color = Color.yellow;
                 }
-                //if (Main.IsValentine)
-                //{
-                //    SpecialEventText.text = "♥happy Valentine♥";
-                //    if (CultureInfo.CurrentCulture.Name == "ja-JP")
-                //        SpecialEventText.text += "<size=60%>\n<color=#b58428>チョコレート屋で遊んでみてね。</size></color>";
-                //    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
-                //}
             }
         }
 
