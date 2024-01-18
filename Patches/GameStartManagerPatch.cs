@@ -210,10 +210,9 @@ namespace TownOfHostY
                 if (timer <= 60) countDown = "";
                 timerText.text = countDown;
             }
-            public static bool MatchVersions(byte playerId, bool acceptVanilla = false, bool IsY = false)
+            public static bool MatchVersions(byte playerId, bool acceptVanilla = false)
             {
                 if (!Main.playerVersion.TryGetValue(playerId, out var version)) return acceptVanilla;
-                if (IsY) return Main.ForkId == version.forkId;
                 return Main.ForkId == version.forkId
                     && Main.version.CompareTo(version.version) == 0
                     && version.tag == $"{ThisAssembly.Git.Commit}({ThisAssembly.Git.Branch})";
