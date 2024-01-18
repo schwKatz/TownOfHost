@@ -15,7 +15,7 @@
   - 入れるマッドを選んでから、バフ属性を付与する>>リベンジャーの選択で道連れマッド作成できます。それ以外にもたくさんの属性を付与することで様々な能力をもたせることが可能です。
 
 - ホスト以外もMODいれていい？
-  - 現状考慮して作成していない部分も多い為、ホスト以外はバニラでの参加をお願いします。
+  - 現状考慮して作成していない部分が多い為、サポートしていません。部屋に入る際に(非ホスト時)、強制的にバニラに切り替わります。
 
 - TOHとなにがちがうの？
   - 様々な役職や機能がたくさん追加されています。設定方法やコマンド等は本家TOHと同じように合わせていますので、TOHを触ったことのある方はスッと慣れて頂けるとは思います。<br>
@@ -50,10 +50,10 @@ Thank you for finding and using TOH_Y!<br>
 
 ## ★リリース
 
-AmongUsバージョン : **2023.10.24**<br>
+AmongUsバージョン : **2023.11.28**<br>
 **最新バージョンは[こちら](https://github.com/Yumenopai/TownOfHost_Y/releases/latest)から**<br>
 
-TOH_Y：[TownOfHost](https://github.com/tukasa0001/TownOfHost)Fork<br>
+※[TownOfHost](https://github.com/tukasa0001/TownOfHost) Fork<br>
 
 本家TOHの説明は[本家TOH/GitHub](https://github.com/tukasa0001/TownOfHost#readme)からReadMeをご覧ください。<br>
 <ins>TOH_Yの追加要素の説明は[WIKIWIKI](https://wikiwiki.jp/tohy_amongus/)に移行しました。</ins>
