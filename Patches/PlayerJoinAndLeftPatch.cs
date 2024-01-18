@@ -8,9 +8,7 @@ using TownOfHostY.Modules;
 using TownOfHostY.Roles;
 using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
-using UnityEngine;
 using static TownOfHostY.Translator;
 
 namespace TownOfHostY

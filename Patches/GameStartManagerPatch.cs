@@ -161,20 +161,27 @@ namespace TownOfHostY
                 }
                 else
                 {
-                    if (MatchVersions(0))
-                        exitTimer = 0;
-                    else
+                    if (!MatchVersions(0))
                     {
-                        exitTimer += Time.deltaTime;
-                        if (exitTimer > 10)
-                        {
-                            exitTimer = 0;
-                            AmongUsClient.Instance.ExitGame(DisconnectReasons.ExitGame);
-                            SceneChanger.ChangeScene("MainMenu");
-                        }
-
-                        warningMessage = Utils.ColorString(Color.red, string.Format(GetString("Warning.AutoExitAtMismatchedVersion"), $"<color={Main.ModColor}>{Main.ModName}</color>", Math.Round(10 - exitTimer).ToString()));
+                        ErrorText.Instance.NotHostFlag = true;
+                        ErrorText.Instance.AddError(ErrorCode.NotHostUnload);
+                        Harmony.UnpatchAll();
+                        Main.Instance.Unload();
                     }
+                    //if (MatchVersions(0))
+                    //    exitTimer = 0;
+                    //else
+                    //{
+                    //    exitTimer += Time.deltaTime;
+                    //    if (exitTimer > 10)
+                    //    {
+                    //        exitTimer = 0;
+                    //        AmongUsClient.Instance.ExitGame(DisconnectReasons.ExitGame);
+                    //        SceneChanger.ChangeScene("MainMenu");
+                    //    }
+
+                    //    warningMessage = Utils.ColorString(Color.red, string.Format(GetString("Warning.AutoExitAtMismatchedVersion"), $"<color={Main.ModColor}>{Main.ModName}</color>", Math.Round(10 - exitTimer).ToString()));
+                    //}
                 }
                 if (warningMessage == "")
                 {
@@ -203,9 +210,10 @@ namespace TownOfHostY
                 if (timer <= 60) countDown = "";
                 timerText.text = countDown;
             }
-            private static bool MatchVersions(byte playerId, bool acceptVanilla = false)
+            public static bool MatchVersions(byte playerId, bool acceptVanilla = false, bool IsY = false)
             {
                 if (!Main.playerVersion.TryGetValue(playerId, out var version)) return acceptVanilla;
+                if (IsY) return Main.ForkId == version.forkId;
                 return Main.ForkId == version.forkId
                     && Main.version.CompareTo(version.version) == 0
                     && version.tag == $"{ThisAssembly.Git.Commit}({ThisAssembly.Git.Branch})";

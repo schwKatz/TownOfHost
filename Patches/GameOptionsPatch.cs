@@ -1,9 +1,6 @@
 using AmongUs.GameOptions;
 using HarmonyLib;
 
-using TownOfHostY.Roles.Core;
-using static TownOfHostY.Translator;
-
 namespace TownOfHostY
 {
     //[HarmonyPatch(typeof(RoleOptionSetting), nameof(RoleOptionSetting.UpdateValuesAndText))]
