@@ -37,4 +37,16 @@ public sealed class Dictator : RoleBase
         MeetingVoteManager.Instance.ClearAndExile(Player.PlayerId, sourceVotedForId);
         return (votedForId, numVotes, false);
     }
+
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        if (!isForMeeting || !Player.IsAlive()) return string.Empty;
+
+        //seenが省略の場合seer
+        seen ??= seer;
+        //seeおよびseenが自分である場合以外は関係なし
+        if (!Is(seer) || !Is(seen)) return "";
+
+        return Translator.GetString("DictatorVote").Color(RoleInfo.RoleColor);
+    }
 }

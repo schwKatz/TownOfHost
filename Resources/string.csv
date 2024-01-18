@@ -1301,6 +1301,11 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "SelectGuardPlayer","Select Guard Player","ガード対象を選択",
 "SelectMaster","Select Master","ご主人を選べ"
 "DoCounsel","Do Counsel","投票でカウンセル",
+"AbilityVote","Ability Vote","投票で能力発動",
+"DictatorVote","Ability Vote","投票で独裁投票",
+"DictatorVote","Ability Vote","投票で独裁投票",
+"ForecastVote","Ability Vote","投票で占う",
+"DuelistVote","Decide Archenemy","投票で宿敵を決めろ",
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,

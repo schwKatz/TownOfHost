@@ -83,6 +83,10 @@ public sealed class FortuneTeller : RoleBase
         }
         return baseVote;
     }
+    bool TaskFinished() => IsTaskFinished || MyTaskState.CompletedTasksCount >= ForecastTaskTrigger;
+    bool CanAbilityVote() => Player.IsAlive() && ForecastResult.Count < NumOfForecast && TaskFinished()
+        && !(!CanForecastNoDeadBody && !GameData.Instance.AllPlayers.ToArray().Any(x => x.IsDead));
+
     private void VoteForecastTarget(byte targetId)
     {
         if (!CanForecastNoDeadBody &&
@@ -181,5 +185,17 @@ public sealed class FortuneTeller : RoleBase
         if (KillerOnly &&
             !(target.GetCustomRole().IsImpostor() || target.IsNeutralKiller() || target.IsCrewKiller())) return false;
         return true;
+    }
+
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        if (!CanAbilityVote() || !isForMeeting) return string.Empty;
+
+        //seenが省略の場合seer
+        seen ??= seer;
+        //seeおよびseenが自分である場合以外は関係なし
+        if (!Is(seer) || !Is(seen)) return "";
+
+        return GetString("ForecastVote").Color(RoleInfo.RoleColor);
     }
 }

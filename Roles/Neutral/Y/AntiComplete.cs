@@ -113,6 +113,17 @@ public sealed class AntiComplete : RoleBase
         }
         return string.Empty;
     }
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        if (!isForMeeting || !Player.IsAlive()) return string.Empty;
+
+        //seenが省略の場合seer
+        seen ??= seer;
+        //seeおよびseenが自分である場合以外は関係なし
+        if (!Is(seer) || !Is(seen)) return "";
+
+        return Translator.GetString("AbilityVote").Color(RoleInfo.RoleColor);
+    }
 
     public override string GetProgressText(bool comms = false) => ColorString(GuardCount > 0 ? RoleInfo.RoleColor : Color.gray, $"〔{GuardCount}〕");
 

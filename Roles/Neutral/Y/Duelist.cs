@@ -64,7 +64,17 @@ public sealed class Duelist : RoleBase, IAdditionalWinner
         return (votedForId, numVotes, doVote);
     }
 
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        if (!MeetingStates.FirstMeeting || !isForMeeting || !Player.IsAlive()) return string.Empty;
 
+        //seenが省略の場合seer
+        seen ??= seer;
+        //seeおよびseenが自分である場合以外は関係なし
+        if (!Is(seer) || !Is(seen)) return "";
+
+        return Translator.GetString("DuelistVote").Color(RoleInfo.RoleColor);
+    }
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool _ = false)
     {
         //seenが省略の場合seer
