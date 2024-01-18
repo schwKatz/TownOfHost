@@ -1161,7 +1161,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "ERR-000-920-2","Test Error Lv.2","テストエラーLv2","测试错误Lv2","測試錯誤Lv2","Ошибка теста - Lv2","Erro de Teste Nvl.2"
 "ERR-000-930-3","Test Error Lv.3","テストエラーLv3","测试错误Lv3","測試錯誤Lv3","Ошибка теста - Lv3","Erro de Teste Nvl.3"
 "ERR-000-804-1","TownOfHost_Y does not support the Vanilla HnS, so unloaded.","現在バニラのHide And Seekはサポートされていません。modを無効化しました。","TOH不支持原版躲猫猫, mod因此失效","Town Of Host模組尚未支援原版的Hide And Seek模式，所以模組將暫時卸載。","Мод не поддерживает обычные Прятки. Мод был отключён",""
-"ERR-000-111-1","TownOfHost_Y does not support the use of mod by players not host,\n so unloaded.Please re-enter the room.","現在TOH_Yはホスト以外のMOD導入をサポートしていません。\n modを無効化しました。再入室してください。"
+"ERR-000-111-1","TownOfHost_Y does not support the use of mod by players not host,\n so unloaded.","現在TOH_Yはホスト以外のMOD導入をサポートしていません。modを無効化しました。"
 "ERR-000-503-1","Public room settings have been changed. Please create the room again.","公開ルーム設定が変更されました。部屋を立て直してください。"
 "#### 001 Main"
 "ERR-001-000-3","Main dictionary has duplicated keys.","MainのDictonaryでKeyの重複が発生しています。","在主目录出现重复密钥","在主目錄出現重複密鑰","Дублирование ключей происходит в основном словаре.","Dicionário principal tem chaves duplicadas.",""
