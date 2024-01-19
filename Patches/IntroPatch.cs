@@ -359,12 +359,14 @@ namespace TownOfHostY
                 if (Main.NormalOptions.MapId != 4)
                 {
                     Main.AllPlayerControls.Do(pc => pc.RpcResetAbilityCooldown());
-                    if (Main.isProtectRoleExist) Utils.ProtectedFirstPlayer();
                     if (Options.FixFirstKillCooldown.GetBool())
+                    {
                         _ = new LateTask(() =>
                         {
                             Main.AllPlayerControls.Do(pc => pc.SetKillCooldown(Main.AllPlayerKillCooldown[pc.PlayerId] - 2f));
                         }, 2f, "FixKillCooldownTask");
+                    }
+                    else if (Main.isProtectRoleExist) Utils.ProtectedFirstPlayer(true);
                 }
                 _ = new LateTask(() => Main.AllPlayerControls.Do(pc => pc.RpcSetRoleDesync(RoleTypes.Shapeshifter, -3)), 2f, "SetImpostorForServer");
                 if (PlayerControl.LocalPlayer.Is(CustomRoles.GM))

@@ -58,7 +58,6 @@ public static class MeetingHudPatch
             foreach (var tm in Main.AllAlivePlayerControls.Where(p=>p.Is(CustomRoles.TaskManager) || p.Is(CustomRoles.Management)))
                 Utils.NotifyRoles(true, tm);
             TargetDeadArrow.OnStartMeeting();
-            MeetingStates.MeetingCalled = true;
         }
         public static void Postfix(MeetingHud __instance)
         {
@@ -204,8 +203,6 @@ public static class MeetingHudPatch
                         pva.NameText.text = pva.NameText.text.ApplyNameColorData(seer, target, true);
                 }
 
-                //とりあえずSnitchは会議中にもインポスターを確認することができる仕様にしていますが、変更する可能性があります。
-
                 if (seer.KnowDeathReason(target))
                     sb.Append($"({Utils.ColorString(Utils.GetRoleColor(CustomRoles.Doctor), Utils.GetVitalText(target.PlayerId))})");
 
@@ -213,13 +210,6 @@ public static class MeetingHudPatch
                 sb.Append(CustomRoleManager.GetMarkOthers(seer, target, true));
                 //Lovers
                 sb.Append(Lovers.GetMark(seer, target));
-
-                foreach (var subRole in target.GetCustomSubRoles())
-                {
-                    switch (subRole)
-                    {
-                    }
-                }
 
                 //会議画面ではインポスター自身の名前にSnitchマークはつけません。
 

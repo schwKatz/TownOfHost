@@ -33,7 +33,7 @@ namespace TownOfHostY
                         FirstTP[player.PlayerId] = false;
                         if (Main.NormalOptions.MapId != 4) return; //マップがエアシップじゃなかったらreturn
                         player.RpcResetAbilityCooldown();
-                        if (Options.FixFirstKillCooldown.GetBool() && !MeetingStates.MeetingCalled)
+                        if (Options.FixFirstKillCooldown.GetBool() && MeetingStates.FirstMeeting)
                             player.SetKillCooldown(Main.AllPlayerKillCooldown[player.PlayerId]);
                         if (Options.RandomSpawn.GetBool()) //ランダムスポーン
                             new AirshipSpawnMap().RandomTeleport(player);

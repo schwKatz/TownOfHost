@@ -39,9 +39,9 @@ class ChangeRoleSettings
         Main.CheckShapeshift = new();
         Main.ShapeshiftTarget = new();
 
-        ReportDeadBodyPatch.CanReport = new();
-        ReportDeadBodyPatch.CanReportByDeadBody = new();
-        ReportDeadBodyPatch.DontReportMark = new();
+        ReportDeadBodyPatch.CannotReportList = new();
+        ReportDeadBodyPatch.CannotReportByDeadBodyList = new();
+        ReportDeadBodyPatch.DontReportMarkList = new();
         MeetingHudPatch.RevengeTargetPlayer = new();
         Options.UsedButtonCount = 0;
         Main.RealOptionsData = new OptionBackupData(GameOptionsManager.Instance.CurrentGameOptions);
@@ -96,9 +96,6 @@ class ChangeRoleSettings
             Main.AllPlayerNames[pc.PlayerId] = pc?.Data?.PlayerName;
             Main.PlayerColors[pc.PlayerId] = Palette.PlayerColors[colorId];
             Main.AllPlayerSpeed[pc.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod); //移動速度をデフォルトの移動速度に変更
-            ReportDeadBodyPatch.CanReport[pc.PlayerId] = true;
-            ReportDeadBodyPatch.CanReportByDeadBody[pc.PlayerId] = true;
-            ReportDeadBodyPatch.DontReportMark[pc.PlayerId] = false;
             ReportDeadBodyPatch.WaitReport[pc.PlayerId] = new();
             pc.cosmetics.nameText.text = pc.name;
 
@@ -123,7 +120,6 @@ class ChangeRoleSettings
 
         IRandom.SetInstanceById(Options.RoleAssigningAlgorithm.GetValue());
 
-        MeetingStates.MeetingCalled = false;
         MeetingStates.FirstMeeting = true;
         GameStates.AlreadyDied = false;
     }

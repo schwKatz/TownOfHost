@@ -87,15 +87,20 @@ public static class Utils
                 return false;
         }
     }
-    public static bool IsActiveDontOpenMeetingSabotage()
+    public static bool IsActiveDontOpenMeetingSabotage(out SystemTypes sabotage)
     {
+        sabotage = SystemTypes.Admin;
         SystemTypes[] Sabotage = { SystemTypes.Electrical, SystemTypes.Comms,
             SystemTypes.Reactor, SystemTypes.Laboratory,
             SystemTypes.LifeSupp,  SystemTypes.HeliSabotage };
 
         foreach (SystemTypes type in Sabotage)
         {
-            if(IsActive(type)) return true;
+            if (IsActive(type))
+            {
+                sabotage = type;
+                return true;
+            }
         }
 
         return false;
@@ -1194,7 +1199,7 @@ public static class Utils
             //Lovers
             SelfMark.Append(Lovers.GetMark(seer));
             //report
-            if (ReportDeadBodyPatch.DontReportMark[seer.PlayerId])
+            if (ReportDeadBodyPatch.DontReportMarkList.Contains(seer.PlayerId))
                 SelfMark.Append(ColorString(Palette.Orange,"◀×"));
 
             //Markとは違い、改行してから追記されます。
@@ -1378,12 +1383,12 @@ public static class Utils
             AirShipElectricalDoors.Initialize();
         DoorsReset.ResetDoors();
     }
-    public static void ProtectedFirstPlayer()
+    public static void ProtectedFirstPlayer(bool FirstSpawn = false)
     {
         foreach (var pc in Main.AllAlivePlayerControls)
         {
-            pc.RpcProtectedMurderPlayer();
-            pc.ResetKillCooldown();
+            if (FirstSpawn) pc.SetKillCooldown(10f, true);
+            else pc.SetKillCooldown(ForceProtect : true);
             break;//一人目だけでBreak
         }
     }

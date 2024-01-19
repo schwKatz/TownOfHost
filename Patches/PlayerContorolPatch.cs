@@ -266,9 +266,9 @@ namespace TownOfHostY
         public static GameData.PlayerInfo ReportTarget;
         public static bool SpecialMeeting = reporter?.PlayerId == ReportTarget?.PlayerId;
 
-        public static Dictionary<byte, bool> CanReport;
-        public static Dictionary<byte, bool> CanReportByDeadBody;
-        public static Dictionary<byte, bool> DontReportMark;
+        public static List<byte> CannotReportList;
+        public static List<byte> CannotReportByDeadBodyList;
+        public static List<byte> DontReportMarkList;
         public static Dictionary<byte, List<GameData.PlayerInfo>> WaitReport = new();
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
         {
@@ -289,37 +289,41 @@ namespace TownOfHostY
             if ((reporter.Object.Is(CustomRoles.NonReport) || reporter.Object.Is(CustomRoles.FoxSpirit)) &&
                 target != null && !target.Object.Is(CustomRoles.Bait) && !target.Object.Is(CustomRoles.AddBait))
             {
-                DontReportMark[reporter.PlayerId] = true;
+                DontReportMarkList.Add(reporter.PlayerId);
                 Utils.NotifyRoles(SpecifySeer: reporter.Object);
                 _ = new LateTask(() =>
                 {
-                    DontReportMark[reporter.PlayerId] = false;
+                    DontReportMarkList.Remove(reporter.PlayerId);
                     Utils.NotifyRoles(SpecifySeer: reporter.Object);
-                }, 5f, "NonReport DontReportMark");
+                }, 5f, "Don't Report Mark Remove");
                 return false;
             }
             // Scavenger
-            if (target != null && !CanReportByDeadBody[target.PlayerId])
+            if (target != null && CannotReportByDeadBodyList.Contains(target.PlayerId))
             {
-                DontReportMark[reporter.PlayerId] = true;
+                DontReportMarkList.Add(reporter.PlayerId);
                 Utils.NotifyRoles(SpecifySeer: reporter.Object);
                 _ = new LateTask(() =>
                 {
-                    DontReportMark[reporter.PlayerId] = false;
+                    DontReportMarkList.Remove(reporter.PlayerId);
                     Utils.NotifyRoles(SpecifySeer: reporter.Object);
-                }, 5f, "Scavenger DontReportMark");
+                }, 5f, "Scavenger DontReportMark Remove");
                 return false;
             }
 
-            if (!CanReport[__instance.PlayerId])
+            if (CannotReportList.Contains(__instance.PlayerId))
             {
                 WaitReport[__instance.PlayerId].Add(target);
                 Logger.Warn($"{__instance.GetNameWithRole()}:通報禁止中のため可能になるまで待機します", "ReportDeadBody");
                 return false;
             }
 
-            //サボタージュ中に呼び出しを受けない
-            if (Utils.IsActiveDontOpenMeetingSabotage()) return false;
+            //会議ボタンの場合、サボタージュ中に呼び出しを受けない
+            if (target == null && Utils.IsActiveDontOpenMeetingSabotage(out var sabotage))
+            {
+                Logger.Warn($"{sabotage}サボタージュ中です", "ReportDeadBody");
+                return false;
+            }
 
             if (!AmongUsClient.Instance.AmHost) return true;
 
@@ -411,7 +415,7 @@ namespace TownOfHostY
                 if (GameStates.IsLobby && (!Main.AllowPublicRoom || ModUpdater.hasUpdate || !VersionChecker.IsSupported || !Main.IsPublicAvailableOnThisVersion) && AmongUsClient.Instance.IsGamePublic)
                     AmongUsClient.Instance.ChangeGamePublic(false);
 
-                if (GameStates.IsInTask && ReportDeadBodyPatch.CanReport[__instance.PlayerId] && ReportDeadBodyPatch.WaitReport[__instance.PlayerId].Count > 0)
+                if (GameStates.IsInTask && !ReportDeadBodyPatch.CannotReportList.Contains(__instance.PlayerId) && ReportDeadBodyPatch.WaitReport[__instance.PlayerId].Count > 0)
                 {
                     var info = ReportDeadBodyPatch.WaitReport[__instance.PlayerId][0];
                     ReportDeadBodyPatch.WaitReport[__instance.PlayerId].Clear();
@@ -524,7 +528,7 @@ namespace TownOfHostY
                     Mark.Append(Lovers.GetMark(seer, target));
 
                     //report
-                    if (seer == target && ReportDeadBodyPatch.DontReportMark[seer.PlayerId])
+                    if (seer == target && ReportDeadBodyPatch.DontReportMarkList.Contains(seer.PlayerId))
                         Mark.Append(Utils.ColorString(Palette.Orange, "◀×"));
 
                     //seerに関わらず発動するLowerText

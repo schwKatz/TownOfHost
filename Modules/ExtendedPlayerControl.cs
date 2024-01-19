@@ -192,11 +192,10 @@ namespace TownOfHostY
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
         }
-        public static void SetKillCooldown(this PlayerControl player, float time = -1f)
+        public static void SetKillCooldown(this PlayerControl player, float time = -1f, bool ForceProtect = false)
         {
             if (player == null) return;
-            CustomRoles role = player.GetCustomRole();
-            if (!player.CanUseKillButton()) return;
+            if (!ForceProtect && !player.CanUseKillButton()) return;
             if (time >= 0f)
             {
                 Main.AllPlayerKillCooldown[player.PlayerId] = time * 2;

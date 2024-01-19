@@ -116,7 +116,7 @@ namespace TownOfHostY
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
         public class GameStartManagerUpdatePatch
         {
-            private static float exitTimer = 0f;
+            //private static float exitTimer = 0f;
             public static void Prefix(GameStartManager __instance)
             {
                 // Lobby code
