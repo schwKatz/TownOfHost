@@ -434,6 +434,7 @@ public enum CustomRoles
     Stealth,
     NekoKabocha,
     EvilHacker,
+    Insider,
     EvilNekomata,
     AntiAdminer,
     CursedWolf,
