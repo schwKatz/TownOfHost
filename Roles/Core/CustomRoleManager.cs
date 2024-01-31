@@ -432,6 +432,7 @@ public enum CustomRoles
     TimeThief,
     EvilTracker,
     Stealth,
+    NekoKabocha,
     EvilHacker,
     EvilNekomata,
     AntiAdminer,
