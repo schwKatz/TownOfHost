@@ -431,6 +431,7 @@ public enum CustomRoles
     Puppeteer,
     TimeThief,
     EvilTracker,
+    Stealth,
     EvilHacker,
     EvilNekomata,
     AntiAdminer,
