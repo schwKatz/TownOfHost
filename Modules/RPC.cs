@@ -36,7 +36,7 @@ namespace TownOfHostY
         MareSync,
         SetSchrodingerCatTeam,
         EvilHackerCreateMurderNotify,
-
+        PenguinSync,
         SetOppoKillerShotLimit,
         SetCursedWolfSpellCount,
         SetNBakryPoison,
