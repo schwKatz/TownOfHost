@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+using UnityEngine;
 
 using static TownOfHostY.Translator;
 
@@ -21,8 +22,12 @@ public abstract class VoteGuesser : RoleBase
         hasTasks,
         hasAbility)
     {
+        NumOfGuess = 1;
     }
 
+    protected int NumOfGuess = 1;
+
+    public override string GetProgressText(bool comms = false) => Utils.ColorString(NumOfGuess > 0 ? Color.yellow : Color.gray, $"({NumOfGuess})");
     private class GuesserInfo
     {
         public Dictionary<byte, int> PlayerNumbers;
