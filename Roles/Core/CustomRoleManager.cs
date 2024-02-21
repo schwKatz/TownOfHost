@@ -588,6 +588,9 @@ public enum CustomRoles
     Archenemy,
 
     MaxAddon,
+
+    //dummy
+    DummyNext = 10000,
 }
 public enum CustomRoleTypes
 {
