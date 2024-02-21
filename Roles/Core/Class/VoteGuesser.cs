@@ -24,6 +24,7 @@ public abstract class VoteGuesser : RoleBase
         hasAbility)
     {
         NumOfGuess = 1;
+        MultipleInMeeting = false;
 
         guesserInfo = null;
 
@@ -34,6 +35,7 @@ public abstract class VoteGuesser : RoleBase
     }
 
     protected int NumOfGuess = 1;
+    protected bool MultipleInMeeting = false;
 
     private GuesserInfo guesserInfo;
 
@@ -66,7 +68,7 @@ public abstract class VoteGuesser : RoleBase
         if (Player == null) return true;
 
         if (NumOfGuess <= 0) return true;
-        if (guessed) return true;
+        if (guessed && !MultipleInMeeting) return true;
 
         if (selecting)
         {
@@ -179,7 +181,7 @@ public abstract class VoteGuesser : RoleBase
     }
     private void SendMessageGuide()
     {
-        if (NumOfGuess > 0 && !guessed)
+        if (NumOfGuess > 0 && (!guessed || MultipleInMeeting))
         {
             Utils.SendMessage(GetString("Message.SelfVoteForActivate"), Player.PlayerId);
         }
