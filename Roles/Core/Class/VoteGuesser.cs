@@ -23,11 +23,33 @@ public abstract class VoteGuesser : RoleBase
         hasAbility)
     {
         NumOfGuess = 1;
+
+        guesserInfo = null;
     }
 
     protected int NumOfGuess = 1;
 
+    private GuesserInfo guesserInfo;
+
     public override string GetProgressText(bool comms = false) => Utils.ColorString(NumOfGuess > 0 ? Color.yellow : Color.gray, $"({NumOfGuess})");
+    public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    {
+        if (!isMeeting) return;
+        if (Player == null || !Player.IsAlive()) return;
+        if (seen == null || !seen.IsAlive() || seen.Data.Disconnected) return;
+        if (NumOfGuess <= 0) return;
+
+        if (guesserInfo == null) guesserInfo = new();
+
+        if (!guesserInfo.PlayerNumbers.TryGetValue(seen.PlayerId, out int number)) return;
+
+        if (!enabled)
+        {
+            roleText = "";
+            enabled = true;
+        }
+        roleText = $"<color=#ffff00><size=110%>{number}</size></color>{roleText}";
+    }
     private class GuesserInfo
     {
         public Dictionary<byte, int> PlayerNumbers;
