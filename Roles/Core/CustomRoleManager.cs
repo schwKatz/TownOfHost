@@ -445,6 +445,7 @@ public enum CustomRoles
     Escalationer,
     EvilDyer,
     BestieWolf,
+    EvilGuesser,
     //Madmate
     MadGuardian,
     Madmate,
