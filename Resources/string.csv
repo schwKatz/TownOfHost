@@ -218,6 +218,7 @@
 "LoyalDoggy","Loyal Doggy","ロイヤルドギー",
 "Rabbit","Rabbit","ラビット",
 "VentManager","Vent Manager","ベントマネージャー",
+"NiceGuesser","Nice Guesser","ナイスゲッサー","","","",""
 
 "CustomCrewmateInfo","I can now use abilities like that.","あんな能力も使えるようになりました。",
 "NiceWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
@@ -255,6 +256,7 @@
 "LoyalDoggyInfo","How are you doing? Master!","調子はどうですか？ご主人様！",
 "RabbitInfo","I have a good ear, so.","耳がいいので探知できるんだ",
 "VentManagerInfo","Vent,Vent,Vent!","ベント、ベント、ベント！",
+"NiceGuesserInfo","Guess the Player Role","役職を推測しよう","","","",""
 
 "CustomCrewmateInfoLong","(Crewmates):\Crewmate with the ability to Add-On to attributes set by the host.","[クルー陣営]\nホストによって設定された属性の能力をもつクルーメイト。",
 "NiceWatcherInfoLong","(Crewmates):\nYou can see everyone's votes even if anonymous voting is on.","(クルー陣営):\n全員の投票先を見ることができる。","(船员阵营:\n会议时窥视者可以看到所有人的投票。","(船員):\n會議時觀察者可以看到所有人的投票。","(Член Экипажа):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Tripulantes):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
@@ -292,7 +294,7 @@
 "LoyalDoggyInfoLong","(Crewmates)\nVote for one person of your choice at the very first meeting and nominate them as Master. (Votes are not shown).\nThe position of the master can be detected by the sense of smell. When the master is killed, the arrow will no longer be displayed. By setting, the task disappears after the Master's death.","[クルー陣営]\n一番初めの会議で1人好きな人に投票して、ご主人として指名する。(票は表示されない)\nその人の場所を嗅覚により探知できる。ご主人がキルされた時、ご主人への矢印はなくなる。設定により、ご主人の死亡後はタスクが無くなる。",
 "RabbitInfoLong","(Crewmates)\nWhen a set number of tasks are completed, an arrow will indicate for 5 seconds in which direction a random 1 Impostor is at that time for each task completed.\nEven after all tasks have been completed, uncounted tasks will appear and the ability will be available for each completed task.","[クルー陣営]\n設定タスク完了すると、タスクを1つ完了させる毎にその時のランダムな1インポスターがどの方向にいるかが矢印で5秒間表示される。\nタスク全完了後もカウントされないタスクが発生し、完了するごとに能力を使用できる。",
 "VentManagerInfoLong","(Crewmates)\nClean Vent.","[クルー陣営]\nベントを掃除しよう。ただそれだけ。",
-
+"NiceGuesserInfoLong","(Crewmates):\nCrewmate guessing the player's role.\nYou can kill a player during a meeting by guessing their role.","(クルー陣営):\n特殊能力を持つクルーメイトです。\n会議中に他のプレイヤーの役職を当てる事でそのプレイヤーを死亡させることができます。","","","",""
 
 "# ニュートラル役職"
 "Jester","Jester","ジェスター","小丑","小丑","Шут","Bobo"

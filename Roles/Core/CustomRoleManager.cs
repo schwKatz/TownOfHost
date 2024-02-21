@@ -503,6 +503,7 @@ public enum CustomRoles
     Rabbit,
     VentManager,
     Counselor,
+    NiceGuesser, 
 
     Potentialist,
     //Neutral
