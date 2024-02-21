@@ -221,6 +221,29 @@ public abstract class VoteGuesser : RoleBase
 
         guesserInfo = null;
     }
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        seen ??= seer;
+        if (!isForMeeting) return "";
+        if (seer == null || seen != seer) return "";
+        if (!seer.IsAlive()) return "";
+        if (NumOfGuess <= 0) return "";
+
+        if (guesserInfo == null) guesserInfo = new();
+
+        var mark = "";
+        var suffix = "";
+        if (seer.PlayerId == PlayerControl.LocalPlayer.PlayerId)
+        {
+            if (guesserInfo.PlayerNumbers.TryGetValue(seer.PlayerId, out int number))
+            {
+                mark = $"<color=#ff8000><size=110%>{number}</size></color>";
+            }
+            suffix = GetProgressText();
+        }
+
+        return $"{mark} <color=#ff8000><size=1.5>{GetString("Message.SelfVoteSuffix")}</size></color> {suffix}";
+    }
     public void RpcGuesserMurderPlayer(PlayerControl target, CustomDeathReason reason)
     {
         target.Data.IsDead = true;
