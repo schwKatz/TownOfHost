@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using static TownOfHostY.Translator;
+using HarmonyLib;
 
 namespace TownOfHostY.Roles.Core.Class;
 
@@ -160,6 +161,21 @@ public abstract class VoteGuesser : RoleBase
     }
     private void UseGuesserAbility(CustomRoles role)
     {
+        guessed = true;
+        NumOfGuess--;
+
+        PlayerControl target;
+        if (targetGuess.Is(role))
+        {
+            target = targetGuess;
+            RpcGuesserMurderPlayer(target, CustomDeathReason.Kill);
+        }
+        else
+        {
+            target = Player;
+            RpcGuesserMurderPlayer(target, CustomDeathReason.Misfire);
+        }
+        SendGuessedMessage(target);
     }
     private void SendMessageGuide()
     {
@@ -171,6 +187,26 @@ public abstract class VoteGuesser : RoleBase
         {
             Utils.SendMessage(GetString("Message.SelfVoteUsed"), Player.PlayerId);
         }
+    }
+    private void SendGuessedMessage(PlayerControl target)
+    {
+        string decoration = $"<color=#ffff00><size=100%>{GetString("Message.GuesserAbilityUse")}</size></color>\n";
+
+        string targetText = $"{Palette.GetColorName(target.Data.DefaultOutfit.ColorId)} {target.name}";
+        targetText = Utils.ColorString(Palette.PlayerColors[target.Data.DefaultOutfit.ColorId], targetText);
+
+        targetText = $"<size=100%>{targetText}\n<color=#ffffff> {GetString("Message.GuesserDead")}</color></size>";
+
+        string dispText = $"{decoration}\n{targetText}\n";
+        string chatText = "\n\n";
+
+        PlayerControl sender = PlayerControl.LocalPlayer;
+        if (sender.Data.IsDead)
+        {
+            sender = PlayerControl.AllPlayerControls.ToArray().OrderBy(x => x.PlayerId).Where(x => !x.Data.IsDead).FirstOrDefault();
+        }
+        string name = sender.Data.PlayerName;
+        ChatCommands.SendCustomChat(dispText, chatText, name, sender);
     }
     public override void OnStartMeeting()
     {
@@ -184,6 +220,25 @@ public abstract class VoteGuesser : RoleBase
         targetForRole = null;
 
         guesserInfo = null;
+    }
+    public void RpcGuesserMurderPlayer(PlayerControl target, CustomDeathReason reason)
+    {
+        target.Data.IsDead = true;
+        target.RpcExileV2();
+
+        var targetState = PlayerState.GetByPlayerId(target.PlayerId);
+        targetState.DeathReason = reason;
+        targetState.SetDead();
+
+        //キルフラッシュ表示
+        Main.AllPlayerControls.Do(pc => pc.KillFlash());
+
+        foreach (var va in MeetingHud.Instance.playerStates)
+        {
+            if (va.VotedFor != target.PlayerId) continue;
+            var voter = Utils.GetPlayerById(va.TargetPlayerId);
+            MeetingHud.Instance.RpcClearVote(voter.GetClientId());
+        }
     }
     private class GuesserInfo
     {
