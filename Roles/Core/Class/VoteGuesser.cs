@@ -26,14 +26,20 @@ public abstract class VoteGuesser : RoleBase
 
         guesserInfo = null;
 
+        selecting = false;
         guessed = false;
+        targetGuess = null;
+        targetForRole = null;
     }
 
     protected int NumOfGuess = 1;
 
     private GuesserInfo guesserInfo;
 
+    private bool selecting = false;
     private bool guessed = false;
+    private PlayerControl targetGuess = null;
+    private PlayerControl targetForRole = null;
 
     public override string GetProgressText(bool comms = false) => Utils.ColorString(NumOfGuess > 0 ? Color.yellow : Color.gray, $"({NumOfGuess})");
     public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
@@ -54,6 +60,107 @@ public abstract class VoteGuesser : RoleBase
         }
         roleText = $"<color=#ffff00><size=110%>{number}</size></color>{roleText}";
     }
+    public override bool CheckVoteAsVoter(PlayerControl votedFor)
+    {
+        if (Player == null) return true;
+
+        if (NumOfGuess <= 0) return true;
+        if (guessed) return true;
+
+        if (selecting)
+        {
+            if (votedFor == null)
+            {
+                //スキップでモード解除
+                selecting = false;
+                targetGuess = null;
+                targetForRole = null;
+
+                Utils.SendMessage(GetString("Message.GuesserSelectionCancel"), Player.PlayerId);
+                SendMessageGuide();
+                return false;
+            }
+
+            if (targetGuess == null)
+            {
+                targetGuess = votedFor;
+                guesserInfo.ResetList();
+                Logger.Info($"GuesserSetTarget1 guesser: {Player?.name}, target: {targetGuess?.name}", "Guesser.CheckVoteAsVoter");
+            }
+            else
+            {
+                targetForRole = votedFor;
+                Logger.Info($"GuesserSetTarget2 guesser: {Player?.name}, target: {targetForRole?.name}", "Guesser.CheckVoteAsVoter");
+            }
+
+            if (targetGuess == null)
+            {
+                Utils.SendMessage(GetString("Message.GuesserSelectionTarget"), Player.PlayerId);
+                return false;
+            }
+            if (targetForRole == null)
+            {
+                Utils.SendMessage(string.Format(GetString("Message.GuesserSelectionRole"), targetGuess.name, guesserInfo.PageNo, guesserInfo.GetRoleGuide()), Player.PlayerId);
+                return false;
+            }
+
+            Logger.Info($"GuesserSelectMeetingEnd guesser: {Player?.name}, target: {targetGuess?.name}, {targetForRole?.name}", "Guesser.CheckVoteAsVoter");
+
+            var role = guesserInfo.GetRole(targetForRole);
+
+            if (role == CustomRoles.NotAssigned)
+            {
+                Logger.Info($"InvalidSelection playerId: {targetForRole?.PlayerId}", "Guesser.CheckVoteAsVoter");
+                targetForRole = null;
+                return false; //無効選択
+            }
+            if (role == CustomRoles.DummyNext)
+            {
+                //ページ切り替え
+                Logger.Info($"NextPage pageNo: {guesserInfo.PageNo}", "Guesser.CheckVoteAsVoter");
+                guesserInfo.NextPage();
+                Utils.SendMessage(string.Format(GetString("Message.GuesserSelectionRole"), targetGuess.name, guesserInfo.PageNo, guesserInfo.GetRoleGuide()), Player.PlayerId);
+                return false;
+            }
+
+            if (targetGuess == null || !targetGuess.IsAlive() || targetGuess.Data.Disconnected)
+            {
+                //ターゲット存在なしは強制スキップ
+                selecting = false;
+                targetGuess = null;
+                targetForRole = null;
+
+                Utils.SendMessage(GetString("Message.GuesserSelectionCancel"), Player.PlayerId);
+                SendMessageGuide();
+                return false;
+            }
+
+            UseGuesserAbility(role);
+
+            selecting = false;
+            targetGuess = null;
+            targetForRole = null;
+            SendMessageGuide();
+
+            return false;
+        }
+        if (votedFor == null) return true;
+        if (Player.PlayerId == votedFor.PlayerId && NumOfGuess > 0)
+        {
+            Logger.Info($"GuesserSelectStart guesser: {Player?.name}", "Guesser.CheckVoteAsVoter");
+
+            selecting = true;
+            guesserInfo.ResetList();
+            Utils.SendMessage(GetString("Message.GuesserSelectionTarget"), Player.PlayerId);
+
+            return false;
+        }
+
+        return true;
+    }
+    private void UseGuesserAbility(CustomRoles role)
+    {
+    }
     private void SendMessageGuide()
     {
         if (NumOfGuess > 0 && !guessed)
@@ -68,6 +175,15 @@ public abstract class VoteGuesser : RoleBase
     public override void OnStartMeeting()
     {
         SendMessageGuide();
+    }
+    public override void AfterMeetingTasks()
+    {
+        selecting = false;
+        guessed = false;
+        targetGuess = null;
+        targetForRole = null;
+
+        guesserInfo = null;
     }
     private class GuesserInfo
     {
