@@ -25,11 +25,15 @@ public abstract class VoteGuesser : RoleBase
         NumOfGuess = 1;
 
         guesserInfo = null;
+
+        guessed = false;
     }
 
     protected int NumOfGuess = 1;
 
     private GuesserInfo guesserInfo;
+
+    private bool guessed = false;
 
     public override string GetProgressText(bool comms = false) => Utils.ColorString(NumOfGuess > 0 ? Color.yellow : Color.gray, $"({NumOfGuess})");
     public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
@@ -49,6 +53,21 @@ public abstract class VoteGuesser : RoleBase
             enabled = true;
         }
         roleText = $"<color=#ffff00><size=110%>{number}</size></color>{roleText}";
+    }
+    private void SendMessageGuide()
+    {
+        if (NumOfGuess > 0 && !guessed)
+        {
+            Utils.SendMessage(GetString("Message.SelfVoteForActivate"), Player.PlayerId);
+        }
+        else
+        {
+            Utils.SendMessage(GetString("Message.SelfVoteUsed"), Player.PlayerId);
+        }
+    }
+    public override void OnStartMeeting()
+    {
+        SendMessageGuide();
     }
     private class GuesserInfo
     {

@@ -1132,6 +1132,8 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "Message.ExportedOptions","Exported options","オプションデータを出力しました","","","",""
 "Message.LoadedOptions","Loaded options","オプションデータを読み込みました","","","",""
 "Message.OnlyHostCanLoadOptions","Only the host can load options","ホストのみがオプションを読み込めます","","","",""
+"Message.SelfVoteForActivate","Vote yourself to activate the ability.","能力を発動するには自投票を行ってください","","","",""
+"Message.SelfVoteUsed","Ability used. The ability cannot be activated.","能力使用済み 能力を発動することはできません","","","",""
 "Message.NextPage","Next page","次ページ","","","",""
 
 "## 警告"
