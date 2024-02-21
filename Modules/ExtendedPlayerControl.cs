@@ -588,6 +588,7 @@ namespace TownOfHostY
                     Prefix = mafia.CanUseKillButton() ? "After" : "Before";
                     break;
                 case CustomRoles.MadSnitch:
+                case CustomRoles.MadGuesser:
                 case CustomRoles.MadGuardian:
                     if (InfoLong) break;
                     text = CustomRoles.Madmate.ToString();

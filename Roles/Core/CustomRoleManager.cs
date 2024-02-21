@@ -460,6 +460,7 @@ public enum CustomRoles
 
     MadDilemma,
     SKMadmate,
+    MadGuesser,
     //Crewmate(Vanilla)
     Engineer,
     GuardianAngel,
