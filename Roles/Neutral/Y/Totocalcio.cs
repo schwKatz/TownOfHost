@@ -65,7 +65,14 @@ public sealed class Totocalcio : RoleBase, IKiller, IAdditionalWinner
 
     public bool CheckWin(ref CustomRoles winnerRole)
     {
-        return Player.IsAlive() && CustomWinnerHolder.WinnerIds.Contains(BetTarget.PlayerId);
+        if (!Player.IsAlive()) return false;
+        if (BetTarget == null) return false;
+
+        //トトカルチョ→トトカルチョの勝利連鎖は行わない
+        if (BetTarget.Is(CustomRoles.Totocalcio)) return false;
+
+        return CustomWinnerHolder.WinnerIds.Contains(BetTarget.PlayerId) ||
+               CustomWinnerHolder.WinnerRoles.Any(team => BetTarget.Is(team));
     }
     public override void Add()
     {
