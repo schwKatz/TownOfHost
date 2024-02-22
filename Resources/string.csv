@@ -32,6 +32,10 @@
 "TimeThief","Time Thief","タイムシーフ","蚀时者","時間竊賊","Вор Времени","Ladrão de Tempo"
 "Sniper","Sniper","スナイパー","狙击手","狙擊手","Снайпер","Sniper"
 "EvilTracker","Evil Tracker","イビルトラッカー","邪恶的追踪者","邪惡的追蹤者","Злой Следопыт","Rastreador do Mal"
+"Stealth","Stealth","ステルス","暗杀者","","Хитрец","Furtivo"
+"NekoKabocha","Neko-Kabocha","ネコカボチャ","猫又","","Неко-Кабоча","Neko-Kabocha"
+"Penguin","Penguin","ペンギン","企鹅","","Пингвин","Pinguim"
+"Insider","Insider","インサイダー","内幕人","","Инсайдер","Informante"
 "EvilNekomata","Evil Nekomata","イビル猫又","双尾妖猫",
 "AntiAdminer","Anti Adminer","アンチアドミナー","监管者",,
 "CursedWolf","Cursed Wolf","呪狼","被诅咒的狼",
@@ -64,6 +68,10 @@
 "TimeThiefInfo","Kill to steal meeting time","敵を殺し、会議時間を奪おう","不仅夺走他们的性命，还有他们的时间","殺光你的敵人並將會議時間縮短","Убивайте игроков чтобы сократить время встречи","Mate para roubar tempo de reunião"
 "SniperInfo","Snipe","狙い撃つぜ","瞄准敌人，射击！","讓你的敵人在你的狙擊下死亡","Стреляйте в Членов Экипажа на расстоянии","Hora de atirar"
 "EvilTrackerInfo","Track others","プレイヤーを追跡しろ","让我看看，我的小目标在哪","你不要過來啊啊阿","Отслеживайте Игроков","Localize os outros"
+"StealthInfo","Act unseen in the dark world...","闇の世界で暗躍せよ","降下黑暗！","","Действуйте незаметно в темноте","Tabalhe sem ser visto no mundo escuro..."
+"NekoKabochaInfo","Take your killer to your grave","死なばもろとも","带走杀死你的人","","Отведи своего убийцу в могилу","Leve seu assassino para o túmulo"
+"PenguinInfo","Let's drag and kill!","ぺちぺち！","扑哧扑哧！","","Давайте тащить и убивать!","Vamos arrastar e matar!"
+"InsiderInfo","Knowledge is power","知は力なり","知识就是力量","","Знание - сила!","Conhecimento é poder"
 "EvilNekomataInfo","Let's get someone on the road","誰かを道連れにしよう","让我们在路上找一些人吧",,
 "AntiAdminerInfo","I wish Admin would just go away","アドミンなんて無くなればいい","我希望管理员能离开",,
 "CursedWolfInfo","It's foolish to kill me","私を斬るなんて愚かだ","杀我是愚蠢的",
@@ -95,6 +103,10 @@
 "TimeThiefInfoLong","(Impostors):\nEvery kill reduces discussion and voting time in meeting.\nIf you are voted out or killed, the lost time returns to meetings.","(インポスター陣営):\nキルを行うと会議時間が減少する。\nタイムシーフが追放または殺害されると、失われた会議時間が返ってきます。","(内鬼阵营):\n蚀时者每击杀一个人，会议时间就将减少一定时间。\n如果蚀时者死亡，被偷取的时间的会议时间将返还。","(狼人陣營):\n時間小偷每次殺人將會減少會議時間\n如果時間小偷被丟出或被殺死,減少的會議時間將會回來","(Предатель):\nКаждое убийство Вора Времени сокращает время обсуждения и голосования на собраниях. \nВ зависимости от настроек потерянное время возвращается после того, как он будет убит или изгнан.","(Impostores):\nCada morte reduz tempo de votação e discussão.\nSe você for exilado ou morto, o tempo perdido retorna para as reuniões."
 "SniperInfoLong","(Impostors):\nYou can shoot players from afar.\nYour line of fire continues as a straight line in the direction of the spot where you shapeshift to where you unshift.\nYou cannot perform normal kills until you use up all of your ammo.","(インポスター陣営):\n遠くの敵を狙撃できるインポスター。\nシェイプシフトした地点から解除した地点の延長線上の敵を一人撃ち抜く。\n撃ちきるまで通常キル出来ない。","(内鬼阵营):\n狙击手拥有远距离射杀的能力。\n方法为：变形的位置及解除变形位置的连线及其延长线上的一名玩家将被射杀。\n在狙击手的子弹耗尽前，狙击手无法进行常规击杀。","(狼人陣營):\n狙擊手\狙擊手可以進行遠程殺人\n他的子彈將從變形處延伸到取消變形處並往直線前進並殺死在這條線上非狼人陣營的人。\n在狙擊手用光子彈前,狙擊手無法正常殺人。","(Предатель):\nСнайпер может стрелять в игроков на расстоянии. \nОн убивает игрока который, находится с ним на одной линии, от точки Морфа до точки возвращения в свой облик. \nОн может совершать обычные убийства после того, как все его патроны закончатся.","(Impostor):\nVocê pode atirar em jogadores de longe.\nSua linha de fogo continua numa linha reta, do ponto que você se metamorfa ao ponto que você volta ao normal.\nVocê não pode fazer mortes normais até usar toda a sua munição."
 "EvilTrackerInfoLong","(Impostors):\nYou can see where others are.\nYou will see arrows pointing to the other impostors and anyone you shapeshift into.\nYou will see a ""kill flash"" when your fellow impostors kill.","(インポスター陣営):\n他人の位置が分かるインポスター。\n味方のインポスターとシェイプシフトで選んだ一人の位置が矢印で表示される。\n味方インポスターのキルによるキルフラッシュも見える。","(内鬼阵营):\n邪恶追踪者可以追踪其他内鬼以及其所变形的玩家。\n玩家名称下面的箭头代表着目标的方向。\n当内鬼队友杀人时，邪恶追踪者将会看到击杀闪烁提示。","(狼人陣營):\n邪惡的追蹤者:\他有一個箭頭指向他的隊友以及他變形的玩家,\n當他的隊友殺人時將出現閃光顯示。","(Предатель):\nЗлой Следопыт может отслеживать других игроков. \nОн может видеть стрелки, которые указывают на Предателей или на того, в кого он превратился. \nОн может видеть когда было совершено убийство с помощью вспышки убийства.","(Impostores):\nVocê consegue ver a posição de outros.\nÉ possível ver setas apontando para outros Impostores e qualquer um em que você se transforme.\nVocê também verá uma piscada de tela quando um aliado Impostor matar alguém."
+"StealthInfoLong","When the Stealth kills, players in the same room are blinded for a short while.","キルを行うと、同じ部屋にいる他のプレイヤーの視界が少しの間暗転する。","当暗杀者完成击杀后，与暗杀者处于同一房间内的玩家会短暂失明。","","Когда Хитрец убивает, игроки в одной локации будут ненадолго ослеплены","Quando o Furtivo mata, os jogadores na mesma sala ficam cegos por um curto período."
+"NekoKabochaInfoLong","The Neko-Kabocha kills back their killer.","キルされた際、自分を殺してきたプレイヤーを殺し返す。","当猫又被击杀时，猫又也会击杀凶手。","","Неко-Кабоча убивает своего убийцу","O Neko-Kabocha mata de volta o seu assassino."
+"PenguinInfoLong","Penguins can restrain target by pressing the kill button, and drag around.\While dragging, the target dies by pressing the kill button again or after a certain period of time.\nPress the kill button twice for a direct kill.","キルボタン一回で相手を拘束して連れまわすことが出来る。\nもう一度キルボタンを押すか一定時間経過でキルする。\nキルボタン2回で直接キル可能。","企鹅使用击杀键可以拖拽目标。\n等到倒计时结束或再次按下击杀键则可以正常击杀目标。","","Пингвины могут удерживать цель, нажимая кнопку убийства, и перетаскивать ее.\Во время перетаскивания цель умирает, нажав кнопку убийства еще раз или через определенный промежуток времени.\nНажмите кнопку убийства дважды, чтобы убить напрямую.","Os Pinguins podem prender o alvo pressionando o botão de matar e arrastá-lo.\nEnquanto estiver arrastando, o alvo morre ao pressionar o botão de matar novamente ou após um determinado período de tempo.\nPressione o botão de matar duas vezes para matar imediatamente."
+"InsiderInfoLong","You can see roles whose you killed.\nYou can also see roles and abilities of all Impostors.\nKIlling specified times tells you Madmate as well.","キルした相手の役職が分かる。\nまた、味方インポスターの役職と能力が見える。\nさらに、特定回数キルするとマッドメイトも分かる。","内幕人可以看到自己击杀的人的职业。\n还可以看到队友的位置和能力。\n此外，如果内幕人完成了指定的击杀数，则可以看到谁是叛徒。","","Вы можете увидеть роли, которых  Вы убили\nВы также можете увидеть роли и способности всех Предателей.\nУбийство в указанное время также сообщает вам о Безумце.","Você pode ver as classes de quem matou.\nVocê também pode ver as classes e as habilidades de todos os Impostores.\nAo matar em horários específicos, você verá o Tripulante Louco."
 "EvilNekomataInfoLong","(Impostors)\nWhen he is hanged，he takes one random person other than the imposter with him. (When the next discussion starts after he is hanged, he will be marked with an "X" without a corpse direction.)","[インポスター陣営]\n自身が吊られた際、インポスター以外のランダムな1人を道連れにする。(吊られた次の議論開始時に死体演出無しで×マークが付く)","(内鬼阵营)\n当他被绞死时，除了内鬼，他会随机带走一个人。(当他被绞死后的下一次会议开始时，他将被标记为“X”，但没有尸体的方向。)",,
 "AntiAdminerInfoLong","(Impostors)\nI can tell if someone is in front of the Admin，Door Log，or Vital equipment. It does not know if the person is actually using the equipment.","[インポスター陣営]\nアドミン・ドアログ・バイタル機器の前に人がいるか分かる。実際に機器を使用しているかは分からない。","(内鬼阵营)\n我可以告诉如果有人在管理地图，门日志，或重要设备的前面时。但它不知道这个人是否真的在使用设备。",,
 "CursedWolfInfoLong","(Impostors)\nWhen someone is about to be killed by someone else, Guard the kill from that person and Spell them to death.\nWhen the spell, its own killcool is set to half its usual level.","[インポスター陣営]\n誰かにキルされそうになった時、その人からキルをガードして呪殺する。(設定回数まで)\n呪殺した時、自身のキルクールは通常の半分にセットされる。","(内鬼阵营)\n当一个人要被别人杀死时。保护他不被那个人杀死。"
@@ -744,6 +756,17 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "EvilTrackerTargetMode.EveryMeeting","Every Meeting","ターン毎"
 "EvilTrackerTargetMode.Always","Always","常時"
 "EvilTrackerCanSeeLastRoomInMeeting","Can See Target's Last Room In Meeting","会議中、追跡対象の最終位置を表示する","可以在会议时知晓追踪目标的最后停留房间","可以在會議中看到目標最後位置","Может видеть местоположение Целей во время Собрания",""
+"StealthExcludeImpostors","Exclude Impostors From Blindness","暗転効果の対象からインポスターを除外する","内鬼不会失明","","Исключить Предателей из слепоты","Excluir Impostores da Cegueira"
+"StealthDarkenDuration","Blindness Duration","暗転の持続時間","失明持续时间","","Длительность слепоты","Duração da Cegueira"
+"NekoKabochaImpostorsGetRevenged","Impostors Get Revenged","インポスターを道連れにする","内鬼可以被反杀","","Предатели могут мстить","Impostores São Vingados"
+"NekoKabochaMadmatesGetRevenged","Madmates Get Revenged","マッドメイトを道連れにする","叛徒可以被反杀","","Безумцы могут мстить","Tripulantes Loucos São Vingados"
+"NekoKabochaRevengeOnExile","Revenge When Exiled","追放された時に誰かを道連れにする","被驱逐时复仇","","Месть во время изгнания","Vinagança Quando Exilado"
+"PenguinAbductTimerLimit","Dragging Time","引き摺れる時間","最长拖拽时间","","Время перетаскивания","Tempo Para Arrastar"
+"PenguinMeetingKill","Kill If Meeting Starts During Dragging","会議開始時に引き摺り中ならキルする","拖拽时开会将立刻击杀目标","","Убить если встреча начнется во время перетаскивания","Matar Se Reunião Começar Enquanto Arrasta"
+"InsiderCanSeeImpostorAbilities","Can See Impostor Abilities","味方インポスターの能力が分かる","可以看到内鬼技能状态","","Может видеть роли других Предателей","Pode Ver Habilidades de Impostor"
+"InsiderCanSeeAllGhostsRoles","Can See All Ghost's Roles","幽霊全員の役職が分かる","可以看到所有幽灵的职业","","Может видеть все роли Призраков","Pode Ver Todas As Classes dos Fantasmas"
+"InsiderCanSeeMadmates","Can See Madmates","マッドメイトが分かる","可以看到叛徒","","Может видеть Безумцев","Pode Ver Tripulantes Loucos"
+"InsiderKillCountToSeeMadmates","Kill Count To See Madmates","必要なキル数","看到叛徒所需击杀数","","Количество убийств при котором будет виден Безумец","Quantas Kills Para Ver Tripulante Louco"
 "WitchModeSwitchAction","Mode Switch Action","モード変更アクション","切换击杀模式","切換模式操作","Действие для Смены Режима",""
 "TriggerKill","Kill","キル","击杀","殺人鍵","Убийство",""
 "TriggerVent","Vent","ベント","通风管","通風口","Вентиляция",""
@@ -1280,6 +1303,8 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "LastAdminInfo","Last-minute admin information","直前のアドミン情報","","","",""
 "MurderNotify","Murder","キル発生","","","",""
 "Deadbody","DEAD","死体","","","",""
+"PenguinKillButtonText","Drag","拉致","拖拽","","ПЕРЕТАСКИВАТЬ","Arrastar"
+"PenguinTimerText","Drag Timer","残り時間","剩余时间","","Время перетаскивания","Tempo para Arrastar"
 
 "killer","Killer","キラー","杀手",
 "AntiAdminerAD","Warning Admin","アドミン注意！","管理室地图注意",,
