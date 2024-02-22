@@ -379,6 +379,25 @@ namespace TownOfHostY
             }
             return !canceled;
         }
+        public static void SendCustomChat(string SendName, string command, string name, PlayerControl sender = null)
+        {
+            Logger.Info($"SendCustomChat SendName: {SendName}, command: {command}, name: {name} sender: {sender?.name}", "SendCustomChat");
+            if (sender == null) sender = PlayerControl.LocalPlayer;
+            var crs = CustomRpcSender.Create("AllSend");
+            crs.AutoStartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(SendName)
+                .EndRpc()
+                .AutoStartRpc(sender.NetId, (byte)RpcCalls.SendChat)
+                .Write(command)
+                .EndRpc()
+                .AutoStartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(name)
+                .EndRpc()
+                .SendMessage();
+            sender.SetName(SendName);
+            DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sender, command);
+            sender.SetName(name);
+        }
 
         public static void GetRolesInfo(string role)
         {
@@ -557,8 +576,8 @@ namespace TownOfHostY
 
                 default:
                     break;
-            }
         }
+    }
     }
     [HarmonyPatch(typeof(ChatController), nameof(ChatController.Update))]
     class ChatUpdatePatch

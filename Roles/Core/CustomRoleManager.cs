@@ -449,6 +449,7 @@ public enum CustomRoles
     Escalationer,
     EvilDyer,
     BestieWolf,
+    EvilGuesser,
     //Madmate
     MadGuardian,
     Madmate,
@@ -463,6 +464,7 @@ public enum CustomRoles
 
     MadDilemma,
     SKMadmate,
+    MadGuesser,
     //Crewmate(Vanilla)
     Engineer,
     GuardianAngel,
@@ -506,6 +508,7 @@ public enum CustomRoles
     Rabbit,
     VentManager,
     Counselor,
+    NiceGuesser, 
 
     Potentialist,
     //Neutral
@@ -592,6 +595,9 @@ public enum CustomRoles
     Archenemy,
 
     MaxAddon,
+
+    //dummy
+    DummyNext = 10000,
 }
 public enum CustomRoleTypes
 {
