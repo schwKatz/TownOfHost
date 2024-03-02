@@ -286,6 +286,7 @@ public static class Options
     // 道連れ設定
     public static OptionItem RevengeNeutral;
     public static OptionItem RevengeMadByImpostor;
+    public static OptionItem RevengeImpostorByImpostor;
 
     public static OptionItem HostGhostIgnoreTasks;
     public static OptionItem DisableForceProtect;
@@ -362,7 +363,11 @@ public static class Options
             .SetGameMode(CustomGameMode.All);
 
         // SpecialEvent
-        SpecialEvent.SetupOptions();
+        if (Main.IsAprilFool)
+        {
+            Potentialist.SetupRoleOptions();
+            Potentialist.RoleInfo.OptionCreator?.Invoke();
+        }
 
         sortedRoleInfo.Where(role => !role.RoleName.IsDontShowOptionRole()).Do(info =>
         {
@@ -615,7 +620,9 @@ public static class Options
         // 道連れ人表記
         ShowRevengeTarget = BooleanOptionItem.Create((int)offsetId.FeatRevenge + 100, "ShowRevengeTarget", true, TabGroup.MainSettings, true)
             .SetColor(Color.cyan);
-        RevengeMadByImpostor = BooleanOptionItem.Create((int)offsetId.FeatRevenge + 200, "RevengeMadByImpostor", false, TabGroup.MainSettings, true)
+        RevengeImpostorByImpostor = BooleanOptionItem.Create((int)offsetId.FeatRevenge + 200, "RevengeImpostorByImpostor", false, TabGroup.MainSettings, true)
+            .SetColor(Palette.ImpostorRed);
+        RevengeMadByImpostor = BooleanOptionItem.Create((int)offsetId.FeatRevenge + 250, "RevengeMadByImpostor", false, TabGroup.MainSettings, true)
             .SetColor(Palette.ImpostorRed);
         RevengeNeutral = BooleanOptionItem.Create((int)offsetId.FeatRevenge + 300, "RevengeNeutral", true, TabGroup.MainSettings, true)
             .SetColor(Palette.Orange);

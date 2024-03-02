@@ -291,7 +291,9 @@ public static class MeetingHudPatch
         if (player == null) return;
         //道連れ能力持たない時は下を通さない
         if (!((player.Is(CustomRoles.SKMadmate) && Options.MadmateRevengeCrewmate.GetBool())
-            || player.Is(CustomRoles.EvilNekomata) || player.Is(CustomRoles.Nekomata) || player.Is(CustomRoles.Immoralist) || player.Is(CustomRoles.Revenger))) return;
+            || (player.Is(CustomRoles.NekoKabocha) && NekoKabocha.revengeOnExile)
+            || player.Is(CustomRoles.EvilNekomata) || player.Is(CustomRoles.Nekomata)
+            || player.Is(CustomRoles.Immoralist) || player.Is(CustomRoles.Revenger))) return;
 
         var target = PickRevengeTarget(player, deathReason);
         if (target == null) return;
@@ -306,25 +308,20 @@ public static class MeetingHudPatch
         {
             if (candidate == exiledplayer || Main.AfterMeetingDeathPlayers.ContainsKey(candidate.PlayerId)) continue;
 
-            //対象とならない人を判定
-            if (exiledplayer.Is(CustomRoleTypes.Madmate) || exiledplayer.Is(CustomRoleTypes.Impostor) || exiledplayer.Is(CustomRoles.Immoralist)) //インポスター陣営の場合
+            ///対象とならない人を判定
+            // インポスター陣営の場合
+            if (exiledplayer.Is(CustomRoleTypes.Madmate) || exiledplayer.Is(CustomRoleTypes.Impostor))
             {
-                if (candidate.Is(CustomRoleTypes.Impostor)) continue; //インポスター
-                if (candidate.Is(CustomRoleTypes.Madmate) && !Options.RevengeMadByImpostor.GetBool()) continue; //マッドメイト（設定）
-                if (exiledplayer.Is(CustomRoles.Immoralist) && candidate.Is(CustomRoles.FoxSpirit)) continue; //FOX
+                if (candidate.Is(CustomRoleTypes.Impostor) && !Options.RevengeImpostorByImpostor.GetBool()) continue; //インポスター
+                if (candidate.Is(CustomRoleTypes.Madmate) && !Options.RevengeMadByImpostor.GetBool()) continue; //マッドメイト
             }
-            if (candidate.Is(CustomRoleTypes.Neutral) && !Options.RevengeNeutral.GetBool()) continue; //第三陣営（設定）
+            // 背徳者は妖狐を道連れしない
+            if (exiledplayer.Is(CustomRoles.Immoralist) && candidate.Is(CustomRoles.FoxSpirit)) continue;
+
+            // 第三陣営を道連れするか（設定）
+            if (candidate.Is(CustomRoleTypes.Neutral) && !Options.RevengeNeutral.GetBool()) continue;
 
             TargetList.Add(candidate);
-            //switch (exiledplayer.GetCustomRole())
-            //{
-            //    //ここに道連れ役職を追加
-            //    default:
-            //        if (exiledplayer.Is(CustomRoleTypes.Madmate) && deathReason == CustomDeathReason.Vote && Options.MadmateRevengeCrewmate.GetBool() //黒猫オプション
-            //        && !candidate.Is(CustomRoleTypes.Impostor))
-            //            TargetList.Add(candidate);
-            //        break;
-            //}
         }
         if (TargetList == null || TargetList.Count == 0) return null;
         var rand = IRandom.Instance;

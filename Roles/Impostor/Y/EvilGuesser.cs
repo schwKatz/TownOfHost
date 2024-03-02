@@ -14,7 +14,8 @@ public sealed class EvilGuesser : VoteGuesser, IImpostor
             CustomRoles.EvilGuesser,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpY + 1400,
+            //(int)Options.offsetId.ImpY + 1400,
+            (int)Options.offsetId.ImpSpecial + 0,
             SetupOptionItem,
             "イビルゲッサー"
         );

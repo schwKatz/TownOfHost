@@ -504,8 +504,8 @@ public static class Utils
             {
                 return false;
             }
-            // 死んでいて，妖狐がいるなら確定でfalse
-            if (p.IsDead && CustomRoles.FoxSpirit.IsPresent() && !p.Object.Is(CustomRoles.Gang))
+            // 死んでいて，妖狐がいるかつ無効化設定ならfalse
+            if (CustomRoles.FoxSpirit.IsPresent() && FoxSpirit.IgnoreGhostTask && p.IsDead && !p.Object.Is(CustomRoles.Gang))
             {
                 return false;
             }
@@ -835,7 +835,13 @@ public static class Utils
             sb.Append('\n');
             foreach (var opt in OptionItem.AllOptions.Where(x => x.GetBool() && x.Parent == null && x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode)))
             {
+                // 常時表示しないオプション
                 if (Options.NotShowOption(opt.Name)) continue;
+
+                // アクティブマップ毎に表示しないオプション
+                if (opt.Name == "MapModificationAirship" && !Options.IsActiveAirship) continue;
+                if (opt.Name == "MapModificationFungle" && !Options.IsActiveFungle) continue;
+                if (opt.Name == "DisableButtonInMushroomMixup" && !Options.IsActiveFungle) continue;
 
                 if (opt.Name is "NameChangeMode" && Options.GetNameChangeModes() != NameChange.None)
                     sb.Append($"<size=60%>◆<u><size=72%>{opt.GetName(true)}</size></u> ：<size=68%>{opt.GetString()}</size>\n</size>");
@@ -966,6 +972,7 @@ public static class Utils
             if (opt.Value.Name == "PolusReactorTimeLimit" && !Options.IsActivePolus) continue;
             if (opt.Value.Name == "AirshipReactorTimeLimit" && !Options.IsActiveAirship) continue;
             if (opt.Value.Name == "FungleReactorTimeLimit" && !Options.IsActiveFungle) continue;
+            if (opt.Value.Name == "FungleMushroomMixupDuration" && !Options.IsActiveFungle) continue;
 
             if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;

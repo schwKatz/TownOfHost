@@ -13,7 +13,8 @@ public sealed class NiceGuesser : VoteGuesser
             CustomRoles.NiceGuesser,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewY + 1900,
+            //(int)Options.offsetId.CrewY + 1800,
+            (int)Options.offsetId.CrewSpecial + 100,
             SetupOptionItem,
             "ナイスゲッサー",
             "#ffff00"
