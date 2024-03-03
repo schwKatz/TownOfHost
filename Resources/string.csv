@@ -1033,6 +1033,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DeathReason.Misfire","Misfire","誤爆","走火","走火","Убился","Alvo Incorreto"
 "DeathReason.Torched","Torched","焼殺","烧死","燒死","Сожжён","Queimado"
 "DeathReason.Sniped","Sniped","狙撃","狙杀","被狙","Застрелен","Baleado"
+"DeathReason.Shot","Shot","射殺","","","",""
 "DeathReason.Execution","Execution","処刑","处决","處刑","Казнен","Executado"
 "DeathReason.Disconnected","Disconnected","回線切断","断连","斷線","Вышел","Desconectado"
 "DeathReason.Fall","Fall","落下死","摔死","摔死","Упал","Queda"

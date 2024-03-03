@@ -170,12 +170,13 @@ public abstract class VoteGuesser : RoleBase
         if (targetGuess.Is(role))
         {
             target = targetGuess;
-            RpcGuesserMurderPlayer(target, CustomDeathReason.Kill);
+            RpcGuesserMurderPlayer(target, CustomDeathReason.Shot);
         }
         else
         {
             target = Player;
             RpcGuesserMurderPlayer(target, CustomDeathReason.Misfire);
+            RpcGuesserMurderPlayer(target, CustomDeathReason.Shot);
         }
         SendGuessedMessage(target);
     }
