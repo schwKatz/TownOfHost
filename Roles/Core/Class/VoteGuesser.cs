@@ -253,7 +253,8 @@ public abstract class VoteGuesser : RoleBase
 
         var targetState = PlayerState.GetByPlayerId(target.PlayerId);
         targetState.DeathReason = reason;
-        targetState.SetDead();
+        CustomRoleManager.CheckMurderInfos[target.PlayerId] = new MurderInfo(Player, target, target, target);
+        CustomRoleManager.OnMurderPlayer(target, target);
 
         //キルフラッシュ表示
         Main.AllPlayerControls.Do(pc => pc.KillFlash());
