@@ -86,6 +86,15 @@ public abstract class VoteGuesser : RoleBase
 
             if (targetGuess == null)
             {
+                if (votedFor.PlayerId == Player.PlayerId)
+                {
+                    //対象選択での自投票は通常投票（自分へ投票）としてゲッサーモード解除 & 投票完了
+                    selecting = false;
+                    targetGuess = null;
+                    targetForRole = null;
+                    Utils.SendMessage(GetString("Message.GuesserSelectionSelfSelect"), Player.PlayerId);
+                    return true;
+                }
                 targetGuess = votedFor;
                 guesserInfo.ResetList();
                 Logger.Info($"GuesserSetTarget1 guesser: {Player?.name}, target: {targetGuess?.name}", "Guesser.CheckVoteAsVoter");
