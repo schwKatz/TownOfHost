@@ -38,6 +38,7 @@ public sealed class MadGuesser : VoteGuesser, IKillFlashSeeable, IDeathReasonSee
 
         NumOfGuess = OptionNumOfGuess.GetInt();
         MultipleInMeeting = OptionMultipleInMeeting.GetBool();
+        HideMisfire = OptionHideMisfire.GetBool();
 
         //CustomRoleManager.MarkOthers.Add(GetMarkOthers);
     }
@@ -46,6 +47,7 @@ public sealed class MadGuesser : VoteGuesser, IKillFlashSeeable, IDeathReasonSee
     //private static OptionItem OptionCanAlsoBeExposedToImpostor;
     private static OptionItem OptionNumOfGuess;
     private static OptionItem OptionMultipleInMeeting;
+    private static OptionItem OptionHideMisfire;
     /// <summary>能力発動タスク数</summary>
     //private static OptionItem OptionTaskTrigger;
     //private static Options.OverrideTasksData Tasks;
@@ -56,6 +58,7 @@ public sealed class MadGuesser : VoteGuesser, IKillFlashSeeable, IDeathReasonSee
         //MadSnitchTaskTrigger,
         GuesserNumOfGuess,
         GuesserMultipleInMeeting,
+        GuesserHideMisfire,
     }
     //private static bool CanSeeKillFlash;
     //private static bool CanSeeDeathReason;
@@ -70,6 +73,7 @@ public sealed class MadGuesser : VoteGuesser, IKillFlashSeeable, IDeathReasonSee
         OptionNumOfGuess = IntegerOptionItem.Create(RoleInfo, 13, OptionName.GuesserNumOfGuess, new(1, 15, 1), 1, false)
             .SetValueFormat(OptionFormat.Times);
         OptionMultipleInMeeting = BooleanOptionItem.Create(RoleInfo, 14, OptionName.GuesserMultipleInMeeting, false, false);
+        OptionHideMisfire = BooleanOptionItem.Create(RoleInfo, 15, OptionName.GuesserHideMisfire, false, false);
         //OptionTaskTrigger = IntegerOptionItem.Create(RoleInfo, 12, OptionName.MadSnitchTaskTrigger, new(0, 99, 1), 1, false).SetValueFormat(OptionFormat.Pieces);
         //Tasks = Options.OverrideTasksData.Create(RoleInfo, 20);
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);

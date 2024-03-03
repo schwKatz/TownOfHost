@@ -6,7 +6,6 @@ using UnityEngine;
 
 using static TownOfHostY.Translator;
 using HarmonyLib;
-
 namespace TownOfHostY.Roles.Core.Class;
 
 public abstract class VoteGuesser : RoleBase
@@ -36,6 +35,7 @@ public abstract class VoteGuesser : RoleBase
 
     protected int NumOfGuess = 1;
     protected bool MultipleInMeeting = false;
+    protected bool HideMisfire = false;
 
     private GuesserInfo guesserInfo;
 
@@ -175,8 +175,9 @@ public abstract class VoteGuesser : RoleBase
         else
         {
             target = Player;
-            RpcGuesserMurderPlayer(target, CustomDeathReason.Misfire);
-            RpcGuesserMurderPlayer(target, CustomDeathReason.Shot);
+            var reason = CustomDeathReason.Misfire;
+            if (HideMisfire) reason = CustomDeathReason.Shot;
+            RpcGuesserMurderPlayer(target, reason);
         }
         SendGuessedMessage(target);
     }

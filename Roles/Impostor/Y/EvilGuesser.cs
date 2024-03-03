@@ -26,18 +26,22 @@ public sealed class EvilGuesser : VoteGuesser, IImpostor
     {
         NumOfGuess = OptionNumOfGuess.GetInt();
         MultipleInMeeting = OptionMultipleInMeeting.GetBool();
+        HideMisfire = OptionHideMisfire.GetBool();
     }
     private static OptionItem OptionNumOfGuess;
     private static OptionItem OptionMultipleInMeeting;
+    private static OptionItem OptionHideMisfire;
     enum OptionName
     {
         GuesserNumOfGuess,
         GuesserMultipleInMeeting,
+        GuesserHideMisfire,
     }
     public static void SetupOptionItem()
     {
         OptionNumOfGuess = IntegerOptionItem.Create(RoleInfo, 10, OptionName.GuesserNumOfGuess, new(1, 15, 1), 1, false)
             .SetValueFormat(OptionFormat.Times);
         OptionMultipleInMeeting = BooleanOptionItem.Create(RoleInfo, 11, OptionName.GuesserMultipleInMeeting, false, false);
+        OptionHideMisfire = BooleanOptionItem.Create(RoleInfo, 12, OptionName.GuesserHideMisfire, false, false);
     }
 }
