@@ -567,6 +567,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "DisableCatchFish","Disable CatchFish Tasks","魚釣りタスク",
 "DisableHelpCritter","Disable HelpCritter Tasks","卵の孵化タスク",
 "DisableTuneRadio","Disable FindSignal Tasks","電波探しタスク",
+"DisableAssembleArtifact","Disable AssembleArtifact Tasks","宝石組み立てタスク",
 
 "SuffixMode","Suffix","名前の二行目","附加标签","名字標籤","Суффикс","Sufixo"
 "SuffixMode.None","None","なし","无","無","Ничего","Nenhum"
