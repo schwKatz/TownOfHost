@@ -271,6 +271,7 @@ namespace TownOfHostY
         Misfire,
         Torched,
         Sniped,
+        Shot,
         Revenge,
         Execution,
         Disconnected,
