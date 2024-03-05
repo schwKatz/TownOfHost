@@ -82,8 +82,8 @@ public static class OptionSerializer
     /// <returns>生成された文字列</returns>
     public static string GenerateVanillaOptionsString()
     {
-        //TODO:april
-        byte[] bytes = GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameOptionsManager.Instance.CurrentGameOptions, true);
+        // 保存時はエイプリルフール無効
+        byte[] bytes = GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameOptionsManager.Instance.CurrentGameOptions, false);
         return Convert.ToBase64String(bytes);
     }
     /// <summary>

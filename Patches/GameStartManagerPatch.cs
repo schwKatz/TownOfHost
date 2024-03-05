@@ -27,8 +27,8 @@ namespace TownOfHostY
         {
             public static void Postfix(GameStartManager __instance, bool neverShow)
             {
-                //現在MODOKコマンドを使用しないためリターン
-                //使用する時になればCanPublicRoomを変更しながら通るように使用する
+                //����MODOK�R�}���h��g�p���Ȃ����߃��^�[��
+                //�g�p���鎞�ɂȂ��CanPublicRoom��ύX���Ȃ���ʂ�悤�Ɏg�p����
 #if false
 
                 //if (!Main.CanPublicRoom.Value) return;
@@ -247,8 +247,7 @@ namespace TownOfHostY
                 Main.LastShapeshifterCooldown.Value = AURoleOptions.ShapeshifterCooldown;
                 AURoleOptions.ShapeshifterCooldown = 0f;
 
-                //TODO:april
-                PlayerControl.LocalPlayer.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(opt, true));
+                PlayerControl.LocalPlayer.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(opt, AprilFoolsMode.IsAprilFoolsModeToggledOn));
 
                 __instance.ReallyBegin(false);
                 return false;
@@ -286,8 +285,7 @@ namespace TownOfHostY
                 if (GameStates.IsCountDown)
                 {
                     Main.NormalOptions.KillCooldown = Options.DefaultKillCooldown;
-                    //TODO:april
-                    PlayerControl.LocalPlayer.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameOptionsManager.Instance.CurrentGameOptions, true));
+                    PlayerControl.LocalPlayer.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameOptionsManager.Instance.CurrentGameOptions, AprilFoolsMode.IsAprilFoolsModeToggledOn));
                 }
             }
         }
