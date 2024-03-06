@@ -247,7 +247,8 @@ namespace TownOfHostY
                 Main.LastShapeshifterCooldown.Value = AURoleOptions.ShapeshifterCooldown;
                 AURoleOptions.ShapeshifterCooldown = 0f;
 
-                PlayerControl.LocalPlayer.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(opt));
+                //TODO:april
+                PlayerControl.LocalPlayer.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(opt, true));
 
                 __instance.ReallyBegin(false);
                 return false;
@@ -285,7 +286,8 @@ namespace TownOfHostY
                 if (GameStates.IsCountDown)
                 {
                     Main.NormalOptions.KillCooldown = Options.DefaultKillCooldown;
-                    PlayerControl.LocalPlayer.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameOptionsManager.Instance.CurrentGameOptions));
+                    //TODO:april
+                    PlayerControl.LocalPlayer.RpcSyncSettings(GameOptionsManager.Instance.gameOptionsFactory.ToBytes(GameOptionsManager.Instance.CurrentGameOptions, true));
                 }
             }
         }
