@@ -181,7 +181,7 @@
       "Title": "【重要】TOH_Yは現在使用できません。",
       "Subtitle": "※各種ホストMOD(TOH、TOH4E、TOHE、TOHK、SNR/SHRモード)を含みます",
       "Short": "【重要】使用できません",
-      "Body": "3/6にAmongUs本体アップデートがありその対応版をリリース、当日は問題なくリリース版で動いておりましたが、\n3/7にAmongUsサーバー側のアップデートが入った模様で、他人の動きが同期されない現象が各種MODで発生しております。\n各種MODが使用しているサーバの問題のようですので、バニラ環境ではこの問題は起こらずに通常通り遊ぶことが出来ます。\n\nなお、クライアントMODであるNebula on the ShipやExtreme Rolesは本体アプデ対応済かつ、この問題は起こりませんので通常通りご利用いただけます。\n\n\nこの問題に関して、進展がありましたら<link=\"https://x.com/yumeno_AmongUs\">[X/Twitter]</link><link=\"https://discord.gg/s7YAS8RPPR\">[Discord]</link>から連絡いたします。\n\nTown Of Host_Y：Yumeno",
+      "Body": "3/6にAmongUs本体アップデートがありその対応版をリリース、当日は問題なくリリース版で動いておりましたが、\n3/7にAmongUsサーバー側のアップデートが入った模様で、他人の動きが同期されない現象が各種MODで発生しております。\n各種MODが使用しているサーバの問題のようですので、バニラ環境ではこの問題は起こらずに通常通り遊ぶことが出来ます。\n\nなお、クライアントMODであるNebula on the ShipやExtreme Rolesは本体アプデ対応済かつ、この問題は起こりませんので通常通りご利用いただけます。\n\n\nこの問題に関して、進展がありましたら<link=\"https://x.com/yumeno_AmongUs\">[X/Twitter]</link> <link=\"https://discord.gg/s7YAS8RPPR\">[Discord]</link>から連絡いたします。\n\nTown Of Host_Y：Yumeno",
       "Date": "2024-03-08T00:00:00Z"
     }
   ]
