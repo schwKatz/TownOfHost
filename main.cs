@@ -115,7 +115,7 @@ namespace TownOfHostY
         public static float DefaultCrewmateVision;
         public static float DefaultImpostorVision;
         public static bool IsValentine = DateTime.Now.Month == 2 && DateTime.Now.Day is 9 or 10 or 11 or 12 or 13 or 14 or 15;
-        public static bool IsWhiteDay = DateTime.Now.Month == 3 && (DateTime.Now.Day >= 14 || DateTime.Now.Day <= 17);
+        public static bool IsWhiteDay = DateTime.Now.Month == 3 && (DateTime.Now.Day >= 14 && DateTime.Now.Day <= 17);
         public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 23 or 24 or 25;
         public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3;
         public static bool IsInitialRelease = DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
