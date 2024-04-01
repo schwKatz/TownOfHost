@@ -411,24 +411,19 @@ public static class Utils
     }
     public static Color GetRoleColor(CustomRoles role)
     {
-        if (!Main.roleColors.TryGetValue(role, out var hexColor)) hexColor = role.GetRoleInfo()?.RoleColorCode;
+        if (!Main.roleColors.TryGetValue(role, out var hexColor))
+        {
+            hexColor = role.GetRoleInfo()?.RoleColorCode;
+        }
         _ = ColorUtility.TryParseHtmlString(hexColor, out Color c);
         return c;
     }
     public static string GetRoleColorCode(CustomRoles role)
     {
-        if (!Main.roleColors.TryGetValue(role, out var hexColor)) hexColor = role.GetRoleInfo()?.RoleColorCode;
-        return hexColor;
-    }
-    public static Color GetCustomColor(CustomColor color)
-    {
-        if (!Main.customColors.TryGetValue(color, out var hexColor)) hexColor = "#ffffff";
-        _ = ColorUtility.TryParseHtmlString(hexColor, out Color c);
-        return c;
-    }
-    public static string GetCustomColorCode(CustomColor color)
-    {
-        if (!Main.customColors.TryGetValue(color, out var hexColor)) hexColor = "#ffffff";
+        if (!Main.roleColors.TryGetValue(role, out var hexColor))
+        {
+            hexColor = role.GetRoleInfo()?.RoleColorCode;
+        }
         return hexColor;
     }
     public static string GetVitalText(byte playerId, bool RealKillerColor = false)
@@ -637,6 +632,9 @@ public static class Utils
 
         var sb = new StringBuilder();
         var myRole = player.GetCustomRole();
+        if (myRole == CustomRoles.Potentialist)
+            myRole = CustomRoles.Crewmate;
+
         var roleName = myRole.ToString();
         if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
             roleName = "NBakery";

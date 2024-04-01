@@ -17,7 +17,8 @@ public sealed class Potentialist : RoleBase
             CustomRoleTypes.Crewmate,
             (int)Options.offsetId.CrewSpecial + 0,
             null,
-            "ポテンシャリスト"
+            "ポテンシャリスト",
+            "#ffff00"
         );
     public Potentialist(PlayerControl player)
     : base(

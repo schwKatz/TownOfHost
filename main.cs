@@ -92,7 +92,6 @@ namespace TownOfHostY
         public static Dictionary<byte, Color32> PlayerColors = new();
         public static Dictionary<byte, CustomDeathReason> AfterMeetingDeathPlayers = new();
         public static Dictionary<CustomRoles, string> roleColors;
-        public static Dictionary<CustomColor, string> customColors;
         public static List<byte> winnerList;
         public static List<int> clientIdList;
         public static List<(string, byte, string, bool)> MessagesToSend;
@@ -120,6 +119,7 @@ namespace TownOfHostY
         public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3;
         public static bool IsInitialRelease = DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
         public const float RoleTextSize = 2f;
+        public static List<byte> ShowRoleInfoAtMeeting = new();
 
         public static IEnumerable<PlayerControl> AllPlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null);
         public static IEnumerable<PlayerControl> AllAlivePlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null && p.IsAlive());
@@ -313,12 +313,6 @@ namespace TownOfHostY
 
         HASTroll = CustomRoles.HASTroll,
     }
-    /*public enum CustomRoles : byte
-    {
-        Default = 0,
-        HASTroll = 1,
-        HASHox = 2
-    }*/
     public enum SuffixModes
     {
         None = 0,
@@ -353,11 +347,5 @@ namespace TownOfHostY
         None,
         Crew,
         Color
-    }
-    public enum CustomColor
-    {
-        Coral,
-        LightCoral,
-        RoyalBlue,
     }
 }

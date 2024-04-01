@@ -915,14 +915,13 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "RabbitRedistributionShortTasks","Short Task Count to be redistributed","再配布されるショートタスク数",
 
 "Head.LimitedTimeRole","Limited Time Role 4/1～4/3","期間限定役職 4/1～4/3"
-##"Potentialist","Potentialist","ポテンシャリスト",
-"Potentialist","Crewmate","クルーメイト",
+"Potentialist","Potentialist","ポテンシャリスト",
 "PotentialistName","Potentialist</color>\n　…At first, Crewmate. Complete tasks and have random abilities.","ポテンシャリスト</color>\n　…初めはクルー。設定タスク完了でランダムな能力を持つ。",
 "PotentialistInfo","do your tasks","タスクを行う",
-"PotentialistInfoLong","do your tasks","タスクを行う",
+"PotentialistInfoLong","do your tasks","[クルー陣営]\n初めはクルーとして表示されるためポテンシャリストの自覚はありませんが、設定タスク数完了させると能力が開花して新たなクルー役職を手に入れられます。\n設定により、マッド系役職やニュートラル役職にも変化します。",
 "poTask","Task Count that Becomes Can Use Ability","能力開花するタスク数",
-"poMad","Role To Be Changed May Be Madmate Role","マッド系役職の可能性がある",
-"poNeutral","Role To Be Changed May Be Neutral Role","ニュートラル役職の可能性がある",
+"poMad","Role To Be Changed May Be Madmate Role","マッド系役職に変化する可能性がある",
+"poNeutral","Role To Be Changed May Be Neutral Role","ニュートラル役職に変化する可能性がある",
 
 # ニュートラル
 "CanBeforeSchrodingerCatWinTheCrewmate","Can Win With Crewmates If No Team","役職変化前であれば、クルー陣営と勝利できる","薛定谔的猫未加入其他阵营前可以跟随船员阵营获胜","薛定諤的貓的陣營轉變前可以隨船員一起獲勝","Без команды он может победить с Членами Экипажа","Pode Ganhar Com Tripulantes"

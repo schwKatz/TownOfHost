@@ -164,12 +164,17 @@ public static class MeetingHudPatch
                 var target = Utils.GetPlayerById(pva.TargetPlayerId);
                 if (target == null) continue;
 
-                // 初手会議での役職説明表示
-                if (Options.ShowRoleInfoAtFirstMeeting.GetBool() && MeetingStates.FirstMeeting)
+                // 役職説明表示
+                if (Main.ShowRoleInfoAtMeeting.Contains(target.PlayerId))
                 {
+                    var targetRole = target.GetCustomRole();
+                    if (targetRole == CustomRoles.Potentialist)
+                        targetRole = CustomRoles.Crewmate;
+
                     string RoleInfoTitleString = $"{GetString("RoleInfoTitle")}";
-                    string RoleInfoTitle = $"{Utils.ColorString(Utils.GetRoleColor(target.GetCustomRole()), RoleInfoTitleString)}";
+                    string RoleInfoTitle = $"{Utils.ColorString(Utils.GetRoleColor(targetRole), RoleInfoTitleString)}";
                     Utils.SendMessage(Utils.GetMyRoleInfo(target), pva.TargetPlayerId, RoleInfoTitle);
+                    Main.ShowRoleInfoAtMeeting.Remove(target.PlayerId);
                 }
 
                 var sb = new StringBuilder();

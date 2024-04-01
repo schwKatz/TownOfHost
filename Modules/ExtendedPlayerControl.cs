@@ -11,11 +11,11 @@ using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Impostor;
-using TownOfHostY.Roles.Madmate;
 using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Impostor;
 using static TownOfHostY.Translator;
+using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHostY
 {
@@ -24,6 +24,10 @@ namespace TownOfHostY
         public static void RpcSetCustomRole(this PlayerControl player, CustomRoles role)
         {
             if (player.GetCustomRole() == role) return;
+
+            // 役職の変更・属性の追加タイミングの次回会議に説明が表示される
+            if(!Main.ShowRoleInfoAtMeeting.Contains(player.PlayerId))
+                Main.ShowRoleInfoAtMeeting.Add(player.PlayerId);
 
             if (role < CustomRoles.StartAddon)
             {
@@ -367,11 +371,19 @@ namespace TownOfHostY
         }
         public static string GetRoleColorCode(this PlayerControl player)
         {
-            return Utils.GetRoleColorCode(player.GetCustomRole());
+            (Color c, string t) = (Color.clear, "");
+            //trueRoleNameでColor上書きあればそれになる
+            player.GetRoleClass()?.OverrideTrueRoleName(ref c, ref t);
+            if (c != Color.clear) return ColorUtility.ToHtmlStringRGB(c);
+            else return Utils.GetRoleColorCode(player.GetCustomRole());
         }
         public static Color GetRoleColor(this PlayerControl player)
         {
-            return Utils.GetRoleColor(player.GetCustomRole());
+            (Color c, string t) = (Color.clear, "");
+            //trueRoleNameでColor上書きあればそれになる
+            player.GetRoleClass()?.OverrideTrueRoleName(ref c, ref t);
+            if (c != Color.clear) return c;
+            else return Utils.GetRoleColor(player.GetCustomRole());
         }
         public static void ResetPlayerCam(this PlayerControl pc, float delay = 0f)
         {
