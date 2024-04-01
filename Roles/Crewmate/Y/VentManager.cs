@@ -1,10 +1,6 @@
-using System.Linq;
-using System.Collections.Generic;
-
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
-using Rewired;
 
 namespace TownOfHostY.Roles.Crewmate;
 public sealed class VentManager : RoleBase
