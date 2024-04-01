@@ -632,9 +632,12 @@ public static class Utils
 
         var sb = new StringBuilder();
         var myRole = player.GetCustomRole();
+        var roleInfoLong = player.GetRoleInfo(true);
         if (myRole == CustomRoles.Potentialist)
+        {
             myRole = CustomRoles.Crewmate;
-
+            roleInfoLong = GetString("PotentialistInfo");
+        }
         var roleName = myRole.ToString();
         if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
             roleName = "NBakery";
@@ -642,9 +645,6 @@ public static class Utils
             roleName = "Pursuer";
         var roleString = GetString(roleName);
         roleString = $"<size=95%>{roleString}</size>".Color(GetRoleColor(myRole).ToReadableColor());
-
-        var roleInfoLong = player.GetRoleInfo(true);
-        if (myRole == CustomRoles.Potentialist) roleInfoLong = "PotentialistInfo";
 
         sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(roleInfoLong).Append("</line-height></size>");
 
