@@ -36,7 +36,7 @@ namespace TownOfHostY
             }
             if (AmongUsClient.Instance.AmHost)
             {
-                if (role < CustomRoles.NotAssigned)
+                if (role < CustomRoles.StartAddon)
                 {
                     var roleClass = player.GetRoleClass();
                     if (roleClass != null)

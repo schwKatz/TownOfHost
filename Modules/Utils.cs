@@ -273,7 +273,6 @@ public static class Utils
             var count = subRolesList.Count;
             foreach (var subRole in subRolesList)
             {
-                if (subRole <= CustomRoles.NotAssigned) continue;
                 switch (subRole)
                 {
                     //必ず省略せずに表示させる
