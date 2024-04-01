@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
+using Rewired;
 
 namespace TownOfHostY.Roles.Crewmate;
 public sealed class VentManager : RoleBase
@@ -18,7 +19,11 @@ public sealed class VentManager : RoleBase
             (int)Options.offsetId.CrewY + 1700,
             SetupOptionItem,
             "ベントマネージャー",
-            "#00ffff"
+            "#00ffff",
+            assignInfo: new(CustomRoles.VentManager, CustomRoleTypes.Crewmate)
+            {
+               IsInitiallyAssignableCallBack = () => (MapNames)Main.NormalOptions.MapId is not MapNames.Polus and not MapNames.Fungle
+            }
         );
     public VentManager(PlayerControl player)
     : base(
@@ -27,7 +32,6 @@ public sealed class VentManager : RoleBase
     )
     {
     }
-
     enum OptionName
     {
         FoxSpiritTaskCount,
