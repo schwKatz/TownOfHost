@@ -642,7 +642,11 @@ public static class Utils
             roleName = "Pursuer";
         var roleString = GetString(roleName);
         roleString = $"<size=95%>{roleString}</size>".Color(GetRoleColor(myRole).ToReadableColor());
-        sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(player.GetRoleInfo(true)).Append("</line-height></size>");
+
+        var roleInfoLong = player.GetRoleInfo(true);
+        if (myRole == CustomRoles.Potentialist) roleInfoLong = "PotentialistInfo";
+
+        sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(roleInfoLong).Append("</line-height></size>");
 
         if (!myRole.IsDontShowOptionRole())
         {
