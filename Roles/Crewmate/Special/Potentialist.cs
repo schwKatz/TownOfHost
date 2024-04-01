@@ -96,7 +96,7 @@ public sealed class Potentialist : RoleBase
                     CustomRoles.Seer,
                     CustomRoles.TimeManager,
                     CustomRoles.Bakery,
-                    CustomRoles.TaskManager,
+                    //CustomRoles.TaskManager,
                     CustomRoles.Nekomata,
                     CustomRoles.Express,
                     CustomRoles.SeeingOff,
