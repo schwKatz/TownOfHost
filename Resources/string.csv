@@ -914,7 +914,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "RabbitRedistributionLongTasks","Long Task Count to be redistributed","再配布されるロングタスク数",
 "RabbitRedistributionShortTasks","Short Task Count to be redistributed","再配布されるショートタスク数",
 
-"Head.LimitedTimeRole","Limited Time Role 4/1～4/3","期間限定役職 4/1～4/3"
+"Head.LimitedTimeRole","Limited Time Role 4/1～4/5","期間限定役職 4/1～4/5"
 "Potentialist","Potentialist","ポテンシャリスト",
 "PotentialistName","Potentialist</color>\n　…At first, Crewmate. Complete tasks and have random abilities.","ポテンシャリスト</color>\n　…初めはクルー。設定タスク完了でランダムな能力を持つ。",
 "PotentialistInfo","do your tasks","タスクを行う",
