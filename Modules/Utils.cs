@@ -648,6 +648,7 @@ public static class Utils
             myRole = CustomRoles.Crewmate;
             roleInfoLong = GetString("PotentialistInfo");
         }
+        if (player.Is(CustomRoles.ChainShifterAddon)) myRole = CustomRoles.ChainShifter;
         var roleName = myRole.ToString();
         if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
             roleName = "NBakery";
