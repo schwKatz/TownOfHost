@@ -584,7 +584,7 @@ namespace TownOfHostY
                         if (target.Is(CustomRoles.SeeingOff) || target.Is(CustomRoles.Sending) || target.Is(CustomRoles.MadDilemma))
                             RealName = Sending.RealNameChange(RealName);
                         else if (Options.IsCCMode)
-                            RealName = Utils.ColorString(seer.GetRoleColor(), seer.GetRoleInfo());
+                            RealName = Utils.ColorString(seer.GetRoleColor(true), seer.GetRoleInfo());
                     }
 
                     //NameColorManager準拠の処理

@@ -139,7 +139,7 @@ public static class MeetingHudPatch
                     foreach (var seen in Main.AllPlayerControls)
                     {
                         var seenName = seen.GetRealName(isMeeting: true);
-                        var coloredName = Utils.ColorString(seen.GetRoleColor(), seenName);
+                        var coloredName = Utils.ColorString(seen.GetRoleColor(true), seenName);
                         foreach (var seer in Main.AllPlayerControls)
                         {
                             seen.RpcSetNamePrivate(

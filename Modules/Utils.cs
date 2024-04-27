@@ -1237,7 +1237,7 @@ public static class Utils
             string SelfDeathReason = seer.KnowDeathReason(seer) ? $"({ColorString(GetRoleColor(CustomRoles.Doctor), GetVitalText(seer.PlayerId))})" : "";
 
             string SelfName = "";
-            Color SelfNameColor = seer.GetRoleColor();
+            Color SelfNameColor = seer.GetRoleColor(true);
 
             //string t = "";
             //trueRoleNameでColor上書きあればそれにする // GetRoleColorでOverrideTrueRoleNameを処理しているため不要
