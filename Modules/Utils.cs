@@ -1239,9 +1239,9 @@ public static class Utils
             string SelfName = "";
             Color SelfNameColor = seer.GetRoleColor();
 
-            string t = "";
-            //trueRoleNameでColor上書きあればそれにする
-            seer.GetRoleClass()?.OverrideTrueRoleName(ref SelfNameColor,ref t);
+            //string t = "";
+            //trueRoleNameでColor上書きあればそれにする // GetRoleColorでOverrideTrueRoleNameを処理しているため不要
+            //seer.GetRoleClass()?.OverrideTrueRoleName(ref SelfNameColor,ref t);
             //if (Options.IsONMode && Main.DefaultRole[seer.PlayerId] != CustomRoles.ONPhantomThief)
             //    SelfNameColor = GetRoleColor(Main.DefaultRole[seer.PlayerId]);
 
