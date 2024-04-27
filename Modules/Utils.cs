@@ -288,6 +288,10 @@ public static class Utils
                         roleText.Append(ColorString(Utils.GetRoleColor(subRole), GetRoleString("Archenemy")));
                         count--;
                         break;
+                    case CustomRoles.ChainShifterAddon:
+                        //AddOnとしては表示しない
+                        count--;
+                        break;
                 }
             }
 
@@ -303,7 +307,7 @@ public static class Utils
                     int i = 0;
                     foreach (var subRole in subRolesList)
                     {
-                        if (subRole is CustomRoles.LastImpostor or CustomRoles.CompleteCrew or CustomRoles.Archenemy) continue;
+                        if (subRole is CustomRoles.LastImpostor or CustomRoles.CompleteCrew or CustomRoles.Archenemy or CustomRoles.ChainShifterAddon) continue;
 
                         roleText.Append(ColorString(GetRoleColor(subRole), GetRoleName(subRole)));
                         i++;
@@ -312,6 +316,11 @@ public static class Utils
                 }
             }
         }
+
+        if (subRolesList.Contains(CustomRoles.ChainShifterAddon))
+            mainRole = CustomRoles.ChainShifter;
+        else if (mainRole == CustomRoles.ChainShifter)
+            mainRole = ChainShifter.ShiftedRole;
 
         if (mainRole < CustomRoles.StartAddon)
         {
@@ -347,7 +356,7 @@ public static class Utils
         {
             foreach (var subRole in subRolesList)
             {
-                if (subRole is CustomRoles.LastImpostor or CustomRoles.CompleteCrew or CustomRoles.Archenemy) continue;
+                if (subRole is CustomRoles.LastImpostor or CustomRoles.CompleteCrew or CustomRoles.Archenemy or CustomRoles.ChainShifterAddon) continue;
                 switch (subRole)
                 {
                     case CustomRoles.AddWatch: sb.Append(AddWatch.SubRoleMark); break;
@@ -540,7 +549,8 @@ public static class Utils
                 {
                     case CustomRoles.Lovers:
                     case CustomRoles.Archenemy:
-                        //ラバーズはタスクを勝利用にカウントしない
+                    case CustomRoles.ChainShifterAddon:
+                        //タスクを勝利用にカウントしない
                         hasTasks &= !ForRecompute;
                         break;
                 }
@@ -1035,7 +1045,8 @@ public static class Utils
         foreach (var role in SubRoles)
         {
             if (role is CustomRoles.NotAssigned or
-                        CustomRoles.LastImpostor) continue;
+                        CustomRoles.LastImpostor or
+                        CustomRoles.ChainShifterAddon) continue;
 
             var RoleText = disableColor ? GetRoleName(role) : ColorString(GetRoleColor(role), GetRoleName(role));
             sb.Append($"{ColorString(Color.gray, " + ")}{RoleText}");
@@ -1387,6 +1398,7 @@ public static class Utils
         foreach (var roleClass in CustomRoleManager.AllActiveRoles.Values)
             roleClass.AfterMeetingTasks();
         Counselor.AfterMeetingTask();
+        ChainShifterAddon.AfterMeetingTasks();
         if (Options.AirShipVariableElectrical.GetBool())
             AirShipElectricalDoors.Initialize();
         DoorsReset.ResetDoors();

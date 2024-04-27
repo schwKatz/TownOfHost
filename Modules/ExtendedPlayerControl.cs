@@ -374,6 +374,8 @@ namespace TownOfHostY
             var role = player.GetCustomRole();
             if (temporaryRole)
             {
+                if (player.Is(CustomRoles.ChainShifterAddon))
+                    return Utils.GetRoleColorCode(CustomRoles.ChainShifter);
             }
 
             (Color c, string t) = (Color.clear, "");
@@ -387,6 +389,8 @@ namespace TownOfHostY
             var role = player.GetCustomRole();
             if (temporaryRole)
             {
+                if (player.Is(CustomRoles.ChainShifterAddon))
+                    return Utils.GetRoleColor(CustomRoles.ChainShifter);
             }
 
             (Color c, string t) = (Color.clear, "");
@@ -623,6 +627,8 @@ namespace TownOfHostY
             var role = player.GetCustomRole();
             
             role = role.IsVanillaRoleConversion();//変換
+
+            if (player.Is(CustomRoles.ChainShifterAddon)) role = CustomRoles.ChainShifter;
 
             var Prefix = "";
             var text = role.ToString();
