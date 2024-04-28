@@ -461,6 +461,7 @@ public enum CustomRoles
     EvilDyer,
     BestieWolf,
     EvilGuesser,
+    SelfBomber,
     //Madmate
     MadGuardian,
     Madmate,
