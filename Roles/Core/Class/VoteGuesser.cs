@@ -30,6 +30,7 @@ public abstract class VoteGuesser : RoleBase
         guesserInfo = null;
 
         selecting = false;
+        voted = false;
         guessed = false;
         targetGuess = null;
         targetForRole = null;
@@ -38,11 +39,13 @@ public abstract class VoteGuesser : RoleBase
     protected int NumOfGuess = 1;
     protected bool MultipleInMeeting = false;
     protected bool HideMisfire = false;
+    protected bool GuessAfterVote = false;
 
     private GuesserInfo guesserInfo;
 
     private bool selecting = false;
     private bool guessed = false;
+    private bool voted = false;
     private PlayerControl targetGuess = null;
     private PlayerControl targetForRole = null;
 
@@ -95,7 +98,7 @@ public abstract class VoteGuesser : RoleBase
                     targetGuess = null;
                     targetForRole = null;
                     Utils.SendMessage(GetString("Message.GuesserSelectionSelfSelect"), Player.PlayerId);
-                    return true;
+                    return DoVote();
                 }
                 targetGuess = votedFor;
                 guesserInfo.ResetList();
@@ -158,7 +161,7 @@ public abstract class VoteGuesser : RoleBase
 
             return false;
         }
-        if (votedFor == null) return true;
+        if (votedFor == null) return DoVote();
         if (Player.PlayerId == votedFor.PlayerId && NumOfGuess > 0)
         {
             Logger.Info($"GuesserSelectStart guesser: {Player?.name}", "Guesser.CheckVoteAsVoter");
@@ -170,7 +173,17 @@ public abstract class VoteGuesser : RoleBase
             return false;
         }
 
-        return true;
+        return DoVote();
+    }
+    private bool DoVote()
+    {
+        if (!GuessAfterVote) return true;
+
+        var vote = !voted;
+        voted = true;
+        _ = new LateTask(() => MeetingHud.Instance.RpcClearVote(Player.GetClientId()), 0.5f, "GuesserClearVote");
+
+        return vote;
     }
     private void UseGuesserAbility(CustomRoles role)
     {
@@ -231,6 +244,7 @@ public abstract class VoteGuesser : RoleBase
     {
         selecting = false;
         guessed = false;
+        voted = false;
         targetGuess = null;
         targetForRole = null;
 
