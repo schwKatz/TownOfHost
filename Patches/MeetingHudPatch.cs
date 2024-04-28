@@ -55,6 +55,7 @@ public static class MeetingHudPatch
             GameStates.AlreadyDied |= !Utils.IsAllAlive;
             Main.AllPlayerControls.Do(x => ReportDeadBodyPatch.WaitReport[x.PlayerId].Clear());
             Sending.OnStartMeeting();
+            ChainShifterAddon.OnStartMeeting();
             foreach (var tm in Main.AllAlivePlayerControls.Where(p=>p.Is(CustomRoles.TaskManager) || p.Is(CustomRoles.Management)))
                 Utils.NotifyRoles(true, tm);
             TargetDeadArrow.OnStartMeeting();
@@ -139,7 +140,7 @@ public static class MeetingHudPatch
                     foreach (var seen in Main.AllPlayerControls)
                     {
                         var seenName = seen.GetRealName(isMeeting: true);
-                        var coloredName = Utils.ColorString(seen.GetRoleColor(), seenName);
+                        var coloredName = Utils.ColorString(seen.GetRoleColor(true), seenName);
                         foreach (var seer in Main.AllPlayerControls)
                         {
                             seen.RpcSetNamePrivate(
@@ -325,6 +326,9 @@ public static class MeetingHudPatch
 
             // 第三陣営を道連れするか（設定）
             if (candidate.Is(CustomRoleTypes.Neutral) && !Options.RevengeNeutral.GetBool()) continue;
+
+            // チェインシフターは道連れされない（涙）
+            if (candidate.Is(CustomRoles.ChainShifterAddon)) continue;
 
             TargetList.Add(candidate);
         }

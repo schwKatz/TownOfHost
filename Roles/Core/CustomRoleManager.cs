@@ -262,6 +262,7 @@ public static class CustomRoleManager
         switch (subRole)
         {
             case CustomRoles.Lovers: Lovers.Add(playerId); break;
+            case CustomRoles.ChainShifterAddon: ChainShifterAddon.Add(playerId); break;
 
             case CustomRoles.AddWatch: AddWatch.Add(playerId); break;
             case CustomRoles.AddLight: AddLight.Add(playerId); break;
@@ -547,6 +548,7 @@ public enum CustomRoles
     Ogre,
     Pirate,
     Gang,
+    ChainShifter,
 
     GM,
     CounselorAndMadDilemma,
@@ -605,6 +607,7 @@ public enum CustomRoles
     InfoPoor,
     NonReport,
     Archenemy,
+    ChainShifterAddon,
 
     MaxAddon,
 
