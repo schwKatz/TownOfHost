@@ -271,6 +271,9 @@ public static class Options
     public static OptionItem ApplyDenyNameList;
     public static OptionItem KickPlayerFriendCodeNotExist;
     public static OptionItem ApplyBanList;
+    public static OptionItem AntiCheat;
+    public static OptionItem CheaterAutoBan;
+    public static OptionItem CheatLobbyKill;
 
     // ModGameMode
     public static bool IsHASMode => CurrentGameMode == CustomGameMode.HideAndSeek;
@@ -739,8 +742,14 @@ public static class Options
             .SetGameMode(CustomGameMode.All);
         ApplyBanList = BooleanOptionItem.Create((int)offsetId.Participation + 300, "ApplyBanList", true, TabGroup.MainSettings, true)
             .SetGameMode(CustomGameMode.All);
+        AntiCheat = BooleanOptionItem.Create((int)offsetId.Participation + 400, "AntiCheat", false, TabGroup.MainSettings, true)
+            .SetGameMode(CustomGameMode.All);
+        CheaterAutoBan = BooleanOptionItem.Create((int)offsetId.Participation + 410, "CheaterAutoBan", false, TabGroup.MainSettings, true).SetParent(AntiCheat)
+            .SetGameMode(CustomGameMode.All);
+        CheatLobbyKill = BooleanOptionItem.Create((int)offsetId.Participation + 420, "CheatLobbyKill", false, TabGroup.MainSettings, true).SetParent(AntiCheat)
+            .SetGameMode(CustomGameMode.All);
 
-        DebugModeManager.SetupCustomOption();
+    DebugModeManager.SetupCustomOption();
 
         OptionSaver.Load();
 
@@ -764,6 +773,9 @@ public static class Options
                         or "ApplyDenyNameList"
                         or "KickPlayerFriendCodeNotExist"
                         or "ApplyBanList"
+                        or "AntiCheat"
+                        or "CheaterAutoBan"
+                        or "CheatLobbyKill"
                         or "ChangeIntro"
                         or "AddonShowMode";
     }
