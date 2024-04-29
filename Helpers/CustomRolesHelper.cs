@@ -112,6 +112,7 @@ namespace TownOfHostY
                 or CustomRoles.Sniper
                 or CustomRoles.StrayWolf
                 or CustomRoles.Totocalcio
+                or CustomRoles.ChainShifter
                 //VentSelect
                 or CustomRoles.Medic
                 or CustomRoles.GrudgeSheriff
