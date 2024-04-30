@@ -582,9 +582,17 @@ namespace TownOfHostY
                     if (target.AmOwner && AmongUsClient.Instance.IsGameStarted)
                     { //targetが自分自身
                         if (target.Is(CustomRoles.SeeingOff) || target.Is(CustomRoles.Sending) || target.Is(CustomRoles.MadDilemma))
-                            RealName = Sending.RealNameChange(RealName);
+                        {
+                            string str = Sending.RealNameChange();
+                            if (str != string.Empty)
+                            {
+                                RealName = str;
+                            }
+                        }
                         else if (Options.IsCCMode)
-                            RealName = Utils.ColorString(seer.GetRoleColor(true), seer.GetRoleInfo());
+                        {
+                            RealName = Utils.ColorString(seer.GetRoleColor(), seer.GetRoleInfo());
+                        }
                     }
 
                     //NameColorManager準拠の処理
