@@ -29,27 +29,29 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
     {
         selectTargetCooldown = OptionSelectTargetCooldown.GetFloat();
         chargeKillCooldown = OptionChargeKillCooldown.GetFloat();
-        chargeMaxKillCount = OptionChargeMaxKillCount.GetInt();
-        maxKillCount = OptionMaxKillCount.GetInt();
+        oneGaugeChargeCount = OptionOneGaugeChargeCount.GetInt();
+        killCountAtStartGame = OptionKillCountAtStartGame.GetInt();
     }
     private static OptionItem OptionSelectTargetCooldown;
     private static OptionItem OptionChargeKillCooldown;
-    private static OptionItem OptionChargeMaxKillCount;
-    private static OptionItem OptionMaxKillCount;
+    private static OptionItem OptionOneGaugeChargeCount;
+    private static OptionItem OptionKillCountAtStartGame;
     enum OptionName
     {
         GrudgeChargerSelectTargetCooldown,
         GrudgeChargerChargeKillCooldown,
-        GrudgeChargerMaxKillCount,
-        GrudgeChargerChargeMaxKillCount,
+        GrudgeChargerOneGaugeChargeCount,
+        GrudgeChargerKillCountAtStartGame,
     }
     private static float selectTargetCooldown;
     private static float chargeKillCooldown;
-    private static int chargeMaxKillCount;
-    private static int maxKillCount;
+    private static int oneGaugeChargeCount;
+    private static int killCountAtStartGame;
 
-    /// <summary> このターンのキル回数 </summary>
-    int killCount;
+    int killLimit;
+    bool killThisTurn;
+    /// <summary> チャージ回数 </summary>
+    int chargeCount;
     PlayerControl KillWaitPlayer;
 
     private static void SetUpOptionItem()
@@ -58,27 +60,38 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
             .SetValueFormat(OptionFormat.Seconds);
         OptionChargeKillCooldown = FloatOptionItem.Create(RoleInfo, 11, OptionName.GrudgeChargerChargeKillCooldown, new(0.5f, 180f, 0.5f), 2f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        OptionChargeMaxKillCount = IntegerOptionItem.Create(RoleInfo, 12, OptionName.GrudgeChargerMaxKillCount, new(1, 40, 1), 10, false)
-            .SetValueFormat(OptionFormat.Seconds);
-        OptionMaxKillCount = IntegerOptionItem.Create(RoleInfo, 13, OptionName.GrudgeChargerChargeMaxKillCount, new(1, 15, 1), 3, false)
-            .SetValueFormat(OptionFormat.Seconds);
+        OptionOneGaugeChargeCount = IntegerOptionItem.Create(RoleInfo, 12, OptionName.GrudgeChargerOneGaugeChargeCount, new(1, 30, 1), 10, false)
+            .SetValueFormat(OptionFormat.Times);
+        OptionKillCountAtStartGame = IntegerOptionItem.Create(RoleInfo, 13, OptionName.GrudgeChargerKillCountAtStartGame, new(0, 2, 1), 0, false)
+            .SetValueFormat(OptionFormat.Times);
     }
     public float CalculateKillCooldown() => chargeKillCooldown;
     public override void ApplyGameOptions(IGameOptions opt)
     {
-        AURoleOptions.ShapeshifterCooldown = killCount == 0 ? 0f : selectTargetCooldown;
+        AURoleOptions.ShapeshifterCooldown = killThisTurn ? 0f : selectTargetCooldown;
         AURoleOptions.ShapeshifterDuration = 1f;
     }
 
     public override void Add()
     {
-        killCount = 0;
+        killThisTurn = false;
+        killLimit = killCountAtStartGame;
+        chargeCount = 0;
         KillWaitPlayer = null;
     }
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
         var killer = info.AttemptKiller;
-        killer.MarkDirtySettings();
+        chargeCount++;
+        if (chargeCount >= oneGaugeChargeCount)
+        {
+            killLimit++;
+            chargeCount = 0;
+        }
+        Utils.NotifyRoles(SpecifySeer: Player);
+
+        killer.SetKillCooldown();
+        info.DoKill = false;
     }
     public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
     {
@@ -88,12 +101,9 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
     {
         if (!GameStates.IsInTask) return;
         if (KillWaitPlayer == null) return;
+        if (!Player.IsAlive()) return;
 
-        if (!Player.IsAlive())
-        {
-            KillWaitPlayer = null;
-            return;
-        }
+        if (killLimit <= 0) return;
 
         Vector2 GCpos = Player.transform.position; //GCの位置
 
@@ -103,46 +113,98 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
         var KillRange = GameOptionsData.KillDistances[Mathf.Clamp(Main.NormalOptions.KillDistance, 0, 2)];
         if (targetDistance <= KillRange && Player.CanMove && target.CanMove)
         {
-            killCount++;
-            Logger.Info($"{Player.GetNameWithRole()} : 残り{chargeMaxKillCount - killCount}発", "GrudgeCharger");
-            Player.MarkDirtySettings();
-            Player.RpcResetAbilityCooldown();
-
+            killThisTurn = true;
+            KillWaitPlayer = null;
+            killLimit--;
             target.SetRealKiller(Player);
             Player.RpcMurderPlayer(target);
-            KillWaitPlayer = null;
+            Logger.Info($"{Player.GetNameWithRole()} : 残り{killLimit}発", "GrudgeCharger");
+
+            Player.MarkDirtySettings();
+            Player.RpcResetAbilityCooldown();
         }
     }
 
     public override void AfterMeetingTasks()
     {
-        if (KillWaitPlayer != null) TargetArrow.Remove(Player.PlayerId, KillWaitPlayer.PlayerId);
-
-        if (Player.IsAlive())
+        if (KillWaitPlayer != null)
         {
-            Player.RpcResetAbilityCooldown();
-            KillWaitPlayer = null;
+            TargetArrow.Remove(Player.PlayerId, KillWaitPlayer.PlayerId);
         }
+        killThisTurn = false;
+        Player.RpcResetAbilityCooldown();
     }
 
     public override bool OnCheckShapeshift(PlayerControl target, ref bool animate)
     {
+        // 自身または死亡しているターゲットは選択できない
+        if (target == Player || !target.IsAlive()) return false;
+        if (KillWaitPlayer != null) return false;
+
         KillWaitPlayer = target;
         TargetArrow.Add(Player.PlayerId, target.PlayerId);
 
         Logger.Info($"{Player.GetNameWithRole()}のターゲットを{target.GetNameWithRole()}に設定", "GrudgeCharger");
         Player.MarkDirtySettings();
-        Utils.NotifyRoles();
+        Utils.NotifyRoles(SpecifySeer: Player);
         return false;
     }
 
     public override string GetAbilityButtonText() => GetString("GrudgeChargerSelectTarget");
+    public override string GetMark(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        //seenが省略の場合seer
+        seen ??= seer;
+        //seerおよびseenが自分である場合以外は関係なし
+        if (!Is(seer) || !Is(seen)) return "";
+
+        //矢印表示する必要がなければ無し
+        if (KillWaitPlayer == null || isForMeeting) return string.Empty;
+
+        return TargetArrow.GetArrows(seer, KillWaitPlayer.PlayerId);
+    }
+
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        //seenが省略の場合seer
+        seen ??= seer;
+        //seerおよびseenが自分である場合以外は関係なし
+        if (!Is(seer) || !Is(seen) || !Player.IsAlive() || isForMeeting) return "";
+
+        var str = new StringBuilder();
+        int charge = chargeCount;
+        int empty = oneGaugeChargeCount - chargeCount;
+
+        int newLine = 0;
+        int count = 1;
+        if (oneGaugeChargeCount > 15)
+        {
+            newLine = oneGaugeChargeCount / 2;
+        }
+
+        str.Append("<size=80%><line-height=85%><color=#ff6347>");
+        for (int i = 0; i < charge; i++, count++)
+        {
+            str.Append('█');
+            if (count == newLine) str.Append('\n');
+        }
+        str.Append("</color><color=#888888>");
+        for (int i = 0; i < empty; i++, count++)
+        {
+            str.Append('■');
+            if (count == newLine) str.Append('\n');
+        }
+        str.Append("</color></line-height></size>");
+
+        return str.ToString();
+    }
+
     public override string GetLowerText(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false, bool isForHud = false)
     {
         //seenが省略の場合seer
         seen ??= seer;
         //seerおよびseenが自分である場合以外は関係なし
-        if (!Is(seer) || !Is(seen) || Player.IsAlive() || isForMeeting) return string.Empty;
+        if (!Is(seer) || !Is(seen) || !Player.IsAlive() || isForMeeting) return string.Empty;
 
         var str = new StringBuilder();
         if (KillWaitPlayer == null)
@@ -155,6 +217,5 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
         return str.ToString();
     }
     public override string GetProgressText(bool comms = false)
-        => Utils.ColorString(Color.yellow, $"〈{chargeMaxKillCount - killCount}〉");
-
+        => Utils.ColorString(Color.yellow, $"〈{killLimit}〉");
 }

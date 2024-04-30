@@ -847,8 +847,8 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "SelfBomberBombCooldown","Bomb Cooldown","自爆クールダウン","","","",""
 "GrudgeChargerSelectTargetCooldown","Select Target Cooldown","一人目の対象選択クールダウン",
 "GrudgeChargerChargeKillCooldown","Charge Kill Cooldown","チャージ(キルボタン)クールダウン",
-"GrudgeChargerMaxKillCount","Max Kill Count Per Turn","一ターンの最大キル数",
-"GrudgeChargerChargeMaxKillCount","One Gauge Accumulate Charge Count","一ゲージが溜まるチャージ数",
+"GrudgeChargerOneGaugeChargeCount","One Gauge Accumulate Charge Count","一ゲージが溜まるチャージ数",
+"GrudgeChargerKillCountAtStartGame","Possible Kill Count At the Start Of the Game","ゲーム開始時のキル可能回数",
 
 # マッドメイト
 "CanMakeMadmateCount","Sidekick Madmate Max Count","サイドキックマッドメイト","变形者可以招募叛徒的数量","變形者招募叛徒最大人數","Максимум союзников Безумца","Máximo de Tripulantes Loucos Ajudantes"
