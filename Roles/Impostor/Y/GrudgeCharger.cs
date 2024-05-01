@@ -137,8 +137,8 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
 
     public override bool OnCheckShapeshift(PlayerControl target, ref bool animate)
     {
-        // 自身または死亡しているターゲットは選択できない
-        if (target == Player || !target.IsAlive()) return false;
+        // 自身または相方インポスター、死亡しているターゲットは選択できない
+        if (target.Is(CustomRoleTypes.Impostor) || !target.IsAlive()) return false;
         if (KillWaitPlayer != null) return false;
 
         KillWaitPlayer = target;
