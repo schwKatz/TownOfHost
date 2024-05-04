@@ -1251,6 +1251,13 @@ public static class Utils
             string SelfName = "";
             Color SelfNameColor = seer.GetRoleColor(true);
 
+            /*
+            if (isForMeeting)
+            {
+                SelfName.Append(DisplayComingOut.GetString(seer.GetCustomRole()));
+            }
+             */
+
             //string t = "";
             //trueRoleNameでColor上書きあればそれにする // GetRoleColorでOverrideTrueRoleNameを処理しているため不要
             //seer.GetRoleClass()?.OverrideTrueRoleName(ref SelfNameColor,ref t);

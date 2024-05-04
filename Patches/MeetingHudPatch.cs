@@ -5,7 +5,6 @@ using HarmonyLib;
 using UnityEngine;
 
 using TownOfHostY.Modules;
-using TownOfHostY.Roles;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Common;
 using static TownOfHostY.Translator;
@@ -77,6 +76,8 @@ public static class MeetingHudPatch
                 roleTextMeeting.fontSize = 1.5f;
                 (roleTextMeeting.enabled, roleTextMeeting.text)
                     = Utils.GetRoleNameAndProgressTextData(true, PlayerControl.LocalPlayer, pc);
+                // CO可否表示
+                roleTextMeeting.text = DisplayComingOut.GetString(pc.GetCustomRole()) + roleTextMeeting.text;
                 roleTextMeeting.gameObject.name = "RoleTextMeeting";
                 roleTextMeeting.enableWordWrapping = false;
                 // 役職とサフィックスを同時に表示する必要が出たら要改修

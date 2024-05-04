@@ -684,6 +684,8 @@ public static class Options
         // 強制守護天使表示の無効化
         ForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 600, "ForceProtect", false, TabGroup.MainSettings, true)
             .SetColor(Palette.CrewmateBlue);
+        // CO可否表示(id+499まで使用)
+        DisplayComingOut.SetupCustomOption((int)offsetId.FeatOther + 700);
         // 初手キルクール調整
         FixFirstKillCooldown = BooleanOptionItem.Create((int)offsetId.FeatOther + 200, "FixFirstKillCooldown", false, TabGroup.MainSettings, false)
             .SetColor(Palette.CrewmateBlue);

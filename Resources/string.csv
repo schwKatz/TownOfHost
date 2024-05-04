@@ -1030,6 +1030,13 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "addonShowModes.All","All","全て表示",
 "addonShowModes.TOH","TOH Original","本家TOH",
 
+"DisplayComingOutEnable","Display Coming Out Mark","CO可否マークを表示する",
+"displayComingOut.NG","NG","×",
+"displayComingOut.None","None","なし",
+"displayComingOut.OK","OK","○",
+"displayComingOut.Limit","Limit","△",
+"displayComingOut%type%","%type%","%type%","%type%","%type%"
+"displayComingOut%role%","%role%","%role%","%role%","%role%"
 
 "## 能力発動条件"
 "TaskProgressRate","Task Progress","タスク進捗率","","",""
