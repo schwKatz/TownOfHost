@@ -465,8 +465,8 @@ public enum CustomRoles
     SelfBomber,
     GrudgeCharger,
     //Madmate
-    MadGuardian,
     Madmate,
+    MadGuardian,
     MadSnitch,
     MadSheriff,
     MadDictator,
@@ -475,10 +475,10 @@ public enum CustomRoles
     MadNimrod,
     MadScientist,
     MadJester,
+    MadGuesser,
 
     MadDilemma,
     SKMadmate,
-    MadGuesser,
     //Crewmate(Vanilla)
     Engineer,
     GuardianAngel,
@@ -521,9 +521,9 @@ public enum CustomRoles
     LoyalDoggy,
     Rabbit,
     VentManager,
-    Counselor,
     NiceGuesser, 
 
+    Counselor,
     Potentialist,
     //Neutral
     Arsonist,

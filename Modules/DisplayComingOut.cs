@@ -1,10 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TownOfHostY.Roles.Core;
-using static Il2CppSystem.Uri;
 
 namespace TownOfHostY;
 
@@ -56,6 +52,8 @@ class DisplayComingOut
         int idOffset = baseId + ((int)type + 1) * 100;
         foreach (var role in CustomRolesHelper.AllStandardRoles.Where(x => x.GetCustomRoleTypes() == type).ToArray())
         {
+            if (IsDontShowRole(role)) continue;
+
             var roleName = Utils.GetRoleName(role);
             Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), roleName) } };
             EachRoles[role] = StringOptionItem.Create(idOffset, "displayComingOut%role%", displayComingOut, 0, TabGroup.MainSettings, true).SetParent(EachTypes[type]);
@@ -86,5 +84,18 @@ class DisplayComingOut
                 break;
         }
         return coStr;
+    }
+
+    private static bool IsDontShowRole(CustomRoles role)
+    {
+        return role is CustomRoles.Shapeshifter
+            or CustomRoles.EvilHacker
+
+            or CustomRoles.Engineer
+            or CustomRoles.Scientist
+            or CustomRoles.Potentialist
+
+            or CustomRoles.GM
+            or CustomRoles.GuardianAngel;
     }
 }

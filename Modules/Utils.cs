@@ -986,8 +986,11 @@ public static class Utils
             if (opt.Value.Name == "FungleReactorTimeLimit" && !Options.IsActiveFungle) continue;
             if (opt.Value.Name == "FungleMushroomMixupDuration" && !Options.IsActiveFungle) continue;
 
+            if (opt.Value.Parent.Name == "displayComingOut%type%" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
+            if (opt.Value.Parent.Name == "AddOnBuffAssign%role%" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;
+            if (opt.Value.Parent.Name == "AddOnDebuffAssign%role%" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "SkinControle" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "DisableTasks" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "EvilHackerFixedRole" && !opt.Value.GetBool()) continue;
@@ -1253,7 +1256,7 @@ public static class Utils
             
             if (isForMeeting)
             {
-                SelfName.Append(DisplayComingOut.GetString(seer.GetCustomRole()));
+                SelfName.Append($"<size={fontSize}>").Append(DisplayComingOut.GetString(seer.GetCustomRole())).Append("</size>");
             }
             SelfName.Append(SelfRoleName).Append("\r\n");
 
