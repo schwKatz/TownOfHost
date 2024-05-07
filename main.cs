@@ -212,6 +212,7 @@ namespace TownOfHostY
                     {CustomRoles.AddBait, "#00f7ff"},
                     {CustomRoles.Refusing, "#61b26c"},
                     {CustomRoles.Archenemy, "#ff6347"},
+                    {CustomRoles.ChainShifterAddon, "#666666"},
 
                     // CatchCat
                     {CustomRoles.CCRedLeader, "#ff0000"},

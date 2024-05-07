@@ -648,7 +648,6 @@ public static class Utils
             myRole = CustomRoles.Crewmate;
             roleInfoLong = GetString("PotentialistInfo");
         }
-        if (player.Is(CustomRoles.ChainShifterAddon)) myRole = CustomRoles.ChainShifter;
         var roleName = myRole.ToString();
         if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
             roleName = "NBakery";
@@ -670,7 +669,11 @@ public static class Utils
         {
             if (subRole != CustomRoles.NotAssigned)
             {
+                if (myRole == CustomRoles.ChainShifter && subRole == CustomRoles.ChainShifterAddon) continue;
+
                 var subroleName = subRole.ToString();
+                if (subRole == CustomRoles.ChainShifterAddon)
+                    subroleName = CustomRoles.ChainShifter.ToString();
                 var subroleString = GetString(subroleName);
                 subroleString = $"<size=95%>{subroleString}</size>".Color(GetRoleColor(subRole).ToReadableColor());
 

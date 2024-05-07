@@ -628,8 +628,6 @@ namespace TownOfHostY
             
             role = role.IsVanillaRoleConversion();//変換
 
-            if (player.Is(CustomRoles.ChainShifterAddon)) role = CustomRoles.ChainShifter;
-
             var Prefix = "";
             var text = role.ToString();
             var Info = "";
