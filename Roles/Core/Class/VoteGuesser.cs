@@ -259,19 +259,7 @@ public abstract class VoteGuesser : RoleBase
         if (NumOfGuess <= 0) return "";
 
         if (guesserInfo == null) guesserInfo = new();
-
-        var mark = "";
-        var suffix = "";
-        if (seer.PlayerId == PlayerControl.LocalPlayer.PlayerId)
-        {
-            if (guesserInfo.PlayerNumbers.TryGetValue(seer.PlayerId, out int number))
-            {
-                mark = $"<color=#ff8000><size=110%>{number}</size></color>";
-            }
-            suffix = GetProgressText();
-        }
-
-        return $"{mark} <color=#ff8000><size=1.5>{GetString("Message.SelfVoteSuffix")}</size></color> {suffix}";
+        return $"<color=#ff8000>{GetString("Message.SelfVoteSuffix")}</color>";
     }
     public void RpcGuesserMurderPlayer(PlayerControl target, CustomDeathReason reason)
     {

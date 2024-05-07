@@ -70,20 +70,25 @@ public static class MeetingHudPatch
             {
                 var pc = Utils.GetPlayerById(pva.TargetPlayerId);
                 if (pc == null) continue;
-                var roleTextMeeting = UnityEngine.Object.Instantiate(pva.NameText);
+                var roleTextMeeting = Object.Instantiate(pva.NameText);
+                var suffixTextMeeting = Object.Instantiate(pva.NameText);
                 roleTextMeeting.transform.SetParent(pva.NameText.transform);
-                roleTextMeeting.transform.localPosition = new Vector3(0f, -0.18f, 0f);
+                suffixTextMeeting.transform.SetParent(pva.NameText.transform);
+
+                roleTextMeeting.transform.localPosition = new Vector3(0f, 0.2f, 0f);
                 roleTextMeeting.fontSize = 1.5f;
-                (roleTextMeeting.enabled, roleTextMeeting.text)
-                    = Utils.GetRoleNameAndProgressTextData(true, PlayerControl.LocalPlayer, pc);
-                // CO可否表示
-                if (PlayerControl.LocalPlayer == pc)
-                {
-                    roleTextMeeting.text = DisplayComingOut.GetString(pc.GetCustomRole()) + roleTextMeeting.text;
-                }
                 roleTextMeeting.gameObject.name = "RoleTextMeeting";
                 roleTextMeeting.enableWordWrapping = false;
-                // 役職とサフィックスを同時に表示する必要が出たら要改修
+                (roleTextMeeting.enabled, roleTextMeeting.text)
+                    = Utils.GetRoleNameAndProgressTextData(true, PlayerControl.LocalPlayer, pc);
+
+                suffixTextMeeting.transform.localPosition = new Vector3(0f, -0.18f, 0f);
+                suffixTextMeeting.fontSize = 1.5f;
+                suffixTextMeeting.gameObject.name = "SuffixTextMeeting";
+                suffixTextMeeting.enableWordWrapping = false;
+                suffixTextMeeting.enabled = false;
+                suffixTextMeeting.text = "";
+                
                 var suffixBuilder = new StringBuilder(32);
                 if (myRole != null)
                 {
@@ -92,8 +97,17 @@ public static class MeetingHudPatch
                 suffixBuilder.Append(CustomRoleManager.GetSuffixOthers(PlayerControl.LocalPlayer, pc, isForMeeting: true));
                 if (suffixBuilder.Length > 0)
                 {
-                    roleTextMeeting.text = suffixBuilder.ToString();
-                    roleTextMeeting.enabled = true;
+                    suffixTextMeeting.text = suffixBuilder.ToString();
+                    suffixTextMeeting.enabled = true;
+
+                    if (roleTextMeeting.text == "")
+                    {
+                        pva.NameText.transform.SetLocalY(0.05f);
+                    }
+                }
+                else if (roleTextMeeting.text != "")
+                {
+                    pva.NameText.transform.SetLocalY(-0.05f);
                 }
             }
             CustomRoleManager.AllActiveRoles.Values.Do(role => role.OnStartMeeting());

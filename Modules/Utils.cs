@@ -225,7 +225,10 @@ public static class Utils
     /// <returns>RoleName + ProgressTextを表示するか、構築する色とテキスト(bool, Color, string)</returns>
     public static (bool enabled, string text) GetRoleNameAndProgressTextData(bool isMeeting, PlayerControl seer, PlayerControl seen = null)
     {
-        var roleName = GetDisplayRoleName(isMeeting,seer, seen);
+        seen ??= seer;
+        // CO可否表示
+        var coDisplay = (seer == seen && isMeeting) ? DisplayComingOut.GetString(seer.GetCustomRole()) : "";
+        var roleName = GetDisplayRoleName(isMeeting, seer, seen);
         var progressText = GetProgressText(seer, seen);
         var text = roleName + (roleName != "" ? " " : "") + progressText;
         return (text != "", text);
@@ -775,10 +778,11 @@ public static class Utils
     // Now
     public static void ShowActiveSettings(byte PlayerId = byte.MaxValue)
     {
+        var title = $"</color>【{GetString("Settings")}】";
         var mapId = Main.NormalOptions.MapId;
         if (Options.HideGameSettings.GetBool() && PlayerId != byte.MaxValue)
         {
-            SendMessage(GetString("Message.HideGameSettings"), PlayerId);
+            SendMessage(GetString("Message.HideGameSettings"), PlayerId, title);
             return;
         }
         var sb = new StringBuilder();
@@ -787,7 +791,7 @@ public static class Utils
             sb.Append(GetString("Roles")).Append(':');
             if (CustomRoles.HASFox.IsEnable()) sb.AppendFormat("\n{0}:{1}", GetRoleName(CustomRoles.HASFox), CustomRoles.HASFox.GetCount());
             if (CustomRoles.HASTroll.IsEnable()) sb.AppendFormat("\n{0}:{1}", GetRoleName(CustomRoles.HASTroll), CustomRoles.HASTroll.GetCount());
-            SendMessage(sb.ToString(), PlayerId);
+            SendMessage(sb.ToString(), PlayerId, title);
             sb.Clear().Append(GetString("Settings")).Append(':');
             sb.Append(GetString("HideAndSeek"));
         }
@@ -821,6 +825,7 @@ public static class Utils
                     ShowChildrenSettings(RoleAssignManager.OptionAssignMode, ref sb);
                 }
                 sb.Append("\n</line-height></size>");
+                CheckPageChange(PlayerId, sb, title);
 
                 foreach (var role in Options.CustomRoleCounts.Keys)
                 {
@@ -843,8 +848,9 @@ public static class Utils
 
                     sb.Append("<size=65%><line-height=1.5pic>");
                     ShowChildrenSettings(Options.CustomRoleSpawnChances[role], ref sb);
-                    sb.Append("</line-height>");
-                    sb.Append("\n</size>");
+                    sb.Append("</line-height>\n</size>");
+
+                    CheckPageChange(PlayerId, sb, title);
                 }
             }
             sb.Append('\n');
@@ -867,11 +873,22 @@ public static class Utils
 
                 sb.Append("<size=65%><line-height=1.5pic>");
                 ShowChildrenSettings(opt, ref sb);
-                sb.Append("</line-height>");
-                sb.Append("\n</size>");
+                sb.Append("</line-height>\n</size>");
+
+                CheckPageChange(PlayerId, sb, title);
             }
         }
-        SendMessage(sb.ToString(), PlayerId, $"</color>【{GetString("Settings")}】");
+        SendMessage(sb.ToString(), PlayerId, title);
+    }
+    // 改ページチェック from:TOH
+    private static void CheckPageChange(byte PlayerId, StringBuilder sb, string title = "", string size = ActiveSettingsSize)
+    {
+        if (sb.Length > 4000)
+        {
+            SendMessage(sb.ToString(), PlayerId, title);
+            sb.Clear();
+            sb.AppendFormat("<size={0}>", size);
+        }
     }
     public static void CopyCurrentSettings()
     {
@@ -1027,11 +1044,13 @@ public static class Utils
         foreach (var id in Main.winnerList)
         {
             sb.Append($"\n★ ".Color(winnerColor)).Append(SummaryTexts(id, true));
+            CheckPageChange(PlayerId, sb, "70%");
             cloneRoles.Remove(id);
         }
         foreach (var id in cloneRoles)
         {
             sb.Append($"\n　 ").Append(SummaryTexts(id, true));
+            CheckPageChange(PlayerId, sb, "70%");
         }
         SendMessage(sb.ToString(), PlayerId);
     }
@@ -1256,11 +1275,6 @@ public static class Utils
             string SelfDeathReason = seer.KnowDeathReason(seer) ? $"({ColorString(GetRoleColor(CustomRoles.Doctor), GetVitalText(seer.PlayerId))})" : "";
 
             StringBuilder SelfName = new();
-            
-            if (isForMeeting)
-            {
-                SelfName.Append($"<size={fontSize}>").Append(DisplayComingOut.GetString(seer.GetCustomRole())).Append("</size>");
-            }
             SelfName.Append(SelfRoleName).Append("\r\n");
 
             Color SelfNameColor = seer.GetRoleColor();
@@ -1286,11 +1300,11 @@ public static class Utils
             }
             if (SelfSuffix.Length != 0)
             {
-                SelfName.Append("\r\n").Append(SelfSuffix);
+                SelfName.Append("\r\n").Append($"<size={fontSize}>{SelfSuffix}</size>");
             }
             if (SelfLower.Length != 0)
             {
-                SelfName.Append("\r\n").Append(SelfLower);
+                SelfName.Append("\r\n").Append($"<size={fontSize}>{SelfLower}</size>");
             }
 
             if (!isForMeeting) SelfName.Append("\r\n");
@@ -1369,7 +1383,8 @@ public static class Utils
                     // 空でなければ先頭に改行を挿入
                     if (TargetSuffix.Length > 0)
                     {
-                        TargetSuffix.Insert(0, "\r\n");
+                        TargetSuffix.Insert(0, "\r\n<size={fontSize}>");
+                        TargetSuffix.Append("</size>");
                     }
 
                     //RealNameを取得 なければ現在の名前をRealNamesに書き込む
