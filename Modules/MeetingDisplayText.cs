@@ -165,19 +165,19 @@ public static class MeetingDisplayText
         float height = 2f;
 
         // 0 = 左上(1番目)
-        if (pc == Main.AllAlivePlayerControls.ElementAtOrDefault(0))
+        if (pc == Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).ElementAtOrDefault(0))
         {
             (addText, column, height) = LeftUp();
             if (addText == "") return name;
         }
         // 1 = 真ん中上(2番目)
-        else if (pc == Main.AllAlivePlayerControls.ElementAtOrDefault(1))
+        else if (pc == Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).ElementAtOrDefault(1))
         {
             (addText, column, height) = CenterUp();
             if (addText == "") return name;
         }
         // 2 = 右上(3番目)
-        else if (pc == Main.AllAlivePlayerControls.ElementAtOrDefault(2))
+        else if (pc == Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).ElementAtOrDefault(2))
         {
             (addText, column, height) = RightUp(true);
         }
