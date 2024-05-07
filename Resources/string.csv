@@ -131,33 +131,6 @@
 "SelfBomberInfoLong","(Impostors):\nCan perform self-destruct range kills.Shapeshifting kills all crew members around you and you die.","(インポスター陣営):\n自爆による特攻キルを行う事ができるインポスター。\nシェイプシフトすることで自身の周囲にいるクルーを全員キルして自分も死にます。\nさあ! 私と共に死んでもらうぞ!!\n爆破!!!!","","","",""
 "GrudgeChargerInfoLong","(Impostors):\nUse the kill button to charge the number of kills, use shapeshift to select a kill target, and automatically make a kill when approaching the target.\nNormal kills and transformations are not possible. Target cannot be changed until next turn or kill. The second and subsequent targets on the same turn can be selected with no cooldown.\nThe charge increases the number of kills possible by one when one gauge is fully accumulated.","[インポスター陣営]\nキルボタンを使ってキル回数をチャージ、シェイプ選択でキルターゲットを選択し、ターゲットに近づくと自動でキルをする。\n通常キル・変身不可。ターゲットは次のターンになるかキルするまで変更ができない。同ターン2人目以降はクールダウン無しでターゲットを選択できる。\nチャージは１ゲージ溜まり切るとキル可能回数が１増加する。"
 
-#イビルハッカ
-"EvilHacker","Evil Replicator","イビルハッカー...?",
-"REvilHacker","Evil Hacker","イビルハッカー",
-"REvilWhiter","Evil Whiter","イビル白化",
-"REvilReder","Evil Reder","イビル真っ赤",
-"REvilFaller","Evil Faller","イビル落下",
-"REvilFire","Evil Fire","イビル発火",
-"REvilVipper","Evil Vipper","イビル閣下",
-"REvilHakka","Evil Hakka","イビルハッカ",
-"EvilHackerTInfo",,"会議時に直前のアドミン情報がチャットで見れる。",
-"EvilWhiterTInfo",,"自身がキルした時、7秒間全員の姿が白色のカモフラージュがかかる",
-"EvilRederTInfo",,"自身がキルした時、7秒間全員の姿が赤色のカモフラージュがかかる",
-"EvilFallerTInfo",,"自身がキルした死体の死因が「落下死」になる。\n全員視点、落下死の死体は死因が表示される。",
-"EvilFireTInfo",,"キル時に発火させる。そのキルされたプレイヤーの周り(目安視界x0.5範囲内)に誰かいた場合、一番近いプレイヤーを爆死させる。\n爆死は1人まで。",
-"EvilVipperTInfo",,"閣下なので属性能力を様々持つ。\n属性：ライティング、ウォッチング、オートプシー、マネジメント、シーイング、VIP、タイブレーカー",
-"EvilHakkaTInfo",,"キルボタンを押されたプレイヤーはハッカでスースーしすぎて死ぬ。それ以外何もない。",
-"EvilHackerInfo","First Anniversary!","一周年記念楽しんでね",
-"EvilHackerInfoLong","(Impostors):\nFirst Anniversary Role\nThis Role that becomes a random ability for each match. In Japanese, it is a pun.","[インポスター陣営]\nイビルハッカーになりたいインポスター。1ゲームごとに能力がランダム。\nイビルハッカー(本家TOH仕様)になれるのは約16%",
-
-"EvilHackerFixedRole","Set on the Role that appears","出現する役職を設定する",
-"SetEHRole%role%","Can Assign %role%","%role%が現れる",
-
-"MDisplay.EHnowRoleText","In Here!","出現！",
-"MDisplay.EHText","Evil Hacker In Here!","イビルハッカー出現！",
-"MDisplay.EH?Text","Replicator In Here!","イビルハッカー、、？",
-"message.ReplicatorTitle","【Types of Replicator In This Game】","【今回のイビルハッカー】",
-
 "# マッドメイト系役職"
 "Madmate","Madmate","マッドメイト","叛徒","叛徒","Безумец","Tripulante Louco"
 "MadGuardian","Mad Guardian","マッドガーディアン","背叛的守卫","背叛的天使","Безумный Страж","Guardião Louco"

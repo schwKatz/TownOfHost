@@ -62,9 +62,7 @@ public static class MeetingDisplayText
         int column = 0;
         float height = 3.2f;
 
-        (string t, int c) = EvilHacker.AddMeetingDisplay();
-        addText.Append(t); column += c;
-        (t, c) = EvilIgnition.AddMeetingDisplay();
+        (string t, int c) = EvilIgnition.AddMeetingDisplay();
         addText.Append(t); column += c;
         (t, c) = Nimrod.AddMeetingDisplay();
         addText.Append(t); column += c;

@@ -1320,7 +1320,6 @@ public static class Utils
                 || seer.IsNeutralKiller() //seerがキル出来るニュートラル
                 || (IsActive(SystemTypes.Electrical) && CustomRoles.Mare.IsEnable())    //メアーが入っていない時は通さない
                 || (IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())   //カモフラオプションがない時は通さない
-                || EvilHacker.IsColorCamouflage    //カモフラがない時は通さない
                 || EvilDyer.IsColorCamouflage    //カモフラがない時は通さない
                 || NoCache
                 || ForceLoop
@@ -1384,8 +1383,6 @@ public static class Utils
                         TargetDeathReason = $"({ColorString(GetRoleColor(CustomRoles.Doctor), GetVitalText(target.PlayerId))})";
 
                     if (IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool() && !isForMeeting)
-                        TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";
-                    if (EvilHacker.IsColorCamouflage && !isForMeeting)
                         TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";
                     if (EvilDyer.IsColorCamouflage && !isForMeeting)
                         TargetPlayerName = $"<size=0%>{TargetPlayerName}</size>";

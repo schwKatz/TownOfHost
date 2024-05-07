@@ -628,8 +628,6 @@ namespace TownOfHostY
                     }*/
                     if (Utils.IsActive(SystemTypes.Comms) && Options.CommsCamouflage.GetBool())
                         RealName = $"<size=0>{RealName}</size> ";
-                    if (EvilHacker.IsColorCamouflage)
-                        RealName = $"<size=0>{RealName}</size> ";
                     if (EvilDyer.IsColorCamouflage)
                         RealName = $"<size=0>{RealName}</size> ";
 

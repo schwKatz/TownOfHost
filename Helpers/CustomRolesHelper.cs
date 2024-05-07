@@ -90,7 +90,7 @@ namespace TownOfHostY
             return role is CustomRoles.Counselor or CustomRoles.MadDilemma
                 or CustomRoles.Gang
                 
-                or CustomRoles.Potentialist or CustomRoles.EvilHacker
+                or CustomRoles.Potentialist
                 or CustomRoles.Impostor or CustomRoles.Crewmate;
         }
 

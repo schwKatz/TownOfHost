@@ -135,8 +135,6 @@ public static class MeetingHudPatch
             if (MeetingStates.FirstMeeting) TemplateManager.SendTemplate("OnFirstMeeting", noErr: true);
             TemplateManager.SendTemplate("OnMeeting", noErr: true);
 
-            EvilHacker.FirstMeetingText();
-
             if (AmongUsClient.Instance.AmHost)
             {
                 _ = new LateTask(() =>

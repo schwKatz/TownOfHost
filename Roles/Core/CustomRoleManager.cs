@@ -445,7 +445,6 @@ public enum CustomRoles
     EvilTracker,
     Stealth,
     NekoKabocha,
-    EvilHacker,
     Insider,
     EvilNekomata,
     AntiAdminer,
