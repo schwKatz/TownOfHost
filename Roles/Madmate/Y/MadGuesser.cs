@@ -7,7 +7,7 @@ using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Madmate;
 
-public sealed class MadGuesser : VoteGuesser, IKillFlashSeeable, IDeathReasonSeeable
+public sealed class MadGuesser : VoteGuesser
 {
     public static readonly SimpleRoleInfo RoleInfo =
         SimpleRoleInfo.Create(
@@ -29,10 +29,6 @@ public sealed class MadGuesser : VoteGuesser, IKillFlashSeeable, IDeathReasonSee
         //() => HasTask.ForRecompute
         )
     {
-        //CanSeeKillFlash = Options.MadmateCanSeeKillFlash.GetBool();
-        //CanSeeDeathReason = Options.MadmateCanSeeDeathReason.GetBool();
-
-        //CanVent = OptionCanVent.GetBool();
         //CanAlsoBeExposedToImpostor = OptionCanAlsoBeExposedToImpostor.GetBool();
         //TaskTrigger = OptionTaskTrigger.GetInt();
 
@@ -63,9 +59,6 @@ public sealed class MadGuesser : VoteGuesser, IKillFlashSeeable, IDeathReasonSee
         GuesserHideMisfire,
         GuesserGuessAfterVote,
     }
-    //private static bool CanSeeKillFlash;
-    //private static bool CanSeeDeathReason;
-    //private static bool CanVent;
     //private static bool CanAlsoBeExposedToImpostor;
     //private static int TaskTrigger;
 
@@ -122,7 +115,4 @@ public sealed class MadGuesser : VoteGuesser, IKillFlashSeeable, IDeathReasonSee
 
     //    return Utils.ColorString(Utils.GetRoleColor(CustomRoles.MadGuesser), "★");
     //}
-
-    //public bool CheckKillFlash(MurderInfo info) => CanSeeKillFlash;
-    //public bool CheckSeeDeathReason(PlayerControl seen) => CanSeeDeathReason;
 }
