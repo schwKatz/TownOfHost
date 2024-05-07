@@ -16,8 +16,7 @@ public sealed class MadGuesser : VoteGuesser
             CustomRoles.MadGuesser,
             () => OptionCanVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate,
             CustomRoleTypes.Madmate,
-            //(int)Options.offsetId.MadY + 700,
-            (int)Options.offsetId.MadSpecial + 0,
+            (int)Options.offsetId.MadY + 700,
             SetupOptionItem,
             "マッドゲッサー",
             introSound: () => GetIntroSound(RoleTypes.Impostor)

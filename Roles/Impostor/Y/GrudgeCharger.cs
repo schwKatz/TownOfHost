@@ -16,7 +16,7 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
             CustomRoles.GrudgeCharger,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            //(int)Options.offsetId.ImpY + 1500,
+            //(int)Options.offsetId.ImpY + 1600,
             (int)Options.offsetId.ImpSpecial + 100,
             SetUpOptionItem,
             "グラージチャージャー"
