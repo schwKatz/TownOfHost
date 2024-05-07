@@ -81,8 +81,9 @@ namespace TownOfHostY
                 or CustomRoles.StrayWolf
                 or CustomRoles.DarkHide
                 or CustomRoles.Pirate
+                or CustomRoles.ChainShifter
                 or CustomRoles.PlatonicLover
-                or CustomRoles.FoxSpirit;;
+                or CustomRoles.FoxSpirit;
         }
 
         public static bool IsDontShowOptionRole(this CustomRoles role)
