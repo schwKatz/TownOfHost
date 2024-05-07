@@ -228,9 +228,10 @@ public static class Utils
         seen ??= seer;
         // CO可否表示
         var coDisplay = (seer == seen && isMeeting) ? DisplayComingOut.GetString(seer.GetCustomRole()) : "";
+        var teamMark = GetDisplayTeamMark(seer, seen);
         var roleName = GetDisplayRoleName(isMeeting, seer, seen);
         var progressText = GetProgressText(seer, seen);
-        var text = roleName + (roleName != "" ? " " : "") + progressText;
+        var text = coDisplay + teamMark + roleName + (roleName != "" ? " " : "") + progressText;
         return (text != "", text);
     }
     /// <summary>
@@ -245,7 +246,7 @@ public static class Utils
         //デフォルト値
         bool enabled = seer == seen
             || seen.Is(CustomRoles.GM)
-            || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCanSeeOtherRoles.GetBool());
+            || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCantSeeOtherRoles.GetBool());
         //オーバーライドによる表示ではサブロールは見えないようにする/上記場合のみ表示
         var (roleColor, roleText) = GetTrueRoleNameData(seen.PlayerId, enabled);
 
@@ -256,6 +257,31 @@ public static class Utils
         seer.GetRoleClass()?.OverrideDisplayRoleNameAsSeer(seen, isMeeting, ref enabled, ref roleColor, ref roleText);
 
         return enabled ? ColorString(roleColor, roleText) : "";
+    }
+    /// <summary>
+    /// GetTeamMarkから取得
+    /// </summary>
+    /// <param name="seer">見る側</param>
+    /// <param name="seen">見られる側</param>
+    /// <returns>TeamMark</returns>
+    public static string GetDisplayTeamMark(PlayerControl seer, PlayerControl seen = null)
+    {
+        seen ??= seer;
+        bool enabled = false;
+
+        // 陣営表示ONのとき
+        if (Options.DisplayTeamMark.GetBool())
+        {
+            enabled = seer == seen // 自分自身はtrue
+                || seen.Is(CustomRoles.GM) // GMはtrue
+                || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCantSeeOtherRoles.GetBool()); // 幽霊で役職見れるとき
+        }
+
+        // 幽霊が陣営のみ見れる設定ならtrue
+        enabled |= Main.VisibleTasksCount && !seer.IsAlive()
+            && Options.GhostCantSeeOtherRoles.GetBool() && Options.GhostCanSeeOtherTeams.GetBool();
+
+        return enabled ? GetTeamMark(seen.GetCustomRole(), 90) : "";
     }
     /// <summary>
     /// 引数の指定通りのRoleNameを表示
@@ -565,7 +591,7 @@ public static class Utils
         seen ??= seer;
         var comms = IsActive(SystemTypes.Comms);
         bool enabled = seer == seen
-                    || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCanSeeOtherTasks.GetBool())
+                    || (Main.VisibleTasksCount && !seer.IsAlive() && !Options.GhostCantSeeOtherTasks.GetBool())
                     || (seen.Is(CustomRoles.Workaholic) && Workaholic.Seen && Workaholic.TaskSeen);
         string text = GetProgressText(seen.PlayerId, comms);
 
@@ -836,11 +862,7 @@ public static class Utils
                     if (role.IsAddOn() || role.IsOtherAddOn())
                         sb.Append("<size=75%><color=#c71585>○</color>"); //改行を消す
                     else if (role.GetCustomRoleTypes() == CustomRoleTypes.Unit) sb.Append("<color=#7fff00>Ⓤ</color>");
-                    else if (role.IsImpostor()) sb.Append("<size=75%><color=#ff1919>Ⓘ</color></size>");
-                    else if (role.IsMadmate())  sb.Append("<size=75%><color=#ff4500>Ⓜ</color></size>");
-                    else if (role.IsCrewmate()) sb.Append("<size=75%><color=#6495ed>Ⓒ</color></size>");
-                    else if (role.IsNeutral())  sb.Append("<size=75%><color=#ffa500>Ⓝ</color></size>");
-                    else sb.Append('　');
+                    else sb.Append(GetTeamMark(role, 75));
 
                     sb.Append($"<u><b>{GetRoleName(role)}</b></u>".Color(GetRoleColor(role).ToReadableColor()));
                     // 確率＆人数
@@ -967,11 +989,7 @@ public static class Utils
                 sb.Append("\n<size=80%>");
                 // 陣営ごとのマーク
                 if (role.GetCustomRoleTypes() == CustomRoleTypes.Unit) sb.Append("<color=#7fff00>Ⓤ</color>");
-                else if (role.IsImpostor()) sb.Append("<color=#ff1919>Ⓘ</color>");
-                else if (role.IsMadmate()) sb.Append("<color=#ff4500>Ⓜ</color>");
-                else if (role.IsCrewmate()) sb.Append("<color=#8cffff>Ⓒ</color>");
-                else if (role.IsNeutral()) sb.Append("<color=#ffa500>Ⓝ</color>");
-                else sb.Append('　');
+                else sb.Append(GetTeamMark(role, 80));
 
                 // 役職名表示
                 sb.Append($"</size><size=90%> {GetRoleName(role)}</size>".Color(GetRoleColor(role)));
@@ -1007,6 +1025,9 @@ public static class Utils
             if (opt.Value.Name == "FungleMushroomMixupDuration" && !Options.IsActiveFungle) continue;
 
             if (opt.Value.Parent.Name == "displayComingOut%type%" && !opt.Value.GetBool()) continue;
+
+            if (opt.Value.Parent.Name == "displayComingOut%type%" && !opt.Value.GetBool()) continue;
+
             if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnBuffAssign%role%" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;
@@ -1079,6 +1100,16 @@ public static class Utils
         }
 
         return sb.ToString();
+    }
+    public static string GetTeamMark(CustomRoles role, int sizePer)
+    {
+        string text = "　";
+        if (role.IsImpostor()) text = "<color=#ff1919>Ⓘ</color>";
+        else if (role.IsMadmate()) text = "<color=#ff4500>Ⓜ</color>";
+        else if (role.IsCrewmate()) text = "<color=#7ee6e6>Ⓒ</color>";
+        else if (role.IsNeutral()) text = "<color=#ffa500>Ⓝ</color>";
+
+        return $"<size={sizePer}%>{text}</size>";
     }
 
     public static void ShowHelp()
