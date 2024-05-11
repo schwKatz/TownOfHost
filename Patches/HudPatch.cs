@@ -224,6 +224,7 @@ class SetHudActivePatch
         __instance.ReportButton.ToggleVisible(!GameStates.IsLobby && isActive);
         if (!GameStates.IsModHost) return;
         IsActive = isActive;
+        if (GameStates.IsLobby) return;
         if (!isActive) return;
 
         var player = PlayerControl.LocalPlayer;
