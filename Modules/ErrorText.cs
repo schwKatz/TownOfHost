@@ -42,12 +42,32 @@ namespace TownOfHostY
             Text.color = Color.red;
             Text.outlineColor = Color.black;
             Text.alignment = TMPro.TextAlignmentOptions.Top;
+
+            // 背景
+            var bgObject = new GameObject("Background") { layer = LayerMask.NameToLayer("UI") };
+            var bgRenderer = instance.background = bgObject.AddComponent<SpriteRenderer>();
+            var bgTexture = new Texture2D(Screen.width, 150, TextureFormat.ARGB32, false);
+            for (var x = 0; x < bgTexture.width; x++)
+            {
+                for (var y = 0; y < bgTexture.height; y++)
+                {
+                    bgTexture.SetPixel(x, y, new(0f, 0f, 0f, 0.6f));
+                }
+            }
+            bgTexture.Apply();
+            var bgSprite = Sprite.Create(bgTexture, new(0, 0, bgTexture.width, bgTexture.height), new(0.5f, 1f /* 上端の真ん中を中心とする */ ));
+            bgRenderer.sprite = bgSprite;
+            var bgTransform = bgObject.transform;
+            bgTransform.parent = instance.transform;
+            bgTransform.localPosition = new(0f, TextOffsetY, 1f);
+            bgObject.SetActive(false);
         }
 
         public TMPro.TextMeshPro Text;
+        private SpriteRenderer background;
         public Camera Camera;
         public List<ErrorData> AllErrors = new();
-        public Vector3 TextOffset = new(0, 0.3f, -1000f);
+        public Vector3 TextOffset = new(0, TextOffsetY, -1000f);
         public void Update()
         {
             AllErrors.ForEach(err => err.IncreaseTimer());
@@ -96,13 +116,13 @@ namespace TownOfHostY
             }
             if (maxLevel == 0)
             {
-                Text.enabled = false;
+                Hide();
             }
             else
             {
                 if (!HnSFlag && !PublicFlag && !NotHostFlag)
                     text += $"{GetString($"ErrorLevel{maxLevel}")}";
-                Text.enabled = true;
+                Show();
             }
             if (GameStates.IsInGame && maxLevel != 3)
                 text += $"\n{GetString("TerminateCommand")}: Shift+L+Enter";
@@ -112,6 +132,16 @@ namespace TownOfHostY
         {
             AllErrors.RemoveAll(err => err.ErrorLevel != 3);
             UpdateText();
+        }
+        private void Show()
+        {
+            Text.enabled = true;
+            background.gameObject.SetActive(true);
+        }
+        private void Hide()
+        {
+            Text.enabled = false;
+            background.gameObject.SetActive(false);
         }
 
         public class ErrorData
