@@ -25,6 +25,8 @@ public sealed class Elder : RoleBase
     )
     {
         DiaInLife = OptionDiaInLife.GetBool();
+
+        GuardCount = 0;
     }
     private static OptionItem OptionDiaInLife;
 
@@ -33,9 +35,20 @@ public sealed class Elder : RoleBase
         ElderDiaInLife,
     }
     private static bool DiaInLife;
-
+    int GuardCount = 0;
     private static void SetupOptionItem()
     {
         OptionDiaInLife = BooleanOptionItem.Create(RoleInfo, 10, OptionName.ElderDiaInLife, false, false);
+    }
+    public override bool OnCheckMurderAsTarget(MurderInfo info)
+    {
+        (var killer, var target) = info.AttemptTuple;
+        if (GuardCount == 0) return true;//普通にキル
+        info.CanKill = false;
+
+        killer.RpcProtectedMurderPlayer(target);
+        GuardCount++;
+
+        return true;
     }
 }
