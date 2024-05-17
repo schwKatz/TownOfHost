@@ -1,3 +1,4 @@
+using System.Linq;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
@@ -25,7 +26,7 @@ public sealed class Elder : RoleBase
     )
     {
         DiaInLife = OptionDiaInLife.GetBool();
-
+        roleChanged = false;
         GuardCount = 0;
     }
     private static OptionItem OptionDiaInLife;
@@ -37,41 +38,60 @@ public sealed class Elder : RoleBase
     private static bool DiaInLife;
     int GuardCount = 0;
     public static CustomRoles ChangeRoleElderDead;
+    private static bool roleChanged;
     public static readonly CustomRoles[] ChangeRoles =
     {
             CustomRoles.Crewmate,
     };
     private static void SetupOptionItem()
     {
+        var cRolesString = ChangeRoles.Select(x => x.ToString()).ToArray();
         OptionDiaInLife = BooleanOptionItem.Create(RoleInfo, 10, OptionName.ElderDiaInLife, false, false);
     }
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;
+        if (!target.Is(CustomRoles.Elder)) return false;
 
         if (GuardCount > 0)
-        {// GuardCountが1以上の場合はキルを通す
+        {
+            // GuardCountが1以上の場合はキルを通す
             info.CanKill = true;
         }
         else
-        {// GuardCountが0の場合はキルを通さない。
+        {
+            // GuardCountが0の場合はキルを通さない。
             info.CanKill = false;
+            roleChanged = true;
             killer.RpcProtectedMurderPlayer(target);
             killer.SetKillCooldown();
         }
-        GuardCount++;// GuardCountを増やす
+
+        GuardCount++; // GuardCountを増やす
         return true;
-    }
-    public void ChangeRole()
-    {
-        Player.RpcSetCustomRole(ChangeRoleElderDead);
-        Utils.NotifyRoles();
     }
     public override void OnFixedUpdate(PlayerControl player)
     {
-        if (!Player.IsAlive())
+        if (!Player.IsAlive() && roleChanged)
         {
-            ChangeRole();
+            foreach (var pc in Main.AllAlivePlayerControls)
+            {
+                var role = PlayerState.GetByPlayerId(pc.PlayerId).MainRole;
+                if (role.IsCrewmate())
+                {
+                    //Player.RpcSetCustomRole(ChangeRoleElderDead);
+                    pc.RpcSetCustomRole(CustomRoles.Crewmate);
+                    pc.RpcProtectedMurderPlayer(); // 変更が行われたことを通知
+                    Utils.NotifyRoles();
+                    Utils.MarkEveryoneDirtySettings(); // 全プレイヤーの設定を更新
+                    break;
+                }
+            }
+            roleChanged = false;
+            if (!roleChanged)
+            {
+                return;
+            }
         }
     }
 }
