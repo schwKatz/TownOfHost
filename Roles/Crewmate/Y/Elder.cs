@@ -51,21 +51,28 @@ public sealed class Elder : RoleBase
         (var killer, var target) = info.AttemptTuple;
         if (!target.Is(CustomRoles.Elder)) return false;
 
-        if (GuardCount > 0)
+        if (IsTaskFinished)//タスク完了時の処理(自身のkillを通す＆killer側も死ぬ。)
         {
-            // GuardCountが1以上の場合はキルを通す
             info.CanKill = true;
+            killer.RpcMurderPlayer(killer);
+            PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.CounterAttack;
         }
         else
         {
-            // GuardCountが0の場合はキルを通さない。
-            info.CanKill = false;
-            roleChanged = true;
-            killer.RpcProtectedMurderPlayer(target);
-            killer.SetKillCooldown();
-        }
+            if (GuardCount > 0)// GuardCountが1以上の場合はキルを通す
+            {
+                info.CanKill = true;
+            }
+            else// GuardCountが0の場合はキルを通さない。
+            {
+                info.CanKill = false;
+                roleChanged = true;
+                killer.RpcProtectedMurderPlayer(target);
+                killer.SetKillCooldown();
+            }
 
-        GuardCount++; // GuardCountを増やす
+            GuardCount++; // GuardCountを増やす
+        }
         return true;
     }
     public override void OnFixedUpdate(PlayerControl player)
@@ -84,8 +91,8 @@ public sealed class Elder : RoleBase
                 DiaInLife = false;
             }
         }
-        if (!Player.IsAlive() && roleChanged)
-        {
+        if (!Player.IsAlive() && roleChanged && !IsTaskFinished)
+        {//エルダーが死んでいる＆roleChangedがtrueである＆タスクが終わってない場合
             ChangeRole();
             DiaInLife = false;
         }

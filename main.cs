@@ -279,6 +279,7 @@ namespace TownOfHostY
         Fall,
         Poisoning,
         Senility,
+        CounterAttack,
         Win,
         etc = -1
     }
