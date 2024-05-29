@@ -1,6 +1,7 @@
 using System.Linq;
 using AmongUs.GameOptions;
 using TownOfHostY.Roles.Core;
+using UnityEngine;
 
 namespace TownOfHostY.Roles.Crewmate;
 public sealed class Elder : RoleBase
@@ -20,24 +21,30 @@ public sealed class Elder : RoleBase
     public Elder(PlayerControl player) : base(RoleInfo, player)
     {
         DiaInLife = OptionDiaInLife.GetBool();
+        Lifetime = OptionLifetime.GetFloat();
         roleChanged = false;
         GuardCount = 0;
     }
 
     private static OptionItem OptionDiaInLife;
+    private static OptionItem OptionLifetime;
     private static bool roleChanged;
     private int GuardCount;
     private static bool DiaInLife;
+    private float Lifetime; // 寿命の時間を管理するプロパティ
     public static readonly CustomRoles[] ChangeRoles = { CustomRoles.Crewmate };
 
     enum OptionName
     {
         ElderDiaInLife,
+        ElderLifetime,
     }
     private static void SetupOptionItem()
     {
         var cRolesString = ChangeRoles.Select(x => x.ToString()).ToArray();
         OptionDiaInLife = BooleanOptionItem.Create(RoleInfo, 10, OptionName.ElderDiaInLife, false, false);
+        OptionLifetime = FloatOptionItem.Create(RoleInfo, 11, OptionName.ElderLifetime, new(5f, 1800f, 5f), 900f, false, OptionDiaInLife)
+                .SetValueFormat(OptionFormat.Seconds);
     }
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
@@ -63,9 +70,28 @@ public sealed class Elder : RoleBase
     }
     public override void OnFixedUpdate(PlayerControl player)
     {
+        if (DiaInLife)
+        {
+            // 寿命のカウントダウン
+            Lifetime -= Time.fixedDeltaTime;
+
+            // 寿命が尽きたかどうかをチェック
+            if (Lifetime <= 0f)
+            {
+                // プレイヤーを死亡させる
+                MyState.DeathReason = CustomDeathReason.Senility;//死因：老衰
+                Player.RpcMurderPlayer(Player);
+                DiaInLife = false;
+            }
+        }
         if (!Player.IsAlive() && roleChanged)
         {
             ChangeRole();
+            DiaInLife = false;
+        }
+        else if (!Player.IsAlive())
+        {
+            DiaInLife = false; // プレイヤーが死亡している間もDiaInLifeをfalseに設定する
         }
     }
     public void ChangeRole()

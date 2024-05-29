@@ -278,6 +278,7 @@ namespace TownOfHostY
         Disconnected,
         Fall,
         Poisoning,
+        Senility,
         Win,
         etc = -1
     }
