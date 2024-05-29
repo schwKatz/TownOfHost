@@ -1,8 +1,6 @@
 using System.Linq;
 using AmongUs.GameOptions;
-
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Core.Class;
 
 namespace TownOfHostY.Roles.Crewmate;
 public sealed class Elder : RoleBase
@@ -19,30 +17,23 @@ public sealed class Elder : RoleBase
             "エルダー",
             "#000080"
         );
-    public Elder(PlayerControl player)
-    : base(
-        RoleInfo,
-        player
-    )
+    public Elder(PlayerControl player) : base(RoleInfo, player)
     {
         DiaInLife = OptionDiaInLife.GetBool();
         roleChanged = false;
         GuardCount = 0;
     }
+
     private static OptionItem OptionDiaInLife;
+    private static bool roleChanged;
+    private int GuardCount;
+    private static bool DiaInLife;
+    public static readonly CustomRoles[] ChangeRoles = { CustomRoles.Crewmate };
 
     enum OptionName
     {
         ElderDiaInLife,
     }
-    private static bool DiaInLife;
-    int GuardCount = 0;
-    public static CustomRoles ChangeRoleElderDead;
-    private static bool roleChanged;
-    public static readonly CustomRoles[] ChangeRoles =
-    {
-            CustomRoles.Crewmate,
-    };
     private static void SetupOptionItem()
     {
         var cRolesString = ChangeRoles.Select(x => x.ToString()).ToArray();
@@ -74,24 +65,19 @@ public sealed class Elder : RoleBase
     {
         if (!Player.IsAlive() && roleChanged)
         {
-            foreach (var pc in Main.AllAlivePlayerControls)
-            {
-                var role = PlayerState.GetByPlayerId(pc.PlayerId).MainRole;
-                if (role.IsCrewmate())
-                {
-                    //Player.RpcSetCustomRole(ChangeRoleElderDead);
-                    pc.RpcSetCustomRole(CustomRoles.Crewmate);
-                    pc.RpcProtectedMurderPlayer(); // 変更が行われたことを通知
-                    Utils.NotifyRoles();
-                    Utils.MarkEveryoneDirtySettings(); // 全プレイヤーの設定を更新
-                    break;
-                }
-            }
-            roleChanged = false;
-            if (!roleChanged)
-            {
-                return;
-            }
+            ChangeRole();
         }
+    }
+    public void ChangeRole()
+    {
+        var playersCrewmate = Main.AllAlivePlayerControls.Where(player => player.Is(CustomRoleTypes.Crewmate));
+        foreach (var player in playersCrewmate)
+        {
+            player.RpcSetCustomRole(ChangeRoles[0]); // クルーメイトに変更
+        }
+        Utils.NotifyRoles(); // 役職変更を通知
+        Utils.MarkEveryoneDirtySettings();
+
+        roleChanged = false;
     }
 }
