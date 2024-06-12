@@ -385,17 +385,32 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 
 
 # Unit-Role
+## Name
 "CounselorAndMadDilemma","<color=#ffc0cb>Counselor</color>＆<color=#ff1919>MadDilemma</color>","<color=#ffc0cb>カウンセラー</color>＆<color=#ff1919>マッドジレンマ</color>",
 "Counselor","Counselor","カウンセラー",
 "MadDilemma","Mad Dilemma","マッドジレンマ",
 
+"GodfatherAndJanitor","<color=#ff1919>Godfather</color>＆<color=#ff1919>Janitor</color>","<color=#ff1919>ゴッドファーザー</color>＆<color=#ff1919>ジャニター</color>",
+"Godfather","Godfather","ゴッドファーザー",
+"Janitor","Janitor","ジャニター",
+
+## Info
 "CounselorAndMadDilemmaInfo","Unit","ユニット",
 "CounselorInfo","Isn't it time for a change of heart?","そろそろ改心しませんか？",
 "MadDilemmaInfo","I'm trying to help Impostor..!","私はインポスターを助けるんだ、、！",
 
+"GodfatherAndJanitorInfo","Unit","ユニット",
+"GodfatherInfo","Let's have Janitor clean up the target","ジャニターに対象を掃除してもらおうか",
+"JanitorInfo","Cover up the evidence","証拠を隠蔽しろ",
+
+## InfoLong
 "CounselorAndMadDilemmaInfoLong","(Unit):\n\nCounselor(Crewmates)\nCounseling is available when the counselor is alive and has completed certain tasks.\nWhen Counselor votes for a MadDilemma at the time of the meeting, MadDilemma can be made to be the crewmate's.\n\nMad Dilemma(Impostors):\nJust a Madmate for unit positions. Let's take the Impostor's side. Customize the attributes from the settings.\nAfter being counseled by a counselor, a person becomes a crewmate. Even if you become a crewmate, they can use their attributes as they are.","[ユニット]\n\nカウンセラー[クルー陣営]\nカウンセラーが生存している且つ、一定タスク完了した時からカウンセリングを行うことが可能。\n会議時にカウンセラーの投票した先がマッドジレンマの時、マッドジレンマをクルー陣営にさせることができる。\n\nマッドジレンマ[インポスター陣営]\nユニット役職用のただのマッドメイト。属性のカスタマイズ可能。\nカウンセラーによりカウンセリングを受けるとクルーメイトになる。クルーになっても属性はそのまま使用出来る。",
 "CounselorInfoLong","(Crewmates)\nCounseling is available when the counselor is alive and has completed certain tasks.\nWhen Counselor votes for a MadDilemma at the time of the meeting, MadDilemma can be made to be the crewmate's.","[クルー陣営]\nユニット役職の片割れ。カウンセラーが生存している且つ、一定タスク完了した時からカウンセリングを行うことが可能。\n会議時にカウンセラーの投票した先がマッドジレンマの時、マッドジレンマをクルー陣営にさせることができる。",
 "MadDilemmaInfoLong","(Impostors):\nJust a Madmate for unit positions. Let's take the Impostor's side. Customize the attributes from the settings.\nAfter being counseled by a counselor, a person becomes a crewmate. Even if you become a crewmate, they can use their attributes as they are.","[インポスター陣営]\nユニット役職の片割れ。ただのマッドメイト。属性のカスタマイズ可能。\nカウンセラーによりカウンセリングを受けるとクルーメイトになる。クルーになっても属性はそのまま使用出来る。",
+
+"GodfatherAndJanitorInfoLong","(Unit):\n","[インポスター陣営]\n二人で協力することで死体なしでキルが出来るインポスターユニット。ゴッドファーザーの能力は基本通常インポスターと変わらないが、ジャニターは通常キルが出来ない掃除専門役職。\nゴッドファーザーがジャニターの近くでキルしようとすると、キルは防がれジャニターにキルフラッシュで通知される。ゴッドファーザーがキルしようとしたプレイヤーに向かってジャニターがキルボタンを押すと、対象者は死体なしで死亡する。\nゴッドファーザー死亡後、ジャニターのキル能力が解放されるか設定可能。オフの場合、ゴッドファーザー死亡時にジャニターは後追い自殺する。"
+"GodfatherInfoLong","(Impostors):\nImpostor to have Janitor clean the target.\nWhen the janitor are nearby,When Godfather makes a kill, Prevent kill once.(KillFlash for janitor)","[インポスター陣営]\nジャニターに対象を掃除してもらうことができるインポスター。\n基本は通常インポスターと同様の能力。もし自身がジャニターの近くでキルを行おうとすると一旦キルは防がれジャニターにキルフラッシュで通知される。さらにその対象をジャニターがキルすることで死体なしでキルすることができる。"
+"JanitorInfoLong","(Impostors):\nImpostor that can kill a subject without a dead body. Normal kills are not possible.\nWhen the Godfather makes a kill near the Janitor, Notified by KillFlash.\nToward the player that Godfather tried to kill, Janitor presses the kill button,the target is erased.\nWhen after godfather dead, Can kill(Setting).if can't kill setting, suicide.","[インポスター陣営]\n死体を作らず証拠隠滅できるインポスター。通常キルは出来ない掃除専門役職。\nゴッドファーザーがジャニターの近くでキルしようとすると、キルは防がれジャニターにキルフラッシュで通知される。ゴッドファーザーがキルしようとしたプレイヤーに向かってジャニターがキルボタンを押すと、対象者は死体なしで死亡する。\nゴッドファーザー死亡後、キル能力が解放されるか設定可能。オフの場合、ゴッドファーザー死亡時にジャニターは後追い自殺する。",
 
 
 "# HideAndSeek"
@@ -987,6 +1002,10 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "CounselorTaskTrigger","Counselor Trigger Tasks","カウンセラーの能力が使用できるタスク数",
 "CounselorChallengeMaxCount","Counselor Voting with Ability Count","カウンセラーの能力投票できる回数",
 "MadDilemmaResetAddonChangeCrew","MadDilemma Resets Addon After Change to Crewmate","マッドジレンマがクルーに改心後、属性をリセットする",
+"GodfatherKillCooldown","Godfather Kill CoolDown","ゴッドファーザーのキルクール",
+"GodfatherLockDistance","Godfather Kill Lock Distance For Janitor Kill","ゴッドファーザーのジャニターキル用ロックが起こる距離",
+"JanitorCleanCooldown","Janitor Clean Cooldown","ジャニターの掃除のクールダウン",
+"JanitorLastCanKill","Janitor Can Kill After Godfather Dead","ジャニターはゴッドファーザー死亡後にキル能力が解放される",
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
@@ -1048,8 +1067,9 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "DeathReason.Disconnected","Disconnected","回線切断","断连","斷線","Вышел","Desconectado"
 "DeathReason.Fall","Fall","落下死","摔死","摔死","Упал","Queda"
 "DeathReason.Revenge","Revenge","道連れ","复仇","復仇","Месть",""
-"DeathReason.Win","hit","的中","猜着",
 "DeathReason.Poisoning","Poisoning","毒死","毒死",
+"DeathReason.Clean","Clean","掃除",
+"DeathReason.Win","hit","的中","猜着",
 "DeathReason.etc","Other","その他","其他","其他","Другое","Outros"
 
 
