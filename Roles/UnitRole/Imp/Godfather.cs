@@ -1,10 +1,6 @@
-using System.Collections.Generic;
 using AmongUs.GameOptions;
-using Hazel;
-using MS.Internal.Xml.XPath;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
-using TownOfHostY.Roles.Crewmate;
 using UnityEngine;
 using static TownOfHostY.Roles.Impostor.GodfatherAndJanitor;
 
@@ -81,5 +77,11 @@ public sealed class Godfather : RoleBase, IImpostor
 
         // ターゲットをリセット
         JanitorTarget.Clear();
+    }
+
+    public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    {
+        // 相方の役職名を表示させる
+        if (seen.Is(CustomRoles.Janitor)) enabled = true;
     }
 }

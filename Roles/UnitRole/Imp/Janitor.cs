@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using AmongUs.GameOptions;
+using UnityEngine;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
-using Unity.IL2CPP.CompilerServices;
 using static TownOfHostY.Roles.Impostor.GodfatherAndJanitor;
 
 namespace TownOfHostY.Roles.Impostor;
@@ -122,5 +120,11 @@ public sealed class Janitor : RoleBase, IImpostor
         MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, janitor.PlayerId);
         godfather.SetRealKiller(janitor);
         Logger.Info($"{janitor.GetNameWithRole()}のLover後追い:{godfather.GetNameWithRole()}", "VoteFollowingSuicide");
+    }
+
+    public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    {
+        // 相方の役職名を表示させる
+        if (seen.Is(CustomRoles.Godfather)) enabled = true;
     }
 }
