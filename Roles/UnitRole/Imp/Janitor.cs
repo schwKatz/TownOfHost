@@ -28,10 +28,12 @@ public sealed class Janitor : RoleBase, IImpostor
     {
         CleanCooldown = OptionJanitorCleanCooldown.GetFloat();
         LastCanKill = OptionJanitorLastCanKill.GetBool();
+        KillCooldown = OptionJanitorKillCooldown.GetFloat();
     }
     private static bool canNormalKill;
     private static float CleanCooldown;
     private static bool LastCanKill;
+    private static float KillCooldown;
 
     public override void Add()
     {
@@ -39,7 +41,7 @@ public sealed class Janitor : RoleBase, IImpostor
         canNormalKill = false;
     }
 
-    public float CalculateKillCooldown() => CleanCooldown;
+    public float CalculateKillCooldown() => canNormalKill ? KillCooldown : CleanCooldown;
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
         // ゴッドファーザー死亡後、設定により通常キル可
@@ -95,6 +97,7 @@ public sealed class Janitor : RoleBase, IImpostor
         {
             // ノーマルキルできる設定への切り替え
             canNormalKill = true;
+            janitor.ResetKillCooldown();
             return;
         }
 
@@ -113,6 +116,7 @@ public sealed class Janitor : RoleBase, IImpostor
         {
             // ノーマルキルできる設定への切り替え
             canNormalKill = true;
+            janitor.ResetKillCooldown();
             return;
         }
 

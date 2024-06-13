@@ -41,12 +41,14 @@ public sealed class GodfatherAndJanitor : RoleBase
     public static OptionItem OptionGodfatherLockDistance;
     public static OptionItem OptionJanitorCleanCooldown;
     public static OptionItem OptionJanitorLastCanKill;
+    public static OptionItem OptionJanitorKillCooldown;
     enum OptionName
     {
         GodfatherKillCooldown,
         GodfatherLockDistance,
         JanitorCleanCooldown,
         JanitorLastCanKill,
+        JanitorKillCooldown,
     }
     private static void SetupOptionItem()
     {
@@ -57,5 +59,7 @@ public sealed class GodfatherAndJanitor : RoleBase
         OptionJanitorCleanCooldown = FloatOptionItem.Create(RoleInfo, 12, OptionName.JanitorCleanCooldown, new(5.0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
         OptionJanitorLastCanKill = BooleanOptionItem.Create(RoleInfo, 13, OptionName.JanitorLastCanKill, false, false);
+        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 14, OptionName.GodfatherKillCooldown, new(5.0f, 180f, 2.5f), 30f, false).SetParent(OptionJanitorLastCanKill)
+            .SetValueFormat(OptionFormat.Seconds);
     }
 }
