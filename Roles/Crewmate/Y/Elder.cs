@@ -15,8 +15,8 @@ public sealed class Elder : RoleBase
             CustomRoleTypes.Crewmate,
             (int)Options.offsetId.CrewY + 1900,//仮
             SetupOptionItem,
-            "エルダー",
-            "#000080"
+            "長老",
+            "#2B6442"//千歳緑
         );
     public Elder(PlayerControl player) : base(RoleInfo, player)
     {
