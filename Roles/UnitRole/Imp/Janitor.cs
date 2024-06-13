@@ -119,8 +119,8 @@ public sealed class Janitor : RoleBase, IImpostor
         }
 
         /* 後追い処理 */
-        MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, target.PlayerId);
-        godfather.SetRealKiller(target);
+        MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, janitor.PlayerId);
+        godfather.SetRealKiller(janitor);
         Logger.Info($"{janitor.GetNameWithRole()}のLover後追い:{godfather.GetNameWithRole()}", "VoteFollowingSuicide");
     }
 }
