@@ -67,26 +67,6 @@ public sealed class Janitor : RoleBase, IImpostor
         // 自身のキルクールリセット
         killer.SetKillCooldown();
     }
-    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
-    {
-        seen ??= seer;
-        //seerおよびseenが自分である場合以外は関係なし
-        // ターゲットがいるかつタスクターン中に矢印を表示
-        if (!Is(seer) || !Is(seen) || isForMeeting || JanitorTarget.Count <= 0)
-            return string.Empty;
-
-        StringBuilder sb = new();
-        foreach (var targetId in JanitorTarget)
-        {
-            // 矢印の取得
-            sb.Append(TargetArrow.GetArrows(Player, targetId));
-        }
-
-        // 文字が何もない場合は空白を返す
-        if (sb.Length <= 0) return string.Empty;
-        // 矢印を色付けで返す
-        return sb.ToString().Color(Palette.ImpostorRed);
-    }
 
     public static void KillSuicide(byte deadTargetId)
     {
@@ -130,5 +110,34 @@ public sealed class Janitor : RoleBase, IImpostor
     {
         // 相方の役職名を表示させる
         if (seen.Is(CustomRoles.Godfather)) enabled = true;
+    }
+    public override string GetMark(PlayerControl seer, PlayerControl seen = null, bool _ = false)
+    {
+        seen ??= seer;
+
+        if (!Is(seer) || !JanitorTarget.Contains(seen.PlayerId)) return string.Empty;
+
+        // ジャニター対象へのマーク
+        return Utils.ColorString(Palette.ImpostorRed, "◀");
+    }
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        seen ??= seer;
+        //seerおよびseenが自分である場合以外は関係なし
+        // ターゲットがいるかつタスクターン中に矢印を表示
+        if (!Is(seer) || !Is(seen) || isForMeeting || JanitorTarget.Count <= 0)
+            return string.Empty;
+
+        StringBuilder sb = new();
+        foreach (var targetId in JanitorTarget)
+        {
+            // 矢印の取得
+            sb.Append(TargetArrow.GetArrows(Player, targetId));
+        }
+
+        // 文字が何もない場合は空白を返す
+        if (sb.Length <= 0) return string.Empty;
+        // 矢印を色付けで返す
+        return sb.ToString().Color(Palette.ImpostorRed);
     }
 }

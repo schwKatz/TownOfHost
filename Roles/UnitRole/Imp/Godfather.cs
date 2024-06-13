@@ -3,6 +3,7 @@ using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using UnityEngine;
 using static TownOfHostY.Roles.Impostor.GodfatherAndJanitor;
+using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHostY.Roles.Impostor;
 public sealed class Godfather : RoleBase, IImpostor
@@ -56,6 +57,8 @@ public sealed class Godfather : RoleBase, IImpostor
         JanitorTarget.Add(target.PlayerId);
         // ジャニター視点の矢印表示追加
         TargetArrow.Add(janitor.PlayerId, target.PlayerId);
+        // バニラの表示更新
+        Utils.NotifyRoles(SpecifySeer: godfather);
         Utils.NotifyRoles(SpecifySeer: janitor);
 
         // 自身のキルクールリセット
@@ -83,5 +86,14 @@ public sealed class Godfather : RoleBase, IImpostor
     {
         // 相方の役職名を表示させる
         if (seen.Is(CustomRoles.Janitor)) enabled = true;
+    }
+    public override string GetMark(PlayerControl seer, PlayerControl seen = null, bool _ = false)
+    {
+        seen ??= seer;
+
+        if (!Is(seer) || !JanitorTarget.Contains(seen.PlayerId)) return string.Empty;
+
+        // ジャニター対象へのマーク
+        return Utils.ColorString(Palette.ImpostorRed, "◀");
     }
 }
