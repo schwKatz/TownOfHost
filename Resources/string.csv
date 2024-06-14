@@ -827,7 +827,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "GrudgeChargerChargeKillCooldown","Charge Kill Cooldown","チャージ(キルボタン)クールダウン",
 "GrudgeChargerOneGaugeChargeCount","One Gauge Accumulate Charge Count","一ゲージが溜まるチャージ数",
 "GrudgeChargerKillCountAtStartGame","Possible Kill Count At the Start Of the Game","ゲーム開始時のキル可能回数",
-"ChaserChaseCooldown","Kill Cooldown","キルクールダウン","击杀冷却时间","擊殺冷卻時間","Перезарядка убийства","Tempo de espera para matar"
+"ChaserChaseCooldown","Chase Cooldown","チェイスクールダウン","追逐冷却时间","追逐冷卻時間","Перезарядка погони","Tempo de espera da perseguição"
 "ChaserReturnPosition","ReturnPosition","元の位置に戻る","返回原位","返回原位","Вернуться в исходное положение","Retornar à posição original"
 "ChaserPositionTime","Time to return to original position","何秒後に戻るか","几秒钟后返回原来位置","多少秒後它會回到原來的位置","Через сколько секунд он вернется в исходное положение","Depois de quantos segundos ele retornará à sua posição original"
 
