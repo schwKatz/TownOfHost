@@ -23,11 +23,19 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
         player
     )
     {
+        KillCooldown = OptionKillCooldown.GetFloat();
+        ChaseCooldown = OptionChaseCooldown.GetFloat();
+        ReturnPosition = OptionReturnPosition.GetBool();
+        PositionTime = OptionPositionTime.GetFloat();
     }
     private static OptionItem OptionKillCooldown;
     private static OptionItem OptionChaseCooldown;
     private static OptionItem OptionReturnPosition;
     private static OptionItem OptionPositionTime;
+    private static float KillCooldown;
+    private static float ChaseCooldown;
+    public static bool ReturnPosition;
+    private static float PositionTime;
     enum OptionName
     {
         ChaserChaseCooldown,
