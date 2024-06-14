@@ -100,4 +100,9 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
         var vents = ShipStatus.Instance.AllVents.OrderBy(v => (lastTransformPosition - (Vector2)v.transform.position).magnitude);
         return vents.First();
     }
+    public override void ApplyGameOptions(IGameOptions opt)
+    {
+        AURoleOptions.ShapeshifterCooldown = ChaseCooldown;
+    }
+    public float CalculateKillCooldown() => KillCooldown;
 }
