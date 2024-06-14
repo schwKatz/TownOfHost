@@ -1,7 +1,9 @@
+using System.Linq;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
+using UnityEngine;
 
 namespace TownOfHostY.Roles.Impostor;
 public sealed class Chaser : RoleBase, IImpostor, ISidekickable
@@ -36,6 +38,8 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
     private static float ChaseCooldown;
     public static bool ReturnPosition;
     private static float PositionTime;
+    private static bool IsVentWarp;//飛ばすフラグ
+    private Vector2 lastTransformPosition;
     enum OptionName
     {
         ChaserChaseCooldown,
@@ -51,5 +55,19 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
         OptionReturnPosition = BooleanOptionItem.Create(RoleInfo, 12, OptionName.ChaserReturnPosition, false, false);
         OptionPositionTime = FloatOptionItem.Create(RoleInfo, 13, OptionName.ChaserPositionTime, new(1f, 99f, 1f), 10f, false, OptionReturnPosition)
             .SetValueFormat(OptionFormat.Seconds);
+    }
+    public override bool OnCheckShapeshift(PlayerControl target, ref bool animate)
+    {
+        IsVentWarp = true;
+        lastTransformPosition = Player.transform.position;          // 変身前の位置を記録する
+
+        Player.MyPhysics.RpcBootFromVent(GetNearestVent(target).Id);//ベントの位置へ飛ばす。
+        animate = false;
+        return false;
+    }
+    Vent GetNearestVent(PlayerControl target)
+    {
+        var vents = ShipStatus.Instance.AllVents.OrderBy(v => (target.transform.position - v.transform.position).magnitude);
+        return vents.First();
     }
 }
