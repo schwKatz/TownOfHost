@@ -63,11 +63,41 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
 
         Player.MyPhysics.RpcBootFromVent(GetNearestVent(target).Id);//ベントの位置へ飛ばす。
         animate = false;
+        if (ReturnPosition)
+        {
+            MyState.CanUseMovingPlatform = false;                   //元の位置に戻る時はぬーんを使わせない。
+
+            _ = new LateTask(() =>
+            {
+                if (Player.MyPhysics.Animations.IsPlayingAnyLadderAnimation())
+                {//梯子をもし使っている場合
+                    Logger.Info($"梯子を使っていたため元の位置に戻れませんでした。", "Chaser");
+                    return;
+                }
+                else
+                {
+                    var returnVent = GetReturnNearestVent();
+                    if (IsVentWarp)
+                    {
+                        Player.MyPhysics.RpcBootFromVent(returnVent.Id);        // 変身前の位置にプレイヤーを戻す
+                        IsVentWarp = false;
+                    }
+                    lastTransformPosition = default;                            //位置をリセットする。
+                    MyState.CanUseMovingPlatform = true;                        //元通りぬーんを使えるようにする。
+
+                }
+            }, PositionTime, "ReturnPosition");
+        }
         return false;
     }
     Vent GetNearestVent(PlayerControl target)
     {
         var vents = ShipStatus.Instance.AllVents.OrderBy(v => (target.transform.position - v.transform.position).magnitude);
+        return vents.First();
+    }
+    Vent GetReturnNearestVent()
+    {
+        var vents = ShipStatus.Instance.AllVents.OrderBy(v => (lastTransformPosition - (Vector2)v.transform.position).magnitude);
         return vents.First();
     }
 }
