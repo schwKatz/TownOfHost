@@ -78,7 +78,7 @@ public sealed class BestieWolf : RoleBase, IImpostor
     private static float KillCooldownSingle;
     private static CustomRoles[] grantAddonRole = { CustomRoles.NotAssigned, CustomRoles.NotAssigned, CustomRoles.NotAssigned, CustomRoles.NotAssigned, CustomRoles.NotAssigned };
 
-    public static PlayerControl EnableKillFrash = null;
+    public static PlayerControl EnableKillFlash = null;
     int killCount = 0;
 
     static CustomRoles[] BuffAddonRoles = CustomRolesHelper.AllAddOnRoles.Where(role => role.IsBuffAddOn() && role != CustomRoles.Loyalty).ToArray();
@@ -151,7 +151,7 @@ public sealed class BestieWolf : RoleBase, IImpostor
             }
             if (nearTarget.pc != null)
             {
-                EnableKillFrash = nearTarget.pc;
+                EnableKillFlash = nearTarget.pc;
                 nearTarget.pc.RpcMurderPlayer(nearTarget.pc);
                 nearTarget.pc.SetRealKiller(killer);
             }
