@@ -1026,8 +1026,6 @@ public static class Utils
 
             if (opt.Value.Parent.Name == "displayComingOut%type%" && !opt.Value.GetBool()) continue;
 
-            if (opt.Value.Parent.Name == "displayComingOut%type%" && !opt.Value.GetBool()) continue;
-
             if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnBuffAssign%role%" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;
