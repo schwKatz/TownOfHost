@@ -40,6 +40,9 @@ public sealed class GodfatherAndJanitor : RoleBase
     public static OptionItem OptionGodfatherKillCooldown;
     public static OptionItem OptionGodfatherLockDistance;
     public static OptionItem OptionJanitorCleanCooldown;
+    public static OptionItem OptionJanitorSeeSelectedTiming;
+    public static OptionItem OptionJanitorTrackTarget;
+    public static OptionItem OptionJanitorTrackGodfather;
     public static OptionItem OptionJanitorLastCanKill;
     public static OptionItem OptionJanitorKillCooldown;
     enum OptionName
@@ -47,6 +50,9 @@ public sealed class GodfatherAndJanitor : RoleBase
         GodfatherKillCooldown,
         GodfatherLockDistance,
         JanitorCleanCooldown,
+        JanitorSeeSelectedTiming,
+        JanitorTrackTarget,
+        JanitorTrackGodfather,
         JanitorLastCanKill,
         JanitorKillCooldown,
     }
@@ -58,8 +64,11 @@ public sealed class GodfatherAndJanitor : RoleBase
             .SetValueFormat(OptionFormat.Multiplier);
         OptionJanitorCleanCooldown = FloatOptionItem.Create(RoleInfo, 12, OptionName.JanitorCleanCooldown, new(5.0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        OptionJanitorLastCanKill = BooleanOptionItem.Create(RoleInfo, 13, OptionName.JanitorLastCanKill, false, false);
-        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 14, OptionName.GodfatherKillCooldown, new(5.0f, 180f, 2.5f), 30f, false).SetParent(OptionJanitorLastCanKill)
+        OptionJanitorSeeSelectedTiming = BooleanOptionItem.Create(RoleInfo, 13, OptionName.JanitorSeeSelectedTiming, true, false);
+        OptionJanitorTrackTarget = BooleanOptionItem.Create(RoleInfo, 14, OptionName.JanitorTrackTarget, true, false);
+        OptionJanitorTrackGodfather = BooleanOptionItem.Create(RoleInfo, 15, OptionName.JanitorTrackGodfather, true, false);
+        OptionJanitorLastCanKill = BooleanOptionItem.Create(RoleInfo, 16, OptionName.JanitorLastCanKill, false, false);
+        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 17, OptionName.GodfatherKillCooldown, new(5.0f, 180f, 2.5f), 30f, false).SetParent(OptionJanitorLastCanKill)
             .SetValueFormat(OptionFormat.Seconds);
     }
 }

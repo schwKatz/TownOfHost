@@ -3,7 +3,6 @@ using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using UnityEngine;
 using static TownOfHostY.Roles.Impostor.GodfatherAndJanitor;
-using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHostY.Roles.Impostor;
 public sealed class Godfather : RoleBase, IImpostor
@@ -27,9 +26,18 @@ public sealed class Godfather : RoleBase, IImpostor
     {
         GodfatherKillCooldown = OptionGodfatherKillCooldown.GetFloat();
         LockDistance = OptionGodfatherLockDistance.GetFloat();
+        JanitorSeeSelectedTiming = OptionJanitorSeeSelectedTiming.GetBool();
+
+        CustomRoleManager.MarkOthers.Add(GetMarkOthers);
     }
+    public override void OnDestroy()
+    {
+        CustomRoleManager.MarkOthers.Remove(GetMarkOthers);
+    }
+
     private static float GodfatherKillCooldown;
     private static float LockDistance;
+    private static bool JanitorSeeSelectedTiming;
 
     public override void Add()
     {
@@ -50,19 +58,30 @@ public sealed class Godfather : RoleBase, IImpostor
         /* ジャニターターゲットの設定*/
         // キルしない
         info.CanKill = false;
-        // ジャニターへのキルフラッシュ通知
-        janitor.KillFlash();
 
         // ジャニターターゲットの追加
         JanitorTarget.Add(target.PlayerId);
+
+        // ターゲットの足止め
+        Main.AllPlayerSpeed[target.PlayerId] = Main.MinSpeed;
+        target.MarkDirtySettings();
+        // ターゲットにキルフラッシュ
+        target.KillFlash();
+
+        // ジャニターへのキルフラッシュ通知
+        if (JanitorSeeSelectedTiming) {
+            janitor.KillFlash();
+        }
         // ジャニター視点の矢印表示追加
-        TargetArrow.Add(janitor.PlayerId, target.PlayerId);
-        // バニラの表示更新
-        Utils.NotifyRoles(SpecifySeer: godfather);
-        Utils.NotifyRoles(SpecifySeer: janitor);
+        if (Janitor.TrackTarget) {
+            TargetArrow.Add(janitor.PlayerId, target.PlayerId);
+        }
 
         // 自身のキルクールリセット
         killer.SetKillCooldown();
+
+        // バニラの表示更新:ターゲットの名前色、マーク表示更新の為全員をまわす
+        Utils.NotifyRoles(ForceLoop: true);
     }
 
     public override void OnReportDeadBody(PlayerControl _, GameData.PlayerInfo __)
@@ -76,6 +95,10 @@ public sealed class Godfather : RoleBase, IImpostor
             var target = Utils.GetPlayerById(targetId);
             target.SetRealKiller(Player);
             target.RpcMurderPlayer(target, true);
+
+            // ターゲットの足止め解除
+            Main.AllPlayerSpeed[target.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod);
+            target.MarkDirtySettings();
         }
 
         // ターゲットをリセット
@@ -87,13 +110,28 @@ public sealed class Godfather : RoleBase, IImpostor
         // 相方の役職名を表示させる
         if (seen.Is(CustomRoles.Janitor)) enabled = true;
     }
-    public override string GetMark(PlayerControl seer, PlayerControl seen = null, bool _ = false)
+    public static string GetMarkOthers(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
     {
+        // seenが省略の場合seer
         seen ??= seer;
 
-        if (!Is(seer) || !JanitorTarget.Contains(seen.PlayerId)) return string.Empty;
+        // ターゲットでない
+        if (!JanitorTarget.Contains(seen.PlayerId)) return string.Empty;
 
         // ジャニター対象へのマーク
-        return Utils.ColorString(Palette.ImpostorRed, "◀");
+        return Utils.ColorString(Palette.ImpostorRed, "⊥");
+    }
+
+    // ターゲットは全視点に名前が紫色になる
+    public static string OverrideNameColorByJanitorTarget(PlayerControl target, string colorCode)
+    {
+        if (!CustomRoles.GodfatherAndJanitor.IsEnable()) return colorCode;
+
+        if (JanitorTarget.Contains(target.PlayerId))
+        {
+            colorCode = "#cc00cc";
+        }
+
+        return colorCode;
     }
 }

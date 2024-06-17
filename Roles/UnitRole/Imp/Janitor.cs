@@ -27,11 +27,17 @@ public sealed class Janitor : RoleBase, IImpostor
     )
     {
         CleanCooldown = OptionJanitorCleanCooldown.GetFloat();
+        TrackTarget = OptionJanitorTrackTarget.GetBool();
+        TrackGodfather = OptionJanitorTrackGodfather.GetBool();
         LastCanKill = OptionJanitorLastCanKill.GetBool();
         KillCooldown = OptionJanitorKillCooldown.GetFloat();
     }
+    // ゴッドファーザーの死亡後、通常キルをする際にtrueにする
     private static bool canNormalKill;
+
     private static float CleanCooldown;
+    public static bool TrackTarget;
+    private static bool TrackGodfather;
     private static bool LastCanKill;
     private static float KillCooldown;
 
@@ -39,6 +45,11 @@ public sealed class Janitor : RoleBase, IImpostor
     {
         janitor = Player;
         canNormalKill = false;
+
+        // ジャニター視点の矢印表示追加
+        if (TrackGodfather) {
+            TargetArrow.Add(janitor.PlayerId, godfather.PlayerId);
+        }
     }
 
     public float CalculateKillCooldown() => canNormalKill ? KillCooldown : CleanCooldown;
@@ -49,10 +60,12 @@ public sealed class Janitor : RoleBase, IImpostor
 
         // Janitorは必ずキルを防ぐ
         info.DoKill = false;
-        // ターゲットがいない場合は処理しない
-        if (JanitorTarget.Count <= 0) return;
-        
+
         var (killer, target) = info.AttemptTuple;
+
+        // ターゲットがいない場合、ターゲットが対象じゃない場合は処理しない
+        if (JanitorTarget.Count <= 0 || !JanitorTarget.Contains(target.PlayerId)) return;
+        
         // ターゲットの状態を取得
         var targetPlayerState = PlayerState.GetByPlayerId(target.PlayerId);
 
@@ -63,9 +76,15 @@ public sealed class Janitor : RoleBase, IImpostor
 
         // 掃除したプレイヤーはリストから削除
         JanitorTarget.Remove(target.PlayerId);
+        // ターゲットの足止め解除
+        Main.AllPlayerSpeed[target.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod);
+        target.MarkDirtySettings();
 
         // 自身のキルクールリセット
         killer.SetKillCooldown();
+
+        // バニラの表示更新:ターゲットの名前色、マーク表示更新の為全員をまわす
+        Utils.NotifyRoles(ForceLoop: true);
     }
 
     public static void KillSuicide(byte deadTargetId)
@@ -111,33 +130,42 @@ public sealed class Janitor : RoleBase, IImpostor
         // 相方の役職名を表示させる
         if (seen.Is(CustomRoles.Godfather)) enabled = true;
     }
-    public override string GetMark(PlayerControl seer, PlayerControl seen = null, bool _ = false)
-    {
-        seen ??= seer;
-
-        if (!Is(seer) || !JanitorTarget.Contains(seen.PlayerId)) return string.Empty;
-
-        // ジャニター対象へのマーク
-        return Utils.ColorString(Palette.ImpostorRed, "◀");
-    }
     public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
         seen ??= seer;
-        //seerおよびseenが自分である場合以外は関係なし
-        // ターゲットがいるかつタスクターン中に矢印を表示
-        if (!Is(seer) || !Is(seen) || isForMeeting || JanitorTarget.Count <= 0)
-            return string.Empty;
+        //seerおよびseenが自分である場合以外、または会議中は関係なし
+        if (!Is(seer) || !Is(seen) || isForMeeting) return string.Empty;
 
         StringBuilder sb = new();
-        foreach (var targetId in JanitorTarget)
+        // ゴッドファーザーへの矢印表示
+        if (TrackGodfather)
         {
             // 矢印の取得
-            sb.Append(TargetArrow.GetArrows(Player, targetId));
+            string arrow = TargetArrow.GetArrows(Player, godfather.PlayerId);
+            // 矢印表示があれば
+            if (arrow.Length >= 0) {
+                // 色を付けてsb追加
+                sb.Append(arrow.Color(Palette.ImpostorRed));
+            }
         }
 
-        // 文字が何もない場合は空白を返す
-        if (sb.Length <= 0) return string.Empty;
-        // 矢印を色付けで返す
-        return sb.ToString().Color(Palette.ImpostorRed);
+        // ジャニターターゲットへの矢印表示
+        if (TrackTarget && JanitorTarget.Count > 0)
+        {
+            string arrow = "";
+            foreach (var targetId in JanitorTarget)
+            {
+                // 矢印の取得
+                arrow += TargetArrow.GetArrows(Player, targetId);
+            }
+            // 矢印表示があれば
+            if (arrow.Length >= 0)
+            {
+                // 色を付けてsb追加
+                sb.Append("<color=#e6ccff>").Append(arrow).Append("</color>");
+            }
+        }
+
+        return sb.ToString();
     }
 }
