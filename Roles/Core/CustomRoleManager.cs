@@ -142,7 +142,7 @@ public static class CustomRoleManager
         {
             onMurderPlayer(info);
         }
-        AddBait.OnMurderPlayer(info);
+
         if (info.IsMeeting)
         {
             Lovers.VoteSuicide(attemptTarget.PlayerId);
