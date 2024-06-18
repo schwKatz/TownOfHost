@@ -190,7 +190,7 @@ public sealed class Pirate : RoleBase, IKiller
                 target.RpcSetCustomRole(CustomRoles.Gang);
                 target.GetPlayerTaskState().CompletedTasksCount = 0;
                 target.GetPlayerTaskState().AllTasksCount = target.Data.Tasks.Count;
-                GameData.Instance.RpcSetTasks(target.PlayerId, Array.Empty<byte>()); //タスクを再配布
+                target.Data.RpcSetTasks(Array.Empty<byte>()); //タスクを再配布
                 target.SyncSettings();
                 Utils.NotifyRoles();
             }

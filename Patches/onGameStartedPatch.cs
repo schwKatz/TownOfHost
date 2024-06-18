@@ -103,7 +103,7 @@ class ChangeRoleSettings
 
             RandomSpawn.CustomNetworkTransformPatch.FirstTP.Add(pc.PlayerId, true);
             var outfit = pc.Data.DefaultOutfit;
-            Camouflage.PlayerSkins[pc.PlayerId] = new GameData.PlayerOutfit().Set(outfit.PlayerName, outfit.ColorId, outfit.HatId, outfit.SkinId, outfit.VisorId, outfit.PetId);
+            Camouflage.PlayerSkins[pc.PlayerId] = new NetworkedPlayerInfo.PlayerOutfit().Set(outfit.PlayerName, outfit.ColorId, outfit.HatId, outfit.SkinId, outfit.VisorId, outfit.PetId);
             Main.clientIdList.Add(pc.GetClientId());
 
             // 初手会議での役職説明表示
@@ -629,7 +629,7 @@ class SelectRolesPatch
             }
             RpcSetRoleReplacer.OverriddenSenderList.Add(senders[player.PlayerId]);
             //ホスト視点はロール決定
-            player.SetRole(othersRole);
+            player.CoSetRole(othersRole, true);// TODO:canOverride
             player.Data.IsDead = true;
             realAssigned++;
 
@@ -746,7 +746,7 @@ class SelectRolesPatch
 
                 foreach (var pair in StoragedData)
                 {
-                    pair.Item1.SetRole(pair.Item2);
+                    pair.Item1.CoSetRole(pair.Item2, true);// TODO:canOverride
                     sender.Value.AutoStartRpc(pair.Item1.NetId, (byte)RpcCalls.SetRole, Utils.GetPlayerById(sender.Key).GetClientId())
                         .Write((ushort)pair.Item2)
                         .EndRpc();

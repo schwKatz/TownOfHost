@@ -47,7 +47,7 @@ namespace TownOfHostY
 
             Main.NormalOptions.KillCooldown = Options.DefaultKillCooldown;
             //winnerListリセット
-            TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+            EndGameResult.CachedWinners = new Il2CppSystem.Collections.Generic.List<CachedPlayerData>();
             var winner = new List<PlayerControl>();
             foreach (var pc in Main.AllPlayerControls)
             {
@@ -100,7 +100,7 @@ namespace TownOfHostY
             {
                 if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw && pc.Is(CustomRoles.GM)) continue;
 
-                TempData.winners.Add(new WinningPlayerData(pc.Data));
+                EndGameResult.CachedWinners.Add(new CachedPlayerData(pc.Data));
                 Main.winnerList.Add(pc.PlayerId);
             }
 

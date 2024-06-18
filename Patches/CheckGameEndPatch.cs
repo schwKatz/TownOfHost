@@ -208,7 +208,7 @@ namespace TownOfHostY
                     // 蘇生
                     playerInfo.IsDead = false;
                     // 送信
-                    GameData.Instance.SetDirtyBit(0b_1u << playerId);
+                    playerInfo.SetDirtyBit(0b_1u << playerId);
                     AmongUsClient.Instance.SendAllStreamedObjects();
                 }
                 // ゲーム終了を確実に最後に届けるための遅延

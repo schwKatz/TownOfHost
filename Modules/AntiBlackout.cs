@@ -67,8 +67,8 @@ namespace TownOfHostY
                 writer.Write(AmongUsClient.Instance.GameId);
                 writer.StartMessage(1); //0x01 Data
                 {
-                    writer.WritePacked(GameData.Instance.NetId);
-                    GameData.Instance.Serialize(writer, true);
+                    //writer.WritePacked(GameData.Instance.NetId);
+                    //NetworkedPlayerInfo.Serialize(writer, true);
 
                 }
                 writer.EndMessage();

@@ -21,7 +21,7 @@ namespace TownOfHostY
         private static TextMeshPro warningText;
         public static TextMeshPro HideName;
         private static TextMeshPro timerText;
-        private static SpriteRenderer cancelButton;
+        private static PassiveButton cancelButton;
 
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.ReallyBegin))]
         public class GameStartManagerReallyBeginPatch
@@ -89,7 +89,7 @@ namespace TownOfHostY
                 cancelLabel.DestroyTranslator();
                 cancelLabel.text = GetString("Cancel");
                 cancelButton.transform.localScale = new(0.4f, 0.4f, 1f);
-                cancelButton.color = Color.red;
+                // cancelButton.color = Color.red;
                 cancelButton.transform.localPosition = new(0f, -0.37f, 0f);
                 var buttonComponent = cancelButton.GetComponent<PassiveButton>();
                 buttonComponent.OnClick = new();
@@ -99,11 +99,11 @@ namespace TownOfHostY
                 if (!AmongUsClient.Instance.AmHost) return;
 
                 // Make Public Button
-                if (!Main.AllowPublicRoom || ModUpdater.hasUpdate || !VersionChecker.IsSupported || !Main.IsPublicAvailableOnThisVersion)
-                {
-                    __instance.MakePublicButton.color = Palette.DisabledClear;
-                    __instance.privatePublicText.color = Palette.DisabledClear;
-                }
+                //if (!Main.AllowPublicRoom || ModUpdater.hasUpdate || !VersionChecker.IsSupported || !Main.IsPublicAvailableOnThisVersion)
+                //{
+                //    __instance.MakePublicButton.color = Palette.DisabledClear;
+                //    __instance.privatePublicText.color = Palette.DisabledClear;
+                //}
 
                 if (Main.NormalOptions.KillCooldown == 0f)
                     Main.NormalOptions.KillCooldown = Main.LastKillCooldown.Value;
