@@ -167,7 +167,7 @@ namespace TownOfHostY
             if (player == null) return;
             if (AmongUsClient.Instance.ClientId == clientId)
             {
-                player.SetRole(role);
+                player.CoSetRole(role, true); // TODO:canOverride
                 return;
             }
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetRole, Hazel.SendOption.Reliable, clientId);
