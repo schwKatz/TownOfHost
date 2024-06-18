@@ -61,7 +61,7 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
         IsVentWarp = true;
         lastTransformPosition = Player.transform.position;          // 変身前の位置を記録する
 
-        Player.MyPhysics.RpcBootFromVent(GetNearestVent(target).Id);//ベントの位置へ飛ばす。
+        Player.MyPhysics.RpcExitVent(GetNearestVent(target).Id);//ベントの位置へ飛ばす。
         animate = false;
         if (ReturnPosition)
         {
@@ -79,7 +79,7 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
                     var returnVent = GetReturnNearestVent();
                     if (IsVentWarp)
                     {
-                        Player.MyPhysics.RpcBootFromVent(returnVent.Id);        // 変身前の位置にプレイヤーを戻す
+                        Player.MyPhysics.RpcExitVent(returnVent.Id);        // 変身前の位置にプレイヤーを戻す
                         IsVentWarp = false;
                     }
                     lastTransformPosition = default;                            //位置をリセットする。
