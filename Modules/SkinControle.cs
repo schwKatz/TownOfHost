@@ -5,7 +5,7 @@ namespace TownOfHostY;
 public static class SkinControle
 {
     static readonly string Missing = "missing";
-    public static GameData.PlayerOutfit PlainOutfit = new GameData.PlayerOutfit().Set("", 15, "hat_NoHat", "skin_None", "visor_EmptyVisor", "pet_EmptyPet");
+    public static NetworkedPlayerInfo.PlayerOutfit PlainOutfit = new NetworkedPlayerInfo.PlayerOutfit().Set("", 15, "hat_NoHat", "skin_None", "visor_EmptyVisor", "pet_EmptyPet");
     public static readonly string[] FullFaceHat = new string[]
     {
         "hat_caiatl",
