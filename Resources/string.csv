@@ -1083,6 +1083,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "Cancel","Cancel","キャンセル","取消","","Отменить",""
 "Unload","DISABLE","無効化","确认","","ОТКЛЮЧИТЬ",""
 "DumpLog","Output Log","ログを出力","输出日志","","Вывести Журнал",""
+"Start","Start","開始",
 
 "## ヘルプテキスト"
 "CommandList","Command List:","コマンド一覧:","指令列表:","指令列表:","Список команд:","Lista de Comandos:"
