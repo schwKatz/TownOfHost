@@ -51,7 +51,7 @@ public sealed class EvilDyer : RoleBase, IImpostor
 
     public float CalculateKillCooldown() => killCooldown;
 
-    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     {
         if (IsColorCamouflage && AmongUsClient.Instance.AmHost)
         {

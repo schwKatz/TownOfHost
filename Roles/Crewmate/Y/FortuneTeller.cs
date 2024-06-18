@@ -108,7 +108,7 @@ public sealed class FortuneTeller : RoleBase
         ForecastTarget = target;
         Logger.Info($"SetForecastTarget player: {Player.name}, target: {ForecastTarget.name}", "FortuneTeller");
     }
-    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     {
         SetForecastResult();
     }

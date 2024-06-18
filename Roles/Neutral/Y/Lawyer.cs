@@ -199,7 +199,7 @@ public sealed class Lawyer : RoleBase
         return true;
     }
 
-    public override void OnExileWrapUp(GameData.PlayerInfo exiled, ref bool DecidedWinner)
+    public override void OnExileWrapUp(NetworkedPlayerInfo exiled, ref bool DecidedWinner)
     {
         if (Player == null) return;
         if (Target != null && Target.PlayerId == exiled.PlayerId && Player.IsAlive())

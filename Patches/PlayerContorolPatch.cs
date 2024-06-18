@@ -337,15 +337,15 @@ namespace TownOfHostY
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.ReportDeadBody))]
     class ReportDeadBodyPatch
     {
-        public static GameData.PlayerInfo reporter;
-        public static GameData.PlayerInfo ReportTarget;
+        public static NetworkedPlayerInfo  reporter;
+        public static NetworkedPlayerInfo ReportTarget;
         public static bool SpecialMeeting = reporter?.PlayerId == ReportTarget?.PlayerId;
 
         public static List<byte> CannotReportList;
         public static List<byte> CannotReportByDeadBodyList;
         public static List<byte> DontReportMarkList;
-        public static Dictionary<byte, List<GameData.PlayerInfo>> WaitReport = new();
-        public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] GameData.PlayerInfo target)
+        public static Dictionary<byte, List<NetworkedPlayerInfo>> WaitReport = new();
+        public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] NetworkedPlayerInfo target)
         {
             reporter = __instance.Data;
             ReportTarget = target;

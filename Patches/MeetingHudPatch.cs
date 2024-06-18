@@ -306,7 +306,7 @@ public static class MeetingHudPatch
         }
     }
     //道連れ(する側,される側)
-    public static List<(GameData.PlayerInfo exiled, GameData.PlayerInfo revengeTarget)> RevengeTargetPlayer;
+    public static List<(NetworkedPlayerInfo exiled, NetworkedPlayerInfo revengeTarget)> RevengeTargetPlayer;
     private static void RevengeOnExile(byte playerId, CustomDeathReason deathReason)
     {
         var player = Utils.GetPlayerById(playerId);
@@ -352,8 +352,8 @@ public static class MeetingHudPatch
         var rand = IRandom.Instance;
         var target = TargetList[rand.Next(TargetList.Count)];
         // 道連れする側とされる側をセットでリストに追加
-        GameData.PlayerInfo exiledInfo = exiledplayer.Data;
-        GameData.PlayerInfo targetInfo = target.Data;
+        NetworkedPlayerInfo exiledInfo = exiledplayer.Data;
+        NetworkedPlayerInfo targetInfo = target.Data;
         RevengeTargetPlayer.Add((exiledInfo, targetInfo));
         return target;
     }

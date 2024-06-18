@@ -93,7 +93,7 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
         killer.SetKillCooldown();
         info.DoKill = false;
     }
-    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     {
         KillWaitPlayer = null;
     }

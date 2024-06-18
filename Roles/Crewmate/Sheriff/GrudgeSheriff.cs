@@ -227,7 +227,7 @@ public sealed class GrudgeSheriff : RoleBase
             _ => false,
         };
     }
-    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     {
         KillWaitPlayerSelect = null;
         KillWaitPlayer = null;
