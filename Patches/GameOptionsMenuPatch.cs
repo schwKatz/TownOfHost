@@ -1,16 +1,93 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using AmongUs.GameOptions;
 using HarmonyLib;
-using Il2CppInterop.Runtime.InteropTypes.Arrays;
+using TMPro;
 using UnityEngine;
-using static TownOfHostY.Translator;
 using Object = UnityEngine.Object;
 
-namespace TownOfHostY
+namespace TownOfHostY;
+[HarmonyPatch(typeof(GameSettingMenu))]
+public class GameSettingMenuPatch
 {
-    //[HarmonyPatch(typeof(GameOptionsMenu), nameof(GameOptionsMenu.Start))]
+    enum GameSettingMenuTab
+    {
+        GamePresets = 0,
+        GameSettings,
+        RoleSettings,
+        ModSettings
+    }
+
+    static GameOptionsMenu ModSettingsTab;
+    static PassiveButton ModSettingsButton;
+
+    [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start))]
+    [HarmonyPriority(Priority.First)]
+    public static class StartPatch
+    {
+        public static void Postfix(GameSettingMenu __instance)
+        {
+            // ゲーム設定を初めに表示させる
+            __instance.ChangeTab((int)GameSettingMenuTab.GamePresets, false);
+
+            // プリセット設定 非表示
+            __instance.GamePresetsButton.gameObject.SetActive(false);
+
+            // ゲーム設定
+            __instance.GameSettingsButton.transform.localPosition = new(-3f, -0.5f, 0f);
+
+            // バニラ役職設定 非表示
+            __instance.RoleSettingsButton.gameObject.SetActive(false);
+
+            // MOD設定
+            ModSettingsButton = Object.Instantiate(__instance.GameSettingsButton, __instance.transform);
+            ModSettingsButton.name = "modSettingMenu";
+            var label = ModSettingsButton.GetComponentInChildren<TextMeshPro>();
+            label.DestroyTranslator();
+            label.text = "TOH_Y Setting";
+            ModSettingsButton.activeTextColor = Color.yellow;
+            ModSettingsButton.inactiveTextColor = Color.yellow;
+            ModSettingsButton.transform.localPosition = new(-3f, -1.2f, 0f);
+            var buttonComponent = ModSettingsButton.GetComponent<PassiveButton>();
+            buttonComponent.OnClick = new();
+            buttonComponent.OnClick.AddListener((Action)(() => __instance.ChangeTab(2, false)));
+        }
+    }
+    [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.ChangeTab))]
+    public static class ChangeTabPatch
+    {
+        public static void Postfix(GameSettingMenu __instance, [HarmonyArgument(0)] int tabNum, [HarmonyArgument(1)] bool previewOnly)
+        {
+            if ((previewOnly && Controller.currentTouchType == Controller.TouchType.Joystick) || !previewOnly)
+            {
+                if (tabNum >= (int)GameSettingMenuTab.GamePresets && tabNum <= (int)GameSettingMenuTab.RoleSettings)
+                {
+                    ModSettingsTab.gameObject.SetActive(false);
+                    ModSettingsButton.SelectButton(false);
+                }
+                else
+                {
+                    ModSettingsTab.gameObject.SetActive(true);
+                    __instance.MenuDescriptionText.text = "ModSetting";
+                }
+            }
+            if (previewOnly)
+            {
+                __instance.ToggleLeftSideDarkener(false);
+                __instance.ToggleRightSideDarkener(true);
+                return;
+            }
+            __instance.ToggleLeftSideDarkener(true);
+            __instance.ToggleRightSideDarkener(false);
+
+            if (tabNum == (int)GameSettingMenuTab.ModSettings)
+            {
+                ModSettingsTab.OpenMenu();
+                ModSettingsButton.SelectButton(true);
+            }
+        }
+    }
+
+    //[HarmonyPatch(typeof(GameOptionsMenu), nameof(GameOptionsMenu.Initialize))]
     //[HarmonyPriority(Priority.First)]
     //public static class GameOptionsMenuPatch
     //{
@@ -47,13 +124,8 @@ namespace TownOfHostY
 
     //        var gameSettingMenu = Object.FindObjectsOfType<GameSettingMenu>().FirstOrDefault();
     //        if (gameSettingMenu == null) return;
-    //        List<GameObject> menus = new() { gameSettingMenu.RegularGameSettings/*, gameSettingMenu.RolesSettings.gameObject*/ };
-    //        List<SpriteRenderer> highlights = new() { gameSettingMenu.GameSettingsHightlight/*, gameSettingMenu.RolesSettingsHightlight*/ };
 
-    //        var roleTab = GameObject.Find("RoleTab");
-    //        roleTab.gameObject.active = false;
-    //        var gameTab = GameObject.Find("GameTab");
-    //        List<GameObject> tabs = new() { gameTab/*, roleTab*/ };
+    //        List<PassiveButton> menus = new() { gameSettingMenu.GameSettingsButton/*, gameSettingMenu.RolesSettings.gameObject*/ };
 
     //        foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
     //        {
@@ -330,27 +402,7 @@ namespace TownOfHostY
             OptionItem.SyncAllOptions();
         }
     }
-    //[HarmonyPatch(typeof(RolesSettingsMenu), nameof(RolesSettingsMenu.Start))]
-    //public static class RolesSettingsMenuPatch
-    //{
-    //    public static void Postfix(RolesSettingsMenu __instance)
-    //    {
-    //        foreach (var ob in __instance.Children)
-    //        {
-    //            switch (ob.Title)
-    //            {
-    //                case StringNames.EngineerCooldown:
-    //                    ob.Cast<NumberOption>().ValidRange = new FloatRange(0, 180);
-    //                    break;
-    //                case StringNames.ShapeshifterCooldown:
-    //                    ob.Cast<NumberOption>().ValidRange = new FloatRange(0, 180);
-    //                    break;
-    //                default:
-    //                    break;
-    //            }
-    //        }
-    //    }
-    //}
+
     //[HarmonyPatch(typeof(NormalGameOptionsV08), nameof(NormalGameOptionsV08.SetRecommendations))]
     //public static class SetRecommendationsPatch
     //{
