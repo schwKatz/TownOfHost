@@ -629,7 +629,7 @@ class SelectRolesPatch
             }
             RpcSetRoleReplacer.OverriddenSenderList.Add(senders[player.PlayerId]);
             //ホスト視点はロール決定
-            player.CoSetRole(othersRole, true);// TODO:canOverride
+            player.StartCoroutine(player.CoSetRole(othersRole, false));
             player.Data.IsDead = true;
             realAssigned++;
 
@@ -746,7 +746,7 @@ class SelectRolesPatch
 
                 foreach (var pair in StoragedData)
                 {
-                    pair.Item1.CoSetRole(pair.Item2, true);// TODO:canOverride
+                    pair.Item1.StartCoroutine(pair.Item1.CoSetRole(pair.Item2, false));
                     sender.Value.AutoStartRpc(pair.Item1.NetId, (byte)RpcCalls.SetRole, Utils.GetPlayerById(sender.Key).GetClientId())
                         .Write((ushort)pair.Item2)
                         .EndRpc();

@@ -15,7 +15,6 @@ using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Impostor;
 using static TownOfHostY.Translator;
-using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHostY
 {
@@ -167,7 +166,7 @@ namespace TownOfHostY
             if (player == null) return;
             if (AmongUsClient.Instance.ClientId == clientId)
             {
-                player.CoSetRole(role, true); // TODO:canOverride
+                player.StartCoroutine(player.CoSetRole(role, false));
                 return;
             }
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetRole, Hazel.SendOption.Reliable, clientId);
