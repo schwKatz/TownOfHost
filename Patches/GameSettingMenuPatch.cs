@@ -222,13 +222,13 @@ public class GameSettingMenuPatch
     {
         public static bool Prefix(GameSettingMenu __instance, ref int tabNum, [HarmonyArgument(1)] bool previewOnly)
         {
-            // プリセットタブは表示させないため、ゲーム設定タブを設定する
-            if (tabNum == (int)GameSettingMenuTab.GamePresets) {
-                tabNum = (int)GameSettingMenuTab.GameSettings;
+            //// プリセットタブは表示させないため、ゲーム設定タブを設定する
+            //if (tabNum == (int)GameSettingMenuTab.GamePresets) {
+            //    tabNum = (int)GameSettingMenuTab.GameSettings;
 
-                // What Is this?のテキスト文を変更
-                // __instance.MenuDescriptionText.text = "test";
-            }
+            //    // What Is this?のテキスト文を変更
+            //    // __instance.MenuDescriptionText.text = "test";
+            //}
 
             ModGameOptionsMenu.TabIndex = tabNum;
 
