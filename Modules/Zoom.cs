@@ -13,9 +13,10 @@ namespace TownOfHostY
         private static bool ResetButtons = false;
         public static void Postfix()
         {
-            if (PlayerControl.LocalPlayer.Is(CustomRoleTypes.Impostor) && Options.ImpostorOperateVisibility.GetBool()) return;
             if (GameStates.IsShip && !GameStates.IsMeeting && GameStates.IsCanMove)
             {
+                if (PlayerControl.LocalPlayer.Is(CustomRoleTypes.Impostor) && Options.ImpostorOperateVisibility.GetBool()) return;
+
                 if (Camera.main.orthographicSize > 3.0f)
                     ResetButtons = true;
                 
