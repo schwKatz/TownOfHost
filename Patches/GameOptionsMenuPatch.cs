@@ -6,6 +6,7 @@ using TMPro;
 using TownOfHostY.Roles.Core;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using static UnityEngine.RemoteConfigSettingsHelper;
 
 namespace TownOfHostY;
 [HarmonyPatch(typeof(GameSettingMenu))]
@@ -17,25 +18,32 @@ public class GameSettingMenuPatch
         GameSettings,
         RoleSettings,
         Mod_MainSettings,
-        //Mod_ImpostorSettings,
+        Mod_ImpostorRoles,
+        Mod_MadmateRoles,
+        Mod_CrewmateRoles,
+        Mod_NeutralRoles,
+        Mod_UnitRoles,
+        Mod_AddOns,
 
         MaxCount,
     }
 
     public static string[] buttonName = new string[]{
-        "Y_Main Setting",
-        //"Y_Impostor Setting",
-    };
-    public static string[] tabName = new string[]{
-        "mainSettingTab",
-        //"Y_Impostor Setting",
+        "Game Setup",
+        "Mod Setup",
+        "Impostors",
+        "Madmates",
+        "Crewmates",
+        "Neutrals",
+        "Unit Roles",
+        "Add-Ons"
     };
 
-    static PassiveButton ModSettingsButton;
     static GameOptionsMenu ModSettingsTab;
     //static GameOptionsMenu[] ModSettingsTab = new GameOptionsMenu[(int)GameSettingMenuTab.MaxCount - 3];
     //static PassiveButton[] ModSettingsButton = new PassiveButton[(int)GameSettingMenuTab.MaxCount - 3];
-    //static Dictionary<TabGroup, GameOptionsMenu> list = new();
+    static Dictionary<TabGroup, PassiveButton> ModSettingsButtons = new();
+    static Dictionary<TabGroup, GameOptionsMenu> list = new();
 
     [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start))]
     [HarmonyPriority(Priority.First)]
@@ -43,55 +51,73 @@ public class GameSettingMenuPatch
     {
         public static void Postfix(GameSettingMenu __instance)
         {
-            // ModSettingsTabの作成
-            for (int i = 0; i < (int)GameSettingMenuTab.MaxCount - 3; i++)
+            Vector3 buttonPosition_Left = new(-3.9f, -0.4f, 0f);
+            Vector3 buttonPosition_Right = new(-2.4f, -0.4f, 0f);
+            Vector3 buttonSize = new(0.45f, 0.55f, 1f);
+
+            // 設定ボタン(左側)
+            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
-                var button = ModSettingsButton;
-                // MOD設定
-                button = Object.Instantiate(__instance.GameSettingsButton, __instance.GameSettingsButton.transform.parent);
-                button.name = buttonName[i];
+                var button = Object.Instantiate(__instance.GameSettingsButton, __instance.GameSettingsButton.transform.parent);
+                button.name = "Button_" + buttonName[(int)tab + 1];
                 var label = button.GetComponentInChildren<TextMeshPro>();
                 label.DestroyTranslator();
-                label.text = buttonName[i];
-                button.activeTextColor = Color.yellow;
-                button.inactiveTextColor = Color.yellow;
-                button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("TownOfHost_Y.Resources.TabIcon_MainSettings.png", 100f);
-                button.activeSprites.GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("TownOfHost_Y.Resources.TabIcon_MainSettings.png", 100f);
-                button.selectedSprites.GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("TownOfHost_Y.Resources.TabIcon_MainSettings.png", 100f);
-                button.transform.localPosition = new(-3f, -1.2f + -0.7f * i, 0f);
+                label.text = buttonName[(int)tab + 1];
+                button.activeTextColor = Color.black;
+                button.inactiveTextColor = Color.black;
+
+                var tabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_{tab}.png", 100f);
+                button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
+                button.activeSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
+                button.selectedSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
+
+                Vector3 offset = new (0.0f, 0.5f * (((int)tab + 1) / 2), 0.0f);
+                button.transform.localPosition = ((((int)tab + 1) % 2 == 0) ? buttonPosition_Left : buttonPosition_Right) - offset;
+                button.transform.localScale = buttonSize;
+
                 var buttonComponent = button.GetComponent<PassiveButton>();
                 buttonComponent.OnClick = new();
                 buttonComponent.OnClick.AddListener(
-                    (Action)(() => __instance.ChangeTab((int)GameSettingMenuTab.Mod_MainSettings, false)));
+                    (Action)(() => __instance.ChangeTab((int)tab + 3, false)));
+
+                // ボタン登録
+                ModSettingsButtons.Add(tab, button);
             }
             // プリセット設定 非表示
             __instance.GamePresetsButton.gameObject.SetActive(false);
 
             // ゲーム設定
             __instance.GameSettingsButton.transform.localPosition = new(-3f, -0.5f, 0f);
+            var textLabel = __instance.GameSettingsButton.GetComponentInChildren<TextMeshPro>();
+            textLabel.DestroyTranslator();
+            textLabel.text = buttonName[0];
+            __instance.GameSettingsButton.activeTextColor = Color.black;
+            __instance.GameSettingsButton.inactiveTextColor = Color.black;
+
+            var vanillaTabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_VanillaGameSettings.png", 100f);
+            __instance.GameSettingsButton.inactiveSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+            __instance.GameSettingsButton.activeSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+            __instance.GameSettingsButton.selectedSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+            __instance.GameSettingsButton.transform.localPosition = buttonPosition_Left;
+            __instance.GameSettingsButton.transform.localScale = buttonSize;
+
 
             // バニラ役職設定 非表示
             __instance.RoleSettingsButton.gameObject.SetActive(false);
 
-            // 
-            Logger.Info("111111", "GameSettingMenu");
 
             var template = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
             if (template == null) return;
-            Logger.Info("22222", "GameSettingMenu");
-
-            Logger.Info("33333", "GameSettingMenu");
 
             //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
                 //if (__instance.name != GameSettingMenuPatch.tabName[(int)tab]) continue;
                 ModSettingsTab = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform.parent);
-                ModSettingsTab.name = tabName[0];
+                ModSettingsTab.name = GameSettingMenuTab.Mod_MainSettings.ToString();
                 //var tab = TabGroup.MainSettings;
                 //OptionBehaviourを破棄
                 ModSettingsTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
             }
-            Logger.Info("4444444444", "GameSettingMenu");
 
             //var tohSettings = Object.Instantiate(gameSettings, gameSettings.transform.parent);
             //tohSettings.name = tab + "Tab";
@@ -99,7 +125,7 @@ public class GameSettingMenuPatch
 
             //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
-                var tab = TabGroup.MainSettings;
+                var tab = TabGroup.ModMainSettings;
                 //ModSettingsTab = GameObject.Find(tabName[0]).GetComponent<GameOptionsMenu>(); ;
                 Il2CppSystem.Collections.Generic.List<OptionBehaviour> scOptions = new();
 
@@ -126,31 +152,24 @@ public class GameSettingMenuPatch
                         stringOption.transform.FindChild("Title Text").localPosition += new Vector3(-1.096f, 0f, 0f);
                         stringOption.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.5f, 0.37f);
                         stringOption.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
-                        Logger.Info("555555555555", "GameSettingMenu");
                         stringOption.SetClickMask(ModSettingsTab.ButtonClickMask);
 
                         option.OptionBehaviour = stringOption;
                     }
                     option.OptionBehaviour.gameObject.SetActive(true);
                 }
-                Logger.Info("666666666666", "GameSettingMenu");
                 {
                     ModSettingsTab.Children = scOptions;
-                    Logger.Info("7777777777", "GameSettingMenu");
 
                     ModSettingsTab.gameObject.SetActive(false);
-                    Logger.Info("8888888888888", "GameSettingMenu");
                     ModSettingsTab.enabled = true;
-                    Logger.Info("999999999999999", "GameSettingMenu");
                 }
             }
             //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
-                var tab = TabGroup.MainSettings;
-                Logger.Info("10", "GameSettingMenu");
+                var tab = TabGroup.ModMainSettings;
 
                 
-                Logger.Info("111111111111111", "GameSettingMenu");
             }
 
 
@@ -172,28 +191,26 @@ public class GameSettingMenuPatch
         {
             if (!previewOnly)
             {
-                Logger.Info("111111111111111", "ChangeTabPatch");
 
-                //ModSettingsTab = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/" + tabName[0]).GetComponent<GameOptionsMenu>();
                 if (ModSettingsTab == null) return;
-                Logger.Info("22222222", "ChangeTabPatch");
-                //ModSettingsTab.gameObject.SetActive(false);
-                //ModSettingsButton.SelectButton(false);
-                Logger.Info("3333333333", "ChangeTabPatch");
+                // 追加したTabの非表示(全リセット)
+                ModSettingsTab.gameObject.SetActive(false);
+                ModSettingsButtons.Do(x => x.Value.SelectButton(false));
 
+                // MODではない設定を次に表示させるときはここで終わり
                 if (tabNum < (int)GameSettingMenuTab.Mod_MainSettings) return;
+
+                // 次表示がMODで追加されたタブの場合の設定
 
                 ModSettingsTab.gameObject.SetActive(true);
                 __instance.MenuDescriptionText.DestroyTranslator();
                 __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
-                Logger.Info("5555555555555", "ChangeTabPatch");
 
                 __instance.ToggleLeftSideDarkener(true);
                 __instance.ToggleRightSideDarkener(false);
-                Logger.Info("66666666666", "ChangeTabPatch");
 
                 ModSettingsTab.OpenMenu();
-                ModSettingsButton.SelectButton(true);
+                ModSettingsButtons[(TabGroup)tabNum - 3].SelectButton(true);
             }
         }
     }
@@ -240,9 +257,11 @@ public class GameOptionsMenuUpdatePatch
     public static void Postfix(GameOptionsMenu __instance)
     {
         if (__instance.transform.name == "GAME SETTINGS TAB") return;
-        foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+
+        //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
         {
-            if (__instance.transform.parent.parent.name != GameSettingMenuPatch.buttonName[(int)tab]) continue;
+            var tab = TabGroup.ModMainSettings;
+            //if (__instance.transform.parent.parent.name != GameSettingMenuPatch.buttonName[(int)tab]) continue;
 
             //switch (tab)
             //{
@@ -291,6 +310,7 @@ public class GameOptionsMenuUpdatePatch
                 opt.size = new(5.0f, 0.45f);
                 while (parent != null && enabled)
                 {
+
                     enabled = parent.GetBool() && !parent.IsHiddenOn(Options.CurrentGameMode);
                     parent = parent.Parent;
                     opt.color = new(0f, 1f, 0f);
@@ -298,6 +318,7 @@ public class GameOptionsMenuUpdatePatch
                     opt.transform.localPosition = new Vector3(0.11f, 0f);
                     option.OptionBehaviour.transform.Find("Title Text").transform.localPosition = new Vector3(-1.08f, 0f);
                     option.OptionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(5.1f, 0.28f);
+
                     if (option.Parent?.Parent != null)
                     {
                         opt.color = new(0f, 0f, 1f);
@@ -305,6 +326,7 @@ public class GameOptionsMenuUpdatePatch
                         opt.transform.localPosition = new Vector3(0.24f, 0f);
                         option.OptionBehaviour.transform.Find("Title Text").transform.localPosition = new Vector3(-0.88f, 0f);
                         option.OptionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(4.9f, 0.28f);
+
                         if (option.Parent?.Parent?.Parent != null)
                         {
                             opt.color = new(1f, 0f, 0f);
@@ -341,6 +363,8 @@ public class GameOptionsMenuUpdatePatch
                     numItems -= 10f;
                 }
             }
+
+            // TODO: 今動かずにエラー吐いてそう
             __instance.GetComponentInParent<Scroller>().ContentYBounds.max = (-offset) - 1.5f;
         }
     }

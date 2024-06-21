@@ -280,7 +280,7 @@ namespace TownOfHostY
 
     public enum TabGroup
     {
-        MainSettings,
+        ModMainSettings,
         ImpostorRoles,
         MadmateRoles,
         CrewmateRoles,
