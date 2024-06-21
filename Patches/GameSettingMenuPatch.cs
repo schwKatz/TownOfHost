@@ -154,9 +154,10 @@ public class GameSettingMenuPatch
                 var setTab = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform.parent);
                 // 名前はゲーム設定タブEnumから取得
                 setTab.name = ((GameSettingMenuTab)tab + 3).ToString();
-                // 中身を削除
-                setTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
-                setTab.GetComponentsInChildren<CategoryHeaderMasked>().Do(x => Object.Destroy(x.gameObject));
+                //// 中身を削除
+                //setTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
+                //setTab.GetComponentsInChildren<CategoryHeaderMasked>().Do(x => Object.Destroy(x.gameObject));
+                setTab.gameObject.SetActive(false);
 
                 // 設定タブを追加
                 ModSettingsTabs.Add(tab, setTab);
