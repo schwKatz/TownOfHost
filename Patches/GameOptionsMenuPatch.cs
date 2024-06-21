@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using HarmonyLib;
-using Il2CppSystem.Collections.Generic;
+using System.Collections.Generic;
 using TMPro;
 using TownOfHostY.Roles.Core;
 using UnityEngine;
@@ -31,10 +31,11 @@ public class GameSettingMenuPatch
         //"Y_Impostor Setting",
     };
 
-    static GameOptionsMenu ModSettingsTab;
     static PassiveButton ModSettingsButton;
+    static GameOptionsMenu ModSettingsTab;
     //static GameOptionsMenu[] ModSettingsTab = new GameOptionsMenu[(int)GameSettingMenuTab.MaxCount - 3];
     //static PassiveButton[] ModSettingsButton = new PassiveButton[(int)GameSettingMenuTab.MaxCount - 3];
+    //static Dictionary<TabGroup, GameOptionsMenu> list = new();
 
     [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start))]
     [HarmonyPriority(Priority.First)]
@@ -45,14 +46,9 @@ public class GameSettingMenuPatch
             // ModSettingsTabの作成
             for (int i = 0; i < (int)GameSettingMenuTab.MaxCount - 3; i++)
             {
-                var tab = ModSettingsTab;
-                tab = Object.Instantiate(__instance.GameSettingsTab, __instance.transform);
-                tab.name = tabName[i];
-                tab.gameObject.SetActive(false);
-
                 var button = ModSettingsButton;
                 // MOD設定
-                button = Object.Instantiate(__instance.GameSettingsButton, __instance.transform);
+                button = Object.Instantiate(__instance.GameSettingsButton, __instance.GameSettingsButton.transform.parent);
                 button.name = buttonName[i];
                 var label = button.GetComponentInChildren<TextMeshPro>();
                 label.DestroyTranslator();
@@ -78,78 +74,83 @@ public class GameSettingMenuPatch
             __instance.RoleSettingsButton.gameObject.SetActive(false);
 
             // 
-            Logger.Info("111111", "ChangeTabPatch");
+            Logger.Info("111111", "GameSettingMenu");
 
             var template = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
             if (template == null) return;
-            Logger.Info("22222", "ChangeTabPatch");
+            Logger.Info("22222", "GameSettingMenu");
 
-            Dictionary<TabGroup, GameOptionsMenu> list = new();
-            Dictionary<TabGroup, Il2CppSystem.Collections.Generic.List<OptionBehaviour>> scOptions = new();
-            Logger.Info("33333", "ChangeTabPatch");
+            Logger.Info("33333", "GameSettingMenu");
 
-            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+            //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
-                if (__instance.name != GameSettingMenuPatch.tabName[(int)tab]) continue;
-
-                var gom = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform);
+                //if (__instance.name != GameSettingMenuPatch.tabName[(int)tab]) continue;
+                ModSettingsTab = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform.parent);
+                ModSettingsTab.name = tabName[0];
+                //var tab = TabGroup.MainSettings;
                 //OptionBehaviourを破棄
-                //gom.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
-                list.Add(tab, gom);
-                //tabButton.icon.sprite = Utils.LoadSprite($"TownOfHost_Y.Resources.TabIcon_{tab}.png", 100f);
+                ModSettingsTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
             }
-            Logger.Info("4444444444", "ChangeTabPatch");
+            Logger.Info("4444444444", "GameSettingMenu");
 
             //var tohSettings = Object.Instantiate(gameSettings, gameSettings.transform.parent);
             //tohSettings.name = tab + "Tab";
             //var tohMenu = tohSettings.transform.FindChild("GameGroup/SliderInner").GetComponent<GameOptionsMenu>();
 
-            foreach (var option in OptionItem.AllOptions)
-            {
-                //if (option.Tab != tab) continue;
-                if (option.OptionBehaviour == null)
-                {
-                    var stringOption = Object.Instantiate(template, list[option.Tab].transform);
-                    if (!scOptions.ContainsKey(option.Tab))
-                    {
-                        scOptions[option.Tab] = new();
-                    }
-                    scOptions[option.Tab].Add(stringOption);
-                    stringOption.OnValueChanged = new System.Action<OptionBehaviour>((o) => { });
-                    stringOption.TitleText.text = option.Name;
-                    stringOption.Value = stringOption.oldValue = option.CurrentValue;
-                    stringOption.ValueText.text = option.GetString();
-                    stringOption.name = option.Name;
-                    stringOption.transform.FindChild("LabelBackground").localScale = new Vector3(1.6f, 1f, 1f);
-                    stringOption.transform.FindChild("LabelBackground").SetLocalX(-2.2695f);
-                    stringOption.transform.FindChild("PlusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 1.1434f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
-                    stringOption.transform.FindChild("MinusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 0.3463f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
-                    stringOption.transform.FindChild("Value_TMP (1)").localPosition += new Vector3(0.7322f, 0f, 0f);
-                    stringOption.transform.FindChild("ValueBox").localScale += new Vector3(0.2f, 0f, 0f);
-                    stringOption.transform.FindChild("ValueBox").localPosition += new Vector3(0.7322f, 0f, 0f);
-                    stringOption.transform.FindChild("Title Text").localPosition += new Vector3(-1.096f, 0f, 0f);
-                    stringOption.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.5f, 0.37f);
-                    stringOption.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
-                    Logger.Info("555555555555", "ChangeTabPatch");
-                    stringOption.SetClickMask(list[option.Tab].ButtonClickMask);
-
-                    option.OptionBehaviour = stringOption;
-                }
-                option.OptionBehaviour.gameObject.SetActive(true);
-            }
-            Logger.Info("666666666666", "ChangeTabPatch");
-            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
-            {
-                list[tab].Children = scOptions[tab];
-                list[tab].gameObject.SetActive(false);
-                list[tab].enabled = true;
-            }
-
             //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
                 var tab = TabGroup.MainSettings;
-                ModSettingsTab.Children = list[tab].Children;
-                //ModSettingsTab.
+                //ModSettingsTab = GameObject.Find(tabName[0]).GetComponent<GameOptionsMenu>(); ;
+                Il2CppSystem.Collections.Generic.List<OptionBehaviour> scOptions = new();
+
+                foreach (var option in OptionItem.AllOptions)
+                {
+                    if (option.Tab != tab) continue;
+
+                    if (option.OptionBehaviour == null)
+                    {
+                        var stringOption = Object.Instantiate(template, ModSettingsTab.transform);
+                        scOptions.Add(stringOption);
+                        stringOption.OnValueChanged = new System.Action<OptionBehaviour>((o) => { });
+                        stringOption.TitleText.text = option.Name;
+                        stringOption.Value = stringOption.oldValue = option.CurrentValue;
+                        stringOption.ValueText.text = option.GetString();
+                        stringOption.name = option.Name;
+                        stringOption.transform.FindChild("LabelBackground").localScale = new Vector3(1.6f, 1f, 1f);
+                        stringOption.transform.FindChild("LabelBackground").SetLocalX(-2.2695f);
+                        stringOption.transform.FindChild("PlusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 1.1434f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+                        stringOption.transform.FindChild("MinusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 0.3463f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+                        stringOption.transform.FindChild("Value_TMP (1)").localPosition += new Vector3(0.7322f, 0f, 0f);
+                        stringOption.transform.FindChild("ValueBox").localScale += new Vector3(0.2f, 0f, 0f);
+                        stringOption.transform.FindChild("ValueBox").localPosition += new Vector3(0.7322f, 0f, 0f);
+                        stringOption.transform.FindChild("Title Text").localPosition += new Vector3(-1.096f, 0f, 0f);
+                        stringOption.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.5f, 0.37f);
+                        stringOption.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
+                        Logger.Info("555555555555", "GameSettingMenu");
+                        stringOption.SetClickMask(ModSettingsTab.ButtonClickMask);
+
+                        option.OptionBehaviour = stringOption;
+                    }
+                    option.OptionBehaviour.gameObject.SetActive(true);
+                }
+                Logger.Info("666666666666", "GameSettingMenu");
+                {
+                    ModSettingsTab.Children = scOptions;
+                    Logger.Info("7777777777", "GameSettingMenu");
+
+                    ModSettingsTab.gameObject.SetActive(false);
+                    Logger.Info("8888888888888", "GameSettingMenu");
+                    ModSettingsTab.enabled = true;
+                    Logger.Info("999999999999999", "GameSettingMenu");
+                }
+            }
+            //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+            {
+                var tab = TabGroup.MainSettings;
+                Logger.Info("10", "GameSettingMenu");
+
+                
+                Logger.Info("111111111111111", "GameSettingMenu");
             }
 
 
@@ -163,22 +164,33 @@ public class GameSettingMenuPatch
         {
             if (tabNum == (int)GameSettingMenuTab.GamePresets) {
                 tabNum = (int)GameSettingMenuTab.GameSettings;
+                __instance.MenuDescriptionText.text = "test";
+
             }
         }
         public static void Postfix(GameSettingMenu __instance, [HarmonyArgument(0)] int tabNum, [HarmonyArgument(1)] bool previewOnly)
         {
             if (!previewOnly)
             {
-                if (!ModSettingsTab) return;
-                ModSettingsTab.gameObject.SetActive(false);
-                ModSettingsButton.SelectButton(false);
+                Logger.Info("111111111111111", "ChangeTabPatch");
+
+                //ModSettingsTab = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/" + tabName[0]).GetComponent<GameOptionsMenu>();
+                if (ModSettingsTab == null) return;
+                Logger.Info("22222222", "ChangeTabPatch");
+                //ModSettingsTab.gameObject.SetActive(false);
+                //ModSettingsButton.SelectButton(false);
+                Logger.Info("3333333333", "ChangeTabPatch");
+
                 if (tabNum < (int)GameSettingMenuTab.Mod_MainSettings) return;
 
                 ModSettingsTab.gameObject.SetActive(true);
+                __instance.MenuDescriptionText.DestroyTranslator();
                 __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
+                Logger.Info("5555555555555", "ChangeTabPatch");
 
                 __instance.ToggleLeftSideDarkener(true);
                 __instance.ToggleRightSideDarkener(false);
+                Logger.Info("66666666666", "ChangeTabPatch");
 
                 ModSettingsTab.OpenMenu();
                 ModSettingsButton.SelectButton(true);
