@@ -12,6 +12,7 @@ namespace TownOfHostY;
 [HarmonyPatch(typeof(GameSettingMenu))]
 public class GameSettingMenuPatch
 {
+    // ゲーム設定メニュータブ
     public enum GameSettingMenuTab
     {
         GamePresets = 0,
@@ -28,6 +29,7 @@ public class GameSettingMenuPatch
         MaxCount,
     }
 
+    // ボタンに表示する名前
     public static string[] buttonName = new string[]{
         "Game Setup",
         "Mod Setup",
@@ -39,95 +41,143 @@ public class GameSettingMenuPatch
         "Add-Ons"
     };
 
+    // MOD設定用ボタン格納変数
     static Dictionary<TabGroup, PassiveButton> ModSettingsButtons = new();
+    // MOD設定メニュー用タブ格納変数
     static Dictionary<TabGroup, GameOptionsMenu> ModSettingsTabs = new();
 
+    // ゲーム設定メニュー 初期関数
     [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start))]
     [HarmonyPriority(Priority.First)]
     public static class StartPatch
     {
         public static void Postfix(GameSettingMenu __instance)
         {
+            /******** ボタン作成 ********/
+
+            // 左側配置ボタン座標
             Vector3 buttonPosition_Left = new(-3.9f, -0.4f, 0f);
+            // 右側配置ボタン座標
             Vector3 buttonPosition_Right = new(-2.4f, -0.4f, 0f);
+            // ボタンサイズ
             Vector3 buttonSize = new(0.45f, 0.55f, 1f);
 
-            // 設定ボタン(左側)
+            // 各グループ毎にボタンを作成する
             foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
+                // ゲーム設定ボタンを元にコピー
                 var button = Object.Instantiate(__instance.GameSettingsButton, __instance.GameSettingsButton.transform.parent);
-                button.name = "Button_" + buttonName[(int)tab + 1];
+                // 名前は「button_ + ボタン名」
+                button.name = "Button_" + buttonName[(int)tab + 1]; // buttonName[0]はバニラ設定用の名前なので+1
+                // ボタンテキスト
                 var label = button.GetComponentInChildren<TextMeshPro>();
+                // ボタンテキストの翻訳破棄
                 label.DestroyTranslator();
+                // ボタンテキストの名前変更
                 label.text = buttonName[(int)tab + 1];
-                button.activeTextColor = Color.black;
-                button.inactiveTextColor = Color.black;
+                // ボタンテキストの色変更
+                button.activeTextColor = button.inactiveTextColor = Color.black;
+                // ボタンテキストの選択中の色変更
+                button.selectedTextColor = Color.blue;
 
+                // ボタンのスプライト取得
                 var tabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_{tab}.png", 100f);
+                // 各種スプライトをオリジナルのものに変更
                 button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
                 button.activeSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
                 button.selectedSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
 
+                // Y座標オフセット
                 Vector3 offset = new (0.0f, 0.5f * (((int)tab + 1) / 2), 0.0f);
+                // ボタンの座標設定
                 button.transform.localPosition = ((((int)tab + 1) % 2 == 0) ? buttonPosition_Left : buttonPosition_Right) - offset;
+                // ボタンのサイズ設定
                 button.transform.localScale = buttonSize;
 
+                // ボタンがクリックされた時の設定
                 var buttonComponent = button.GetComponent<PassiveButton>();
                 buttonComponent.OnClick = new();
+                // ボタンがクリックされるとタブをそのものに変更する
                 buttonComponent.OnClick.AddListener(
                     (Action)(() => __instance.ChangeTab((int)tab + 3, false)));
 
                 // ボタン登録
                 ModSettingsButtons.Add(tab, button);
-            }
+            }/******** ボタン作成 ここまで ********/
+
+            /******** デフォルトボタン設定 ********/
             // プリセット設定 非表示
             __instance.GamePresetsButton.gameObject.SetActive(false);
 
-            // ゲーム設定
-            __instance.GameSettingsButton.transform.localPosition = new(-3f, -0.5f, 0f);
-            var textLabel = __instance.GameSettingsButton.GetComponentInChildren<TextMeshPro>();
+            /**** ゲーム設定ボタンを変更 ****/
+            var gameSettingButton = __instance.GameSettingsButton;
+            // 座標指定
+            gameSettingButton.transform.localPosition = new(-3f, -0.5f, 0f);
+            // ボタンテキスト
+            var textLabel = gameSettingButton.GetComponentInChildren<TextMeshPro>();
+            // 翻訳破棄
             textLabel.DestroyTranslator();
+            // バニラ設定ボタンの名前を設定
             textLabel.text = buttonName[0];
-            __instance.GameSettingsButton.activeTextColor = Color.black;
-            __instance.GameSettingsButton.inactiveTextColor = Color.black;
+            // ボタンテキストの色変更
+            gameSettingButton.activeTextColor = gameSettingButton.inactiveTextColor = Color.black;
+            // ボタンテキストの選択中の色変更
+            gameSettingButton.selectedTextColor = Color.blue;
 
+            // ボタンのスプライト取得
             var vanillaTabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_VanillaGameSettings.png", 100f);
-            __instance.GameSettingsButton.inactiveSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
-            __instance.GameSettingsButton.activeSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
-            __instance.GameSettingsButton.selectedSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
-            __instance.GameSettingsButton.transform.localPosition = buttonPosition_Left;
-            __instance.GameSettingsButton.transform.localScale = buttonSize;
-
+            // 各種スプライトをオリジナルのものに変更
+            gameSettingButton.inactiveSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+            gameSettingButton.activeSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+            gameSettingButton.selectedSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+            // ボタンの座標設定
+            gameSettingButton.transform.localPosition = buttonPosition_Left;
+            // ボタンのサイズ設定
+            gameSettingButton.transform.localScale = buttonSize;
+            /**** ゲーム設定ボタンを変更 ここまで ****/
 
             // バニラ役職設定 非表示
             __instance.RoleSettingsButton.gameObject.SetActive(false);
+            /******** デフォルトボタン設定 ここまで ********/
 
-
+            /******** タブ作成 ********/
+            // ストリングオプションのテンプレート作成
             var templateStringOption = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
             if (templateStringOption == null) return;
 
+            // 各グループ毎にタブを作成する/基盤作成
             foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
+                // ゲーム設定タブからコピー
                 var setTab = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform.parent);
+                // 名前はゲーム設定タブEnumから取得
                 setTab.name = ((GameSettingMenuTab)tab + 3).ToString();
                 // 中身を削除
                 setTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
                 setTab.GetComponentsInChildren<CategoryHeaderMasked>().Do(x => Object.Destroy(x.gameObject));
 
+                // 設定タブを追加
                 ModSettingsTabs.Add(tab, setTab);
             }
 
+            // 各グループ毎にタブを作成する/中身追加
             foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
+                // オプションをまとめて格納する
                 Il2CppSystem.Collections.Generic.List<OptionBehaviour> scOptions = new();
 
+                // オプションを全てまわす
                 foreach (var option in OptionItem.AllOptions)
                 {
+                    // オプションを出すタブでないなら次
                     if (option.Tab != tab) continue;
 
+                    // ビヘイビアがまだ設定されていないなら
                     if (option.OptionBehaviour == null)
                     {
+                        // ストリングオプションをコピー
                         var stringOption = Object.Instantiate(templateStringOption, GameObject.Find($"{ModSettingsTabs[tab].name}/Scroller/SliderInner").transform);
+                        // オプションListに追加
                         scOptions.Add(stringOption);
                         stringOption.OnValueChanged = new System.Action<OptionBehaviour>((o) => { });
                         stringOption.TitleText.text = option.Name;
@@ -146,13 +196,17 @@ public class GameSettingMenuPatch
                         stringOption.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
                         stringOption.SetClickMask(ModSettingsTabs[tab].ButtonClickMask);
 
+                        // ビヘイビアに作成したストリングオプションを設定
                         option.OptionBehaviour = stringOption;
                     }
+                    // ビヘイビアのobjectを表示
                     option.OptionBehaviour.gameObject.SetActive(true);
                 }
-
+                // タブの子にオプションリストを設定
                 ModSettingsTabs[tab].Children = scOptions;
+                // 選択されるときに表示するため、初期値はfalse
                 ModSettingsTabs[tab].gameObject.SetActive(false);
+                // 有効にする
                 ModSettingsTabs[tab].enabled = true;
             }
         }
@@ -163,9 +217,12 @@ public class GameSettingMenuPatch
     {
         public static void Prefix(GameSettingMenu __instance, ref int tabNum, [HarmonyArgument(1)] bool previewOnly)
         {
+            // プリセットタブは表示させないため、ゲーム設定タブを設定する
             if (tabNum == (int)GameSettingMenuTab.GamePresets) {
                 tabNum = (int)GameSettingMenuTab.GameSettings;
-                //__instance.MenuDescriptionText.text = "test";
+
+                // What Is this?のテキスト文を変更
+                // __instance.MenuDescriptionText.text = "test";
             }
         }
         public static void Postfix(GameSettingMenu __instance, [HarmonyArgument(0)] int tabNum, [HarmonyArgument(1)] bool previewOnly)
@@ -183,7 +240,9 @@ public class GameSettingMenuPatch
 
                 // 次表示がMODで追加されたタブの場合の設定
                 ModSettingsTabs[(TabGroup)tabNum - 3].gameObject.SetActive(true);
+                // What Is this?のテキスト文の翻訳破棄
                 __instance.MenuDescriptionText.DestroyTranslator();
+                // What Is this?のテキスト文の設定
                 __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
 
                 __instance.ToggleLeftSideDarkener(true);
@@ -202,6 +261,8 @@ public static class GameOptionsMenuPatch
 {
     public static void Postfix(GameOptionsMenu __instance)
     {
+        if (__instance.transform.name != "GAME SETTINGS TAB") return;
+
         foreach (var ob in __instance.Children)
         {
             switch (ob.Title)
@@ -234,23 +295,30 @@ public class GameOptionsMenuUpdatePatch
 
     public static void Postfix(GameOptionsMenu __instance)
     {
+        // デフォルトのタブには変更を加えないため返す
         if (__instance.transform.name == "GAME SETTINGS TAB") return;
 
+        // 選択されるタブを使用する
         foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
         {
+            // 設定されている名前と一致する（＝選択されているタブである）
             if (__instance.transform.name != ((GameSettingMenuPatch.GameSettingMenuTab)(tab + 3)).ToString()) continue;
 
             _timer += Time.deltaTime;
             if (_timer < 0.1f) return;
             _timer = 0f;
 
+
             float numItems = __instance.Children.Count;
             var offset = 2.7f;
             var y = 0.713f;
 
+            // 全てのオプションをまわす
             foreach (var option in OptionItem.AllOptions)
             {
+                // オプションのタブと一致するグループのみ通す
                 if (tab != option.Tab) continue;
+                // ビヘイビアが設定済み、objectがある
                 if (option?.OptionBehaviour == null || option.OptionBehaviour.gameObject == null) continue;
                 var enabled = true;
                 var parent = option.Parent;
@@ -289,12 +357,13 @@ public class GameOptionsMenuUpdatePatch
                     }
                 }
 
+                // ヘッダー用（TODO:HeaderMaskに移動？ ）
                 if (option.IsText)
                 {
                     opt.color = new(0, 0, 0);
                     //opt.transform.localPosition = new(100f, 100f, 100f);
                 }
-
+                // 有効である者のみ表示する
                 option.OptionBehaviour.gameObject.SetActive(enabled);
                 if (enabled)
                 {
