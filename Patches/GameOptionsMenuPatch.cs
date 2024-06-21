@@ -12,7 +12,7 @@ namespace TownOfHostY;
 [HarmonyPatch(typeof(GameSettingMenu))]
 public class GameSettingMenuPatch
 {
-    enum GameSettingMenuTab
+    public enum GameSettingMenuTab
     {
         GamePresets = 0,
         GameSettings,
@@ -39,11 +39,8 @@ public class GameSettingMenuPatch
         "Add-Ons"
     };
 
-    static GameOptionsMenu ModSettingsTab;
-    //static GameOptionsMenu[] ModSettingsTab = new GameOptionsMenu[(int)GameSettingMenuTab.MaxCount - 3];
-    //static PassiveButton[] ModSettingsButton = new PassiveButton[(int)GameSettingMenuTab.MaxCount - 3];
     static Dictionary<TabGroup, PassiveButton> ModSettingsButtons = new();
-    static Dictionary<TabGroup, GameOptionsMenu> list = new();
+    static Dictionary<TabGroup, GameOptionsMenu> ModSettingsTabs = new();
 
     [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start))]
     [HarmonyPriority(Priority.First)]
@@ -106,27 +103,22 @@ public class GameSettingMenuPatch
             __instance.RoleSettingsButton.gameObject.SetActive(false);
 
 
-            var template = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
-            if (template == null) return;
+            var templateStringOption = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
+            if (templateStringOption == null) return;
 
-            //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
-                //if (__instance.name != GameSettingMenuPatch.tabName[(int)tab]) continue;
-                ModSettingsTab = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform.parent);
-                ModSettingsTab.name = GameSettingMenuTab.Mod_MainSettings.ToString();
-                //var tab = TabGroup.MainSettings;
-                //OptionBehaviourを破棄
-                ModSettingsTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
+                var setTab = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform.parent);
+                setTab.name = ((GameSettingMenuTab)tab + 3).ToString();
+                // 中身を削除
+                setTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
+                setTab.GetComponentsInChildren<CategoryHeaderMasked>().Do(x => Object.Destroy(x.gameObject));
+
+                ModSettingsTabs.Add(tab, setTab);
             }
 
-            //var tohSettings = Object.Instantiate(gameSettings, gameSettings.transform.parent);
-            //tohSettings.name = tab + "Tab";
-            //var tohMenu = tohSettings.transform.FindChild("GameGroup/SliderInner").GetComponent<GameOptionsMenu>();
-
-            //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
-                var tab = TabGroup.ModMainSettings;
-                //ModSettingsTab = GameObject.Find(tabName[0]).GetComponent<GameOptionsMenu>(); ;
                 Il2CppSystem.Collections.Generic.List<OptionBehaviour> scOptions = new();
 
                 foreach (var option in OptionItem.AllOptions)
@@ -135,7 +127,7 @@ public class GameSettingMenuPatch
 
                     if (option.OptionBehaviour == null)
                     {
-                        var stringOption = Object.Instantiate(template, ModSettingsTab.transform);
+                        var stringOption = Object.Instantiate(templateStringOption, GameObject.Find($"{ModSettingsTabs[tab].name}/Scroller/SliderInner").transform);
                         scOptions.Add(stringOption);
                         stringOption.OnValueChanged = new System.Action<OptionBehaviour>((o) => { });
                         stringOption.TitleText.text = option.Name;
@@ -152,30 +144,20 @@ public class GameSettingMenuPatch
                         stringOption.transform.FindChild("Title Text").localPosition += new Vector3(-1.096f, 0f, 0f);
                         stringOption.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.5f, 0.37f);
                         stringOption.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
-                        stringOption.SetClickMask(ModSettingsTab.ButtonClickMask);
+                        stringOption.SetClickMask(ModSettingsTabs[tab].ButtonClickMask);
 
                         option.OptionBehaviour = stringOption;
                     }
                     option.OptionBehaviour.gameObject.SetActive(true);
                 }
-                {
-                    ModSettingsTab.Children = scOptions;
 
-                    ModSettingsTab.gameObject.SetActive(false);
-                    ModSettingsTab.enabled = true;
-                }
+                ModSettingsTabs[tab].Children = scOptions;
+                ModSettingsTabs[tab].gameObject.SetActive(false);
+                ModSettingsTabs[tab].enabled = true;
             }
-            //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
-            {
-                var tab = TabGroup.ModMainSettings;
-
-                
-            }
-
-
-
         }
     }
+
     [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.ChangeTab))]
     public static class ChangeTabPatch
     {
@@ -183,8 +165,7 @@ public class GameSettingMenuPatch
         {
             if (tabNum == (int)GameSettingMenuTab.GamePresets) {
                 tabNum = (int)GameSettingMenuTab.GameSettings;
-                __instance.MenuDescriptionText.text = "test";
-
+                //__instance.MenuDescriptionText.text = "test";
             }
         }
         public static void Postfix(GameSettingMenu __instance, [HarmonyArgument(0)] int tabNum, [HarmonyArgument(1)] bool previewOnly)
@@ -192,24 +173,23 @@ public class GameSettingMenuPatch
             if (!previewOnly)
             {
 
-                if (ModSettingsTab == null) return;
+                if (ModSettingsTabs == null) return;
                 // 追加したTabの非表示(全リセット)
-                ModSettingsTab.gameObject.SetActive(false);
+                ModSettingsTabs.Do(x => x.Value.gameObject.SetActive(false));
                 ModSettingsButtons.Do(x => x.Value.SelectButton(false));
 
                 // MODではない設定を次に表示させるときはここで終わり
                 if (tabNum < (int)GameSettingMenuTab.Mod_MainSettings) return;
 
                 // 次表示がMODで追加されたタブの場合の設定
-
-                ModSettingsTab.gameObject.SetActive(true);
+                ModSettingsTabs[(TabGroup)tabNum - 3].gameObject.SetActive(true);
                 __instance.MenuDescriptionText.DestroyTranslator();
                 __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
 
                 __instance.ToggleLeftSideDarkener(true);
                 __instance.ToggleRightSideDarkener(false);
 
-                ModSettingsTab.OpenMenu();
+                ModSettingsTabs[(TabGroup)tabNum - 3].OpenMenu();
                 ModSettingsButtons[(TabGroup)tabNum - 3].SelectButton(true);
             }
         }
@@ -244,8 +224,6 @@ public static class GameOptionsMenuPatch
                     break;
             }
         }
-        if (__instance.transform.name == "GAME SETTINGS TAB") return;
-
     }
 }
 
@@ -258,35 +236,9 @@ public class GameOptionsMenuUpdatePatch
     {
         if (__instance.transform.name == "GAME SETTINGS TAB") return;
 
-        //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+        foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
         {
-            var tab = TabGroup.ModMainSettings;
-            //if (__instance.transform.parent.parent.name != GameSettingMenuPatch.buttonName[(int)tab]) continue;
-
-            //switch (tab)
-            //{
-            //    case TabGroup.MainSettings:
-            //        tabName = "<color=#ffff00>Main Settings</color>";
-            //        break;
-            //    case TabGroup.ImpostorRoles:
-            //        tabName = "<color=#ff0000>Impostor Settings</color>";
-            //        break;
-            //    case TabGroup.MadmateRoles:
-            //        tabName = "<color=#ff4500>Madmate Settings</color>";
-            //        break;
-            //    case TabGroup.CrewmateRoles:
-            //        tabName = "<color=#b6f0ff>Crewmate Settings</color>";
-            //        break;
-            //    case TabGroup.NeutralRoles:
-            //        tabName = "<color=#ffa500>Neutral Settings</color>";
-            //        break;
-            //    case TabGroup.UnitRoles:
-            //        tabName = "<color=#7fff00>Combination-Role Settings</color>";
-            //        break;
-            //    case TabGroup.Addons:
-            //        tabName = "<color=#ee82ee>Add-Ons Settings</color>";
-            //        break;
-            //}
+            if (__instance.transform.name != ((GameSettingMenuPatch.GameSettingMenuTab)(tab + 3)).ToString()) continue;
 
             _timer += Time.deltaTime;
             if (_timer < 0.1f) return;
@@ -294,12 +246,12 @@ public class GameOptionsMenuUpdatePatch
 
             float numItems = __instance.Children.Count;
             var offset = 2.7f;
+            var y = 0.713f;
 
             foreach (var option in OptionItem.AllOptions)
             {
                 if (tab != option.Tab) continue;
                 if (option?.OptionBehaviour == null || option.OptionBehaviour.gameObject == null) continue;
-
                 var enabled = true;
                 var parent = option.Parent;
 
@@ -310,30 +262,29 @@ public class GameOptionsMenuUpdatePatch
                 opt.size = new(5.0f, 0.45f);
                 while (parent != null && enabled)
                 {
-
                     enabled = parent.GetBool() && !parent.IsHiddenOn(Options.CurrentGameMode);
                     parent = parent.Parent;
                     opt.color = new(0f, 1f, 0f);
-                    opt.size = new(4.8f, 0.45f);
-                    opt.transform.localPosition = new Vector3(0.11f, 0f);
-                    option.OptionBehaviour.transform.Find("Title Text").transform.localPosition = new Vector3(-1.08f, 0f);
-                    option.OptionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(5.1f, 0.28f);
+                    opt.size = new(4.6f, 0.45f);
+                    //opt.transform.localPosition = new Vector3(0.11f, 0f);
+                    option.OptionBehaviour.transform.Find("Title Text").transform.localPosition = new Vector3(-1.8566f, 0f);
+                    option.OptionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.4f, 0.37f);
 
                     if (option.Parent?.Parent != null)
                     {
                         opt.color = new(0f, 0f, 1f);
-                        opt.size = new(4.6f, 0.45f);
-                        opt.transform.localPosition = new Vector3(0.24f, 0f);
-                        option.OptionBehaviour.transform.Find("Title Text").transform.localPosition = new Vector3(-0.88f, 0f);
-                        option.OptionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(4.9f, 0.28f);
+                        opt.size = new(4.4f, 0.45f);
+                        //opt.transform.localPosition = new Vector3(0.24f, 0f);
+                        option.OptionBehaviour.transform.Find("Title Text").transform.localPosition = new Vector3(-1.4566f, 0f);
+                        option.OptionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.3f, 0.37f);
 
                         if (option.Parent?.Parent?.Parent != null)
                         {
                             opt.color = new(1f, 0f, 0f);
-                            opt.size = new(4.4f, 0.45f);
-                            opt.transform.localPosition = new Vector3(0.37f, 0f);
-                            option.OptionBehaviour.transform.Find("Title Text").transform.localPosition = new Vector3(-0.68f, 0f);
-                            option.OptionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(4.7f, 0.28f);
+                            opt.size = new(4.2f, 0.45f);
+                            //opt.transform.localPosition = new Vector3(0.37f, 0f);
+                            option.OptionBehaviour.transform.Find("Title Text").transform.localPosition = new Vector3(-1.6566f, 0f);
+                            option.OptionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.2f, 0.37f);
                         }
                     }
                 }
@@ -341,21 +292,19 @@ public class GameOptionsMenuUpdatePatch
                 if (option.IsText)
                 {
                     opt.color = new(0, 0, 0);
-                    opt.transform.localPosition = new(100f, 100f, 100f);
+                    //opt.transform.localPosition = new(100f, 100f, 100f);
                 }
 
                 option.OptionBehaviour.gameObject.SetActive(enabled);
                 if (enabled)
                 {
-                    offset -= option.IsHeader ? 0.7f : 0.5f;
-                    option.OptionBehaviour.transform.localPosition = new Vector3(
-                        option.OptionBehaviour.transform.localPosition.x,
-                        offset,
-                        option.OptionBehaviour.transform.localPosition.z);
+                    offset -= option.IsHeader ? 0.48f : 0.45f;
+                    option.OptionBehaviour.transform.localPosition = new Vector3(0.952f, y, -120f);
+                    y -= option.IsHeader ? 0.48f : 0.45f;
 
                     if (option.IsHeader)
                     {
-                        numItems += 0.3f;
+                        numItems += 0.5f;
                     }
                 }
                 else
@@ -365,7 +314,7 @@ public class GameOptionsMenuUpdatePatch
             }
 
             // TODO: 今動かずにエラー吐いてそう
-            __instance.GetComponentInParent<Scroller>().ContentYBounds.max = (-offset) - 1.5f;
+            //__instance.GetComponentInParent<Scroller>().ContentYBounds.max = (-offset) - 1.5f;
         }
     }
 }
