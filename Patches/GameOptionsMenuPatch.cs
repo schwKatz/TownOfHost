@@ -285,7 +285,7 @@ public static class NumberOptionPatch
 
             if (item is IntegerOptionItem integerOptionItem)
             {
-                integerOptionItem.SetValue(__instance.GetInt());
+                integerOptionItem.SetValue(integerOptionItem.Rule.GetNearestIndex(__instance.GetInt()));
             }
             else if (item is FloatOptionItem floatOptionItem)
             {
