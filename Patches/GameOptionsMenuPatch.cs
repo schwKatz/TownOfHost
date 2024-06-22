@@ -190,7 +190,7 @@ public static class ToggleOptionPatch
         {
             var item = OptionItem.AllOptions[index];
             //Logger.Info($"{item.Name}, {index}", "ToggleOption.Initialize.TryGetValue");
-            __instance.TitleText.text = Translator.GetString(item.Name);
+            __instance.TitleText.text = item.GetName();
             __instance.CheckMark.enabled = item.GetBool();
             return false;
         }
@@ -219,7 +219,7 @@ public static class NumberOptionPatch
         {
             var item = OptionItem.AllOptions[index];
             //Logger.Info($"{item.Name}, {index}", "NumberOption.Initialize.TryGetValue");
-            __instance.TitleText.text = Translator.GetString(item.Name);
+            __instance.TitleText.text = item.GetName();
             return false;
         }
         return true;
@@ -279,7 +279,7 @@ public static class StringOptionPatch
         {
             var item = OptionItem.AllOptions[index];
             //Logger.Info($"{item.Name}, {index}", "StringOption.Initialize.TryAdd");
-            __instance.TitleText.text = Translator.GetString(item.Name);
+            __instance.TitleText.text = item.GetName();
             return false;
         }
         return true;
