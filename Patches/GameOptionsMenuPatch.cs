@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using Il2CppSystem.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 

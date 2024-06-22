@@ -1,12 +1,9 @@
 using System;
-using System.Linq;
 using HarmonyLib;
 using System.Collections.Generic;
 using TMPro;
-using TownOfHostY.Roles.Core;
 using UnityEngine;
 using Object = UnityEngine.Object;
-using static UnityEngine.RemoteConfigSettingsHelper;
 
 namespace TownOfHostY;
 
@@ -146,6 +143,8 @@ public class GameSettingMenuPatch
             //var templateStringOption = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
             //if (templateStringOption == null) return;
 
+            ModGameOptionsMenu.OptionList.Clear();
+
             // 各グループ毎にタブを作成する/基盤作成
             ModSettingsTabs = new();
             foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
@@ -163,7 +162,6 @@ public class GameSettingMenuPatch
                 ModSettingsTabs.Add(tab, setTab);
             }
 
-            ModGameOptionsMenu.OptionList.Clear();
             //⇒GamOptionsMenuPatchで処理
             //// 各グループ毎にタブを作成する/中身追加
             //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
