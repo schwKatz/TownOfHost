@@ -53,14 +53,16 @@ public static class GameOptionsMenuPatch
             var option = OptionItem.AllOptions[index];
             if (option.Tab != modTab) continue;
 
-            if (option.IsHeader)
+            if (option.IsHeader || option is TextOptionItem)
             {
                 CategoryHeaderMasked categoryHeaderMasked = UnityEngine.Object.Instantiate<CategoryHeaderMasked>(__instance.categoryHeaderOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
                 categoryHeaderMasked.SetHeader(StringNames.RolesCategory, 20);
-                categoryHeaderMasked.Title.text = Translator.GetString(option.Name);
+                categoryHeaderMasked.Title.text = option.GetName();
                 categoryHeaderMasked.transform.localScale = Vector3.one * 0.63f;
                 categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, num, -2f);
                 num -= 0.63f;
+
+                if (option is TextOptionItem) continue;
             }
 
             var baseGameSetting = GetSetting(option);
