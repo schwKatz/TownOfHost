@@ -18,6 +18,9 @@ public static class GameOptionsMenuPatch
     [HarmonyPatch(nameof(GameOptionsMenu.Initialize)), HarmonyPrefix]
     private static bool InitializePrefix(GameOptionsMenu __instance)
     {
+        // 下部のグラデーションを非表示にする
+        __instance.transform.FindChild("Gradient").gameObject.SetActive(false);
+
         if (ModGameOptionsMenu.TabIndex < 3) return true;
 
         if (__instance.Children == null || __instance.Children.Count == 0)
@@ -52,6 +55,8 @@ public static class GameOptionsMenuPatch
 
         //float num = 0.713f;
         float num = 2.0f;
+        const float pos_x = 0.952f;
+        const float pos_z = -2.0f;
         for (int index = 0; index < OptionItem.AllOptions.Count; index++)
         {
             var option = OptionItem.AllOptions[index];
@@ -66,7 +71,7 @@ public static class GameOptionsMenuPatch
                 categoryHeaderMasked.SetHeader(StringNames.RolesCategory, 20);
                 categoryHeaderMasked.Title.text = option.GetName();
                 categoryHeaderMasked.transform.localScale = Vector3.one * 0.63f;
-                categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, num, -2f);
+                categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, num, pos_z);
                 categoryHeaderMasked.gameObject.SetActive(enabled);
                 ModGameOptionsMenu.CategoryHeaderList.TryAdd(index, categoryHeaderMasked);
 
@@ -77,18 +82,34 @@ public static class GameOptionsMenuPatch
             var baseGameSetting = GetSetting(option);
             if (baseGameSetting == null) continue;
 
+
             OptionBehaviour optionBehaviour;
+
             switch (baseGameSetting.Type)
             {
                 case OptionTypes.Checkbox:
                     {
                         optionBehaviour = UnityEngine.Object.Instantiate<ToggleOption>(__instance.checkboxOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
+                        optionBehaviour.transform.localPosition = new Vector3(pos_x, num, pos_z);
+
+                        OptionBehaviourSetSizeAndPosition(optionBehaviour, option, baseGameSetting.Type);
+
+                        optionBehaviour.SetClickMask(__instance.ButtonClickMask);
+                        optionBehaviour.SetUpFromData(baseGameSetting, 20);
+                        ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
                         //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         break;
                     }
                 case OptionTypes.String:
                     {
                         optionBehaviour = UnityEngine.Object.Instantiate<StringOption>(__instance.stringOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
+                        optionBehaviour.transform.localPosition = new Vector3(pos_x, num, pos_z);
+
+                        OptionBehaviourSetSizeAndPosition(optionBehaviour, option, baseGameSetting.Type);
+
+                        optionBehaviour.SetClickMask(__instance.ButtonClickMask);
+                        optionBehaviour.SetUpFromData(baseGameSetting, 20);
+                        ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
                         //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         break;
                     }
@@ -96,9 +117,17 @@ public static class GameOptionsMenuPatch
                 case OptionTypes.Int:
                     {
                         optionBehaviour = UnityEngine.Object.Instantiate<NumberOption>(__instance.numberOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
+                        optionBehaviour.transform.localPosition = new Vector3(pos_x, num, pos_z);
+
+                        OptionBehaviourSetSizeAndPosition(optionBehaviour, option, baseGameSetting.Type);
+
+                        optionBehaviour.SetClickMask(__instance.ButtonClickMask);
+                        optionBehaviour.SetUpFromData(baseGameSetting, 20);
+                        ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
                         //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         break;
                     }
+
                 //case OptionTypes.Player:
                 //    {
                 //        OptionBehaviour optionBehaviour = UnityEngine.Object.Instantiate<PlayerOption>(__instance.playerOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
@@ -106,6 +135,7 @@ public static class GameOptionsMenuPatch
                 //    }
                 default:
                     continue;
+
             }
             optionBehaviour.transform.localPosition = new Vector3(0.952f, num, -2f);
             optionBehaviour.SetClickMask(__instance.ButtonClickMask);
@@ -125,6 +155,42 @@ public static class GameOptionsMenuPatch
 
         return false;
     }
+    private static void OptionBehaviourSetSizeAndPosition(OptionBehaviour optionBehaviour, OptionItem option, OptionTypes type)
+    {
+        optionBehaviour.transform.FindChild("LabelBackground").localScale += new Vector3(0.9f, -0.2f, 0f);
+        optionBehaviour.transform.FindChild("LabelBackground").localPosition += new Vector3(-0.4f, 0f, 0f);
+
+        optionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.5f, 0.37f);
+        optionBehaviour.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
+
+        switch (type)
+        {
+            case OptionTypes.Checkbox:
+                optionBehaviour.transform.FindChild("Toggle").localPosition += new Vector3(option.IsFixValue ? 100f : 0.9f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+                break;
+
+            case OptionTypes.String:
+                optionBehaviour.transform.FindChild("PlusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 1.7f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+                optionBehaviour.transform.FindChild("MinusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 0.9f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+                optionBehaviour.transform.FindChild("Value_TMP (1)").localPosition += new Vector3(1.3f, 0f, 0f);
+                optionBehaviour.transform.FindChild("Value_TMP (1)").localScale += new Vector3(0.1f, 0f, 0f);
+                goto default;
+
+            case OptionTypes.Float:
+            case OptionTypes.Int:
+                optionBehaviour.transform.FindChild("PlusButton").localPosition += new Vector3(option.IsFixValue ? 100f : 1.7f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+                optionBehaviour.transform.FindChild("MinusButton").localPosition += new Vector3(option.IsFixValue ? 100f : 0.9f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+                optionBehaviour.transform.FindChild("Value_TMP").localPosition += new Vector3(1.3f, 0f, 0f);
+                optionBehaviour.transform.FindChild("Value_TMP").localScale += new Vector3(0.1f, 0f, 0f);
+                goto default;
+
+            default:// Number & String 共通
+                optionBehaviour.transform.FindChild("ValueBox").localScale += new Vector3(0.2f, 0f, 0f);
+                optionBehaviour.transform.FindChild("ValueBox").localPosition += new Vector3(1.3f, 0f, 0f);
+                break;
+        }
+    }
+
     [HarmonyPatch(nameof(GameOptionsMenu.ValueChanged)), HarmonyPrefix]
     private static bool ValueChangedPrefix(GameOptionsMenu __instance, OptionBehaviour option)
     {
@@ -171,6 +237,7 @@ public static class GameOptionsMenuPatch
             __instance.ControllerSelectable.Add(x);
         __instance.scrollBar.SetYBoundsMax(-num - 1.65f);
     }
+
     private static BaseGameSetting GetSetting(OptionItem item)
     {
         BaseGameSetting baseGameSetting = null;
@@ -229,7 +296,6 @@ public static class GameOptionsMenuPatch
         return baseGameSetting;
     }
 }
-
 
 [HarmonyPatch(typeof(ToggleOption))]
 public static class ToggleOptionPatch
