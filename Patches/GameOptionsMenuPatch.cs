@@ -1,12 +1,16 @@
+using System;
 using Il2CppSystem.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
+
 namespace TownOfHostY;
 
 public static class ModGameOptionsMenu
 {
     public static int TabIndex = 0;
     public static Dictionary<OptionBehaviour, int> OptionList = new();
+    public static Dictionary<int, OptionBehaviour> BehaviourList = new();
+    public static Dictionary<int, CategoryHeaderMasked> CategoryHeaderList = new();
 }
 [HarmonyPatch(typeof(GameOptionsMenu))]
 public static class GameOptionsMenuPatch
@@ -26,15 +30,15 @@ public static class GameOptionsMenuPatch
             //__instance.Children.Add(__instance.MapPicker);
             __instance.CreateSettings();
             __instance.cachedData = GameOptionsManager.Instance.CurrentGameOptions;
-            //for (int i = 0; i < GameOptionsMenuMod.ModChildren.Count; i++)
-            //{
-            //    OptionBehaviour optionBehaviour = __instance.Children[i];
-            //    optionBehaviour.OnValueChanged = new Action<OptionBehaviour>(__instance.ValueChanged);
-            //    if (AmongUsClient.Instance && !AmongUsClient.Instance.AmHost)
-            //    {
-            //        optionBehaviour.SetAsPlayer();
-            //    }
-            //}
+            for (int i = 0; i < __instance.Children.Count; i++)
+            {
+                OptionBehaviour optionBehaviour = __instance.Children[i];
+                optionBehaviour.OnValueChanged = new Action<OptionBehaviour>(__instance.ValueChanged);
+                //if (AmongUsClient.Instance && !AmongUsClient.Instance.AmHost)
+                //{
+                //    optionBehaviour.SetAsPlayer();
+                //}
+            }
             __instance.InitializeControllerNavigation();
         }
 
@@ -53,6 +57,9 @@ public static class GameOptionsMenuPatch
             var option = OptionItem.AllOptions[index];
             if (option.Tab != modTab) continue;
 
+            var enabled = !option.IsHiddenOn(Options.CurrentGameMode)
+                         && (option.Parent == null || (!option.Parent.IsHiddenOn(Options.CurrentGameMode) && option.Parent.GetBool()));
+
             if (option.IsHeader || option is TextOptionItem)
             {
                 CategoryHeaderMasked categoryHeaderMasked = UnityEngine.Object.Instantiate<CategoryHeaderMasked>(__instance.categoryHeaderOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
@@ -60,67 +67,109 @@ public static class GameOptionsMenuPatch
                 categoryHeaderMasked.Title.text = option.GetName();
                 categoryHeaderMasked.transform.localScale = Vector3.one * 0.63f;
                 categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, num, -2f);
-                num -= 0.63f;
+                categoryHeaderMasked.gameObject.SetActive(enabled);
+                ModGameOptionsMenu.CategoryHeaderList.TryAdd(index, categoryHeaderMasked);
 
-                if (option is TextOptionItem) continue;
+                if (enabled) num -= 0.63f;
             }
+            if (option is TextOptionItem) continue;
 
             var baseGameSetting = GetSetting(option);
             if (baseGameSetting == null) continue;
 
+            OptionBehaviour optionBehaviour;
             switch (baseGameSetting.Type)
             {
                 case OptionTypes.Checkbox:
                     {
-                        OptionBehaviour optionBehaviour = UnityEngine.Object.Instantiate<ToggleOption>(__instance.checkboxOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
-                        optionBehaviour.transform.localPosition = new Vector3(0.952f, num, -2f);
-                        optionBehaviour.SetClickMask(__instance.ButtonClickMask);
-                        optionBehaviour.SetUpFromData(baseGameSetting, 20);
-                        ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
+                        optionBehaviour = UnityEngine.Object.Instantiate<ToggleOption>(__instance.checkboxOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
                         //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
-                        __instance.Children.Add(optionBehaviour);
                         break;
                     }
                 case OptionTypes.String:
                     {
-                        OptionBehaviour optionBehaviour = UnityEngine.Object.Instantiate<StringOption>(__instance.stringOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
-                        optionBehaviour.transform.localPosition = new Vector3(0.952f, num, -2f);
-                        optionBehaviour.SetClickMask(__instance.ButtonClickMask);
-                        optionBehaviour.SetUpFromData(baseGameSetting, 20);
-                        ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
+                        optionBehaviour = UnityEngine.Object.Instantiate<StringOption>(__instance.stringOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
                         //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
-                        __instance.Children.Add(optionBehaviour);
                         break;
                     }
                 case OptionTypes.Float:
                 case OptionTypes.Int:
                     {
-                        OptionBehaviour optionBehaviour = UnityEngine.Object.Instantiate<NumberOption>(__instance.numberOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
-                        optionBehaviour.transform.localPosition = new Vector3(0.952f, num, -2f);
-                        optionBehaviour.SetClickMask(__instance.ButtonClickMask);
-                        optionBehaviour.SetUpFromData(baseGameSetting, 20);
-                        ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
+                        optionBehaviour = UnityEngine.Object.Instantiate<NumberOption>(__instance.numberOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
                         //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
-                        __instance.Children.Add(optionBehaviour);
                         break;
                     }
-                    //case OptionTypes.Player:
-                    //    {
-                    //        OptionBehaviour optionBehaviour = UnityEngine.Object.Instantiate<PlayerOption>(__instance.playerOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
-                    //        optionBehaviour.transform.localPosition = new Vector3(0.952f, num, -2f);
-                    //        optionBehaviour.SetClickMask(__instance.ButtonClickMask);
-                    //        optionBehaviour.SetUpFromData(baseGameSetting, 20);
-                    //        __instance.Children.Add(optionBehaviour);
-                    //        break;
-                    //    }
+                //case OptionTypes.Player:
+                //    {
+                //        OptionBehaviour optionBehaviour = UnityEngine.Object.Instantiate<PlayerOption>(__instance.playerOptionOrigin, Vector3.zero, Quaternion.identity, __instance.settingsContainer);
+                //        break;
+                //    }
+                default:
+                    continue;
             }
-            num -= 0.45f;
+            optionBehaviour.transform.localPosition = new Vector3(0.952f, num, -2f);
+            optionBehaviour.SetClickMask(__instance.ButtonClickMask);
+            optionBehaviour.SetUpFromData(baseGameSetting, 20);
+            ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
+            ModGameOptionsMenu.BehaviourList.TryAdd(index, optionBehaviour);
+            optionBehaviour.gameObject.SetActive(enabled);
+            __instance.Children.Add(optionBehaviour);
+
+            if (enabled) num -= 0.45f;
         }
+
+        __instance.ControllerSelectable.Clear();
         foreach (var x in __instance.scrollBar.GetComponentsInChildren<UiElement>())
             __instance.ControllerSelectable.Add(x);
         __instance.scrollBar.SetYBoundsMax(-num - 1.65f);
 
         return false;
+    }
+    [HarmonyPatch(nameof(GameOptionsMenu.ValueChanged)), HarmonyPrefix]
+    private static bool ValueChangedPrefix(GameOptionsMenu __instance, OptionBehaviour option)
+    {
+        if (ModGameOptionsMenu.TabIndex < 3) return true;
+
+        if (ModGameOptionsMenu.OptionList.TryGetValue(option, out var index))
+        {
+            var item = OptionItem.AllOptions[index];
+            if (item != null && item.Children.Count > 0) ReCreateSettings(__instance);
+        }
+        return false;
+    }
+    private static void ReCreateSettings(GameOptionsMenu __instance)
+    {
+        if (ModGameOptionsMenu.TabIndex < 3) return;
+        var modTab = (TabGroup)(ModGameOptionsMenu.TabIndex - 3);
+
+        //float num = 0.713f;
+        float num = 2.0f;
+        for (int index = 0; index < OptionItem.AllOptions.Count; index++)
+        {
+            var option = OptionItem.AllOptions[index];
+            if (option.Tab != modTab) continue;
+
+            var enabled = !option.IsHiddenOn(Options.CurrentGameMode)
+                         && (option.Parent == null || (!option.Parent.IsHiddenOn(Options.CurrentGameMode) && option.Parent.GetBool()));
+
+            if (ModGameOptionsMenu.CategoryHeaderList.TryGetValue(index, out var categoryHeaderMasked))
+            {
+                categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, num, -2f);
+                categoryHeaderMasked.gameObject.SetActive(enabled);
+                if (enabled) num -= 0.63f;
+            }
+            if (ModGameOptionsMenu.BehaviourList.TryGetValue(index, out var optionBehaviour))
+            {
+                optionBehaviour.transform.localPosition = new Vector3(0.952f, num, -2f);
+                optionBehaviour.gameObject.SetActive(enabled);
+                if (enabled) num -= 0.45f;
+            }
+        }
+
+        __instance.ControllerSelectable.Clear();
+        foreach (var x in __instance.scrollBar.GetComponentsInChildren<UiElement>())
+            __instance.ControllerSelectable.Add(x);
+        __instance.scrollBar.SetYBoundsMax(-num - 1.65f);
     }
     private static BaseGameSetting GetSetting(OptionItem item)
     {
