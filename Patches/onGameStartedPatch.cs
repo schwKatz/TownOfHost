@@ -749,6 +749,7 @@ class SelectRolesPatch
                     pair.Item1.StartCoroutine(pair.Item1.CoSetRole(pair.Item2, false));
                     sender.Value.AutoStartRpc(pair.Item1.NetId, (byte)RpcCalls.SetRole, Utils.GetPlayerById(sender.Key).GetClientId())
                         .Write((ushort)pair.Item2)
+                        .Write(false)           //canOverrideRole = false
                         .EndRpc();
                 }
                 sender.Value.EndMessage();

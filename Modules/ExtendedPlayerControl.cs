@@ -155,11 +155,12 @@ namespace TownOfHostY
 
             var clientId = seer.GetClientId();
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetName, Hazel.SendOption.Reliable, clientId);
+            writer.Write(player.Data.NetId);
             writer.Write(name);
             writer.Write(DontShowOnModdedClient);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
-        public static void RpcSetRoleDesync(this PlayerControl player, RoleTypes role, int clientId)
+        public static void RpcSetRoleDesync(this PlayerControl player, RoleTypes role, int clientId, bool canOverrideRole = false)
         {
             //player: 名前の変更対象
 
@@ -171,6 +172,7 @@ namespace TownOfHostY
             }
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetRole, Hazel.SendOption.Reliable, clientId);
             writer.Write((ushort)role);
+            writer.Write(canOverrideRole);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
