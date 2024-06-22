@@ -319,6 +319,30 @@ public static class NumberOptionPatch
         if (item == null) return value.ToString(__instance.FormatString);
         return string.Format(Translator.GetString("Format." + item.ValueFormat), value);
     }
+    [HarmonyPatch(nameof(NumberOption.Increase)), HarmonyPrefix]
+    public static bool IncreasePrefix(NumberOption __instance)
+    {
+        if (__instance.Value == __instance.ValidRange.max)
+        {
+            __instance.Value = __instance.ValidRange.min;
+            __instance.UpdateValue();
+            __instance.OnValueChanged.Invoke(__instance);
+            return false;
+        }
+        return true;
+    }
+    [HarmonyPatch(nameof(NumberOption.Decrease)), HarmonyPrefix]
+    public static bool DecreasePrefix(NumberOption __instance)
+    {
+        if (__instance.Value == __instance.ValidRange.min)
+        {
+            __instance.Value = __instance.ValidRange.max;
+            __instance.UpdateValue();
+            __instance.OnValueChanged.Invoke(__instance);
+            return false;
+        }
+        return true;
+    }
 }
 [HarmonyPatch(typeof(StringOption))]
 public static class StringOptionPatch
@@ -363,6 +387,30 @@ public static class StringOptionPatch
                     __instance.ValueText.text = Translator.GetString(stringOptionItem.Selections[stringOptionItem.Rule.GetValueByIndex(__instance.Value)]);
                 }
             }
+            return false;
+        }
+        return true;
+    }
+    [HarmonyPatch(nameof(StringOption.Increase)), HarmonyPrefix]
+    public static bool IncreasePrefix(StringOption __instance)
+    {
+        if (__instance.Value == __instance.Values.Length - 1)
+        {
+            __instance.Value = 0;
+            __instance.UpdateValue();
+            __instance.OnValueChanged.Invoke(__instance);
+            return false;
+        }
+        return true;
+    }
+    [HarmonyPatch(nameof(StringOption.Decrease)), HarmonyPrefix]
+    public static bool DecreasePrefix(StringOption __instance)
+    {
+        if (__instance.Value == 0)
+        {
+            __instance.Value = __instance.Values.Length - 1;
+            __instance.UpdateValue();
+            __instance.OnValueChanged.Invoke(__instance);
             return false;
         }
         return true;
