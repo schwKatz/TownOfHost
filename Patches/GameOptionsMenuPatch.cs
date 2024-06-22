@@ -55,7 +55,7 @@ public static class GameOptionsMenuPatch
                         optionBehaviour.SetClickMask(__instance.ButtonClickMask);
                         optionBehaviour.SetUpFromData(baseGameSetting, 20);
                         ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
-                        Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
+                        //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         __instance.Children.Add(optionBehaviour);
                         break;
                     }
@@ -66,7 +66,7 @@ public static class GameOptionsMenuPatch
                         optionBehaviour.SetClickMask(__instance.ButtonClickMask);
                         optionBehaviour.SetUpFromData(baseGameSetting, 20);
                         ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
-                        Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
+                        //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         __instance.Children.Add(optionBehaviour);
                         break;
                     }
@@ -78,7 +78,7 @@ public static class GameOptionsMenuPatch
                         optionBehaviour.SetClickMask(__instance.ButtonClickMask);
                         optionBehaviour.SetUpFromData(baseGameSetting, 20);
                         ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
-                        Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
+                        //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         __instance.Children.Add(optionBehaviour);
                         break;
                     }
@@ -160,7 +160,6 @@ public static class GameOptionsMenuPatch
     [HarmonyPatch(nameof(GameOptionsMenu.Initialize)), HarmonyPrefix]
     private static bool InitializePrefix(GameOptionsMenu __instance)
     {
-        __instance.Children = null;
         if (ModGameOptionsMenu.TabIndex < 3) return true;
 
         if (__instance.Children == null || __instance.Children.Count == 0)
@@ -198,7 +197,7 @@ public static class ToggleOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "ToggleOption.Initialize.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "ToggleOption.Initialize.TryGetValue");
             __instance.TitleText.text = Translator.GetString(item.Name);
             __instance.CheckMark.enabled = item.GetBool();
             return false;
@@ -211,7 +210,7 @@ public static class ToggleOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "ToggleOption.UpdateValue.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "ToggleOption.UpdateValue.TryGetValue");
             item.SetValue(__instance.GetBool() ? 1 : 0);
             return false;
         }
@@ -227,7 +226,7 @@ public static class NumberOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "NumberOption.Initialize.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "NumberOption.Initialize.TryGetValue");
             __instance.TitleText.text = Translator.GetString(item.Name);
             return false;
         }
@@ -239,7 +238,7 @@ public static class NumberOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "NumberOption.UpdateValue.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "NumberOption.UpdateValue.TryGetValue");
 
             if (item is IntegerOptionItem integerOptionItem)
             {
@@ -260,7 +259,7 @@ public static class NumberOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "NumberOption.FixedUpdate.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "NumberOption.FixedUpdate.TryGetValue");
 
             if (__instance.oldValue != __instance.Value)
             {
@@ -287,7 +286,7 @@ public static class StringOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "StringOption.Initialize.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "StringOption.Initialize.TryAdd");
             __instance.TitleText.text = Translator.GetString(item.Name);
             return false;
         }
