@@ -112,6 +112,8 @@ public class GameSettingMenuPatch
         //if (templateStringOption == null) return;
 
         ModGameOptionsMenu.OptionList= new();
+        ModGameOptionsMenu.BehaviourList = new();
+        ModGameOptionsMenu.CategoryHeaderList = new();
 
         // 各グループ毎にタブを作成する/基盤作成
         ModSettingsTabs = new();
