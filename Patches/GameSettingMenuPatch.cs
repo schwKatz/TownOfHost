@@ -39,288 +39,338 @@ public class GameSettingMenuPatch
         "Add-Ons"
     };
 
+    // 左側配置ボタン座標
+    private static Vector3 buttonPosition_Left = new(-3.9f, -0.4f, 0f);
+    // 右側配置ボタン座標
+    private static Vector3 buttonPosition_Right = new(-2.4f, -0.4f, 0f);
+    // ボタンサイズ
+    private static Vector3 buttonSize = new(0.45f, 0.55f, 1f);
+
+    private static GameOptionsMenu templateGameOptionsMenu;
+    private static PassiveButton templateGameSettingsButton;
+
     // MOD設定用ボタン格納変数
     static Dictionary<TabGroup, PassiveButton> ModSettingsButtons = new();
     // MOD設定メニュー用タブ格納変数
     static Dictionary<TabGroup, GameOptionsMenu> ModSettingsTabs = new();
 
     // ゲーム設定メニュー 初期関数
-    [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start))]
+    [HarmonyPatch(nameof(GameSettingMenu.Start)), HarmonyPrefix]
     [HarmonyPriority(Priority.First)]
-    public static class StartPatch
+    public static void StartPostfix(GameSettingMenu __instance)
     {
-        public static void Postfix(GameSettingMenu __instance)
+        /******** ボタン作成 ********/
+
+        // 各グループ毎にボタンを作成する
+        ModSettingsButtons = new();
+        foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
         {
-            /******** ボタン作成 ********/
-
-            // 左側配置ボタン座標
-            Vector3 buttonPosition_Left = new(-3.9f, -0.4f, 0f);
-            // 右側配置ボタン座標
-            Vector3 buttonPosition_Right = new(-2.4f, -0.4f, 0f);
-            // ボタンサイズ
-            Vector3 buttonSize = new(0.45f, 0.55f, 1f);
-
-            // 各グループ毎にボタンを作成する
-            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
-            {
-                // ゲーム設定ボタンを元にコピー
-                var button = Object.Instantiate(__instance.GameSettingsButton, __instance.GameSettingsButton.transform.parent);
-                // 名前は「button_ + ボタン名」
-                button.name = "Button_" + buttonName[(int)tab + 1]; // buttonName[0]はバニラ設定用の名前なので+1
-                // ボタンテキスト
-                var label = button.GetComponentInChildren<TextMeshPro>();
-                // ボタンテキストの翻訳破棄
-                label.DestroyTranslator();
-                // ボタンテキストの名前変更
-                label.text = buttonName[(int)tab + 1];
-                // ボタンテキストの色変更
-                button.activeTextColor = button.inactiveTextColor = Color.black;
-                // ボタンテキストの選択中の色変更
-                button.selectedTextColor = Color.blue;
-
-                // ボタンのスプライト取得
-                var tabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_{tab}.png", 100f);
-                // 各種スプライトをオリジナルのものに変更
-                button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
-                button.activeSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
-                button.selectedSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
-
-                // Y座標オフセット
-                Vector3 offset = new (0.0f, 0.5f * (((int)tab + 1) / 2), 0.0f);
-                // ボタンの座標設定
-                button.transform.localPosition = ((((int)tab + 1) % 2 == 0) ? buttonPosition_Left : buttonPosition_Right) - offset;
-                // ボタンのサイズ設定
-                button.transform.localScale = buttonSize;
-
-                // ボタンがクリックされた時の設定
-                var buttonComponent = button.GetComponent<PassiveButton>();
-                buttonComponent.OnClick = new();
-                // ボタンがクリックされるとタブをそのものに変更する
-                buttonComponent.OnClick.AddListener(
-                    (Action)(() => __instance.ChangeTab((int)tab + 3, false)));
-
-                // ボタン登録
-                ModSettingsButtons.Add(tab, button);
-            }/******** ボタン作成 ここまで ********/
-
-            /******** デフォルトボタン設定 ********/
-            // プリセット設定 非表示
-            __instance.GamePresetsButton.gameObject.SetActive(false);
-
-            /**** ゲーム設定ボタンを変更 ****/
-            var gameSettingButton = __instance.GameSettingsButton;
-            // 座標指定
-            gameSettingButton.transform.localPosition = new(-3f, -0.5f, 0f);
+            // ゲーム設定ボタンを元にコピー
+            var button = Object.Instantiate(templateGameSettingsButton, __instance.GameSettingsButton.transform.parent);
+            button.gameObject.SetActive(true);
+            // 名前は「button_ + ボタン名」
+            button.name = "Button_" + buttonName[(int)tab + 1]; // buttonName[0]はバニラ設定用の名前なので+1
             // ボタンテキスト
-            var textLabel = gameSettingButton.GetComponentInChildren<TextMeshPro>();
-            // 翻訳破棄
-            textLabel.DestroyTranslator();
-            // バニラ設定ボタンの名前を設定
-            textLabel.text = buttonName[0];
+            var label = button.GetComponentInChildren<TextMeshPro>();
+            // ボタンテキストの翻訳破棄
+            label.DestroyTranslator();
+            // ボタンテキストの名前変更
+            label.text = buttonName[(int)tab + 1];
             // ボタンテキストの色変更
-            gameSettingButton.activeTextColor = gameSettingButton.inactiveTextColor = Color.black;
+            button.activeTextColor = button.inactiveTextColor = Color.black;
             // ボタンテキストの選択中の色変更
-            gameSettingButton.selectedTextColor = Color.blue;
+            button.selectedTextColor = Color.blue;
 
             // ボタンのスプライト取得
-            var vanillaTabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_VanillaGameSettings.png", 100f);
+            var tabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_{tab}.png", 100f);
             // 各種スプライトをオリジナルのものに変更
-            gameSettingButton.inactiveSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
-            gameSettingButton.activeSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
-            gameSettingButton.selectedSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+            button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
+            button.activeSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
+            button.selectedSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
+
+            // Y座標オフセット
+            Vector3 offset = new (0.0f, 0.5f * (((int)tab + 1) / 2), 0.0f);
             // ボタンの座標設定
-            gameSettingButton.transform.localPosition = buttonPosition_Left;
+            button.transform.localPosition = ((((int)tab + 1) % 2 == 0) ? buttonPosition_Left : buttonPosition_Right) - offset;
             // ボタンのサイズ設定
-            gameSettingButton.transform.localScale = buttonSize;
-            /**** ゲーム設定ボタンを変更 ここまで ****/
+            button.transform.localScale = buttonSize;
 
-            // バニラ役職設定 非表示
-            __instance.RoleSettingsButton.gameObject.SetActive(false);
-            /******** デフォルトボタン設定 ここまで ********/
+            // ボタンがクリックされた時の設定
+            var buttonComponent = button.GetComponent<PassiveButton>();
+            buttonComponent.OnClick = new();
+            // ボタンがクリックされるとタブをそのものに変更する
+            buttonComponent.OnClick.AddListener(
+                (Action)(() => __instance.ChangeTab((int)tab + 3, false)));
 
-            /******** タブ作成 ********/
-            //// ストリングオプションのテンプレート作成
-            //var templateStringOption = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
-            //if (templateStringOption == null) return;
+            // ボタン登録
+            ModSettingsButtons.Add(tab, button);
+        }/******** ボタン作成 ここまで ********/
 
-            ModGameOptionsMenu.OptionList.Clear();
+        /******** タブ作成 ********/
+        //// ストリングオプションのテンプレート作成
+        //var templateStringOption = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
+        //if (templateStringOption == null) return;
 
-            // 各グループ毎にタブを作成する/基盤作成
-            ModSettingsTabs = new();
-            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
-            {
-                // ゲーム設定タブからコピー
-                var setTab = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform.parent);
-                // 名前はゲーム設定タブEnumから取得
-                setTab.name = ((GameSettingMenuTab)tab + 3).ToString();
-                //// 中身を削除
-                //setTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
-                //setTab.GetComponentsInChildren<CategoryHeaderMasked>().Do(x => Object.Destroy(x.gameObject));
-                setTab.gameObject.SetActive(false);
+        ModGameOptionsMenu.OptionList= new();
 
-                // 設定タブを追加
-                ModSettingsTabs.Add(tab, setTab);
-            }
+        // 各グループ毎にタブを作成する/基盤作成
+        ModSettingsTabs = new();
+        foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+        {
+            // ゲーム設定タブからコピー
+            var setTab = Object.Instantiate(templateGameOptionsMenu, __instance.GameSettingsTab.transform.parent);
+            // 名前はゲーム設定タブEnumから取得
+            setTab.name = ((GameSettingMenuTab)tab + 3).ToString();
+            //// 中身を削除
+            //setTab.GetComponentsInChildren<OptionBehaviour>().Do(x => Object.Destroy(x.gameObject));
+            //setTab.GetComponentsInChildren<CategoryHeaderMasked>().Do(x => Object.Destroy(x.gameObject));
+            setTab.gameObject.SetActive(false);
 
-            //⇒GamOptionsMenuPatchで処理
-            //// 各グループ毎にタブを作成する/中身追加
-            //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
-            //{
-            //    // オプションをまとめて格納する
-            //    Il2CppSystem.Collections.Generic.List<OptionBehaviour> scOptions = new();
-
-            //    // オプションを全てまわす
-            //    foreach (var option in OptionItem.AllOptions)
-            //    {
-            //        // オプションを出すタブでないなら次
-            //        if (option.Tab != tab) continue;
-
-            //        // ビヘイビアがまだ設定されていないなら
-            //        if (option.OptionBehaviour == null)
-            //        {
-            //            // ストリングオプションをコピー
-            //            var stringOption = Object.Instantiate(templateStringOption, GameObject.Find($"{ModSettingsTabs[tab].name}/Scroller/SliderInner").transform);
-            //            // オプションListに追加
-            //            scOptions.Add(stringOption);
-            //            stringOption.OnValueChanged = new System.Action<OptionBehaviour>((o) => { });
-            //            stringOption.TitleText.text = option.Name;
-            //            stringOption.Value = stringOption.oldValue = option.CurrentValue;
-            //            stringOption.ValueText.text = option.GetString();
-            //            stringOption.name = option.Name;
-            //            stringOption.transform.FindChild("LabelBackground").localScale = new Vector3(1.6f, 1f, 1f);
-            //            stringOption.transform.FindChild("LabelBackground").SetLocalX(-2.2695f);
-            //            stringOption.transform.FindChild("PlusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 1.1434f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
-            //            stringOption.transform.FindChild("MinusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 0.3463f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
-            //            stringOption.transform.FindChild("Value_TMP (1)").localPosition += new Vector3(0.7322f, 0f, 0f);
-            //            stringOption.transform.FindChild("ValueBox").localScale += new Vector3(0.2f, 0f, 0f);
-            //            stringOption.transform.FindChild("ValueBox").localPosition += new Vector3(0.7322f, 0f, 0f);
-            //            stringOption.transform.FindChild("Title Text").localPosition += new Vector3(-1.096f, 0f, 0f);
-            //            stringOption.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.5f, 0.37f);
-            //            stringOption.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
-            //            stringOption.SetClickMask(ModSettingsTabs[tab].ButtonClickMask);
-
-            //            // ビヘイビアに作成したストリングオプションを設定
-            //            option.OptionBehaviour = stringOption;
-            //        }
-            //        // ビヘイビアのobjectを表示
-            //        option.OptionBehaviour.gameObject.SetActive(true);
-            //    }
-            //    // タブの子にオプションリストを設定
-            //    ModSettingsTabs[tab].Children = scOptions;
-            //    // 選択されるときに表示するため、初期値はfalse
-            //    ModSettingsTabs[tab].gameObject.SetActive(false);
-            //    // 有効にする
-            //    ModSettingsTabs[tab].enabled = true;
-            //}
+            // 設定タブを追加
+            ModSettingsTabs.Add(tab, setTab);
         }
+
+        foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+        {
+            if (ModSettingsButtons.TryGetValue(tab, out var button))
+            {
+                __instance.ControllerSelectable.Add(button);
+            }
+        }
+
+        //⇒GamOptionsMenuPatchで処理
+        //// 各グループ毎にタブを作成する/中身追加
+        //foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
+        //{
+        //    // オプションをまとめて格納する
+        //    Il2CppSystem.Collections.Generic.List<OptionBehaviour> scOptions = new();
+
+        //    // オプションを全てまわす
+        //    foreach (var option in OptionItem.AllOptions)
+        //    {
+        //        // オプションを出すタブでないなら次
+        //        if (option.Tab != tab) continue;
+
+        //        // ビヘイビアがまだ設定されていないなら
+        //        if (option.OptionBehaviour == null)
+        //        {
+        //            // ストリングオプションをコピー
+        //            var stringOption = Object.Instantiate(templateStringOption, GameObject.Find($"{ModSettingsTabs[tab].name}/Scroller/SliderInner").transform);
+        //            // オプションListに追加
+        //            scOptions.Add(stringOption);
+        //            stringOption.OnValueChanged = new System.Action<OptionBehaviour>((o) => { });
+        //            stringOption.TitleText.text = option.Name;
+        //            stringOption.Value = stringOption.oldValue = option.CurrentValue;
+        //            stringOption.ValueText.text = option.GetString();
+        //            stringOption.name = option.Name;
+        //            stringOption.transform.FindChild("LabelBackground").localScale = new Vector3(1.6f, 1f, 1f);
+        //            stringOption.transform.FindChild("LabelBackground").SetLocalX(-2.2695f);
+        //            stringOption.transform.FindChild("PlusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 1.1434f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+        //            stringOption.transform.FindChild("MinusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 0.3463f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+        //            stringOption.transform.FindChild("Value_TMP (1)").localPosition += new Vector3(0.7322f, 0f, 0f);
+        //            stringOption.transform.FindChild("ValueBox").localScale += new Vector3(0.2f, 0f, 0f);
+        //            stringOption.transform.FindChild("ValueBox").localPosition += new Vector3(0.7322f, 0f, 0f);
+        //            stringOption.transform.FindChild("Title Text").localPosition += new Vector3(-1.096f, 0f, 0f);
+        //            stringOption.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.5f, 0.37f);
+        //            stringOption.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
+        //            stringOption.SetClickMask(ModSettingsTabs[tab].ButtonClickMask);
+
+        //            // ビヘイビアに作成したストリングオプションを設定
+        //            option.OptionBehaviour = stringOption;
+        //        }
+        //        // ビヘイビアのobjectを表示
+        //        option.OptionBehaviour.gameObject.SetActive(true);
+        //    }
+        //    // タブの子にオプションリストを設定
+        //    ModSettingsTabs[tab].Children = scOptions;
+        //    // 選択されるときに表示するため、初期値はfalse
+        //    ModSettingsTabs[tab].gameObject.SetActive(false);
+        //    // 有効にする
+        //    ModSettingsTabs[tab].enabled = true;
+        //}
+    }
+    private static void SetDefaultButton(GameSettingMenu __instance)
+    {
+        /******** デフォルトボタン設定 ********/
+        // プリセット設定 非表示
+        __instance.GamePresetsButton.gameObject.SetActive(false);
+
+        /**** ゲーム設定ボタンを変更 ****/
+        var gameSettingButton = __instance.GameSettingsButton;
+        // 座標指定
+        gameSettingButton.transform.localPosition = new(-3f, -0.5f, 0f);
+        // ボタンテキスト
+        var textLabel = gameSettingButton.GetComponentInChildren<TextMeshPro>();
+        // 翻訳破棄
+        textLabel.DestroyTranslator();
+        // バニラ設定ボタンの名前を設定
+        textLabel.text = buttonName[0];
+        // ボタンテキストの色変更
+        gameSettingButton.activeTextColor = gameSettingButton.inactiveTextColor = Color.black;
+        // ボタンテキストの選択中の色変更
+        gameSettingButton.selectedTextColor = Color.blue;
+
+        // ボタンのスプライト取得
+        var vanillaTabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_VanillaGameSettings.png", 100f);
+        // 各種スプライトをオリジナルのものに変更
+        gameSettingButton.inactiveSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+        gameSettingButton.activeSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+        gameSettingButton.selectedSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+        // ボタンの座標設定
+        gameSettingButton.transform.localPosition = buttonPosition_Left;
+        // ボタンのサイズ設定
+        gameSettingButton.transform.localScale = buttonSize;
+        /**** ゲーム設定ボタンを変更 ここまで ****/
+
+        // バニラ役職設定 非表示
+        __instance.RoleSettingsButton.gameObject.SetActive(false);
+        /******** デフォルトボタン設定 ここまで ********/
+
+        __instance.DefaultButtonSelected = gameSettingButton;
+        __instance.ControllerSelectable = new();
+        __instance.ControllerSelectable.Add(gameSettingButton);
     }
 
-    [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.ChangeTab))]
-    public static class ChangeTabPatch
+
+    [HarmonyPatch(nameof(GameSettingMenu.ChangeTab)), HarmonyPrefix]
+    public static bool ChangeTabPrefix(GameSettingMenu __instance, ref int tabNum, [HarmonyArgument(1)] bool previewOnly)
     {
-        public static bool Prefix(GameSettingMenu __instance, ref int tabNum, [HarmonyArgument(1)] bool previewOnly)
+        //// プリセットタブは表示させないため、ゲーム設定タブを設定する
+        //if (tabNum == (int)GameSettingMenuTab.GamePresets) {
+        //    tabNum = (int)GameSettingMenuTab.GameSettings;
+
+        //    // What Is this?のテキスト文を変更
+        //    // __instance.MenuDescriptionText.text = "test";
+        //}
+
+        ModGameOptionsMenu.TabIndex = tabNum;
+
+        GameOptionsMenu settingsTab;
+        PassiveButton button;
+
+        if ((previewOnly && Controller.currentTouchType == Controller.TouchType.Joystick) || !previewOnly)
         {
-            //// プリセットタブは表示させないため、ゲーム設定タブを設定する
-            //if (tabNum == (int)GameSettingMenuTab.GamePresets) {
-            //    tabNum = (int)GameSettingMenuTab.GameSettings;
-
-            //    // What Is this?のテキスト文を変更
-            //    // __instance.MenuDescriptionText.text = "test";
-            //}
-
-            ModGameOptionsMenu.TabIndex = tabNum;
-
-            GameOptionsMenu settingsTab;
-            PassiveButton button;
-
-            if ((previewOnly && Controller.currentTouchType == Controller.TouchType.Joystick) || !previewOnly)
+            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
-                foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
-                {
-                    if (ModSettingsTabs.TryGetValue(tab, out settingsTab) &&
-                        settingsTab != null)
-                    {
-                        settingsTab.gameObject.SetActive(false);
-                    }
-                }
-                foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
-                {
-                    if (ModSettingsButtons.TryGetValue(tab, out button) &&
-                        button != null)
-                    {
-                        button.SelectButton(false);
-                    }
-                }
-            }
-
-            if (tabNum < 3) return true;
-
-            if ((previewOnly && Controller.currentTouchType == Controller.TouchType.Joystick) || !previewOnly)
-            {
-                __instance.PresetsTab.gameObject.SetActive(false);
-                __instance.GameSettingsTab.gameObject.SetActive(false);
-                __instance.RoleSettingsTab.gameObject.SetActive(false);
-                __instance.GamePresetsButton.SelectButton(false);
-                __instance.GameSettingsButton.SelectButton(false);
-                __instance.RoleSettingsButton.SelectButton(false);
-
-                if (ModSettingsTabs.TryGetValue((TabGroup)(tabNum - 3), out settingsTab) &&
+                if (ModSettingsTabs.TryGetValue(tab, out settingsTab) &&
                     settingsTab != null)
                 {
-                    settingsTab.gameObject.SetActive(true);
-                    __instance.MenuDescriptionText.DestroyTranslator();
-                    __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
+                    settingsTab.gameObject.SetActive(false);
                 }
             }
-            if (previewOnly)
+            foreach (var tab in EnumHelper.GetAllValues<TabGroup>())
             {
-                __instance.ToggleLeftSideDarkener(false);
-                __instance.ToggleRightSideDarkener(true);
-                return false;
+                if (ModSettingsButtons.TryGetValue(tab, out button) &&
+                    button != null)
+                {
+                    button.SelectButton(false);
+                }
             }
-            __instance.ToggleLeftSideDarkener(true);
-            __instance.ToggleRightSideDarkener(false);
+        }
+
+        if (tabNum < 3) return true;
+
+        if ((previewOnly && Controller.currentTouchType == Controller.TouchType.Joystick) || !previewOnly)
+        {
+            __instance.PresetsTab.gameObject.SetActive(false);
+            __instance.GameSettingsTab.gameObject.SetActive(false);
+            __instance.RoleSettingsTab.gameObject.SetActive(false);
+            __instance.GamePresetsButton.SelectButton(false);
+            __instance.GameSettingsButton.SelectButton(false);
+            __instance.RoleSettingsButton.SelectButton(false);
+
             if (ModSettingsTabs.TryGetValue((TabGroup)(tabNum - 3), out settingsTab) &&
                 settingsTab != null)
             {
-                settingsTab.OpenMenu();
-                __instance.GamePresetsButton.SelectButton(true);
+                settingsTab.gameObject.SetActive(true);
+                __instance.MenuDescriptionText.DestroyTranslator();
+                __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
             }
-            if (ModSettingsButtons.TryGetValue((TabGroup)(tabNum - 3), out button) &&
-                button != null)
-            {
-                button.SelectButton(true);
-            }
-
+        }
+        if (previewOnly)
+        {
+            __instance.ToggleLeftSideDarkener(false);
+            __instance.ToggleRightSideDarkener(true);
             return false;
         }
-        //public static void Postfix(GameSettingMenu __instance, [HarmonyArgument(0)] int tabNum, [HarmonyArgument(1)] bool previewOnly)
-        //{
-        //    if (!previewOnly)
-        //    {
+        __instance.ToggleLeftSideDarkener(true);
+        __instance.ToggleRightSideDarkener(false);
+        if (ModSettingsTabs.TryGetValue((TabGroup)(tabNum - 3), out settingsTab) &&
+            settingsTab != null)
+        {
+            settingsTab.OpenMenu();
+            __instance.GamePresetsButton.SelectButton(true);
+        }
+        if (ModSettingsButtons.TryGetValue((TabGroup)(tabNum - 3), out button) &&
+            button != null)
+        {
+            button.SelectButton(true);
+        }
 
-        //        if (ModSettingsTabs == null) return;
-        //        // 追加したTabの非表示(全リセット)
-        //        ModSettingsTabs.Do(x => x.Value.gameObject.SetActive(false));
-        //        ModSettingsButtons.Do(x => x.Value.SelectButton(false));
+        return false;
+    }
+    //public static void Postfix(GameSettingMenu __instance, [HarmonyArgument(0)] int tabNum, [HarmonyArgument(1)] bool previewOnly)
+    //{
+    //    if (!previewOnly)
+    //    {
 
-        //        // MODではない設定を次に表示させるときはここで終わり
-        //        if (tabNum < (int)GameSettingMenuTab.Mod_MainSettings) return;
+    //        if (ModSettingsTabs == null) return;
+    //        // 追加したTabの非表示(全リセット)
+    //        ModSettingsTabs.Do(x => x.Value.gameObject.SetActive(false));
+    //        ModSettingsButtons.Do(x => x.Value.SelectButton(false));
 
-        //        // 次表示がMODで追加されたタブの場合の設定
-        //        ModSettingsTabs[(TabGroup)tabNum - 3].gameObject.SetActive(true);
-        //        // What Is this?のテキスト文の翻訳破棄
-        //        __instance.MenuDescriptionText.DestroyTranslator();
-        //        // What Is this?のテキスト文の設定
-        //        __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
+    //        // MODではない設定を次に表示させるときはここで終わり
+    //        if (tabNum < (int)GameSettingMenuTab.Mod_MainSettings) return;
 
-        //        __instance.ToggleLeftSideDarkener(true);
-        //        __instance.ToggleRightSideDarkener(false);
+    //        // 次表示がMODで追加されたタブの場合の設定
+    //        ModSettingsTabs[(TabGroup)tabNum - 3].gameObject.SetActive(true);
+    //        // What Is this?のテキスト文の翻訳破棄
+    //        __instance.MenuDescriptionText.DestroyTranslator();
+    //        // What Is this?のテキスト文の設定
+    //        __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
 
-        //        ModSettingsTabs[(TabGroup)tabNum - 3].OpenMenu();
-        //        ModSettingsButtons[(TabGroup)tabNum - 3].SelectButton(true);
-        //    }
-        //}
+    //        __instance.ToggleLeftSideDarkener(true);
+    //        __instance.ToggleRightSideDarkener(false);
+
+    //        ModSettingsTabs[(TabGroup)tabNum - 3].OpenMenu();
+    //        ModSettingsButtons[(TabGroup)tabNum - 3].SelectButton(true);
+    //    }
+    //}
+    [HarmonyPatch(nameof(GameSettingMenu.OnEnable)), HarmonyPrefix]
+    private static bool OnEnablePrefix(GameSettingMenu __instance)
+    {
+        if (templateGameOptionsMenu == null)
+        {
+            templateGameOptionsMenu = Object.Instantiate(__instance.GameSettingsTab, __instance.GameSettingsTab.transform.parent);
+            templateGameOptionsMenu.gameObject.SetActive(false);
+        }
+        if (templateGameSettingsButton == null)
+        {
+            templateGameSettingsButton = Object.Instantiate(__instance.GameSettingsButton, __instance.GameSettingsButton.transform.parent);
+            templateGameSettingsButton.gameObject.SetActive(false);
+        }
+
+        SetDefaultButton(__instance);
+
+        ControllerManager.Instance.OpenOverlayMenu(__instance.name, __instance.BackButton, __instance.DefaultButtonSelected, __instance.ControllerSelectable, false);
+        DestroyableSingleton<HudManager>.Instance.menuNavigationPrompts.SetActive(false);
+        if (Controller.currentTouchType != Controller.TouchType.Joystick)
+        {
+            __instance.ChangeTab(1, Controller.currentTouchType == Controller.TouchType.Joystick);
+        }
+        __instance.StartCoroutine(__instance.CoSelectDefault());
+
+        return false;
+    }
+    [HarmonyPatch(nameof(GameSettingMenu.Close)), HarmonyPostfix]
+    private static void ClosePostfix(GameSettingMenu __instance)
+    {
+        foreach (var button in ModSettingsButtons.Values)
+            UnityEngine.Object.Destroy(button);
+        foreach (var tab in ModSettingsTabs.Values)
+            UnityEngine.Object.Destroy(tab);
+        ModSettingsButtons = new();
+        ModSettingsTabs = new();
     }
 }
 

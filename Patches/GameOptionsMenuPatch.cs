@@ -1,7 +1,6 @@
 using Il2CppSystem.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
-
 namespace TownOfHostY;
 
 public static class ModGameOptionsMenu
@@ -12,22 +11,43 @@ public static class ModGameOptionsMenu
 [HarmonyPatch(typeof(GameOptionsMenu))]
 public static class GameOptionsMenuPatch
 {
-    //[HarmonyPatch(nameof(GameOptionsMenu.Awake)), HarmonyPrefix]
-    //private static bool AwakePrefix(GameOptionsMenu __instance)
-    //{
-    //    __instance.MaskBg.material.SetInt(PlayerMaterial.MaskLayer, 20);
-    //    __instance.MaskArea.material.SetInt(PlayerMaterial.MaskLayer, 20);
-    //    return false;
-    //}
+    [HarmonyPatch(nameof(GameOptionsMenu.Initialize)), HarmonyPrefix]
+    private static bool InitializePrefix(GameOptionsMenu __instance)
+    {
+        if (ModGameOptionsMenu.TabIndex < 3) return true;
+
+        if (__instance.Children == null || __instance.Children.Count == 0)
+        {
+            __instance.MapPicker.gameObject.SetActive(false);
+            //__instance.MapPicker.Initialize(20);
+            //BaseGameSetting mapNameSetting = GameManager.Instance.GameSettingsList.MapNameSetting;
+            //__instance.MapPicker.SetUpFromData(mapNameSetting, 20);
+            __instance.Children = new Il2CppSystem.Collections.Generic.List<OptionBehaviour>();
+            //__instance.Children.Add(__instance.MapPicker);
+            __instance.CreateSettings();
+            __instance.cachedData = GameOptionsManager.Instance.CurrentGameOptions;
+            //for (int i = 0; i < GameOptionsMenuMod.ModChildren.Count; i++)
+            //{
+            //    OptionBehaviour optionBehaviour = __instance.Children[i];
+            //    optionBehaviour.OnValueChanged = new Action<OptionBehaviour>(__instance.ValueChanged);
+            //    if (AmongUsClient.Instance && !AmongUsClient.Instance.AmHost)
+            //    {
+            //        optionBehaviour.SetAsPlayer();
+            //    }
+            //}
+            __instance.InitializeControllerNavigation();
+        }
+
+        return false;
+    }
     [HarmonyPatch(nameof(GameOptionsMenu.CreateSettings)), HarmonyPrefix]
     private static bool CreateSettingsPrefix(GameOptionsMenu __instance)
     {
         if (ModGameOptionsMenu.TabIndex < 3) return true;
         var modTab = (TabGroup)(ModGameOptionsMenu.TabIndex - 3);
-        //var modTab = TabGroup.ImpostorRoles;
 
-        float num = 0.713f;
-        //foreach (var option in OptionItem.AllOptions.Where(x => x.Tab == TabGroup.ImpostorRoles))
+        //float num = 0.713f;
+        float num = 2.0f;
         for (int index = 0; index < OptionItem.AllOptions.Count; index++)
         {
             var option = OptionItem.AllOptions[index];
@@ -55,7 +75,7 @@ public static class GameOptionsMenuPatch
                         optionBehaviour.SetClickMask(__instance.ButtonClickMask);
                         optionBehaviour.SetUpFromData(baseGameSetting, 20);
                         ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
-                        Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
+                        //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         __instance.Children.Add(optionBehaviour);
                         break;
                     }
@@ -66,7 +86,7 @@ public static class GameOptionsMenuPatch
                         optionBehaviour.SetClickMask(__instance.ButtonClickMask);
                         optionBehaviour.SetUpFromData(baseGameSetting, 20);
                         ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
-                        Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
+                        //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         __instance.Children.Add(optionBehaviour);
                         break;
                     }
@@ -78,7 +98,7 @@ public static class GameOptionsMenuPatch
                         optionBehaviour.SetClickMask(__instance.ButtonClickMask);
                         optionBehaviour.SetUpFromData(baseGameSetting, 20);
                         ModGameOptionsMenu.OptionList.TryAdd(optionBehaviour, index);
-                        Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
+                        //Logger.Info($"{option.Name}, {index}", "OptionList.TryAdd");
                         __instance.Children.Add(optionBehaviour);
                         break;
                     }
@@ -157,35 +177,6 @@ public static class GameOptionsMenuPatch
 
         return baseGameSetting;
     }
-    [HarmonyPatch(nameof(GameOptionsMenu.Initialize)), HarmonyPrefix]
-    private static bool InitializePrefix(GameOptionsMenu __instance)
-    {
-        __instance.Children = null;
-        if (ModGameOptionsMenu.TabIndex < 3) return true;
-
-        if (__instance.Children == null || __instance.Children.Count == 0)
-        {
-            __instance.MapPicker.Initialize(20);
-            BaseGameSetting mapNameSetting = GameManager.Instance.GameSettingsList.MapNameSetting;
-            __instance.MapPicker.SetUpFromData(mapNameSetting, 20);
-            __instance.Children = new Il2CppSystem.Collections.Generic.List<OptionBehaviour>();
-            __instance.Children.Add(__instance.MapPicker);
-            __instance.CreateSettings();
-            __instance.cachedData = GameOptionsManager.Instance.CurrentGameOptions;
-            //for (int i = 0; i < GameOptionsMenuMod.ModChildren.Count; i++)
-            //{
-            //    OptionBehaviour optionBehaviour = __instance.Children[i];
-            //    optionBehaviour.OnValueChanged = new Action<OptionBehaviour>(__instance.ValueChanged);
-            //    if (AmongUsClient.Instance && !AmongUsClient.Instance.AmHost)
-            //    {
-            //        optionBehaviour.SetAsPlayer();
-            //    }
-            //}
-            __instance.InitializeControllerNavigation();
-        }
-
-        return false;
-    }
 }
 
 
@@ -198,7 +189,7 @@ public static class ToggleOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "ToggleOption.Initialize.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "ToggleOption.Initialize.TryGetValue");
             __instance.TitleText.text = Translator.GetString(item.Name);
             __instance.CheckMark.enabled = item.GetBool();
             return false;
@@ -211,7 +202,7 @@ public static class ToggleOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "ToggleOption.UpdateValue.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "ToggleOption.UpdateValue.TryGetValue");
             item.SetValue(__instance.GetBool() ? 1 : 0);
             return false;
         }
@@ -227,7 +218,7 @@ public static class NumberOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "NumberOption.Initialize.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "NumberOption.Initialize.TryGetValue");
             __instance.TitleText.text = Translator.GetString(item.Name);
             return false;
         }
@@ -239,7 +230,7 @@ public static class NumberOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "NumberOption.UpdateValue.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "NumberOption.UpdateValue.TryGetValue");
 
             if (item is IntegerOptionItem integerOptionItem)
             {
@@ -260,7 +251,7 @@ public static class NumberOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "NumberOption.FixedUpdate.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "NumberOption.FixedUpdate.TryGetValue");
 
             if (__instance.oldValue != __instance.Value)
             {
@@ -287,7 +278,7 @@ public static class StringOptionPatch
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];
-            Logger.Info($"{item.Name}, {index}", "StringOption.Initialize.TryAdd");
+            //Logger.Info($"{item.Name}, {index}", "StringOption.Initialize.TryAdd");
             __instance.TitleText.text = Translator.GetString(item.Name);
             return false;
         }
