@@ -29,12 +29,12 @@ public class GameSettingMenuPatch
 
     // ボタンに表示する名前
     public static string[] buttonName = new string[]{
-        "Game Setup",
-        "Mod Setup",
-        "Impostors",
-        "Madmates",
-        "Crewmates",
-        "Neutrals",
+        "Game Settings",
+        "TOH_Y Settings",
+        "Impostor Roles",
+        "Madmate Roles",
+        "Crewmate Roles",
+        "Neutral Roles",
         "Unit Roles",
         "Add-Ons"
     };
@@ -44,7 +44,7 @@ public class GameSettingMenuPatch
     // 右側配置ボタン座標
     private static Vector3 buttonPosition_Right = new(-2.4f, -0.4f, 0f);
     // ボタンサイズ
-    private static Vector3 buttonSize = new(0.45f, 0.55f, 1f);
+    private static Vector3 buttonSize = new(0.45f, 0.6f, 1f);
 
     private static GameOptionsMenu templateGameOptionsMenu;
     private static PassiveButton templateGameSettingsButton;
