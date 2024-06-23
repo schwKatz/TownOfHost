@@ -76,4 +76,18 @@ namespace TownOfHostY
             get => Opt.GetFloat(FloatOptionNames.PhantomDuration);
             set => Opt.SetFloat(FloatOptionNames.PhantomDuration, value);
     }
+        public static float TrackerCooldown
+        {
+            get => Opt.GetFloat(FloatOptionNames.TrackerCooldown);
+            set => Opt.SetFloat(FloatOptionNames.TrackerCooldown, value);
+        }
+        public static float TrackerDuration
+        {
+            get => Opt.GetFloat(FloatOptionNames.TrackerDuration);
+            set => Opt.SetFloat(FloatOptionNames.TrackerDuration, value);
+        }
+        public static float TrackerDelay
+        {
+            get => Opt.GetFloat(FloatOptionNames.TrackerDelay);
+            set => Opt.SetFloat(FloatOptionNames.TrackerDelay, value);
 }

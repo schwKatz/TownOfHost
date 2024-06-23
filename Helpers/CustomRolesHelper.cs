@@ -64,6 +64,7 @@ namespace TownOfHostY
                 CustomRoles.NormalEngineer => CustomRoles.Engineer,
                 CustomRoles.NormalScientist => CustomRoles.Scientist,
                 CustomRoles.NormalPhantom => CustomRoles.Phantom,
+                CustomRoles.NormalTracker => CustomRoles.Tracker,
                 _ => role
             };
         }

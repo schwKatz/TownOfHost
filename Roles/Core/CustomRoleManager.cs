@@ -484,9 +484,11 @@ public enum CustomRoles
     Engineer,
     GuardianAngel,
     Scientist,
+    Tracker,
     //Crewmate
     NormalEngineer,
     NormalScientist,
+    NormalTracker,
     CustomCrewmate,
     NiceWatcher,
     Bait,

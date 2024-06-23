@@ -16,6 +16,7 @@
 "NormalEngineer","Engineer","エンジニア","工程师","工程師","Инженер","Engenheiro"
 "NormalScientist","Scientist","科学者","科学家","科學家","Ученый","Cientista"
 "NormalPhantom","Phantom","ファントム","","",""
+"NormalTracker","Tracker","トラッカー","","",""
 
 "# 特殊インポスター役職"
 "CustomImpostor","Custom Impostor","カスタムインポスター",
