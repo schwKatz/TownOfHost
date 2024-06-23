@@ -66,5 +66,14 @@ namespace TownOfHostY
             get => Opt.GetBool(BoolOptionNames.ShapeshifterLeaveSkin);
             set => Opt.SetBool(BoolOptionNames.ShapeshifterLeaveSkin, value);
         }
+        public static float PhantomCooldown
+        {
+            get => Opt.GetFloat(FloatOptionNames.PhantomCooldown);
+            set => Opt.SetFloat(FloatOptionNames.PhantomCooldown, value);
+        }
+        public static float PhantomDuration
+        {
+            get => Opt.GetFloat(FloatOptionNames.PhantomDuration);
+            set => Opt.SetFloat(FloatOptionNames.PhantomDuration, value);
     }
 }

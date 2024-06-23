@@ -63,6 +63,7 @@ namespace TownOfHostY
                 CustomRoles.NormalShapeshifter => CustomRoles.Shapeshifter,
                 CustomRoles.NormalEngineer => CustomRoles.Engineer,
                 CustomRoles.NormalScientist => CustomRoles.Scientist,
+                CustomRoles.NormalPhantom => CustomRoles.Phantom,
                 _ => role
             };
         }

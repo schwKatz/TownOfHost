@@ -424,9 +424,11 @@ public enum CustomRoles
     //Impostor(Vanilla)
     Impostor,
     Shapeshifter,
+    Phantom,
     //Impostor
     NormalImpostor,
     NormalShapeshifter,
+    NormalPhantom,
     CustomImpostor,
     EvilWatcher,
     BountyHunter,
