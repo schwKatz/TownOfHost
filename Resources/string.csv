@@ -17,6 +17,7 @@
 "NormalScientist","Scientist","科学者","科学家","科學家","Ученый","Cientista"
 "NormalPhantom","Phantom","ファントム","","",""
 "NormalTracker","Tracker","トラッカー","","",""
+"NormalNoisemaker","Noisemaker","ノイズメーカー","","",""
 
 "# 特殊インポスター役職"
 "CustomImpostor","Custom Impostor","カスタムインポスター",

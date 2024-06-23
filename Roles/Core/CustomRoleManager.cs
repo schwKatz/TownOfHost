@@ -485,10 +485,12 @@ public enum CustomRoles
     GuardianAngel,
     Scientist,
     Tracker,
+    Noisemaker,
     //Crewmate
     NormalEngineer,
     NormalScientist,
     NormalTracker,
+    NormalNoisemaker,
     CustomCrewmate,
     NiceWatcher,
     Bait,

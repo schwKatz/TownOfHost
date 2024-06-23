@@ -75,7 +75,7 @@ namespace TownOfHostY
         {
             get => Opt.GetFloat(FloatOptionNames.PhantomDuration);
             set => Opt.SetFloat(FloatOptionNames.PhantomDuration, value);
-    }
+        }
         public static float TrackerCooldown
         {
             get => Opt.GetFloat(FloatOptionNames.TrackerCooldown);
@@ -90,4 +90,16 @@ namespace TownOfHostY
         {
             get => Opt.GetFloat(FloatOptionNames.TrackerDelay);
             set => Opt.SetFloat(FloatOptionNames.TrackerDelay, value);
+        }
+        public static bool NoisemakerImpostorAlert
+        {
+            get => Opt.GetBool(BoolOptionNames.NoisemakerImpostorAlert);
+            set => Opt.SetBool(BoolOptionNames.NoisemakerImpostorAlert, value);
+        }
+        public static float NoisemakerAlertDuration
+        {
+            get => Opt.GetFloat(FloatOptionNames.NoisemakerAlertDuration);
+            set => Opt.SetFloat(FloatOptionNames.NoisemakerAlertDuration, value);
+        }
+    }
 }
