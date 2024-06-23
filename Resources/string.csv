@@ -8,9 +8,12 @@
 "Crewmate","Crewmate","クルーメイト","船员","船員","Член Экипажа","Tripulante"
 "Engineer","Engineer","エンジニア","工程师","工程師","Инженер","Engenheiro"
 "Scientist","Scientist","科学者","科学家","科學家","Ученый","Cientista"
+"Tracker","Tracker","トラッカー","","",""
+"Noisemaker","Noisemaker","ノイズメーカー","","",""
 "GuardianAngel","Guardian Angel","守護天使","守护天使","守護天使","Ангел-хранитель","Anjo da Guarda"
 "Impostor","Impostor","インポスター","内鬼","偽裝者","Предатель","Impostor"
 "Shapeshifter","Shapeshifter","シェイプシフター","变形者","變形者","Оборотень","Metamorfo"
+"Phantom","Phantom","ファントム","","",""
 "NormalImpostor","Normal Impostor","通常インポスター","普通内鬼"
 "NormalShapeshifter","Shapeshifter","シェイプシフター","变形者","變形者","Оборотень","Metamorfo"
 "NormalEngineer","Engineer","エンジニア","工程师","工程師","Инженер","Engenheiro"
@@ -712,6 +715,13 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "VitalBatteryDuration","Battery Duration","充電持続時間",,
 "ShapeshiftDuration","Shapeshift Duration","変身持続時間",,
 "ShapeshifterLeaveSkin","Leave Shapeshifting Evidence","変身の証拠を残す"
+"PhantomDuration","Vanish Duration","消える長さ"
+"PhantomCooldown","Vanish Cooldown","消えるのクールダウン"
+"TrackerCooldown","Tracking Cooldown","追跡のクールダウン"
+"TrackerDelay","Tracking Delay","追跡の遅れ"
+"TrackerDuration","Tracking Duration","追跡の長さ"
+"NoisemakerImpostorAlert","Impostor get alert","インポスターへの警報"
+"NoisemakerAlertDuration","Alert duration","警報の長さ"
 
 "AssignMode","Assign Algorithm Mode","アサインモード","分配算法","","Алгоритм назначения",""
 "AssignAlgorithm.Fixed","Fixed","固定","固定","","Фиксированный",""

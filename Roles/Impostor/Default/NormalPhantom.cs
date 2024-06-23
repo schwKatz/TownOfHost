@@ -23,30 +23,30 @@ public sealed class NormalPhantom : RoleBase, IImpostor
         player
     )
     {
-        phantomCooldown = OptionPhantomCooldown.GetFloat();
         phantomDuration = OptionPhantomDuration.GetFloat();
+        phantomCooldown = OptionPhantomCooldown.GetFloat();
     }
-    private static OptionItem OptionPhantomCooldown;
     private static OptionItem OptionPhantomDuration;
+    private static OptionItem OptionPhantomCooldown;
     enum OptionName
     {
-        PhantomCooldown,
         PhantomDuration,
+        PhantomCooldown,
     }
-    private static float phantomCooldown;
     private static float phantomDuration;
+    private static float phantomCooldown;
 
     public static void SetupOptionItem()
     {
-        OptionPhantomCooldown = FloatOptionItem.Create(RoleInfo, 3, OptionName.PhantomCooldown, new(2.5f, 60, 2.5f), 15f, false)
+        OptionPhantomDuration = FloatOptionItem.Create(RoleInfo, 3, OptionName.PhantomDuration, new(5f, 90f, 5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        OptionPhantomDuration = FloatOptionItem.Create(RoleInfo, 4, OptionName.PhantomDuration, new(5f, 90f, 5f), 30f, false)
+        OptionPhantomCooldown = FloatOptionItem.Create(RoleInfo, 4, OptionName.PhantomCooldown, new(2.5f, 60, 2.5f), 15f, false)
             .SetValueFormat(OptionFormat.Seconds);
     }
 
     public override void ApplyGameOptions(IGameOptions opt)
     {
-        AURoleOptions.PhantomCooldown = phantomCooldown;
         AURoleOptions.PhantomDuration = phantomDuration;
+        AURoleOptions.PhantomCooldown = phantomCooldown;
     }
 }
