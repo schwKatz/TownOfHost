@@ -385,12 +385,14 @@ namespace TownOfHostY
             if (sender == null) sender = PlayerControl.LocalPlayer;
             var crs = CustomRpcSender.Create("AllSend");
             crs.AutoStartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(sender.Data.NetId)
                 .Write(SendName)
                 .EndRpc()
                 .AutoStartRpc(sender.NetId, (byte)RpcCalls.SendChat)
                 .Write(command)
                 .EndRpc()
                 .AutoStartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(sender.Data.NetId)
                 .Write(name)
                 .EndRpc()
                 .SendMessage();
@@ -609,12 +611,14 @@ namespace TownOfHostY
             var writer = CustomRpcSender.Create("MessagesToSend", SendOption.None);
             writer.StartMessage(clientId);
             writer.StartRpc(player.NetId, (byte)RpcCalls.SetName)
+                .Write(player.Data.NetId)
                 .Write(title)
                 .EndRpc();
             writer.StartRpc(player.NetId, (byte)RpcCalls.SendChat)
                 .Write(msg)
                 .EndRpc();
             writer.StartRpc(player.NetId, (byte)RpcCalls.SetName)
+                .Write(player.Data.NetId)
                 .Write(player.Data.PlayerName)
                 .EndRpc();
             writer.EndMessage();
@@ -640,12 +644,14 @@ namespace TownOfHostY
             var writer = CustomRpcSender.Create("CustomSend");
             writer.StartMessage(clientId);
             writer.StartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(sender.Data.NetId)
                 .Write(SendName)
                 .EndRpc()
                 .StartRpc(sender.NetId, (byte)RpcCalls.SendChat)
                 .Write(command)
                 .EndRpc()
                 .StartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(sender.Data.NetId)
                 .Write(name)
                 .EndRpc()
                 .EndMessage()

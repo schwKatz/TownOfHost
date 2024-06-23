@@ -60,23 +60,10 @@ namespace TownOfHostY
         public static void SendGameData([CallerMemberName] string callerMethodName = "")
         {
             logger.Info($"SendGameData is called from {callerMethodName}");
-            MessageWriter writer = MessageWriter.Get(SendOption.Reliable);
-            // 書き込み {}は読みやすさのためです。
-            writer.StartMessage(5); //0x05 GameData
+            foreach (var innerNetObject in GameData.Instance.AllPlayers)
             {
-                writer.Write(AmongUsClient.Instance.GameId);
-                writer.StartMessage(1); //0x01 Data
-                {
-                    //writer.WritePacked(GameData.Instance.NetId);
-                    //NetworkedPlayerInfo.Serialize(writer, true);
-
-                }
-                writer.EndMessage();
+                innerNetObject.SetDirtyBit(uint.MaxValue);
             }
-            writer.EndMessage();
-
-            AmongUsClient.Instance.SendOrDisconnect(writer);
-            writer.Recycle();
         }
         public static void OnDisconnect(NetworkedPlayerInfo player)
         {
