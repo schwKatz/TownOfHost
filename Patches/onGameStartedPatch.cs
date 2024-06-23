@@ -21,8 +21,11 @@ class ChangeRoleSettings
     {
         //注:この時点では役職は設定されていません。
         Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
+        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Phantom, 0, 0);
         Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Engineer, 0, 0);
         Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Scientist, 0, 0);
+        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Tracker, 0, 0);
+        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Noisemaker, 0, 0);
         Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.GuardianAngel, 0, 0);
 
         if (Options.IsCCMode) Main.NormalOptions.NumImpostors = 1;
@@ -205,7 +208,7 @@ class SelectRolesPatch
         //}
         else if (Options.CurrentGameMode != CustomGameMode.HideAndSeek)
         {
-            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Shapeshifter };
+            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom };
             foreach (var roleTypes in RoleTypesList)
             {
                 var roleOpt = Main.NormalOptions.roleOptions;
@@ -267,8 +270,11 @@ class SelectRolesPatch
         List<PlayerControl> Impostors = new();
         List<PlayerControl> Scientists = new();
         List<PlayerControl> Engineers = new();
+        List<PlayerControl> Trackers = new();
+        List<PlayerControl> Noisemakers = new();
         List<PlayerControl> GuardianAngels = new();
         List<PlayerControl> Shapeshifters = new();
+        List<PlayerControl> Phantoms = new();
 
         List<PlayerControl> allPlayersbySub = new();
 
@@ -299,6 +305,14 @@ class SelectRolesPatch
                     Engineers.Add(pc);
                     role = CustomRoles.Engineer;
                     break;
+                case RoleTypes.Tracker:
+                    Trackers.Add(pc);
+                    role = CustomRoles.Tracker;
+                    break;
+                case RoleTypes.Noisemaker:
+                    Noisemakers.Add(pc);
+                    role = CustomRoles.Noisemaker;
+                    break;
                 case RoleTypes.GuardianAngel:
                     GuardianAngels.Add(pc);
                     role = CustomRoles.GuardianAngel;
@@ -306,6 +320,10 @@ class SelectRolesPatch
                 case RoleTypes.Shapeshifter:
                     Shapeshifters.Add(pc);
                     role = CustomRoles.Shapeshifter;
+                    break;
+                case RoleTypes.Phantom:
+                    Phantoms.Add(pc);
+                    role = CustomRoles.Phantom;
                     break;
                 default:
                     Logger.SendInGame(string.Format(GetString("Error.InvalidRoleAssignment"), pc?.Data?.PlayerName));
@@ -473,8 +491,11 @@ class SelectRolesPatch
                 {
                     RoleTypes.Impostor => Impostors,
                     RoleTypes.Shapeshifter => Shapeshifters,
+                    RoleTypes.Phantom => Phantoms,
                     RoleTypes.Scientist => Scientists,
                     RoleTypes.Engineer => Engineers,
+                    RoleTypes.Tracker => Trackers,
+                    RoleTypes.Noisemaker => Noisemakers,
                     RoleTypes.GuardianAngel => GuardianAngels,
                     _ => Crewmates,
                 };
@@ -549,7 +570,7 @@ class SelectRolesPatch
                 }
             }
 
-            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Shapeshifter };
+            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom };
             foreach (var roleTypes in RoleTypesList)
             {
                 var roleOpt = Main.NormalOptions.roleOptions;

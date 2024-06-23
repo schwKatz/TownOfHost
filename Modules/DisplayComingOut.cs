@@ -89,9 +89,12 @@ class DisplayComingOut
     private static bool IsDontShowRole(CustomRoles role)
     {
         return role is CustomRoles.Shapeshifter
+            or CustomRoles.Phantom
 
             or CustomRoles.Engineer
             or CustomRoles.Scientist
+            or CustomRoles.Tracker
+            or CustomRoles.Noisemaker
             or CustomRoles.Potentialist
 
             or CustomRoles.GM

@@ -484,6 +484,7 @@ public static class Utils
         {
             case RoleTypes.Impostor:
             case RoleTypes.Shapeshifter:
+            case RoleTypes.Phantom:
                 text = "Impostor";
                 color = Palette.ImpostorRed;
                 break;
