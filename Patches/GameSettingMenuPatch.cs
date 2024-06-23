@@ -324,7 +324,6 @@ public class GameSettingMenuPatch
             settingsTab != null)
         {
             settingsTab.OpenMenu();
-            __instance.GamePresetsButton.SelectButton(true);
         }
         if (ModSettingsButtons.TryGetValue((TabGroup)(tabNum - 3), out button) &&
             button != null)
