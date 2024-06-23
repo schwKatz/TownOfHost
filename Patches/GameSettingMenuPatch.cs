@@ -24,7 +24,7 @@ public class GameSettingMenuPatch
         Mod_UnitRoles,
         Mod_AddOns,
 
-        MaxCount,
+            MaxCount,
     }
 
     // ボタンに表示する名前
@@ -286,7 +286,30 @@ public class GameSettingMenuPatch
             {
                 settingsTab.gameObject.SetActive(true);
                 __instance.MenuDescriptionText.DestroyTranslator();
-                __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
+                switch ((TabGroup)(tabNum - 3))
+                {
+                    case TabGroup.ModMainSettings:
+                        __instance.MenuDescriptionText.text = "MOD機能の設定ができる。";
+                        break;
+                    case TabGroup.ImpostorRoles:
+                        __instance.MenuDescriptionText.text = "MODインポスターロールの設定ができる。";
+                        break;
+                    case TabGroup.MadmateRoles:
+                        __instance.MenuDescriptionText.text = "MODマッドメイトロールの設定ができる。";
+                        break;
+                    case TabGroup.CrewmateRoles:
+                        __instance.MenuDescriptionText.text = "MODクルーメイトロールの設定ができる。";
+                        break;
+                    case TabGroup.NeutralRoles:
+                        __instance.MenuDescriptionText.text = "MODニュートラルロールの設定ができる。";
+                        break;
+                    case TabGroup.UnitRoles:
+                        __instance.MenuDescriptionText.text = "MODユニットロールの設定ができる。";
+                        break;
+                    case TabGroup.Addons:
+                        __instance.MenuDescriptionText.text = "MODロール属性の設定ができる。";
+                        break;
+                }
             }
         }
         if (previewOnly)
