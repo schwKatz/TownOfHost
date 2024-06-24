@@ -484,6 +484,7 @@ public static class Utils
         {
             case RoleTypes.Impostor:
             case RoleTypes.Shapeshifter:
+            case RoleTypes.Phantom:
                 text = "Impostor";
                 color = Palette.ImpostorRed;
                 break;
@@ -751,7 +752,8 @@ public static class Utils
                 if (role is CustomRoles.NormalImpostor) continue;
 
                 string infoLongText = "";
-                if (role is CustomRoles.NormalShapeshifter or CustomRoles.NormalEngineer or CustomRoles.NormalScientist)
+                if (role is CustomRoles.NormalShapeshifter or CustomRoles.NormalEngineer or CustomRoles.NormalScientist or
+                            CustomRoles.NormalPhantom or CustomRoles.NormalTracker or CustomRoles.NormalNoisemaker)
                     infoLongText = '\n' + GetString(Enum.GetName(typeof(CustomRoles), role.IsVanillaRoleConversion()) + "BlurbLong");
                 else
                     infoLongText = GetString(Enum.GetName(typeof(CustomRoles), role) + "InfoLong");

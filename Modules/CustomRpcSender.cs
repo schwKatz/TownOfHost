@@ -253,10 +253,11 @@ namespace TownOfHostY
 
     public static class CustomRpcSenderExtensions
     {
-        public static void RpcSetRole(this CustomRpcSender sender, PlayerControl player, RoleTypes role, int targetClientId = -1)
+        public static void RpcSetRole(this CustomRpcSender sender, PlayerControl player, RoleTypes role, int targetClientId = -1, bool canOverrideRole = false)
         {
             sender.AutoStartRpc(player.NetId, (byte)RpcCalls.SetRole, targetClientId)
                 .Write((ushort)role)
+                .Write(canOverrideRole)
                 .EndRpc();
         }
         public static void RpcMurderPlayer(this CustomRpcSender sender, PlayerControl player, PlayerControl target, int targetClientId = -1)

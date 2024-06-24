@@ -51,9 +51,12 @@ namespace TownOfHostY
                 role is CustomRoles.Crewmate or
                 CustomRoles.Engineer or
                 CustomRoles.Scientist or
+                CustomRoles.Tracker or
+                CustomRoles.Noisemaker or
                 CustomRoles.GuardianAngel or
                 CustomRoles.Impostor or
-                CustomRoles.Shapeshifter;
+                CustomRoles.Shapeshifter or
+                CustomRoles.Phantom;
         }
         public static CustomRoles IsVanillaRoleConversion(this CustomRoles role)
         {
@@ -61,8 +64,11 @@ namespace TownOfHostY
             {
                 CustomRoles.NormalImpostor => CustomRoles.Impostor,
                 CustomRoles.NormalShapeshifter => CustomRoles.Shapeshifter,
-                CustomRoles.NormalEngineer => CustomRoles.Engineer,
+                 CustomRoles.NormalPhantom => CustomRoles.Phantom,
+               CustomRoles.NormalEngineer => CustomRoles.Engineer,
                 CustomRoles.NormalScientist => CustomRoles.Scientist,
+                CustomRoles.NormalTracker => CustomRoles.Tracker,
+                CustomRoles.NormalNoisemaker => CustomRoles.Noisemaker,
                 _ => role
             };
         }
@@ -234,7 +240,10 @@ namespace TownOfHostY
                 {
                     CustomRoles.Engineer => roleOpt.GetNumPerGame(RoleTypes.Engineer),
                     CustomRoles.Scientist => roleOpt.GetNumPerGame(RoleTypes.Scientist),
+                    CustomRoles.Tracker => roleOpt.GetNumPerGame(RoleTypes.Tracker),
+                    CustomRoles.Noisemaker => roleOpt.GetNumPerGame(RoleTypes.Noisemaker),
                     CustomRoles.Shapeshifter => roleOpt.GetNumPerGame(RoleTypes.Shapeshifter),
+                    CustomRoles.Phantom => roleOpt.GetNumPerGame(RoleTypes.Phantom),
                     CustomRoles.GuardianAngel => roleOpt.GetNumPerGame(RoleTypes.GuardianAngel),
                     CustomRoles.Crewmate => roleOpt.GetNumPerGame(RoleTypes.Crewmate),
                     _ => 0
@@ -254,7 +263,10 @@ namespace TownOfHostY
                 {
                     CustomRoles.Engineer => roleOpt.GetChancePerGame(RoleTypes.Engineer),
                     CustomRoles.Scientist => roleOpt.GetChancePerGame(RoleTypes.Scientist),
+                    CustomRoles.Tracker => roleOpt.GetChancePerGame(RoleTypes.Tracker),
+                    CustomRoles.Noisemaker => roleOpt.GetChancePerGame(RoleTypes.Noisemaker),
                     CustomRoles.Shapeshifter => roleOpt.GetChancePerGame(RoleTypes.Shapeshifter),
+                    CustomRoles.Phantom => roleOpt.GetChancePerGame(RoleTypes.Phantom),
                     CustomRoles.GuardianAngel => roleOpt.GetChancePerGame(RoleTypes.GuardianAngel),
                     CustomRoles.Crewmate => roleOpt.GetChancePerGame(RoleTypes.Crewmate),
                     _ => 0

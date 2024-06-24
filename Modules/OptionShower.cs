@@ -82,7 +82,8 @@ namespace TownOfHostY
                     sb.Append('\n');
                 }
                 nameAndValue(Options.EnableGM);
-                if(!Options.IsCCMode)
+                if (!Options.IsCCMode)
+                {
                     foreach (var kvp in Options.CustomRoleSpawnChances)
                     {
                         if (!kvp.Key.IsEnable() || kvp.Value.IsHiddenOn(Options.CurrentGameMode)) continue;
@@ -110,7 +111,7 @@ namespace TownOfHostY
                             sb.Append($"{ruleFooter}{Options.CanMakeMadmateCount.GetName()}: {Options.CanMakeMadmateCount.GetString()}\n");
                         }
                     }
-
+                }
                 foreach (var opt in OptionItem.AllOptions.Where(x => x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode) && x.Parent == null))
                 {
                     if (opt.IsText) sb.Append('\n');

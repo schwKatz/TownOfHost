@@ -108,7 +108,6 @@ namespace TownOfHostY
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
         public class GameStartManagerUpdatePatch
         {
-            //private static float exitTimer = 0f;
             public static void Prefix(GameStartManager __instance)
             {
                 // Lobby code
@@ -158,14 +157,13 @@ namespace TownOfHostY
                     foreach (var line in kickName)
                     {
                         if (line == "") continue;
-                        var hostName = PlayerControl.LocalPlayer.name;
+                        var hostName = AmongUsClient.Instance.PlayerPrefab.GetRealName();
                         if (Regex.IsMatch(hostName?.ToLower(), line))
                         {
                             __instance.StartButton.gameObject.SetActive(false);
                             warningMessage = Utils.ColorString(Color.red, "MOD内でエラーが発生しています。\nY鯖のDiscordまでご連絡ください。");
                         }
                     }
-
                     if (!canStartGame)
                     {
                         __instance.StartButton.gameObject.SetActive(false);

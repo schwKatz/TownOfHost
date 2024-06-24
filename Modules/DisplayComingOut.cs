@@ -26,7 +26,7 @@ class DisplayComingOut
 
     public static void SetupCustomOption(int id)
     {
-        Enable = BooleanOptionItem.Create(id + 0, "DisplayComingOutEnable", false, TabGroup.MainSettings, true)
+        Enable = BooleanOptionItem.Create(id + 0, "DisplayComingOutEnable", false, TabGroup.ModMainSettings, true)
             .SetColor(Palette.CrewmateBlue);
 
         SetupTypeComingOut(id);
@@ -39,7 +39,7 @@ class DisplayComingOut
             if (type is CustomRoleTypes.Unit) continue;
 
             Dictionary<string, string> replacementDic = new() { { "%type%", Translator.GetString($"CustomRoleTypes.{type}") } };
-            EachTypes[type] = BooleanOptionItem.Create(idOffset, "displayComingOut%type%", false, TabGroup.MainSettings, true).SetParent(Enable);
+            EachTypes[type] = BooleanOptionItem.Create(idOffset, "displayComingOut%type%", false, TabGroup.ModMainSettings, true).SetParent(Enable);
             EachTypes[type].ReplacementDictionary = replacementDic;
 
             SetupRoleComingOut(type, baseId);
@@ -56,7 +56,7 @@ class DisplayComingOut
 
             var roleName = Utils.GetRoleName(role);
             Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), roleName) } };
-            EachRoles[role] = StringOptionItem.Create(idOffset, "displayComingOut%role%", displayComingOut, 0, TabGroup.MainSettings, true).SetParent(EachTypes[type]);
+            EachRoles[role] = StringOptionItem.Create(idOffset, "displayComingOut%role%", displayComingOut, 0, TabGroup.ModMainSettings, true).SetParent(EachTypes[type]);
             EachRoles[role].ReplacementDictionary = replacementDic;
             idOffset++;
         }
@@ -89,9 +89,12 @@ class DisplayComingOut
     private static bool IsDontShowRole(CustomRoles role)
     {
         return role is CustomRoles.Shapeshifter
+            or CustomRoles.Phantom
 
             or CustomRoles.Engineer
             or CustomRoles.Scientist
+            or CustomRoles.Tracker
+            or CustomRoles.Noisemaker
             or CustomRoles.Potentialist
 
             or CustomRoles.GM
