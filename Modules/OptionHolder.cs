@@ -861,7 +861,7 @@ public static class Options
     public static void SetUpAddOnRoleOption(CustomRoles PlayerRole, TabGroup tab, CustomRoles role, int Id, bool defaultValue = false, OptionItem parent = null)
     {
         if (parent == null) parent = CustomRoleSpawnChances[PlayerRole];
-        Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), Utils.GetRoleName(role)) + "  " + Utils.GetAddonAbilityInfo(role) } };
+        Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), Utils.GetRoleName(role)) + "ㅤ" + Utils.GetAddonAbilityInfo(role) } };
         AddOnRoleOptions[(PlayerRole, role)] = BooleanOptionItem.Create(Id, "AddOnAssign%role%", defaultValue, tab, false).SetParent(parent);
         AddOnRoleOptions[(PlayerRole, role)].ReplacementDictionary = replacementDic;
     }

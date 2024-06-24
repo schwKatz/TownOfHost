@@ -2,6 +2,7 @@ using System;
 using Il2CppSystem.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
+using static UnityEngine.RemoteConfigSettingsHelper;
 
 namespace TownOfHostY;
 
@@ -18,9 +19,6 @@ public static class GameOptionsMenuPatch
     [HarmonyPatch(nameof(GameOptionsMenu.Initialize)), HarmonyPrefix]
     private static bool InitializePrefix(GameOptionsMenu __instance)
     {
-        // 下部のグラデーションを非表示にする
-        __instance.transform.FindChild("Gradient").gameObject.SetActive(false);
-
         if (ModGameOptionsMenu.TabIndex < 3) return true;
 
         if (__instance.Children == null || __instance.Children.Count == 0)
@@ -72,6 +70,8 @@ public static class GameOptionsMenuPatch
                 categoryHeaderMasked.Title.text = option.GetName();
                 categoryHeaderMasked.transform.localScale = Vector3.one * 0.63f;
                 categoryHeaderMasked.transform.localPosition = new Vector3(-0.903f, num, pos_z);
+                categoryHeaderMasked.transform.FindChild("HeaderText").GetComponent<TMPro.TextMeshPro>().fontStyle = TMPro.FontStyles.Bold;
+                categoryHeaderMasked.transform.FindChild("HeaderText").GetComponent<TMPro.TextMeshPro>().outlineWidth = 0.17f;
                 categoryHeaderMasked.gameObject.SetActive(enabled);
                 ModGameOptionsMenu.CategoryHeaderList.TryAdd(index, categoryHeaderMasked);
 
@@ -157,23 +157,56 @@ public static class GameOptionsMenuPatch
     }
     private static void OptionBehaviourSetSizeAndPosition(OptionBehaviour optionBehaviour, OptionItem option, OptionTypes type)
     {
-        optionBehaviour.transform.FindChild("LabelBackground").localScale += new Vector3(0.9f, -0.2f, 0f);
-        optionBehaviour.transform.FindChild("LabelBackground").localPosition += new Vector3(-0.4f, 0f, 0f);
+        optionBehaviour.transform.FindChild("LabelBackground").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingMenu_LabelBackground.png", 100f);
 
-        optionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(6.5f, 0.37f);
+        Vector3 positionOffset = new(0f, 0f, 0f);
+        Vector3 scaleOffset = new(0f, 0f, 0f);
+        Color color = new(0.7f, 0.7f, 0.7f);
+        float sizeDelta_x = 5.7f;
+
+        if (option.Parent?.Parent?.Parent != null)
+        {
+            scaleOffset = new(-0.18f, 0, 0);
+            positionOffset = new(0.3f, 0f, 0f);
+            color = new(0.7f, 0.5f, 0.5f);
+            sizeDelta_x = 5.1f;
+        }
+        else if (option.Parent?.Parent != null)
+        {
+            scaleOffset = new(-0.12f, 0, 0);
+            positionOffset = new(0.2f, 0f, 0f);
+            color = new(0.5f, 0.5f, 0.7f);
+            sizeDelta_x = 5.3f;
+        }
+        else if (option.Parent != null)
+        {
+            scaleOffset = new(-0.05f, 0, 0);
+            positionOffset = new(0.1f, 0f, 0f);
+            color = new(0.5f, 0.7f, 0.5f);
+            sizeDelta_x = 5.5f;
+        }
+
+        optionBehaviour.transform.FindChild("LabelBackground").GetComponent<SpriteRenderer>().color = color;
+        optionBehaviour.transform.FindChild("LabelBackground").localScale += new Vector3(0.9f, -0.2f, 0f) + scaleOffset;
+        optionBehaviour.transform.FindChild("LabelBackground").localPosition += new Vector3(-0.4f, 0f, 0f) + positionOffset;
+
+        optionBehaviour.transform.FindChild("Title Text").localPosition += new Vector3(-0.4f, 0f, 0f) + positionOffset; ;
+        optionBehaviour.transform.FindChild("Title Text").GetComponent<RectTransform>().sizeDelta = new Vector2(sizeDelta_x, 0.37f);
         optionBehaviour.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.MidlineLeft;
+        optionBehaviour.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().fontStyle = TMPro.FontStyles.Bold;
+        optionBehaviour.transform.FindChild("Title Text").GetComponent<TMPro.TextMeshPro>().outlineWidth = 0.17f;
 
         switch (type)
         {
             case OptionTypes.Checkbox:
-                optionBehaviour.transform.FindChild("Toggle").localPosition += new Vector3(option.IsFixValue ? 100f : 0.9f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
+                optionBehaviour.transform.FindChild("Toggle").localPosition = new Vector3(1.46f, -0.042f);
                 break;
 
             case OptionTypes.String:
                 optionBehaviour.transform.FindChild("PlusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 1.7f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
                 optionBehaviour.transform.FindChild("MinusButton (1)").localPosition += new Vector3(option.IsFixValue ? 100f : 0.9f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
                 optionBehaviour.transform.FindChild("Value_TMP (1)").localPosition += new Vector3(1.3f, 0f, 0f);
-                optionBehaviour.transform.FindChild("Value_TMP (1)").localScale += new Vector3(0.1f, 0f, 0f);
+                optionBehaviour.transform.FindChild("Value_TMP (1)").GetComponent<RectTransform>().sizeDelta = new Vector2(2.3f, 0.4f);
                 goto default;
 
             case OptionTypes.Float:
@@ -181,7 +214,6 @@ public static class GameOptionsMenuPatch
                 optionBehaviour.transform.FindChild("PlusButton").localPosition += new Vector3(option.IsFixValue ? 100f : 1.7f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
                 optionBehaviour.transform.FindChild("MinusButton").localPosition += new Vector3(option.IsFixValue ? 100f : 0.9f, option.IsFixValue ? 100f : 0f, option.IsFixValue ? 100f : 0f);
                 optionBehaviour.transform.FindChild("Value_TMP").localPosition += new Vector3(1.3f, 0f, 0f);
-                optionBehaviour.transform.FindChild("Value_TMP").localScale += new Vector3(0.1f, 0f, 0f);
                 goto default;
 
             default:// Number & String 共通
@@ -332,6 +364,27 @@ public static class NumberOptionPatch
     [HarmonyPatch(nameof(NumberOption.Initialize)), HarmonyPrefix]
     private static bool InitializePrefix(NumberOption __instance)
     {
+        // バニラゲーム設定の拡張
+        switch (__instance.Title)
+        {
+            case StringNames.GameShortTasks:
+            case StringNames.GameLongTasks:
+            case StringNames.GameCommonTasks:
+                __instance.ValidRange = new FloatRange(0, 99);
+                break;
+            case StringNames.GameKillCooldown:
+                __instance.ValidRange = new FloatRange(0, 180);
+                break;
+            case StringNames.GameNumImpostors:
+                if (DebugModeManager.IsDebugMode)
+                {
+                    __instance.ValidRange.min = 0;
+                }
+                break;
+            default:
+                break;
+        }
+
         if (ModGameOptionsMenu.OptionList.TryGetValue(__instance, out var index))
         {
             var item = OptionItem.AllOptions[index];

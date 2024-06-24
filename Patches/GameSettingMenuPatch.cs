@@ -24,7 +24,7 @@ public class GameSettingMenuPatch
         Mod_UnitRoles,
         Mod_AddOns,
 
-            MaxCount,
+        MaxCount,
     }
 
     // ボタンに表示する名前
@@ -75,18 +75,17 @@ public class GameSettingMenuPatch
             // ボタンテキストの翻訳破棄
             label.DestroyTranslator();
             // ボタンテキストの名前変更
-            label.text = buttonName[(int)tab + 1];
+            label.text = "";
             // ボタンテキストの色変更
             button.activeTextColor = button.inactiveTextColor = Color.black;
             // ボタンテキストの選択中の色変更
             button.selectedTextColor = Color.blue;
 
-            // ボタンのスプライト取得
-            var tabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_{tab}.png", 100f);
+            var activeButton = Utils.LoadSprite($"TownOfHost_Y.Resources.Tab_Active_{tab}.png", 100f);
             // 各種スプライトをオリジナルのものに変更
-            button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
-            button.activeSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
-            button.selectedSprites.GetComponent<SpriteRenderer>().sprite = tabSprite;
+            button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite($"TownOfHost_Y.Resources.Tab_Small_{tab}.png", 100f);
+            button.activeSprites.GetComponent<SpriteRenderer>().sprite = activeButton;
+            button.selectedSprites.GetComponent<SpriteRenderer>().sprite = activeButton;
 
             // Y座標オフセット
             Vector3 offset = new (0.0f, 0.5f * (((int)tab + 1) / 2), 0.0f);
@@ -111,7 +110,7 @@ public class GameSettingMenuPatch
         //var templateStringOption = GameObject.Find("Main Camera/PlayerOptionsMenu(Clone)/MainArea/GAME SETTINGS TAB/Scroller/SliderInner/GameOption_String(Clone)").GetComponent<StringOption>();
         //if (templateStringOption == null) return;
 
-        ModGameOptionsMenu.OptionList= new();
+        ModGameOptionsMenu.OptionList = new();
         ModGameOptionsMenu.BehaviourList = new();
         ModGameOptionsMenu.CategoryHeaderList = new();
 
@@ -206,18 +205,17 @@ public class GameSettingMenuPatch
         // 翻訳破棄
         textLabel.DestroyTranslator();
         // バニラ設定ボタンの名前を設定
-        textLabel.text = buttonName[0];
+        textLabel.text = "";
         // ボタンテキストの色変更
         gameSettingButton.activeTextColor = gameSettingButton.inactiveTextColor = Color.black;
         // ボタンテキストの選択中の色変更
         gameSettingButton.selectedTextColor = Color.blue;
 
-        // ボタンのスプライト取得
-        var vanillaTabSprite = Utils.LoadSprite($"TownOfHost_Y.Resources.SettingTab_VanillaGameSettings.png", 100f);
+        var vanillaActiveButton = Utils.LoadSprite($"TownOfHost_Y.Resources.Tab_Active_VanillaGameSettings.png", 100f);
         // 各種スプライトをオリジナルのものに変更
-        gameSettingButton.inactiveSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
-        gameSettingButton.activeSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
-        gameSettingButton.selectedSprites.GetComponent<SpriteRenderer>().sprite = vanillaTabSprite;
+        gameSettingButton.inactiveSprites.GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite($"TownOfHost_Y.Resources.Tab_Small_VanillaGameSettings.png", 100f);
+        gameSettingButton.activeSprites.GetComponent<SpriteRenderer>().sprite = vanillaActiveButton;
+        gameSettingButton.selectedSprites.GetComponent<SpriteRenderer>().sprite = vanillaActiveButton;
         // ボタンの座標設定
         gameSettingButton.transform.localPosition = buttonPosition_Left;
         // ボタンのサイズ設定
@@ -232,7 +230,6 @@ public class GameSettingMenuPatch
         __instance.ControllerSelectable = new();
         __instance.ControllerSelectable.Add(gameSettingButton);
     }
-
 
     [HarmonyPatch(nameof(GameSettingMenu.ChangeTab)), HarmonyPrefix]
     public static bool ChangeTabPrefix(GameSettingMenu __instance, ref int tabNum, [HarmonyArgument(1)] bool previewOnly)
@@ -320,11 +317,11 @@ public class GameSettingMenuPatch
         }
         __instance.ToggleLeftSideDarkener(true);
         __instance.ToggleRightSideDarkener(false);
-        if (ModSettingsTabs.TryGetValue((TabGroup)(tabNum - 3), out settingsTab) &&
-            settingsTab != null)
-        {
-            settingsTab.OpenMenu();
-        }
+        //if (ModSettingsTabs.TryGetValue((TabGroup)(tabNum - 3), out settingsTab) &&
+        //    settingsTab != null)
+        //{
+        //    settingsTab.OpenMenu();
+        //}
         if (ModSettingsButtons.TryGetValue((TabGroup)(tabNum - 3), out button) &&
             button != null)
         {
@@ -333,33 +330,7 @@ public class GameSettingMenuPatch
 
         return false;
     }
-    //public static void Postfix(GameSettingMenu __instance, [HarmonyArgument(0)] int tabNum, [HarmonyArgument(1)] bool previewOnly)
-    //{
-    //    if (!previewOnly)
-    //    {
 
-    //        if (ModSettingsTabs == null) return;
-    //        // 追加したTabの非表示(全リセット)
-    //        ModSettingsTabs.Do(x => x.Value.gameObject.SetActive(false));
-    //        ModSettingsButtons.Do(x => x.Value.SelectButton(false));
-
-    //        // MODではない設定を次に表示させるときはここで終わり
-    //        if (tabNum < (int)GameSettingMenuTab.Mod_MainSettings) return;
-
-    //        // 次表示がMODで追加されたタブの場合の設定
-    //        ModSettingsTabs[(TabGroup)tabNum - 3].gameObject.SetActive(true);
-    //        // What Is this?のテキスト文の翻訳破棄
-    //        __instance.MenuDescriptionText.DestroyTranslator();
-    //        // What Is this?のテキスト文の設定
-    //        __instance.MenuDescriptionText.text = "MODのロールや機能の設定ができる。";
-
-    //        __instance.ToggleLeftSideDarkener(true);
-    //        __instance.ToggleRightSideDarkener(false);
-
-    //        ModSettingsTabs[(TabGroup)tabNum - 3].OpenMenu();
-    //        ModSettingsButtons[(TabGroup)tabNum - 3].SelectButton(true);
-    //    }
-    //}
     [HarmonyPatch(nameof(GameSettingMenu.OnEnable)), HarmonyPrefix]
     private static bool OnEnablePrefix(GameSettingMenu __instance)
     {

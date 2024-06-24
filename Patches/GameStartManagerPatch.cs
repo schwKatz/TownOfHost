@@ -108,7 +108,6 @@ namespace TownOfHostY
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
         public class GameStartManagerUpdatePatch
         {
-            private static float timer = 0f;
             public static void Prefix(GameStartManager __instance)
             {
                 // Lobby code
@@ -155,18 +154,14 @@ namespace TownOfHostY
                             "招待",
                             "宣伝"
                         };
-                    timer += Time.deltaTime;
-                    if (timer > 0.5f)
+                    foreach (var line in kickName)
                     {
-                        foreach (var line in kickName)
+                        if (line == "") continue;
+                        var hostName = AmongUsClient.Instance.PlayerPrefab.GetRealName();
+                        if (Regex.IsMatch(hostName?.ToLower(), line))
                         {
-                            if (line == "") continue;
-                            var hostName = PlayerControl.LocalPlayer.name;
-                            if (Regex.IsMatch(hostName?.ToLower(), line))
-                            {
-                                __instance.StartButton.gameObject.SetActive(false);
-                                warningMessage = Utils.ColorString(Color.red, "MOD内でエラーが発生しています。\nY鯖のDiscordまでご連絡ください。");
-                            }
+                            __instance.StartButton.gameObject.SetActive(false);
+                            warningMessage = Utils.ColorString(Color.red, "MOD内でエラーが発生しています。\nY鯖のDiscordまでご連絡ください。");
                         }
                     }
                     if (!canStartGame)
