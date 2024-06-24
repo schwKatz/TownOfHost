@@ -146,10 +146,12 @@ public static class CustomRoleManager
         if (info.IsMeeting)
         {
             Lovers.VoteSuicide(attemptTarget.PlayerId);
+            Janitor.VoteSuicide(attemptTarget.PlayerId);
         }
         else
         {
             Lovers.KillSuicide(attemptTarget.PlayerId);
+            Janitor.KillSuicide(attemptTarget.PlayerId);
         }
 
         //TargetDeadArrow
@@ -465,6 +467,9 @@ public enum CustomRoles
     EvilGuesser,
     SelfBomber,
     GrudgeCharger,
+
+    Godfather,
+    Janitor,
     //Madmate
     Madmate,
     MadGuardian,
@@ -558,6 +563,7 @@ public enum CustomRoles
 
     GM,
     CounselorAndMadDilemma,
+    GodfatherAndJanitor,
     MaxMain,
     /************/
 

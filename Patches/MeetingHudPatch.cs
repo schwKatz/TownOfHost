@@ -299,8 +299,9 @@ public static class MeetingHudPatch
     {
         foreach (var playerId in playerIds)
         {
-            //Lovers
+            // 役職による道連れ
             Lovers.VoteSuicide(playerId);
+            Janitor.VoteSuicide(playerId);
             //道連れチェック
             RevengeOnExile(playerId, deathReason);
         }
