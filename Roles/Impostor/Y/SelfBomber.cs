@@ -17,8 +17,7 @@ public sealed class SelfBomber : RoleBase, IImpostor
             CustomRoles.SelfBomber,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            //(int)Options.offsetId.ImpY + 1500,
-            (int)Options.offsetId.ImpSpecial + 0,
+            (int)Options.offsetId.ImpY + 1500,
             SetupCustomOption,
             "自爆魔"
         );
