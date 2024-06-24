@@ -84,7 +84,7 @@ public sealed class Godfather : RoleBase, IImpostor
         Utils.NotifyRoles(ForceLoop: true);
     }
 
-    public override void OnReportDeadBody(PlayerControl _, GameData.PlayerInfo __)
+    public override void OnReportDeadBody(PlayerControl _, NetworkedPlayerInfo __)
     {
         // ターゲットがいない場合は処理しない
         if (JanitorTarget.Count <= 0) return;
