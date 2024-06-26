@@ -50,6 +50,9 @@ public sealed class Godfather : RoleBase, IImpostor
     {
         var (killer, target) = info.AttemptTuple;
 
+        //ジャニターが死亡している場合killをそのまま行う
+        if (!janitor.IsAlive()) return;
+
         // ゴッドファーザーとジャニターの距離
         var janitorDist = Vector2.Distance(killer.transform.position, janitor.transform.position);
         // 設定距離に満たない場合は通常のキルをそのまま行う
@@ -69,11 +72,13 @@ public sealed class Godfather : RoleBase, IImpostor
         target.KillFlash();
 
         // ジャニターへのキルフラッシュ通知
-        if (JanitorSeeSelectedTiming) {
+        if (JanitorSeeSelectedTiming)
+        {
             janitor.KillFlash();
         }
         // ジャニター視点の矢印表示追加
-        if (Janitor.TrackTarget) {
+        if (Janitor.TrackTarget)
+        {
             TargetArrow.Add(janitor.PlayerId, target.PlayerId);
         }
 
