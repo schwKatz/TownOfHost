@@ -69,7 +69,7 @@ public sealed class GodfatherAndJanitor : RoleBase
         OptionJanitorTrackTarget = BooleanOptionItem.Create(RoleInfo, 14, OptionName.JanitorTrackTarget, true, false);
         OptionJanitorTrackGodfather = BooleanOptionItem.Create(RoleInfo, 15, OptionName.JanitorTrackGodfather, true, false);
         OptionJanitorLastCanKill = BooleanOptionItem.Create(RoleInfo, 16, OptionName.JanitorLastCanKill, false, false);
-        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 17, OptionName.GodfatherKillCooldown, new(5.0f, 180f, 2.5f), 30f, false).SetParent(OptionJanitorLastCanKill)
+        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 17, OptionName.JanitorKillCooldown, new(5.0f, 180f, 2.5f), 30f, false, OptionJanitorLastCanKill)
             .SetValueFormat(OptionFormat.Seconds);
     }
 }
