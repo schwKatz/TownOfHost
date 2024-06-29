@@ -32,6 +32,7 @@ public sealed class Janitor : RoleBase, IImpostor
         TrackGodfather = OptionJanitorTrackGodfather.GetBool();
         LastCanKill = OptionJanitorLastCanKill.GetBool();
         KillCooldown = OptionJanitorKillCooldown.GetFloat();
+        GFDeadMode = (AfterGotfatherDeadMode)OptionAfterGotfatherDeadMode.GetValue();
     }
     // ゴッドファーザーの死亡後、通常キルをする際にtrueにする
     private static bool canNormalKill;
@@ -52,7 +53,8 @@ public sealed class Janitor : RoleBase, IImpostor
         if (TrackGodfather)
         {
             var god = Main.AllPlayerControls.Where(pc => pc.Is(CustomRoles.Godfather)).FirstOrDefault();
-            if (god != null) {
+            if (god != null)
+            {
                 TargetArrow.Add(janitor.PlayerId, god.PlayerId);
                 Logger.Info($"{Player.GetNameWithRole()} : Janitor.TargetArrowAdd", "G&J");
             }
@@ -72,7 +74,7 @@ public sealed class Janitor : RoleBase, IImpostor
 
         // ターゲットがいない場合、ターゲットが対象じゃない場合は処理しない
         if (JanitorTarget.Count <= 0 || !JanitorTarget.Contains(target.PlayerId)) return;
-        
+
         // ターゲットの状態を取得
         var targetPlayerState = PlayerState.GetByPlayerId(target.PlayerId);
 
@@ -100,7 +102,7 @@ public sealed class Janitor : RoleBase, IImpostor
         var target = Utils.GetPlayerById(deadTargetId);
         if (target != godfather) return;
         // ゴッドファーザー死亡後、キルできる設定の時
-        if (LastCanKill)
+        if (GFDeadMode == AfterGotfatherDeadMode.LastCanKill)
         {
             // ノーマルキルできる設定への切り替え
             canNormalKill = true;
@@ -119,7 +121,7 @@ public sealed class Janitor : RoleBase, IImpostor
         var target = Utils.GetPlayerById(deadTargetId);
         if (target != godfather) return;
         // ゴッドファーザー死亡後、キルできる設定の時
-        if (LastCanKill)
+        if (GFDeadMode == AfterGotfatherDeadMode.LastCanKill)
         {
             // ノーマルキルできる設定への切り替え
             canNormalKill = true;
@@ -151,7 +153,8 @@ public sealed class Janitor : RoleBase, IImpostor
             // 矢印の取得
             string arrow = TargetArrow.GetArrows(Player, godfather.PlayerId);
             // 矢印表示があれば
-            if (arrow.Length >= 0) {
+            if (arrow.Length >= 0)
+            {
                 // 色を付けてsb追加
                 sb.Append(arrow.Color(Palette.ImpostorRed));
             }
