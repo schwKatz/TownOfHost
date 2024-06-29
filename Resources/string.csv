@@ -1023,6 +1023,10 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "JanitorTrackGodfather","Janitor Track Godfather","ジャニターはゴッドファーザーへの矢印が見える",
 "JanitorLastCanKill","Janitor Can Kill After Godfather Dead","ジャニターはゴッドファーザー死亡後にキル能力が解放される",
 "JanitorKillCooldown","Janitor Kill CoolDown","ジャニターのキルクール",
+"JanitorAfterGotfatherDeadMode","Janitor Mode After Godfather Dead","ジャニターのゴットファーザー死亡後モード",,,,
+"JanitorAfterGotfatherDeadMode.Madmate","Madmate","マッドメイト",,,,
+"JanitorAfterGotfatherDeadMode.Following","Following","後追い",,,,
+"JanitorAfterGotfatherDeadMode.LastCanKill","LastCanKill","kill能力の付与",,,,
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
