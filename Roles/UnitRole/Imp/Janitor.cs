@@ -179,4 +179,35 @@ public sealed class Janitor : RoleBase, IImpostor
 
         return sb.ToString();
     }
+    public override void OnFixedUpdate(PlayerControl player)
+    {
+        /* マッドメイトの時：自身が最後のインポスターの時に試合を終わらせる処理。 */
+        if (GFDeadMode == AfterGotfatherDeadMode.Madmate)
+        {
+            int ImpostorsCount = 0;
+            foreach (var pc in Main.AllAlivePlayerControls)
+            {
+                var role = pc.GetCustomRole();
+                if (role != CustomRoles.Janitor && role.IsImpostor()) ImpostorsCount++;
+            }
+            if (ImpostorsCount == 0 && !janitor.IsAlive())
+            {
+                LastKillerKill(player);
+                MyState.DeathReason = CustomDeathReason.Suicide;//死因：自殺。
+            }
+        }
+        if (GFDeadMode == AfterGotfatherDeadMode.Following)
+        {
+            if (!godfather.IsAlive() && !janitor.IsAlive())
+            {
+                LastKillerKill(player);
+                MyState.DeathReason = CustomDeathReason.FollowingSuicide;//死因：後追い。
+            }
+        }
+    }
+    public void LastKillerKill(PlayerControl player)
+    {
+        player.RpcExileV2();
+    }
+
 }
