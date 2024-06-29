@@ -42,6 +42,8 @@ public sealed class Godfather : RoleBase, IImpostor
     public override void Add()
     {
         godfather = Player;
+        Logger.Info($"{Player.GetNameWithRole()} : Godfather登録", "G&J");
+
         JanitorTarget.Clear();
     }
     public float CalculateKillCooldown() => GodfatherKillCooldown;
@@ -55,6 +57,7 @@ public sealed class Godfather : RoleBase, IImpostor
 
         // ゴッドファーザーとジャニターの距離
         var janitorDist = Vector2.Distance(killer.transform.position, janitor.transform.position);
+        Logger.Info($"{Player.GetNameWithRole()}～Janitor距離 : {janitorDist}", "G&J");
         // 設定距離に満たない場合は通常のキルをそのまま行う
         if (janitorDist > LockDistance) return;
 
@@ -68,6 +71,8 @@ public sealed class Godfather : RoleBase, IImpostor
         // ターゲットの足止め
         Main.AllPlayerSpeed[target.PlayerId] = Main.MinSpeed;
         target.MarkDirtySettings();
+        Logger.Info($"{target.GetNameWithRole()} : ターゲット足止め", "G&J");
+
         // ターゲットにキルフラッシュ
         target.KillFlash();
 
@@ -104,6 +109,7 @@ public sealed class Godfather : RoleBase, IImpostor
             // ターゲットの足止め解除
             Main.AllPlayerSpeed[target.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod);
             target.MarkDirtySettings();
+            Logger.Info($"{target.GetNameWithRole()} : ジャニター未掃除のターゲット死亡", "G&J");
         }
 
         // ターゲットをリセット

@@ -5,6 +5,7 @@ using UnityEngine;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using static TownOfHostY.Roles.Impostor.GodfatherAndJanitor;
+using System.Linq;
 
 namespace TownOfHostY.Roles.Impostor;
 public sealed class Janitor : RoleBase, IImpostor
@@ -44,11 +45,17 @@ public sealed class Janitor : RoleBase, IImpostor
     public override void Add()
     {
         janitor = Player;
+        Logger.Info($"{Player.GetNameWithRole()} : Janitor登録", "G&J");
         canNormalKill = false;
 
         // ジャニター視点の矢印表示追加
-        if (TrackGodfather) {
-            TargetArrow.Add(janitor.PlayerId, godfather.PlayerId);
+        if (TrackGodfather)
+        {
+            var god = Main.AllPlayerControls.Where(pc => pc.Is(CustomRoles.Godfather)).FirstOrDefault();
+            if (god != null) {
+                TargetArrow.Add(janitor.PlayerId, god.PlayerId);
+                Logger.Info($"{Player.GetNameWithRole()} : Janitor.TargetArrowAdd", "G&J");
+            }
         }
     }
 
@@ -73,6 +80,7 @@ public sealed class Janitor : RoleBase, IImpostor
         targetPlayerState.SetDead();
         target.RpcExileV2();
         targetPlayerState.DeathReason = CustomDeathReason.Clean;
+        Logger.Info($"{Player.GetNameWithRole()} : ターゲット({target.GetNameWithRole()})を掃除", "G&J");
 
         // 掃除したプレイヤーはリストから削除
         JanitorTarget.Remove(target.PlayerId);
