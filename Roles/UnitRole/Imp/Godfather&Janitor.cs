@@ -60,6 +60,18 @@ public sealed class GodfatherAndJanitor : RoleBase
         JanitorKillCooldown,
         JanitorAfterGotfatherDeadMode,
     }
+    public static readonly string[] AfterGotfatherDeadModeText =
+    {
+        "JanitorAfterGotfatherDeadMode.Madmate",
+        "JanitorAfterGotfatherDeadMode.Following",
+        "JanitorAfterGotfatherDeadMode.LastCanKill",
+    };
+    public enum AfterGotfatherDeadMode
+    {
+        Madmate,
+        Following,
+        LastCanKill,
+    };
     private static void SetupOptionItem()
     {
         OptionGodfatherKillCooldown = FloatOptionItem.Create(RoleInfo, 10, OptionName.GodfatherKillCooldown, new(5.0f, 180f, 2.5f), 30f, false)
