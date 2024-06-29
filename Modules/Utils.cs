@@ -987,6 +987,8 @@ public static class Utils
             foreach (CustomRoles role in CustomRolesHelper.AllStandardRoles)
             {
                 if (!role.IsEnable()) continue;
+                // バニラ役職(元)は反映させないので表示させない
+                if (role.IsVanilla()) continue;
 
                 sb.Append("\n<size=80%>");
                 // 陣営ごとのマーク
