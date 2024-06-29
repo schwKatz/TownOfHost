@@ -114,6 +114,19 @@ namespace TownOfHostY
             }
             //オブジェクト破棄
             CustomRoleManager.Dispose();
+
+            // ログ内にゲーム結果を出力
+            Logger.Info("■■■■ゲーム結果■■■■", "EndGame");
+            List<byte> cloneRoles = new(PlayerState.AllPlayerStates.Keys);
+            foreach (var id in Main.winnerList)
+            {
+                Logger.Info($"★ {SummaryText[id].RemoveColorTags()}", "EndGame");
+                cloneRoles.Remove(id);
+            }
+            foreach (var id in cloneRoles)
+            {
+                Logger.Info($"　 {SummaryText[id].RemoveColorTags()}", "EndGame");
+            }
         }
     }
     [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
