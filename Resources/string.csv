@@ -1095,6 +1095,15 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "Last-","Last ","ラスト","仅存","獨活","Последний ",""
 "Complete-","Complete","コンプリート",
 
+"## 設定メニュー説明"
+"MenuDescriptionText.ModMainSettings","Edit individual settings for the mod.","MODの各設定を編集する。",
+"MenuDescriptionText.ImpostorRoles","Edit impostor role settings for your game lobby.","インポスター役職の設定を編集する。",
+"MenuDescriptionText.MadmateRoles","Edit madmate role settings for your game lobby.","マッド役職の設定を編集する。",
+"MenuDescriptionText.CrewmateRoles","Edit crewmate role settings for your game lobby.","クルー役職の設定を編集する。",
+"MenuDescriptionText.NeutralRoles","Edit neutral role settings for your game lobby.","ニュートラル役職の設定を編集する。",
+"MenuDescriptionText.UnitRoles","Edit unit role settings for your game lobby.","ユニット役職の設定を編集する。",
+"MenuDescriptionText.Addons","Edit add-on settings for your game lobby.","属性の設定を編集する。",
+
 "## リアクターの時間制御"
 "SabotageTimeControl","Sabotage Duration Control","サボタージュの時間制御","更改修理时限","重新設定緊急任務時間","Изменить время Саботажа","Controle da Duração de Sabotagem"
 "PolusReactorTimeLimit","Polus Reactor Duration","ポーラスのリアクター制限時間","波鲁斯抗震稳定器修理时限","Polus地震抑制器破壞最大時間","Polus время саботажа Реактора","Duração do Reator em Polus"

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using static UnityEngine.RemoteConfigSettingsHelper;
 
 namespace TownOfHostY;
 
@@ -283,30 +284,7 @@ public class GameSettingMenuPatch
             {
                 settingsTab.gameObject.SetActive(true);
                 __instance.MenuDescriptionText.DestroyTranslator();
-                switch ((TabGroup)(tabNum - 3))
-                {
-                    case TabGroup.ModMainSettings:
-                        __instance.MenuDescriptionText.text = "MOD機能の設定ができる。";
-                        break;
-                    case TabGroup.ImpostorRoles:
-                        __instance.MenuDescriptionText.text = "MODインポスターロールの設定ができる。";
-                        break;
-                    case TabGroup.MadmateRoles:
-                        __instance.MenuDescriptionText.text = "MODマッドメイトロールの設定ができる。";
-                        break;
-                    case TabGroup.CrewmateRoles:
-                        __instance.MenuDescriptionText.text = "MODクルーメイトロールの設定ができる。";
-                        break;
-                    case TabGroup.NeutralRoles:
-                        __instance.MenuDescriptionText.text = "MODニュートラルロールの設定ができる。";
-                        break;
-                    case TabGroup.UnitRoles:
-                        __instance.MenuDescriptionText.text = "MODユニットロールの設定ができる。";
-                        break;
-                    case TabGroup.Addons:
-                        __instance.MenuDescriptionText.text = "MODロール属性の設定ができる。";
-                        break;
-                }
+                __instance.MenuDescriptionText.text = Translator.GetString($"MenuDescriptionText.{(TabGroup)(tabNum - 3)}");
             }
         }
         if (previewOnly)
