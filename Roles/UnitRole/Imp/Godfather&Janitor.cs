@@ -45,6 +45,8 @@ public sealed class GodfatherAndJanitor : RoleBase
     public static OptionItem OptionJanitorTrackTarget;
     public static OptionItem OptionJanitorTrackGodfather;
     public static OptionItem OptionJanitorLastCanKill;
+    public static StringOptionItem OptionAfterGotfatherDeadMode;
+    public static AfterGotfatherDeadMode GFDeadMode;
     public static OptionItem OptionJanitorKillCooldown;
     enum OptionName
     {
@@ -56,6 +58,7 @@ public sealed class GodfatherAndJanitor : RoleBase
         JanitorTrackGodfather,
         JanitorLastCanKill,
         JanitorKillCooldown,
+        JanitorAfterGotfatherDeadMode,
     }
     private static void SetupOptionItem()
     {
@@ -68,8 +71,8 @@ public sealed class GodfatherAndJanitor : RoleBase
         OptionJanitorSeeSelectedTiming = BooleanOptionItem.Create(RoleInfo, 13, OptionName.JanitorSeeSelectedTiming, true, false);
         OptionJanitorTrackTarget = BooleanOptionItem.Create(RoleInfo, 14, OptionName.JanitorTrackTarget, true, false);
         OptionJanitorTrackGodfather = BooleanOptionItem.Create(RoleInfo, 15, OptionName.JanitorTrackGodfather, true, false);
-        OptionJanitorLastCanKill = BooleanOptionItem.Create(RoleInfo, 16, OptionName.JanitorLastCanKill, false, false);
-        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 17, OptionName.JanitorKillCooldown, new(5.0f, 180f, 2.5f), 30f, false, OptionJanitorLastCanKill)
-            .SetValueFormat(OptionFormat.Seconds);
+        OptionAfterGotfatherDeadMode = StringOptionItem.Create(RoleInfo, 16, OptionName.JanitorAfterGotfatherDeadMode, AfterGotfatherDeadModeText, 2, false);
+        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 17, OptionName.JanitorKillCooldown, new(5.0f, 180f, 2.5f), 30f, false)
+                    .SetValueFormat(OptionFormat.Seconds);
     }
 }
