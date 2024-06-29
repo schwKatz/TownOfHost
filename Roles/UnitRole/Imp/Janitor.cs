@@ -30,7 +30,6 @@ public sealed class Janitor : RoleBase, IImpostor
         CleanCooldown = OptionJanitorCleanCooldown.GetFloat();
         TrackTarget = OptionJanitorTrackTarget.GetBool();
         TrackGodfather = OptionJanitorTrackGodfather.GetBool();
-        LastCanKill = OptionJanitorLastCanKill.GetBool();
         KillCooldown = OptionJanitorKillCooldown.GetFloat();
         GFDeadMode = (AfterGotfatherDeadMode)OptionAfterGotfatherDeadMode.GetValue();
     }
@@ -40,7 +39,6 @@ public sealed class Janitor : RoleBase, IImpostor
     private static float CleanCooldown;
     public static bool TrackTarget;
     private static bool TrackGodfather;
-    private static bool LastCanKill;
     private static float KillCooldown;
 
     public override void Add()
@@ -109,12 +107,6 @@ public sealed class Janitor : RoleBase, IImpostor
             janitor.ResetKillCooldown();
             return;
         }
-
-        /* 後追い処理 */
-        godfather.RpcMurderPlayer(janitor);
-        godfather.SetRealKiller(janitor);
-        PlayerState.GetByPlayerId(janitor.PlayerId).DeathReason = CustomDeathReason.FollowingSuicide;
-        Logger.Info($"{janitor.GetNameWithRole()}の後追い:{godfather.GetNameWithRole()}", "KillFollowingSuicide");
     }
     public static void VoteSuicide(byte deadTargetId)
     {
@@ -128,11 +120,6 @@ public sealed class Janitor : RoleBase, IImpostor
             janitor.ResetKillCooldown();
             return;
         }
-
-        /* 後追い処理 */
-        MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, janitor.PlayerId);
-        godfather.SetRealKiller(janitor);
-        Logger.Info($"{janitor.GetNameWithRole()}のLover後追い:{godfather.GetNameWithRole()}", "VoteFollowingSuicide");
     }
 
     public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
@@ -202,6 +189,7 @@ public sealed class Janitor : RoleBase, IImpostor
             {
                 LastKillerKill(player);
                 MyState.DeathReason = CustomDeathReason.FollowingSuicide;//死因：後追い。
+                Logger.Info($"{janitor.GetNameWithRole()}の後追い:{godfather.GetNameWithRole()}", "KillFollowingSuicide");
             }
         }
     }

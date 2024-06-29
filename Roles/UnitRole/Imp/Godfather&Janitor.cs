@@ -44,7 +44,6 @@ public sealed class GodfatherAndJanitor : RoleBase
     public static OptionItem OptionJanitorSeeSelectedTiming;
     public static OptionItem OptionJanitorTrackTarget;
     public static OptionItem OptionJanitorTrackGodfather;
-    public static OptionItem OptionJanitorLastCanKill;
     public static StringOptionItem OptionAfterGotfatherDeadMode;
     public static AfterGotfatherDeadMode GFDeadMode;
     public static OptionItem OptionJanitorKillCooldown;
@@ -56,7 +55,6 @@ public sealed class GodfatherAndJanitor : RoleBase
         JanitorSeeSelectedTiming,
         JanitorTrackTarget,
         JanitorTrackGodfather,
-        JanitorLastCanKill,
         JanitorKillCooldown,
         JanitorAfterGotfatherDeadMode,
     }
