@@ -2,7 +2,6 @@ using System;
 using Il2CppSystem.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
-using static UnityEngine.RemoteConfigSettingsHelper;
 
 namespace TownOfHostY;
 
@@ -16,9 +15,11 @@ public static class ModGameOptionsMenu
 [HarmonyPatch(typeof(GameOptionsMenu))]
 public static class GameOptionsMenuPatch
 {
+    public static GameOptionsMenu Instance;
     [HarmonyPatch(nameof(GameOptionsMenu.Initialize)), HarmonyPrefix]
     private static bool InitializePrefix(GameOptionsMenu __instance)
     {
+        Instance ??= __instance;
         if (ModGameOptionsMenu.TabIndex < 3) return true;
 
         if (__instance.Children == null || __instance.Children.Count == 0)
@@ -48,6 +49,7 @@ public static class GameOptionsMenuPatch
     [HarmonyPatch(nameof(GameOptionsMenu.CreateSettings)), HarmonyPrefix]
     private static bool CreateSettingsPrefix(GameOptionsMenu __instance)
     {
+        Instance ??= __instance;
         if (ModGameOptionsMenu.TabIndex < 3) return true;
         var modTab = (TabGroup)(ModGameOptionsMenu.TabIndex - 3);
 
@@ -223,10 +225,23 @@ public static class GameOptionsMenuPatch
         }
     }
 
+    public static void UpdateSettings()
+    {
+        foreach (var optionBehaviour in ModGameOptionsMenu.OptionList.Keys)
+        {
+            try
+            {
+                optionBehaviour.Initialize();
+                Instance?.ValueChanged(optionBehaviour);
+            }
+            catch { }
+        }
+    }
+
     [HarmonyPatch(nameof(GameOptionsMenu.ValueChanged)), HarmonyPrefix]
     private static bool ValueChangedPrefix(GameOptionsMenu __instance, OptionBehaviour option)
     {
-        if (ModGameOptionsMenu.TabIndex < 3) return true;
+        if (__instance == null || ModGameOptionsMenu.TabIndex < 3) return true;
 
         if (ModGameOptionsMenu.OptionList.TryGetValue(option, out var index))
         {
@@ -317,6 +332,16 @@ public static class GameOptionsMenuPatch
                 Type = OptionTypes.String,
                 Values = new StringNames[stringItem.Selections.Length], //ダミー
                 Index = stringItem.GetInt(),
+            };
+        }
+        else if (item is PresetOptionItem)
+        {
+            PresetOptionItem presetItem = item as PresetOptionItem;
+            baseGameSetting = new StringGameSetting
+            {
+                Type = OptionTypes.String,
+                Values = new StringNames[OptionItem.NumPresets], //ダミー
+                Index = presetItem.GetInt(),
             };
         }
 
@@ -436,7 +461,7 @@ public static class NumberOptionPatch
     {
         if (__instance.ZeroIsInfinity && Mathf.Abs(value) < 0.0001f) return "<b>∞</b>";
         if (item == null) return value.ToString(__instance.FormatString);
-        return item.ApplyFormat(value.ToString());
+        return item.GetString();
     }
     [HarmonyPatch(nameof(NumberOption.Increase)), HarmonyPrefix]
     public static bool IncreasePrefix(NumberOption __instance)
@@ -487,6 +512,10 @@ public static class StringOptionPatch
             Logger.Info($"{item.Name}, {index}", "StringOption.UpdateValue.TryAdd");
 
             item.SetValue(__instance.GetInt());
+            if (item is PresetOptionItem || item.Name == "GameMode")
+            {
+                GameOptionsMenuPatch.UpdateSettings();
+            }
             return false;
         }
         return true;
@@ -503,7 +532,15 @@ public static class StringOptionPatch
                 if (__instance.oldValue != __instance.Value)
                 {
                     __instance.oldValue = __instance.Value;
-                    __instance.ValueText.text = Translator.GetString(stringOptionItem.Selections[stringOptionItem.Rule.GetValueByIndex(__instance.Value)]);
+                    __instance.ValueText.text = stringOptionItem.GetString();
+                }
+            }
+            if (item is PresetOptionItem presetOptionItem)
+            {
+                if (__instance.oldValue != __instance.Value)
+                {
+                    __instance.oldValue = __instance.Value;
+                    __instance.ValueText.text = presetOptionItem.GetString();
                 }
             }
             return false;
