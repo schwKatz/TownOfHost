@@ -1154,7 +1154,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 
 "MDisplay.Button","Emergency Button","緊急ボタンでの会議",
 "MDisplay.ReportBody","<size=90%>Report:{0}Body</size>","通報:{0}の死体",
-"MDisplay.RevengeHeader","Revenge","道連れ死亡",
+"MDisplay.RevengeHeader","Revenge","道連れ",
 "MDisplay.RevengeMultiple","Multiple","複数発生しています",
 
 "## メッセージ"
