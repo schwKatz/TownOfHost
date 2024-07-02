@@ -171,6 +171,13 @@ public abstract class RoleBase : IDisposable
     { }
 
     /// <summary>
+    /// 透明化チェック時に呼ばれる
+    /// 自分自身が透明化したときのみ呼ばれる
+    /// </summary>
+    /// <returns>falseを返すと透明化がキャンセルされる</returns>
+    public virtual bool OnCheckVanish() => true;
+
+    /// <summary>
     /// タスクターンに常時呼ばれる関数
     /// 自分自身について呼ばれるため本人確認不要
     /// Host以外も呼ばれるので注意

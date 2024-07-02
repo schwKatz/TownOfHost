@@ -334,6 +334,29 @@ namespace TownOfHostY
             }
         }
     }
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckVanish))]
+    public static class PlayerControlCheckVanishPatch
+    {
+        private static readonly LogHandler logger = Logger.Handler(nameof(PlayerControl.CheckVanish));
+
+        public static bool Prefix(PlayerControl __instance)
+        {
+            if (AmongUsClient.Instance.IsGameOver || !AmongUsClient.Instance.AmHost)
+            {
+                return false;
+            }
+
+            var phantom = __instance;
+            // 役職の処理
+            var role = phantom.GetRoleClass();
+            if (role?.OnCheckVanish() == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+    }
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.ReportDeadBody))]
     class ReportDeadBodyPatch
     {

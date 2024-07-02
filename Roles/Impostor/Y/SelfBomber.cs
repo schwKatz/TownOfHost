@@ -15,7 +15,7 @@ public sealed class SelfBomber : RoleBase, IImpostor
             typeof(SelfBomber),
             player => new SelfBomber(player),
             CustomRoles.SelfBomber,
-            () => RoleTypes.Shapeshifter,
+            () => RoleTypes.Phantom,
             CustomRoleTypes.Impostor,
             (int)Options.offsetId.ImpY + 1500,
             SetupCustomOption,
@@ -49,7 +49,7 @@ public sealed class SelfBomber : RoleBase, IImpostor
         OptionBombCooldown = FloatOptionItem.Create(RoleInfo, 11, OptionName.SelfBomberBombCooldown, new(5f, 180f, 2.5f), 15.0f, false)
             .SetValueFormat(OptionFormat.Seconds);
     }
-    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.ShapeshifterCooldown = BombCooldown;
+    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.PhantomCooldown = BombCooldown;
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
         if (Player == null || !Player.IsAlive()) return;
@@ -65,11 +65,11 @@ public sealed class SelfBomber : RoleBase, IImpostor
         Player.RpcResetAbilityCooldown();
         Logger.Info($"ResetBombTimer(afterMeeting) bomber: {Player?.name}", "SelfBomber");
     }
-    public override bool OnCheckShapeshift(PlayerControl target, ref bool animate)
+    public override bool OnCheckVanish()
     {
         if (!AmongUsClient.Instance.AmHost) return false; // 爆破処理はホストのみ
 
-        if (Player == null || !Player.IsAlive() || Is(target)) return false;
+        if (Player == null || !Player.IsAlive()) return false;
         Logger.Info($"BombFire bomber: {Player?.name}", "SelfBomber");
 
         var allKill = true;
