@@ -101,6 +101,10 @@ namespace TownOfHostY
                             case "roles":
                                 Utils.ShowActiveRoles();
                                 break;
+                            case "v":
+                            case "vanilla":
+                                Utils.ShowVanillaSetting();
+                                break;
                             default:
                                 Utils.ShowActiveSettings();
                                 break;
@@ -516,7 +520,10 @@ namespace TownOfHostY
                         case "roles":
                             Utils.ShowActiveRoles(player.PlayerId);
                             break;
-
+                        case "v":
+                        case "vanilla":
+                            Utils.ShowVanillaSetting(player.PlayerId);
+                            break;
                         default:
                             Utils.ShowActiveSettings(player.PlayerId);
                             break;

@@ -1047,6 +1047,20 @@ public static class Utils
             if (opt.Value.GetBool()) ShowChildrenSettings(opt.Value, ref sb, deep + 1);
         }
     }
+    // Now Vanilla
+    public static void ShowVanillaSetting(byte PlayerId = byte.MaxValue)
+    {
+        StringBuilder message = new();
+        message.Append("<line-height=0.94em>");
+        foreach (var s in GameOptionsManager.Instance.CurrentGameOptions.ToHudString(GameData.Instance ? GameData.Instance.PlayerCount : 10))
+        {
+            if (s == '科') break;
+            message.Append(s);
+        }
+        message.Append("</line-height>");
+        SendMessage(message.ToString(), PlayerId, "【Vanilla Setting】");
+    }
+
     public static void ShowLastResult(byte PlayerId = byte.MaxValue)
     {
         if (AmongUsClient.Instance.IsGameStarted)
@@ -1133,6 +1147,7 @@ public static class Utils
     {
         if (!AmongUsClient.Instance.AmHost) return;
         if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
+        else title = title.Color(Color.white);
 
         Logger.Info($"[MessagesToSend.Add] sendTo: {sendTo}", "SendMessage");
         Main.MessagesToSend.Add(($"<align={"left"}><size=90%>{text}</size></align>", sendTo, $"<align={"left"}>{title}</align>", false));
