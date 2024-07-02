@@ -299,5 +299,6 @@ namespace TownOfHostY
         Votes,
         Pieces,
         Pair,
+        Turns,
     }
 }

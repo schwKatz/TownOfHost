@@ -1366,6 +1366,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "Format.Votes","{0}","{0}票","{0}票","{0}票","{0}","{0}"
 "Format.Pieces","{0}","{0}個","{0}个","{0}個","{0}","{0}"
 "Format.Pair","{0} Pair","{0}組",
+"Format.Turns","{0}","{0}ターン",
 "Pair","Pair","組",
 "KillButtonText","Kill","キル","击杀","殺死","Убить","Matar"
 "SniperSnipeButtonText","Snipe","狙撃","狙击","狙擊","Застрелить","Atirar"

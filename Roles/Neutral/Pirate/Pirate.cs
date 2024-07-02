@@ -90,7 +90,8 @@ public sealed class Pirate : RoleBase, IKiller
         OptionKillCoolDown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
         OptionHasImpostorVision = BooleanOptionItem.Create(RoleInfo, 11, GeneralOption.ImpostorVision, true, false);
-        OptionLimitTurn = IntegerOptionItem.Create(RoleInfo, 12, OptionName.PirateLimitTurn, new(1, 30, 1), 3, false);
+        OptionLimitTurn = IntegerOptionItem.Create(RoleInfo, 12, OptionName.PirateLimitTurn, new(1, 30, 1), 3, false)
+            .SetValueFormat(OptionFormat.Turns);
         OptionCanImpostorBeGang = BooleanOptionItem.Create(RoleInfo, 13, OptionName.PirateImpostorCanBeGang, false, false);
         OptionCanMadmateBeGang = BooleanOptionItem.Create(RoleInfo, 14, OptionName.PirateMadmateCanBeGang, true, false);
         OptionCanNeutralBeGang = BooleanOptionItem.Create(RoleInfo, 15, OptionName.PirateNeutralCanBeGang, true, false);
