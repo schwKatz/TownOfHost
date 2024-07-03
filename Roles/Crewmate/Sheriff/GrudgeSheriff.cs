@@ -4,6 +4,7 @@ using System.Text;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Neutral;
 using UnityEngine;
 using static TownOfHostY.Translator;
 
@@ -51,6 +52,7 @@ public sealed class GrudgeSheriff : RoleBase
         TaskTrigger,
     }
     public static Dictionary<CustomRoles, OptionItem> KillTargetOptions = new();
+    public static Dictionary<SchrodingerCat.TeamType, OptionItem> SchrodingerCatKillTargetOptions = new();
     PlayerControl KillWaitPlayerSelect = null;
     PlayerControl KillWaitPlayer = null;
     bool IsCoolTimeOn = true;
@@ -84,6 +86,15 @@ public sealed class GrudgeSheriff : RoleBase
             SetUpKillTargetOption(neutral, idOffset, true, CanKillNeutrals);
             idOffset++;
         }
+        foreach (var catType in EnumHelper.GetAllValues<SchrodingerCat.TeamType>())
+        {
+            if ((byte)catType < 50)
+            {
+                continue;
+            }
+            SetUpSchrodingerCatKillTargetOption(catType, idOffset, true, CanKillNeutrals);
+            idOffset++;
+        }
     }
     public static void SetUpKillTargetOption(CustomRoles role, int idOffset, bool defaultValue = true, OptionItem parent = null)
     {
@@ -93,6 +104,18 @@ public sealed class GrudgeSheriff : RoleBase
         Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), roleName) } };
         KillTargetOptions[role] = BooleanOptionItem.Create(id, OptionName.SheriffCanKill + "%role%", defaultValue, RoleInfo.Tab, false).SetParent(parent);
         KillTargetOptions[role].ReplacementDictionary = replacementDic;
+    }
+    public static void SetUpSchrodingerCatKillTargetOption(SchrodingerCat.TeamType catType, int idOffset, bool defaultValue = true, OptionItem parent = null)
+    {
+        var id = RoleInfo.ConfigId + idOffset;
+        parent ??= RoleInfo.RoleOption;
+        // (%team%陣営)
+        var inTeam = GetString("In%team%", new Dictionary<string, string>() { ["%team%"] = GetRoleString(catType.ToString()) });
+        // シュレディンガーの猫(%team%陣営)
+        var catInTeam = Utils.ColorString(SchrodingerCat.GetCatColor(catType), Utils.GetRoleName(CustomRoles.SchrodingerCat) + inTeam);
+        Dictionary<string, string> replacementDic = new() { ["%role%"] = catInTeam };
+        SchrodingerCatKillTargetOptions[catType] = BooleanOptionItem.Create(id, OptionName.SheriffCanKill + "%role%", defaultValue, RoleInfo.Tab, false).SetParent(parent);
+        SchrodingerCatKillTargetOptions[catType].ReplacementDictionary = replacementDic;
     }
     public override void Add()
     {
@@ -159,7 +182,7 @@ public sealed class GrudgeSheriff : RoleBase
             if (!CanBeKilledBy(target))
             {
                 PlayerState.GetByPlayerId(Player.PlayerId).DeathReason = CustomDeathReason.Misfire;
-                Player.RpcMurderPlayer(Player, true);
+                Player.RpcMurderPlayer(Player);
                 Utils.MarkEveryoneDirtySettings();
                 KillWaitPlayerSelect = null;
                 KillWaitPlayer = null;
@@ -170,7 +193,7 @@ public sealed class GrudgeSheriff : RoleBase
                 }
             }
             target.SetRealKiller(Player);
-            Player.RpcMurderPlayer(target, true);
+            Player.RpcMurderPlayer(target);
             Utils.MarkEveryoneDirtySettings();
             KillWaitPlayerSelect = null;
             KillWaitPlayer = null;
@@ -180,6 +203,22 @@ public sealed class GrudgeSheriff : RoleBase
     public static bool CanBeKilledBy(PlayerControl player)
     {
         var cRole = player.GetCustomRole();
+
+        if (player.GetRoleClass() is SchrodingerCat schrodingerCat)
+        {
+            if (schrodingerCat.Team == SchrodingerCat.TeamType.None)
+            {
+                Logger.Warn($"シェリフ({player.GetRealName()})にキルされたシュレディンガーの猫のロールが変化していません", nameof(Sheriff));
+                return false;
+            }
+            return schrodingerCat.Team switch
+            {
+                SchrodingerCat.TeamType.Mad => KillTargetOptions.TryGetValue(CustomRoles.Madmate, out var option) && option.GetBool(),
+                SchrodingerCat.TeamType.Crew => false,
+                _ => CanKillNeutrals.GetValue() == 0 || (SchrodingerCatKillTargetOptions.TryGetValue(schrodingerCat.Team, out var option) && option.GetBool()),
+            };
+        }
+
         return cRole.GetCustomRoleTypes() switch
         {
             CustomRoleTypes.Impostor => true,
@@ -188,7 +227,7 @@ public sealed class GrudgeSheriff : RoleBase
             _ => false,
         };
     }
-    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     {
         KillWaitPlayerSelect = null;
         KillWaitPlayer = null;

@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Text;
 using HarmonyLib;
@@ -37,10 +38,8 @@ namespace TownOfHostY
                 if (!GameStates.IsModHost) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Warning.NoModHost")));
                 if (DebugModeManager.IsDebugMode) sb.Append("\r\n").Append(Utils.ColorString(Color.green, "デバッグモード"));
 
-                var offset_x = 1.2f; //右端からのオフセット
-                if (HudManager.InstanceExists && HudManager._instance.Chat.chatButton.active) offset_x += 0.8f; //チャットボタンがある場合の追加オフセット
-                if (FriendsListManager.InstanceExists && FriendsListManager._instance.FriendsListButton.Button.active) offset_x += 0.8f; //フレンドリストボタンがある場合の追加オフセット
-                __instance.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(offset_x, 0f, 0f);
+                // 位置調整
+                __instance.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.6f, 6.0f, 0f);
 
                 if (GameStates.IsLobby)
                 {
@@ -54,6 +53,30 @@ namespace TownOfHostY
         [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
         class VersionShowerStartPatch
         {
+            static string[] mainManuText = {
+                "このコメントは21種類らしい\nなんか増えてる？",
+                "いつもありがとう！\nこれからも沢山遊んでね",
+                "【今日のおすすめ役職】\nマッドニムロッド",
+                "【今日のおすすめ属性】\nリフュージング",
+                "ランダムな文が\n表示されるって\nなんかいいよね",
+                "今日もシェリフ？\nハンター使ってみない？",
+                "開発者が1人増えました。\nこんなところで発表します。",
+                "作りたい属性がひとつ。\nいつ作って実装できるかな？",
+                "暫く新役職のリリースは\nないと思うたぶん",
+                "バカシェリフで誤爆して\n相手を吊ろう",
+                "属性を一つ足すだけで\n一気にゲームが変わります",
+                "ラストインポスターとか\nコンプリートクルーとかって\n使ってる？",
+                "パン屋はパン屋でも\nたまにご飯が好きになったりする",
+                "バカシェリフはもっとバカに\nなってもいいと思うんだ",
+                "新しい要素を考えるのって\n結構大変なんだよな",
+                "COしていいかどうか\n表示させることができます",
+                "ひいた役職の陣営がわからない？\n陣営表示機能を追加したよ",
+                "グラージチャージャー新登場。\nゲージを溜めてキル回数を増やそう",
+                "チェインシフター新登場。\nまるでババ抜きのババのよう",
+                "自爆魔新登場。\n自分も死ぬけど、周りも道連れに。",
+                "COします。占い師です。\nあなたは人狼ですね？",
+            };
+
             static TextMeshPro SpecialEventText;
             static void Postfix(VersionShower __instance)
             {
@@ -77,6 +100,10 @@ namespace TownOfHostY
                 }
 
                 VersionChecker.Check();
+                if (OptionItem.IdDuplicated)
+                {
+                    ErrorText.Instance.AddError(ErrorCode.OptionIDDuplicate);
+                }
 
                 if (SpecialEventText == null && TohLogo != null)
                 {
@@ -96,40 +123,43 @@ namespace TownOfHostY
                     SpecialEventText.enabled = TitleLogoPatch.amongUsLogo != null;
                     SpecialEventText.gameObject.SetActive(true);
                 }
-                if (Main.IsInitialRelease)
+                if (Main.IsValentine)
+                {
+                    SpecialEventText.text = "♥happy Valentine♥";
+                    if (CultureInfo.CurrentCulture.Name == "ja-JP")
+                        SpecialEventText.text += "<size=60%>\n<color=#b58428>チョコレート屋が\n一年ぶりに帰ってきた！</size></color>";
+                    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
+                }
+                else if (Main.IsWhiteDay)
+                {
+                    SpecialEventText.text = "♥happy WhiteDay♥";
+                    if (CultureInfo.CurrentCulture.Name == "ja-JP")
+                        SpecialEventText.text += "<size=60%>\n<color=#b58428>チョコレート屋でお返しを。</size></color>";
+                    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
+                }
+                else if (Main.IsAprilFool)
+                {
+                    SpecialEventText.text = "<size=70%>";
+                    SpecialEventText.text += DateTime.Now.Day == 1 ? "【朗報】\n大型アップデート決定！\n役職大量追加や新ゲームモード！\n2024年下半期まで待て、、"
+                                                                   : "なにか嘘つきました？\nエイプリルフールで\n「ポテンシャリスト」を\n楽しんでね。(～4/3)";
+                    SpecialEventText.color = Color.yellow;
+                }
+                else if (Main.IsInitialRelease)
                 {
                     SpecialEventText.color = Color.yellow;
                     SpecialEventText.text = $"Happy Birthday to {Main.ModName}!";
-                    if (CultureInfo.CurrentCulture.Name == "ja-JP")
-                    {
-                        SpecialEventText.text += SpecialEvent.TitleText();
-                    }
                 }
                 else if (Main.IsChristmas)
                 {
                     SpecialEventText.color = Color.yellow;
                     SpecialEventText.text = "★Merry Christmas★";
-                    if (CultureInfo.CurrentCulture.Name == "ja-JP")
-                    {
-                        SpecialEventText.text += SpecialEvent.TitleText();
-                    }
                 }
-                else if (Main.IsOneNightRelease && CultureInfo.CurrentCulture.Name == "ja-JP")
+                else if (CultureInfo.CurrentCulture.Name == "ja-JP")
                 {
-                    SpecialEventText.text = "TOH_Yへようこそ！" +
-                        "\n<size=55%>仕様の質問や不具合報告はTOH_YのDiscordまで。" +
-                        "\n不具合報告の際、ログの提出をお願いしています。" +
-                        "\nCtrl＋F1でデスクトップにログを作成できますので何卒。" +
-                        "\nこれからもTOH_Yをよろしくお願いします！\n</size><size=40%>\n次回アップデートはちょっと先になりそう。</size>";
+                    var num = IRandom.Instance.Next(mainManuText.Length);
+                    SpecialEventText.text = $"★TOH_Yへようこそ！★\n<size=55%>{mainManuText[num]}</size>";
                     SpecialEventText.color = Color.yellow;
                 }
-                //if (Main.IsValentine)
-                //{
-                //    SpecialEventText.text = "♥happy Valentine♥";
-                //    if (CultureInfo.CurrentCulture.Name == "ja-JP")
-                //        SpecialEventText.text += "<size=60%>\n<color=#b58428>チョコレート屋で遊んでみてね。</size></color>";
-                //    SpecialEventText.color = Utils.GetRoleColor(CustomRoles.Lovers);
-                //}
             }
         }
 
@@ -165,7 +195,6 @@ namespace TownOfHostY
             }
             public static void Postfix(ModManager __instance)
             {
-                //var offset_y = HudManager.InstanceExists ? 1.6f : 0.9f;
                 __instance.ModStamp.transform.position = AspectPosition.ComputeWorldPosition(
                     __instance.localCamera, AspectPosition.EdgeAlignments.RightTop,
                     new Vector3(0.4f, 1.6f, __instance.localCamera.nearClipPlane + 0.1f));

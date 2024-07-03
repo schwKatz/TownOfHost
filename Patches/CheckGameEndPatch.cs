@@ -1,9 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
 using HarmonyLib;
 using Hazel;
-
+using UnityEngine;
+using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Crewmate;
@@ -59,6 +62,13 @@ namespace TownOfHostY
                 }
                 if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw and not CustomWinner.None)
                 {
+                    if (FoxSpirit.CheckWin() && !reason.Equals(GameOverReason.ImpostorBySabotage))
+                    {
+                        CustomWinnerHolder.ResetAndSetWinner(CustomWinner.FoxSpirit);
+                        Main.AllPlayerControls
+                            .Where(p => p.Is(CustomRoles.FoxSpirit) && p.IsAlive())
+                            .Do(p => CustomWinnerHolder.WinnerIds.Add(p.PlayerId));
+                    }
                     if (God.CheckWin())
                     {
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.God);
@@ -66,8 +76,8 @@ namespace TownOfHostY
                             .Where(p => p.Is(CustomRoles.God) && p.IsAlive())
                             .Do(p => CustomWinnerHolder.WinnerIds.Add(p.PlayerId));
                     }
-                    if (Main.LoversPlayers.Count > 0 && Main.LoversPlayers.ToArray().All(p => p.IsAlive())
-                        && !reason.Equals(GameOverReason.HumansByTask) && !(Options.LoversAddWin.GetBool() || PlatonicLover.AddWin))
+                    if (Lovers.playersList.Count > 0 && Lovers.playersList.ToArray().All(p => p.IsAlive())
+                        && !reason.Equals(GameOverReason.HumansByTask) && !(Lovers.LoversAddWin.GetBool() || PlatonicLover.AddWin))
                     {
                         CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lovers);
                         Main.AllPlayerControls
@@ -97,7 +107,7 @@ namespace TownOfHostY
                     {
                         //Lover追加勝利
                         if (pc.Is(CustomRoles.Lovers) && pc.IsAlive()
-                            && (Options.LoversAddWin.GetBool() || PlatonicLover.AddWin))
+                            && (Lovers.LoversAddWin.GetBool() || PlatonicLover.AddWin))
                         {
                             CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
                             CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Lovers);
@@ -121,6 +131,16 @@ namespace TownOfHostY
                     }
                     //弁護士且つ追跡者
                     Lawyer.EndGameCheck();
+
+                    //確定敗北陣営
+                    foreach (var pc in Main.AllPlayerControls)
+                    {
+                        if (pc.Is(CustomRoles.ChainShifterAddon))
+                        {
+                            if (CustomWinnerHolder.WinnerIds.Contains(pc.PlayerId))
+                                CustomWinnerHolder.WinnerIds.Remove(pc.PlayerId);
+                        }
+                    }
                 }
                 ShipStatus.Instance.enabled = false;
                 StartEndGame(reason);
@@ -130,11 +150,13 @@ namespace TownOfHostY
         }
         public static void StartEndGame(GameOverReason reason)
         {
-            var sender = new CustomRpcSender("EndGameSender", SendOption.Reliable, true);
-            sender.StartMessage(-1); // 5: GameData
-            MessageWriter writer = sender.stream;
+            AmongUsClient.Instance.StartCoroutine(CoEndGame(AmongUsClient.Instance, reason).WrapToIl2Cpp());
+        }
+        private static IEnumerator CoEndGame(AmongUsClient self, GameOverReason reason)
+        {
+            // サーバー側のパケットサイズ制限によりCustomRpcSenderが利用できないため，遅延を挟むことで順番の整合性を保つ．
 
-            //ゴーストロール化
+            // バニラ画面でのアウトロを正しくするためのゴーストロール化
             List<byte> ReviveRequiredPlayerIds = new();
             var winner = CustomWinnerHolder.WinnerTeam;
             foreach (var pc in Main.AllPlayerControls)
@@ -158,58 +180,45 @@ namespace TownOfHostY
                     if (ToGhostImpostor)
                     {
                         Logger.Info($"{pc.GetNameWithRole()}: ImpostorGhostに変更", "ResetRoleAndEndGame");
-                        sender.StartRpc(pc.NetId, RpcCalls.SetRole)
-                            .Write((ushort)RoleTypes.ImpostorGhost)
-                            .EndRpc();
-                        pc.SetRole(RoleTypes.ImpostorGhost);
+                        pc.RpcSetRole(RoleTypes.ImpostorGhost);
                     }
                     else
                     {
                         Logger.Info($"{pc.GetNameWithRole()}: CrewmateGhostに変更", "ResetRoleAndEndGame");
-                        sender.StartRpc(pc.NetId, RpcCalls.SetRole)
-                            .Write((ushort)RoleTypes.CrewmateGhost)
-                            .EndRpc();
-                        pc.SetRole(RoleTypes.Crewmate);
+                        pc.RpcSetRole(RoleTypes.CrewmateGhost);
                     }
                 }
             }
 
             // CustomWinnerHolderの情報の同期
-            sender.StartRpc(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.EndGame);
-            CustomWinnerHolder.WriteTo(sender.stream);
-            sender.EndRpc();
+            var winnerWriter = self.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.EndGame, SendOption.Reliable);
+            CustomWinnerHolder.WriteTo(winnerWriter);
+            self.FinishRpcImmediately(winnerWriter);
 
-            // GameDataによる蘇生処理
-            writer.StartMessage(1); // Data
+            // 蘇生を確実にゴーストロール設定の後に届けるための遅延
+            yield return new WaitForSeconds(EndGameDelay);
+
+            if (ReviveRequiredPlayerIds.Count > 0)
             {
-                writer.WritePacked(GameData.Instance.NetId); // NetId
-                foreach (var info in GameData.Instance.AllPlayers)
+                // 蘇生 パケットが膨れ上がって死ぬのを防ぐため，1送信につき1人ずつ蘇生する
+                for (int i = 0; i < ReviveRequiredPlayerIds.Count; i++)
                 {
-                    if (ReviveRequiredPlayerIds.Contains(info.PlayerId))
-                    {
-                        // 蘇生&メッセージ書き込み
-                        info.IsDead = false;
-                        writer.StartMessage(info.PlayerId);
-                        info.Serialize(writer);
-                        writer.EndMessage();
-                    }
+                    var playerId = ReviveRequiredPlayerIds[i];
+                    var playerInfo = GameData.Instance.GetPlayerById(playerId);
+                    // 蘇生
+                    playerInfo.IsDead = false;
+                    // 送信
+                    playerInfo.SetDirtyBit(0b_1u << playerId);
+                    AmongUsClient.Instance.SendAllStreamedObjects();
                 }
-                writer.EndMessage();
+                // ゲーム終了を確実に最後に届けるための遅延
+                yield return new WaitForSeconds(EndGameDelay);
             }
 
-            sender.EndMessage();
-
-            // バニラ側のゲーム終了RPC
-            writer.StartMessage(8); //8: EndGame
-            {
-                writer.Write(AmongUsClient.Instance.GameId); //GameId
-                writer.Write((byte)reason); //GameoverReason
-                writer.Write(false); //showAd
-            }
-            writer.EndMessage();
-
-            sender.SendMessage();
+            // ゲーム終了
+            GameManager.Instance.RpcEndGame(reason, false);
         }
+        private const float EndGameDelay = 0.2f;
 
         public static void SetPredicateToNormal() => predicate = new NormalGameEndPredicate();
         public static void SetPredicateToHideAndSeek() => predicate = new HideAndSeekGameEndPredicate();
@@ -236,9 +245,10 @@ namespace TownOfHostY
 
                 int Imp = Utils.AlivePlayersCount(CountTypes.Impostor);
                 int Jackal = Utils.AlivePlayersCount(CountTypes.Jackal);
+                int Pirate = Utils.AlivePlayersCount(CountTypes.Pirate);
                 int Crew = Utils.AlivePlayersCount(CountTypes.Crew);
 
-                if (Imp == 0 && Crew == 0 && Jackal == 0) //全滅
+                if (Imp == 0 && Crew == 0 && Jackal == 0 && Pirate == 0) //全滅
                 {
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.None);
@@ -248,19 +258,27 @@ namespace TownOfHostY
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lovers);
                 }
-                else if (Jackal == 0 && Crew <= Imp) //インポスター勝利
+                else if (Jackal == 0 && Pirate == 0 && Crew <= Imp) //インポスター勝利
                 {
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Impostor);
                 }
-                else if (Imp == 0 && Crew <= Jackal) //ジャッカル勝利
+                else if (Imp == 0 && Pirate == 0 && Crew <= Jackal) //ジャッカル勝利
                 {
                     reason = GameOverReason.ImpostorByKill;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Jackal);
                     CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Jackal);
                     CustomWinnerHolder.WinnerRoles.Add(CustomRoles.JClient);
                 }
-                else if (Jackal == 0 && Imp == 0) //クルー勝利
+                else if (Imp == 0 && Jackal == 0 && Crew <= Pirate) //海賊勝利
+                {
+                    reason = GameOverReason.ImpostorByKill;
+                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Pirate);
+                    CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Pirate);
+                    CustomWinnerHolder.WinnerRoles.Add(CustomRoles.Gang);
+                    CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Gang);
+                }
+                else if (Jackal == 0 && Pirate == 0 && Imp == 0) //クルー勝利
                 {
                     reason = GameOverReason.HumansByVote;
                     CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Crewmate);

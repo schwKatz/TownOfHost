@@ -42,8 +42,9 @@ public sealed class Express : RoleBase
             .SetValueFormat(OptionFormat.Multiplier);
     }
 
-    public override void ApplyGameOptions(IGameOptions opt)
+    public override void Add()
     {
+        // スピード設定
         Main.AllPlayerSpeed[Player.PlayerId] = Speed;
     }
 }

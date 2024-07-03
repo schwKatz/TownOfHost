@@ -53,9 +53,9 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "513.19.2";
+        public const string PluginVersion = "516.22.1";
         // サポートされている最低のAmongUsバージョン
-        public static readonly string LowestSupportedVersion = "2023.10.24";
+        public static readonly string LowestSupportedVersion = "2024.6.18";
         // このバージョンのみで公開ルームを無効にする場合
         public static readonly bool IsPublicAvailableOnThisVersion = false;
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
@@ -65,13 +65,14 @@ namespace TownOfHostY
         public static string ExceptionMessage;
         public static bool ExceptionMessageIsShown = false;
         public static string credentialsText;
-        public static NormalGameOptionsV07 NormalOptions => GameOptionsManager.Instance.currentNormalGameOptions;
-        public static HideNSeekGameOptionsV07 HideNSeekSOptions => GameOptionsManager.Instance.currentHideNSeekGameOptions;
+        public static NormalGameOptionsV08 NormalOptions => GameOptionsManager.Instance.currentNormalGameOptions;
+        public static HideNSeekGameOptionsV08 HideNSeekSOptions => GameOptionsManager.Instance.currentHideNSeekGameOptions;
         //Client Options
         public static ConfigEntry<string> HideName { get; private set; }
         public static ConfigEntry<string> HideColor { get; private set; }
         public static ConfigEntry<bool> ForceJapanese { get; private set; }
         public static ConfigEntry<bool> JapaneseRoleName { get; private set; }
+        public static ConfigEntry<bool> IsMuteLobbyBGM { get; private set; }
         public static ConfigEntry<float> MessageWait { get; private set; }
 
         public static Dictionary<byte, PlayerVersion> playerVersion = new();
@@ -92,16 +93,13 @@ namespace TownOfHostY
         public static Dictionary<byte, Color32> PlayerColors = new();
         public static Dictionary<byte, CustomDeathReason> AfterMeetingDeathPlayers = new();
         public static Dictionary<CustomRoles, string> roleColors;
-        public static Dictionary<CustomColor, string> customColors;
         public static List<byte> winnerList;
         public static List<int> clientIdList;
         public static List<(string, byte, string, bool)> MessagesToSend;
         public static bool isChatCommand = false;
-        public static List<PlayerControl> LoversPlayers = new(2);
-        public static bool isLoversDead = true;
         public static Dictionary<byte, float> AllPlayerKillCooldown = new();
         public static Dictionary<int, string> ConsentModUse = new();
-
+        public static bool isProtectRoleExist = false;
         /// <summary>
         /// 基本的に速度の代入は禁止.スピードは増減で対応してください.
         /// </summary>
@@ -116,12 +114,13 @@ namespace TownOfHostY
         public static bool introDestroyed = false;
         public static float DefaultCrewmateVision;
         public static float DefaultImpostorVision;
-        public static bool IsValentine = DateTime.Now.Month == 3 && DateTime.Now.Day is 9 or 10 or 11 or 12 or 13 or 14 or 15;
+        public static bool IsValentine = DateTime.Now.Month == 2 && DateTime.Now.Day is 9 or 10 or 11 or 12 or 13 or 14 or 15;
+        public static bool IsWhiteDay = DateTime.Now.Month == 3 && (DateTime.Now.Day >= 14 && DateTime.Now.Day <= 17);
         public static bool IsChristmas = DateTime.Now.Month == 12 && DateTime.Now.Day is 23 or 24 or 25;
-        public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3;
+        public static bool IsAprilFool = DateTime.Now.Month == 4 && DateTime.Now.Day is 1 or 2 or 3 or 4 or 5;
         public static bool IsInitialRelease = DateTime.Now.Month == 11 && DateTime.Now.Day >= 2 && DateTime.Now.Day <= 15;
-        public static bool IsOneNightRelease = true;
         public const float RoleTextSize = 2f;
+        public static List<byte> ShowRoleInfoAtMeeting = new();
 
         public static IEnumerable<PlayerControl> AllPlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null);
         public static IEnumerable<PlayerControl> AllAlivePlayerControls => PlayerControl.AllPlayerControls.ToArray().Where(p => p != null && p.IsAlive());
@@ -136,10 +135,11 @@ namespace TownOfHostY
             Instance = this;
 
             //Client Options
-            HideName = Config.Bind("Client Options", "Hide Game Code Name", "Town Of Host_Y");
+            HideName = Config.Bind("Client Options", "Hide Game Code Name", "TOH_Y");
             HideColor = Config.Bind("Client Options", "Hide Game Code Color", $"{ModColor}");
             ForceJapanese = Config.Bind("Client Options", "Force Japanese", false);
             JapaneseRoleName = Config.Bind("Client Options", "Japanese Role Name", true);
+            IsMuteLobbyBGM = Config.Bind("Client Options", "Mute Lobby BGM", false);
             DebugKeyInput = Config.Bind("Authentication", "Debug Key", "");
 
             Logger = BepInEx.Logging.Logger.CreateLogSource("TOH_Y");
@@ -214,6 +214,7 @@ namespace TownOfHostY
                     {CustomRoles.AddBait, "#00f7ff"},
                     {CustomRoles.Refusing, "#61b26c"},
                     {CustomRoles.Archenemy, "#ff6347"},
+                    {CustomRoles.ChainShifterAddon, "#666666"},
 
                     // CatchCat
                     {CustomRoles.CCRedLeader, "#ff0000"},
@@ -273,11 +274,13 @@ namespace TownOfHostY
         Misfire,
         Torched,
         Sniped,
+        Shot,
         Revenge,
         Execution,
         Disconnected,
         Fall,
         Poisoning,
+        Clean,
         Win,
         etc = -1
     }
@@ -304,6 +307,8 @@ namespace TownOfHostY
         LoveCutter = CustomRoles.LoveCutter,
         Lawyer = CustomRoles.Lawyer,
         God = CustomRoles.God,
+        FoxSpirit = CustomRoles.FoxSpirit,
+        Pirate = CustomRoles.Pirate,
 
         //CC
         RedL = CustomRoles.CCRedLeader,
@@ -312,12 +317,6 @@ namespace TownOfHostY
 
         HASTroll = CustomRoles.HASTroll,
     }
-    /*public enum CustomRoles : byte
-    {
-        Default = 0,
-        HASTroll = 1,
-        HASHox = 2
-    }*/
     public enum SuffixModes
     {
         None = 0,
@@ -352,11 +351,5 @@ namespace TownOfHostY
         None,
         Crew,
         Color
-    }
-    public enum CustomColor
-    {
-        Coral,
-        LightCoral,
-        RoyalBlue,
     }
 }

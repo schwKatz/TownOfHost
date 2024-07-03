@@ -21,8 +21,11 @@ class ChangeRoleSettings
     {
         //注:この時点では役職は設定されていません。
         Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Shapeshifter, 0, 0);
+        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Phantom, 0, 0);
         Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Engineer, 0, 0);
         Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Scientist, 0, 0);
+        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Tracker, 0, 0);
+        Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.Noisemaker, 0, 0);
         Main.NormalOptions.roleOptions.SetRoleRate(RoleTypes.GuardianAngel, 0, 0);
 
         if (Options.IsCCMode) Main.NormalOptions.NumImpostors = 1;
@@ -39,9 +42,11 @@ class ChangeRoleSettings
         Main.CheckShapeshift = new();
         Main.ShapeshiftTarget = new();
 
-        ReportDeadBodyPatch.CanReport = new();
-        ReportDeadBodyPatch.CanReportByDeadBody = new();
-        ReportDeadBodyPatch.DontReportMark = new();
+        Main.ShowRoleInfoAtMeeting = new();
+
+        ReportDeadBodyPatch.CannotReportList = new();
+        ReportDeadBodyPatch.CannotReportByDeadBodyList = new();
+        ReportDeadBodyPatch.DontReportMarkList = new();
         MeetingHudPatch.RevengeTargetPlayer = new();
         Options.UsedButtonCount = 0;
         Main.RealOptionsData = new OptionBackupData(GameOptionsManager.Instance.CurrentGameOptions);
@@ -96,16 +101,19 @@ class ChangeRoleSettings
             Main.AllPlayerNames[pc.PlayerId] = pc?.Data?.PlayerName;
             Main.PlayerColors[pc.PlayerId] = Palette.PlayerColors[colorId];
             Main.AllPlayerSpeed[pc.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod); //移動速度をデフォルトの移動速度に変更
-            ReportDeadBodyPatch.CanReport[pc.PlayerId] = true;
-            ReportDeadBodyPatch.CanReportByDeadBody[pc.PlayerId] = true;
-            ReportDeadBodyPatch.DontReportMark[pc.PlayerId] = false;
             ReportDeadBodyPatch.WaitReport[pc.PlayerId] = new();
             pc.cosmetics.nameText.text = pc.name;
 
             RandomSpawn.CustomNetworkTransformPatch.FirstTP.Add(pc.PlayerId, true);
             var outfit = pc.Data.DefaultOutfit;
-            Camouflage.PlayerSkins[pc.PlayerId] = new GameData.PlayerOutfit().Set(outfit.PlayerName, outfit.ColorId, outfit.HatId, outfit.SkinId, outfit.VisorId, outfit.PetId);
+            Camouflage.PlayerSkins[pc.PlayerId] = new NetworkedPlayerInfo.PlayerOutfit().Set(outfit.PlayerName, outfit.ColorId, outfit.HatId, outfit.SkinId, outfit.VisorId, outfit.PetId);
             Main.clientIdList.Add(pc.GetClientId());
+
+            // 初手会議での役職説明表示
+            if (Options.ShowRoleInfoAtFirstMeeting.GetBool())
+            {
+                Main.ShowRoleInfoAtMeeting.Add(pc.PlayerId);
+            }
         }
         Main.VisibleTasksCount = true;
         if (__instance.AmHost)
@@ -123,7 +131,6 @@ class ChangeRoleSettings
 
         IRandom.SetInstanceById(Options.RoleAssigningAlgorithm.GetValue());
 
-        MeetingStates.MeetingCalled = false;
         MeetingStates.FirstMeeting = true;
         GameStates.AlreadyDied = false;
     }
@@ -136,13 +143,7 @@ class SelectRolesPatch
     {
         if (!AmongUsClient.Instance.AmHost) return;
         //CustomRpcSenderとRpcSetRoleReplacerの初期化
-        Dictionary<byte, CustomRpcSender> senders = new();
-        foreach (var pc in Main.AllPlayerControls)
-        {
-            senders[pc.PlayerId] = new CustomRpcSender($"{pc.name}'s SetRole Sender", SendOption.Reliable, false)
-                    .StartMessage(pc.GetClientId());
-        }
-        RpcSetRoleReplacer.StartReplace(senders);
+        RpcSetRoleReplacer.StartReplace();
 
         RoleAssignManager.SelectAssignRoles();
 
@@ -167,12 +168,8 @@ class SelectRolesPatch
                 PlayerControl.LocalPlayer.Data.IsDead = true;
             }
 
-            Dictionary<(byte, byte), RoleTypes> rolesMap = new();
-
-            AssignDesyncRole(CustomRoles.CCYellowLeader, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-            AssignDesyncRole(CustomRoles.CCBlueLeader, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor);
-
-            MakeDesyncSender(senders, rolesMap);
+            AssignDesyncRole(CustomRoles.CCYellowLeader, AllPlayers, BaseRole: RoleTypes.Impostor);
+            AssignDesyncRole(CustomRoles.CCBlueLeader, AllPlayers, BaseRole: RoleTypes.Impostor);
         }
         //else if (Options.IsONMode())
         //{
@@ -201,7 +198,7 @@ class SelectRolesPatch
         //}
         else if (Options.CurrentGameMode != CustomGameMode.HideAndSeek)
         {
-            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Shapeshifter };
+            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom };
             foreach (var roleTypes in RoleTypesList)
             {
                 var roleOpt = Main.NormalOptions.roleOptions;
@@ -222,7 +219,6 @@ class SelectRolesPatch
                 PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
                 PlayerControl.LocalPlayer.Data.IsDead = true;
             }
-            Dictionary<(byte, byte), RoleTypes> rolesMap = new();
             foreach (var (role, info) in CustomRoleManager.AllRolesInfo)
             {
                 if (info.IsDesyncImpostor)
@@ -230,17 +226,16 @@ class SelectRolesPatch
                     switch (role)
                     {
                         case CustomRoles.StrayWolf:
-                            AssignedStrayWolf = AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, senders, rolesMap, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
+                            AssignedStrayWolf = AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
                             continue;
                         case CustomRoles.Opportunist:
                             if (!Opportunist.OptionCanKill.GetBool()) continue;
                             break;
                     }
 
-                    AssignDesyncRole(role, AllPlayers, senders, rolesMap, BaseRole: info.BaseRoleType.Invoke());
+                    AssignDesyncRole(role, AllPlayers, BaseRole: info.BaseRoleType.Invoke());
                 }
             }
-            MakeDesyncSender(senders, rolesMap);
         }
         //以下、バニラ側の役職割り当てが入る
     }
@@ -248,12 +243,9 @@ class SelectRolesPatch
     {
         if (!AmongUsClient.Instance.AmHost) return;
         RpcSetRoleReplacer.Release(); //保存していたSetRoleRpcを一気に書く
-        RpcSetRoleReplacer.senders.Do(kvp => kvp.Value.SendMessage());
 
         // 不要なオブジェクトの削除
-        RpcSetRoleReplacer.senders = null;
-        RpcSetRoleReplacer.OverriddenSenderList = null;
-        RpcSetRoleReplacer.StoragedData = null;
+        RpcSetRoleReplacer.EndReplace();
 
         //Utils.ApplySuffix();
 
@@ -263,8 +255,11 @@ class SelectRolesPatch
         List<PlayerControl> Impostors = new();
         List<PlayerControl> Scientists = new();
         List<PlayerControl> Engineers = new();
+        List<PlayerControl> Trackers = new();
+        List<PlayerControl> Noisemakers = new();
         List<PlayerControl> GuardianAngels = new();
         List<PlayerControl> Shapeshifters = new();
+        List<PlayerControl> Phantoms = new();
 
         List<PlayerControl> allPlayersbySub = new();
 
@@ -295,6 +290,14 @@ class SelectRolesPatch
                     Engineers.Add(pc);
                     role = CustomRoles.Engineer;
                     break;
+                case RoleTypes.Tracker:
+                    Trackers.Add(pc);
+                    role = CustomRoles.Tracker;
+                    break;
+                case RoleTypes.Noisemaker:
+                    Noisemakers.Add(pc);
+                    role = CustomRoles.Noisemaker;
+                    break;
                 case RoleTypes.GuardianAngel:
                     GuardianAngels.Add(pc);
                     role = CustomRoles.GuardianAngel;
@@ -302,6 +305,10 @@ class SelectRolesPatch
                 case RoleTypes.Shapeshifter:
                     Shapeshifters.Add(pc);
                     role = CustomRoles.Shapeshifter;
+                    break;
+                case RoleTypes.Phantom:
+                    Phantoms.Add(pc);
+                    role = CustomRoles.Phantom;
                     break;
                 default:
                     Logger.SendInGame(string.Format(GetString("Error.InvalidRoleAssignment"), pc?.Data?.PlayerName));
@@ -469,8 +476,11 @@ class SelectRolesPatch
                 {
                     RoleTypes.Impostor => Impostors,
                     RoleTypes.Shapeshifter => Shapeshifters,
+                    RoleTypes.Phantom => Phantoms,
                     RoleTypes.Scientist => Scientists,
                     RoleTypes.Engineer => Engineers,
+                    RoleTypes.Tracker => Trackers,
+                    RoleTypes.Noisemaker => Noisemakers,
                     RoleTypes.GuardianAngel => GuardianAngels,
                     _ => Crewmates,
                 };
@@ -478,7 +488,8 @@ class SelectRolesPatch
             }
 
             // Random-Addon
-            if (!CustomRoles.PlatonicLover.IsEnable()) AssignLoversRolesFromList(allPlayersbySub);
+            if (!CustomRoles.PlatonicLover.IsEnable() && CustomRoles.Lovers.IsEnable())
+                AssignCustomSubRolesFromList(CustomRoles.Lovers, allPlayersbySub, 2);
             AssignCustomSubRolesFromList(CustomRoles.AddWatch, allPlayersbySub);
             AssignCustomSubRolesFromList(CustomRoles.Sunglasses, allPlayersbySub);
             AssignCustomSubRolesFromList(CustomRoles.AddLight, allPlayersbySub);
@@ -520,7 +531,6 @@ class SelectRolesPatch
                         if (Options.AddOnRoleOptions.TryGetValue((pc.GetCustomRole(), Addon), out var option) && option.GetBool())
                         {
                             pc.RpcSetCustomRole(Addon);
-                            CustomRoleManager.SubRoleAdd(pc.PlayerId, Addon);
                         }
                     }
                 }
@@ -545,7 +555,7 @@ class SelectRolesPatch
                 }
             }
 
-            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Shapeshifter };
+            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom };
             foreach (var roleTypes in RoleTypesList)
             {
                 var roleOpt = Main.NormalOptions.roleOptions;
@@ -561,7 +571,7 @@ class SelectRolesPatch
                 );
             }
         }
-
+        Main.isProtectRoleExist = CustomRolesHelper.AllRoles.Where(role => role.IsPresent() && role.IsProtectRole()).Any() && Options.ForceProtect.GetBool();
         /*
         //インポスターのゴーストロールがクルーになるバグ対策
         foreach (var pc in PlayerControl.AllPlayerControls)
@@ -576,13 +586,14 @@ class SelectRolesPatch
         Utils.SyncAllSettings();
         SetColorPatch.IsAntiGlitchDisabled = false;
     }
-    private static bool AssignDesyncRole(CustomRoles role, List<PlayerControl> AllPlayers, Dictionary<byte, CustomRpcSender> senders, Dictionary<(byte, byte), RoleTypes> rolesMap, RoleTypes BaseRole, RoleTypes hostBaseRole = RoleTypes.Crewmate, bool IsImpostorRole = false)
+    private static bool AssignDesyncRole(CustomRoles role, List<PlayerControl> AllPlayers, RoleTypes BaseRole, RoleTypes hostBaseRole = RoleTypes.Crewmate, bool IsImpostorRole = false)
     {
         if (!role.IsPresent()) return false;
 
         var hostId = PlayerControl.LocalPlayer.PlayerId;
         var rand = IRandom.Instance;
         var realAssigned = 0;
+        var rolesMap = RpcSetRoleReplacer.RolesMap;
 
         if (IsImpostorRole)
         {
@@ -623,9 +634,9 @@ class SelectRolesPatch
                     rolesMap[(seer.PlayerId, player.PlayerId)] = othersRole;
                 }
             }
-            RpcSetRoleReplacer.OverriddenSenderList.Add(senders[player.PlayerId]);
+            RpcSetRoleReplacer.OverriddenSenderList.Add(player.PlayerId);
             //ホスト視点はロール決定
-            player.SetRole(othersRole);
+            player.StartCoroutine(player.CoSetRole(othersRole, false));
             player.Data.IsDead = true;
             realAssigned++;
 
@@ -635,21 +646,6 @@ class SelectRolesPatch
         if (IsImpostorRole) Main.NormalOptions.NumImpostors -= realAssigned;
 
         return realAssigned > 0;
-    }
-    public static void MakeDesyncSender(Dictionary<byte, CustomRpcSender> senders, Dictionary<(byte, byte), RoleTypes> rolesMap)
-    {
-        var hostId = PlayerControl.LocalPlayer.PlayerId;
-        foreach (var seer in Main.AllPlayerControls)
-        {
-            var sender = senders[seer.PlayerId];
-            foreach (var target in Main.AllPlayerControls)
-            {
-                if (rolesMap.TryGetValue((seer.PlayerId, target.PlayerId), out var role))
-                {
-                    sender.RpcSetRole(seer, role, target.GetClientId());
-                }
-            }
-        }
     }
 
     private static List<PlayerControl> AssignCustomRolesFromList(CustomRoles role, List<PlayerControl> players, int RawCount = -1)
@@ -694,24 +690,11 @@ class SelectRolesPatch
         {
             var player = allPlayersbySub[rand.Next(0, allPlayersbySub.Count)];
             AssignedPlayers.Add(player);
-            if (role == CustomRoles.Lovers) Main.LoversPlayers.Add(player);
             allPlayersbySub.Remove(player);
             PlayerState.GetByPlayerId(player.PlayerId).SetSubRole(role);
             Logger.Info("属性設定:" + player?.Data?.PlayerName + " = " + player.GetCustomRole().ToString() + " + " + role.ToString(), "AssignSubRoles");
         }
-        if (role == CustomRoles.Lovers) RPC.SyncLoversPlayers();
-
         return AssignedPlayers;
-    }
-    private static List<PlayerControl> AssignLoversRolesFromList(List<PlayerControl> allPlayersbySub)
-    {
-        if (!CustomRoles.Lovers.IsEnable()) return null;
-            //Loversを初期化
-            Main.LoversPlayers.Clear();
-            Main.isLoversDead = false;
-            //ランダムに2人選出
-            //AssignLoversRoles(2);
-            return AssignCustomSubRolesFromList(CustomRoles.Lovers, allPlayersbySub, 2);
     }
 
     public static int GetRoleTypesCount(RoleTypes roleTypes)
@@ -731,11 +714,13 @@ class SelectRolesPatch
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole))]
     class RpcSetRoleReplacer
     {
-        public static bool doReplace = false;
-        public static Dictionary<byte, CustomRpcSender> senders;
+        private static bool doReplace = false;
+        private static Dictionary<byte, CustomRpcSender> senders;
         public static List<(PlayerControl, RoleTypes)> StoragedData = new();
-        // 役職Desyncなど別の処理でSetRoleRpcを書き込み済みなため、追加の書き込みが不要なSenderのリスト
-        public static List<CustomRpcSender> OverriddenSenderList;
+        // 役職DesyncなどRolesMapでSetRoleRpcを書き込みするリスト
+        public static List<byte> OverriddenSenderList;
+        public static Dictionary<(byte, byte), RoleTypes> RolesMap;
+
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] RoleTypes roleType)
         {
             if (doReplace && senders != null)
@@ -747,29 +732,70 @@ class SelectRolesPatch
         }
         public static void Release()
         {
+            ReleaseDesyncSetRole();
+            ReleaseNormalSetRole();
+            senders.Do(kvp => kvp.Value.SendMessage());
+        }
+        private static void ReleaseDesyncSetRole()
+        {
+            foreach (var seer in Main.AllPlayerControls)
+            {
+                foreach (var target in Main.AllPlayerControls)
+                {
+                    if (RolesMap.TryGetValue((seer.PlayerId, target.PlayerId), out var role))
+                    {
+                        if (role == RoleTypes.Scientist &&
+                            StoragedData.Any(x => x.Item1.PlayerId == seer.PlayerId && x.Item2 == RoleTypes.Noisemaker))
+                        {
+                            Logger.Info($"ChangeNoisemaker seer: {seer.PlayerId}, target: {target.PlayerId},{role}=>{RoleTypes.Noisemaker}", "MakeDesyncSender");
+                            role = RoleTypes.Noisemaker;
+                        }
+
+                        var sender = senders[seer.PlayerId];
+                        sender.RpcSetRole(seer, role, target.GetClientId());
+                    }
+                }
+            }
+        }
+        private static void ReleaseNormalSetRole()
+        {
             foreach (var sender in senders)
             {
-                if (OverriddenSenderList.Contains(sender.Value)) continue;
+                if (OverriddenSenderList.Contains(sender.Key)) continue;
                 if (sender.Value.CurrentState != CustomRpcSender.State.InRootMessage)
                     throw new InvalidOperationException("A CustomRpcSender had Invalid State.");
 
                 foreach (var pair in StoragedData)
                 {
-                    pair.Item1.SetRole(pair.Item2);
+                    pair.Item1.StartCoroutine(pair.Item1.CoSetRole(pair.Item2, false));
                     sender.Value.AutoStartRpc(pair.Item1.NetId, (byte)RpcCalls.SetRole, Utils.GetPlayerById(sender.Key).GetClientId())
                         .Write((ushort)pair.Item2)
+                        .Write(false)           //canOverrideRole = false
                         .EndRpc();
                 }
                 sender.Value.EndMessage();
             }
             doReplace = false;
         }
-        public static void StartReplace(Dictionary<byte, CustomRpcSender> senders)
+        public static void StartReplace()
         {
-            RpcSetRoleReplacer.senders = senders;
+            senders = new();
+            foreach (var pc in Main.AllPlayerControls)
+            {
+                senders[pc.PlayerId] = new CustomRpcSender($"{pc.name}'s SetRole Sender", SendOption.Reliable, false)
+                        .StartMessage(pc.GetClientId());
+            }
             StoragedData = new();
             OverriddenSenderList = new();
+            RolesMap = new();
             doReplace = true;
+        }
+        public static void EndReplace()
+        {
+            senders = null;
+            OverriddenSenderList = null;
+            RolesMap = null;
+            StoragedData = null;
         }
     }
 }

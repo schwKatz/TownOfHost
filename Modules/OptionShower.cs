@@ -59,14 +59,10 @@ namespace TownOfHostY
                         {
                             var role = kvp.Key;
                             // 陣営ごとのマーク
-                            // 陣営ごとのマーク
-                            if (role.IsAddOn() || role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse or CustomRoles.CompleteCrew)
+                            if (role.IsAddOn() || role.IsOtherAddOn())
                                 sb.Append("<size=85%><color=#ee82ee>○</color></size>");
-                            else if (role.IsImpostor()) sb.Append("<size=85%><color=#ff1919>Ⓘ</color></size>");
-                            else if (role.IsMadmate()) sb.Append("<size=85%><color=#ff4500>Ⓜ</color></size>");
-                            else if (role.IsCrewmate()) sb.Append("<size=85%><color=#8cffff>Ⓒ</color></size>");
-                            else if (role.IsNeutral()) sb.Append("<size=85%><color=#ffa500>Ⓝ</color></size>");
-                            else sb.Append('　');
+                            else if (role.GetCustomRoleTypes() == CustomRoleTypes.Unit) sb.Append("<color=#7fff00>Ⓤ</color>");
+                            else sb.Append(Utils.GetTeamMark(role, 85));
 
                             sb.Append($"{Utils.ColorString(Utils.GetRoleColor(role), Utils.GetRoleName(role))}：{kvp.Value.GetString()}×{role.GetCount()}");
                             if (role.IsPairRole()) sb.Append(GetString("Pair"));
@@ -83,7 +79,8 @@ namespace TownOfHostY
                     sb.Append('\n');
                 }
                 nameAndValue(Options.EnableGM);
-                if(!Options.IsCCMode)
+                if (!Options.IsCCMode)
+                {
                     foreach (var kvp in Options.CustomRoleSpawnChances)
                     {
                         if (!kvp.Key.IsEnable() || kvp.Value.IsHiddenOn(Options.CurrentGameMode)) continue;
@@ -111,7 +108,7 @@ namespace TownOfHostY
                             sb.Append($"{ruleFooter}{Options.CanMakeMadmateCount.GetName()}: {Options.CanMakeMadmateCount.GetString()}\n");
                         }
                     }
-
+                }
                 foreach (var opt in OptionItem.AllOptions.Where(x => x.Id >= 100000 && !x.IsHiddenOn(Options.CurrentGameMode) && x.Parent == null))
                 {
                     if (opt.IsText) sb.Append('\n');

@@ -42,7 +42,6 @@ namespace TownOfHostY.Roles.Impostor
 
         static float KillDelay;
 
-        public bool CanBeLastImpostor { get; } = false;
         Dictionary<byte, float> BittenPlayers = new(14);
 
         private static void SetupOptionItem()
@@ -84,7 +83,7 @@ namespace TownOfHostY.Roles.Impostor
                 }
             }
         }
-        public override void OnReportDeadBody(PlayerControl _, GameData.PlayerInfo __)
+        public override void OnReportDeadBody(PlayerControl _, NetworkedPlayerInfo __)
         {
             foreach (var targetId in BittenPlayers.Keys)
             {

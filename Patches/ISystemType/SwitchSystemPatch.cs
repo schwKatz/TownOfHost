@@ -2,6 +2,7 @@ using HarmonyLib;
 using Hazel;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
+using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
 using UnityEngine;
 
@@ -32,7 +33,10 @@ public static class SwitchSystemUpdateSystemPatch
             player.Is(CustomRoles.SKMadmate) ||
             // マッド属性化時に削除
             (player.GetRoleClass() is SchrodingerCat schrodingerCat && schrodingerCat.AmMadmate);
-        if ((isMadmate && !Options.MadmateCanFixLightsOut.GetBool()) || player.Is(CustomRoles.Clumsy))
+        if ((isMadmate && !Options.MadmateCanFixLightsOut.GetBool()) || player.Is(CustomRoles.Clumsy)
+            || (player.Is(CustomRoles.Sheriff) && Sheriff.IsClumsy.GetBool())
+            || (player.Is(CustomRoles.SillySheriff) && SillySheriff.IsClumsy.GetBool())
+            || (player.Is(CustomRoles.Hunter) && Hunter.IsClumsy.GetBool()))
         {
             // 直せないならキャンセル
             return false;

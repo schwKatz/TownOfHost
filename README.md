@@ -2,30 +2,23 @@
 
 ## TOH_Yへようこそ！
 ### よくある質問
+- 公開ルームは使えないの？
+  - innersloth公式からホストMOD各種〈TOH_Y,本家TOH,TOH4E,TOH-K,TOHEシリーズ,SNR(SHR)など〉へのアナウンスに基づいて、TOH系列は**公開ルーム(野良)で使用出来ないように**MODで制限をかけています。
+  - バニラユーザーが意図せずmod部屋に入れてしまい、ユーザーの混乱を招いたり、また公式への問い合わせが増加している為です。名前の上に書いてあるからいいだろ？というわけにもいかないのです。
+  - 非公開ルームでコードを共有して遊ぶのには問題ありませんが、公開ルームでのMOD部屋への誘導を促すための部屋作成はおやめ下さい。
+
+- 役職の説明はどこを見ればいい？
+  - ゲーム内のヘルプコマンドや、[WIKIWIKI](https://wikiwiki.jp/tohy_amongus)をご覧ください。
+  - 自身の役職説明が一番初めの会議にチャットで表示される設定もあります。
+
 - マッドの道連れないの？
   - 入れるマッドを選んでから、バフ属性を付与する>>リベンジャーの選択で道連れマッド作成できます。それ以外にもたくさんの属性を付与することで様々な能力をもたせることが可能です。
 
 - ホスト以外もMODいれていい？
-  - 現状考慮して作成していない部分も多い為、ホスト以外はバニラでの参加をお願いします。
+  - 現状考慮して作成していない部分が多い為、サポートしていません。部屋に入る際に(非ホスト時)、強制的にバニラに切り替わります。
 
 - TOHとなにがちがうの？
   - 様々な役職や機能がたくさん追加されています。設定方法やコマンド等は本家TOHと同じように合わせていますので、TOHを触ったことのある方はスッと慣れて頂けるとは思います。<br>
-  - 追加役職や[追加機能](https://wikiwiki.jp/tohy_amongus/%E8%BF%BD%E5%8A%A0%E6%A9%9F%E8%83%BD)の説明はWIKIWIKIからご覧ください。
-
-## TOH_Yは一周年を迎えました！
-### 期間限定役職登場！
-
-- 「おにぎり屋」 @クルー陣営 ( @第三陣営 覚醒)
-  - パン屋置換/バレンタインホワイトデー復刻
-  - 20種類超のコメントを用意しました。
-- 「ポテンシャリスト」 @クルー陣営 ( @インポスター陣営 @第三陣営 変化)
-  - エイプリルフール復刻
-  - 指定数のタスクを完了させて役職をゲットしよう。
-  - ここにしか現れないシークレットクルー役職あり、、？
-  - 役職増量！ニュートラルにも変化するようになりました。
-- 「イビルハッカー、、？」 @インポスター陣営 
-  - ゲーム毎に能力がランダム。初手会議に何になったかはお知らせされるよ。
-  - 本家TOH仕様のイビルハッカーになれるのは約16%。
 
 ## 10/27更新 TOH_Yは更新休止期間です。
 TOH_Yの更新は本体アプデやTOHアプデ、不具合修正などを除き休止させていただいております。
@@ -57,10 +50,10 @@ Thank you for finding and using TOH_Y!<br>
 
 ## ★リリース
 
-AmongUsバージョン : **2023.10.24**<br>
-**最新バージョンは[こちら](https://github.com/Yumenopai/TownOfHost_Y/releases/latest)から**<br>
+AmongUsバージョン : **2024.3.5**<br>
+**最新バージョンは[こちらからダウンロード](https://github.com/Yumenopai/TownOfHost_Y/releases/latest)**<br>
 
-TOH_Y：TownOfHost[v5.1.1](https://github.com/tukasa0001/TownOfHost/releases/tag/v5.1.1)Fork<br>
+※[TownOfHost](https://github.com/tukasa0001/TownOfHost) Fork<br>
 
 本家TOHの説明は[本家TOH/GitHub](https://github.com/tukasa0001/TownOfHost#readme)からReadMeをご覧ください。<br>
 <ins>TOH_Yの追加要素の説明は[WIKIWIKI](https://wikiwiki.jp/tohy_amongus/)に移行しました。</ins>
@@ -68,8 +61,7 @@ TOH_Y：TownOfHost[v5.1.1](https://github.com/tukasa0001/TownOfHost/releases/tag
 ## TOH_Y外部サイト
 [WIKIWIKI](https://wikiwiki.jp/tohy_amongus)・
 [Discord](https://discord.gg/YCUY8b3jew)・
-[Twitter](https://twitter.com/yumeno_AmongUs)・
-[公式LINE](https://lin.ee/MiKT3Qp)
+[X/Twitter](https://twitter.com/yumeno_AmongUs)・
 
 ## 開発者
 - [ゆめの/Yumenopai](https://github.com/Yumenopai) ([Twitter本垢](https://twitter.com/Yumepai_houchi), [Youtube](https://www.youtube.com/@Yumenopai))
@@ -78,11 +70,13 @@ TOH_Y：TownOfHost[v5.1.1](https://github.com/tukasa0001/TownOfHost/releases/tag
 ## TOH_Y助っ人
 - [くろにゃんこ](https://github.com/schwKatz) ([Twitter](https://twitter.com/KatzeSw), [Youtube](https://www.youtube.com/@SwKatz))
 
-## クレジット
+## 移植・参考クレジット
 - SPECIALTHANKS [本家TOH](https://github.com/tukasa0001/TownOfHost)・[TOH_H](https://github.com/Hyz-sui/TownOfHost-H)
 - MODクライアント視点霊界での視界拡大縮小 [TownOfPlus](https://github.com/tugaru1975/TownOfPlus)
-- 猫又系役職の道連れ・純愛者・神 [SuperNewRoles](https://github.com/ykundesu/SuperNewRoles)
+- 猫又系役職の道連れ・純愛者・神・マッドジェスター/マッドてるてる・パン屋レアコメント・にじいろスター/スター [SuperNewRoles](https://github.com/ykundesu/SuperNewRoles)
 - サングラス・弁護士・VIP・タイブレーカー [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles)
 - タイトル画面から見れるInfoアナウンス画面 [Nebula on the Ship](https://github.com/Dolly1016/Nebula)
 - スカベンジャー [TownOfHostEdited](https://github.com/KARPED1EM/TownOfHostEdited)
 - トトカルチョ [ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)
+- エスカレーショナー/Escalation Gamemode・シンクロカラーモード/twin,50-50,clone Gamemode (Skeld.net)
+

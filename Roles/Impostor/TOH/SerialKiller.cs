@@ -41,7 +41,6 @@ namespace TownOfHostY.Roles.Impostor
         private static float KillCooldown;
         private static float TimeLimit;
 
-        public bool CanBeLastImpostor { get; } = false;
         public float? SuicideTimer;
 
         private static void SetUpOptionItem()
@@ -68,7 +67,7 @@ namespace TownOfHostY.Roles.Impostor
             SuicideTimer = null;
             killer.MarkDirtySettings();
         }
-        public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+        public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
         {
             SuicideTimer = null;
         }
@@ -90,7 +89,7 @@ namespace TownOfHostY.Roles.Impostor
                 {
                     //自爆時間が来たとき
                     MyState.DeathReason = CustomDeathReason.Suicide;//死因：自殺
-                    Player.RpcMurderPlayer(Player, true);//自殺させる
+                    Player.RpcMurderPlayer(Player);//自殺させる
                     //ExileControllerWrapUpPatch.REIKAITENSOU(Player.PlayerId, CustomDeathReason.Suicide);
                     //foreach (var target in Main.AllAlivePlayerControls)
                     //{

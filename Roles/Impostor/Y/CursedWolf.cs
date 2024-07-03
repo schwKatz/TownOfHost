@@ -25,17 +25,28 @@ public sealed class CursedWolf : RoleBase, IImpostor
     )
     {
         GuardSpellTimes = OptionGuardSpellTimes.GetInt();
+        nowKillMotion = (KillMotionOption)OptionKillMotion.GetValue();
     }
+    public static OptionItem OptionKillMotion;
     private static OptionItem OptionGuardSpellTimes;
     enum OptionName
     {
+        CursedWolfGuardSpellMotion,
         CursedWolfGuardSpellTimes,
     }
+    enum KillMotionOption
+    {
+        MotionKill,
+        MotionSuicide,
+    };
+    KillMotionOption nowKillMotion;
+
     private static int GuardSpellTimes;
     int SpellCount;
 
     public static void SetupOptionItem()
     {
+        OptionKillMotion = StringOptionItem.Create(RoleInfo, 11, OptionName.CursedWolfGuardSpellMotion, EnumHelper.GetAllNames<KillMotionOption>(), 0, false);
         OptionGuardSpellTimes = IntegerOptionItem.Create(RoleInfo, 10, OptionName.CursedWolfGuardSpellTimes, new(1, 15, 1), 3, false)
             .SetValueFormat(OptionFormat.Times);
     }
@@ -73,8 +84,16 @@ public sealed class CursedWolf : RoleBase, IImpostor
         Logger.Info($"{target.GetNameWithRole()} : 残り{SpellCount}回", "CursedWolf");
 
         //切り返す
+        switch (nowKillMotion)
+        {
+            case KillMotionOption.MotionKill://自身がキル
+                target.RpcMurderPlayer(killer);
+                break;
+            case KillMotionOption.MotionSuicide://相手が自爆
+                killer.RpcMurderPlayer(killer);
+                break;
+        }
         PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Spell;
-        target.RpcMurderPlayerV2(killer);
         // 自身は斬られない
         info.CanKill = false;
         return true;

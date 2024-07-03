@@ -101,6 +101,10 @@ namespace TownOfHostY
                             case "roles":
                                 Utils.ShowActiveRoles();
                                 break;
+                            case "v":
+                            case "vanilla":
+                                Utils.ShowVanillaSetting();
+                                break;
                             default:
                                 Utils.ShowActiveSettings();
                                 break;
@@ -286,7 +290,7 @@ namespace TownOfHostY
                     case "/kill":
                         canceled = true;
                         if (args.Length < 2 || !int.TryParse(args[1], out int id2)) break;
-                        Utils.GetPlayerById(id2)?.RpcMurderPlayer(Utils.GetPlayerById(id2), true);
+                        Utils.GetPlayerById(id2)?.RpcMurderPlayer(Utils.GetPlayerById(id2));
                         break;
 
                     case "/vo":
@@ -378,6 +382,27 @@ namespace TownOfHostY
                 __instance.freeChatField.textArea.SetText(cancelVal);
             }
             return !canceled;
+        }
+        public static void SendCustomChat(string SendName, string command, string name, PlayerControl sender = null)
+        {
+            Logger.Info($"SendCustomChat SendName: {SendName}, command: {command}, name: {name} sender: {sender?.name}", "SendCustomChat");
+            if (sender == null) sender = PlayerControl.LocalPlayer;
+            var crs = CustomRpcSender.Create("AllSend");
+            crs.AutoStartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(sender.Data.NetId)
+                .Write(SendName)
+                .EndRpc()
+                .AutoStartRpc(sender.NetId, (byte)RpcCalls.SendChat)
+                .Write(command)
+                .EndRpc()
+                .AutoStartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(sender.Data.NetId)
+                .Write(name)
+                .EndRpc()
+                .SendMessage();
+            sender.SetName(SendName);
+            DestroyableSingleton<HudManager>.Instance.Chat.AddChat(sender, command);
+            sender.SetName(name);
         }
 
         public static void GetRolesInfo(string role)
@@ -495,7 +520,10 @@ namespace TownOfHostY
                         case "roles":
                             Utils.ShowActiveRoles(player.PlayerId);
                             break;
-
+                        case "v":
+                        case "vanilla":
+                            Utils.ShowVanillaSetting(player.PlayerId);
+                            break;
                         default:
                             Utils.ShowActiveSettings(player.PlayerId);
                             break;
@@ -557,8 +585,8 @@ namespace TownOfHostY
 
                 default:
                     break;
-            }
         }
+    }
     }
     [HarmonyPatch(typeof(ChatController), nameof(ChatController.Update))]
     class ChatUpdatePatch
@@ -590,12 +618,14 @@ namespace TownOfHostY
             var writer = CustomRpcSender.Create("MessagesToSend", SendOption.None);
             writer.StartMessage(clientId);
             writer.StartRpc(player.NetId, (byte)RpcCalls.SetName)
+                .Write(player.Data.NetId)
                 .Write(title)
                 .EndRpc();
             writer.StartRpc(player.NetId, (byte)RpcCalls.SendChat)
                 .Write(msg)
                 .EndRpc();
             writer.StartRpc(player.NetId, (byte)RpcCalls.SetName)
+                .Write(player.Data.NetId)
                 .Write(player.Data.PlayerName)
                 .EndRpc();
             writer.EndMessage();
@@ -621,12 +651,14 @@ namespace TownOfHostY
             var writer = CustomRpcSender.Create("CustomSend");
             writer.StartMessage(clientId);
             writer.StartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(sender.Data.NetId)
                 .Write(SendName)
                 .EndRpc()
                 .StartRpc(sender.NetId, (byte)RpcCalls.SendChat)
                 .Write(command)
                 .EndRpc()
                 .StartRpc(sender.NetId, (byte)RpcCalls.SetName)
+                .Write(sender.Data.NetId)
                 .Write(name)
                 .EndRpc()
                 .EndMessage()

@@ -56,9 +56,12 @@ namespace TownOfHostY
                     RoleTypes.Crewmate => CustomRoles.Crewmate,
                     RoleTypes.Engineer => CustomRoles.Engineer,
                     RoleTypes.Scientist => CustomRoles.Scientist,
+                    RoleTypes.Tracker => CustomRoles.Tracker,
+                    RoleTypes.Noisemaker => CustomRoles.Noisemaker,
                     RoleTypes.GuardianAngel => CustomRoles.GuardianAngel,
                     RoleTypes.Impostor => CustomRoles.Impostor,
                     RoleTypes.Shapeshifter => CustomRoles.Shapeshifter,
+                    RoleTypes.Phantom => CustomRoles.Phantom,
                     _ => CustomRoles.Crewmate,
                 };
         }
@@ -82,7 +85,10 @@ namespace TownOfHostY
                 SubRoles.ToArray().Do(role => SubRoles.Remove(role));
 
             if (!SubRoles.Contains(role))
+            {
                 SubRoles.Add(role);
+                CustomRoleManager.SubRoleAdd(PlayerId, role);
+            }
         }
         public void RemoveSubRole(CustomRoles role)
         {
@@ -225,7 +231,7 @@ namespace TownOfHostY
     public static class MeetingStates
     {
         public static DeadBody[] DeadBodies = null;
-        public static GameData.PlayerInfo ReportTarget = null;
+        public static NetworkedPlayerInfo ReportTarget = null;
         public static bool IsEmergencyMeeting => ReportTarget == null;
         public static bool IsExistDeadBody => DeadBodies.Length > 0;
         public static bool MeetingCalled = false;

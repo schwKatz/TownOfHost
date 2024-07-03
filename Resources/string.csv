@@ -1,4 +1,4 @@
-"id","0","11","13","14","5","2"
+"id","0","11","13","14","5","2","3"
 "## Translators"
 "#5  RusTranslation: Tommy-XL"
 "#13 SChinese:fivefirex&ZeMingOH233  2T&MC-AS-Huier&xiaojin xyjx001(Edit: Tanakanira)"
@@ -8,13 +8,19 @@
 "Crewmate","Crewmate","クルーメイト","船员","船員","Член Экипажа","Tripulante"
 "Engineer","Engineer","エンジニア","工程师","工程師","Инженер","Engenheiro"
 "Scientist","Scientist","科学者","科学家","科學家","Ученый","Cientista"
+"Tracker","Tracker","トラッカー","","",""
+"Noisemaker","Noisemaker","ノイズメーカー","","",""
 "GuardianAngel","Guardian Angel","守護天使","守护天使","守護天使","Ангел-хранитель","Anjo da Guarda"
 "Impostor","Impostor","インポスター","内鬼","偽裝者","Предатель","Impostor"
 "Shapeshifter","Shapeshifter","シェイプシフター","变形者","變形者","Оборотень","Metamorfo"
+"Phantom","Phantom","ファントム","","",""
 "NormalImpostor","Normal Impostor","通常インポスター","普通内鬼"
 "NormalShapeshifter","Shapeshifter","シェイプシフター","变形者","變形者","Оборотень","Metamorfo"
 "NormalEngineer","Engineer","エンジニア","工程师","工程師","Инженер","Engenheiro"
 "NormalScientist","Scientist","科学者","科学家","科學家","Ученый","Cientista"
+"NormalPhantom","Phantom","ファントム","","",""
+"NormalTracker","Tracker","トラッカー","","",""
+"NormalNoisemaker","Noisemaker","ノイズメーカー","","",""
 
 "# 特殊インポスター役職"
 "CustomImpostor","Custom Impostor","カスタムインポスター",
@@ -32,6 +38,10 @@
 "TimeThief","Time Thief","タイムシーフ","蚀时者","時間竊賊","Вор Времени","Ladrão de Tempo"
 "Sniper","Sniper","スナイパー","狙击手","狙擊手","Снайпер","Sniper"
 "EvilTracker","Evil Tracker","イビルトラッカー","邪恶的追踪者","邪惡的追蹤者","Злой Следопыт","Rastreador do Mal"
+"Stealth","Stealth","ステルス","暗杀者","","Хитрец","Furtivo"
+"NekoKabocha","Neko-Kabocha","ネコカボチャ","猫又","","Неко-Кабоча","Neko-Kabocha"
+"Penguin","Penguin","ペンギン","企鹅","","Пингвин","Pinguim"
+"Insider","Insider","インサイダー","内幕人","","Инсайдер","Informante"
 "EvilNekomata","Evil Nekomata","イビル猫又","双尾妖猫",
 "AntiAdminer","Anti Adminer","アンチアドミナー","监管者",,
 "CursedWolf","Cursed Wolf","呪狼","被诅咒的狼",
@@ -42,6 +52,13 @@
 "Telepathisters","Telepathisters","テレパシスターズ",
 "ShapeKiller","Shape Killer","シェイプキラー",,,,
 "StrayWolf","Stray Wolf","はぐれ狼",
+"EvilIgnition","Evil Ignition","イビルイグニッション",
+"Escalationer","Escalationer","エスカレーショナー",
+"EvilDyer","Evil Dyer","イビル真っ赤",
+"BestieWolf","Bestie Wolf","ベスティーウルフ",
+"EvilGuesser","Evil Guesser","イビルゲッサー","","","",""
+"SelfBomber","SelfBomber","自爆魔","","","",""
+"GrudgeCharger","Grudge Charger","グラージチャージャー",
 
 "CustomImpostorInfo","I can now use abilities like that","あんな能力も使えるようになりました",
 "EvilWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
@@ -60,6 +77,10 @@
 "TimeThiefInfo","Kill to steal meeting time","敵を殺し、会議時間を奪おう","不仅夺走他们的性命，还有他们的时间","殺光你的敵人並將會議時間縮短","Убивайте игроков чтобы сократить время встречи","Mate para roubar tempo de reunião"
 "SniperInfo","Snipe","狙い撃つぜ","瞄准敌人，射击！","讓你的敵人在你的狙擊下死亡","Стреляйте в Членов Экипажа на расстоянии","Hora de atirar"
 "EvilTrackerInfo","Track others","プレイヤーを追跡しろ","让我看看，我的小目标在哪","你不要過來啊啊阿","Отслеживайте Игроков","Localize os outros"
+"StealthInfo","Act unseen in the dark world...","闇の世界で暗躍せよ","降下黑暗！","","Действуйте незаметно в темноте","Tabalhe sem ser visto no mundo escuro..."
+"NekoKabochaInfo","Take your killer to your grave","死なばもろとも","带走杀死你的人","","Отведи своего убийцу в могилу","Leve seu assassino para o túmulo"
+"PenguinInfo","Let's drag and kill!","ぺちぺち！","扑哧扑哧！","","Давайте тащить и убивать!","Vamos arrastar e matar!"
+"InsiderInfo","Knowledge is power","知は力なり","知识就是力量","","Знание - сила!","Conhecimento é poder"
 "EvilNekomataInfo","Let's get someone on the road","誰かを道連れにしよう","让我们在路上找一些人吧",,
 "AntiAdminerInfo","I wish Admin would just go away","アドミンなんて無くなればいい","我希望管理员能离开",,
 "CursedWolfInfo","It's foolish to kill me","私を斬るなんて愚かだ","杀我是愚蠢的",
@@ -70,6 +91,14 @@
 "TelepathistersInfo","understand each other without language","以心伝心でキルしよう",
 "ShapeKillerInfo","Shape &	Camouflage Report","プレイヤーを偽装しよう",,,,
 "StrayWolfInfo","Where are my mates?","仲間、、おるかな、、",
+"EvilIgnitionInfo","Why are you two together?","寄り添うものならば、私が発火します",
+"EscalationerInfo","Get more impatient","キルする度に焦っていく",
+"EvilDyerInfo","Let's going to dye them all red","皆を赤色に染めてやるんだ",
+"BestieWolfInfo","I'll be in support","うちはサポートにまわります",
+"AfterBestieWolfInfo","I lost my friends, why..?","仲間おらんなった、、なんで、、",
+"EvilGuesserInfo","Guess and shoot","推測して撃ち抜こう","","","",""
+"SelfBomberInfo","Self Bomb!","みんな死んじゃえ","","","",""
+"GrudgeChargerInfo","Resentment builds up and attacks","恨みが溜まり襲い掛かる",
 
 "CustomImpostorInfoLong","(Impostors):\nImpostor with the ability to Add-On to attributes set by the host.","[インポスター陣営]\nホストによって設定された属性の能力をもつインポスター。",
 "EvilWatcherInfoLong","(Impostors):\nYou can see everyone's votes even if anonymous voting is on.","(インポスター陣営):\n全員の投票先を見ることができる。","(内鬼阵营):\n会议时窥视者可以看到所有人的投票。","(狼人陣營):\n會議時觀察者可以看到所有人的投票。","(Предатель):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Impostores):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
@@ -86,43 +115,27 @@
 "TimeThiefInfoLong","(Impostors):\nEvery kill reduces discussion and voting time in meeting.\nIf you are voted out or killed, the lost time returns to meetings.","(インポスター陣営):\nキルを行うと会議時間が減少する。\nタイムシーフが追放または殺害されると、失われた会議時間が返ってきます。","(内鬼阵营):\n蚀时者每击杀一个人，会议时间就将减少一定时间。\n如果蚀时者死亡，被偷取的时间的会议时间将返还。","(狼人陣營):\n時間小偷每次殺人將會減少會議時間\n如果時間小偷被丟出或被殺死,減少的會議時間將會回來","(Предатель):\nКаждое убийство Вора Времени сокращает время обсуждения и голосования на собраниях. \nВ зависимости от настроек потерянное время возвращается после того, как он будет убит или изгнан.","(Impostores):\nCada morte reduz tempo de votação e discussão.\nSe você for exilado ou morto, o tempo perdido retorna para as reuniões."
 "SniperInfoLong","(Impostors):\nYou can shoot players from afar.\nYour line of fire continues as a straight line in the direction of the spot where you shapeshift to where you unshift.\nYou cannot perform normal kills until you use up all of your ammo.","(インポスター陣営):\n遠くの敵を狙撃できるインポスター。\nシェイプシフトした地点から解除した地点の延長線上の敵を一人撃ち抜く。\n撃ちきるまで通常キル出来ない。","(内鬼阵营):\n狙击手拥有远距离射杀的能力。\n方法为：变形的位置及解除变形位置的连线及其延长线上的一名玩家将被射杀。\n在狙击手的子弹耗尽前，狙击手无法进行常规击杀。","(狼人陣營):\n狙擊手\狙擊手可以進行遠程殺人\n他的子彈將從變形處延伸到取消變形處並往直線前進並殺死在這條線上非狼人陣營的人。\n在狙擊手用光子彈前,狙擊手無法正常殺人。","(Предатель):\nСнайпер может стрелять в игроков на расстоянии. \nОн убивает игрока который, находится с ним на одной линии, от точки Морфа до точки возвращения в свой облик. \nОн может совершать обычные убийства после того, как все его патроны закончатся.","(Impostor):\nVocê pode atirar em jogadores de longe.\nSua linha de fogo continua numa linha reta, do ponto que você se metamorfa ao ponto que você volta ao normal.\nVocê não pode fazer mortes normais até usar toda a sua munição."
 "EvilTrackerInfoLong","(Impostors):\nYou can see where others are.\nYou will see arrows pointing to the other impostors and anyone you shapeshift into.\nYou will see a ""kill flash"" when your fellow impostors kill.","(インポスター陣営):\n他人の位置が分かるインポスター。\n味方のインポスターとシェイプシフトで選んだ一人の位置が矢印で表示される。\n味方インポスターのキルによるキルフラッシュも見える。","(内鬼阵营):\n邪恶追踪者可以追踪其他内鬼以及其所变形的玩家。\n玩家名称下面的箭头代表着目标的方向。\n当内鬼队友杀人时，邪恶追踪者将会看到击杀闪烁提示。","(狼人陣營):\n邪惡的追蹤者:\他有一個箭頭指向他的隊友以及他變形的玩家,\n當他的隊友殺人時將出現閃光顯示。","(Предатель):\nЗлой Следопыт может отслеживать других игроков. \nОн может видеть стрелки, которые указывают на Предателей или на того, в кого он превратился. \nОн может видеть когда было совершено убийство с помощью вспышки убийства.","(Impostores):\nVocê consegue ver a posição de outros.\nÉ possível ver setas apontando para outros Impostores e qualquer um em que você se transforme.\nVocê também verá uma piscada de tela quando um aliado Impostor matar alguém."
+"StealthInfoLong","(Impostors)\nWhen the Stealth kills, players in the same room are blinded for a short while.","(インポスター陣営):\nキルを行うと、同じ部屋にいる他のプレイヤーの視界が少しの間暗転する。","当暗杀者完成击杀后，与暗杀者处于同一房间内的玩家会短暂失明。","","Когда Хитрец убивает, игроки в одной локации будут ненадолго ослеплены","Quando o Furtivo mata, os jogadores na mesma sala ficam cegos por um curto período."
+"NekoKabochaInfoLong","(Impostors)\nThe Neko-Kabocha kills back their killer.","(インポスター陣営):\nキルされた際、自分を殺してきたプレイヤーを殺し返す。","当猫又被击杀时，猫又也会击杀凶手。","","Неко-Кабоча убивает своего убийцу","O Neko-Kabocha mata de volta o seu assassino."
+"PenguinInfoLong","(Impostors)\nPenguins can restrain target by pressing the kill button, and drag around.\While dragging, the target dies by pressing the kill button again or after a certain period of time.\nPress the kill button twice for a direct kill.","(インポスター陣営):\nキルボタン一回で相手を拘束して連れまわすことが出来る。\nもう一度キルボタンを押すか一定時間経過でキルする。\nキルボタン2回で直接キル可能。","企鹅使用击杀键可以拖拽目标。\n等到倒计时结束或再次按下击杀键则可以正常击杀目标。","","Пингвины могут удерживать цель, нажимая кнопку убийства, и перетаскивать ее.\Во время перетаскивания цель умирает, нажав кнопку убийства еще раз или через определенный промежуток времени.\nНажмите кнопку убийства дважды, чтобы убить напрямую.","Os Pinguins podem prender o alvo pressionando o botão de matar e arrastá-lo.\nEnquanto estiver arrastando, o alvo morre ao pressionar o botão de matar novamente ou após um determinado período de tempo.\nPressione o botão de matar duas vezes para matar imediatamente."
+"InsiderInfoLong","(Impostors)\nYou can see roles whose you killed.\nYou can also see roles and abilities of all Impostors.\nKIlling specified times tells you Madmate as well.","(インポスター陣営):\nキルした相手の役職が分かる。\nまた、味方インポスターの役職と能力が見える。\nさらに、特定回数キルするとマッドメイトも分かる。","内幕人可以看到自己击杀的人的职业。\n还可以看到队友的位置和能力。\n此外，如果内幕人完成了指定的击杀数，则可以看到谁是叛徒。","","Вы можете увидеть роли, которых  Вы убили\nВы также можете увидеть роли и способности всех Предателей.\nУбийство в указанное время также сообщает вам о Безумце.","Você pode ver as classes de quem matou.\nVocê também pode ver as classes e as habilidades de todos os Impostores.\nAo matar em horários específicos, você verá o Tripulante Louco."
 "EvilNekomataInfoLong","(Impostors)\nWhen he is hanged，he takes one random person other than the imposter with him. (When the next discussion starts after he is hanged, he will be marked with an "X" without a corpse direction.)","[インポスター陣営]\n自身が吊られた際、インポスター以外のランダムな1人を道連れにする。(吊られた次の議論開始時に死体演出無しで×マークが付く)","(内鬼阵营)\n当他被绞死时，除了内鬼，他会随机带走一个人。(当他被绞死后的下一次会议开始时，他将被标记为“X”，但没有尸体的方向。)",,
 "AntiAdminerInfoLong","(Impostors)\nI can tell if someone is in front of the Admin，Door Log，or Vital equipment. It does not know if the person is actually using the equipment.","[インポスター陣営]\nアドミン・ドアログ・バイタル機器の前に人がいるか分かる。実際に機器を使用しているかは分からない。","(内鬼阵营)\n我可以告诉如果有人在管理地图，门日志，或重要设备的前面时。但它不知道这个人是否真的在使用设备。",,
 "CursedWolfInfoLong","(Impostors)\nWhen someone is about to be killed by someone else, Guard the kill from that person and Spell them to death.\nWhen the spell, its own killcool is set to half its usual level.","[インポスター陣営]\n誰かにキルされそうになった時、その人からキルをガードして呪殺する。(設定回数まで)\n呪殺した時、自身のキルクールは通常の半分にセットされる。","(内鬼阵营)\n当一个人要被别人杀死时。保护他不被那个人杀死。"
 "GreedierInfoLong","(Impostors)\nImpostor with different killcools for odd and even number of kills. Greedier is reset each time a meeting is held and always starts with the odd-numbered killcool.","[インポスター陣営]\nキル奇数回目と偶数回目でキルクールが異なるインポスター。会議が入る毎にリセットされ、必ず奇数回目キルクールからになる。","(内鬼阵营)\n对于奇数次和偶数次的击杀，使用不同的击杀冷却。每次开会都会重新设置贪婪者的击杀冷却，并且总是以奇数击杀冷却开头。"
 "AmbitionerInfoLong","(Impostors)\nFor each kill, the killcool is shortened by a set multiplier. The killcool is reset every turn.","[インポスター陣営]\nキルする毎にキルクールが設定倍率短くなる。ターン毎にキルクールはリセットされる。","(内鬼阵营)\n对于每次击杀，击杀冷却都会缩短一个设置的乘数。每过一局就重置一次。",
-"ScavengerInfoLong","(Impostors)\nBodies killed by Scavenger will not be able to be reported.(It does not respond when we press report)","[インポスター陣営]\nスカベンジャーにキルされた死体は、通報することが出来なくなる。(通報ボタンを押しても反応しない)","(内鬼阵营)\n被清道夫击杀的尸体将无法被报告.(当点击报告时无响应)",
+"ScavengerInfoLong","(Impostors)\nBodies killed by Scavenger will not be able to be reported.(It does not respond when we press report)","[インポスター陣営]\nスカベンジャーにキルされた死体は、通報することが出来なくなる。(通報ボタンを押しても反応しない)\n能力キルの回数制限をオンにしている時、キルボタンの1回クリックで能力キル、ダブルクリックで通常キルとなる。なお残り回数が0になった時は、1回押すだけで通常キルになる。\n能力キルの回数制限を付けない時、1回クリックで全て能力キルが起こる。","(内鬼阵营)\n被清道夫击杀的尸体将无法被报告.(当点击报告时无响应)",
 "EvilDivinerInfoLong","(Impostors)\nBy pressing the kill button once, the target's Role can be divined after one second. In that case, no kill occurs and the killcool is reset.\nWhen the kill button is double-clicked, it becomes a kill. When the number of divinations reaches 0, a kill is made by simply pressing the button once.","[インポスター陣営]\n1回キルボタンを押すことで、1秒後に対象者の役職を占うことが出来る。その場合、キルは起こらずにキルクールがリセットされる。\nキルボタンをダブルクリックした時、キルになる。なお占い回数が0になった時は、1回押すだけでキルになる。",
 "TelepathistersInfoLong","(Impostors)\nTelepathisters are Impostors that can only be set up by more than one person.\nThe arrows indicate the location of other Telepathisers.\nThe number of times the Telepathisters vent can be used is shared by all Telepathisters  and can only be used up to a set number.","[インポスター陣営]\n複数人でしか設定できないインポスター。\nテレパシスターズの相方(以下、シスターとする)の位置が矢印8方向で分かる。\n設定により、シスターのキルによるキルフラッシュが見えたり、会議時にシスターの最終位置を表示できたりする。\nなお、テレパシスターズのベント使用回数は全員で共有されており、設定数までしか使用できない。",
 "ShapeKillerInfoLong","(Impostors):\nShapeKiller can disguise reports.\nBy shape-shifting and reporting, ShapeKiller can report the shape-shifted target.","(インポスター陣営):\n通報を偽装できるインポスター。\nシェイプシフトして死体通報することでシェイプシフトした相手の通報にできる。",,,,
 "StrayWolfInfoLong","(Impostors):\nAn Impostor in which the companions are not displayed. Winning conditions are the same as for a regular Impostor.\nCan be set up to kill each other with Impostors or not.","[インポスター陣営]\n仲間が表示されないインポスター。勝利条件は通常インポスターと変わらない。\n[仲間斬り合い設定]\n・常時：仲間インポスターもそのままキル。仲間とずっと視認できない。\n・視認後：仲間を斬りそうな時or仲間から斬られそうになった時にガード、互いに視認できるようになる。その相手とはキルしあえる状態に。\n・なし：視認後はキルボタンが互いだけ反応しなくなる。"
-
-#イビルハッカ
-"EvilHacker","Evil Replicator","イビルハッカー...?",
-"REvilHacker","Evil Hacker","イビルハッカー",
-"REvilWhiter","Evil Whiter","イビル白化",
-"REvilReder","Evil Reder","イビル真っ赤",
-"REvilFaller","Evil Faller","イビル落下",
-"REvilFire","Evil Fire","イビル発火",
-"REvilVipper","Evil Vipper","イビル閣下",
-"REvilHakka","Evil Hakka","イビルハッカ",
-"EvilHackerTInfo",,"会議時に直前のアドミン情報がチャットで見れる。",
-"EvilWhiterTInfo",,"自身がキルした時、7秒間全員の姿が白色のカモフラージュがかかる",
-"EvilRederTInfo",,"自身がキルした時、7秒間全員の姿が赤色のカモフラージュがかかる",
-"EvilFallerTInfo",,"自身がキルした死体の死因が「落下死」になる。\n全員視点、落下死の死体は死因が表示される。",
-"EvilFireTInfo",,"キル時に発火させる。そのキルされたプレイヤーの周り(目安視界x0.5範囲内)に誰かいた場合、一番近いプレイヤーを爆死させる。\n爆死は1人まで。",
-"EvilVipperTInfo",,"閣下なので属性能力を様々持つ。\n属性：ライティング、ウォッチング、オートプシー、マネジメント、シーイング、VIP、タイブレーカー",
-"EvilHakkaTInfo",,"キルボタンを押されたプレイヤーはハッカでスースーしすぎて死ぬ。それ以外何もない。",
-"EvilHackerInfo","First Anniversary!","一周年記念楽しんでね",
-"EvilHackerInfoLong","(Impostors):\nFirst Anniversary Role\nThis Role that becomes a random ability for each match. In Japanese, it is a pun.","[インポスター陣営]\nイビルハッカーになりたいインポスター。1ゲームごとに能力がランダム。\nイビルハッカー(本家TOH仕様)になれるのは約16%",
-
-"EvilHackerFixedRole","Set on the Role that appears","出現する役職を設定する",
-"SetEHRole%role%","Can Assign %role%","%role%が現れる",
-
-"MDisplay.EHnowRoleText","In Here!","出現！",
-"MDisplay.EHText","Evil Hacker In Here!","イビルハッカー出現！",
-"MDisplay.EH?Text","Replicator In Here!","イビルハッカー、、？",
-"message.ReplicatorTitle","【Types of Replicator In This Game】","【今回のイビルハッカー】",
+"EvilIgnitionInfoLong","(Impostors):\nWhen the kill button is clicked once, the kill target is ignited.If there is anyone around the player (within an approximate range of x0.5 visibility), the nearest player is killed by the bomb.\nWhen the kill button is double clicked, it becomes a normal kill. When the number of fires reaches zero, a single click will result in a normal kill.","[インポスター陣営]\nキルボタンを1回クリックした時、キル対象を発火させる。そのプレイヤーの周り(目安視界x0.5範囲内)に誰かいた場合、一番近いプレイヤー1人を爆死させる。\nキルボタンをダブルクリックした時、通常のキルになる。なお発火回数が0になった時は、1回押すだけで通常キルになる。"
+"EscalationerInfoLong","(Impostors):\nWhen Escalationer kills, everyone's player speed increases.In addition, the killcool is shortened for each kill only for himself.","[インポスター陣営]\n自身がキルすると、全員のプレイヤースピードが上昇する。また、自身のみキルする度にキルクールが短くなる。",
+"EvilDyerInfoLong","(Impostors):\nWhen he kills someone, everyone turns red for a certain period of time.","[インポスター陣営]\n自身が誰かキルすると全員が一定時間、赤色の姿になる。",
+"BestieWolfInfoLong","(Impostors):\nHe is supportive of his partner because of his love for his companions, but when he becomes a lone Impostor, he becomes lonely and goes berserk.\n\nWhen multiple Impostors are alive, the buff Add-On is given to the partner Impostor depending on the number of kills.\nIf you are the sole Impostor and there is someone else within view of the kill target at the time of the kill, you will kill that person at the same time. Additional kills are limited to one person per kill, and when simultaneous kills occur, a kill flash is visible from all viewpoints.","[インポスター陣営]\n仲間想いなため相方へのサポートをするが、単独な狼になった時には孤独が寂しくなり暴走する。\n\n複数インポスターが生存時、キル回数によって相方インポスターにバフ属性を付与する。\n自身が単独インポスターになった場合、キルする時にそのキル対象の見える範囲内に誰かいた場合、その人まで同時にキルする。追加キルは1キル1人までで、同時キルが起こった時は全視点でキルフラッシュが見える。"
+"EvilGuesserInfoLong","(Impostors):\nImpostor guessing the player's role.\nYou can shoot a player during a meeting by guessing their role.","(インポスター陣営):\n会議中に他のプレイヤーの役職を当てる事でそのプレイヤーを死亡(死因:射殺)させることができる。\nなお役職の推測をミスした場合、自身が死亡(死因:誤爆)する。","","","",""
+"SelfBomberInfoLong","(Impostors):\nCan perform self-destruct range kills.Vanishing kills all crew members around you and you die.","(インポスター陣営):\n自爆による特攻キルを行う事ができるインポスター。\n透明化することで自身の周囲にいるクルーを全員キルして自分も死にます。\nさあ! 私と共に死んでもらうぞ!!\n爆破!!!!","","","",""
+"GrudgeChargerInfoLong","(Impostors):\nUse the kill button to charge the number of kills, use shapeshift to select a kill target, and automatically make a kill when approaching the target.\nNormal kills and transformations are not possible. Target cannot be changed until next turn or kill. The second and subsequent targets on the same turn can be selected with no cooldown.\nThe charge increases the number of kills possible by one when one gauge is fully accumulated.","[インポスター陣営]\nキルボタンを使ってキル回数をチャージ、シェイプ選択でキルターゲットを選択し、ターゲットに近づくと自動でキルをする。\n通常キル・変身不可。ターゲットは次のターンになるかキルするまで変更ができない。同ターン2人目以降はクールダウン無しでターゲットを選択できる。\nチャージは１ゲージ溜まり切るとキル可能回数が１増加する。"
 
 "# マッドメイト系役職"
 "Madmate","Madmate","マッドメイト","叛徒","叛徒","Безумец","Tripulante Louco"
@@ -133,6 +146,9 @@
 "MadNatureCalls","Mad NatureCalls","マッドネイチャコール","背叛的自然呼声",,
 "MadBrackOuter","Mad BrackOuter","マッドブラックアウター","背叛的控灯人",
 "MadNimrod","Mad Nimrod","マッドニムロッド",
+"MadScientist","Mad Scientist","マッド科学者",
+"MadJester","Mad Jester","マッドジェスター"
+"MadGuesser","Mad Guesser","マッドゲッサー","","","",""
 "SKMadmate","Sidekick Madmate","サイドキックマッドメイト","叛徒跟班","叛徒跟班","Союзник Безумца","Tripulante Louco Ajudante"
 
 "MadmateInfo","Help the Impostors","インポスターの援助をしよう","帮助内鬼","幫助偽裝者","Помогите Предателям","Ajude os Impostores"
@@ -144,6 +160,9 @@
 "MadNatureCallsInfo","Help the Impostors","インポスターの援助をしよう","帮助内鬼",,
 "MadBrackOuterInfo","Help the Impostors","インポスターの援助をしよう","帮助内鬼",,
 "MadNimrodInfo","Help the Impostors","インポスターの援助をしよう","帮助内鬼",,
+"MadScientistInfo","Help the Impostors","インポスターの援助をしよう","帮助内鬼",,
+"MadJesterInfo","Help the Impostors","インポスターの援助をしよう","帮助内鬼",,
+"MadGuesserInfo","Guess and shoot","推測して撃ち抜こう","","","",""
 "SKMadmateInfo","You are now on Team Impostors","サイドキックにされた","你是内鬼的好帮手","你現在是偽裝者的夥伴了，盡你所能幫助他們","Теперь вы в команде Предателя","Você agora está no Time Impostor"
 
 "MadmateInfoLong","(Impostors):\nYou are a crewmate, but you act as the impostors' ally.\nYou and the impostors cannot recognize each other.\nYou can vent, and you have no tasks.","(インポスター陣営):\nクルーだがインポスターの味方をする。\nインポスターと互いに認識できない。\nベントが使え、タスクはない。","(内鬼阵营):\n叛徒伪装成船员来帮助内鬼阵营，但是他们并不知道谁是内鬼。\n叛徒不可以进行击杀或者破坏，可以跳管道且没有任务。","(狼人陣營):\n船員,但是他們屬於狼人陣營.\n狼人無法知道叛徒是誰,\n他可以跳洞且沒有任務。","(Предатель):\nЧлен Экипажа, который на стороне Предателей. \nНо он не знает кто является Предателем в игре. \nМожет использовать вентиляцию, но нет заданий.","(Impostores):\nVocê é um tripulante que se aliou ao impostor.\nOs Impostores não sabem quem você é e vice-versa.\nPode usar a ventilação, e não tem tarefas."
@@ -154,6 +173,9 @@
 "MadNatureCallsInfoLong","(Impostors)\nCrew but takes the side of the Imposter. Unrecognizable to the Imposter and each other. Can use venting，no tasks. \nThe effect is only activated during airship. Each time you enter a vent, four lounge toilet doors open at the same time.","[インポスター陣営]:\nクルーだがインポスターの味方をする。インポスターと互いに認識できない。ベントが使え、タスクはない。\nエアシップの時のみ効果を発動する。ベントに入る度ラウンジトイレのドアが4つ同時に開く。","(内鬼阵营)\n船员但站在内鬼一边。内鬼和对方都认不出来。可以用管道，没有。这个效果只在飞艇期间被激活。每次你进入一个通风口，四个休息室的厕所门同时打开。",,
 "MadBrackOuterInfoLong","(Impostors)\nCrewmate but takes the side of the Imposter. Unrecognizable to the Imposter and each other. Can use venting，no tasks. \nBlackout when entering the vent (Should set longer vent cooldowns).Blackout can be superimposed on the sabotage caused by the imposter (although they can't be vented in the first place during the communication sabotage).","[インポスター陣営]:\nクルーだがインポスターの味方をする。インポスターと互いに認識できない。ベントが使え、タスクはない。\nベントに入ることで停電を起こすことが出来る（ベントクールダウンを長めに設定するべし）。自身が起こした停電中にもう一回ベントに入ると停電は解除される。インポスターが起こしたサボには重ねることが可能（コミュサボ中はそもそもベント入れないが）。","(内鬼阵营)\n船员但站在内鬼一边。内鬼和对方都认不出来。可以用管道，没有任务。\n进入通风口时停电（应设置更长的通风口冷却时间）。停电可以叠加在内鬼造成的破坏上（尽管他们在通信破坏期间不能钻管）。",
 "MadNimrodInfoLong","(Impostors)\nCrewmate but takes the side of the Imposter. Unrecognizable to the Imposter and each other. no tasks. \nWhen Nimrod is exiled, a meeting is held again for a vote on Nimrod. Here, only Nimrod is allowed to discuss the matter once exiled, and he may choose one person to be voted in and executed along the way.","[インポスター陣営]:\nクルーだがインポスターの味方をする。インポスターと互いに認識できない。タスクはない。\n自身が追放された時、再びニムロッド投票用の会議が開かれる。ここでは追放されたらニムロッド以外は議論するべからず。1人を投票で選択して道連れ処刑することができる。",
+"MadScientistInfoLong","(Impostors)\nCrewmate but takes the side of the Imposter. Unrecognizable to the Imposter and each other. no tasks. \nMadScientist have Vital.","[インポスター陣営]:\nクルーだがインポスターの味方をする。インポスターと互いに認識できない。タスクはない。\nバイタルを持つ。",
+"MadJesterInfoLong","(Impostors)\nCrewmate but takes the side of the Imposter. Unrecognizable to the Imposter and each other. no tasks. \nIf he himself is expelled, the Impostor team wins.","[インポスター陣営]:\nクルーだがインポスターの味方をする。インポスターと互いに認識できない。タスクはない。\n自身が追放されると、その時点でインポスター陣営の勝利になる。",
+"MadGuesserInfoLong","(Impostors):\nMadmate guessing the player's role.\nYou can shoot a player during a meeting by guessing their role.","(インポスター陣営):\n会議中に他のプレイヤーの役職を当てる事でそのプレイヤーを死亡(死因:射殺)させることができる。\nなお役職の推測をミスした場合、自身が死亡(死因:誤爆)する。","","","",""
 "SKMadmateInfoLong","(Impostors):\nThe player closest to a Shapeshifter when they shapeshift will become a Sidekick Madmate. You have no tasks.","(インポスター陣営):\n変身した際に一番近かった人がなれる役職。タスクはない。","(内鬼阵营):\n一些内鬼职业变形时，其附近的与其距离最近的玩家的职业有概率转化为该职业。\n叛徒跟班与内鬼不互认。","(狼人陣營):\n當狼人變形時\n離狼人變形最近的一個人將有機率轉化為叛徒跟班\n他沒有任務,且叛徒跟班與狼人無法互相知道。","(Предатель):\nРоль, которую может занять ближайший к вам игрок, когда вы используете Морф. Нет заданий.","(Impostores):\nO jogador mais próximo de um Metamorfo quando eles se transformam virará um Tripulante Louco Ajudante. Você não tem tarefas."
 
 
@@ -193,6 +215,10 @@
 "Psychic","Psychic","霊媒師",
 "Nimrod","Nimrod","ニムロッド",
 "Detector","Detector","ディテクター",
+"LoyalDoggy","Loyal Doggy","ロイヤルドギー",
+"Rabbit","Rabbit","ラビット",
+"VentManager","Vent Manager","ベントマネージャー",
+"NiceGuesser","Nice Guesser","ナイスゲッサー","","","",""
 
 "CustomCrewmateInfo","I can now use abilities like that.","あんな能力も使えるようになりました。",
 "NiceWatcherInfo","Gaze upon all votes","みんなの投票に目を光らせよう","你可以看见所有人的投票，注意他们的选择","注意所有人的投票","Вы видите цвета голосов","Veja todos os votos"
@@ -217,7 +243,7 @@
 "ExpressInfo","Let's run around comfortably","気持ちよく駆け回ろう","让我们舒服的奔跑吧",,
 "SeeingOffInfo","I'll see you through your final days.","あなたの最期を見送ってあげる","被驱逐者是内鬼吗？",,
 "ChairmanInfo","Manipulate conference openings and closings","会議開閉を操ろう","操纵会议的开场和结束",,
-"SillySheriffInfo","Can you properly judge a Impostor?","ちゃんと人外判断できるかな","你能正确地判断内鬼吗?",
+"SillySheriffInfo","Sorry,I think I'm a little out of sorts","ごめん、ちょっと調子悪いみたい","你能正确地判断内鬼吗?",
 "SympathizerInfo","Neither of us is an imposter!","ふたりで白をとり合おう","我们都不是内鬼",
 "BlinderInfo","You can kill me, right?","私をキルしてもいいんだよ?",
 "MedicInfo","You're the only one I don't want to die","あなただけは斬られてほしくないんだ",
@@ -226,7 +252,11 @@
 "FortuneTellerInfo","Forecast Other Player","役職を占おう",,,,
 "PsychicInfo","I wanted to use your ability","貴方の能力を使いたかった",
 "NimrodInfo","Let us go with you to the spirit world","あなたと共に霊界へ向かおう",
-"DetectorInfo","I'll find the body first","死体は私が見つけます"
+"DetectorInfo","I'll find the body first","死体は私が見つけます",
+"LoyalDoggyInfo","How are you doing? Master!","調子はどうですか？ご主人様！",
+"RabbitInfo","I have a good ear, so.","耳がいいので探知できるんだ",
+"VentManagerInfo","Vent,Vent,Vent!","ベント、ベント、ベント！",
+"NiceGuesserInfo","Guess and shoot","推測して撃ち抜こう","","","",""
 
 "CustomCrewmateInfoLong","(Crewmates):\Crewmate with the ability to Add-On to attributes set by the host.","[クルー陣営]\nホストによって設定された属性の能力をもつクルーメイト。",
 "NiceWatcherInfoLong","(Crewmates):\nYou can see everyone's votes even if anonymous voting is on.","(クルー陣営):\n全員の投票先を見ることができる。","(船员阵营:\n会议时窥视者可以看到所有人的投票。","(船員):\n會議時觀察者可以看到所有人的投票。","(Член Экипажа):\nNice Watcher может видеть все цвета голосов несмотря на анонимное голосование.","(Tripulantes):\nVocê consegue ver os votos de todos, mesmo que os votos anônimos estejam ligados."
@@ -251,7 +281,7 @@
 "ExpressInfoLong","(Crewmates)\nIt is just fast. ","[クルー陣営]\nただ足が速い。","(船员阵营)\n它只是很快。",
 "SeeingOffInfoLong","(Crewmates)\nYou will know if the person you have banished is an imposter or not.","[クルー陣営]\n追放した人がインポスターかそうでないかがわかる。","(船员阵营)\n你会知道你驱逐的人是否是内鬼。",,
 "ChairmanInfoLong","(Crewmates)\nWhen you enter a vent，you can open a meeting. During sabotage，entering a vent does not open a meeting. The vent button is consumed at the same time as the normal button count. (If you use the vent button first when you have one normal button count，you will not be able to use the normal button.) Voting for someone can immediately interrupt the meeting. You cannot vote normally except for skip/self-vote，which triggers the ability.","[クルー陣営]\n・ベントに入ると会議が開ける。サボタージュ中はベントに入っても会議を開けない。\n通常ボタン回数と同時に消費する。(通常ボタン回数1回の時、先にベントボタンを使うと、通常ボタンは使えなくなる。)\n・誰かに投票することでその会議を即中断できる(追放は起こらずスキップ扱い)。\nスキップ・自投票以外の普通の投票は出来ず、能力を発動してしまう。","(船员阵营)\n当你进入一个通风口时，你可以发起一个会议。在破坏过程中，进入通风口并不会开启会议。管道按钮与正常按钮计数同时消耗。(如果你在有一个正常按钮的情况下先使用管道按钮，你将不能使用正常按钮。)为某人投票会立即打断会议。你不能正常投票，除了跳过/自我投票，这会触发能力。",,
-"SillySheriffInfoLong","(Crewmates)\nIt is almost the same as a normal sheriff, but sometimes it does not recognize the camp correctly.","[クルー陣営]\n普通のシェリフとほとんど変わりないが、正しく陣営を認識できない時がある。(人外に向かって自爆・クルーをキルする時がある)","(船员阵营)\n它与普通的警长几乎一样，但有时它不能正确识别阵营。"
+"SillySheriffInfoLong","(Crewmates)\nIt is almost the same as a normal sheriff, but sometimes it does not recognize the camp correctly.","[クルー陣営]\n普通のシェリフとはちょっと違うバカなシェリフ。正しく陣営を認識できない時、人外に向かって自爆したりクルーをキルする時がある","(船员阵营)\n它与普通的警长几乎一样，但有时它不能正确识别阵营。"
 "SympathizerInfoLong","(Crewmates)\nOnly two Sympathizer can be set up at any given time.\nWhen the number of tasks completed is reached, ◎ is placed on the other Sympathizer, which is visible only to the Sympathizer, and when both Sympathizers have exceeded the number of tasks set for each other, the other Sympathizer is also marked with ◎.","[クルー陣営]\n共鳴者は必ず2人でしか設定できない。\n設定タスク数まで完了させると自身にしか見えない◎がつく。2人ともタスクが互いに設定数を超えた時、相手にも◎が付きもう1人の共鳴者が誰か分かる。","(船员阵营)\n任何时候只能设置两个同情者。\n当需要完成的任务数量达到时，“◎”会被放在另一个同情者身上，只有同情者才能看到，当两个同情者都超过了为对方设定的任务数量时，另一个同情者也会被标记为“◎”。",
 "BlinderInfoLong","(Crewmates)\nCrew with an independent vision.\nMake the view of the person who kills you the same as the blinder's own view.Killed people become affected by the blackout regardless of the original setting.","[クルー陣営]\n独立した視野を持つクルー。\nキルしてきた人の視野をブラインダー自身の視野と同じにさせる。キルした人は元設定に関わらず停電の影響を受けるようになる。","(船员阵营)\n此船员具有独立的视野。让杀你的人的视野和盲人的视野一样。被杀的人会受到停电的影响，不管最初的设定是什么。",
 "MedicInfoLong","(Crewmates)\nIt can grant a shield that prevents a kill to one person other than itself once. During the task turn, Medic can specify which player to grant it to by entering and exiting the vent.\nThe shielded side cannot see either the shield or the kill guard. The medic's side is marked when the shield is granted, and the mark disappears when the shield is removed by a kill.","[クルー陣営]\n自身以外の誰か1人に1回、キルを防ぐシールドを付与することが出来る。タスクターン中、ベントに出入りすることで付与するプレイヤーを指定できる。\nシールドが張られた側はシールド付与、キルガード共に確認できない。メディック側はシールドを付与するとそのプレイヤーにマークが付き、シールドがキルにより剝がされるとそのマークは消える。",
@@ -261,7 +291,10 @@
 "PsychicInfoLong","(Crewmates)\nThe deceased can be selected by venting to see their Role.",[クルー陣営]\n死亡した人をベントで選択して役職を確認することができる。,
 "NimrodInfoLong","(Crewmates)\nWhen Nimrod is exiled, a meeting is held again for a vote on Nimrod. Here, only Nimrod is allowed to discuss the matter once exiled, and he may choose one person to be voted in and executed along the way.","[クルー陣営]\n自身が追放された時、再びニムロッド投票用の会議が開かれる。ここでは追放されたらニムロッド以外は議論するべからず。1人を投票で選択して道連れ処刑することができる。",
 "DetectorInfoLong","(Crewmates)\nUpon completion of a set amount of tasks, When a corpse is born, a kill flash will be visible and an arrow to the location of the corpse will appear.","[クルー陣営]\n設定タスク量を完了すると、死体が生まれた際にキルフラッシュが見えると共に死体の場所への矢印が表示されるようになる。",
-
+"LoyalDoggyInfoLong","(Crewmates)\nVote for one person of your choice at the very first meeting and nominate them as Master. (Votes are not shown).\nThe position of the master can be detected by the sense of smell. When the master is killed, the arrow will no longer be displayed. By setting, the task disappears after the Master's death.","[クルー陣営]\n一番初めの会議で1人好きな人に投票して、ご主人として指名する。(票は表示されない)\nその人の場所を嗅覚により探知できる。ご主人がキルされた時、ご主人への矢印はなくなる。設定により、ご主人の死亡後はタスクが無くなる。",
+"RabbitInfoLong","(Crewmates)\nWhen a set number of tasks are completed, an arrow will indicate for 5 seconds in which direction a random 1 Impostor is at that time for each task completed.\nEven after all tasks have been completed, uncounted tasks will appear and the ability will be available for each completed task.","[クルー陣営]\n設定タスク完了すると、タスクを1つ完了させる毎にその時のランダムな1インポスターがどの方向にいるかが矢印で5秒間表示される。\nタスク全完了後もカウントされないタスクが発生し、完了するごとに能力を使用できる。",
+"VentManagerInfoLong","(Crewmates)\nClean Vent.","[クルー陣営]\nベントを掃除しよう。ただそれだけ。",
+"NiceGuesserInfoLong","(Crewmates):\nCrewmate guessing the player's role.\nYou can shoot a player during a meeting by guessing their role.","(クルー陣営):\n会議中に他のプレイヤーの役職を当てる事でそのプレイヤーを死亡(死因:射殺)させることができる。\nなお役職の推測をミスした場合、自身が死亡(死因:誤爆)する。","","","",""
 
 "# ニュートラル役職"
 "Jester","Jester","ジェスター","小丑","小丑","Шут","Bobo"
@@ -288,6 +321,13 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "Totocalcio","Totocalcio","トトカルチョ",
 "Duelist","Duelist","決闘者",
 "God","God","神","","","",""
+"FoxSpirit","Fox Spirit","妖狐",
+"Immoralist","Immoralist","背徳者",
+"Ogre","Ogre","鬼",
+"Pirate","Pirate","海賊",
+"Gang","Gang","一味",
+"ChainShifter","ChainShifter","チェインシフター",
+"ChainShifterAddon","ㅤ","ㅤ",
 
 "ArsonistInfo","Burn them to crisps","燃やせ","火焰给我燃烧起来吧！","燒吧，燒吧，燃燒吧","Облейте и подожгите всех игроков","Queime tudo em pedacinhos"
 "JesterInfo","Get voted out","追放されよう","让他们把你这个假货投出去","想個辦法讓你被投出去","Заставь игроков изгнать себя","Seja exilado"
@@ -314,6 +354,13 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "TotocalcioInfo","I leave my victory to you","私の勝利は貴方に任せる",
 "DuelistInfo","I decided on you, it's battle time!","貴方は因縁の相手、いざ勝負！",
 "GodInfo","You Are God!!","あなたは神だ","","","",""
+"FoxSpiritInfo","Survive and intercept the victory","生き残って勝利を横取りしよう",
+"ImmoralistInfo","Help the FoxSpirit","妖狐の援助をし、勝利へ導こう",
+"OgreInfo","I held the club!","金棒を持たせたな？",
+"PirateInfo","I am the captain of the pirates","海賊団船長とはこの私だ",
+"GangInfo","As Gang, we're going to make sure the captain wins","一味として船長を勝たせるんだ",
+"ChainShifterInfo","You Have a Joker","あなたは負けよっ！",
+"ChainShifterAddonInfo","ㅤ","ㅤ",
 
 "ArsonistInfoLong","(Neutrals):\nWhen you use the kill button, you douse your target in oil.\nAfter dousing all living players, you set everything ablaze and win by venting.","(ニュートラル):\nキルボタンを使おうとすると、ターゲットに油を塗れる。\nすべてのクルーに油を塗ったら船を燃やして勝利する。","(独立阵营):\n纵火犯可以通过对玩家点击击杀按钮并在跟随其数秒来完成涂油行为。\n当所有存活玩家都被纵火犯涂油后，纵火犯可以通过跳通风管来点火，并单独获得胜利。","(中立):\n當縱火犯嘗試使用殺人鍵,它將對他身邊最近的一個人澆上油,\n當他對所有玩家澆上油之後,縱火縱火犯點火即勝利。","(Нейтрал):\nПоджигатель может обливать игроков, нажав на кнопку 'Убить' и находясь рядом с игроком в течение нескольких секунд. \nПосле того как он обольёт всех живых игроков Поджигатель сможет запрыгнуть в вентиляцию, чтобы поджечь всех игроков, что приводит к победе Поджигателя.","(Neutros):\nAo apertar o botão de matar, você encharca o seu inimigo em óleo.\nApós ter encharcado todos os jogadores vivos, você coloca tudo em chamas e ganha entrando na ventilação."
 "JesterInfoLong","(Neutrals):\nYou solo victory by getting voted out during a meeting.\nIf the game ends without you getting voted out, or if you are killed, you lose.","(ニュートラル):\n会議で追放された時に単独勝利できる。\n追放されず試合が終了orキルされると敗北。","(独立阵营):\n小丑被放逐则小丑单独游戏胜利。\n游戏结束时若小丑仍存活则小丑输掉游戏。","(中立):\n當小丑被丟出時即宣告小丑獲勝,\n但是小丑在遊戲結束時活下來或是在遊戲中被殺即宣告失敗","(Нейтрал):\nШут сможет выиграть игру, если за него проголосуют во время голосования и он будет изгнан.\nВ противном случае Шут проиграет.","(Neutros): \nVocê ganha sozinho ao ser exilado durante uma reunião. \nSe o jogo terminar com você não sendo votado, ou você for morto, você perde."
@@ -322,7 +369,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "SchrodingerCatInfoLong","(Neutrals):\nWhen you are killed, you block the kill and join the attacker's team.","(ニュートラル):\nキルされると、キルを防いでキルをしてきた陣営に所属する。","(独立阵营):游戏开始时薛定谔的猫没有胜利条件。\n薛定谔的猫被击杀后，其会复活且加入凶手阵营，获得与凶手所在阵营相同的胜利条件。\n 注:1.被放逐的薛定谔的猫死亡并不再变更胜利条件。\n2.被术士击杀的薛定谔的猫死亡并不再变更胜利条件。\n3.除吸血鬼的击杀外，一切显示为玩家自杀的情况内薛定谔的猫死亡并不再变更胜利条件。","(中立陣營):\n當薛定諤的貓第一次被殺時，他將轉入殺他的那個陣營。\n(P.S:1.薛定諤的貓如果被丟出則陣營不更改(可以在設定中更改)\n2.薛定諤的貓如果被術士下咒對象咒死時則陣營不更改\n3.如果薛定諤的貓有戀人且戀人死亡受到戀人共死影響自殺則陣營不更改)","(Нейтрал):\nКогда Пленника пытаются убить, он предотвращает убийство и переходит к команде убийцы.","(Neutros): \nQuando morto, você bloqueia a morte e se junta ao time do seu assassino."
 "OpportunistInfoLong","(Neutrals):\nSo long as you are alive at the end of the game, you will win alongside whoever the victor is.","(ニュートラル):\n試合終了時に生存していれば追加勝利となる。","(独立阵营):\n若投机者在游戏结束时存活，则投机者跟随获胜玩家一同获得胜利。","(中立):\n如果投機主義者活到最後,他將跟著遊戲結束獲勝的陣營一起獲勝。","(Нейтрал):\nВыживший выигрывает игру с любыми другими ролями, но только если он выжил.","(Neutros): \nContanto que você esteja vivo no final do jogo, você dividirá a vitória ao lado do vencedor."
 "EgoistInfoLong","(Neutrals):\nWhen all impostors are dead, you solo victory by fulfilling impostor victory conditions.\nYou and the impostors know who each other are.","(ニュートラル):\n味方がすべて死んだ状態でインポスターが勝つと単独勝利する。\nインポスターは誰がエゴイストか分かる。エゴイストも、誰がインポスターか分かる。","(独立阵营):\n原则上野心家属于内鬼阵营。野心家与内鬼阵营玩家互认但不可以击杀对方。\n当其他内鬼阵营玩家全部死亡后，若野心家存活且内鬼阵营达成胜利条件，则野心家单独获得胜利。","(中立陣營):\n如果所有的偽裝者都死亡，且利己主義者存活，利己主義者將獨自獲勝。\n(偽裝者和利己主義者互相知道對方但是不可以互刀對方)","(Нейтрал):\nПосле того, как все Предатели умрут то Эгоист побеждает вместо Предателей. \nПредатели и Эгоист видят друг друга.","(Neutros): \nQuando todos os Impostores morrerem, você ganha sozinho assumindo o papel de Impostor. \nVocê e os Impostores sabem quem são uns aos outros."
-"JackalInfoLong","(Neutrals):\nJackal can kill all Crewmates, Impostors and Neutrals.\nTeam Jackal wins when living Jackal outnumbers living Crewmates and when there are no Impostors alive.","(ニュートラル):\nジャッカルはすべてのプレイヤーを殺すことができる。\nインポスターが残っておらず、生き残っているジャッカルの人数がクルーと同じかそれ以上でジャッカルが勝利する。","(独立阵营):\n豺狼需要击杀所有人。\n存活的玩家只剩豺狼和一名其他船员时，豺狼获得胜利。","(中立):\n豺狼需要殺死所有人來獲得勝利,\n如果場上存活的玩家只剩下豺狼和另一名不帶刀職業時,豺狼將獲勝。","(Нейтрал):\nШакал может убить всех Членов Экипажа, Нейтралов и Предателей тоже. \nШакал может победить, когда в живых остался только 1 Шакал и 1 Член Экипажа.","(Neutros): \nVocê pode matar todos os jogadores. \nGanhe quando não existirem mais Impostores, e o número de Chacais for maior que o de Tripulantes."
+"JackalInfoLong","(Neutrals):\nJackal can kill all Crewmates, Impostors and Neutrals.\nTeam Jackal wins when living Jackal outnumbers living Crewmates and when there are no Impostors alive.","(ジャッカル陣営):\nジャッカルはすべてのプレイヤーを殺すことができる。\nインポスターが残っておらず、生き残っているジャッカルの人数がクルーと同じかそれ以上でジャッカルが勝利する。","(独立阵营):\n豺狼需要击杀所有人。\n存活的玩家只剩豺狼和一名其他船员时，豺狼获得胜利。","(中立):\n豺狼需要殺死所有人來獲得勝利,\n如果場上存活的玩家只剩下豺狼和另一名不帶刀職業時,豺狼將獲勝。","(Нейтрал):\nШакал может убить всех Членов Экипажа, Нейтралов и Предателей тоже. \nШакал может победить, когда в живых остался только 1 Шакал и 1 Член Экипажа.","(Neutros): \nVocê pode matar todos os jogadores. \nGanhe quando não existirem mais Impostores, e o número de Chacais for maior que o de Tripulantes."
 "JClientInfoLong","(Neutrals):\nCrewmate, but they belong to team Jackal, one type of Jackal's Madmates.\nThey can see who is the Jackal after finishing all their tasks.\nDepending on option, they can use vents.","(ジャッカル陣営):\nクルーだがジャッカルの味方をする。\nジャッカルと互いに認識できないが、タスクを全て完了させるとジャッカルを認識できるようになる。",,,,
 "AntiCompleteInfoLong","(Neutrals)\nDuring the meeting, you can vote for your favorite person only once in the entire meeting. If that person has already completed the task,，he or she wins alone. If you select someone who has no task or who has not completed a task，you die and lose. When the AntiComplete selects someone，the meeting is forced to end.","[ニュートラル]\n会議中、全体で1回のみ好きな人を投票で選択出来る。その人がタスクを既に完了させていたら単独勝利。タスクがない人、タスクが終わってない人を選ぶと死亡し敗北。\nアンチコンプが誰か選択した時、会議は強制終了する。","(中立阵营)\n在整个会议中，您只能投票给您喜欢的人一次。如果这个人已经完成了任务，它独自获胜。如果你选择了一个没有任务或者没有完成任务的人，你就会失败。当防成者选择某人时，会议将被迫结束。",,
 "WorkaholicInfoLong","(Neutrals)\nWhen you complete a task，you win alone. The amount of tasks is very large. Even if you die，you win when you finish the task. Vent is possible.","[ニュートラル]\nタスクを完了させた時、単独勝利。タスク量はとても多い。死亡しても関係なく、タスクが終わると勝利。霊界からでも終わらそう。ベント可。","(中立阵营)\n当你完成一项任务时，你独自获胜。任务的数量非常大。即使你死了，当你完成任务时你就赢了。钻管是可能的。",,
@@ -333,7 +380,44 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "PursuerInfoLong","(Neutrals):\nThe client died, so the lawyer became a pursuer.\nIf you yourself are still alive at the end of the game, you win an additional victory. It is also possible to prevent kills for a set number of times.","[ニュートラル]\n依頼人が死亡したので弁護士は追跡者になった。\n自身がゲーム終了時に生存していれば追加で勝利となる。また、設定回数分キルを防ぐことが可能。","(中立阵营):\n当客户死了 律师将会变成起诉人\n如果起诉人在游戏结束时还活着，它将单独获得胜利. 也可以在设定的次数内阻止死亡",
 "TotocalcioInfoLong","(Neutrals):\nThe kill button can be used to 'BET' on someone.If the BET player on the game wins, he can win an additional unconditional victory.","[ニュートラル]\nキルボタンを使用して、誰かに「賭ける」ことが可能。賭けた対象プレイヤーが勝利すると、無条件で自身も追加で勝利できる。\n「賭ける」先は設定により途中で変更することも可能。ただし生存人数が減るごとに「賭ける」クールタイムが長くなる。",,
 "DuelistInfoLong","(Neutrals):\nThe opponent who votes for the first meeting becomes the Duelist's own Archenemy.After the decision of the Archenemy, the name of the duelist is also displayed from the Archenemy's point of view, and the victory condition for the duelist and Archenemy is 'If you are alive when the victory is decided and your Archenemy dies, you win an additional victory.'","[ニュートラル]\n初手会議に投票した相手を自身の宿敵にする。初手会議の投票時、決闘者の投票先は全視点見えない。初手会議で宿敵を決定しないと自殺する。\n宿敵決定後、宿敵目線でも決闘者が誰か表示され、決闘者・宿敵の勝利条件は「勝利判定時に自身が生存、且つ宿敵(決闘者)が死亡で追加勝利」となる。",,
-"GodInfoLong","(Neutrals):\nEveryone's position is known.\nIf you survive to the end you take away the win.\nGod cannot fix all sabotage.","(第三陣営):\n全員の役職がわかります。\n最後まで生き残っていると、勝利を奪い取ります。\n神はすべてのサボタージュが直せません。","","","",""
+"GodInfoLong","(Neutrals):\nEveryone's position is known.\nIf you survive to the end you take away the win.\nGod cannot fix all sabotage.","(ニュートラル):\n全員の役職がわかります。\n最後まで生き残っていると、勝利を奪い取ります。\n神はすべてのサボタージュが直せません。","","","",""
+"FoxSpiritInfoLong","(Neutrals):\nAfter completing the task, when the Impostor or Crewmate achieve the victory conditions while FoxSpirit is still alive, win.\nAlways have a shield and never get killed. All tasks are vent tasks only. Reactor and O2 sabotage is not repairable. Cannot report a dead body.\n※Not available：Polus,Fungle","[妖狐陣営]\nタスク完了後に自身が生存している状態で、インポスター及びクルーが勝利条件を達成した時、横取りで勝利する。\n常にバリアを所持し、妖狐にキルボタンが押された時に互いにバリアが見える。タスクは全てベント掃除タスク。リアクター・Ｏ２サボの修理、死体通報ができない。\n※Polus,Fungleでは使用できません",
+"ImmoralistInfoLong","(Neutrals):\nCrewmate, but they belong to team FoxSpirit, one type of FoxSpirit's Madmates.\nWhen the FoxSpirit dies, Immoralist also dies. When Immoralist is exiled，they takes one random person other than FoxSpirit and impostor with them. Power outages and communication sabotage cannot be repaired.","[妖狐陣営]\nクルーだが妖狐の味方をする。\n妖狐と互いに認識できないが、タスクを全て完了させると妖狐を認識できるようになる。妖狐が死亡すると背徳者は後追い自殺する。自身が追放された際、クルーを道ずれする(妖狐、インポスターは道連れしない)。停電、コミュサボの修理ができない。",
+"OgreInfoLong","(Neutrals):\nAdditional victory is awarded if the impostor survives Ogre with at least one impostor remaining at the end of the game.\nIt has a kill button and can kill, but the probability of a successful kill decreases with each successful kill.\nWhen about to be killed by an impostor, it will guard the kill with a set probability. If the kill is from a non-impostor, it will guard the kill with a set probability and rebound to kill.","[ニュートラル]:\nゲーム決着時に、インポスターが1人以上残った状態で自身が生存していると追加で勝利する。\nキルボタンを持ちキルできるが、キル成功確率はキルに成功する毎に下がる。\nインポスターからキルされそうになった時、設定確率でキルガードする。インポスター以外からのキルの場合、設定確率でキルガードし、はね返してキルする。",
+"PirateInfoLong","(Neutrals):\nFirst, someone kills.The killed Crew member dies, but becomes a member of the pirate Gang and the victory condition changes to Pirate Victory.\nThe gang has a task, and the pirate's ability is expanded according to the gang's completion of the task.\nIf the Impostor is wiped out and the number of pirates equals or exceeds the number of crew members, wins alone.\n[Pirate ability by Gang task]\n25%：Can Vent\n50%：Can Kill\n75%：Grant Buff-Add-On\n100%：Know Impostor","[ニュートラル]\nはじめに誰かキルする。そのキルされた人は死亡するが、海賊の一味となり勝利条件が「海賊の勝利」に変化する。\n一味はタスクを持ち、一味のタスク完了度により海賊の能力が拡大する。\nインポスターの全滅かつ、海賊の数がクルーと同数または上回ると単独で勝利する。\n[一味のタスクによる海賊の能力]\n25%完了：ベント使用可能\n50%完了：キル可能\n75%完了：バフ属性の付与\n100%完了：インポスターが誰か分かる",
+"GangInfoLong","(Neutrals):\nLet's aim for a pirate victory. The gang has a task, and the pirate's ability is expanded according to the gang's completion of the task.\n[task]\n25%：Can Vent\n50%：Can Kill\n75%：Grant Buff-Add-On\n100%：Know Impostor","[ニュートラル]\n海賊の勝利を目指そう。一味のタスク完了度により海賊の能力が拡大する。\n[タスク]\n25%完了：ベント使用可能\n50%完了：キル可能\n75%完了：バフ属性の付与\n100%完了：インポスターが誰か分かる",
+"ChainShifterInfoLong","(Neutrals):\nYou lose if you end the game with ChainShifter.\nChainShifter can be transferred to another opponent by being nearby for a while.\nYou can win with the changed role after transferring the ChainShifter.","[ニュートラル]\nチェインシフターでゲームを終了すると負けになる役職。\nチェインシフターは他のクルーの近くにしばらくいることで相手に移すことができる。\nチェインシフターを移した後に変化した役職で勝利できる。","","","",""
+"ChainShifterAddonInfoLong","ㅤ","ㅤ",
+
+
+# Unit-Role
+## Name
+"CounselorAndMadDilemma","<color=#ffc0cb>Counselor</color>＆<color=#ff1919>MadDilemma</color>","<color=#ffc0cb>カウンセラー</color>＆<color=#ff1919>マッドジレンマ</color>",
+"Counselor","Counselor","カウンセラー",
+"MadDilemma","Mad Dilemma","マッドジレンマ",
+
+"GodfatherAndJanitor","<color=#ff1919>Godfather</color>＆<color=#ff1919>Janitor</color>","<color=#ff1919>ゴッドファーザー</color>＆<color=#ff1919>ジャニター</color>",
+"Godfather","Godfather","ゴッドファーザー",
+"Janitor","Janitor","ジャニター",
+
+## Info
+"CounselorAndMadDilemmaInfo","Unit","ユニット",
+"CounselorInfo","Isn't it time for a change of heart?","そろそろ改心しませんか？",
+"MadDilemmaInfo","I'm trying to help Impostor..!","私はインポスターを助けるんだ、、！",
+
+"GodfatherAndJanitorInfo","Unit","ユニット",
+"GodfatherInfo","Let's have Janitor clean up the target","ジャニターに対象を掃除してもらおうか",
+"JanitorInfo","Cover up the evidence","証拠を隠蔽しろ",
+
+## InfoLong
+"CounselorAndMadDilemmaInfoLong","(Unit):\n\nCounselor(Crewmates)\nCounseling is available when the counselor is alive and has completed certain tasks.\nWhen Counselor votes for a MadDilemma at the time of the meeting, MadDilemma can be made to be the crewmate's.\n\nMad Dilemma(Impostors):\nJust a Madmate for unit positions. Let's take the Impostor's side. Customize the attributes from the settings.\nAfter being counseled by a counselor, a person becomes a crewmate. Even if you become a crewmate, they can use their attributes as they are.","[ユニット]\n\nカウンセラー[クルー陣営]\nカウンセラーが生存している且つ、一定タスク完了した時からカウンセリングを行うことが可能。\n会議時にカウンセラーの投票した先がマッドジレンマの時、マッドジレンマをクルー陣営にさせることができる。\n\nマッドジレンマ[インポスター陣営]\nユニット役職用のただのマッドメイト。属性のカスタマイズ可能。\nカウンセラーによりカウンセリングを受けるとクルーメイトになる。クルーになっても属性はそのまま使用出来る。",
+"CounselorInfoLong","(Crewmates)\nCounseling is available when the counselor is alive and has completed certain tasks.\nWhen Counselor votes for a MadDilemma at the time of the meeting, MadDilemma can be made to be the crewmate's.","[クルー陣営]\nユニット役職の片割れ。カウンセラーが生存している且つ、一定タスク完了した時からカウンセリングを行うことが可能。\n会議時にカウンセラーの投票した先がマッドジレンマの時、マッドジレンマをクルー陣営にさせることができる。",
+"MadDilemmaInfoLong","(Impostors):\nJust a Madmate for unit positions. Let's take the Impostor's side. Customize the attributes from the settings.\nAfter being counseled by a counselor, a person becomes a crewmate. Even if you become a crewmate, they can use their attributes as they are.","[インポスター陣営]\nユニット役職の片割れ。ただのマッドメイト。属性のカスタマイズ可能。\nカウンセラーによりカウンセリングを受けるとクルーメイトになる。クルーになっても属性はそのまま使用出来る。",
+
+"GodfatherAndJanitorInfoLong","(Unit):\nAn Impostor unit where 2 player can work together to make a kill without a dead body.\nIf Godfather attempts to kill someone near Janitor, the target player becomes a target for Janitor and is stranded.\nToward the player that Godfather tried to kill, Janitor presses the kill button,the target is erased.\nWhen after godfather dead, Can kill(Setting).if can't kill setting, suicide.","[インポスター陣営]\n二人で協力することで死体なしでキルが出来るインポスターユニット。ゴッドファーザーの能力は基本通常インポスターと変わらないが、ジャニターは通常キルが出来ない掃除専門役職。\nゴッドファーザーがジャニターの近くで誰かをキルしようとすると、その対象プレイヤーはジャニターへのターゲットとなり足止めされる。ターゲットに向かってジャニターがキルボタンを押すと、対象者は死体なしで死亡する。\nゴッドファーザー死亡後、ジャニターのキル能力が解放されるか設定可能。オフの場合、ゴッドファーザー死亡時にジャニターは後追い自殺する。"
+"GodfatherInfoLong","(Impostors):\nImpostor to have Janitor clean the target.\nIf Godfather attempts to kill someone near Janitor, the target player becomes a target for Janitor and is stranded.\nToward the player that Godfather tried to kill, Janitor presses the kill button,the target is erased.","[インポスター陣営]\nジャニターに対象を掃除してもらうことができるインポスター。\n基本は通常インポスターと同様の能力。自身がジャニターの近くで誰かをキルしようとすると、その対象プレイヤーはジャニターへのターゲットとなり足止めされる。さらにその対象をジャニターがキルすることで死体なしでキルすることができる。"
+"JanitorInfoLong","(Impostors):\nImpostor that can kill a subject without a dead body. Normal kills are not possible.\nIf Godfather attempts to kill someone near Janitor, the target player becomes a target for Janitor and is stranded.\nToward the player that Godfather tried to kill, Janitor presses the kill button,the target is erased.\nWhen after godfather dead, Can kill(Setting).if can't kill setting, suicide.","[インポスター陣営]\n死体を作らず証拠隠滅できるインポスター。通常キルは出来ない掃除専門役職。\nゴッドファーザーがジャニターの近くで誰かをキルしようとすると、その対象プレイヤーはジャニターへのターゲットとなり足止めされる。ターゲットに向かってジャニターがキルボタンを押すと、対象者は死体なしで死亡する。\nゴッドファーザー死亡後、キル能力が解放されるか設定可能。オフの場合、ゴッドファーザー死亡時にジャニターは後追い自殺する。",
+
 
 "# HideAndSeek"
 "HASFox","Fox","狐","狐狸","狐妖","Лис","Raposa"
@@ -451,6 +535,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "TeamImpostor","Team Impostors","インポスター陣営","内鬼阵营","幫助偽裝者","Команда Предателей","Time Impostor"
 "TeamEgoist","Team Egoist","エゴイスト陣営","野心家阵营","利己主義者陣營","Команда Эгоистов","Time Egoísta"
 "TeamJackal","Team Jackal","ジャッカル陣営","豺狼阵营","豺狼陣營","Команда Шакалов","Time Chacal"
+"TeamFoxSpirit","Team FoxSpirit","妖狐陣営",
 
 "Neutral","Neutral","ニュートラル","独立阵营","中立陣營","Нейтрал","Neutro"
 "NeutralInfo","Independent forces unaffiliated with any other teams","他のどの陣営にも属さない孤高の陣営","不属于其他阵营的独立阵营","你屬於一個獨立陣營且不受其他陣營或職業的獲勝條件引響","Команда которая не принадлежит ни к каким другим командам","Forças independentes que não pertencem a nenhuma outra equipe"
@@ -488,6 +573,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "DisableCatchFish","Disable CatchFish Tasks","魚釣りタスク",
 "DisableHelpCritter","Disable HelpCritter Tasks","卵の孵化タスク",
 "DisableTuneRadio","Disable FindSignal Tasks","電波探しタスク",
+"DisableAssembleArtifact","Disable AssembleArtifact Tasks","宝石組み立てタスク",
 
 "SuffixMode","Suffix","名前の二行目","附加标签","名字標籤","Суффикс","Sufixo"
 "SuffixMode.None","None","なし","无","無","Ничего","Nenhum"
@@ -506,10 +592,12 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "NoDuplicateHat","No duplicate hats","他の人と同じハット使用禁止",,,,
 "NoDuplicateSkin","No duplicate skins","他の人と同じスキン使用禁止",,,,
 "FixFirstKillCooldown","Normalize First Kill Cooldown","初期スポーン時のクールダウン修正","修正首刀冷却时间","修正開場時的殺人冷卻時間","Нормализовать откат убийства в начале Игры","Normalizar Tempo de Recarga do Primeiro Abate"
-GhostCanSeeOtherRoles,Ghost Can't See Other Roles,幽霊が他人の役職を見ることができない,幽灵不可见他人职业,幽靈不可以看見所有玩家職業,
-GhostCanSeeOtherVotes,Ghost Can't See Other Votes,幽霊が他人の投票先を見ることができない,幽灵不可见投票情况,幽靈不可以看見所有玩家的投票,
-GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタスク進捗を見ることができない"
+"GhostCantSeeOtherRoles","Ghost Can't See Other Roles","幽霊が他人の役職を見ることができない","幽灵不可见他人职业","幽靈不可以看見所有玩家職業",
+"GhostCantSeeOtherVotes","Ghost Can't See Other Votes","幽霊が他人の投票先を見ることができない","幽灵不可见投票情况","幽靈不可以看見所有玩家的投票",
+"GhostCantSeeOtherTasks","Ghosts Can't See Other Tasks","幽霊が他人のタスク進捗を見ることができない"
+"GhostCanSeeOtherTeams","Ghost Can See Other Teams","幽霊が他人の陣営を見ることができる",
 "GhostCanSeeDeathReason","Ghost Can See Cause Of Death","幽霊が死因を見ることができる","幽灵可以看见死因","幽靈可以看見死因","Призраки могут видеть Причины Смерти","Fantasmas Podem Ver Causa da Morte"
+"HostGhostIgnoreTasks","Host Ghosts Exempt From Tasks","ホストは死後タスクを免除する",
 "GhostIgnoreTasks","Ghosts Exempt From Tasks","死人のタスクを免除する","幽灵无视任务","幽靈可以免除任務","Призраки игнорируют Задания","Fantasmas Isentos de Tarefas"
 "DisableTaskWin","Disable Task Win","タスク勝利を無効化","禁用任务胜利","禁用任務勝利","Отключить победу по Заданиям","Desativar Vitória por Tarefas"
 "HideGameSettings","Hide Game Settings","ゲーム設定を隠す","隐藏游戏设置","隱藏遊戲設定","Скрыть настройки Игры","Esconder Configurações"
@@ -591,10 +679,14 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "ApplyDenyNameList","Apply DenyName List","DenyNameリストを適用する","启用违禁昵称名单","","Применить файл запрещённых имён (DenyName)",""
 "KickPlayerFriendCodeNotExist","Kick Players Whose Friend Code Does Not Exist","フレンドコードが存在しないプレイヤーをキックする","踢出好友编号无效的玩家","","Кикнуть игроков у которых нет Кода Друга",""
 "ApplyBanList","Apply BanList","BANリストを適用する","启用封禁名单","","Применить файл с забаненными игроками (BanList)",""
+"AntiCheat","Anti Cheat","チート対策","","","",""
+"CheaterAutoBan","Automatically Ban Cheater","自動BANリスト追加","","","",""
+"CheatLobbyKill","Lobby Kill Cheat","ロビーキルチート","","","",""
 "ShowReportReason","Show button or report","ボタンかレポートか表示させる","显示按钮或报告"
 "ShowRevengeTarget","Show Revenge player at Meeting","道連れされた人を会議で表示する","在会议上显示复仇玩家"
 "ShowRoleInfoAtFirstMeeting","Show Role description at the first meeting","初めの会議で役職説明を表示する","在第一次会议上显示角色介绍"
-
+"ForceProtect","Force GuardianAngel Display","強制的に会議初めの守護天使を表示する"
+"DisplayTeamMark","Display Team Mark","陣営マークを表示する"
 "## モード説明"
 "HideAndSeekInfo","Hide and Seek:\nNo emergency meetings. Crewmates (Blue) can only win by finishing tasks\nand impostors (Red) can only win by killing all crewmates.","かくれんぼ:\n会議を開くことはできず、クルーはタスク完了、インポスターは全クルー殺害でのみ勝利することができる。\nインポスターは赤、クルーは青に体の色が変更される。","躲猫猫:\n不能开会；船员只能通过完成任务获得胜利；\n内鬼需要杀死所有船员来获得胜利；\n内鬼的皮肤颜色将变为红色，船员变为蓝色，以示区分。","躲貓貓:\n不能拍桌或舉報，船員只能做任務\n偽裝者的勝利條件為殺光所有船員\n狼人的顏色會轉變為紅色，船員則會變為藍色。","Прятки:\nНикто не может созвать срочное собрание, Члены Экипажа могут победить, только выполняя задания. \nПредатели меняют цвет тела на красный, а экипажи на синий.","Esconde-Esconde:\nNão há reuniões de emergência. Tripulantes (Azul) podem ganhar apenas ao completar todas as tarefas,\ne Impostores (Vermelho) ganham apenas quando matarem todos os tripulantes."
 "StandardHASInfo","Hide and Seek with Roles:\nNo emergency meetings. Crewmates can only win by finishing tasks and impostors can only win by killing all crewmates.","役職入りでかくれんぼ:\n会議を開くことはできず、クルーはタスク完了、インポスターは全クルー殺害でのみ勝利することができる。","躲猫猫（模组）:\n没有会议阶段；船员只能完成任务；\n内鬼需要杀死所有船员来获得胜利。","躲貓貓(附加普通模式職業):\n不能拍桌或舉報，船員只能做任務\n偽裝者的勝利條件為殺光所有船員\n偽裝者的顏色會轉變為紅色，船員則會變為藍色。","Прятки с Ролями:\nНикто не может созвать срочное собрание, Члены Экипажа могут победить, только выполнив задания, А Предатели могут победить, только убив всех Членов Экипажа.","Esconde-Esconde com Classes:\nNão há reuniões de emergência. Tripulantes podem ganhar apenas ao completar todas as tarefas, e Impostores ganham apenas quando matarem todos os tripulantes."
@@ -638,6 +730,13 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "VitalBatteryDuration","Battery Duration","充電持続時間",,
 "ShapeshiftDuration","Shapeshift Duration","変身持続時間",,
 "ShapeshifterLeaveSkin","Leave Shapeshifting Evidence","変身の証拠を残す"
+"PhantomDuration","Vanish Duration","消える長さ"
+"PhantomCooldown","Vanish Cooldown","消えるのクールダウン"
+"TrackerCooldown","Tracking Cooldown","追跡のクールダウン"
+"TrackerDelay","Tracking Delay","追跡の遅れ"
+"TrackerDuration","Tracking Duration","追跡の長さ"
+"NoisemakerImpostorAlert","Impostor get alert","インポスターへの警報"
+"NoisemakerAlertDuration","Alert duration","警報の長さ"
 
 "AssignMode","Assign Algorithm Mode","アサインモード","分配算法","","Алгоритм назначения",""
 "AssignAlgorithm.Fixed","Fixed","固定","固定","","Фиксированный",""
@@ -654,9 +753,13 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "ChangeIntro","(MOD)Change the Intro the Original TOH Specs.","(MOD)第三陣営やマッド役職のイントロを本家TOH仕様に戻す","(MOD)将介绍更改为原始TOH规格。"
 "CanKill","Can Kill","キルできる","可以击杀",
 "RevengeNeutral","Can Revenge Neutrals","道連れ能力持ちがニュートラル役職を道連れ出来る","可以接受同伴为中立",,
+"RevengeImpostorByImpostor","Can Revenge Impostors By Impostor Team","道連れ能力持ちインポスター陣営がインポスター役職を道連れ出来る",,,
 "RevengeMadByImpostor","Can Revenge Madmates By Impostor Team","道連れ能力持ちインポスター陣営がマッド系役職を道連れ出来る",,,
 "TaskTrigger","Trigger Tasks","能力が使用可能になるタスク数",
-
+"GuesserNumOfGuess","Number Of Guess","推測の回数","","","",""
+"GuesserMultipleInMeeting","Multiple In Meeting","一会議での複数使用","","","",""
+"GuesserHideMisfire","Hide DeathReason Misfire","死因 誤爆を隠す","","","",""
+"GuesserGuessAfterVote","Guess After Voted","投票後の能力使用","","","",""
 
 # インポスター
 "BountyTargetChangeTime","Time Until Target Swaps","ターゲット変更時間","赏金目标切换时间","賞金目標切換時間","Время смены цели","Tempo Para Troca de Alvos"
@@ -684,6 +787,17 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "EvilTrackerTargetMode.EveryMeeting","Every Meeting","ターン毎"
 "EvilTrackerTargetMode.Always","Always","常時"
 "EvilTrackerCanSeeLastRoomInMeeting","Can See Target's Last Room In Meeting","会議中、追跡対象の最終位置を表示する","可以在会议时知晓追踪目标的最后停留房间","可以在會議中看到目標最後位置","Может видеть местоположение Целей во время Собрания",""
+"StealthExcludeImpostors","Exclude Impostors From Blindness","暗転効果の対象からインポスターを除外する","内鬼不会失明","","Исключить Предателей из слепоты","Excluir Impostores da Cegueira"
+"StealthDarkenDuration","Blindness Duration","暗転の持続時間","失明持续时间","","Длительность слепоты","Duração da Cegueira"
+"NekoKabochaImpostorsGetRevenged","Impostors Get Revenged","インポスターを道連れにする","内鬼可以被反杀","","Предатели могут мстить","Impostores São Vingados"
+"NekoKabochaMadmatesGetRevenged","Madmates Get Revenged","マッドメイトを道連れにする","叛徒可以被反杀","","Безумцы могут мстить","Tripulantes Loucos São Vingados"
+"NekoKabochaRevengeOnExile","Revenge When Exiled","追放された時に誰かを道連れにする","被驱逐时复仇","","Месть во время изгнания","Vinagança Quando Exilado"
+"PenguinAbductTimerLimit","Dragging Time","引き摺れる時間","最长拖拽时间","","Время перетаскивания","Tempo Para Arrastar"
+"PenguinMeetingKill","Kill If Meeting Starts During Dragging","会議開始時に引き摺り中ならキルする","拖拽时开会将立刻击杀目标","","Убить если встреча начнется во время перетаскивания","Matar Se Reunião Começar Enquanto Arrasta"
+"InsiderCanSeeImpostorAbilities","Can See Impostor Abilities","味方インポスターの能力が分かる","可以看到内鬼技能状态","","Может видеть роли других Предателей","Pode Ver Habilidades de Impostor"
+"InsiderCanSeeAllGhostsRoles","Can See All Ghost's Roles","幽霊全員の役職が分かる","可以看到所有幽灵的职业","","Может видеть все роли Призраков","Pode Ver Todas As Classes dos Fantasmas"
+"InsiderCanSeeMadmates","Can See Madmates","マッドメイトが分かる","可以看到叛徒","","Может видеть Безумцев","Pode Ver Tripulantes Loucos"
+"InsiderKillCountToSeeMadmates","Kill Count To See Madmates","必要なキル数","看到叛徒所需击杀数","","Количество убийств при котором будет виден Безумец","Quantas Kills Para Ver Tripulante Louco"
 "WitchModeSwitchAction","Mode Switch Action","モード変更アクション","切换击杀模式","切換模式操作","Действие для Смены Режима",""
 "TriggerKill","Kill","キル","击杀","殺人鍵","Убийство",""
 "TriggerVent","Vent","ベント","通风管","通風口","Вентиляция",""
@@ -696,11 +810,16 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "MafiaCanKillImpostorCount","Can Kill Remaining Impostor Count","キル可能になるインポスター残数","剩余的可以被击杀的内鬼的数量"
 "AntiAdminerCanCheckCamera","Can check camera","カメラの人も検知出来る","可以检查摄像头",,
 "CursedWolfGuardSpellTimes","Guard and Spell Times","キルを防いで呪殺する回数","守护和下咒时间",
+"CursedWolfGuardSpellMotion","Spell Motion","呪いキルする時のモーション",
+"MotionKill","Own Kill","自身がキルする",
+"MotionSuicide","Target Suicide","相手が自爆する",
 "GreedierDefaultKillCooldown","Kill Cooldown After the Meeting","会議明けのキルクール",
 "GreedierOddKillCooldown","Odd Kill Cooldown","キル奇数回目のキルクール","奇数击杀冷却",
 "GreedierEvenKillCooldown","Even Kill Cooldown","キル偶数回目のキルクール","偶数击杀冷却",
 "AmbitionerKillCoolDecreaseRate","Killcool Decrease Rate","キルクール減少率","击杀冷却降低率",
 "ScavengerIgnoreBait","Ignore Forced Reports of Bait Kill","ベイトキル時の強制レポートを無視する",
+"ScavengerIsEatUpKillLimit","Eat Up Kill Limit (Double Click Mode)","能力キルの使用制限(ダブルクリックモード)",
+"ScavengerLimitMaxCount","Number of Eat Up Kill","能力キルの最大回数",
 "TelepathistersCanSeeKillFlash","Can See ""Kill Flash"" for Telepathisters Kills","シスターがキルした時、フラッシュが見える",
 "TelepathistersCanSeeLastRoomInMeeting","Can See Telepathisters Last Room In Meeting","会議中、シスターの最終位置を表示する",
 "TelepathistersOptionVentCount","Number of times entered in vent (common for Telepathisters)","ベントの使える回数(シスターズ共有)",
@@ -710,7 +829,29 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "StrayWolfKillMode.Always","Always","常時",
 "StrayWolfKillMode.AfterCheck","After Checking Up","視認後",
 "StrayWolfKillMode.None","None","なし",
-
+"EvilFireIgnitionMaxCount","Number of Ignition","発火する最大回数",
+"EvilFireFalseIgnition","Can't Engulf Ignites,Times Don't Decrease","発火時に巻き込みがない時は回数が減らない",
+"EvilFireIsCanBombTarget","Everyone Can See Bombed Target","全員視点で爆死したプレイヤーが分かる",
+"EscalationerSpeedUpRate","Speed Up with Each Kill(+)","キル毎の速度上昇(+)",
+"EscalationerKillCoolDecrease","Killcool Decrease with Each Kill(-)","キル毎のキルクール減少(-)",
+"EscalationerSpeedAndCoolReset","Speed And KillCool Reset After Every Meeting.","会議毎にスピードとキルクールをリセットする"
+"EvilDyerDyeTime","Time of Appearance Change","姿が変わる時間",
+"BestieWolfKillCooldownSeveral","Kill Cooldown During Multiple Impostors","複数インポスター時のキルクール",
+"BestieWolfKillCooldownSingle","Kill Cooldown During a Single Impostor","単独インポスター時のキルクール",
+"BestieWolfGrantMethod","Method of Grant Buff-Add-On","バフ属性の付与方法",
+"GrantRandom","①～⑤ Random","①～⑤ランダム",
+"GrantOrder","①→②...→⑤","①→②...→⑤",
+"BestieWolfBuffAddonAssignTarget1","Buff Add-On To Be Granted ①","付与するバフ属性①",
+"BestieWolfBuffAddonAssignTarget2","Buff Add-On To Be Granted ②","付与するバフ属性②",
+"BestieWolfBuffAddonAssignTarget3","Buff Add-On To Be Granted ③","付与するバフ属性③",
+"BestieWolfBuffAddonAssignTarget4","Buff Add-On To Be Granted ④","付与するバフ属性④",
+"BestieWolfBuffAddonAssignTarget5","Buff Add-On To Be Granted ⑤","付与するバフ属性⑤",
+"SelfBomberBombRadius","Bomb Explosion Radius","自爆の爆発半径","","","",""
+"SelfBomberBombCooldown","Bomb Cooldown","自爆クールダウン","","","",""
+"GrudgeChargerSelectTargetCooldown","Select Target Cooldown","一人目の対象選択クールダウン",
+"GrudgeChargerChargeKillCooldown","Charge Kill Cooldown","チャージ(キルボタン)クールダウン",
+"GrudgeChargerOneGaugeChargeCount","One Gauge Accumulate Charge Count","一ゲージが溜まるチャージ数",
+"GrudgeChargerKillCountAtStartGame","Possible Kill Count At the Start Of the Game","ゲーム開始時のキル可能回数",
 
 # マッドメイト
 "CanMakeMadmateCount","Sidekick Madmate Max Count","サイドキックマッドメイト","变形者可以招募叛徒的数量","變形者招募叛徒最大人數","Максимум союзников Безумца","Máximo de Tripulantes Loucos Ajudantes"
@@ -718,6 +859,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "MadSnitchCanAlsoBeExposedToImpostor","Known to Impostors","インポスターからも視認できる","对内鬼同样可见","對偽裝者同樣可見","Также не защищен от Предателей","Visível Para Impostor"
 "MadSnitchTaskTrigger","Tasks Until Boost Activated","効果を発動するタスク数","","","",""
 "MadGuardianCanSeeWhoTriedToKill","Can See Attempted Murderer","自身の殺害未遂者を知ることができる","背叛的守卫可以得知尝试对其击杀的玩家","背叛天使可以看到是誰嘗試殺害自己","Может видеть кто пытался его убить","Pode Ver Quem Tentou Matar"
+"MadJesterTaskCompWin","Win By Completing All Tasks And Exiled","タスク全完了かつ追放で勝利する",
 
 "MadmateCanFixLightsOut","Madmate Can Fix Lights","停電を直せる","叛徒系职业可以修理照明破坏","叛徒職業的玩家可以修理電燈","Madmates Могут Чинить Свет","Loucos Podem Consertar Luzes"
 "MadmateCanFixComms","Madmate Can Fix Comms","通信障害を直せる","叛徒系职业可以修理通讯","叛徒職業的玩家可以修理通訊","Madmates Могут Чинить Связь","Loucos Podem Consertar Comunicações"
@@ -767,6 +909,10 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "TimeManagerLimitMeetingTime","Increase limit","会議時間の伸びる限界","增加限制","會議時間延長上限","Лимит увеличения времени встреч",""
 "BaitWaitTime","Time From Bait Kill to Report","ベイトキルから通報までの時間","从杀死诱饵后到报告的时间长度"
 "SillySheriffProbability","Probability of Not Correctly Recognizing and Killing","正しく認識してキルできない確率","不能正确识别和击杀的概率",
+"SillySheriffKillMotion","Motion to kill","キルする時のモーション",
+"MotionNone","Don't Moving Kill","動かずにキルする",
+"SillySheriffSuicideMotion","Motion to Suicide","自爆する時のモーション",
+"MotionKilled","Target Kill","相手がキルする",
 "HunterKnowTargetIsImpostor","Can Show If the Kill Target Is Not Crewmate","キルした時、敵陣営かどうか分かる","可以显示杀死的目标是不是船员"
 "HunterKnowTargetMadIsImpostor","MadMate Is Indicated By Imposter Determination.","マッドメイトはインポスター判定で表示する",
 "BakeryChangeChances","Chance that Bakery will change to Neutral","ニュートラルに変化する確率","面包师变为中立的可能性"
@@ -786,19 +932,21 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "FortuneTellerConfirmCamp","Make it a Camp Confirmation, Not Role",役職でなく陣営確認にする,
 "FortuneTellerKillerOnly","Check only Killer",キルできる役職のみ確認できる,
 "PsychicMaxCheckRole","Role of The Deceased Can Be Checked Count","霊媒できる回数",
+"LoyalDoggyMasterSeeMasterMark","Master Finds Himself Master","ご主人は自身がご主人だと分かる",
+"LoyalDoggyIgnoreTaskAfterDeadMaster","After the Death of Master, Task Be Lost","ご主人死亡後はタスクが無くなる",
+"LoyalDoggyIsInfoPoor","After the Death of Master, Unable to Use Devices such as Admin,Camera,etc.","ご主人死亡後、アドミン・カメラ等の機器が使用できない",
+"LoyalDoggyIsClumsy","After the Death of Master, Cannot Fix Lights And Fix Comms","ご主人死亡後、停電・通信妨害が直せない",
+"RabbitRedistributionLongTasks","Long Task Count to be redistributed","再配布されるロングタスク数",
+"RabbitRedistributionShortTasks","Short Task Count to be redistributed","再配布されるショートタスク数",
 
-"Head.LimitedTimeRole","Limited Time Role 12/23～12/25","期間限定役職 12/23～12/25"
-##"Potentialist","Potentialist","ポテンシャリスト",
-"Potentialist","Crewmate","クルーメイト",
+"Head.LimitedTimeRole","Limited Time Role 4/1～4/5","期間限定役職 4/1～4/5"
+"Potentialist","Potentialist","ポテンシャリスト",
 "PotentialistName","Potentialist</color>\n　…At first, Crewmate. Complete tasks and have random abilities.","ポテンシャリスト</color>\n　…初めはクルー。設定タスク完了でランダムな能力を持つ。",
 "PotentialistInfo","do your tasks","タスクを行う",
-"PotentialistInfoLong","do your tasks","タスクを行う",
+"PotentialistInfoLong","do your tasks","[クルー陣営]\n初めはクルーとして表示されるためポテンシャリストの自覚はありませんが、設定タスク数完了させると能力が開花して新たなクルー役職を手に入れられます。\n設定により、マッド系役職やニュートラル役職にも変化します。",
 "poTask","Task Count that Becomes Can Use Ability","能力開花するタスク数",
-"poNeutral","Role To Be Changed May Be Neutral Role","ニュートラル役職の可能性がある",
-
-"VentManager","Vent Manager","ベントマネージャー",
-"VentManagerInfo","Vent,Vent,Vent!","ベント、ベント、ベント！",
-"VentManagerInfoLong","(Crewmates)\nclean Vent.","[クルー陣営]\nおめでとう。あなたは見事シークレット役職を引き当てました。\nベントを掃除しよう。ただそれだけです。",
+"poMad","Role To Be Changed May Be Madmate Role","マッド系役職に変化する可能性がある",
+"poNeutral","Role To Be Changed May Be Neutral Role","ニュートラル役職に変化する可能性がある",
 
 # ニュートラル
 "CanBeforeSchrodingerCatWinTheCrewmate","Can Win With Crewmates If No Team","役職変化前であれば、クルー陣営と勝利できる","薛定谔的猫未加入其他阵营前可以跟随船员阵营获胜","薛定諤的貓的陣營轉變前可以隨船員一起獲勝","Без команды он может победить с Членами Экипажа","Pode Ganhar Com Tripulantes"
@@ -839,7 +987,46 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "PursuerGuardNum","Pursuer guard count","追跡者のキルガード回数","起诉人自保次数",
 "PlatonicLoverLimitTurn","Have to Make Love at First Sight Turn","一目惚れしないといけないターン数",
 "GodTaskCompleteToWin","Task Complete To Win","タスクを終わらせないと勝利できない","","","",""
-"GodViewVoteFor","View Where To Vote","投票先が見える	","","","",""
+"GodViewVoteFor","View Where To Vote","投票先が見える","","","",""
+"FoxSpiritTaskCount","Clean Vent Task Count","ベント掃除のタスク数",
+"FoxSpiritKilledAfterFinishTask","Killed After Finish Task","タスク全完了後はキルが通る",
+"FoxSpiritIgnoreGhostTask","Ignore Ghost Tasks","死亡したクルーのタスクを無効化する"
+"ImmoralistCanAlsoBeExposedToFox","Immoralist Also Exposed To FoxSpirit","背徳者が妖狐からも視認できる",
+"ImmoralistOptionAddGuard","Provides Guard","他者へガードを付与できる",
+"ImmoralistOptionAddGuardTiming","Selection Method","選択方法",
+"SelectFirstMeeting","First Meeting","一回目の会議",
+"SelectTaskFinish","After Task Finish","タスク全完了後の会議",
+"SelectRandom","Random Provide","ランダム付与",
+"OgreKillSuccessRate","Percentage Reduction in the Rate of Successful Kill(*)","キル成功確率が減少する割合(×)",
+"OgreKilledGuardRate","Killed Guard Rate","キルされる時にガードする確率",
+"PirateLimitTurn","Turn Required To Create Gang","一味を作成しないといけないターン数",
+"PirateImpostorCanBeGang","Impostor Can Be Gang","インポスターが一味になれる",
+"PirateMadmateCanBeGang","Madmate Can Be Gang","マッドメイトが一味になれる",
+"PirateNeutralCanBeGang","Neutral Can Be Gang","ニュートラルが一味になれる",
+"PirateBuffAddonAssignTarget","Buff Add-On To Be Granted (Gang Task 75%)","一味のタスク75%で付与するバフ属性",
+"ChainShifterShiftTime","Shift Time","シフトする時間",
+"ChainShifterShiftDistance","Shift Distance","シフトする距離",
+"ChainShifterShiftInactiveTime","Shift Inactive Time","シフト無効時間",
+"ChainShifterShiftedRole","Role Changes Shifted","シフト後に変化する役職",
+"ChainShifterShiftWhenKilled","Shift By Killed","キルで強制シフトする",
+"Random","Random","ランダム","随机",
+
+# Unit
+"CounselorTaskTrigger","Counselor Trigger Tasks","カウンセラーの能力が使用できるタスク数",
+"CounselorChallengeMaxCount","Counselor Voting with Ability Count","カウンセラーの能力投票できる回数",
+"MadDilemmaResetAddonChangeCrew","MadDilemma Resets Addon After Change to Crewmate","マッドジレンマがクルーに改心後、属性をリセットする",
+"GodfatherKillCooldown","Godfather Kill CoolDown","ゴッドファーザーのキルクール",
+"GodfatherLockDistance","Godfather Kill Lock Distance For Janitor Kill","ゴッドファーザーのジャニターキル用ロックが起こる距離",
+"JanitorCleanCooldown","Janitor Clean Cooldown","ジャニターの掃除のクールダウン",
+"JanitorSeeSelectedTiming","Janitor See Selected Timing","ジャニターがターゲット選択通知を受け取れる",
+"JanitorTrackTarget","Janitor Track Target","ジャニターはターゲットへの矢印が見える",
+"JanitorTrackGodfather","Janitor Track Godfather","ジャニターはゴッドファーザーへの矢印が見える",
+"JanitorLastCanKill","Janitor Can Kill After Godfather Dead","ジャニターはゴッドファーザー死亡後にキル能力が解放される",
+"JanitorKillCooldown","Janitor Kill CoolDown","ジャニターのキルクール",
+"JanitorAfterGotfatherDeadMode","Janitor Mode After Godfather Dead","ジャニターのゴットファーザー死亡後モード",,,,
+"JanitorAfterGotfatherDeadMode.Madmate","Madmate","マッドメイト",,,,
+"JanitorAfterGotfatherDeadMode.Following","Following","後追い",,,,
+"JanitorAfterGotfatherDeadMode.LastCanKill","LastCanKill","kill能力の付与",,,,
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
@@ -856,13 +1043,22 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "ManagementSeeNowtask"," - Watch now all task count"," - 会議時以外でもタスク数が見える"," - 现在观看所有的任务计数",,
 
 "AddOnBuffAssign","Assign Buff Add-On","バフ属性を付与する","分配加强效果"
+"AddOnBuffAssign%role%","%role% Assign Buff Add-On","%role%にバフ属性を付与する","%role% 分配加强效果"
 "AddOnDebuffAssign","Assign Debuff Add-On","デバフ属性を付与する","分配弱化效果"
+"AddOnDebuffAssign%role%","%role% Assign Debuff Add-On","%role%にデバフ属性を付与する","%role% 分配弱化效果"
 "AddOnAssign%role%","%role%","%role%","%role%","%role%"
 "AddonShowMode","Add-On Show Style","属性の表示方法",
 "addonShowModes.Default","Default","デフォルト",
 "addonShowModes.All","All","全て表示",
 "addonShowModes.TOH","TOH Original","本家TOH",
 
+"DisplayComingOutEnable","Display Coming Out Mark","CO可否マークを表示する",
+"displayComingOut.NG","NG","×",
+"displayComingOut.None","None","なし",
+"displayComingOut.OK","OK","○",
+"displayComingOut.Limit","Limit","△",
+"displayComingOut%type%","%type%","%type%","%type%","%type%"
+"displayComingOut%role%","%role%","%role%","%role%","%role%"
 
 "## 能力発動条件"
 "TaskProgressRate","Task Progress","タスク進捗率","","",""
@@ -887,12 +1083,14 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "DeathReason.Misfire","Misfire","誤爆","走火","走火","Убился","Alvo Incorreto"
 "DeathReason.Torched","Torched","焼殺","烧死","燒死","Сожжён","Queimado"
 "DeathReason.Sniped","Sniped","狙撃","狙杀","被狙","Застрелен","Baleado"
+"DeathReason.Shot","Shot","射殺","","","",""
 "DeathReason.Execution","Execution","処刑","处决","處刑","Казнен","Executado"
 "DeathReason.Disconnected","Disconnected","回線切断","断连","斷線","Вышел","Desconectado"
 "DeathReason.Fall","Fall","落下死","摔死","摔死","Упал","Queda"
 "DeathReason.Revenge","Revenge","道連れ","复仇","復仇","Месть",""
-"DeathReason.Win","hit","的中","猜着",
 "DeathReason.Poisoning","Poisoning","毒死","毒死",
+"DeathReason.Clean","Clean","掃除",
+"DeathReason.Win","hit","的中","猜着",
 "DeathReason.etc","Other","その他","其他","其他","Другое","Outros"
 
 
@@ -901,11 +1099,21 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "Last-","Last ","ラスト","仅存","獨活","Последний ",""
 "Complete-","Complete","コンプリート",
 
+"## 設定メニュー説明"
+"MenuDescriptionText.ModMainSettings","Edit individual settings for the mod.","MODの各設定を編集する。",
+"MenuDescriptionText.ImpostorRoles","Edit impostor role settings for your game lobby.","インポスター役職の設定を編集する。",
+"MenuDescriptionText.MadmateRoles","Edit madmate role settings for your game lobby.","マッド役職の設定を編集する。",
+"MenuDescriptionText.CrewmateRoles","Edit crewmate role settings for your game lobby.","クルー役職の設定を編集する。",
+"MenuDescriptionText.NeutralRoles","Edit neutral role settings for your game lobby.","ニュートラル役職の設定を編集する。",
+"MenuDescriptionText.UnitRoles","Edit unit role settings for your game lobby.","ユニット役職の設定を編集する。",
+"MenuDescriptionText.Addons","Edit add-on settings for your game lobby.","属性の設定を編集する。",
+
 "## リアクターの時間制御"
 "SabotageTimeControl","Sabotage Duration Control","サボタージュの時間制御","更改修理时限","重新設定緊急任務時間","Изменить время Саботажа","Controle da Duração de Sabotagem"
 "PolusReactorTimeLimit","Polus Reactor Duration","ポーラスのリアクター制限時間","波鲁斯抗震稳定器修理时限","Polus地震抑制器破壞最大時間","Polus время саботажа Реактора","Duração do Reator em Polus"
 "AirshipReactorTimeLimit","Airship Reactor Duration","エアシップのリアクター制限時間","飞艇坠毁路线修理时限","Airship間隙室破壞最大時間","Airship время саботажа Реактора","Duração do Reator em Airship"
 "FungleReactorTimeLimit","Fungle Reactor Duration","ファングルのリアクター制限時間",
+"FungleMushroomMixupDuration","Fungle Mushroom Mixup Duration","ファングルのキノコカオス効果時間","","","","",""
 
 "## サボタージュのクールダウン変更"
 "ModifySabotageCooldown","Sabotage Cooldown Control","サボタージュのクールダウン制御","","","",""
@@ -918,6 +1126,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "JapaneseRoleName","Japanese Role Name","日本語の役職名","用日语显示职业名","","Японские названия ролей",""
 "CanPublicRoom","Can Public Room","公開ルーム可能",
 "ModNameLobbyDisplay","Show ModName(Lobby)","Mod名ロビー表示",
+"IsMuteLobbyBGM","Mute Lobby BGM","ロビーBGMをミュート",
 "UnloadMod","Disable The Mod","Modを無効化","切换为原版","","Отключить мод",""
 "UnloadWarning","<color=#ffff00><size=200%>Warning</size></color>\n\nTo re-enable the mod, you must restart the game. Would you like to continue anyway?","<color=#ffff00><size=200%>警告</size></color>\n\nModを再び有効化するにはゲームの再起動が必要です。本当に無効化しますか？","<color=#ffff00><size=200%>警告：</size></color>\n\n切换后需要重启游戏来恢复模组，确定要切换原版吗？","","<color=#ffff00><size=200%>Внимание!</size></color>\n\nДля повторного включения мода необходимо перезапустить игру. Вы все равно хотите продолжить?",""
 "CannotUnloadDuringGame","The mod cannot be disabled during a game.","試合中はModを無効化できません","游戏中不能切换原版","","Мод нельзя отключить во время игры.",""
@@ -925,6 +1134,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "Cancel","Cancel","キャンセル","取消","","Отменить",""
 "Unload","DISABLE","無効化","确认","","ОТКЛЮЧИТЬ",""
 "DumpLog","Output Log","ログを出力","输出日志","","Вывести Журнал",""
+"Start","Start","開始",
 
 "## ヘルプテキスト"
 "CommandList","Command List:","コマンド一覧:","指令列表:","指令列表:","Список команд:","Lista de Comandos:"
@@ -944,7 +1154,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 
 "MDisplay.Button","Emergency Button","緊急ボタンでの会議",
 "MDisplay.ReportBody","<size=90%>Report:{0}Body</size>","通報:{0}の死体",
-"MDisplay.RevengeHeader","Revenge","道連れ死亡",
+"MDisplay.RevengeHeader","Revenge","道連れ",
 "MDisplay.RevengeMultiple","Multiple","複数発生しています",
 
 "## メッセージ"
@@ -979,6 +1189,7 @@ GhostCanSeeOtherTasks,"Ghosts Can't See Other Tasks","幽霊が他人のタス�
 "Message.ModCheckMessageSend","A confirmation message has been sent to players who have not consented to the mod.","Mod未同意のプレイヤーに確認メッセージを送信しました",,,,
 "Message.ModCheckAgree","I agree to use mods. Player: {0}\n\nPlease exit the room to cancel.","MODの使用に同意しました。\n　Player: {0}\n\n※取り消す場合は部屋を抜けてください",,,,
 "Message.ModCheckKick","{0} has been kicked due to lack of agreement to use mods.","{0} はMOD使用の同意がないためキックされました",,,,
+"Message.isProtectRoleExist","It is a setting that always displays the guardian angel at the beginning of the meeting.","必ず会議初めに守護天使の表示が出る設定です。",
 
 "MDisplay.NimrodTitle","The Nimrod's Choice","ニムロッドの処刑選択"
 "IsNimrodMeetingTitle","【The Nimrod's choice】","【ニムロッドの処刑選択】"
@@ -1019,6 +1230,16 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "Message.ExportedOptions","Exported options","オプションデータを出力しました","","","",""
 "Message.LoadedOptions","Loaded options","オプションデータを読み込みました","","","",""
 "Message.OnlyHostCanLoadOptions","Only the host can load options","ホストのみがオプションを読み込めます","","","",""
+"Message.SelfVoteForActivate","Vote yourself to activate the ability.","能力を発動するには自投票を行ってください","","","",""
+"Message.SelfVoteUsed","Ability used. The ability cannot be activated.","能力使用済み 能力を発動することはできません","","","",""
+"Message.SelfVoteSuffix","Vote self to use","自投票で能力発動","","","",""
+"Message.GuesserSelectionCancel","【Cancel Guesser Selection】\nGuesser selection mode has been canceled.","【ゲッサーモード解除】\nゲッサーモードが解除されました","","","",""
+"Message.GuesserSelectionSelfSelect","【Cancel Guesser Selection】\nVoting for yourself and vote is complete.","【ゲッサーモード解除】\n自投票として投票を完了しました","","","",""
+"Message.GuesserSelectionTarget","【Guesser Selection】\nSelect by voting the target.\n*Can't choose yourself as a target.\n(If select yourself be voting for yourself and vote is complete.)\n*Skip to cancel Guesser selection mode.\n\nTarget choice","【ゲッサー選択】\nターゲットを投票によって選択してください\n※自分は選択できません\n（自分選択は自投票として投票完了）\n※スキップでゲッサーモード解除\n\nターゲットの選択","","","",""
+"Message.GuesserSelectionRole","【Guesser Selection】\nSelect by voting the target role.\nSelect by the number on the nameplate.\n*Skip to cancel Guesser selection mode.\nTarget: {0}\n\nRole choice(page {1}){2}","【ゲッサー選択】\nターゲットの役職を投票によって選択してください\nネームプレートにある番号で選択してください\n※スキップでゲッサーモード解除\nターゲット：{0}\n\n役職の選択(ページ{1}){2}","","","",""
+"Message.GuesserAbilityUse","【Guesser Kill】\nGuesser's ability activated","【ゲッサー】\nゲッサーの能力が発動されました","","","",""
+"Message.GuesserDead","died","が死亡しました","","","",""
+"Message.NextPage","Next page","次ページ","","","",""
 
 "## 警告"
 "Warning.EgoistCannotWin","Egoist cannot win","エゴイストが勝利できません","野心家无法获胜","利己主義者無法獲勝","Эгоист не может победить!","Egoísta não pode vencer"
@@ -1047,10 +1268,12 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "ERR-000-910-1","Test Error Lv.1","テストエラーLv1","测试错误Lv1","測試錯誤Lv1","Ошибка теста - Lv1","Erro de Teste Nvl.1"
 "ERR-000-920-2","Test Error Lv.2","テストエラーLv2","测试错误Lv2","測試錯誤Lv2","Ошибка теста - Lv2","Erro de Teste Nvl.2"
 "ERR-000-930-3","Test Error Lv.3","テストエラーLv3","测试错误Lv3","測試錯誤Lv3","Ошибка теста - Lv3","Erro de Teste Nvl.3"
-"ERR-000-804-1","TownOfHost does not support the Vanilla HnS, so unloaded.","現在バニラのHide And Seekはサポートされていません。modを無効化しました。","TOH不支持原版躲猫猫, mod因此失效","Town Of Host模組尚未支援原版的Hide And Seek模式，所以模組將暫時卸載。","Мод не поддерживает обычные Прятки. Мод был отключён",""
+"ERR-000-804-1","TownOfHost_Y does not support the Vanilla HnS, so unloaded.","現在バニラのHide And Seekはサポートされていません。modを無効化しました。","TOH不支持原版躲猫猫, mod因此失效","Town Of Host模組尚未支援原版的Hide And Seek模式，所以模組將暫時卸載。","Мод не поддерживает обычные Прятки. Мод был отключён",""
+"ERR-000-111-1","TownOfHost_Y does not support the use of mod by players not host,\n so unloaded.","現在TOH_Yはホスト以外のMOD導入をサポートしていません。modを無効化しました。"
 "ERR-000-503-1","Public room settings have been changed. Please create the room again.","公開ルーム設定が変更されました。部屋を立て直してください。"
 "#### 001 Main"
-"ERR-001-000-3","Main dictionary has duplicated keys.","MainのDictonaryでKeyの重複が発生しています。","在主目录出现重复密钥","在主目錄出現重複密鑰","Дублирование ключей происходит в основном словаре.","Dicionário principal tem chaves duplicadas."
+"ERR-001-000-3","Main dictionary has duplicated keys.","MainのDictonaryでKeyの重複が発生しています。","在主目录出现重复密钥","在主目錄出現重複密鑰","Дублирование ключей происходит в основном словаре.","Dicionário principal tem chaves duplicadas.",""
+"ERR-001-010-3","Duplicate Options ID","オプションIDが重複しています","","","","",""
 "#### 002 Support"
 "ERR-002-000-1","Unsupported AmongUs version. Please update.","サポートされていないAmongUsバージョンです。ゲームをアップデートしてください。","","","Неподдерживаемая версия AmongUs. Пожалуйста, обновите игру",""
 
@@ -1088,6 +1311,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "FireworksPutPhase","{0} Fireworks Left","あと{0}個置け","还要安放{0}枚烟花","還需要安裝{0}枚煙火","Осталось {0} Фейерверков","Restam {0} Fogos de Artifício"
 "FireworksWaitPhase","Wait for it...","時を待て...","耐心等待....","等待時機...","Подожди время...","Espere o momento certo..."
 "FireworksReadyFirePhase","Fire!","打ち上げろ！","烟花来咯，大型烟花秀开始！","準備就緒，煙火秀開始!","Огонь!","Lançar!"
+"SelfBomberFirePhase","Fire by Vanish","消えるで自爆","","","",""
 "StandardHAS","Hide And Seek with Roles","役職入りでかくれんぼ","在躲猫猫模式中加入职业","在躲貓貓中加入多職業模式中的職業","Прятки с Ролями","Esconde-Esconde com Classes"
 "StandardHASWaitingTime","Standby","待機時間","躲猫猫猎人等待时间","躲貓貓偽裝者等待時間","Время ожидания","Tempo de Espera"
 "InvalidArgs","Invalid Args","無効な引数","无效参数","無效的參數","Недопустимые Аргументы","Argumento Inválido"
@@ -1130,6 +1354,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "PressTabToNextPage","Press Tab or Number for Next Page...","Tabキーまたは数字キーを押して次のページへ...","按下tab键查看更多...","按下Tab以顯示下一頁...","Нажмите Tab или Цифру чтобы перейти на следующую страницу...","Aperte Tab ou Números para Passar a Página..."
 "RoleSummaryText","Game End Player-Roles List:","ゲーム終了時の役職一覧:","游戏结束时玩家的职业:","遊戲結束時玩家的職業:","Игроки и роли в конце игры:","Lista de Classes dos Jogadores ao Final do Jogo:"
 "doOverride","Override Tasks","タスク上書き(1以上)","特别设置任务数","特別設定任務","Изменить задания","Ignorar Tarefas (Mínimo1)"
+"doOverride%role%","%role% Override Tasks","%role%のタスク上書き(1以上)","%role% 特别设置任务数","%role% 特別設定任務",
 "assignCommonTasks","Common Tasks","通常タスク","普通任务","普通任務","имеет общие задания","Dar Tarefas Comuns"
 "roleLongTasksNum","Long Tasks","ロングタスク","长任务数","長任務數量","долгие задания","Dar Tarefas Longas"
 "roleShortTasksNum","Short Tasks","ショートタスク","短任务数","短任務數量","короткие задания","Dar Tarefas Curtas"
@@ -1141,6 +1366,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "Format.Votes","{0}","{0}票","{0}票","{0}票","{0}","{0}"
 "Format.Pieces","{0}","{0}個","{0}个","{0}個","{0}","{0}"
 "Format.Pair","{0} Pair","{0}組",
+"Format.Turns","{0}","{0}ターン",
 "Pair","Pair","組",
 "KillButtonText","Kill","キル","击杀","殺死","Убить","Matar"
 "SniperSnipeButtonText","Snipe","狙撃","狙击","狙擊","Застрелить","Atirar"
@@ -1164,6 +1390,10 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "LastAdminInfo","Last-minute admin information","直前のアドミン情報","","","",""
 "MurderNotify","Murder","キル発生","","","",""
 "Deadbody","DEAD","死体","","","",""
+"PenguinKillButtonText","Drag","拉致","拖拽","","ПЕРЕТАСКИВАТЬ","Arrastar"
+"PenguinTimerText","Drag Timer","残り時間","剩余时间","","Время перетаскивания","Tempo para Arrastar"
+"SelfBomberExplosionButtonText","Fire","爆破","引爆","引爆","Зажечь","Explodir"
+"GrudgeChargerSelectTarget","Select","キル対象選択",
 
 "killer","Killer","キラー","杀手",
 "AntiAdminerAD","Warning Admin","アドミン注意！","管理室地图注意",,
@@ -1177,11 +1407,21 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "SelectPlayerTagMini","Selected：","選択中：",
 "SelectPlayerTagBefore","You can choose which player in the vent.","ベントでプレイヤーを選択できます。",
 "SelectPlayerTagMiniBefore","Select player in vent.","ベントでプレイヤーを選択",
+"ShapeSelectPlayerTagBefore","You can choose which target at Shape select.","シェイプ選択画面でターゲットを選択できます。",
+"ShapeSelectPlayerTagMiniBefore","Select target at Shape select.","シェイプ選択画面で対象を選択",
 "NameChangeMode","Name Change Mode","名前変更モード",
 "nameChangeMode.None","None","なし",
 "nameChangeMode.Crew","Crewmate","クルー","船员","船員","Экипаж","Tripulante"
 "nameChangeMode.Color","Color","色名",
 "ExtendedChat","Extended Chat","拡張チャット",,,,
+"SelectGuardPlayer","Select Guard Player","ガード対象を選択",
+"SelectMaster","Select Master","ご主人を選べ"
+"DoCounsel","Do Counsel","投票でカウンセル",
+"AbilityVote","Ability Vote","投票で能力発動",
+"DictatorVote","Ability Vote","投票で独裁投票",
+"ChairmanVote","Ability Vote","他人投票で強制SKIP",
+"ForecastVote","Ability Vote","投票で占う",
+"DuelistVote","Decide Archenemy","投票で宿敵を決めろ",
 
 "VoiceReaderMode","VoiceReader Mode","チャットの読上げ",,,,
 "VoiceReaderHost","Host","ホスト",,,,

@@ -121,7 +121,7 @@ public sealed class Arsonist : RoleBase, IKiller
         }
         info.DoKill = false;
     }
-    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     {
         TargetInfo = null;
     }
@@ -184,7 +184,7 @@ public sealed class Arsonist : RoleBase, IKiller
                 {
                     //生存者は焼殺
                     pc.SetRealKiller(Player);
-                    pc.RpcMurderPlayer(pc, true);
+                    pc.RpcMurderPlayer(pc);
                     var state = PlayerState.GetByPlayerId(pc.PlayerId);
                     state.DeathReason = CustomDeathReason.Torched;
                     state.SetDead();

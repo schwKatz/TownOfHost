@@ -7,6 +7,7 @@ using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.AddOns.Crewmate;
 using TownOfHostY.Roles.Crewmate;
 using System.Linq;
+using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY
 {
@@ -38,6 +39,7 @@ namespace TownOfHostY
                 if (task.TaskType == TaskTypes.CatchFish && Options.DisableCatchFish.GetBool()) disabledTasks.Add(task);//魚釣りタスク
                 if (task.TaskType == TaskTypes.HelpCritter && Options.DisableHelpCritter.GetBool()) disabledTasks.Add(task);//卵孵化タスク
                 if (task.TaskType == TaskTypes.TuneRadio && Options.DisableTuneRadio.GetBool()) disabledTasks.Add(task);//通信修復タスク
+                if (task.TaskType == TaskTypes.AssembleArtifact && Options.DisableAssembleArtifact.GetBool()) disabledTasks.Add(task);//宝石組み立てタスク
             }
             foreach (var task in disabledTasks)
             {
@@ -47,14 +49,13 @@ namespace TownOfHostY
         }
     }
 
-    [HarmonyPatch(typeof(GameData), nameof(GameData.RpcSetTasks))]
+    [HarmonyPatch(typeof(NetworkedPlayerInfo), nameof(NetworkedPlayerInfo.RpcSetTasks))]
     class RpcSetTasksPatch
     {
         //タスクを割り当ててRPCを送る処理が行われる直前にタスクを上書きするPatch
         //バニラのタスク割り当て処理自体には干渉しない
-        public static void Prefix(GameData __instance,
-        [HarmonyArgument(0)] byte playerId,
-        [HarmonyArgument(1)] ref Il2CppStructArray<byte> taskTypeIds)
+        public static void Prefix(NetworkedPlayerInfo __instance,
+        [HarmonyArgument(0)] ref Il2CppStructArray<byte> taskTypeIds)
         {
             //null対策
             if (Main.RealOptionsData == null)
@@ -63,7 +64,7 @@ namespace TownOfHostY
                 return;
             }
 
-            var pc = Utils.GetPlayerById(playerId);
+            var pc = Utils.GetPlayerById(__instance.PlayerId);
             CustomRoles? RoleNullable = pc?.GetCustomRole();
             if (RoleNullable == null) return;
             CustomRoles role = RoleNullable.Value;
@@ -81,12 +82,20 @@ namespace TownOfHostY
                 NumShortTasks = data.numShortTasks.GetInt(); // 割り当てるショートタスクの数
                                                              // ロングとショートは常時再割り当てが行われる。
             }
+
+            if (pc.Is(CustomRoles.VentManager))
+                (hasCommonTasks, NumLongTasks, NumShortTasks) = VentManager.TaskData;
+            if (pc.Is(CustomRoles.FoxSpirit))
+                (hasCommonTasks, NumLongTasks, NumShortTasks) = FoxSpirit.TaskData;
             if (pc.Is(CustomRoles.Workhorse))
                 (hasCommonTasks, NumLongTasks, NumShortTasks) = Workhorse.TaskData;
+            if (pc.Is(CustomRoles.Rabbit) && Rabbit.IsFinish(pc))
+                (hasCommonTasks, NumLongTasks, NumShortTasks) = Rabbit.TaskData;
 
             if (taskTypeIds.Count == 0) hasCommonTasks = false; //タスク再配布時はコモンを0に
             if (!hasCommonTasks && NumLongTasks == 0 && NumShortTasks == 0) NumShortTasks = 1; //タスク0対策
-            if (!pc.Is(CustomRoles.VentManager) && hasCommonTasks && NumLongTasks == Main.NormalOptions.NumLongTasks && NumShortTasks == Main.NormalOptions.NumShortTasks) return; //変更点がない場合
+            if (!pc.Is(CustomRoles.VentManager) && !pc.Is(CustomRoles.FoxSpirit)
+                && hasCommonTasks && NumLongTasks == Main.NormalOptions.NumLongTasks && NumShortTasks == Main.NormalOptions.NumShortTasks) return; //変更点がない場合
 
             //割り当て可能なタスクのIDが入ったリスト
             //本来のRpcSetTasksの第二引数のクローン
@@ -120,16 +129,13 @@ namespace TownOfHostY
                 ShortTasks.Add(task);
             Shuffle<NormalPlayerTask>(ShortTasks);
 
-            if (pc.Is(CustomRoles.VentManager))
+            if (pc.Is(CustomRoles.VentManager) || pc.Is(CustomRoles.FoxSpirit))
             {
                 TasksList.Clear();
                 ShortTasks.Clear();
 
                 var task = ShipStatus.Instance.ShortTasks.FirstOrDefault(task => task.TaskType == TaskTypes.VentCleaning);
                 ShortTasks.Add(task);
-
-                NumLongTasks = 0; // 割り当てるロングタスクの数
-                NumShortTasks = pc.GetPlayerTaskState().AllTasksCount; //VentManager.TaskCount.GetInt(); // 割り当てるショートタスクの数
             }
 
             //実際にAmong Us側で使われているタスクを割り当てる関数を使う。

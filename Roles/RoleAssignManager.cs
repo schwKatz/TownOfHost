@@ -23,10 +23,10 @@ namespace TownOfHostY.Roles
                 var replacementDictionary = new Dictionary<string, string>()
                 { { "%roleType%", GetString( $"CustomRoleTypes.{roleTypes}") } };
 
-                var minOption = IntegerOptionItem.Create(idStart + id + 1, "RoleTypeMin", new(0, maxCount, 1), 0, TabGroup.MainSettings, false)
+                var minOption = IntegerOptionItem.Create(idStart + id + 1, "RoleTypeMin", new(0, maxCount, 1), 0, TabGroup.ModMainSettings, false)
                     .SetParent(parent)
                     .SetValueFormat(OptionFormat.Players);
-                var maxOption = IntegerOptionItem.Create(idStart + id + 2, "RoleTypeMax", new(0, maxCount, 1), 0, TabGroup.MainSettings, false)
+                var maxOption = IntegerOptionItem.Create(idStart + id + 2, "RoleTypeMax", new(0, maxCount, 1), 0, TabGroup.ModMainSettings, false)
                     .SetParent(parent)
                     .SetValueFormat(OptionFormat.Players);
 
@@ -60,7 +60,7 @@ namespace TownOfHostY.Roles
         private static List<CustomRoles> AssignRoleList = new(CustomRolesHelper.AllRoles.Length);
         public static void SetupOptionItem()
         {
-            OptionAssignMode = StringOptionItem.Create(idStart, "AssignMode", AssignModeSelections, 0, TabGroup.MainSettings, false);
+            OptionAssignMode = StringOptionItem.Create(idStart, "AssignMode", AssignModeSelections, 0, TabGroup.ModMainSettings, false);
 
             assignMode = () => (AssignAlgorithm)OptionAssignMode.GetInt();
             RandomAssignOptionsCollection.Clear();
@@ -153,7 +153,7 @@ namespace TownOfHostY.Roles
 
             foreach (var roleType in CustomRolesHelper.AllRoleTypes)
             {
-                var count = AssignRoleList.Count(role => role.GetCustomRoleTypes() == roleType);
+                var count = AssignRoleList.Count(role => role.GetAssignRoleType() == roleType);
                 AssignCount.Add(roleType, count);
             }
         }
@@ -222,25 +222,23 @@ namespace TownOfHostY.Roles
             List<(CustomRoles, int)> randomRoleTicketPool = new(); //ランダム抽選時のプール
             var rand = IRandom.Instance;
             var assignCount = new Dictionary<CustomRoleTypes, int>(AssignCount); //アサイン枠のDictionary
-
             foreach (var role in GetCandidateRoleList(100).OrderBy(x => Guid.NewGuid()))
             {
                 var targetRoles = role.GetAssignUnitRolesArray();
                 //アサイン枠が足りてない場合
                 if (CustomRolesHelper.AllRoleTypes.Any(
                     type => assignCount.TryGetValue(type, out var count) &&
-                    targetRoles.Count(role => role.GetCustomRoleTypes() == type) > count
+                    targetRoles.Count(role => role.GetAssignRoleType() == type) > count
                 )) continue;
 
                 foreach (var targetRole in targetRoles)
                 {
                     AssignRoleList.Add(targetRole);
-                    var targetRoleType = targetRole.GetCustomRoleTypes();
+                    var targetRoleType = targetRole.GetAssignRoleType();
                     if (assignCount.ContainsKey(targetRoleType))
                         assignCount[targetRoleType]--;
                 }
             }
-
             if (assignCount.All(kvp => kvp.Value <= 0)) return;
 
             foreach (var role in AllMainRoles.OrderBy(x => Guid.NewGuid())) //確定枠が偏らないようにシャッフル
@@ -254,21 +252,22 @@ namespace TownOfHostY.Roles
                 //確率がそのまま追加枚数に
                 for (var i = 0; i < count; i++)
                     randomRoleTicketPool.AddRange(Enumerable.Repeat((role, i), chance / 10).ToList());
-
             }
 
             //確定分では足りない場合に抽選を行う
             while (assignCount.Any(kvp => kvp.Value > 0) && randomRoleTicketPool.Count > 0)
             {
                 var selectedTicket = randomRoleTicketPool[rand.Next(randomRoleTicketPool.Count)];
+                Logger.Info($"{selectedTicket.Item1}", "SetRandomAssignRoleList");
                 var targetRoles = selectedTicket.Item1.GetAssignUnitRolesArray();
+                Logger.Info($"{targetRoles}", "SetRandomAssignRoleList");
                 //アサイン枠が足りていれば追加
-                if (CustomRolesHelper.AllRoleTypes.All(type => targetRoles.Count(role => role.GetCustomRoleTypes() == type) <= assignCount[type]))
+                if (CustomRolesHelper.AllRoleTypes.Where(type => type != CustomRoleTypes.Unit).All(type => targetRoles.Count(role => role.GetAssignRoleType() == type) <= assignCount[type]))
                 {
                     foreach (var targetRole in targetRoles)
                     {
                         AssignRoleList.Add(targetRole);
-                        assignCount[targetRole.GetCustomRoleTypes()]--;
+                        assignCount[targetRole.GetAssignRoleType()]--;
                     }
                 }
                 //1-9個ある同じチケットを削除
@@ -309,6 +308,8 @@ namespace TownOfHostY.Roles
         }
         private static RoleAssignInfo GetRoleAssignInfo(this CustomRoles role) =>
             CustomRoleManager.GetRoleInfo(role)?.AssignInfo;
+        private static CustomRoleTypes GetAssignRoleType(this CustomRoles role) =>
+            role.GetRoleAssignInfo()?.AssignRoleType ?? role.GetCustomRoleTypes();
         private static bool IsAssignable(this CustomRoles role)
             => role.GetRoleAssignInfo()?.IsInitiallyAssignable ?? true;
         /// <summary>
@@ -343,12 +344,17 @@ namespace TownOfHostY.Roles
     {
         public RoleAssignInfo(CustomRoles role, CustomRoleTypes roleType)
         {
+            AssignRoleType = roleType;
             IsInitiallyAssignableCallBack = () => true;
             AssignCountRule =
                 roleType == CustomRoleTypes.Impostor ? new(1, 3, 1) : new(1, 15, 1);
             AssignUnitRoles =
                 Enumerable.Repeat(role, AssignCountRule.Step).ToArray();
         }
+        /// <summary>
+        /// どのアサイン枠を消費するか
+        /// </summary>
+        public CustomRoleTypes AssignRoleType { get; init; }
         /// <summary>
         /// 試合開始時にアサインされるかどうかのデリゲート
         /// </summary>

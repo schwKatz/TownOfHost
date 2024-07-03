@@ -10,6 +10,7 @@ using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Impostor;
+using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Common;
 
 namespace TownOfHostY.Roles.Core;
@@ -67,6 +68,8 @@ public static class CustomRoleManager
                 if (Guarding.OnCheckMurder(info)) { }
                 // メディックの対象プレイヤー
                 else if (Medic.GuardPlayerCheckMurder(info)) { }
+                // 背徳者の対象プレイヤー
+                else if (Immoralist.GuardPlayerCheckMurder(info)) { }
                 // ターゲットのキルチェック処理実行
                 else if (targetRole != null)
                 {
@@ -93,7 +96,7 @@ public static class CustomRoleManager
         {
             //MurderPlayer用にinfoを保存
             CheckMurderInfos[appearanceKiller.PlayerId] = info;
-            appearanceKiller.RpcMurderPlayer(appearanceTarget, true);
+            appearanceKiller.RpcMurderPlayer(appearanceTarget);
             return true;
         }
         else
@@ -139,13 +142,21 @@ public static class CustomRoleManager
         {
             onMurderPlayer(info);
         }
-        AddBait.OnMurderPlayer(info);
 
-        //サブロール処理ができるまではラバーズをここで処理
-        FixedUpdatePatch.LoversSuicide(attemptTarget.PlayerId);
+        if (info.IsMeeting)
+        {
+            Lovers.VoteSuicide(attemptTarget.PlayerId);
+            Janitor.VoteSuicide(attemptTarget.PlayerId);
+        }
+        else
+        {
+            Lovers.KillSuicide(attemptTarget.PlayerId);
+            Janitor.KillSuicide(attemptTarget.PlayerId);
+        }
+
         //TargetDeadArrow
-        TargetDeadArrow.UpdateDeadBody();
-        //WinTask
+        if (!info.IsMeeting) TargetDeadArrow.UpdateDeadBody();
+      　//WinTask
         VentEnterTask.TaskWinCountAllComplete(attemptTarget.PlayerId);
 
         //以降共通処理
@@ -158,6 +169,14 @@ public static class CustomRoleManager
 
         targetState.SetDead();
         attemptTarget.SetRealKiller(attemptKiller, true);
+
+        //ホストの死後タスク免除
+        if (attemptTarget == PlayerControl.LocalPlayer && Options.HostGhostIgnoreTasks.GetBool()
+            && !attemptTarget.Is(CustomRoles.Gang))
+        {
+            var task = attemptTarget.GetPlayerTaskState();
+            task.CompletedTasksCount = task.AllTasksCount;
+        }
 
         Utils.CountAlivePlayers(true);
 
@@ -246,6 +265,9 @@ public static class CustomRoleManager
     {
         switch (subRole)
         {
+            case CustomRoles.Lovers: Lovers.Add(playerId); break;
+            case CustomRoles.ChainShifterAddon: ChainShifterAddon.Add(playerId); break;
+
             case CustomRoles.AddWatch: AddWatch.Add(playerId); break;
             case CustomRoles.AddLight: AddLight.Add(playerId); break;
             case CustomRoles.AddSeer: AddSeer.Add(playerId); break;
@@ -384,6 +406,10 @@ public class MurderInfo
     /// 遠距離キル代わりの疑似自殺
     /// </summary>
     public bool IsFakeSuicide => AppearanceKiller.PlayerId == AppearanceTarget.PlayerId;
+    /// <summary>
+    ///会議中キルの場合
+    /// </summary>
+    public bool IsMeeting => GameStates.IsMeeting;
     public MurderInfo(PlayerControl attemptKiller, PlayerControl attemptTarget, PlayerControl appearanceKiller, PlayerControl appearancetarget)
     {
         AttemptKiller = attemptKiller;
@@ -402,9 +428,11 @@ public enum CustomRoles
     //Impostor(Vanilla)
     Impostor,
     Shapeshifter,
+    Phantom,
     //Impostor
     NormalImpostor,
     NormalShapeshifter,
+    NormalPhantom,
     CustomImpostor,
     EvilWatcher,
     BountyHunter,
@@ -417,10 +445,13 @@ public enum CustomRoles
     Witch,
     Warlock,
     Mare,
+    Penguin,
     Puppeteer,
     TimeThief,
     EvilTracker,
-    EvilHacker,
+    Stealth,
+    NekoKabocha,
+    Insider,
     EvilNekomata,
     AntiAdminer,
     CursedWolf,
@@ -431,25 +462,43 @@ public enum CustomRoles
     Telepathisters,
     ShapeKiller,
     StrayWolf,
+    EvilIgnition,
+    Escalationer,
+    EvilDyer,
+    BestieWolf,
+    EvilGuesser,
+    SelfBomber,
+    GrudgeCharger,
+
+    Godfather,
+    Janitor,
     //Madmate
-    MadGuardian,
     Madmate,
+    MadGuardian,
     MadSnitch,
     MadSheriff,
     MadDictator,
     MadNatureCalls,
     MadBrackOuter,
     MadNimrod,
+    MadScientist,
+    MadJester,
+    MadGuesser,
     MadCostomer,
 
+    MadDilemma,
     SKMadmate,
     //Crewmate(Vanilla)
     Engineer,
     GuardianAngel,
     Scientist,
+    Tracker,
+    Noisemaker,
     //Crewmate
     NormalEngineer,
     NormalScientist,
+    NormalTracker,
+    NormalNoisemaker,
     CustomCrewmate,
     NiceWatcher,
     Bait,
@@ -482,8 +531,12 @@ public enum CustomRoles
     Psychic,
     Nimrod,
     Detector,
+    LoyalDoggy,
+    Rabbit,
     VentManager,
+    NiceGuesser, 
 
+    Counselor,
     Potentialist,
     //Neutral
     Arsonist,
@@ -504,8 +557,16 @@ public enum CustomRoles
     Totocalcio,
     Duelist,
     God,
+    FoxSpirit,
+    Immoralist,
+    Ogre,
+    Pirate,
+    Gang,
+    ChainShifter,
 
     GM,
+    CounselorAndMadDilemma,
+    GodfatherAndJanitor,
     MaxMain,
     /************/
 
@@ -561,8 +622,12 @@ public enum CustomRoles
     InfoPoor,
     NonReport,
     Archenemy,
+    ChainShifterAddon,
 
     MaxAddon,
+
+    //dummy
+    DummyNext = 10000,
 }
 public enum CustomRoleTypes
 {
@@ -570,6 +635,7 @@ public enum CustomRoleTypes
     Madmate,
     Crewmate,
     Neutral,
+    Unit
 }
 public enum HasTask
 {

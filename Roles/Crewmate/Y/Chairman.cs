@@ -57,7 +57,7 @@ public sealed class Chairman : RoleBase
             : opt.GetInt(Int32OptionNames.EmergencyCooldown);
         AURoleOptions.EngineerInVentMaxTime = 1;
     }
-    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     {
         if (reporter == Player && target == null) //ボタン
             LeftButtonCount--;
@@ -85,6 +85,18 @@ public sealed class Chairman : RoleBase
         }
         MeetingVoteManager.Instance.ClearAndExile(Player.PlayerId, 253);
         return (votedForId, numVotes, false);
+    }
+
+    public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        if (!isForMeeting || !Player.IsAlive() || IgnoreSkip) return string.Empty;
+
+        //seenが省略の場合seer
+        seen ??= seer;
+        //seeおよびseenが自分である場合以外は関係なし
+        if (!Is(seer) || !Is(seen)) return "";
+
+        return Translator.GetString("ChairmanVote").Color(RoleInfo.RoleColor);
     }
 
     public override void AfterMeetingTasks()=> Player.RpcResetAbilityCooldown();

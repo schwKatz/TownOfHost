@@ -49,6 +49,7 @@ namespace TownOfHostY
         {
             return ((pc.Is(CustomRoles.Sheriff) && Sheriff.IsInfoPoor.GetBool())
                     || (pc.Is(CustomRoles.SillySheriff) && SillySheriff.IsInfoPoor.GetBool())
+                    || (pc.Is(CustomRoles.Hunter) && Hunter.IsInfoPoor.GetBool())
                     || pc.Is(CustomRoles.InfoPoor));
         }
         public static bool IsPoorEnable()
@@ -72,7 +73,7 @@ namespace TownOfHostY
 
                 try
                 {
-                    if (pc.IsModClient()) continue;
+                    if (pc == PlayerControl.LocalPlayer/*pc.IsModClient()*/) continue;
 
                     bool doComms = false;
                     Vector2 PlayerPos = pc.GetTruePosition();

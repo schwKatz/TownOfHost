@@ -38,7 +38,6 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
     }
 
     private static OptionItem KillCooldown;
-    private static OptionItem MisfireKillsTarget;
     private static OptionItem ShotLimitOpt;
     public static OptionItem IsInfoPoor;
     public static OptionItem IsClumsy;
@@ -113,9 +112,9 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
         var id = RoleInfo.ConfigId + idOffset;
         parent ??= RoleInfo.RoleOption;
         // (%team%陣営)
-        //var inTeam = GetString("In%team%", new Dictionary<string, string>() { ["%team%"] = GetRoleString(catType.ToString()) });
+        var inTeam = GetString("In%team%", new Dictionary<string, string>() { ["%team%"] = GetRoleString(catType.ToString()) });
         // シュレディンガーの猫(%team%陣営)
-        var catInTeam = Utils.ColorString(SchrodingerCat.GetCatColor(catType), Utils.GetRoleName(CustomRoles.SchrodingerCat)/* + inTeam*/);
+        var catInTeam = Utils.ColorString(SchrodingerCat.GetCatColor(catType), Utils.GetRoleName(CustomRoles.SchrodingerCat) + inTeam);
         Dictionary<string, string> replacementDic = new() { ["%role%"] = catInTeam };
         SchrodingerCatKillTargetOptions[catType] = BooleanOptionItem.Create(id, OptionName.SheriffCanKill + "%role%", defaultValue, RoleInfo.Tab, false).SetParent(parent);
         SchrodingerCatKillTargetOptions[catType].ReplacementDictionary = replacementDic;
@@ -165,13 +164,11 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
         SendRPC();
         if (!CanBeKilledBy(target))
         {
-            killer.RpcMurderPlayer(killer, true);
+            killer.RpcMurderPlayer(killer);
             PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
-            if (!MisfireKillsTarget.GetBool())
-            {
-                info.DoKill = false;
-                return;
-            }
+
+            info.DoKill = false;
+            return;
         }
         killer.ResetKillCooldown();
     }

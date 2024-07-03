@@ -42,16 +42,17 @@ public sealed class Trapper : RoleBase
     public override void OnMurderPlayerAsTarget(MurderInfo info)
     {
         if (info.IsSuicide) return;
+        if (info.IsMeeting) return;
 
         var killer = info.AttemptKiller;
         var tmpSpeed = Main.AllPlayerSpeed[killer.PlayerId];
         Main.AllPlayerSpeed[killer.PlayerId] = Main.MinSpeed;    //tmpSpeedで後ほど値を戻すので代入しています。
-        ReportDeadBodyPatch.CanReport[killer.PlayerId] = false;
+        ReportDeadBodyPatch.CannotReportList.Add(killer.PlayerId);
         killer.MarkDirtySettings();
         _ = new LateTask(() =>
         {
             Main.AllPlayerSpeed[killer.PlayerId] = tmpSpeed;
-            ReportDeadBodyPatch.CanReport[killer.PlayerId] = true;
+            ReportDeadBodyPatch.CannotReportList.Remove(killer.PlayerId);
             killer.MarkDirtySettings();
             RPC.PlaySoundRPC(killer.PlayerId, Sounds.TaskComplete);
         }, BlockMoveTime, "Trapper BlockMove");

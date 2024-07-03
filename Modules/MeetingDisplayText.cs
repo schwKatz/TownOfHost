@@ -62,7 +62,7 @@ public static class MeetingDisplayText
         int column = 0;
         float height = 3.2f;
 
-        (string t, int c) = EvilHacker.AddMeetingDisplay();
+        (string t, int c) = EvilIgnition.AddMeetingDisplay();
         addText.Append(t); column += c;
         (t, c) = Nimrod.AddMeetingDisplay();
         addText.Append(t); column += c;
@@ -81,9 +81,12 @@ public static class MeetingDisplayText
         // ModName&Version (Vanilla Only)
         if (forVanilla)
         {
-            addText.Append($"<color={Main.ModColor}>TOH_Y</color> v{Main.PluginVersion}\n\n".Color(Color.white));
-            column += 2;
-            height = 3.5f;
+            addText.Append("<line-height=0.68em>\n</line-height>")
+                .Append($"<size=80%><color={Main.ModColor}>TOH_Y</color>\n</size>")
+                .Append($"<size=70%> v{Main.PluginVersion}\n</size>\n".Color(Color.white));
+
+            column += 3;
+            height = 2.7f;
         }
 
         // Revenge
@@ -92,25 +95,25 @@ public static class MeetingDisplayText
             if (MeetingHudPatch.RevengeTargetPlayer.Count() >= 2)
             {
                 addText.Append("<line-height=0.12em>\n</line-height>")
-                    //.Append($"<line-height=0.87em>道連れ死亡:\n</line-height>　複数発生しています\n".Color(Color.white));
-                    .Append($"<line-height=0.87em>{GetString("MDisplay.RevengeHeader")}:\n</line-height>　{GetString("MDisplay.RevengeMultiple")}\n".Color(Color.white));
+                    .Append($"<line-height=0.88em>{GetString("MDisplay.RevengeHeader")}:\n</line-height>　{GetString("MDisplay.RevengeMultiple")}\n".Color(Color.white));
                 column += 2;
                 height = 0.8f;
             }
-
-            foreach (var Exiled_Target in MeetingHudPatch.RevengeTargetPlayer)
+            else
             {
-                var colorT = Palette.GetColorName(Exiled_Target.revengeTarget.DefaultOutfit.ColorId).Color(Exiled_Target.revengeTarget.Color);
-                var colorE = Palette.GetColorName(Exiled_Target.exiled.DefaultOutfit.ColorId).Color(Exiled_Target.exiled.Color);
+                foreach (var Exiled_Target in MeetingHudPatch.RevengeTargetPlayer)
+                {
+                    var colorT = Palette.GetColorName(Exiled_Target.revengeTarget.DefaultOutfit.ColorId).Color(Exiled_Target.revengeTarget.Color);
+                    var colorE = Palette.GetColorName(Exiled_Target.exiled.DefaultOutfit.ColorId).Color(Exiled_Target.exiled.Color);
 
-                addText.Append("<line-height=0.12em>\n</line-height>")
-                    .Append($"<line-height=0.87em>{GetString("MDisplay.RevengeHeader")}:\n</line-height>")
-                    .Append($"{colorT}<={colorE}\n".Color(Color.white));
-                column += 2;
-                height = 0.8f;
+                    addText.Append("<line-height=0.12em>\n</line-height>")
+                        .Append($"<line-height=0.88em>{GetString("MDisplay.RevengeHeader")}:\n</line-height>")
+                        .Append($"{colorT}<={colorE}\n".Color(Color.white));
+                    column += 2;
+                    height = 0.8f;
+                }
             }
         }
-
         return (addText.ToString(), column, height);
     }
 
@@ -165,19 +168,19 @@ public static class MeetingDisplayText
         float height = 2f;
 
         // 0 = 左上(1番目)
-        if (pc == Main.AllAlivePlayerControls.ElementAtOrDefault(0))
+        if (pc == Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).ElementAtOrDefault(0))
         {
             (addText, column, height) = LeftUp();
             if (addText == "") return name;
         }
         // 1 = 真ん中上(2番目)
-        else if (pc == Main.AllAlivePlayerControls.ElementAtOrDefault(1))
+        else if (pc == Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).ElementAtOrDefault(1))
         {
             (addText, column, height) = CenterUp();
             if (addText == "") return name;
         }
         // 2 = 右上(3番目)
-        else if (pc == Main.AllAlivePlayerControls.ElementAtOrDefault(2))
+        else if (pc == Main.AllAlivePlayerControls.OrderBy(x => x.PlayerId).ElementAtOrDefault(2))
         {
             (addText, column, height) = RightUp(true);
         }

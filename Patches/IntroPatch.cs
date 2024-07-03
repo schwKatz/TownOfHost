@@ -31,7 +31,10 @@ namespace TownOfHostY
                 }
 
                 foreach (var subRole in PlayerState.GetByPlayerId(PlayerControl.LocalPlayer.PlayerId).SubRoles)
+                {
+                    if (subRole == CustomRoles.ChainShifterAddon) continue;
                     __instance.RoleBlurbText.text += "\n" + Utils.ColorString(Utils.GetRoleColor(subRole), GetString($"{subRole}Info"));
+                }
                 __instance.RoleText.text = Utils.GetTrueRoleName(PlayerControl.LocalPlayer.PlayerId, false, true);
 
             }, 0.01f, "Override Role Text");
@@ -144,6 +147,14 @@ namespace TownOfHostY
                         __instance.ImpostorText.gameObject.SetActive(true);
                         __instance.ImpostorText.text = GetString("TeamJackal");
                         __instance.BackgroundBar.material.color = Utils.GetRoleColor(CustomRoles.Jackal);
+                        break;
+                    case CustomRoles.FoxSpirit:
+                    case CustomRoles.Immoralist:
+                        __instance.TeamTitle.text = Utils.GetRoleName(CustomRoles.FoxSpirit);
+                        __instance.TeamTitle.color = Utils.GetRoleColor(CustomRoles.FoxSpirit);
+                        __instance.ImpostorText.gameObject.SetActive(true);
+                        __instance.ImpostorText.text = GetString("TeamFoxSpirit");
+                        __instance.BackgroundBar.material.color = Utils.GetRoleColor(CustomRoles.FoxSpirit);
                         break;
                     
                     case CustomRoles.MadSheriff:
@@ -353,10 +364,13 @@ namespace TownOfHostY
                 {
                     Main.AllPlayerControls.Do(pc => pc.RpcResetAbilityCooldown());
                     if (Options.FixFirstKillCooldown.GetBool())
+                    {
                         _ = new LateTask(() =>
                         {
                             Main.AllPlayerControls.Do(pc => pc.SetKillCooldown(Main.AllPlayerKillCooldown[pc.PlayerId] - 2f));
                         }, 2f, "FixKillCooldownTask");
+                    }
+                    else if (Main.isProtectRoleExist) Utils.ProtectedFirstPlayer(true);
                 }
                 _ = new LateTask(() => Main.AllPlayerControls.Do(pc => pc.RpcSetRoleDesync(RoleTypes.Shapeshifter, -3)), 2f, "SetImpostorForServer");
                 if (PlayerControl.LocalPlayer.Is(CustomRoles.GM))

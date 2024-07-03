@@ -35,8 +35,9 @@ namespace TownOfHostY
         SyncPuppet,
         MareSync,
         SetSchrodingerCatTeam,
+        StealthDarken,
         EvilHackerCreateMurderNotify,
-
+        PenguinSync,
         SetOppoKillerShotLimit,
         SetCursedWolfSpellCount,
         SetNBakryPoison,
@@ -61,12 +62,14 @@ namespace TownOfHostY
             switch (rpcType)
             {
                 case RpcCalls.SetName: //SetNameRPC
+                    subReader.ReadUInt32();
                     string name = subReader.ReadString();
                     if (subReader.BytesRemaining > 0 && subReader.ReadBoolean()) return false;
                     Logger.Info("名前変更:" + __instance.GetNameWithRole() + " => " + name, "SetName");
                     break;
                 case RpcCalls.SetRole: //SetNameRPC
                     var role = (RoleTypes)subReader.ReadUInt16();
+                    bool canOverride = reader.ReadBoolean();
                     Logger.Info("役職:" + __instance.GetRealName(Options.GetNameChangeModes() == NameChange.Crew) + " => " + role, "SetRole");
                     break;
                 case RpcCalls.SendChat:
@@ -77,6 +80,17 @@ namespace TownOfHostY
                 case RpcCalls.StartMeeting:
                     var p = Utils.GetPlayerById(subReader.ReadByte());
                     Logger.Info($"{__instance.GetNameWithRole()} => {p?.GetNameWithRole() ?? "null"}", "StartMeeting");
+                    break;
+                case RpcCalls.MurderPlayer: //MurderPlayerRPC
+                    if (GameStates.IsLobby && Options.CheatLobbyKill.GetBool())
+                    {
+                        //ロビーキルチート
+                        var client = __instance.GetClient();
+                        if (Options.CheaterAutoBan.GetBool()) BanManager.AddBanPlayer(client, true);
+                        AmongUsClient.Instance.KickPlayer(client.Id, false);
+                        Logger.Info($"LobbyKillCancel {client.PlayerName}, FriendCode={client.FriendCode}, ProductUserId={client.ProductUserId}", "RPCHandlerPatch");
+                        return false;
+                    }
                     break;
             }
             if (__instance.PlayerId != 0
@@ -159,12 +173,6 @@ namespace TownOfHostY
                     break;
                 case CustomRPC.SetNameColorData:
                     NameColorManager.ReceiveRPC(reader);
-                    break;
-                case CustomRPC.SetLoversPlayers:
-                    Main.LoversPlayers.Clear();
-                    int count = reader.ReadInt32();
-                    for (int i = 0; i < count; i++)
-                        Main.LoversPlayers.Add(Utils.GetPlayerById(reader.ReadByte()));
                     break;
                 case CustomRPC.SetRealKiller:
                     byte targetId = reader.ReadByte();
@@ -281,17 +289,6 @@ namespace TownOfHostY
             HudManager.Instance.SetHudActive(true);
             if (PlayerControl.LocalPlayer.PlayerId == targetId) RemoveDisableDevicesPatch.UpdateDisableDevices();
         }
-        public static void SyncLoversPlayers()
-        {
-            if (!AmongUsClient.Instance.AmHost) return;
-            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetLoversPlayers, Hazel.SendOption.Reliable, -1);
-            writer.Write(Main.LoversPlayers.Count);
-            foreach (var lp in Main.LoversPlayers)
-            {
-                writer.Write(lp.PlayerId);
-            }
-            AmongUsClient.Instance.FinishRpcImmediately(writer);
-        }
         public static void SendRpcLogger(uint targetNetId, byte callId, int targetClientId = -1)
         {
             if (!DebugModeManager.AmDebugger) return;
@@ -326,7 +323,7 @@ namespace TownOfHostY
             writer.Write(killerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
-        public static void ReportDeadBodyForced(this PlayerControl player, GameData.PlayerInfo target)
+        public static void ReportDeadBodyForced(this PlayerControl player, NetworkedPlayerInfo target)
         {
             //PlayerControl.ReportDeadBodyと同様の処理
             if (!AmongUsClient.Instance.AmHost) return;

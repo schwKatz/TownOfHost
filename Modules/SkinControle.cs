@@ -5,7 +5,7 @@ namespace TownOfHostY;
 public static class SkinControle
 {
     static readonly string Missing = "missing";
-    public static GameData.PlayerOutfit PlainOutfit = new GameData.PlayerOutfit().Set("", 15, "hat_NoHat", "skin_None", "visor_EmptyVisor", "pet_EmptyPet");
+    public static NetworkedPlayerInfo.PlayerOutfit PlainOutfit = new NetworkedPlayerInfo.PlayerOutfit().Set("", 15, "hat_NoHat", "skin_None", "visor_EmptyVisor", "pet_EmptyPet");
     public static readonly string[] FullFaceHat = new string[]
     {
         "hat_caiatl",
@@ -157,6 +157,7 @@ public static class SkinControle
             target.SetHat(newOutfit.HatId, outfit.ColorId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetHatStr)
                 .Write(newOutfit.HatId)
+                .Write(target.GetNextRpcSequenceId(RpcCalls.SetHatStr))
                 .EndRpc();
         }
 
@@ -165,6 +166,7 @@ public static class SkinControle
             target.SetSkin(newOutfit.SkinId, outfit.ColorId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetSkinStr)
                 .Write(newOutfit.SkinId)
+                .Write(target.GetNextRpcSequenceId(RpcCalls.SetSkinStr))
                 .EndRpc();
         }
 
@@ -173,6 +175,7 @@ public static class SkinControle
             target.SetVisor(newOutfit.VisorId, outfit.ColorId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetVisorStr)
                 .Write(newOutfit.VisorId)
+                .Write(target.GetNextRpcSequenceId(RpcCalls.SetVisorStr))
                 .EndRpc();
         }
 
@@ -181,6 +184,7 @@ public static class SkinControle
             target.SetPet(newOutfit.PetId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetPetStr)
                 .Write(newOutfit.PetId)
+                .Write(target.GetNextRpcSequenceId(RpcCalls.SetPetStr))
                 .EndRpc();
         }
 

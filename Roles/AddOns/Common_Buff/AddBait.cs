@@ -26,9 +26,13 @@ public static class AddBait
     {
         if (!playerIdList.Contains(playerId))
             playerIdList.Add(playerId);
+        CustomRoleManager.OnMurderPlayerOthers.Add(OnMurderPlayerOthers);
     }
-    public static void OnMurderPlayer(MurderInfo info)
+
+    public static void OnMurderPlayerOthers(MurderInfo info)
     {
+        if (info.IsMeeting) return;
+
         var (killer, target) = info.AttemptTuple;
 
         if (playerIdList.Contains(target.PlayerId) && !info.IsSuicide)

@@ -119,7 +119,7 @@ public class MeetingVoteManager
     /// <param name="applyVoteMode">スキップと同数投票の設定を適用するかどうか</param>
     public void EndMeeting(bool applyVoteMode = true, byte antiCompId = byte.MaxValue)
     {
-        var result = CountVotes(applyVoteMode);
+        var result = CountVotes(applyVoteMode, antiCompId != byte.MaxValue);
         //Y-anti
         var exiled = (antiCompId == byte.MaxValue) ? result.Exiled : Utils.GetPlayerInfoById(antiCompId);
 
@@ -165,7 +165,7 @@ public class MeetingVoteManager
     /// </summary>
     /// <param name="applyVoteMode">スキップと同数投票の設定を適用するかどうか</param>
     /// <returns>([Key: 投票先,Value: 票数]の辞書, 追放される人, 同数投票かどうか)</returns>
-    public VoteResult CountVotes(bool applyVoteMode)
+    public VoteResult CountVotes(bool applyVoteMode, bool isAntiComp = false)
     {
         // 投票モードに従って投票を変更
         if (applyVoteMode && Options.VoteMode.GetBool())
@@ -196,7 +196,7 @@ public class MeetingVoteManager
             votes[vote.VotedFor] += vote.NumVotes;
         }
 
-        return new VoteResult(votes);
+        return new VoteResult(votes, isAntiComp);
     }
     /// <summary>
     /// スキップモードと無投票モードに応じて，投票を上書きしたりプレイヤーを死亡させたりします
@@ -310,13 +310,13 @@ public class MeetingVoteManager
         /// <summary>
         /// 追放されるプレイヤー
         /// </summary>
-        public readonly GameData.PlayerInfo Exiled;
+        public readonly NetworkedPlayerInfo Exiled;
         /// <summary>
         /// 同数投票かどうか
         /// </summary>
         public readonly bool IsTie;
 
-        public VoteResult(Dictionary<byte, int> votedCounts)
+        public VoteResult(Dictionary<byte, int> votedCounts, bool isAntiComp = false)
         {
             this.votedCounts = votedCounts;
 
@@ -341,10 +341,13 @@ public class MeetingVoteManager
                 logger.Info($"最多得票者: {GetVoteName(mostVotedPlayers[0])}");
             }
 
-            (IsTie, Exiled) = TieBreaker.BreakingVote(IsTie, Exiled, votedCounts, maxVoteNum);
-            Exiled = Refusing.VoteChange(Exiled);
-            Exiled = Nimrod.VoteChange(Exiled);
-            Exiled = MadNimrod.VoteChange(Exiled);
+            if (!isAntiComp)
+            {
+                (IsTie, Exiled) = TieBreaker.BreakingVote(IsTie, Exiled, votedCounts, maxVoteNum);
+                Exiled = Refusing.VoteChange(Exiled);
+                Exiled = Nimrod.VoteChange(Exiled);
+                Exiled = MadNimrod.VoteChange(Exiled);
+            }
 
             // 同数投票時の特殊モード
             if (IsTie && Options.VoteMode.GetBool())

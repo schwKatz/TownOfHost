@@ -78,6 +78,7 @@ public sealed class Medic : RoleBase
         if (killer.GetCustomRole().IsDirectKillRole()) return false;
 
         killer.RpcProtectedMurderPlayer(target); //killer側のみ。斬られた側は見れない。
+        info.CanKill = false;
 
         foreach (var medic in Medics)
         {
@@ -107,6 +108,18 @@ public sealed class Medic : RoleBase
         });
 
         Utils.NotifyRoles(SpecifySeer: Player);
+        return true;
+    }
+
+    public override bool OnCompleteTask()
+    {
+        if (!Player.IsAlive()) return true;
+
+        if (MyTaskState.CompletedTasksCount == TaskTrigger || IsTaskFinished)
+        {
+            Player.MarkDirtySettings();
+        }
+
         return true;
     }
 

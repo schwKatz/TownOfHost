@@ -42,6 +42,8 @@ public sealed class Hunter : RoleBase, IKiller, ISchrodingerCatOwner
     private static OptionItem KillCooldown;
     private static OptionItem ShotLimitOpt;
     private static OptionItem CanKillAllAlive;
+    public static OptionItem IsInfoPoor;
+    public static OptionItem IsClumsy;
     private static OptionItem KnowTargetIsImpostor;
     private static OptionItem OpKnowTargetMadIsImpostor;
     private static OptionItem VentEnterTaskMaxCount;
@@ -52,6 +54,8 @@ public sealed class Hunter : RoleBase, IKiller, ISchrodingerCatOwner
         VentEnterTaskMaxCount,
         SheriffShotLimit,
         SheriffCanKillAllAlive,
+        SheriffIsInfoPoor,
+        SheriffIsClumsy,
         HunterKnowTargetIsImpostor,
         HunterKnowTargetMadIsImpostor,
     }
@@ -75,6 +79,8 @@ public sealed class Hunter : RoleBase, IKiller, ISchrodingerCatOwner
         ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 11, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false)
             .SetValueFormat(OptionFormat.Times);
         CanKillAllAlive = BooleanOptionItem.Create(RoleInfo, 12, OptionName.SheriffCanKillAllAlive, true, false);
+        IsInfoPoor = BooleanOptionItem.Create(RoleInfo, 15, OptionName.SheriffIsInfoPoor, false, false);
+        IsClumsy = BooleanOptionItem.Create(RoleInfo, 16, OptionName.SheriffIsClumsy, false, false);
         KnowTargetIsImpostor = BooleanOptionItem.Create(RoleInfo, 13, OptionName.HunterKnowTargetIsImpostor, true, false);
         OpKnowTargetMadIsImpostor = BooleanOptionItem.Create(RoleInfo, 14, OptionName.HunterKnowTargetMadIsImpostor, true, false, KnowTargetIsImpostor);
     }

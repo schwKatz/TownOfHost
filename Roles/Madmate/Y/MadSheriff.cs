@@ -26,17 +26,26 @@ public sealed class MadSheriff : RoleBase, IKiller
     )
     {
         KillCooldown = OptionKillCooldown.GetFloat();
+        nowSuicideMotion = (SuicideMotionOption)OptionSuicideMotion.GetValue();
         MisfireKillsTarget = OptionMisfireKillsTarget.GetBool();
         CanVent = OptionCanVent.GetBool();
     }
 
     private static OptionItem OptionKillCooldown;
+    public static OptionItem OptionSuicideMotion;
     private static OptionItem OptionMisfireKillsTarget;
     private static OptionItem OptionCanVent;
+    public enum SuicideMotionOption
+    {
+        Default,
+        MotionKilled
+    };
+    SuicideMotionOption nowSuicideMotion;
 
     enum OptionName
     {
         SheriffMisfireKillsTarget,
+        SillySheriffSuicideMotion,
     }
     private static float KillCooldown;
     private static bool MisfireKillsTarget;
@@ -46,6 +55,7 @@ public sealed class MadSheriff : RoleBase, IKiller
     {
         OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
+        OptionSuicideMotion = StringOptionItem.Create(RoleInfo, 13, OptionName.SillySheriffSuicideMotion, EnumHelper.GetAllNames<SuicideMotionOption>(), 0, false);
         OptionMisfireKillsTarget = BooleanOptionItem.Create(RoleInfo, 11, OptionName.SheriffMisfireKillsTarget, false, false);
         OptionCanVent = BooleanOptionItem.Create(RoleInfo, 12, GeneralOption.CanVent, false, false);
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, RoleInfo.RoleName, RoleInfo.Tab);
@@ -61,9 +71,17 @@ public sealed class MadSheriff : RoleBase, IKiller
         if (!Is(info.AttemptKiller) || info.IsSuicide) return;
         (var killer, var target) = info.AttemptTuple;
         // ガード持ちに関わらず能力発動する直接キル役職
-
+        //自殺処理
+        switch (nowSuicideMotion)
+        {
+            case SuicideMotionOption.Default://自殺モーション起こさない＝自身が自爆
+                killer.RpcMurderPlayer(killer);
+                break;
+            case SuicideMotionOption.MotionKilled://相手に切られる
+                target.RpcMurderPlayer(killer);
+                break;
+        }
         PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
-        killer.RpcMurderPlayer(killer, true);
 
         if (!MisfireKillsTarget) info.DoKill = false;
     }

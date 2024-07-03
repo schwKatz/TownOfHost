@@ -11,7 +11,6 @@ using TownOfHostY.Modules;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Impostor;
-using TownOfHostY.Roles.Madmate;
 using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Impostor;
@@ -25,6 +24,10 @@ namespace TownOfHostY
         {
             if (player.GetCustomRole() == role) return;
 
+            // 役職の変更・属性の追加タイミングの次回会議に説明が表示される
+            if(!Main.ShowRoleInfoAtMeeting.Contains(player.PlayerId))
+                Main.ShowRoleInfoAtMeeting.Add(player.PlayerId);
+
             if (role < CustomRoles.StartAddon)
             {
                 PlayerState.GetByPlayerId(player.PlayerId).SetMainRole(role);
@@ -36,11 +39,14 @@ namespace TownOfHostY
             }
             if (AmongUsClient.Instance.AmHost)
             {
-                var roleClass = player.GetRoleClass();
-                if (roleClass != null)
+                if (role < CustomRoles.StartAddon)
                 {
-                    roleClass.Dispose();
-                    CustomRoleManager.CreateInstance(role, player);
+                    var roleClass = player.GetRoleClass();
+                    if (roleClass != null)
+                    {
+                        roleClass.Dispose();
+                        CustomRoleManager.CreateInstance(role, player);
+                    }
                 }
 
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetCustomRole, Hazel.SendOption.Reliable, -1);
@@ -74,7 +80,7 @@ namespace TownOfHostY
             var client = player.GetClient();
             return client == null ? -1 : client.Id;
         }
-        public static CustomRoles GetCustomRole(this GameData.PlayerInfo player)
+        public static CustomRoles GetCustomRole(this NetworkedPlayerInfo player)
         {
             return player == null || player.Object == null ? CustomRoles.Crewmate : player.Object.GetCustomRole();
         }
@@ -149,22 +155,24 @@ namespace TownOfHostY
 
             var clientId = seer.GetClientId();
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetName, Hazel.SendOption.Reliable, clientId);
+            writer.Write(player.Data.NetId);
             writer.Write(name);
             writer.Write(DontShowOnModdedClient);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
-        public static void RpcSetRoleDesync(this PlayerControl player, RoleTypes role, int clientId)
+        public static void RpcSetRoleDesync(this PlayerControl player, RoleTypes role, int clientId, bool canOverrideRole = false)
         {
             //player: 名前の変更対象
 
             if (player == null) return;
             if (AmongUsClient.Instance.ClientId == clientId)
             {
-                player.SetRole(role);
+                player.StartCoroutine(player.CoSetRole(role, false));
                 return;
             }
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetRole, Hazel.SendOption.Reliable, clientId);
             writer.Write((ushort)role);
+            writer.Write(canOverrideRole);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
@@ -174,13 +182,14 @@ namespace TownOfHostY
             if (!killer.IsAlive()) return;
 
             if (target == null) target = killer;
-            // Host
-            if (killer.AmOwner)
-            {
-                killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
-            }
+            killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
+            //// Host
+            //if (killer.AmOwner)
+            //{
+
+            //}
             // Other Clients
-            if (killer.PlayerId != 0)
+            //if (killer.PlayerId != 0)
             {
                 var writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable);
                 writer.WriteNetObject(target);
@@ -188,11 +197,10 @@ namespace TownOfHostY
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
         }
-        public static void SetKillCooldown(this PlayerControl player, float time = -1f)
+        public static void SetKillCooldown(this PlayerControl player, float time = -1f, bool ForceProtect = false)
         {
             if (player == null) return;
-            CustomRoles role = player.GetCustomRole();
-            if (!player.CanUseKillButton()) return;
+            if (!ForceProtect && !player.CanUseKillButton()) return;
             if (time >= 0f)
             {
                 Main.AllPlayerKillCooldown[player.PlayerId] = time * 2;
@@ -258,6 +266,35 @@ namespace TownOfHostY
                 この変更により、役職としての守護天使が無効化されます。
                 ホストのクールダウンは直接リセットします。
             */
+        }
+        public static void RpcSpecificShapeshift(this PlayerControl player, PlayerControl target, bool shouldAnimate)
+        {
+            if (!AmongUsClient.Instance.AmHost) return;
+            if (player.PlayerId == 0)
+            {
+                player.Shapeshift(target, shouldAnimate);
+                return;
+            }
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.Shapeshift, SendOption.Reliable, player.GetClientId());
+            messageWriter.WriteNetObject(target);
+            messageWriter.Write(shouldAnimate);
+            AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
+        }
+        public static void RpcSpecificRejectShapeshift(this PlayerControl player, PlayerControl target, bool shouldAnimate)
+        {
+            if (!AmongUsClient.Instance.AmHost) return;
+            foreach (var seer in Main.AllPlayerControls)
+            {
+                if (seer != player)
+                {
+                    MessageWriter msg = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.RejectShapeshift, SendOption.Reliable, seer.GetClientId());
+                    AmongUsClient.Instance.FinishRpcImmediately(msg);
+                }
+                else
+                {
+                    player.RpcSpecificShapeshift(target, shouldAnimate);
+                }
+            }
         }
         public static void RpcDesyncUpdateSystem(this PlayerControl target, SystemTypes systemType, int amount)
         {
@@ -333,13 +370,35 @@ namespace TownOfHostY
         {
             return $"{player?.Data?.PlayerName}" + (GameStates.IsInGame ? $"({player?.GetAllRoleName()})" : "");
         }
-        public static string GetRoleColorCode(this PlayerControl player)
+        public static string GetRoleColorCode(this PlayerControl player, bool temporaryRole = false)
         {
-            return Utils.GetRoleColorCode(player.GetCustomRole());
+            var role = player.GetCustomRole();
+            if (temporaryRole)
+            {
+                if (player.Is(CustomRoles.ChainShifterAddon))
+                    return Utils.GetRoleColorCode(CustomRoles.ChainShifter);
+            }
+
+            (Color c, string t) = (Color.clear, "");
+            //trueRoleNameでColor上書きあればそれになる
+            player.GetRoleClass()?.OverrideTrueRoleName(ref c, ref t);
+            if (c != Color.clear) return ColorUtility.ToHtmlStringRGB(c);
+            else return Utils.GetRoleColorCode(role);
         }
-        public static Color GetRoleColor(this PlayerControl player)
+        public static Color GetRoleColor(this PlayerControl player, bool temporaryRole = false)
         {
-            return Utils.GetRoleColor(player.GetCustomRole());
+            var role = player.GetCustomRole();
+            if (temporaryRole)
+            {
+                if (player.Is(CustomRoles.ChainShifterAddon))
+                    return Utils.GetRoleColor(CustomRoles.ChainShifter);
+            }
+
+            (Color c, string t) = (Color.clear, "");
+            //trueRoleNameでColor上書きあればそれになる
+            player.GetRoleClass()?.OverrideTrueRoleName(ref c, ref t);
+            if (c != Color.clear) return c;
+            else return Utils.GetRoleColor(role);
         }
         public static void ResetPlayerCam(this PlayerControl pc, float delay = 0f)
         {
@@ -470,7 +529,7 @@ namespace TownOfHostY
             AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
             Utils.NotifyRoles();
         }
-        public static void NoCheckStartMeeting(this PlayerControl reporter, GameData.PlayerInfo target)
+        public static void NoCheckStartMeeting(this PlayerControl reporter, NetworkedPlayerInfo target)
         { /*サボタージュ中でも関係なしに会議を起こせるメソッド
             targetがnullの場合はボタンとなる*/
             MeetingRoomManager.Instance.AssignSelf(reporter, target);
@@ -525,8 +584,8 @@ namespace TownOfHostY
             {
                 return false;
             }
-            if (EvilHacker.IsExistEvilFaller() &&
-                PlayerState.GetByPlayerId(seen.PlayerId).DeathReason == CustomDeathReason.Fall)
+            if (EvilIgnition.CanBombTarget() &&
+                PlayerState.GetByPlayerId(seen.PlayerId).DeathReason == CustomDeathReason.Bombed)
             {
                 return true;
             }
@@ -567,6 +626,7 @@ namespace TownOfHostY
                     Prefix = mafia.CanUseKillButton() ? "After" : "Before";
                     break;
                 case CustomRoles.MadSnitch:
+                case CustomRoles.MadGuesser:
                 case CustomRoles.MadGuardian:
                     if (InfoLong) break;
                     text = CustomRoles.Madmate.ToString();
@@ -575,6 +635,10 @@ namespace TownOfHostY
                 case CustomRoles.Bakery:
                     if (Bakery.IsNeutral(player))
                         text = "NBakery";
+                    break;
+                case CustomRoles.BestieWolf:
+                    if (InfoLong) break;
+                    Prefix = Main.AliveImpostorCount >= 2 ? "" : "After";
                     break;
             }
             Info = role.IsVanilla() ? "Blurb" : "Info";
@@ -610,6 +674,19 @@ namespace TownOfHostY
                     return room;
             }
             return null;
+        }
+        public static void RpcSnapTo(this PlayerControl pc, Vector2 position)
+        {
+            pc.NetTransform.RpcSnapTo(position);
+        }
+        public static void RpcSnapToDesync(this PlayerControl pc, PlayerControl target, Vector2 position)
+        {
+            var net = pc.NetTransform;
+            var num = (ushort)(net.lastSequenceId + 2);
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpcImmediately(net.NetId, (byte)RpcCalls.SnapTo, SendOption.None, target.GetClientId());
+            NetHelpers.WriteVector2(position, messageWriter);
+            messageWriter.Write(num);
+            AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
         }
         /// <summary>現在守護されているかどうか</summary>
         public static bool IsProtected(this PlayerControl self) => self.protectedByGuardianId > -1;

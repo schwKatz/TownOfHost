@@ -20,9 +20,10 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
             CustomRoles.Telepathisters,
             () => RoleTypes.Impostor,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpY + 700,
+            (int)Options.offsetId.UnitImp + 0,
             SetupOptionItem,
             "テレパシスターズ",
+            tab: TabGroup.UnitRoles,
             assignInfo: new RoleAssignInfo(CustomRoles.Telepathisters, CustomRoleTypes.Impostor)
             {
                 AssignCountRule = new(2, 3, 1),
@@ -119,9 +120,7 @@ public sealed class Telepathisters : RoleBase, IImpostor, IKillFlashSeeable
         seen ??= seer;
         if (isForMeeting)
         {
-            var roomName = GetLastRoom(seen);
-            // 空のときにタグを付けると，suffixが空ではない判定となりなにもない3行目が表示される
-            return roomName.Length == 0 ? "" : $"<size=1.5>{roomName}</size>";
+            return GetLastRoom(seen);
         }
         else
         {

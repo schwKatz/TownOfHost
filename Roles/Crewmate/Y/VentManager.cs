@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Collections.Generic;
-
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
@@ -15,10 +12,14 @@ public sealed class VentManager : RoleBase
             CustomRoles.VentManager,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewY + 1500,
+            (int)Options.offsetId.CrewY + 1700,
             SetupOptionItem,
             "ベントマネージャー",
-            "#00ffff"
+            "#00ffff",
+            assignInfo: new(CustomRoles.VentManager, CustomRoleTypes.Crewmate)
+            {
+               IsInitiallyAssignableCallBack = () => (MapNames)Main.NormalOptions.MapId is not MapNames.Polus and not MapNames.Fungle
+            }
         );
     public VentManager(PlayerControl player)
     : base(
@@ -27,15 +28,15 @@ public sealed class VentManager : RoleBase
     )
     {
     }
-
     enum OptionName
     {
-        TaskCount,
+        FoxSpiritTaskCount,
     }
 
     public static OptionItem TaskCount;
     private static void SetupOptionItem()
     {
-        TaskCount = IntegerOptionItem.Create(RoleInfo, 10, OptionName.TaskCount, new(1, 30, 1), 15, false).SetValueFormat(OptionFormat.Pieces);
+        TaskCount = IntegerOptionItem.Create(RoleInfo, 10, OptionName.FoxSpiritTaskCount, new(1, 30, 1), 15, false).SetValueFormat(OptionFormat.Pieces);
     }
+    public static (bool, int, int) TaskData => (false, 0, TaskCount.GetInt());
 }

@@ -7,6 +7,7 @@ using AmongUs.GameOptions;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using TownOfHostY.Roles.Neutral;
+using static TownOfHostY.Translator;
 
 namespace TownOfHostY.Roles.Crewmate;
 public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
@@ -34,6 +35,9 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
     {
         ShotLimit = ShotLimitOpt.GetInt();
         CurrentKillCooldown = KillCooldown.GetFloat();
+        probability = Probability.GetInt();
+        nowKillMotion = (KillMotionOption)OptionKillMotion.GetValue();
+        nowSuicideMotion = (SuicideMotionOption)OptionSuicideMotion.GetValue();
     }
 
     private static OptionItem KillCooldown;
@@ -42,6 +46,8 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
     public static OptionItem IsInfoPoor;
     public static OptionItem IsClumsy;
     public static OptionItem Probability;
+    public static OptionItem OptionKillMotion;
+    public static OptionItem OptionSuicideMotion;
     private static OptionItem CanKillAllAlive;
     public static OptionItem CanKillNeutrals;
     private static OptionItem VentEnterTaskMaxCount;
@@ -53,23 +59,33 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
         SheriffIsInfoPoor,
         SheriffIsClumsy,
         SillySheriffProbability,
+        SillySheriffKillMotion,
+        SillySheriffSuicideMotion,
         SheriffCanKillAllAlive,
         SheriffCanKillNeutrals,
         SheriffCanKill,
     }
     public static Dictionary<CustomRoles, OptionItem> KillTargetOptions = new();
+    public static Dictionary<SchrodingerCat.TeamType, OptionItem> SchrodingerCatKillTargetOptions = new();
     public int ShotLimit = 0;
+    public int probability = 0;
     public float CurrentKillCooldown = 30;
     public static readonly string[] KillOption =
     {
             "SheriffCanKillAll", "SheriffCanKillSeparately"
     };
-    public static readonly string[] rates =
+    public enum KillMotionOption
     {
-            "Rate0",  "Rate5",  "Rate10", "Rate20", "Rate30", "Rate40",
-            "Rate50", "Rate60", "Rate70", "Rate80", "Rate90", "Rate100",
+        Default,
+        MotionNone
     };
-
+    public enum SuicideMotionOption
+    {
+        Default,
+        MotionKilled
+    };
+    KillMotionOption nowKillMotion;
+    SuicideMotionOption nowSuicideMotion;
     public SchrodingerCat.TeamType SchrodingerCatChangeTo => SchrodingerCat.TeamType.Crew;
 
     private static void SetupOptionItem()
@@ -78,12 +94,15 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
             .SetValueFormat(OptionFormat.Pieces);
         KillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        MisfireKillsTarget = BooleanOptionItem.Create(RoleInfo, 11, OptionName.SheriffMisfireKillsTarget, false, false);
         ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 12, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false)
             .SetValueFormat(OptionFormat.Times);
         IsInfoPoor = BooleanOptionItem.Create(RoleInfo, 16, OptionName.SheriffIsInfoPoor, false, false);
         IsClumsy = BooleanOptionItem.Create(RoleInfo, 17, OptionName.SheriffIsClumsy, false, false);
-        Probability = StringOptionItem.Create(RoleInfo, 20, OptionName.SillySheriffProbability, rates[1..], 0, false);
+        Probability = IntegerOptionItem.Create(RoleInfo, 20, OptionName.SillySheriffProbability, new(0, 100, 5), 0, false)
+            .SetValueFormat(OptionFormat.Percent);
+        OptionKillMotion = StringOptionItem.Create(RoleInfo, 21, OptionName.SillySheriffKillMotion, EnumHelper.GetAllNames<KillMotionOption>(), 0, false);
+        OptionSuicideMotion = StringOptionItem.Create(RoleInfo, 22, OptionName.SillySheriffSuicideMotion, EnumHelper.GetAllNames<SuicideMotionOption>(), 0, false);
+        MisfireKillsTarget = BooleanOptionItem.Create(RoleInfo, 11, OptionName.SheriffMisfireKillsTarget, false, false);
         CanKillAllAlive = BooleanOptionItem.Create(RoleInfo, 15, OptionName.SheriffCanKillAllAlive, true, false);
         SetUpKillTargetOption(CustomRoles.Madmate, 13);
         CanKillNeutrals = StringOptionItem.Create(RoleInfo, 14, OptionName.SheriffCanKillNeutrals, KillOption, 0, false);
@@ -97,20 +116,36 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
             SetUpKillTargetOption(neutral, idOffset, true, CanKillNeutrals);
             idOffset++;
         }
+        foreach (var catType in EnumHelper.GetAllValues<SchrodingerCat.TeamType>())
+        {
+            if ((byte)catType < 50)
+            {
+                continue;
+            }
+            SetUpSchrodingerCatKillTargetOption(catType, idOffset, true, CanKillNeutrals);
+            idOffset++;
+        }
     }
     public static void SetUpKillTargetOption(CustomRoles role, int idOffset, bool defaultValue = true, OptionItem parent = null)
     {
         var id = RoleInfo.ConfigId + idOffset;
         if (parent == null) parent = RoleInfo.RoleOption;
-        var roleName = Utils.GetRoleName(role); //+ role switch
-        //{
-        //    CustomRoles.EgoSchrodingerCat => $" {GetString("In%team%", new Dictionary<string, string>() { { "%team%", Utils.GetRoleName(CustomRoles.Egoist) } })}",
-        //    CustomRoles.JSchrodingerCat => $" {GetString("In%team%", new Dictionary<string, string>() { { "%team%", Utils.GetRoleName(CustomRoles.Jackal) } })}",
-        //    _ => "",
-        //};
+        var roleName = Utils.GetRoleName(role);
         Dictionary<string, string> replacementDic = new() { { "%role%", Utils.ColorString(Utils.GetRoleColor(role), roleName) } };
         KillTargetOptions[role] = BooleanOptionItem.Create(id, OptionName.SheriffCanKill + "%role%", defaultValue, RoleInfo.Tab, false).SetParent(parent);
         KillTargetOptions[role].ReplacementDictionary = replacementDic;
+    }
+    public static void SetUpSchrodingerCatKillTargetOption(SchrodingerCat.TeamType catType, int idOffset, bool defaultValue = true, OptionItem parent = null)
+    {
+        var id = RoleInfo.ConfigId + idOffset;
+        parent ??= RoleInfo.RoleOption;
+        // (%team%陣営)
+        var inTeam = GetString("In%team%", new Dictionary<string, string>() { ["%team%"] = GetRoleString(catType.ToString()) });
+        // シュレディンガーの猫(%team%陣営)
+        var catInTeam = Utils.ColorString(SchrodingerCat.GetCatColor(catType), Utils.GetRoleName(CustomRoles.SchrodingerCat) + inTeam);
+        Dictionary<string, string> replacementDic = new() { ["%role%"] = catInTeam };
+        SchrodingerCatKillTargetOptions[catType] = BooleanOptionItem.Create(id, OptionName.SheriffCanKill + "%role%", defaultValue, RoleInfo.Tab, false).SetParent(parent);
+        SchrodingerCatKillTargetOptions[catType].ReplacementDictionary = replacementDic;
     }
     public override void Add()
     {
@@ -147,9 +182,6 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
         if (!Is(info.AttemptKiller) || info.IsSuicide || !info.CanKill) return;
         (var killer, var target) = info.AttemptTuple;
 
-        int Chance = (Probability as StringOptionItem).GetChance();
-        int chance = IRandom.Instance.Next(1, 101);
-
         if (ShotLimit <= 0)
         {
             info.DoKill = false;
@@ -158,23 +190,60 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
         ShotLimit--;
         Logger.Info($"{killer.GetNameWithRole()} : 残り{ShotLimit}発", "SillySheriff");
         SendRPC();
-        if ((CanBeKilledBy(target) && chance <= Chance) || (!CanBeKilledBy(target) && chance >= Chance))
+        int chance = IRandom.Instance.Next(1, 101);
+        if ((CanBeKilledBy(target) && chance <= probability) || (!CanBeKilledBy(target) && chance >= probability))
         {
-            // 自殺
-            killer.RpcMurderPlayer(killer, true);
+            //自殺処理
+            switch (nowSuicideMotion)
+            {
+                case SuicideMotionOption.Default://自殺モーション起こさない＝自身が自爆
+                    killer.RpcMurderPlayer(killer);
+                    break;
+                case SuicideMotionOption.MotionKilled://相手に切られる
+                    target.RpcMurderPlayer(killer);
+                    break;
+            }
             PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.Misfire;
+
             if (!MisfireKillsTarget.GetBool())
             {
                 info.DoKill = false;
                 return;
             }
         }
-        killer.ResetKillCooldown();
+
+        switch (nowKillMotion)
+        {
+            case KillMotionOption.MotionNone://キルモーション起こさない＝相手が自爆
+                target.RpcMurderPlayer(target);
+                killer.SetKillCooldown();//自身は全くキルしないことになるのでキルクールセットする
+
+                info.CanKill = false;
+                return;//通常のキルは起こさない
+        }
+
+        // ここまで到達は通常キル
     }
     public override string GetProgressText(bool comms = false) => Utils.ColorString(CanUseKillButton() ? Color.yellow : Color.gray, $"〈{ShotLimit}〉");
     public static bool CanBeKilledBy(PlayerControl player)
     {
         var cRole = player.GetCustomRole();
+
+        if (player.GetRoleClass() is SchrodingerCat schrodingerCat)
+        {
+            if (schrodingerCat.Team == SchrodingerCat.TeamType.None)
+            {
+                Logger.Warn($"シェリフ({player.GetRealName()})にキルされたシュレディンガーの猫のロールが変化していません", nameof(Sheriff));
+                return false;
+            }
+            return schrodingerCat.Team switch
+            {
+                SchrodingerCat.TeamType.Mad => KillTargetOptions.TryGetValue(CustomRoles.Madmate, out var option) && option.GetBool(),
+                SchrodingerCat.TeamType.Crew => false,
+                _ => CanKillNeutrals.GetValue() == 0 || (SchrodingerCatKillTargetOptions.TryGetValue(schrodingerCat.Team, out var option) && option.GetBool()),
+            };
+        }
+
         return cRole.GetCustomRoleTypes() switch
         {
             CustomRoleTypes.Impostor => true,
