@@ -1489,13 +1489,23 @@ public static class Utils
             AirShipElectricalDoors.Initialize();
         DoorsReset.ResetDoors();
     }
-    public static void ProtectedFirstPlayer(bool FirstSpawn = false)
+    public static void ProtectedFirstPlayer()
     {
-        foreach (var pc in Main.AllAlivePlayerControls)
+        var lists = Main.AllAlivePlayerControls.Where(pc => pc.GetRoleClass() is not IKiller);
+        var pc = lists.ElementAtOrDefault(new System.Random().Next(lists.Count()));
+
+        if (pc == null)
         {
-            if (FirstSpawn) pc.SetKillCooldown(10f, true);
-            else pc.SetKillCooldown(ForceProtect : true);
-            break;//一人目だけでBreak
+            pc = Main.AllAlivePlayerControls.FirstOrDefault();
+            // パリン
+            Logger.Info($"nullcase:{pc.GetNameWithRole()}に強制守護天使表示", "ForceProtected");
+            pc.SetKillCooldown(ForceProtect: true);
+        }
+        else
+        {
+            // パリン
+            Logger.Info($"{pc.GetNameWithRole()}に強制守護天使表示", "ForceProtected");
+            pc.RpcProtectedMurderPlayer();
         }
     }
 

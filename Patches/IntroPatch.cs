@@ -369,7 +369,11 @@ namespace TownOfHostY
                             Main.AllPlayerControls.Do(pc => pc.SetKillCooldown(Main.AllPlayerKillCooldown[pc.PlayerId] - 2f));
                         }, 2f, "FixKillCooldownTask");
                     }
-                    else if (Main.isProtectRoleExist) Utils.ProtectedFirstPlayer(true);
+                    else if (Main.isProtectRoleExist)
+                    {
+                        Logger.Info($"強制守護天使表示", "intro");
+                        Utils.ProtectedFirstPlayer();
+                    }
                 }
                 _ = new LateTask(() => Main.AllPlayerControls.Do(pc => pc.RpcSetRoleDesync(RoleTypes.Shapeshifter, -3)), 2f, "SetImpostorForServer");
                 if (PlayerControl.LocalPlayer.Is(CustomRoles.GM))

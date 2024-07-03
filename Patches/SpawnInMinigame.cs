@@ -13,11 +13,20 @@ public static class SpawnInMinigameSpawnAtPatch
         if (AmongUsClient.Instance.AmHost)
         {
             PlayerControl.LocalPlayer.RpcResetAbilityCooldown();
-            if (Options.FixFirstKillCooldown.GetBool() && MeetingStates.FirstMeeting)
+            if (MeetingStates.FirstMeeting)
             {
-                PlayerControl.LocalPlayer.SetKillCooldown(Main.AllPlayerKillCooldown[PlayerControl.LocalPlayer.PlayerId]);
+                if (Options.FixFirstKillCooldown.GetBool())
+                {
+                    Logger.Info($"初手キルクール調整", "spawn");
+                    PlayerControl.LocalPlayer.SetKillCooldown(Main.AllPlayerKillCooldown[PlayerControl.LocalPlayer.PlayerId]);
+                }
+                else if (Main.isProtectRoleExist)
+                {
+                    Logger.Info($"強制守護天使表示", "spawn");
+                    Utils.ProtectedFirstPlayer();
+                }
             }
-            else if (Main.isProtectRoleExist) Utils.ProtectedFirstPlayer(MeetingStates.FirstMeeting);
+
             if (Options.RandomSpawn.GetBool())
             {
                 new RandomSpawn.AirshipSpawnMap().RandomTeleport(PlayerControl.LocalPlayer);

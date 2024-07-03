@@ -123,8 +123,11 @@ namespace TownOfHostY
                 }, 0.5f, "Restore IsDead Task");
                 _ = new LateTask(() =>
                 {
-                    if (Main.isProtectRoleExist) Utils.ProtectedFirstPlayer();
-
+                    if (Main.isProtectRoleExist)
+                    {
+                        Logger.Info($"強制守護天使表示", "exile");
+                        Utils.ProtectedFirstPlayer();
+                    }
                     Main.AfterMeetingDeathPlayers.Do(x =>
                     {
                         (byte playerId, CustomDeathReason reason) = (x.Key, x.Value);
