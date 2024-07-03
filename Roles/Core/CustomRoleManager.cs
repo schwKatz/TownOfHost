@@ -156,6 +156,8 @@ public static class CustomRoleManager
 
         //TargetDeadArrow
         if (!info.IsMeeting) TargetDeadArrow.UpdateDeadBody();
+      　//WinTask
+        VentEnterTask.TaskWinCountAllComplete(attemptTarget.PlayerId);
 
         //以降共通処理
         var targetState = PlayerState.GetByPlayerId(attemptTarget.PlayerId);
@@ -482,6 +484,7 @@ public enum CustomRoles
     MadScientist,
     MadJester,
     MadGuesser,
+    MadCostomer,
 
     MadDilemma,
     SKMadmate,
