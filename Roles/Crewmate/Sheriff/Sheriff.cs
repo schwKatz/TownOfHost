@@ -43,8 +43,10 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
     public static OptionItem IsClumsy;
     private static OptionItem CanKillAllAlive;
     public static OptionItem CanKillNeutrals;
+    private static OptionItem VentEnterTaskMaxCount;
     enum OptionName
     {
+        VentEnterTaskMaxCount,
         SheriffShotLimit,
         SheriffIsInfoPoor,
         SheriffIsClumsy,
@@ -65,9 +67,11 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
 
     private static void SetupOptionItem()
     {
+        VentEnterTaskMaxCount = IntegerOptionItem.Create(RoleInfo, 11, OptionName.VentEnterTaskMaxCount, new(0, 30, 1), 5, false)
+            .SetValueFormat(OptionFormat.Pieces);
         KillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(0f, 180f, 0.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
-        ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 12, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false)
+        ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 12, OptionName.SheriffShotLimit, new(1, 15, 1), 1, false)
             .SetValueFormat(OptionFormat.Times);
         IsInfoPoor = BooleanOptionItem.Create(RoleInfo, 16, OptionName.SheriffIsInfoPoor, false, false);
         IsClumsy = BooleanOptionItem.Create(RoleInfo, 17, OptionName.SheriffIsClumsy, false, false);
@@ -121,6 +125,9 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
         CurrentKillCooldown = KillCooldown.GetFloat();
         ShotLimit = ShotLimitOpt.GetInt();
         Logger.Info($"{Utils.GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "Sheriff");
+
+        if (VentEnterTaskMaxCount.GetInt() > 0)
+            VentEnterTask.Add(Player, VentEnterTaskMaxCount.GetInt(), true, false);
     }
     private void SendRPC()
     {
@@ -138,7 +145,6 @@ public sealed class Sheriff : RoleBase, IKiller, ISchrodingerCatOwner
         => Player.IsAlive()
         && (CanKillAllAlive.GetBool() || GameStates.AlreadyDied)
         && ShotLimit > 0;
-    public bool CanUseImpostorVentButton() => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
         opt.SetVision(false);

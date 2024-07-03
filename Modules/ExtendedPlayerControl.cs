@@ -471,19 +471,6 @@ namespace TownOfHostY
 
             var roleCanUse = (pc.GetRoleClass() as IKiller)?.CanUseImpostorVentButton();
             return roleCanUse ?? false;
-
-            /*
-            return pc.GetCustomRole() switch
-            {
-                CustomRoles.Egoist => true,
-                CustomRoles.Jackal => Jackal.CanVent,
-                CustomRoles.MadSheriff => MadSheriff.CanVent,
-                CustomRoles.Arsonist => Arsonist.IsDouseDone(pc),
-
-                CustomRoles.Telepathisters => Telepathisters.VentCountLimit > -1,
-                _ => pc.Is(CustomRoleTypes.Impostor),
-            };
-            */
         }
         public static bool CanUseSabotageButton(this PlayerControl pc)
         {

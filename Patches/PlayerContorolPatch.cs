@@ -723,6 +723,7 @@ namespace TownOfHostY
                     __instance.RpcBootFromVent(id);
 
                 if ((!user.GetRoleClass()?.OnEnterVent(__instance, id) ?? false) ||
+                    !VentEnterTask.OnEnterVent(__instance, id) ||
                     (user.GetCustomRole().IsCCCatRoles() && !CatchCat.CatPlayer.CanUseVent(user)) ||
                     (user.Data.Role.Role != RoleTypes.Engineer && //エンジニアでなく
                     !user.CanUseImpostorVentButton()) //インポスターベントも使えない

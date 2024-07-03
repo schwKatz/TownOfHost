@@ -366,7 +366,8 @@ namespace TownOfHostY
             reason = GameOverReason.ImpostorByKill;
             if (Options.DisableTaskWin.GetBool() || TaskState.InitialTotalTasks == 0) return false;
 
-            if (GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks)
+            (int vtComp, int vtTotal) = VentEnterTask.TaskWinCountData();
+            if (GameData.Instance.TotalTasks + vtTotal <= GameData.Instance.CompletedTasks + vtComp)
             {
                 reason = GameOverReason.HumansByTask;
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Crewmate);
