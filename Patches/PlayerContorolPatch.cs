@@ -729,7 +729,10 @@ namespace TownOfHostY
                     !user.CanUseImpostorVentButton()) //インポスターベントも使えない
                 )
                 {
-                    __instance.RpcBootFromVent(id);
+                    _ = new LateTask(() =>
+                    {
+                        __instance.RpcBootFromVent(id);
+                    }, 0.5f, "Fix DesyncImpostor Stuck");
                     return false;
                 }
             }

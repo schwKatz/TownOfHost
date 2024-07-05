@@ -158,7 +158,7 @@ namespace TownOfHostY
                         break;
                     
                     case CustomRoles.MadSheriff:
-                    case CustomRoles.MadCostomer:
+                    case CustomRoles.MadConnecter:
                         __instance.ImpostorText.gameObject.SetActive(true);
                         var numImpostors = Main.NormalOptions.NumImpostors;
                         __instance.ImpostorText.text = numImpostors == 1

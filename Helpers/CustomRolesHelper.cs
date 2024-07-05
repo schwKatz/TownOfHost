@@ -181,7 +181,8 @@ namespace TownOfHostY
                 CustomRoles.Arsonist or
                 CustomRoles.PlatonicLover or
                 CustomRoles.Totocalcio or
-                CustomRoles.MadSheriff;
+                CustomRoles.MadSheriff or
+                CustomRoles.MadConnecter;
         }
 
         //CC

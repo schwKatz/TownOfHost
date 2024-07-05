@@ -50,10 +50,8 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
     public static OptionItem OptionSuicideMotion;
     private static OptionItem CanKillAllAlive;
     public static OptionItem CanKillNeutrals;
-    private static OptionItem VentEnterTaskMaxCount;
     enum OptionName
     {
-        VentEnterTaskMaxCount,
         SheriffMisfireKillsTarget,
         SheriffShotLimit,
         SheriffIsInfoPoor,
@@ -72,7 +70,7 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
     public float CurrentKillCooldown = 30;
     public static readonly string[] KillOption =
     {
-            "SheriffCanKillAll", "SheriffCanKillSeparately"
+        "SheriffCanKillAll", "SheriffCanKillSeparately"
     };
     public enum KillMotionOption
     {
@@ -90,8 +88,6 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
 
     private static void SetupOptionItem()
     {
-        VentEnterTaskMaxCount = IntegerOptionItem.Create(RoleInfo, 18, OptionName.VentEnterTaskMaxCount, new(0, 30, 1), 5, false)
-            .SetValueFormat(OptionFormat.Pieces);
         KillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(0f, 180f, 2.5f), 30f, false)
             .SetValueFormat(OptionFormat.Seconds);
         ShotLimitOpt = IntegerOptionItem.Create(RoleInfo, 12, OptionName.SheriffShotLimit, new(1, 15, 1), 15, false)
@@ -153,9 +149,6 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
         CurrentKillCooldown = KillCooldown.GetFloat();
         ShotLimit = ShotLimitOpt.GetInt();
         Logger.Info($"{Utils.GetPlayerById(playerId)?.GetNameWithRole()} : 残り{ShotLimit}発", "SillySheriff");
-
-        if (VentEnterTaskMaxCount.GetInt() > 0)
-            VentEnterTask.Add(Player, VentEnterTaskMaxCount.GetInt(), true, false);
     }
     private void SendRPC()
     {

@@ -484,7 +484,7 @@ public enum CustomRoles
     MadScientist,
     MadJester,
     MadGuesser,
-    MadCostomer,
+    MadConnecter,
 
     MadDilemma,
     SKMadmate,

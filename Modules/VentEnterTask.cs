@@ -3,6 +3,8 @@ using HarmonyLib;
 using UnityEngine;
 
 using TownOfHostY.Attributes;
+using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Madmate;
 using static TownOfHostY.Utils;
 
 namespace TownOfHostY;
@@ -10,7 +12,6 @@ static class VentEnterTask
 {
     public static List<byte> PlayerIdList = new();
 
-    private static Dictionary<byte, bool> nowTurnFinish = new();
     private static Dictionary<byte, bool> UseVent = new();
     private static Dictionary<byte, bool> taskWinCount = new();
     private static Dictionary<byte, int> taskCountNow = new();
@@ -27,7 +28,6 @@ static class VentEnterTask
     public static void Init()
     {
         PlayerIdList = new();
-        nowTurnFinish = new();
         UseVent = new();
         taskWinCount = new();
         taskCountNow = new();
@@ -37,7 +37,6 @@ static class VentEnterTask
     public static void Add(PlayerControl pc, int maxTaskCount, bool winCount = false, bool useVent = true)
     {
         PlayerIdList.Add(pc.PlayerId);
-        nowTurnFinish.Add(pc.PlayerId, false);
         UseVent.Add(pc.PlayerId, useVent);
         taskWinCount.Add(pc.PlayerId, winCount);
         taskCountNow.Add(pc.PlayerId, 0);
@@ -45,7 +44,6 @@ static class VentEnterTask
         nowVTask.Add(pc.PlayerId, SetTask(pc));
     }
     public static bool HaveTask(PlayerControl pc) => PlayerIdList.Contains(pc.PlayerId);
-    public static bool NowTurnFinish(byte id) => nowTurnFinish[id];
     public static int NowTaskCountNow(byte id) => taskCountNow[id];
     public static Vent NowVentTaskData(byte id) => nowVTask[id];
 
@@ -84,29 +82,28 @@ static class VentEnterTask
         var player = physics.myPlayer;
         var playerId = physics.myPlayer.PlayerId;
         if (!PlayerIdList.Contains(playerId)) return true;
-        if (nowTurnFinish[playerId]) return false;
-        if (taskCountNow[playerId] >= taskCountMax[playerId]) return UseVent[playerId];
-        if (nowVTask[playerId].id != ventId)
+
+        if (taskCountNow[playerId] < taskCountMax[playerId]
+            && nowVTask[playerId].id == ventId)
         {
-            if (UseVent[playerId]) return true;
-            else
+            taskCountNow[playerId]++;
+            RPC.PlaySoundRPC(playerId, Sounds.TaskComplete);
+            Logger.Info($"{player.GetNameWithRole()}：Id={ventId}/タスクCountUp ({taskCountNow[playerId]}/{taskCountMax[playerId]})", "VentEnterTask");
+
+            nowVTask[playerId] = SetTask(player);
+
+            if (player.Is(CustomRoles.MadConnecter))
             {
-                nowTurnFinish[playerId] = true;
-                return false;
+                MadConnecter.OnCompleteTask();
             }
+
+            NotifyRoles(SpecifySeer: player);
         }
 
-        taskCountNow[playerId]++;
-        Logger.Info($"{player.GetNameWithRole()}：Id={ventId}/タスクCountUp ({taskCountNow[playerId]}/{taskCountMax[playerId]})", "VentEnterTask");
-        nowTurnFinish[playerId] = true;
-
-        nowVTask[playerId] = SetTask(player);
-        NotifyRoles(SpecifySeer: player);
-        return false;
+        return UseVent[playerId];
     }
     public static void AfterMeetingTasks()
     {
-        PlayerIdList.Do(id => nowTurnFinish[id] = false);
     }
 
     public static string GetProgressText(byte id, bool comms = false)
@@ -135,10 +132,8 @@ static class VentEnterTask
 
         string text = $"Task：{nowVTask[id].name}";
         if (taskCountNow[id] >= taskCountMax[id]) text = "";
-        else if (nowTurnFinish[id]) text = "Task：Next Turn";
 
-        var color = taskWinCount[id] ? Color.white : GetRoleColor(seer.GetCustomRole());
-        return text.Color(color);
+        return text.Color(Color.white);
     }
 
     private static Vent SetTask(PlayerControl pc)
