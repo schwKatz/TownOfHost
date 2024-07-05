@@ -1,11 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
-using TownOfHostY.Roles.Impostor;
 
 namespace TownOfHostY.Roles.Madmate;
 public sealed class MadConnecter : RoleBase, IKiller
@@ -72,10 +70,12 @@ public sealed class MadConnecter : RoleBase, IKiller
 
     private bool KnowsImpostor()
     {
+        // タスク完了＝インポスターが誰か分かる
         return VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowImpostorTasks;
     }
     private bool ConnectsImpostor(byte impostorId)
     {
+        // 互いにコネクトした相方インポスター
         return ConnectImpostorId.Contains(impostorId);
     }
 
@@ -85,31 +85,39 @@ public sealed class MadConnecter : RoleBase, IKiller
         (var killer, var target) = info.AttemptTuple;
         info.DoKill = false;
 
-        if (!KnowsImpostor()) return;
+        // 視認前、またはインポスターでない、または既に繋がっている場合は関係ない
+        if (!KnowsImpostor() || !target.Is(CustomRoleTypes.Impostor) || ConnectsImpostor(target.PlayerId)) return;
 
-        if (ConnectsImpostor(target.PlayerId))
-        {
-            Logger.Info($"{killer?.GetNameWithRole()} : {target?.GetNameWithRole()}コネクト済", "MadConnecter");
-        }
+        // インポスターとコネクト
+        ConnectImpostorId.Add(target.PlayerId);
+        // マッドにはパリン
         killer.RpcProtectedMurderPlayer(target);
+        // 相方インポスターにはキルフラッシュ
         target.KillFlash();
 
         Logger.Info($"{killer.GetNameWithRole()} : {target.GetNameWithRole()}とコネクト", "MadConnecter");
-        ConnectImpostorId.Add(target.PlayerId);
+
+        // 互いに矢印追加
         TargetArrow.Add(killer.PlayerId, target.PlayerId);
         TargetArrow.Add(target.PlayerId, killer.PlayerId);
+
+        // 表示更新
         Utils.NotifyRoles();
     }
-    public static void OnCompleteTask()
+    // オーバーライドでない
+    public static new void OnCompleteTask()
     {
         foreach (var mad in MadList)
         {
+            // (視認できるタスク数が未完了)なら関係ない
             if (!mad.KnowsImpostor()) continue;
 
             foreach (var impostor in Main.AllPlayerControls.Where(player => player.Is(CustomRoleTypes.Impostor)))
             {
+                // インポスターの名前を赤くする
                 NameColorManager.Add(mad.Player.PlayerId, impostor.PlayerId, impostor.GetRoleColorCode());
             }
+            // マッドには終わらせた合図のパリン
             mad.Player.RpcProtectedMurderPlayer(mad.Player);
         }
     }
@@ -120,12 +128,12 @@ public sealed class MadConnecter : RoleBase, IKiller
         if (!Is(seer) || !Is(seen) || isForMeeting) return string.Empty;
 
         string arrow = "";
-        // ジャニターターゲットへの矢印表示
+        // インポスターへの矢印表示
         if (ConnectImpostorId.Count > 0)
         {
             foreach (var targetId in ConnectImpostorId)
             {
-                // 矢印の取得
+                // マッドからコネクトインポスターへの矢印
                 arrow += TargetArrow.GetArrows(Player, targetId);
             }
             // 矢印表示があれば
@@ -146,13 +154,14 @@ public sealed class MadConnecter : RoleBase, IKiller
         {
             return string.Empty;
         }
+        // インポスターから見たマッドへの★
         return "★".Color(Palette.ImpostorRed);
     }
     public static string GetSuffixOthers(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
         seen ??= seer;
         if (seer != seen) return string.Empty;
-
+        // インポスターから見たマッドへの矢印
         return GetImpostorArrows(seer.PlayerId);
     }
     private static string GetImpostorArrows(byte seerId)
@@ -164,6 +173,7 @@ public sealed class MadConnecter : RoleBase, IKiller
         {
             if (mad.ConnectImpostorId.Count <= 0) continue;
 
+            // インポスターから見たマッドへの矢印
             arrow += TargetArrow.GetArrows(seerId, mad.Player.PlayerId);
         }
 
