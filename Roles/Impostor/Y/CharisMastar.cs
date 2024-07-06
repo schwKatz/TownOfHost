@@ -145,6 +145,18 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
             GatherChoosePlayer.Add(target.PlayerId);
             GatherChoosePlayer.Add(Player.PlayerId);
             Player.SetKillCooldown();
+            SendRPC(target.PlayerId);
         }
+    }
+    public void SendRPC(byte targetId)
+    {
+        using var sender = CreateSender(CustomRPC.SetCharisMastarMark);
+        sender.Writer.Write(targetId);
+    }
+    public override void ReceiveRPC(MessageReader reader, CustomRPC rpcType)
+    {
+        if (rpcType != CustomRPC.SetCharisMastarMark) return;
+
+        GatherChoosePlayer.Add(reader.ReadByte());
     }
 }
