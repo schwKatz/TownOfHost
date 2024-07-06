@@ -80,6 +80,22 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         /* 生存者全員をワープする処理*/
         foreach (var Worptarget in Main.AllAlivePlayerControls)
         {
+            /* 梯子を使っている場合*/
+            if (Worptarget.MyPhysics.Animations.IsPlayingAnyLadderAnimation() && !Worptarget.Is(CustomRoleTypes.Impostor))
+            {
+                if (NotGatherPlayerKill)
+                {
+                    Worptarget.SetRealKiller(Player);
+                    Worptarget.RpcMurderPlayer(Worptarget);//集合しない時キルする設定なのでkillする
+                    GatherChoosePlayer.Remove(Worptarget.PlayerId); // キル後にリストから削除
+                    PlayerState.GetByPlayerId(Worptarget.PlayerId).DeathReason = CustomDeathReason.NotGather;
+                }
+                else
+                {
+                    return false;
+                }
+                Logger.Info($"ワープできませんでした。", "CharisMastar");
+            }
             /* 生存者のみ、飛ばす*/
             if (Worptarget.IsAlive())
             {
@@ -101,5 +117,10 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         NowGatherCount--;
         Player.RpcResetAbilityCooldown();
         return false;
+    }
+    Vent GetNearestVent()
+    {
+        var vents = ShipStatus.Instance.AllVents.OrderBy(v => (Player.transform.position - v.transform.position).magnitude);
+        return vents.First();
     }
 }
