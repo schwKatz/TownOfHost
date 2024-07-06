@@ -62,6 +62,8 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
     public List<byte> GatherChoosePlayer = new();
     int GatherCount;
     int NowGatherCount;
+    public float CalculateKillCooldown() => KillCooldown;
+    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.PhantomCooldown = GatherCooldown;
     private static void SetUpOptionItem()
     {
         OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 30f, false)
@@ -72,6 +74,11 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
             .SetValueFormat(OptionFormat.Seconds);
         OptionNotGatherPlayerKill = BooleanOptionItem.Create(RoleInfo, 13, OptionName.CharisMastarNotGatherPlayerKill, true, false);
         OptionGatherMode = StringOptionItem.Create(RoleInfo, 14, OptionName.CharisMastarGatherMode, GatherModeText, 2, false);
+    }
+    public override void Add()
+    {
+        NowGatherCount = GatherCount;
+        GatherChoosePlayer.Clear();
     }
     public override bool OnCheckVanish()
     {
