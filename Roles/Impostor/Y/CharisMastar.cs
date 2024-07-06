@@ -138,4 +138,13 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
             SetGatherPlayer(target);
         }
     }
+    public void SetGatherPlayer(PlayerControl target)
+    {
+        if (target.IsAlive())
+        {
+            GatherChoosePlayer.Add(target.PlayerId);
+            GatherChoosePlayer.Add(Player.PlayerId);
+            Player.SetKillCooldown();
+        }
+    }
 }
