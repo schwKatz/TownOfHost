@@ -123,4 +123,19 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         var vents = ShipStatus.Instance.AllVents.OrderBy(v => (Player.transform.position - v.transform.position).magnitude);
         return vents.First();
     }
+    public void OnCheckMurderAsKiller(MurderInfo info)
+    {
+        if (!info.CanKill || NowGatherCount == 0) return;
+
+        var (killer, target) = info.AttemptTuple;
+        if (GathersMode == GatherMode.CanChoose)
+        {
+            info.DoKill = killer.CheckDoubleTrigger(target, () => { SetGatherPlayer(target); });
+        }
+        else
+        {
+            info.DoKill = false;//killをしない。
+            SetGatherPlayer(target);
+        }
+    }
 }
