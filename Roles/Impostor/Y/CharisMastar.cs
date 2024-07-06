@@ -159,4 +159,19 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
 
         GatherChoosePlayer.Add(reader.ReadByte());
     }
+    public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
+    {
+        // seenが省略の場合seer
+        seen ??= seer;
+
+        if (seer.Is(CustomRoles.CharisMastar) && seer != seen && GathersMode == GatherMode.CanChoose)
+        {
+            if (GatherChoosePlayer.Contains(seen.PlayerId))
+            {
+                return ColorString(RoleInfo.RoleColor, "◎");
+            }
+        }
+
+        return string.Empty;
+    }
 }
