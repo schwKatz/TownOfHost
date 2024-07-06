@@ -38,6 +38,11 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         CanChoose,
         EveryoneGather,
     };
+    public static readonly string[] GatherModeText =
+    {
+        "CharisMastarGatherMode.CanChoose",
+        "CharisMastarGatherMode.EveryoneGather",
+    };
     enum OptionName
     {
         CharisMastarGatherCount,
@@ -54,7 +59,9 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
     private static OptionItem OptionNotGatherPlayerKill;
     public static StringOptionItem OptionGatherMode;
     public static GatherMode GathersMode;
+    public List<byte> GatherChoosePlayer = new();
     int GatherCount;
+    int NowGatherCount;
     private static void SetUpOptionItem()
     {
         OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 30f, false)
