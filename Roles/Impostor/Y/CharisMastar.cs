@@ -73,4 +73,33 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         OptionNotGatherPlayerKill = BooleanOptionItem.Create(RoleInfo, 13, OptionName.CharisMastarNotGatherPlayerKill, true, false);
         OptionGatherMode = StringOptionItem.Create(RoleInfo, 14, OptionName.CharisMastarGatherMode, GatherModeText, 2, false);
     }
+    public override bool OnCheckVanish()
+    {
+        if (NowGatherCount == 0) return false;
+
+        /* 生存者全員をワープする処理*/
+        foreach (var Worptarget in Main.AllAlivePlayerControls)
+        {
+            /* 生存者のみ、飛ばす*/
+            if (Worptarget.IsAlive())
+            {
+                if (GathersMode == GatherMode.EveryoneGather)
+                {
+                    var NearestVent = GetNearestVent();
+                    Worptarget.MyPhysics.RpcExitVent(NearestVent.Id);
+                }
+                if (GathersMode == GatherMode.CanChoose)
+                {
+                    if (GatherChoosePlayer.Contains(Worptarget.PlayerId))
+                    {
+                        var NearestVent = GetNearestVent();
+                        Worptarget.MyPhysics.RpcExitVent(NearestVent.Id);
+                    }
+                }
+            }
+        }
+        NowGatherCount--;
+        Player.RpcResetAbilityCooldown();
+        return false;
+    }
 }
