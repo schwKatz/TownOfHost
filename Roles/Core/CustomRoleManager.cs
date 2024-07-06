@@ -156,7 +156,7 @@ public static class CustomRoleManager
 
         //TargetDeadArrow
         if (!info.IsMeeting) TargetDeadArrow.UpdateDeadBody();
-      　//WinTask
+        //WinTask
         VentEnterTask.TaskWinCountAllComplete(attemptTarget.PlayerId);
 
         //以降共通処理
@@ -469,6 +469,7 @@ public enum CustomRoles
     EvilGuesser,
     SelfBomber,
     GrudgeCharger,
+    CharisMastar,
 
     Godfather,
     Janitor,
@@ -534,7 +535,7 @@ public enum CustomRoles
     LoyalDoggy,
     Rabbit,
     VentManager,
-    NiceGuesser, 
+    NiceGuesser,
 
     Counselor,
     Potentialist,

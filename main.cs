@@ -281,6 +281,7 @@ namespace TownOfHostY
         Fall,
         Poisoning,
         Clean,
+        NotGather,
         Win,
         etc = -1
     }
