@@ -92,10 +92,8 @@ static class VentEnterTask
 
             nowVTask[playerId] = SetTask(player);
 
-            if (player.Is(CustomRoles.MadConnecter))
-            {
-                MadConnecter.OnCompleteTask();
-            }
+            // マッドのタスク完了
+            MadConnecter.OnCompleteVentTask(player);
 
             NotifyRoles(SpecifySeer: player);
         }

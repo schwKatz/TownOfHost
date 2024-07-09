@@ -122,6 +122,9 @@ namespace TownOfHostY
                 or CustomRoles.StrayWolf
                 or CustomRoles.Totocalcio
                 or CustomRoles.ChainShifter
+                // VentTask
+                or CustomRoles.MadConnecter
+
                 //VentSelect
                 or CustomRoles.Medic
                 or CustomRoles.GrudgeSheriff

@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using UnityEngine;
 using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY.Roles.Madmate;
-public sealed class MadConnecter : RoleBase, IKiller
+public sealed class MadConnecter : RoleBase, IKiller, IKillFlashSeeable
 {
     public static readonly SimpleRoleInfo RoleInfo =
          SimpleRoleInfo.Create(
@@ -30,29 +32,57 @@ public sealed class MadConnecter : RoleBase, IKiller
     {
         CanVent = OptionCanVent.GetBool();
         KnowImpostorTasks = OptionKnowImpostor.GetInt();
+        KnowImpostorRoleTasks = OptionKnowImpostorRole.GetInt();
+        KnowDeadBodyArrowTasks = OptionKnowDeadBodyArrow.GetInt();
+
+        int count = KnowImpostorTasks;
+        if (count < KnowImpostorRoleTasks) count = KnowImpostorRoleTasks;
+        if (count < KnowDeadBodyArrowTasks) count = KnowDeadBodyArrowTasks;
+        // タスクの最大数
+        if (count != 0) maxTask = count;
 
         MadList = new();
         CustomRoleManager.MarkOthers.Add(GetMarkOthers);
         CustomRoleManager.SuffixOthers.Add(GetSuffixOthers);
     }
 
-    private static OptionItem OptionCanVent;
-    private static OptionItem OptionKnowImpostor;
-    private static bool CanVent;
-    private static int KnowImpostorTasks;
-    private static HashSet<MadConnecter> MadList;
-    private HashSet<byte> ConnectImpostorId;
+    static OptionItem OptionCanVent;
+    static OptionItem OptionKnowImpostor;
+    static OptionItem OptionKnowImpostorRole;
+    static OptionItem OptionKnowDeadBodyArrow;
+    static bool CanVent;
+    static int KnowImpostorTasks;
+    static int KnowImpostorRoleTasks;
+    static int KnowDeadBodyArrowTasks;
+
+    static HashSet<MadConnecter> MadList;
+    static int maxTask = 99;
+
+    HashSet<byte> ConnectImpostorId;
+    bool[] IsSet;
+    enum SetNumber
+    {
+        knowImpostor = 0,
+        knowDeadBodyArrow,
+    }
 
     enum OptionName
     {
-        MadSnitchTaskTrigger
-    }
+        MadConnectorKnowImpostorsTasks,
+        MadConnectorKnowImpostorRoleTasks,
+        MadConnectorKnowDeadBodyArrowTasks,
+    }   
 
     private static void SetupOptionItem()
     {
         OptionCanVent = BooleanOptionItem.Create(RoleInfo, 10, GeneralOption.CanVent, true, false);
-        OptionKnowImpostor = IntegerOptionItem.Create(RoleInfo, 11, OptionName.MadSnitchTaskTrigger, new(1, 30, 1), 2, false)
+        OptionKnowImpostor = IntegerOptionItem.Create(RoleInfo, 11, OptionName.MadConnectorKnowImpostorsTasks, new(0, 30, 1), 2, false)
             .SetValueFormat(OptionFormat.Pieces);
+        OptionKnowImpostorRole = IntegerOptionItem.Create(RoleInfo, 12, OptionName.MadConnectorKnowImpostorRoleTasks, new(0, 30, 1), 4, false, OptionKnowImpostor)
+            .SetValueFormat(OptionFormat.Pieces);
+        OptionKnowDeadBodyArrow = IntegerOptionItem.Create(RoleInfo, 13, OptionName.MadConnectorKnowDeadBodyArrowTasks, new(0, 30, 1), 0, false)
+            .SetValueFormat(OptionFormat.Pieces);
+
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, RoleInfo.RoleName, RoleInfo.Tab);
     }
     public float CalculateKillCooldown() => 0.01f;
@@ -64,20 +94,32 @@ public sealed class MadConnecter : RoleBase, IKiller
     {
         MadList.Add(this);
         ConnectImpostorId = new();
+        IsSet = new[] { false, false };
 
-        VentEnterTask.Add(Player, KnowImpostorTasks, useVent: CanVent);
+        if (maxTask == 99) maxTask = 1;
+        VentEnterTask.Add(Player, maxTask, useVent: CanVent);
+    }
+    public bool CheckKillFlash(MurderInfo info) => IsSet[(int)SetNumber.knowDeadBodyArrow];
+
+    // TargetDeadArrowで更新を行うか
+    public static bool IsEnableDeadArrow()
+    {
+        return CustomRoles.MadConnecter.IsEnable() && KnowDeadBodyArrowTasks > 0;
     }
 
+    // インポスターが誰か分かるタスク数に達しているか
     private bool KnowsImpostor()
-    {
-        // タスク完了＝インポスターが誰か分かる
-        return VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowImpostorTasks;
-    }
+        => VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowImpostorTasks;
+    // インポスターの役職が分かるタスク数に達しているか
+    private bool KnowsImpostorRole()
+        => VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowImpostorRoleTasks;
+    // 死体への矢印が表示されるタスク数に達しているか
+    private bool KnowDeadBodyArrow()
+        => VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowDeadBodyArrowTasks;
+
+    // 互いにコネクトしたインポスターであるか
     private bool ConnectsImpostor(byte impostorId)
-    {
-        // 互いにコネクトした相方インポスター
-        return ConnectImpostorId.Contains(impostorId);
-    }
+        => ConnectImpostorId.Contains(impostorId);
 
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
@@ -104,22 +146,73 @@ public sealed class MadConnecter : RoleBase, IKiller
         // 表示更新
         Utils.NotifyRoles();
     }
-    // オーバーライドでない
-    public static new void OnCompleteTask()
-    {
-        foreach (var mad in MadList)
-        {
-            // (視認できるタスク数が未完了)なら関係ない
-            if (!mad.KnowsImpostor()) continue;
 
+    // タスク完了ごとに呼ばれる
+    public static void OnCompleteVentTask(PlayerControl pc)
+    {
+        // 全員通る
+        if (pc.GetRoleClass() is not MadConnecter mad) return;
+
+        // インポスターが誰か分かる
+        if (mad.KnowsImpostor() && !mad.IsSet[(int)SetNumber.knowImpostor])
+        {
+            mad.IsSet[(int)SetNumber.knowImpostor] = true;
             foreach (var impostor in Main.AllPlayerControls.Where(player => player.Is(CustomRoleTypes.Impostor)))
             {
                 // インポスターの名前を赤くする
-                NameColorManager.Add(mad.Player.PlayerId, impostor.PlayerId, impostor.GetRoleColorCode());
+                NameColorManager.Add(pc.PlayerId, impostor.PlayerId, impostor.GetRoleColorCode());
             }
-            // マッドには終わらせた合図のパリン
-            mad.Player.RpcProtectedMurderPlayer(mad.Player);
+            // 表示更新
+            Utils.NotifyRoles(SpecifySeer: pc);
         }
+
+        // 死体への矢印が表示される
+        if (mad.KnowDeadBodyArrow() && !mad.IsSet[(int)SetNumber.knowDeadBodyArrow])
+        {
+            mad.IsSet[(int)SetNumber.knowDeadBodyArrow] = true;
+
+            // 死体への矢印が表示できるようにする
+            TargetDeadArrow.AddSeer(mad.Player.PlayerId);
+        }
+    }
+
+    public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
+    {
+        // 相方の役職名を表示させる
+        if (KnowsImpostor() && KnowsImpostorRole() && seen.Is(CustomRoleTypes.Impostor)) enabled = true;
+    }
+    public override string GetMark(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        seen ??= seer;
+        //seerが自分でない、
+        if (!Is(seer)) return string.Empty;
+
+        // インポスターへの丸印表示
+        if (seen.Is(CustomRoleTypes.Impostor) && KnowsImpostor())
+        {
+            // 名前に色が付かない時があったため、予備でマーク付け
+            return Utils.ColorString(Palette.ImpostorRed, "●");
+        }
+
+        if (!Is(seen)) return string.Empty;
+        // タスク完了による能力解放マーク
+        var mark = new StringBuilder();
+        if (KnowsImpostor()) mark.Append(Utils.ColorString(Palette.ImpostorRed, "Ｉ"));
+        if (KnowsImpostorRole()) mark.Append(Utils.ColorString(Palette.Purple, "Ｒ"));
+        if (KnowDeadBodyArrow()) mark.Append(Utils.ColorString(Palette.CrewmateBlue, "Ｄ"));
+        return mark.ToString();
+    }
+    public static string GetMarkOthers(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
+    {
+        seen ??= seer;
+        if (!seer.Is(CustomRoleTypes.Impostor) ||
+            seen.GetRoleClass() is not MadConnecter madConnecter ||
+            !madConnecter.ConnectsImpostor(seer.PlayerId))
+        {
+            return string.Empty;
+        }
+        // インポスターから見たマッドへの★
+        return Utils.ColorString(Palette.ImpostorRed, "★");
     }
     public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
@@ -140,22 +233,10 @@ public sealed class MadConnecter : RoleBase, IKiller
             if (arrow.Length >= 0)
             {
                 // 色を付ける
-                arrow.Color(Palette.ImpostorRed);
+                arrow = Utils.ColorString(Palette.ImpostorRed, arrow);
             }
         }
         return arrow;
-    }
-    public static string GetMarkOthers(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
-    {
-        seen ??= seer;
-        if (!seer.Is(CustomRoleTypes.Impostor) ||
-            seen.GetRoleClass() is not MadConnecter madConnecter ||
-            !madConnecter.ConnectsImpostor(seer.PlayerId))
-        {
-            return string.Empty;
-        }
-        // インポスターから見たマッドへの★
-        return "★".Color(Palette.ImpostorRed);
     }
     public static string GetSuffixOthers(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
@@ -169,15 +250,17 @@ public sealed class MadConnecter : RoleBase, IKiller
         var arrow = "";
         MadList.RemoveWhere(mad => !mad.Player.IsAlive());
 
+        HashSet<byte> targets = new(15);
+
         foreach (var mad in MadList)
         {
             if (mad.ConnectImpostorId.Count <= 0) continue;
 
-            // インポスターから見たマッドへの矢印
-            arrow += TargetArrow.GetArrows(seerId, mad.Player.PlayerId);
+            targets.Add(mad.Player.PlayerId);
         }
+        // インポスターから見たマッドへの矢印
+        arrow += TargetArrow.GetArrows(seerId, targets.ToArray());
 
-        arrow = arrow.Length > 0 ? arrow.Color(Palette.ImpostorRed) : "";
-        return arrow;
+        return arrow.Length > 0 ? Utils.ColorString(Palette.ImpostorRed, arrow) : "";
     }
 }

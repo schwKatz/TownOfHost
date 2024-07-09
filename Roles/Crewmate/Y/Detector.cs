@@ -54,16 +54,8 @@ public sealed class Detector : RoleBase, IKillFlashSeeable
             return true;
         }
         IsSet = true;
-        TargetDeadArrow.SeerList.Add(Player.PlayerId);
-        Logger.Info($"SeerList.Add({Player.PlayerId})", "Detector");
-        if (TargetDeadArrow.DeadBodyList.Count != 0)
-        {
-            foreach (var target in TargetDeadArrow.DeadBodyList)
-            {
-                TargetDeadArrow.TargetArrowAdd(Player.PlayerId, target);
-                Logger.Info($"TargetArrowAdd({Player.PlayerId}, {target})", "Detector");
-            }
-        }
+        // 死体への矢印が表示できるようにする
+        TargetDeadArrow.AddSeer(Player.PlayerId);
         return true;
     }
 }

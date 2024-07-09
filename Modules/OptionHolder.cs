@@ -687,7 +687,7 @@ public static class Options
             .SetColor(Palette.ImpostorRed)
             .SetValueFormat(OptionFormat.Seconds);
         // 強制守護天使表示
-        ForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 600, "ForceProtect", false, TabGroup.ModMainSettings, true)
+        ForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 600, "ForceProtect", true, TabGroup.ModMainSettings, true)
             .SetColor(Palette.CrewmateBlue);
         // CO可否表示(id+499まで使用)
         DisplayComingOut.SetupCustomOption((int)offsetId.FeatOther + 700);
