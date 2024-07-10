@@ -1406,6 +1406,7 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "PenguinTimerText","Drag Timer","残り時間","剩余时间","","Время перетаскивания","Tempo para Arrastar"
 "SelfBomberExplosionButtonText","Fire","爆破","引爆","引爆","Зажечь","Explodir"
 "GrudgeChargerSelectTarget","Select","キル対象選択",
+"CharisMastarGatherButtonText","Gather","集え..",
 
 "killer","Killer","キラー","杀手",
 "AntiAdminerAD","Warning Admin","アドミン注意！","管理室地图注意",,

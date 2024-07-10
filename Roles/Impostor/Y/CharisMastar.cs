@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using static TownOfHostY.Translator;
 using System.Linq;
 using AmongUs.GameOptions;
 using Hazel;
@@ -64,6 +65,8 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
     int NowGatherCount;
     public float CalculateKillCooldown() => KillCooldown;
     public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.ShapeshifterCooldown = GatherCooldown;
+    public override string GetAbilityButtonText() => GetString("CharisMastarGatherButtonText");
+
     private static void SetUpOptionItem()
     {
         OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 30f, false)
