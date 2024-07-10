@@ -15,7 +15,7 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
             typeof(CharisMastar),
             player => new CharisMastar(player),
             CustomRoles.CharisMastar,
-            () => RoleTypes.Phantom,
+            () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
             (int)Options.offsetId.ImpY + 2000,//仮
             SetUpOptionItem,
@@ -63,7 +63,7 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
     int GatherCount;
     int NowGatherCount;
     public float CalculateKillCooldown() => KillCooldown;
-    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.PhantomCooldown = GatherCooldown;
+    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.ShapeshifterCooldown = GatherCooldown;
     private static void SetUpOptionItem()
     {
         OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 30f, false)
@@ -80,7 +80,7 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         NowGatherCount = GatherCount;
         GatherChoosePlayer.Clear();
     }
-    public override bool OnCheckVanish()
+    public override bool OnCheckShapeshift(PlayerControl target, ref bool animate)
     {
         if (NowGatherCount == 0) return false;
 
