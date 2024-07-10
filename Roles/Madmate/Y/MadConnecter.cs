@@ -109,13 +109,16 @@ public sealed class MadConnecter : RoleBase, IKiller, IKillFlashSeeable
 
     // インポスターが誰か分かるタスク数に達しているか
     private bool KnowsImpostor()
-        => VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowImpostorTasks;
+        => KnowImpostorTasks != 0 &&
+        VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowImpostorTasks;
     // インポスターの役職が分かるタスク数に達しているか
     private bool KnowsImpostorRole()
-        => VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowImpostorRoleTasks;
+        => KnowImpostorRoleTasks != 0 &&
+        VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowImpostorRoleTasks;
     // 死体への矢印が表示されるタスク数に達しているか
     private bool KnowDeadBodyArrow()
-        => VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowDeadBodyArrowTasks;
+        => KnowDeadBodyArrowTasks != 0 &&
+        VentEnterTask.NowTaskCountNow(Player.PlayerId) >= KnowDeadBodyArrowTasks;
 
     // 互いにコネクトしたインポスターであるか
     private bool ConnectsImpostor(byte impostorId)
