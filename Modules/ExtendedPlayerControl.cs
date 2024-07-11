@@ -176,27 +176,6 @@ namespace TownOfHostY
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
-        public static void RpcProtectedMurderPlayer(this PlayerControl killer, PlayerControl target = null)
-        {
-            //killerが死んでいる場合は実行しない
-            if (!killer.IsAlive()) return;
-
-            if (target == null) target = killer;
-            killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
-            //// Host
-            //if (killer.AmOwner)
-            //{
-
-            //}
-            // Other Clients
-            //if (killer.PlayerId != 0)
-            {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable);
-                writer.WriteNetObject(target);
-                writer.Write((int)MurderResultFlags.FailedProtected);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-            }
-        }
         public static void SetKillCooldown(this PlayerControl player, float time = -1f, bool ForceProtect = false)
         {
             if (player == null) return;
@@ -549,7 +528,7 @@ namespace TownOfHostY
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
             }
         }
-        public static void NoCheckStartMeeting(this PlayerControl reporter, GameData.PlayerInfo target)
+        public static void NoCheckStartMeeting(this PlayerControl reporter, NetworkedPlayerInfo target)
         { /*サボタージュ中でも関係なしに会議を起こせるメソッド
             targetがnullの場合はボタンとなる*/
             MeetingRoomManager.Instance.AssignSelf(reporter, target);
