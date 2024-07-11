@@ -171,6 +171,8 @@ namespace TownOfHostY
         public bool HnSFlag;
         public bool PublicFlag;
         public bool NotHostFlag;
+
+        const float TextOffsetY = 0.3f;
     }
     public enum ErrorCode
     {
