@@ -12,7 +12,6 @@ using UnityEngine;
 
 using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Crewmate;
 
 [assembly: AssemblyFileVersionAttribute(TownOfHostY.Main.PluginVersion)]
 [assembly: AssemblyInformationalVersionAttribute(TownOfHostY.Main.PluginVersion)]
@@ -53,7 +52,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "516.22.1";
+        public const string PluginVersion = "517.22.1";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2024.6.18";
         // このバージョンのみで公開ルームを無効にする場合
