@@ -84,7 +84,7 @@ namespace TownOfHostY
                 Main.credentialsText = $"<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginVersion}";
                 if (Main.IsPrerelease)
                 {
-                    Main.credentialsText += $"\r\n<#F39C12><size=120%>{GetString("Prerelease")}</size></color>";
+                    Main.credentialsText += $"\r\n<#F39C12>Pre-Release</color>";
                 }
 #if DEBUG
                 Main.credentialsText += $"\r\n<color={Main.ModColor}>{ThisAssembly.Git.Branch}({ThisAssembly.Git.Commit})</color>";
