@@ -44,8 +44,8 @@ public sealed class GodfatherAndJanitor : RoleBase
     public static OptionItem OptionJanitorSeeSelectedTiming;
     public static OptionItem OptionJanitorTrackTarget;
     public static OptionItem OptionJanitorTrackGodfather;
-    public static StringOptionItem OptionAfterGotfatherDeadMode;
-    public static AfterGotfatherDeadMode GFDeadMode;
+    public static OptionItem OptionAfterGotfatherDeadIsAlive;
+    public static OptionItem OptionJanitorCanKill;
     public static OptionItem OptionJanitorKillCooldown;
     enum OptionName
     {
@@ -55,21 +55,10 @@ public sealed class GodfatherAndJanitor : RoleBase
         JanitorSeeSelectedTiming,
         JanitorTrackTarget,
         JanitorTrackGodfather,
+        JanitorAfterGotfatherDeadIsAlive,
+        JanitorCanKill,
         JanitorKillCooldown,
-        JanitorAfterGotfatherDeadMode,
     }
-    public static readonly string[] AfterGotfatherDeadModeText =
-    {
-        "JanitorAfterGotfatherDeadMode.Madmate",
-        "JanitorAfterGotfatherDeadMode.Following",
-        "JanitorAfterGotfatherDeadMode.LastCanKill",
-    };
-    public enum AfterGotfatherDeadMode
-    {
-        Madmate,
-        Following,
-        LastCanKill,
-    };
     private static void SetupOptionItem()
     {
         OptionGodfatherKillCooldown = FloatOptionItem.Create(RoleInfo, 10, OptionName.GodfatherKillCooldown, new(5.0f, 180f, 2.5f), 30f, false)
@@ -81,8 +70,9 @@ public sealed class GodfatherAndJanitor : RoleBase
         OptionJanitorSeeSelectedTiming = BooleanOptionItem.Create(RoleInfo, 13, OptionName.JanitorSeeSelectedTiming, true, false);
         OptionJanitorTrackTarget = BooleanOptionItem.Create(RoleInfo, 14, OptionName.JanitorTrackTarget, true, false);
         OptionJanitorTrackGodfather = BooleanOptionItem.Create(RoleInfo, 15, OptionName.JanitorTrackGodfather, true, false);
-        OptionAfterGotfatherDeadMode = StringOptionItem.Create(RoleInfo, 16, OptionName.JanitorAfterGotfatherDeadMode, AfterGotfatherDeadModeText, 2, false);
-        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 17, OptionName.JanitorKillCooldown, new(5.0f, 180f, 2.5f), 30f, false)
-                    .SetValueFormat(OptionFormat.Seconds);
+        OptionAfterGotfatherDeadIsAlive = BooleanOptionItem.Create(RoleInfo, 16, OptionName.JanitorAfterGotfatherDeadIsAlive, true, false);
+        OptionJanitorCanKill = BooleanOptionItem.Create(RoleInfo, 17, OptionName.JanitorCanKill, true, false, OptionAfterGotfatherDeadIsAlive);
+        OptionJanitorKillCooldown = FloatOptionItem.Create(RoleInfo, 18, OptionName.JanitorKillCooldown, new(0f, 180f, 2.5f), 30f, false, OptionJanitorCanKill)
+            .SetValueFormat(OptionFormat.Seconds);
     }
 }
