@@ -469,7 +469,8 @@ public enum CustomRoles
     EvilGuesser,
     SelfBomber,
     GrudgeCharger,
-
+    Chaser,
+    
     Godfather,
     Janitor,
     //Madmate
