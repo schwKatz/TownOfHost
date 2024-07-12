@@ -163,7 +163,7 @@ public static class Utils
         {
             if (subRole == CustomRoles.VIP) return true;
         }
-        if (target == BestieWolf.EnableKillFrash) return true;
+        if (target == BestieWolf.EnableKillFlash) return true;
 
         if (seer.Data.IsDead || killer == seer || target == seer) return false;
 
@@ -484,6 +484,7 @@ public static class Utils
         {
             case RoleTypes.Impostor:
             case RoleTypes.Shapeshifter:
+            case RoleTypes.Phantom:
                 text = "Impostor";
                 color = Palette.ImpostorRed;
                 break;
@@ -508,7 +509,7 @@ public static class Utils
         return (text, color);
     }
 
-    public static bool HasTasks(GameData.PlayerInfo p, bool ForRecompute = true)
+    public static bool HasTasks(NetworkedPlayerInfo p, bool ForRecompute = true)
     {
         if (GameStates.IsLobby) return false;
         //Tasksがnullの場合があるのでその場合タスク無しとする
@@ -611,6 +612,7 @@ public static class Utils
         var role = State.MainRole;
         var roleClass = CustomRoleManager.GetByPlayerId(playerId);
         ProgressText.Append(GetTaskProgressText(playerId, comms));
+        ProgressText.Append(VentEnterTask.GetProgressText(playerId, comms));
         if (roleClass != null)
         {
             ProgressText.Append(roleClass.GetProgressText(comms));
@@ -662,7 +664,8 @@ public static class Utils
                 all += taskState.AllTasksCount;
             }
         }
-        return (completed, all);
+        (int vtComp, int vtTotal) = VentEnterTask.TaskWinCountData();
+        return (completed + vtComp, all + vtTotal);
     }
 
     public static string GetMyRoleInfo(PlayerControl player)
@@ -741,7 +744,9 @@ public static class Utils
             //if (Options.DisableDevices.GetBool()) { SendMessage(GetString("DisableDevicesInfo"), PlayerId); }
             //if (Options.SyncButtonMode.GetBool()) { SendMessage(GetString("SyncButtonModeInfo"), PlayerId); }
             //if (Options.SabotageTimeControl.GetBool()) { SendMessage(GetString("SabotageTimeControlInfo"), PlayerId); }
-            //if (Options.RandomMapsMode.GetBool()) { SendMessage(GetString("RandomMapsModeInfo"), PlayerId); }
+            if (Options.RandomMapsMode.GetBool()) { SendMessage(GetString("RandomMapsModeInfo"), PlayerId); }
+            if (Options.ForceProtect.GetBool() && CustomRolesHelper.AllStandardRoles.Where(role => role.IsProtectRole() && role.IsEnable()).Any())
+            { SendMessage("【" + GetString("ForceProtect") + "】\n" + GetString("Message.isProtectRoleExist"), PlayerId); }
             if (Options.IsStandardHAS) { SendMessage(GetString("StandardHASInfo"), PlayerId); }
             if (Options.EnableGM.GetBool()) { SendMessage(GetRoleName(CustomRoles.GM) + GetString("GMInfoLong"), PlayerId); }
             foreach (var role in CustomRolesHelper.AllStandardRoles) // OneNight追加時にワンナイト役職も含める
@@ -751,7 +756,8 @@ public static class Utils
                 if (role is CustomRoles.NormalImpostor) continue;
 
                 string infoLongText = "";
-                if (role is CustomRoles.NormalShapeshifter or CustomRoles.NormalEngineer or CustomRoles.NormalScientist)
+                if (role is CustomRoles.NormalShapeshifter or CustomRoles.NormalEngineer or CustomRoles.NormalScientist or
+                            CustomRoles.NormalPhantom or CustomRoles.NormalTracker or CustomRoles.NormalNoisemaker)
                     infoLongText = '\n' + GetString(Enum.GetName(typeof(CustomRoles), role.IsVanillaRoleConversion()) + "BlurbLong");
                 else
                     infoLongText = GetString(Enum.GetName(typeof(CustomRoles), role) + "InfoLong");
@@ -985,6 +991,8 @@ public static class Utils
             foreach (CustomRoles role in CustomRolesHelper.AllStandardRoles)
             {
                 if (!role.IsEnable()) continue;
+                // バニラ役職(元)は反映させないので表示させない
+                if (role.IsVanilla()) continue;
 
                 sb.Append("\n<size=80%>");
                 // 陣営ごとのマーク
@@ -1026,8 +1034,6 @@ public static class Utils
 
             if (opt.Value.Parent.Name == "displayComingOut%type%" && !opt.Value.GetBool()) continue;
 
-            if (opt.Value.Parent.Name == "displayComingOut%type%" && !opt.Value.GetBool()) continue;
-
             if (opt.Value.Parent.Name == "AddOnBuffAssign" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnBuffAssign%role%" && !opt.Value.GetBool()) continue;
             if (opt.Value.Parent.Name == "AddOnDebuffAssign" && !opt.Value.GetBool()) continue;
@@ -1045,6 +1051,20 @@ public static class Utils
             if (opt.Value.GetBool()) ShowChildrenSettings(opt.Value, ref sb, deep + 1);
         }
     }
+    // Now Vanilla
+    public static void ShowVanillaSetting(byte PlayerId = byte.MaxValue)
+    {
+        StringBuilder message = new();
+        message.Append("<line-height=0.94em>");
+        foreach (var s in GameOptionsManager.Instance.CurrentGameOptions.ToHudString(GameData.Instance ? GameData.Instance.PlayerCount : 10))
+        {
+            if (s == '科') break;
+            message.Append(s);
+        }
+        message.Append("</line-height>");
+        SendMessage(message.ToString(), PlayerId, "【Vanilla Setting】");
+    }
+
     public static void ShowLastResult(byte PlayerId = byte.MaxValue)
     {
         if (AmongUsClient.Instance.IsGameStarted)
@@ -1131,6 +1151,7 @@ public static class Utils
     {
         if (!AmongUsClient.Instance.AmHost) return;
         if (title == "") title = "<color=#aaaaff>" + GetString("DefaultSystemMessageTitle") + "</color>";
+        else title = title.Color(Color.white);
 
         Logger.Info($"[MessagesToSend.Add] sendTo: {sendTo}", "SendMessage");
         Main.MessagesToSend.Add(($"<align={"left"}><size=90%>{text}</size></align>", sendTo, $"<align={"left"}>{title}</align>", false));
@@ -1220,7 +1241,7 @@ public static class Utils
         return "???";
     }
 
-    public static GameData.PlayerInfo GetPlayerInfoById(int PlayerId) =>
+    public static NetworkedPlayerInfo GetPlayerInfoById(int PlayerId) =>
         GameData.Instance.AllPlayers.ToArray().Where(info => info.PlayerId == PlayerId).FirstOrDefault();
     private static StringBuilder SelfMark = new(20);
     private static StringBuilder SelfSuffix = new(20);
@@ -1281,14 +1302,17 @@ public static class Utils
 
             //Markとは違い、改行してから追記されます。
             SelfSuffix.Clear();
+
             //seer役職が対象のSuffix
             SelfSuffix.Append(seerRole?.GetSuffix(seer, isForMeeting: isForMeeting));
             //seerに関わらず発動するSuffix
             SelfSuffix.Append(CustomRoleManager.GetSuffixOthers(seer, isForMeeting: isForMeeting));
             //TargetDeadArrow
-            SelfSuffix.Append(TargetDeadArrow.GetDeadBodiesArrow(seer, seer));
+            if(!isForMeeting) SelfSuffix.Append(TargetDeadArrow.GetDeadBodiesArrow(seer, seer));
 
             SelfLower.Clear();
+          　// ベントタスクの対象ベント表示
+            SelfLower.Append(VentEnterTask.GetLowerText(seer, isForMeeting: isForMeeting));
             //seer役職が対象のLowerText
             SelfLower.Append(seerRole?.GetLowerText(seer, isForMeeting: isForMeeting));
             //seerに関わらず発動するLowerText
@@ -1380,6 +1404,8 @@ public static class Utils
                 || seer.Is(CustomRoles.Totocalcio)
                 || seer.Is(CustomRoles.Immoralist)
                 || seer.Is(CustomRoles.LoyalDoggy)
+                || VentEnterTask.HaveTask(seer)
+
                 || Duelist.CheckNotify(seer)
                 )
             {
@@ -1466,19 +1492,32 @@ public static class Utils
         }
         foreach (var roleClass in CustomRoleManager.AllActiveRoles.Values)
             roleClass.AfterMeetingTasks();
+
         Counselor.AfterMeetingTask();
         ChainShifterAddon.AfterMeetingTasks();
+      　VentEnterTask.AfterMeetingTasks();
+
         if (Options.AirShipVariableElectrical.GetBool())
             AirShipElectricalDoors.Initialize();
         DoorsReset.ResetDoors();
     }
-    public static void ProtectedFirstPlayer(bool FirstSpawn = false)
+    public static void ProtectedFirstPlayer()
     {
-        foreach (var pc in Main.AllAlivePlayerControls)
+        var lists = Main.AllAlivePlayerControls.Where(pc => pc.GetRoleClass() is not IKiller);
+        var pc = lists.ElementAtOrDefault(new System.Random().Next(lists.Count()));
+
+        if (pc == null)
         {
-            if (FirstSpawn) pc.SetKillCooldown(10f, true);
-            else pc.SetKillCooldown(ForceProtect : true);
-            break;//一人目だけでBreak
+            pc = Main.AllAlivePlayerControls.FirstOrDefault();
+            // パリン
+            Logger.Info($"nullcase:{pc.GetNameWithRole()}に強制守護天使表示", "ForceProtected");
+            pc.SetKillCooldown(ForceProtect: true);
+        }
+        else
+        {
+            // パリン
+            Logger.Info($"{pc.GetNameWithRole()}に強制守護天使表示", "ForceProtected");
+            pc.RpcProtectedMurderPlayer();
         }
     }
 

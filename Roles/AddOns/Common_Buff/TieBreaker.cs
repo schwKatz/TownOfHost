@@ -38,7 +38,7 @@ public static class TieBreaker
         Logger.Info($"{Utils.GetPlayerById(voter).GetNameWithRole()} が タイブレーカー投票({Utils.GetPlayerById(votedFor).GetNameWithRole()})", "TieBreaker");
         TieBreakerVote.Add(voter, votedFor);
     }
-    public static (bool, GameData.PlayerInfo) BreakingVote(bool IsTie, GameData.PlayerInfo Exiled, Dictionary<byte, int> votedCounts, int maxVoteNum)
+    public static (bool, NetworkedPlayerInfo) BreakingVote(bool IsTie, NetworkedPlayerInfo Exiled, Dictionary<byte, int> votedCounts, int maxVoteNum)
     {
         if (IsTie)
         {

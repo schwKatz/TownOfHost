@@ -51,9 +51,12 @@ namespace TownOfHostY
                 role is CustomRoles.Crewmate or
                 CustomRoles.Engineer or
                 CustomRoles.Scientist or
+                CustomRoles.Tracker or
+                CustomRoles.Noisemaker or
                 CustomRoles.GuardianAngel or
                 CustomRoles.Impostor or
-                CustomRoles.Shapeshifter;
+                CustomRoles.Shapeshifter or
+                CustomRoles.Phantom;
         }
         public static CustomRoles IsVanillaRoleConversion(this CustomRoles role)
         {
@@ -61,8 +64,11 @@ namespace TownOfHostY
             {
                 CustomRoles.NormalImpostor => CustomRoles.Impostor,
                 CustomRoles.NormalShapeshifter => CustomRoles.Shapeshifter,
-                CustomRoles.NormalEngineer => CustomRoles.Engineer,
+                 CustomRoles.NormalPhantom => CustomRoles.Phantom,
+               CustomRoles.NormalEngineer => CustomRoles.Engineer,
                 CustomRoles.NormalScientist => CustomRoles.Scientist,
+                CustomRoles.NormalTracker => CustomRoles.Tracker,
+                CustomRoles.NormalNoisemaker => CustomRoles.Noisemaker,
                 _ => role
             };
         }
@@ -71,7 +77,8 @@ namespace TownOfHostY
         {
             return role is CustomRoles.Lovers
                 or CustomRoles.Sympathizer
-                or CustomRoles.CounselorAndMadDilemma;
+                or CustomRoles.CounselorAndMadDilemma
+                or CustomRoles.GodfatherAndJanitor;
         }
         public static bool IsFixedCountRole(this CustomRoles role)
         {
@@ -89,6 +96,7 @@ namespace TownOfHostY
         public static bool IsDontShowOptionRole(this CustomRoles role)
         {
             return role is CustomRoles.Counselor or CustomRoles.MadDilemma
+                or CustomRoles.Godfather or CustomRoles.Janitor
                 or CustomRoles.Gang
                 
                 or CustomRoles.Potentialist
@@ -114,6 +122,9 @@ namespace TownOfHostY
                 or CustomRoles.StrayWolf
                 or CustomRoles.Totocalcio
                 or CustomRoles.ChainShifter
+                // VentTask
+                or CustomRoles.MadConnecter
+
                 //VentSelect
                 or CustomRoles.Medic
                 or CustomRoles.GrudgeSheriff
@@ -173,7 +184,8 @@ namespace TownOfHostY
                 CustomRoles.Arsonist or
                 CustomRoles.PlatonicLover or
                 CustomRoles.Totocalcio or
-                CustomRoles.MadSheriff;
+                CustomRoles.MadSheriff or
+                CustomRoles.MadConnecter;
         }
 
         //CC
@@ -234,7 +246,10 @@ namespace TownOfHostY
                 {
                     CustomRoles.Engineer => roleOpt.GetNumPerGame(RoleTypes.Engineer),
                     CustomRoles.Scientist => roleOpt.GetNumPerGame(RoleTypes.Scientist),
+                    CustomRoles.Tracker => roleOpt.GetNumPerGame(RoleTypes.Tracker),
+                    CustomRoles.Noisemaker => roleOpt.GetNumPerGame(RoleTypes.Noisemaker),
                     CustomRoles.Shapeshifter => roleOpt.GetNumPerGame(RoleTypes.Shapeshifter),
+                    CustomRoles.Phantom => roleOpt.GetNumPerGame(RoleTypes.Phantom),
                     CustomRoles.GuardianAngel => roleOpt.GetNumPerGame(RoleTypes.GuardianAngel),
                     CustomRoles.Crewmate => roleOpt.GetNumPerGame(RoleTypes.Crewmate),
                     _ => 0
@@ -254,7 +269,10 @@ namespace TownOfHostY
                 {
                     CustomRoles.Engineer => roleOpt.GetChancePerGame(RoleTypes.Engineer),
                     CustomRoles.Scientist => roleOpt.GetChancePerGame(RoleTypes.Scientist),
+                    CustomRoles.Tracker => roleOpt.GetChancePerGame(RoleTypes.Tracker),
+                    CustomRoles.Noisemaker => roleOpt.GetChancePerGame(RoleTypes.Noisemaker),
                     CustomRoles.Shapeshifter => roleOpt.GetChancePerGame(RoleTypes.Shapeshifter),
+                    CustomRoles.Phantom => roleOpt.GetChancePerGame(RoleTypes.Phantom),
                     CustomRoles.GuardianAngel => roleOpt.GetChancePerGame(RoleTypes.GuardianAngel),
                     CustomRoles.Crewmate => roleOpt.GetChancePerGame(RoleTypes.Crewmate),
                     _ => 0

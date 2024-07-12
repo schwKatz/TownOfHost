@@ -62,12 +62,14 @@ namespace TownOfHostY
             switch (rpcType)
             {
                 case RpcCalls.SetName: //SetNameRPC
+                    subReader.ReadUInt32();
                     string name = subReader.ReadString();
                     if (subReader.BytesRemaining > 0 && subReader.ReadBoolean()) return false;
                     Logger.Info("名前変更:" + __instance.GetNameWithRole() + " => " + name, "SetName");
                     break;
                 case RpcCalls.SetRole: //SetNameRPC
                     var role = (RoleTypes)subReader.ReadUInt16();
+                    bool canOverride = reader.ReadBoolean();
                     Logger.Info("役職:" + __instance.GetRealName(Options.GetNameChangeModes() == NameChange.Crew) + " => " + role, "SetRole");
                     break;
                 case RpcCalls.SendChat:
@@ -321,7 +323,7 @@ namespace TownOfHostY
             writer.Write(killerId);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
-        public static void ReportDeadBodyForced(this PlayerControl player, GameData.PlayerInfo target)
+        public static void ReportDeadBodyForced(this PlayerControl player, NetworkedPlayerInfo target)
         {
             //PlayerControl.ReportDeadBodyと同様の処理
             if (!AmongUsClient.Instance.AmHost) return;

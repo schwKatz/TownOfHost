@@ -19,6 +19,9 @@ namespace TownOfHostY
                 if (KnowTargetRoleColor(seer, target, isMeeting))
                     colorCode = target.GetRoleColorCode();
             }
+            // ジャニターターゲットの色上書き
+            colorCode = Godfather.OverrideNameColorByJanitorTarget(target, colorCode);
+
             string openTag = "", closeTag = "";
             if (colorCode != "")
             {

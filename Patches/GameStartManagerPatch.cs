@@ -20,16 +20,14 @@ namespace TownOfHostY
         private static float timer = 600f;
         private static TextMeshPro warningText;
         public static TextMeshPro HideName;
-        private static TextMeshPro timerText;
-        private static SpriteRenderer cancelButton;
+        private static PassiveButton cancelButton;
 
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.ReallyBegin))]
         public class GameStartManagerReallyBeginPatch
         {
             public static void Postfix(GameStartManager __instance, bool neverShow)
             {
-                //����MODOK�R�}���h��g�p���Ȃ����߃��^�[��
-                //�g�p���鎞�ɂȂ��CanPublicRoom��ύX���Ȃ���ʂ�悤�Ɏg�p����
+                //MOD同意機能 現在使用していないためfalseで閉じる
 #if false
 
                 //if (!Main.CanPublicRoom.Value) return;
@@ -75,22 +73,15 @@ namespace TownOfHostY
                 warningText.transform.localPosition = new(0f, 0f - __instance.transform.localPosition.y, -1f);
                 warningText.gameObject.SetActive(false);
 
-                timerText = Object.Instantiate(__instance.PlayerCounter, __instance.PlayerCounter.transform.parent);
-                timerText.autoSizeTextContainer = true;
-                timerText.fontSize = 3.2f;
-                timerText.name = "Timer";
-                timerText.DestroyChildren();
-                timerText.transform.localPosition += Vector3.down * 0.2f;
-                timerText.gameObject.SetActive(AmongUsClient.Instance.NetworkMode == NetworkModes.OnlineGame && AmongUsClient.Instance.AmHost);
-
                 cancelButton = Object.Instantiate(__instance.StartButton, __instance.transform);
                 cancelButton.name = "CancelButton";
                 var cancelLabel = cancelButton.GetComponentInChildren<TextMeshPro>();
                 cancelLabel.DestroyTranslator();
                 cancelLabel.text = GetString("Cancel");
                 cancelButton.transform.localScale = new(0.4f, 0.4f, 1f);
-                cancelButton.color = Color.red;
-                cancelButton.transform.localPosition = new(0f, -0.37f, 0f);
+                cancelButton.activeTextColor = Color.red;
+                cancelButton.inactiveTextColor = Color.red;
+                cancelButton.transform.localPosition = new(0f, -0.2f, 0f);
                 var buttonComponent = cancelButton.GetComponent<PassiveButton>();
                 buttonComponent.OnClick = new();
                 buttonComponent.OnClick.AddListener((Action)(() => __instance.ResetStartState()));
@@ -101,8 +92,8 @@ namespace TownOfHostY
                 // Make Public Button
                 if (!Main.AllowPublicRoom || ModUpdater.hasUpdate || !VersionChecker.IsSupported || !Main.IsPublicAvailableOnThisVersion)
                 {
-                    __instance.MakePublicButton.color = Palette.DisabledClear;
-                    __instance.privatePublicText.color = Palette.DisabledClear;
+                    __instance.HostPrivateButton.inactiveTextColor = Palette.DisabledClear;
+                    __instance.HostPrivateButton.activeTextColor = Palette.DisabledClear;
                 }
 
                 if (Main.NormalOptions.KillCooldown == 0f)
@@ -117,18 +108,17 @@ namespace TownOfHostY
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
         public class GameStartManagerUpdatePatch
         {
-            //private static float exitTimer = 0f;
             public static void Prefix(GameStartManager __instance)
             {
                 // Lobby code
                 if (DataManager.Settings.Gameplay.StreamerMode)
                 {
-                    __instance.GameRoomNameCode.color = new(255, 255, 255, 0);
+                    __instance.GameRoomNameCode.color = new(__instance.GameRoomNameCode.color.r, __instance.GameRoomNameCode.color.g, __instance.GameRoomNameCode.color.b, 0);
                     HideName.enabled = true;
                 }
                 else
                 {
-                    __instance.GameRoomNameCode.color = new(255, 255, 255, 255);
+                    __instance.GameRoomNameCode.color = new(__instance.GameRoomNameCode.color.r, __instance.GameRoomNameCode.color.g, __instance.GameRoomNameCode.color.b, 255);
                     HideName.enabled = false;
                 }
             }
@@ -167,14 +157,13 @@ namespace TownOfHostY
                     foreach (var line in kickName)
                     {
                         if (line == "") continue;
-                        var hostName = PlayerControl.LocalPlayer.name;
+                        var hostName = AmongUsClient.Instance.PlayerPrefab.GetRealName();
                         if (Regex.IsMatch(hostName?.ToLower(), line))
                         {
                             __instance.StartButton.gameObject.SetActive(false);
                             warningMessage = Utils.ColorString(Color.red, "MOD内でエラーが発生しています。\nY鯖のDiscordまでご連絡ください。");
                         }
                     }
-
                     if (!canStartGame)
                     {
                         __instance.StartButton.gameObject.SetActive(false);
@@ -229,9 +218,10 @@ namespace TownOfHostY
                 int minutes = (int)timer / 60;
                 int seconds = (int)timer % 60;
                 string countDown = $"({minutes:00}:{seconds:00})";
-                //if (timer <= 60) countDown = Utils.ColorString(Color.red, countDown);
                 if (timer <= 60) countDown = "";
-                timerText.text = countDown;
+
+                // タイマーテキスト
+                __instance.StartButton.buttonText.text = GetString("Start") + countDown;
             }
             public static bool MatchVersions(byte playerId, bool acceptVanilla = false)
             {

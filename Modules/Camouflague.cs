@@ -6,7 +6,7 @@ namespace TownOfHostY
 {
     static class PlayerOutfitExtension
     {
-        public static GameData.PlayerOutfit Set(this GameData.PlayerOutfit instance, string playerName, int colorId, string hatId, string skinId, string visorId, string petId)
+        public static NetworkedPlayerInfo.PlayerOutfit Set(this NetworkedPlayerInfo.PlayerOutfit instance, string playerName, int colorId, string hatId, string skinId, string visorId, string petId)
         {
             instance.PlayerName = playerName;
             instance.ColorId = colorId;
@@ -16,7 +16,7 @@ namespace TownOfHostY
             instance.PetId = petId;
             return instance;
         }
-        public static bool Compare(this GameData.PlayerOutfit instance, GameData.PlayerOutfit targetOutfit)
+        public static bool Compare(this NetworkedPlayerInfo.PlayerOutfit instance, NetworkedPlayerInfo.PlayerOutfit targetOutfit)
         {
             return instance.ColorId == targetOutfit.ColorId &&
                     instance.HatId == targetOutfit.HatId &&
@@ -25,17 +25,17 @@ namespace TownOfHostY
                     instance.PetId == targetOutfit.PetId;
 
         }
-        public static string GetString(this GameData.PlayerOutfit instance)
+        public static string GetString(this NetworkedPlayerInfo.PlayerOutfit instance)
         {
             return $"{instance.PlayerName} Color:{instance.ColorId} {instance.HatId} {instance.SkinId} {instance.VisorId} {instance.PetId}";
         }
     }
     public static class Camouflage
     {
-        public static GameData.PlayerOutfit CamouflageOutfit = new GameData.PlayerOutfit().Set("", 15, "", "", "", "");
+        public static NetworkedPlayerInfo.PlayerOutfit CamouflageOutfit = new NetworkedPlayerInfo.PlayerOutfit().Set("", 15, "", "", "", "");
 
         public static bool IsCamouflage;
-        public static Dictionary<byte, GameData.PlayerOutfit> PlayerSkins = new();
+        public static Dictionary<byte, NetworkedPlayerInfo.PlayerOutfit> PlayerSkins = new();
 
         [GameModuleInitializer]
         public static void Init()
@@ -64,7 +64,7 @@ namespace TownOfHostY
                 Utils.NotifyRoles(NoCache: true);
             }
         }
-        public static void RpcSetSkin(bool isCamouflage, PlayerControl target, GameData.PlayerOutfit camouflageOutfit = null, bool ForceRevert = false, bool RevertToDefault = false)
+        public static void RpcSetSkin(bool isCamouflage, PlayerControl target, NetworkedPlayerInfo.PlayerOutfit camouflageOutfit = null, bool ForceRevert = false, bool RevertToDefault = false)
         {
             if (!(AmongUsClient.Instance.AmHost && (Options.CommsCamouflage.GetBool() || Roles.Core.CustomRoles.EvilDyer.IsEnable()))) return;
             if (target == null) return;
@@ -101,27 +101,32 @@ namespace TownOfHostY
 
             target.SetColor(newOutfit.ColorId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetColor)
+                .Write(target.Data.NetId)
                 .Write(newOutfit.ColorId)
                 .EndRpc();
 
             target.SetHat(newOutfit.HatId, newOutfit.ColorId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetHatStr)
                 .Write(newOutfit.HatId)
+                .Write(target.GetNextRpcSequenceId(RpcCalls.SetHatStr))
                 .EndRpc();
 
             target.SetSkin(newOutfit.SkinId, newOutfit.ColorId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetSkinStr)
                 .Write(newOutfit.SkinId)
+                .Write(target.GetNextRpcSequenceId(RpcCalls.SetSkinStr))
                 .EndRpc();
 
             target.SetVisor(newOutfit.VisorId, newOutfit.ColorId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetVisorStr)
                 .Write(newOutfit.VisorId)
+                .Write(target.GetNextRpcSequenceId(RpcCalls.SetVisorStr))
                 .EndRpc();
 
             target.SetPet(newOutfit.PetId);
             sender.AutoStartRpc(target.NetId, (byte)RpcCalls.SetPetStr)
                 .Write(newOutfit.PetId)
+                .Write(target.GetNextRpcSequenceId(RpcCalls.SetPetStr))
                 .EndRpc();
 
             sender.SendMessage();

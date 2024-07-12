@@ -12,7 +12,6 @@ using UnityEngine;
 
 using TownOfHostY.Attributes;
 using TownOfHostY.Roles.Core;
-using TownOfHostY.Roles.Crewmate;
 
 [assembly: AssemblyFileVersionAttribute(TownOfHostY.Main.PluginVersion)]
 [assembly: AssemblyInformationalVersionAttribute(TownOfHostY.Main.PluginVersion)]
@@ -53,11 +52,13 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "516.22";
+        public const string PluginVersion = "517.22.1";
         // サポートされている最低のAmongUsバージョン
-        public static readonly string LowestSupportedVersion = "2024.3.5";
+        public static readonly string LowestSupportedVersion = "2024.6.18";
         // このバージョンのみで公開ルームを無効にする場合
         public static readonly bool IsPublicAvailableOnThisVersion = false;
+        // プレリリースかどうか
+        public static bool IsPrerelease { get; } = true;
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;
@@ -65,13 +66,14 @@ namespace TownOfHostY
         public static string ExceptionMessage;
         public static bool ExceptionMessageIsShown = false;
         public static string credentialsText;
-        public static NormalGameOptionsV07 NormalOptions => GameOptionsManager.Instance.currentNormalGameOptions;
-        public static HideNSeekGameOptionsV07 HideNSeekSOptions => GameOptionsManager.Instance.currentHideNSeekGameOptions;
+        public static NormalGameOptionsV08 NormalOptions => GameOptionsManager.Instance.currentNormalGameOptions;
+        public static HideNSeekGameOptionsV08 HideNSeekSOptions => GameOptionsManager.Instance.currentHideNSeekGameOptions;
         //Client Options
         public static ConfigEntry<string> HideName { get; private set; }
         public static ConfigEntry<string> HideColor { get; private set; }
         public static ConfigEntry<bool> ForceJapanese { get; private set; }
         public static ConfigEntry<bool> JapaneseRoleName { get; private set; }
+        public static ConfigEntry<bool> IsMuteLobbyBGM { get; private set; }
         public static ConfigEntry<float> MessageWait { get; private set; }
 
         public static Dictionary<byte, PlayerVersion> playerVersion = new();
@@ -134,10 +136,11 @@ namespace TownOfHostY
             Instance = this;
 
             //Client Options
-            HideName = Config.Bind("Client Options", "Hide Game Code Name", "Town Of Host_Y");
+            HideName = Config.Bind("Client Options", "Hide Game Code Name", "TOH_Y");
             HideColor = Config.Bind("Client Options", "Hide Game Code Color", $"{ModColor}");
             ForceJapanese = Config.Bind("Client Options", "Force Japanese", false);
             JapaneseRoleName = Config.Bind("Client Options", "Japanese Role Name", true);
+            IsMuteLobbyBGM = Config.Bind("Client Options", "Mute Lobby BGM", false);
             DebugKeyInput = Config.Bind("Authentication", "Debug Key", "");
 
             Logger = BepInEx.Logging.Logger.CreateLogSource("TOH_Y");
@@ -278,8 +281,10 @@ namespace TownOfHostY
         Disconnected,
         Fall,
         Poisoning,
+        Clean,
         Senility,
         CounterAttack,
+
         Win,
         etc = -1
     }

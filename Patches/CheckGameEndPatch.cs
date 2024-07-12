@@ -176,7 +176,8 @@ namespace TownOfHostY
 
                 void SetGhostRole(bool ToGhostImpostor)
                 {
-                    if (!pc.Data.IsDead) ReviveRequiredPlayerIds.Add(pc.PlayerId);
+                    var isDead = pc.Data.IsDead;
+                    if (!isDead) ReviveRequiredPlayerIds.Add(pc.PlayerId);
                     if (ToGhostImpostor)
                     {
                         Logger.Info($"{pc.GetNameWithRole()}: ImpostorGhostに変更", "ResetRoleAndEndGame");
@@ -187,6 +188,8 @@ namespace TownOfHostY
                         Logger.Info($"{pc.GetNameWithRole()}: CrewmateGhostに変更", "ResetRoleAndEndGame");
                         pc.RpcSetRole(RoleTypes.CrewmateGhost);
                     }
+                    // 蘇生までの遅延の間にオートミュートをかけられないように元に戻しておく
+                    pc.Data.IsDead = isDead;
                 }
             }
 
@@ -208,7 +211,7 @@ namespace TownOfHostY
                     // 蘇生
                     playerInfo.IsDead = false;
                     // 送信
-                    GameData.Instance.SetDirtyBit(0b_1u << playerId);
+                    playerInfo.SetDirtyBit(0b_1u << playerId);
                     AmongUsClient.Instance.SendAllStreamedObjects();
                 }
                 // ゲーム終了を確実に最後に届けるための遅延
@@ -366,7 +369,8 @@ namespace TownOfHostY
             reason = GameOverReason.ImpostorByKill;
             if (Options.DisableTaskWin.GetBool() || TaskState.InitialTotalTasks == 0) return false;
 
-            if (GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks)
+            (int vtComp, int vtTotal) = VentEnterTask.TaskWinCountData();
+            if (GameData.Instance.TotalTasks + vtTotal <= GameData.Instance.CompletedTasks + vtComp)
             {
                 reason = GameOverReason.HumansByTask;
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Crewmate);

@@ -102,7 +102,7 @@ public sealed class LoyalDoggy : RoleBase
             if (OptionIsClumsy.GetBool()) Player.RpcSetCustomRole(CustomRoles.Clumsy);
         }
     }
-    public static bool IgnoreTask(GameData.PlayerInfo p)
+    public static bool IgnoreTask(NetworkedPlayerInfo p)
     {
         if (!IgnoreTaskAfterDeadMaster) return false;
 

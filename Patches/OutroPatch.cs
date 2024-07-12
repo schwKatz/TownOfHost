@@ -47,7 +47,7 @@ namespace TownOfHostY
 
             Main.NormalOptions.KillCooldown = Options.DefaultKillCooldown;
             //winnerListリセット
-            TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+            EndGameResult.CachedWinners = new Il2CppSystem.Collections.Generic.List<CachedPlayerData>();
             var winner = new List<PlayerControl>();
             foreach (var pc in Main.AllPlayerControls)
             {
@@ -100,7 +100,7 @@ namespace TownOfHostY
             {
                 if (CustomWinnerHolder.WinnerTeam is not CustomWinner.Draw && pc.Is(CustomRoles.GM)) continue;
 
-                TempData.winners.Add(new WinningPlayerData(pc.Data));
+                EndGameResult.CachedWinners.Add(new CachedPlayerData(pc.Data));
                 Main.winnerList.Add(pc.PlayerId);
             }
 
@@ -114,6 +114,19 @@ namespace TownOfHostY
             }
             //オブジェクト破棄
             CustomRoleManager.Dispose();
+
+            // ログ内にゲーム結果を出力
+            Logger.Info("■■■■ゲーム結果■■■■", "EndGame");
+            List<byte> cloneRoles = new(PlayerState.AllPlayerStates.Keys);
+            foreach (var id in Main.winnerList)
+            {
+                Logger.Info($"★ {SummaryText[id].RemoveColorTags()}", "EndGame");
+                cloneRoles.Remove(id);
+            }
+            foreach (var id in cloneRoles)
+            {
+                Logger.Info($"　 {SummaryText[id].RemoveColorTags()}", "EndGame");
+            }
         }
     }
     [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]

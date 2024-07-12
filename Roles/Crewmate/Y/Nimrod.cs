@@ -26,7 +26,7 @@ public sealed class Nimrod : RoleBase
     )
     {
         playerIdList = new();
-        IsExecutionMeeting = byte.MaxValue;
+        ExecutionMeetingPlayerId = byte.MaxValue;
     }
     public override void OnDestroy()
     {
@@ -34,27 +34,29 @@ public sealed class Nimrod : RoleBase
     }
 
     public static List<byte> playerIdList = new();
-    private static byte IsExecutionMeeting = byte.MaxValue;
+    private static byte ExecutionMeetingPlayerId = byte.MaxValue;
 
     public override void Add()
     {
         playerIdList.Add(Player.PlayerId);
     }
+    public static bool IsExecutionMeeting()
+        => ExecutionMeetingPlayerId != byte.MaxValue;
 
-    public static GameData.PlayerInfo VoteChange(GameData.PlayerInfo Exiled)
+    public static NetworkedPlayerInfo VoteChange(NetworkedPlayerInfo Exiled)
     {
         if (Exiled == null || !playerIdList.Contains(Exiled.PlayerId)) return Exiled;
 
         _ = new LateTask(() =>
         {
-            IsExecutionMeeting = Exiled.PlayerId;
+            ExecutionMeetingPlayerId = Exiled.PlayerId;
             Utils.GetPlayerById(Exiled.PlayerId).ReportDeadBody(Exiled);
         }, 15f, "NimrodExiled");
         return null;
     }
     public override void OnStartMeeting()
     {
-        if (IsExecutionMeeting == byte.MaxValue) return;
+        if (ExecutionMeetingPlayerId == byte.MaxValue) return;
 
         Utils.SendMessage(Translator.GetString("IsNimrodMeetingText"),
             title: $"<color={RoleInfo.RoleColorCode}>{Translator.GetString("IsNimrodMeetingTitle")}</color>");
@@ -62,7 +64,7 @@ public sealed class Nimrod : RoleBase
 
     public static (string, int) AddMeetingDisplay()
     {
-        if (IsExecutionMeeting == byte.MaxValue) return ("", 0);
+        if (ExecutionMeetingPlayerId == byte.MaxValue) return ("", 0);
 
         string text = Translator.GetString("MDisplay.NimrodTitle").Color(RoleInfo.RoleColor);
         text += "\n";
@@ -74,7 +76,7 @@ public sealed class Nimrod : RoleBase
         // 既定値
         var (votedForId, numVotes, doVote) = base.ModifyVote(voterId, sourceVotedForId, isIntentional);
         var baseVote = (votedForId, numVotes, doVote);
-        if (IsExecutionMeeting != Player.PlayerId || voterId != Player.PlayerId)
+        if (ExecutionMeetingPlayerId != Player.PlayerId || voterId != Player.PlayerId)
         {
             return baseVote;
         }
@@ -86,7 +88,7 @@ public sealed class Nimrod : RoleBase
             PlayerState.GetByPlayerId(sourceVotedForId).DeathReason = CustomDeathReason.Execution;
         }
         MeetingVoteManager.Instance.ClearAndExile(Player.PlayerId, sourceVotedForId);
-        IsExecutionMeeting = byte.MaxValue;
+        ExecutionMeetingPlayerId = byte.MaxValue;
         return (votedForId, numVotes, false);
     }
 }

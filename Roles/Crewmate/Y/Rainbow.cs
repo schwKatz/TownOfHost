@@ -48,6 +48,7 @@ public sealed class Rainbow : RoleBase
         Player.SetNamePlate("nameplate_flagRainbow");
         CustomRpcSender.Create(name: $"RpcSetNamePlate({Player.Data.PlayerName})").AutoStartRpc(Player.NetId, (byte)RpcCalls.SetNamePlateStr)
             .Write("nameplate_flagRainbow")
+            .Write(Player.GetNextRpcSequenceId(RpcCalls.SetNamePlateStr))
             .EndRpc();
     }
     public override void OnFixedUpdate(PlayerControl player)

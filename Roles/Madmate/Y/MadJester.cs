@@ -46,7 +46,7 @@ public sealed class MadJester : RoleBase
         Options.SetUpAddOnOptions(RoleInfo.ConfigId + 30, RoleInfo.RoleName, RoleInfo.Tab);
     }
 
-    public override void OnExileWrapUp(GameData.PlayerInfo exiled, ref bool DecidedWinner)
+    public override void OnExileWrapUp(NetworkedPlayerInfo exiled, ref bool DecidedWinner)
     {
         if (!AmongUsClient.Instance.AmHost || Player.PlayerId != exiled.PlayerId) return;
         if (TaskCompWin && !MyTaskState.IsTaskFinished) return;

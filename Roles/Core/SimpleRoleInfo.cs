@@ -74,7 +74,7 @@ public class SimpleRoleInfo
 
         _ = ColorUtility.TryParseHtmlString(colorCode, out RoleColor);
 
-        if (tab == TabGroup.MainSettings)
+        if (tab == TabGroup.ModMainSettings)
             tab = CustomRoleType switch
             {
                 CustomRoleTypes.Impostor => TabGroup.ImpostorRoles,
@@ -99,7 +99,7 @@ public class SimpleRoleInfo
         string chatCommand,
         string colorCode = "",
         bool isDesyncImpostor = false,
-        TabGroup tab = TabGroup.MainSettings,
+        TabGroup tab = TabGroup.ModMainSettings,
         Func<AudioClip> introSound = null,
         Func<bool> canMakeMadmate = null,
         CountTypes? countType = null,
@@ -151,6 +151,14 @@ public class SimpleRoleInfo
                 roleName = CustomRoles.Scientist;
                 customRoleType = CustomRoleTypes.Crewmate;
                 break;
+            case RoleTypes.Tracker:
+                roleName = CustomRoles.Tracker;
+                customRoleType = CustomRoleTypes.Crewmate;
+                break;
+            case RoleTypes.Noisemaker:
+                roleName = CustomRoles.Noisemaker;
+                customRoleType = CustomRoleTypes.Crewmate;
+                break;
             case RoleTypes.GuardianAngel:
                 roleName = CustomRoles.GuardianAngel;
                 customRoleType = CustomRoleTypes.Crewmate;
@@ -162,6 +170,11 @@ public class SimpleRoleInfo
                 break;
             case RoleTypes.Shapeshifter:
                 roleName = CustomRoles.Shapeshifter;
+                customRoleType = CustomRoleTypes.Impostor;
+                countType = CountTypes.Impostor;
+                break;
+            case RoleTypes.Phantom:
+                roleName = CustomRoles.Phantom;
                 customRoleType = CustomRoleTypes.Impostor;
                 countType = CountTypes.Impostor;
                 break;
@@ -183,7 +196,7 @@ public class SimpleRoleInfo
                 null,
                 colorCode,
                 false,
-                TabGroup.MainSettings,
+                TabGroup.ModMainSettings,
                 null,
                 () => canMakeMadmate,
                 assignInfo ?? new(roleName, customRoleType)
