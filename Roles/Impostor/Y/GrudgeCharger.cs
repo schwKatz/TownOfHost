@@ -16,8 +16,7 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
             CustomRoles.GrudgeCharger,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            //(int)Options.offsetId.ImpY + 1600,
-            (int)Options.offsetId.ImpSpecial + 100,
+            (int)Options.offsetId.ImpY + 1600,
             SetUpOptionItem,
             "グラージチャージャー"
         );
@@ -93,7 +92,7 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
         killer.SetKillCooldown();
         info.DoKill = false;
     }
-    public override void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public override void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     {
         KillWaitPlayer = null;
     }

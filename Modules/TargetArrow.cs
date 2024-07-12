@@ -90,8 +90,17 @@ namespace TownOfHostY
         /// <returns></returns>
         public static string GetArrows(PlayerControl seer, params byte[] targets)
         {
+            return GetArrows(seer.PlayerId, targets);
+        }
+        /// <summary>
+        /// 見ることのできるすべてのターゲット矢印を取得
+        /// </summary>
+        /// <param name="seer"></param>
+        /// <returns></returns>
+        public static string GetArrows(byte seerId, params byte[] targets)
+        {
             var arrows = "";
-            foreach (var arrowInfo in TargetArrows.Keys.Where(ai => ai.From == seer.PlayerId && targets.Contains(ai.To)))
+            foreach (var arrowInfo in TargetArrows.Keys.Where(ai => ai.From == seerId && targets.Contains(ai.To)))
             {
                 arrows += TargetArrows[arrowInfo];
             }

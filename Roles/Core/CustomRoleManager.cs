@@ -142,18 +142,22 @@ public static class CustomRoleManager
         {
             onMurderPlayer(info);
         }
-        AddBait.OnMurderPlayer(info);
+
         if (info.IsMeeting)
         {
             Lovers.VoteSuicide(attemptTarget.PlayerId);
+            Janitor.VoteSuicide(attemptTarget.PlayerId);
         }
         else
         {
             Lovers.KillSuicide(attemptTarget.PlayerId);
+            Janitor.KillSuicide(attemptTarget.PlayerId);
         }
 
         //TargetDeadArrow
         if (!info.IsMeeting) TargetDeadArrow.UpdateDeadBody();
+      　//WinTask
+        VentEnterTask.TaskWinCountAllComplete(attemptTarget.PlayerId);
 
         //以降共通処理
         var targetState = PlayerState.GetByPlayerId(attemptTarget.PlayerId);
@@ -424,9 +428,11 @@ public enum CustomRoles
     //Impostor(Vanilla)
     Impostor,
     Shapeshifter,
+    Phantom,
     //Impostor
     NormalImpostor,
     NormalShapeshifter,
+    NormalPhantom,
     CustomImpostor,
     EvilWatcher,
     BountyHunter,
@@ -464,6 +470,9 @@ public enum CustomRoles
     SelfBomber,
     GrudgeCharger,
     Chaser,
+    
+    Godfather,
+    Janitor,
     //Madmate
     Madmate,
     MadGuardian,
@@ -476,6 +485,7 @@ public enum CustomRoles
     MadScientist,
     MadJester,
     MadGuesser,
+    MadConnecter,
 
     MadDilemma,
     SKMadmate,
@@ -483,9 +493,13 @@ public enum CustomRoles
     Engineer,
     GuardianAngel,
     Scientist,
+    Tracker,
+    Noisemaker,
     //Crewmate
     NormalEngineer,
     NormalScientist,
+    NormalTracker,
+    NormalNoisemaker,
     CustomCrewmate,
     NiceWatcher,
     Bait,
@@ -522,6 +536,7 @@ public enum CustomRoles
     Rabbit,
     VentManager,
     NiceGuesser,
+    Elder,
 
     Counselor,
     Potentialist,
@@ -553,6 +568,7 @@ public enum CustomRoles
 
     GM,
     CounselorAndMadDilemma,
+    GodfatherAndJanitor,
     MaxMain,
     /************/
 

@@ -15,8 +15,7 @@ public sealed class ChainShifter : RoleBase
             CustomRoles.ChainShifter,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Neutral,
-            //(int)Options.offsetId.NeuY + 1100,
-            (int)Options.offsetId.NeuSpecial + 0,
+            (int)Options.offsetId.NeuY + 1100,
             SetupOptionItem,
             "チェインシフター",
             "#666666",
@@ -69,7 +68,8 @@ public sealed class ChainShifter : RoleBase
         var cRolesString = ChangeRoles.Select(x => x.ToString()).ToArray();
         OptionShiftTime = FloatOptionItem.Create(RoleInfo, 10, OptionName.ChainShifterShiftTime, new(1f, 10f, 1f), 4f, false)
            .SetValueFormat(OptionFormat.Seconds);
-        OptionShiftDistance = FloatOptionItem.Create(RoleInfo, 11, OptionName.ChainShifterShiftDistance, new(0.5f, 2f, 0.1f), 1f, false);
+        OptionShiftDistance = FloatOptionItem.Create(RoleInfo, 11, OptionName.ChainShifterShiftDistance, new(0.5f, 2f, 0.1f), 1f, false)
+            .SetValueFormat(OptionFormat.Multiplier);
         OptionShiftInactiveTime = FloatOptionItem.Create(RoleInfo, 12, OptionName.ChainShifterShiftInactiveTime, new(10f, 60f, 2.5f), 10f, false)
            .SetValueFormat(OptionFormat.Seconds);
         OptionShiftedRole = StringOptionItem.Create(RoleInfo, 13, OptionName.ChainShifterShiftedRole, cRolesString, 1, false);

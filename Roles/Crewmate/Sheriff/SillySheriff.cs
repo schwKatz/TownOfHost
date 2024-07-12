@@ -70,7 +70,7 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
     public float CurrentKillCooldown = 30;
     public static readonly string[] KillOption =
     {
-            "SheriffCanKillAll", "SheriffCanKillSeparately"
+        "SheriffCanKillAll", "SheriffCanKillSeparately"
     };
     public enum KillMotionOption
     {
@@ -166,7 +166,6 @@ public sealed class SillySheriff : RoleBase, IKiller, ISchrodingerCatOwner
         => Player.IsAlive()
         && (CanKillAllAlive.GetBool() || GameStates.AlreadyDied)
         && ShotLimit > 0;
-    public bool CanUseImpostorVentButton() => false;
     public override void ApplyGameOptions(IGameOptions opt)
     {
         opt.SetVision(false);

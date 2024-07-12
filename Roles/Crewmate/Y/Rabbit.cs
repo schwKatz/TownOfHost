@@ -119,7 +119,7 @@ public sealed class Rabbit : RoleBase
         if (IsTaskFinished) //タスク全完了時にリセット
         {
             MyTaskState.AllTasksCount += NumLongTasks + NumShortTasks;
-            GameData.Instance.RpcSetTasks(Player.PlayerId, Array.Empty<byte>()); //タスクを再配布
+            Player.Data.RpcSetTasks(Array.Empty<byte>()); //タスクを再配布
             Player.SyncSettings();
         }
         return true;

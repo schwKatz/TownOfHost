@@ -15,7 +15,6 @@ using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
 using TownOfHostY.Roles.AddOns.Impostor;
 using static TownOfHostY.Translator;
-using static UnityEngine.GraphicsBuffer;
 
 namespace TownOfHostY
 {
@@ -81,7 +80,7 @@ namespace TownOfHostY
             var client = player.GetClient();
             return client == null ? -1 : client.Id;
         }
-        public static CustomRoles GetCustomRole(this GameData.PlayerInfo player)
+        public static CustomRoles GetCustomRole(this NetworkedPlayerInfo player)
         {
             return player == null || player.Object == null ? CustomRoles.Crewmate : player.Object.GetCustomRole();
         }
@@ -156,46 +155,27 @@ namespace TownOfHostY
 
             var clientId = seer.GetClientId();
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetName, Hazel.SendOption.Reliable, clientId);
+            writer.Write(player.Data.NetId);
             writer.Write(name);
             writer.Write(DontShowOnModdedClient);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
-        public static void RpcSetRoleDesync(this PlayerControl player, RoleTypes role, int clientId)
+        public static void RpcSetRoleDesync(this PlayerControl player, RoleTypes role, int clientId, bool canOverrideRole = false)
         {
             //player: 名前の変更対象
 
             if (player == null) return;
             if (AmongUsClient.Instance.ClientId == clientId)
             {
-                player.SetRole(role);
+                player.StartCoroutine(player.CoSetRole(role, false));
                 return;
             }
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetRole, Hazel.SendOption.Reliable, clientId);
             writer.Write((ushort)role);
+            writer.Write(canOverrideRole);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
         }
 
-        public static void RpcProtectedMurderPlayer(this PlayerControl killer, PlayerControl target = null)
-        {
-            //killerが死んでいる場合は実行しない
-            if (!killer.IsAlive()) return;
-
-            if (target == null) target = killer;
-            killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
-            //// Host
-            //if (killer.AmOwner)
-            //{
-
-            //}
-            // Other Clients
-            //if (killer.PlayerId != 0)
-            {
-                var writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable);
-                writer.WriteNetObject(target);
-                writer.Write((int)MurderResultFlags.FailedProtected);
-                AmongUsClient.Instance.FinishRpcImmediately(writer);
-            }
-        }
         public static void SetKillCooldown(this PlayerControl player, float time = -1f, bool ForceProtect = false)
         {
             if (player == null) return;
@@ -470,19 +450,6 @@ namespace TownOfHostY
 
             var roleCanUse = (pc.GetRoleClass() as IKiller)?.CanUseImpostorVentButton();
             return roleCanUse ?? false;
-
-            /*
-            return pc.GetCustomRole() switch
-            {
-                CustomRoles.Egoist => true,
-                CustomRoles.Jackal => Jackal.CanVent,
-                CustomRoles.MadSheriff => MadSheriff.CanVent,
-                CustomRoles.Arsonist => Arsonist.IsDouseDone(pc),
-
-                CustomRoles.Telepathisters => Telepathisters.VentCountLimit > -1,
-                _ => pc.Is(CustomRoleTypes.Impostor),
-            };
-            */
         }
         public static bool CanUseSabotageButton(this PlayerControl pc)
         {
@@ -541,7 +508,27 @@ namespace TownOfHostY
             AmongUsClient.Instance.FinishRpcImmediately(messageWriter);
             Utils.NotifyRoles();
         }
-        public static void NoCheckStartMeeting(this PlayerControl reporter, GameData.PlayerInfo target)
+        public static void RpcProtectedMurderPlayer(this PlayerControl killer, PlayerControl target = null)
+        {
+            //killerが死んでいる場合は実行しない
+            if (!killer.IsAlive()) return;
+
+            if (target == null) target = killer;
+            // Host
+            if (killer.AmOwner)
+            {
+                killer.MurderPlayer(target, MurderResultFlags.FailedProtected);
+            }
+            // Other Clients
+            if (killer.PlayerId != 0)
+            {
+                var writer = AmongUsClient.Instance.StartRpcImmediately(killer.NetId, (byte)RpcCalls.MurderPlayer, SendOption.Reliable, killer.GetClientId());
+                writer.WriteNetObject(target);
+                writer.Write((int)MurderResultFlags.FailedProtected);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+            }
+        }
+        public static void NoCheckStartMeeting(this PlayerControl reporter, NetworkedPlayerInfo target)
         { /*サボタージュ中でも関係なしに会議を起こせるメソッド
             targetがnullの場合はボタンとなる*/
             MeetingRoomManager.Instance.AssignSelf(reporter, target);

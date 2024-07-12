@@ -139,7 +139,7 @@ public sealed class Potentialist : RoleBase
 
             if (AmongUsClient.Instance.AmHost && Role == CustomRoles.VentManager)
             {
-                GameData.Instance.RpcSetTasks(playerId, Array.Empty<byte>()); //タスクを再配布
+                player.Data.RpcSetTasks(Array.Empty<byte>()); //タスクを再配布
                 player.SyncSettings();
                 Utils.NotifyRoles();
             }

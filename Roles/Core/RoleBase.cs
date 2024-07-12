@@ -46,8 +46,11 @@ public abstract class RoleBase : IDisposable
         this.hasTasks = hasTasks ?? (roleInfo.CustomRoleType == CustomRoleTypes.Crewmate ? () => HasTask.True : () => HasTask.False);
         HasAbility = hasAbility ?? roleInfo.BaseRoleType.Invoke() is
             RoleTypes.Shapeshifter or
+            RoleTypes.Phantom or
             RoleTypes.Engineer or
             RoleTypes.Scientist or
+            RoleTypes.Tracker or
+            RoleTypes.Noisemaker or
             RoleTypes.GuardianAngel or
             RoleTypes.CrewmateGhost or
             RoleTypes.ImpostorGhost;
@@ -168,6 +171,13 @@ public abstract class RoleBase : IDisposable
     { }
 
     /// <summary>
+    /// 透明化チェック時に呼ばれる
+    /// 自分自身が透明化したときのみ呼ばれる
+    /// </summary>
+    /// <returns>falseを返すと透明化がキャンセルされる</returns>
+    public virtual bool OnCheckVanish() => true;
+
+    /// <summary>
     /// タスクターンに常時呼ばれる関数
     /// 自分自身について呼ばれるため本人確認不要
     /// Host以外も呼ばれるので注意
@@ -184,7 +194,7 @@ public abstract class RoleBase : IDisposable
     /// </summary>
     /// <param name="reporter">通報したプレイヤー</param>
     /// <param name="target">通報されたプレイヤー</param>
-    public virtual void OnReportDeadBody(PlayerControl reporter, GameData.PlayerInfo target)
+    public virtual void OnReportDeadBody(PlayerControl reporter, NetworkedPlayerInfo target)
     { }
 
     /// <summary>
@@ -193,7 +203,7 @@ public abstract class RoleBase : IDisposable
     /// </summary>
     /// <param name="physics"></param>
     /// <param name="id"></param>
-    /// <returns>falseを返すとベントから追い出され、他人からアニメーションも見られません</returns>
+    /// <returns>falseを返すとベントから追い出されます</returns>
     public virtual bool OnEnterVent(PlayerPhysics physics, int ventId) => true;
 
     /// <summary>
@@ -225,7 +235,7 @@ public abstract class RoleBase : IDisposable
     /// </summary>
     /// <param name="exiled">追放されるプレイヤー</param>
     /// <param name="DecidedWinner">勝者を確定させるか</param>
-    public virtual void OnExileWrapUp(GameData.PlayerInfo exiled, ref bool DecidedWinner)
+    public virtual void OnExileWrapUp(NetworkedPlayerInfo exiled, ref bool DecidedWinner)
     { }
 
     /// <summary>
@@ -346,7 +356,9 @@ public abstract class RoleBase : IDisposable
         {
             RoleTypes.Engineer => StringNames.VentAbility,
             RoleTypes.Scientist => StringNames.VitalsAbility,
+            RoleTypes.Tracker => StringNames.TrackerAbility,
             RoleTypes.Shapeshifter => StringNames.ShapeshiftAbility,
+            RoleTypes.Phantom => StringNames.PhantomAbility,
             RoleTypes.GuardianAngel => StringNames.ProtectAbility,
             RoleTypes.ImpostorGhost or RoleTypes.CrewmateGhost => StringNames.HauntAbilityName,
             _ => null

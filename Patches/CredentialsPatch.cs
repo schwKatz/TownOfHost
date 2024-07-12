@@ -38,10 +38,8 @@ namespace TownOfHostY
                 if (!GameStates.IsModHost) sb.Append($"\r\n").Append(Utils.ColorString(Color.red, GetString("Warning.NoModHost")));
                 if (DebugModeManager.IsDebugMode) sb.Append("\r\n").Append(Utils.ColorString(Color.green, "デバッグモード"));
 
-                var offset_x = 1.2f; //右端からのオフセット
-                if (HudManager.InstanceExists && HudManager._instance.Chat.chatButton.active) offset_x += 0.8f; //チャットボタンがある場合の追加オフセット
-                if (FriendsListManager.InstanceExists && FriendsListManager._instance.FriendsListButton.Button.active) offset_x += 0.8f; //フレンドリストボタンがある場合の追加オフセット
-                __instance.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(offset_x, 0f, 0f);
+                // 位置調整
+                __instance.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.6f, 6.0f, 0f);
 
                 if (GameStates.IsLobby)
                 {
@@ -84,6 +82,10 @@ namespace TownOfHostY
             {
                 TMPTemplate.SetBase(__instance.text);
                 Main.credentialsText = $"<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginVersion}";
+                if (Main.IsPrerelease)
+                {
+                    Main.credentialsText += $"\r\n<#F39C12>Pre-Release</color>";
+                }
 #if DEBUG
                 Main.credentialsText += $"\r\n<color={Main.ModColor}>{ThisAssembly.Git.Branch}({ThisAssembly.Git.Commit})</color>";
 #endif
