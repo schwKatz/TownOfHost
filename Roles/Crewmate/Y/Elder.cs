@@ -13,26 +13,27 @@ public sealed class Elder : RoleBase
             CustomRoles.Elder,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewY + 1900,//仮
+            (int)Options.offsetId.CrewSpecial + 0,
+            //(int)Options.offsetId.CrewY + 1900,
             SetupOptionItem,
             "長老",
             "#2B6442"//千歳緑
         );
-    public Elder(PlayerControl player) : base(RoleInfo, player)
+    public Elder(PlayerControl player)
+    : base(
+        RoleInfo,
+        player
+    )
     {
         DiaInLife = OptionDiaInLife.GetBool();
         Lifetime = OptionLifetime.GetFloat();
-        roleChanged = false;
-        GuardCount = 0;
     }
 
     private static OptionItem OptionDiaInLife;
     private static OptionItem OptionLifetime;
-    private static bool roleChanged;
-    private int GuardCount;
+    private bool IsUseGuard;
     private static bool DiaInLife;
     private float Lifetime; // 寿命の時間を管理するプロパティ
-    public static readonly CustomRoles[] ChangeRoles = { CustomRoles.Crewmate };
 
     enum OptionName
     {
@@ -41,76 +42,76 @@ public sealed class Elder : RoleBase
     }
     private static void SetupOptionItem()
     {
-        var cRolesString = ChangeRoles.Select(x => x.ToString()).ToArray();
         OptionDiaInLife = BooleanOptionItem.Create(RoleInfo, 10, OptionName.ElderDiaInLife, false, false);
         OptionLifetime = FloatOptionItem.Create(RoleInfo, 11, OptionName.ElderLifetime, new(5f, 1800f, 5f), 900f, false, OptionDiaInLife)
                 .SetValueFormat(OptionFormat.Seconds);
     }
+
+    public override void Add()
+    {
+        IsUseGuard = false;
+    }
+
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;
-        if (!target.Is(CustomRoles.Elder)) return false;
+        // 直接キル出来る役職チェック
+        if (killer.GetCustomRole().IsDirectKillRole()) return true;
 
-        if (IsTaskFinished)//タスク完了時の処理(自身のkillを通す＆killer側も死ぬ。)
+        // タスク完了時の処理/ガード未使用に関わらず反撃を行う
+        if (IsTaskFinished)
         {
-            info.CanKill = true;
-            killer.RpcMurderPlayer(killer);
-            PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.CounterAttack;
+            // killer側も死亡する
+            PlayerState.GetByPlayerId(killer.PlayerId).DeathReason = CustomDeathReason.CounterAttack; //死因：反撃
+            target.RpcMurderPlayer(killer);
+            return true;
         }
-        else
-        {
-            if (GuardCount > 0)// GuardCountが1以上の場合はキルを通す
-            {
-                info.CanKill = true;
-            }
-            else// GuardCountが0の場合はキルを通さない。
-            {
-                info.CanKill = false;
-                roleChanged = true;
-                killer.RpcProtectedMurderPlayer(target);
-                killer.SetKillCooldown();
-            }
 
-            GuardCount++; // GuardCountを増やす
+        // キルガードする。        
+        if (!IsUseGuard)
+        {
+            info.CanKill = false;
+            IsUseGuard = true;
+            killer.RpcProtectedMurderPlayer(target);
+            killer.SetKillCooldown();
+            return true;
         }
+
+        // 既にガードを使用している場合はキルされる
+        // クルー陣営はみんなクルーメイトになる
+        ChangeRole();
         return true;
     }
     public override void OnFixedUpdate(PlayerControl player)
     {
-        if (DiaInLife)
-        {
-            // 寿命のカウントダウン
-            Lifetime -= Time.fixedDeltaTime;
+        // 老衰設定でない、または長老が死んでいる時は関係ない
+        if (!DiaInLife || !Player.IsAlive()) return;
 
-            // 寿命が尽きたかどうかをチェック
-            if (Lifetime <= 0f)
-            {
-                // プレイヤーを死亡させる
-                MyState.DeathReason = CustomDeathReason.Senility;//死因：老衰
-                Player.RpcMurderPlayer(Player);
-                DiaInLife = false;
-            }
-        }
-        if (!Player.IsAlive() && roleChanged && !IsTaskFinished)
-        {//エルダーが死んでいる＆roleChangedがtrueである＆タスクが終わってない場合
-            ChangeRole();
-            DiaInLife = false;
-        }
-        else if (!Player.IsAlive())
+        // 寿命のカウントダウン
+        Lifetime -= Time.fixedDeltaTime;
+
+        // 寿命が尽きたかどうかをチェック
+        if (Lifetime <= 0f)
         {
-            DiaInLife = false; // プレイヤーが死亡している間もDiaInLifeをfalseに設定する
+            // プレイヤーを死亡させる
+            MyState.DeathReason = CustomDeathReason.Senility; //死因：老衰
+            Player.RpcMurderPlayer(Player);
+            // タスクが終わっていない場合、クルーメイトにする
+            if (!IsTaskFinished) {
+                ChangeRole();
+            }
         }
     }
     public void ChangeRole()
     {
-        var playersCrewmate = Main.AllAlivePlayerControls.Where(player => player.Is(CustomRoleTypes.Crewmate));
-        foreach (var player in playersCrewmate)
+        var crewPlayers = Main.AllAlivePlayerControls.Where(player => player.Is(CustomRoleTypes.Crewmate));
+        foreach (var player in crewPlayers)
         {
-            player.RpcSetCustomRole(ChangeRoles[0]); // クルーメイトに変更
+            // クルーメイトに変更
+            player.RpcSetCustomRole(CustomRoles.Crewmate);
         }
-        Utils.NotifyRoles(); // 役職変更を通知
+        // 役職変更を通知
+        Utils.NotifyRoles(ForceLoop: true);
         Utils.MarkEveryoneDirtySettings();
-
-        roleChanged = false;
     }
 }
