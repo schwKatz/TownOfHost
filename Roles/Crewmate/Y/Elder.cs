@@ -27,24 +27,29 @@ public sealed class Elder : RoleBase
     {
         DiaInLife = OptionDiaInLife.GetBool();
         Lifetime = OptionLifetime.GetFloat();
+        TimeMoveMeeting = OptionTimeMoveMeeting.GetBool();
     }
 
     private static OptionItem OptionDiaInLife;
     private static OptionItem OptionLifetime;
+    private static OptionItem OptionTimeMoveMeeting;
     private bool IsUseGuard;
     private static bool DiaInLife;
-    private float Lifetime; // 寿命の時間を管理するプロパティ
+    private static float Lifetime;
+    private static bool TimeMoveMeeting;
 
     enum OptionName
     {
         ElderDiaInLife,
         ElderLifetime,
+        ElderTimeMoveMeeting,
     }
     private static void SetupOptionItem()
     {
         OptionDiaInLife = BooleanOptionItem.Create(RoleInfo, 10, OptionName.ElderDiaInLife, false, false);
         OptionLifetime = FloatOptionItem.Create(RoleInfo, 11, OptionName.ElderLifetime, new(5f, 1800f, 5f), 900f, false, OptionDiaInLife)
                 .SetValueFormat(OptionFormat.Seconds);
+        OptionTimeMoveMeeting = BooleanOptionItem.Create(RoleInfo, 12, OptionName.ElderTimeMoveMeeting, false, false, OptionDiaInLife);
     }
 
     public override void Add()
@@ -86,6 +91,8 @@ public sealed class Elder : RoleBase
     {
         // 老衰設定でない、または長老が死んでいる時は関係ない
         if (!DiaInLife || !Player.IsAlive()) return;
+        // 会議時間中に変化しない設定の場合はタスクターン以外返す
+        if (!GameStates.IsInTask && !TimeMoveMeeting) return;
 
         // 寿命のカウントダウン
         Lifetime -= Time.fixedDeltaTime;
