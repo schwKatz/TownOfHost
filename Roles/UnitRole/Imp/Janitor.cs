@@ -6,6 +6,7 @@ using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using static TownOfHostY.Roles.Impostor.GodfatherAndJanitor;
 using System.Linq;
+using TownOfHostY.CatchCat;
 
 namespace TownOfHostY.Roles.Impostor;
 public sealed class Janitor : RoleBase, IImpostor
@@ -30,8 +31,9 @@ public sealed class Janitor : RoleBase, IImpostor
         CleanCooldown = OptionJanitorCleanCooldown.GetFloat();
         TrackTarget = OptionJanitorTrackTarget.GetBool();
         TrackGodfather = OptionJanitorTrackGodfather.GetBool();
-        KillCooldown = OptionJanitorKillCooldown.GetFloat();
-        GFDeadMode = (AfterGotfatherDeadMode)OptionAfterGotfatherDeadMode.GetValue();
+        AfterGotfatherDeadIsAlive = OptionAfterGotfatherDeadIsAlive.GetBool();
+        JanitorCanKill = OptionJanitorCanKill.GetBool();
+        JanitorKillCooldown = OptionJanitorKillCooldown.GetFloat();
     }
     // ゴッドファーザーの死亡後、通常キルをする際にtrueにする
     private static bool canNormalKill;
@@ -39,7 +41,9 @@ public sealed class Janitor : RoleBase, IImpostor
     private static float CleanCooldown;
     public static bool TrackTarget;
     private static bool TrackGodfather;
-    private static float KillCooldown;
+    private static bool AfterGotfatherDeadIsAlive;
+    private static bool JanitorCanKill;
+    private static float JanitorKillCooldown;
 
     public override void Add()
     {
@@ -59,7 +63,7 @@ public sealed class Janitor : RoleBase, IImpostor
         }
     }
 
-    public float CalculateKillCooldown() => canNormalKill ? KillCooldown : CleanCooldown;
+    public float CalculateKillCooldown() => canNormalKill ? JanitorKillCooldown : CleanCooldown;
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
         // ゴッドファーザー死亡後、設定により通常キル可
@@ -100,7 +104,7 @@ public sealed class Janitor : RoleBase, IImpostor
         var target = Utils.GetPlayerById(deadTargetId);
         if (target != godfather) return;
         // ゴッドファーザー死亡後、キルできる設定の時
-        if (GFDeadMode == AfterGotfatherDeadMode.LastCanKill)
+        if (JanitorCanKill)
         {
             // ノーマルキルできる設定への切り替え
             canNormalKill = true;
@@ -113,7 +117,7 @@ public sealed class Janitor : RoleBase, IImpostor
         var target = Utils.GetPlayerById(deadTargetId);
         if (target != godfather) return;
         // ゴッドファーザー死亡後、キルできる設定の時
-        if (GFDeadMode == AfterGotfatherDeadMode.LastCanKill)
+        if (JanitorCanKill)
         {
             // ノーマルキルできる設定への切り替え
             canNormalKill = true;
@@ -169,7 +173,7 @@ public sealed class Janitor : RoleBase, IImpostor
     public override void OnFixedUpdate(PlayerControl player)
     {
         /* マッドメイトの時：自身が最後のインポスターの時に試合を終わらせる処理。 */
-        if (GFDeadMode == AfterGotfatherDeadMode.Madmate)
+        if (AfterGotfatherDeadIsAlive && !JanitorCanKill)
         {
             int ImpostorsCount = 0;
             foreach (var pc in Main.AllAlivePlayerControls)
@@ -183,7 +187,7 @@ public sealed class Janitor : RoleBase, IImpostor
                 MyState.DeathReason = CustomDeathReason.Suicide;//死因：自殺。
             }
         }
-        if (GFDeadMode == AfterGotfatherDeadMode.Following)
+        if (!AfterGotfatherDeadIsAlive)
         {
             if (!godfather.IsAlive() && !janitor.IsAlive())
             {
