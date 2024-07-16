@@ -15,8 +15,8 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
             CustomRoles.Chaser,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpSpecial + 0,
-            //(int)Options.offsetId.ImpY + 1700,
+            (int)Options.offsetId.ImpSpecial + 100,
+            //(int)Options.offsetId.ImpY + 1800,
             SetUpOptionItem,
             "チェイサー"
         );
@@ -28,21 +28,27 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
     {
         KillCooldown = OptionKillCooldown.GetFloat();
         ChaseCooldown = OptionChaseCooldown.GetFloat();
+        ChaseMaxCount = OptionChaseMaxCount.GetInt();
         ReturnPosition = OptionReturnPosition.GetBool();
         PositionTime = OptionPositionTime.GetFloat();
     }
     private static OptionItem OptionKillCooldown;
     private static OptionItem OptionChaseCooldown;
+    private static OptionItem OptionChaseMaxCount;
     private static OptionItem OptionReturnPosition;
     private static OptionItem OptionPositionTime;
     private static float KillCooldown;
     private static float ChaseCooldown;
+    private static int ChaseMaxCount;
     public static bool ReturnPosition;
     private static float PositionTime;
+
     private Vector2 lastTransformPosition;
+    private int chaseLimitCount;
     enum OptionName
     {
         ChaserChaseCooldown,
+        ChaserChaseMaxCount,
         ChaserReturnPosition,
         ChaserPositionTime,
     }
@@ -52,9 +58,15 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
                 .SetValueFormat(OptionFormat.Seconds);
         OptionChaseCooldown = FloatOptionItem.Create(RoleInfo, 11, OptionName.ChaserChaseCooldown, new(1f, 180f, 1f), 30f, false)
                 .SetValueFormat(OptionFormat.Seconds);
-        OptionReturnPosition = BooleanOptionItem.Create(RoleInfo, 12, OptionName.ChaserReturnPosition, false, false);
-        OptionPositionTime = FloatOptionItem.Create(RoleInfo, 13, OptionName.ChaserPositionTime, new(1f, 99f, 1f), 10f, false, OptionReturnPosition)
+        OptionChaseMaxCount = IntegerOptionItem.Create(RoleInfo, 12, OptionName.ChaserChaseMaxCount, new(1, 50, 1), 3, false)
+                .SetValueFormat(OptionFormat.Seconds);
+        OptionReturnPosition = BooleanOptionItem.Create(RoleInfo, 13, OptionName.ChaserReturnPosition, false, false);
+        OptionPositionTime = FloatOptionItem.Create(RoleInfo, 14, OptionName.ChaserPositionTime, new(1f, 99f, 1f), 10f, false, OptionReturnPosition)
             .SetValueFormat(OptionFormat.Seconds);
+    }
+    public override void Add()
+    {
+        chaseLimitCount = ChaseMaxCount;
     }
 
     public float CalculateKillCooldown() => KillCooldown;
@@ -71,12 +83,19 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
     {
         // 変身アニメーションを起こさない
         animate = false;
+        // 回数制限
+        if (chaseLimitCount <= 0) return false;
+
         // 変身前の位置を記録する
         lastTransformPosition = Player.transform.position;
         // ベントの位置へ飛ばす。
         Player.MyPhysics.RpcExitVent(GetNearestVentId(target));
         // 変身クールダウンのリセット
         Player.RpcResetAbilityCooldown();
+
+        // 回数消化
+        chaseLimitCount--;
+        Logger.Info($"{Player.GetNameWithRole()} : 残り{chaseLimitCount}発", "Chaser");
 
         // 以下、元の場所に戻れる時の処理
         if (!ReturnPosition) return false;
@@ -117,4 +136,6 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
         var vents = ShipStatus.Instance.AllVents.OrderBy(v => (lastTransformPosition - (Vector2)v.transform.position).magnitude);
         return vents.First().Id;
     }
+
+    public override string GetProgressText(bool comms = false) => Utils.ColorString(chaseLimitCount > 0 ? RoleInfo.RoleColor : Color.gray, $"[{chaseLimitCount}]");
 }
