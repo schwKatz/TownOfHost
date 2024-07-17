@@ -151,6 +151,7 @@ public sealed class LoyalDoggy : RoleBase
 
         //矢印表示する必要がなければ無し
         if (!masterDecision || isForMeeting || masterIsDead) return string.Empty;
+        if (Master == null || Master.Data.Disconnected) return string.Empty;
 
         var arrow = TargetArrow.GetArrows(seer, Master.PlayerId);
         var color = Master.IsAlive() ? RoleInfo.RoleColor : Palette.ImpostorRed;
