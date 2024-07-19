@@ -131,6 +131,7 @@ namespace TownOfHostY
         public OptionItem SetHidden(bool value) => Do(i => i.IsHidden = value);
         public OptionItem SetFixValue(bool value) => Do(i => i.IsFixValue = value);
         public OptionItem SetText(bool value) => Do(i => i.IsText = value);
+        public OptionItem SetReplacementDictionary(Dictionary<string, string> value) => Do(i => i.ReplacementDictionary = value);
 
         public OptionItem SetParent(OptionItem parent) => Do(i =>
         {

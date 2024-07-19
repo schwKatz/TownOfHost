@@ -59,6 +59,7 @@
 "EvilGuesser","Evil Guesser","イビルゲッサー","","","",""
 "SelfBomber","SelfBomber","自爆魔","","","",""
 "GrudgeCharger","Grudge Charger","グラージチャージャー",
+"Charger","Charger","チャージャー",
 "Chaser","Chaser","チェイサー","","","",""
 
 "CustomImpostorInfo","I can now use abilities like that","あんな能力も使えるようになりました",
@@ -100,6 +101,7 @@
 "EvilGuesserInfo","Guess and shoot","推測して撃ち抜こう","","","",""
 "SelfBomberInfo","Self Bomb!","みんな死んじゃえ","","","",""
 "GrudgeChargerInfo","Resentment builds up and attacks","恨みが溜まり襲い掛かる",
+"ChargerInfo","Release the power all at once.","力を一気に解放する、、今だ！",
 "ChaserInfo","I will chase you to the ends of the earth.","地の果てまで追いかける…","","","",""
 
 "CustomImpostorInfoLong","(Impostors):\nImpostor with the ability to Add-On to attributes set by the host.","[インポスター陣営]\nホストによって設定された属性の能力をもつインポスター。",
@@ -138,6 +140,7 @@
 "EvilGuesserInfoLong","(Impostors):\nImpostor guessing the player's role.\nYou can shoot a player during a meeting by guessing their role.","(インポスター陣営):\n会議中に他のプレイヤーの役職を当てる事でそのプレイヤーを死亡(死因:射殺)させることができる。\nなお役職の推測をミスした場合、自身が死亡(死因:誤爆)する。","","","",""
 "SelfBomberInfoLong","(Impostors):\nCan perform self-destruct range kills.Vanishing kills all crew members around you and you die.","(インポスター陣営):\n自爆による特攻キルを行う事ができるインポスター。\n透明化することで自身の周囲にいるクルーを全員キルして自分も死にます。\nさあ! 私と共に死んでもらうぞ!!\n爆破!!!!","","","",""
 "GrudgeChargerInfoLong","(Impostors):\nUse the kill button to charge the number of kills, use shapeshift to select a kill target, and automatically make a kill when approaching the target.\nNormal kills and transformations are not possible. Target cannot be changed until next turn or kill. The second and subsequent targets on the same turn can be selected with no cooldown.\nThe charge increases the number of kills possible by one when one gauge is fully accumulated.","[インポスター陣営]\nキルボタンを使ってキル回数をチャージ、シェイプ選択でキルターゲットを選択し、ターゲットに近づくと自動でキルをする。\n通常キル・変身不可。ターゲットは次のターンになるかキルするまで変更ができない。同ターン2人目以降はクールダウン無しでターゲットを選択できる。\nチャージは１ゲージ溜まり切るとキル可能回数が１増加する。"
+"ChargerInfoLong","(Impostors):\nUse the kill button to charge the number of kills,Use the Vanish button to kill.\nNormal kills and Vanish are not possible. The second and subsequent targets on the same turn can be selected with no cooldown.\nThe charge increases the number of kills possible by one when one gauge is fully accumulated.","[インポスター陣営]\nキルボタンを使ってキル回数をチャージ、消えるボタンで溜まったキル回数を使ってキルをする。\n通常キル・透明化不可。同ターン2人目以降はクールダウン無しでキルできる。\nチャージは１ゲージ溜まり切るとキル可能回数が１増加する。"
 "ChaserInfoLong","(Impostors):\nA role that allows you to warp by transforming.\nDetects a nearby vent with a transformed target and warps there.\nYou can also return to the original position in the settings.\nIt would be funny if there were other players in front of you.\n","[インポスター陣営]\n近くに移動したいターゲットをシェイプボタンで選択すると、そのターゲットから一番近いベントにワープすることができる。ワープ時、他視点からチェイサーはそのベントから出てきたように見える(ベント開閉あり)。\n元の位置に戻る設定がONの時、設定時間後に元居た場所の近くのベントに戻る。"
 
 "# マッドメイト系役職"
@@ -861,7 +864,9 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "GrudgeChargerChargeKillCooldown","Charge Kill Cooldown","チャージ(キルボタン)クールダウン",
 "GrudgeChargerOneGaugeChargeCount","One Gauge Accumulate Charge Count","一ゲージが溜まるチャージ数",
 "GrudgeChargerKillCountAtStartGame","Possible Kill Count At the Start Of the Game","ゲーム開始時のキル可能回数",
+"ChargerFirstKillCooldown","First Kill Cooldown","一人目キルのクールダウン",
 "ChaserChaseCooldown","Chase Cooldown","チェイスクールダウン","追逐冷却时间","追逐冷卻時間","Перезарядка погони","Tempo de espera da perseguição"
+"ChaserChaseMaxCount","Chase Max Count","チェイスの最大回数",
 "ChaserReturnPosition","Return Position After Chase","チェイス後、元の位置に戻る","返回原位","返回原位","Вернуться в исходное положение","Retornar à posição original"
 "ChaserPositionTime","Time to return to original position","元の位置に戻るまでの時間","几秒钟后返回原来位置","多少秒後它會回到原來的位置","Через сколько секунд он вернется в исходное положение","Depois de quantos segundos ele retornará à sua posição original"
 
@@ -1034,15 +1039,15 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "CounselorTaskTrigger","Counselor Trigger Tasks","カウンセラーの能力が使用できるタスク数",
 "CounselorChallengeMaxCount","Counselor Voting with Ability Count","カウンセラーの能力投票できる回数",
 "MadDilemmaResetAddonChangeCrew","MadDilemma Resets Addon After Change to Crewmate","マッドジレンマがクルーに改心後、属性をリセットする",
-"GodfatherKillCooldown","Godfather Kill CoolDown","ゴッドファーザーのキルクール",
-"GodfatherLockDistance","Godfather Kill Lock Distance For Janitor Kill","ゴッドファーザーのジャニターキル用ロックが起こる距離",
-"JanitorCleanCooldown","Janitor Clean Cooldown","ジャニターの掃除のクールダウン",
-"JanitorSeeSelectedTiming","Janitor See Selected Timing","ジャニターがターゲット選択通知を受け取れる",
-"JanitorTrackTarget","Janitor Track Target","ジャニターはターゲットへの矢印が見える",
-"JanitorTrackGodfather","Janitor Track Godfather","ジャニターはゴッドファーザーへの矢印が見える",
-"JanitorAfterGotfatherDeadIsAlive","After Gotfather Dead IsAlive","ゴットファーザー死亡後ジャニターは生存する",
-"JanitorCanKill","Janitor Can Kill","ジャニターがキル能力を持つ",
-"JanitorKillCooldown","Janitor Kill CoolDown","ジャニターのキルクール",
+"GodfatherKillCooldown","%godfather% Kill CoolDown","%godfather%のキルクール",
+"GodfatherLockDistance","%godfather% Kill Lock Distance For Janitor Kill","%godfather%のロックキルが起こる距離",
+"JanitorCleanCooldown","%janitor% Clean Cooldown","%janitor%の掃除のクールダウン",
+"JanitorSeeSelectedTiming","%janitor% See Selected Timing","%janitor%がターゲット選択通知を受け取れる",
+"JanitorTrackTarget","%janitor% Track Target","%janitor%はターゲットへの矢印が見える",
+"JanitorTrackGodfather","%janitor% Track Godfather","%janitor%はゴッドファーザーへの矢印が見える",
+"JanitorAfterGotfatherDeadIsAlive","%janitor% Alive After Godfather Dead ","%janitor%はゴットファーザー死亡後も生存する",
+"JanitorCanKill","%janitor% Can Kill","%janitor%がキル能力を持つ",
+"JanitorKillCooldown","%janitor% Kill CoolDown","%janitor%のキルクール",
 
 # アドオン
 #"NumberOfLovers","Number Of Lovers (Pairs)","ラバーズの組数(x2人数)","恋人对数","戀人最大數量(2位玩家)","Количество Любовников (x2участника)","Quantidade de Amantes (Pares)"
@@ -1415,7 +1420,9 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "PenguinKillButtonText","Drag","拉致","拖拽","","ПЕРЕТАСКИВАТЬ","Arrastar"
 "PenguinTimerText","Drag Timer","残り時間","剩余时间","","Время перетаскивания","Tempo para Arrastar"
 "SelfBomberExplosionButtonText","Fire","爆破","引爆","引爆","Зажечь","Explodir"
+"GrudgeChargerCharge","Charge","チャージ",
 "GrudgeChargerSelectTarget","Select","キル対象選択",
+"ChargerKill","Kill","キル",
 
 "killer","Killer","キラー","杀手",
 "AntiAdminerAD","Warning Admin","アドミン注意！","管理室地图注意",,
