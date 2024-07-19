@@ -132,10 +132,6 @@ public static class MeetingHudPatch
                         $"{Exiled_Target.exiled.PlayerName}{Exiled_Target.exiled.ColorName.Color(Exiled_Target.exiled.Color)}", $"{Exiled_Target.revengeTarget.PlayerName}{Exiled_Target.revengeTarget.ColorName.Color(Exiled_Target.revengeTarget.Color)}"));
                 }
             }
-            if (Main.isProtectRoleExist)
-            {
-                Utils.SendMessage(GetString("Message.isProtectRoleExist"));
-            }
 
             if (AntiBlackout.OverrideExiledPlayer && !Options.IsCCMode)
             {

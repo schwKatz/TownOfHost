@@ -568,17 +568,6 @@ class SelectRolesPatch
                 );
             }
         }
-        Main.isProtectRoleExist = CustomRolesHelper.AllRoles.Where(role => role.IsPresent() && role.IsProtectRole()).Any() && Options.ForceProtect.GetBool();
-        /*
-        //インポスターのゴーストロールがクルーになるバグ対策
-        foreach (var pc in PlayerControl.AllPlayerControls)
-        {
-            if (pc.Data.Role.IsImpostor || Main.ResetCamPlayerList.Contains(pc.PlayerId))
-            {
-                pc.Data.Role.DefaultGhostRole = RoleTypes.ImpostorGhost;
-            }
-        }
-        */
         Utils.CountAlivePlayers(true);
         Utils.SyncAllSettings();
         SetColorPatch.IsAntiGlitchDisabled = false;
