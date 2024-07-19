@@ -745,8 +745,6 @@ public static class Utils
             //if (Options.SyncButtonMode.GetBool()) { SendMessage(GetString("SyncButtonModeInfo"), PlayerId); }
             //if (Options.SabotageTimeControl.GetBool()) { SendMessage(GetString("SabotageTimeControlInfo"), PlayerId); }
             if (Options.RandomMapsMode.GetBool()) { SendMessage(GetString("RandomMapsModeInfo"), PlayerId); }
-            if (Options.ForceProtect.GetBool() && CustomRolesHelper.AllStandardRoles.Where(role => role.IsProtectRole() && role.IsEnable()).Any())
-            { SendMessage("【" + GetString("ForceProtect") + "】\n" + GetString("Message.isProtectRoleExist"), PlayerId); }
             if (Options.IsStandardHAS) { SendMessage(GetString("StandardHASInfo"), PlayerId); }
             if (Options.EnableGM.GetBool()) { SendMessage(GetRoleName(CustomRoles.GM) + GetString("GMInfoLong"), PlayerId); }
             foreach (var role in CustomRolesHelper.AllStandardRoles) // OneNight追加時にワンナイト役職も含める

@@ -100,7 +100,6 @@ namespace TownOfHostY
         public static bool isChatCommand = false;
         public static Dictionary<byte, float> AllPlayerKillCooldown = new();
         public static Dictionary<int, string> ConsentModUse = new();
-        public static bool isProtectRoleExist = false;
         /// <summary>
         /// 基本的に速度の代入は禁止.スピードは増減で対応してください.
         /// </summary>
