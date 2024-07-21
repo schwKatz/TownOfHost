@@ -466,6 +466,20 @@ public static class NumberOptionPatch
     [HarmonyPatch(nameof(NumberOption.Increase)), HarmonyPrefix]
     public static bool IncreasePrefix(NumberOption __instance)
     {
+        // Shift押しながらの値更新
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            __instance.Value = __instance.Value + (__instance.Increment * 5);
+            // 超えている場合は最大値
+            if (__instance.Value > __instance.ValidRange.max)
+            {
+                __instance.Value = __instance.ValidRange.max;
+            }
+            __instance.UpdateValue();
+            __instance.OnValueChanged.Invoke(__instance);
+            return false;
+        }
+
         if (__instance.Value == __instance.ValidRange.max)
         {
             __instance.Value = __instance.ValidRange.min;
@@ -478,6 +492,20 @@ public static class NumberOptionPatch
     [HarmonyPatch(nameof(NumberOption.Decrease)), HarmonyPrefix]
     public static bool DecreasePrefix(NumberOption __instance)
     {
+        // Shift押しながらの値更新
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            __instance.Value = __instance.Value - (__instance.Increment * 5);
+            // 超えている場合は最小値
+            if (__instance.Value < __instance.ValidRange.min)
+            {
+                __instance.Value = __instance.ValidRange.min;
+            }
+            __instance.UpdateValue();
+            __instance.OnValueChanged.Invoke(__instance);
+            return false;
+        }
+
         if (__instance.Value == __instance.ValidRange.min)
         {
             __instance.Value = __instance.ValidRange.max;
@@ -550,6 +578,20 @@ public static class StringOptionPatch
     [HarmonyPatch(nameof(StringOption.Increase)), HarmonyPrefix]
     public static bool IncreasePrefix(StringOption __instance)
     {
+        // Shift押しながらの値更新
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            __instance.Value = __instance.Value + 5;
+            // 超えている場合は最大値
+            if (__instance.Value > __instance.Values.Length - 1)
+            {
+                __instance.Value = __instance.Values.Length - 1;
+            }
+            __instance.UpdateValue();
+            __instance.OnValueChanged.Invoke(__instance);
+            return false;
+        }
+
         if (__instance.Value == __instance.Values.Length - 1)
         {
             __instance.Value = 0;
@@ -562,6 +604,20 @@ public static class StringOptionPatch
     [HarmonyPatch(nameof(StringOption.Decrease)), HarmonyPrefix]
     public static bool DecreasePrefix(StringOption __instance)
     {
+        // Shift押しながらの値更新
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            __instance.Value = __instance.Value - 5;
+            // 超えている場合は最小値
+            if (__instance.Value < 0)
+            {
+                __instance.Value = 0;
+            }
+            __instance.UpdateValue();
+            __instance.OnValueChanged.Invoke(__instance);
+            return false;
+        }
+
         if (__instance.Value == 0)
         {
             __instance.Value = __instance.Values.Length - 1;
@@ -572,29 +628,3 @@ public static class StringOptionPatch
         return true;
     }
 }
-
-//[HarmonyPatch(typeof(StringOption), nameof(StringOption.Increase))]
-//public class StringOptionIncreasePatch
-//{
-//    public static bool Prefix(StringOption __instance)
-//    {
-//        var option = OptionItem.AllOptions.FirstOrDefault(opt => opt.OptionBehaviour == __instance);
-//        if (option == null) return true;
-
-//        option.SetValue(option.CurrentValue + (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? 5 : 1));
-//        return false;
-//    }
-//}
-
-//[HarmonyPatch(typeof(StringOption), nameof(StringOption.Decrease))]
-//public class StringOptionDecreasePatch
-//{
-//    public static bool Prefix(StringOption __instance)
-//    {
-//        var option = OptionItem.AllOptions.FirstOrDefault(opt => opt.OptionBehaviour == __instance);
-//        if (option == null) return true;
-
-//        option.SetValue(option.CurrentValue - (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift) ? 5 : 1));
-//        return false;
-//    }
-//}
