@@ -1,9 +1,8 @@
 using AmongUs.GameOptions;
-using MS.Internal.Xml.XPath;
+using UnityEngine;
+
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
-using TownOfHostY.Roles.Vanilla;
-using UnityEngine;
 using static TownOfHostY.Roles.Impostor.GodfatherAndJanitor;
 
 namespace TownOfHostY.Roles.Impostor;
