@@ -1260,8 +1260,8 @@ public static class Utils
 
         var caller = new System.Diagnostics.StackFrame(1, false);
         var callerMethod = caller.GetMethod();
-        string callerMethodName = callerMethod.Name;
-        string callerClassName = callerMethod.DeclaringType.FullName;
+        string callerMethodName = callerMethod?.Name;
+        string callerClassName = callerMethod?.DeclaringType?.FullName;
         var logger = Logger.Handler("NotifyRoles");
         logger.Info("NotifyRolesが" + callerClassName + "." + callerMethodName + "から呼び出されました");
         HudManagerPatch.NowCallNotifyRolesCount++;
