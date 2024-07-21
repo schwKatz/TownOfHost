@@ -35,9 +35,6 @@ public sealed class Janitor : RoleBase, IImpostor
         JanitorCanKill = OptionJanitorCanKill.GetBool();
         JanitorKillCooldown = OptionJanitorKillCooldown.GetFloat();
     }
-    // ゴッドファーザーの死亡後、通常キルをする際にtrueにする
-    private static bool canNormalKill;
-
     private static float CleanCooldown;
     public static bool TrackTarget;
     private static bool TrackGodfather;
@@ -45,11 +42,17 @@ public sealed class Janitor : RoleBase, IImpostor
     private static bool JanitorCanKill;
     private static float JanitorKillCooldown;
 
+    // ゴッドファーザーの死亡後、通常キルをする際にtrueにする
+    private static bool canNormalKill;
+    // murderPlayerの無限ループ防止
+    private static bool isSuiside;
+
     public override void Add()
     {
         janitor = Player;
         Logger.Info($"{Player.GetNameWithRole()} : Janitor登録", "G&J");
         canNormalKill = false;
+        isSuiside = false;
 
         // ジャニター視点の矢印表示追加
         if (TrackGodfather)
@@ -105,8 +108,9 @@ public sealed class Janitor : RoleBase, IImpostor
         if (!commonSuiside(deadTargetId)) return;
 
         /* 後追い処理 */
+        isSuiside = true;
         PlayerState.GetByPlayerId(janitor.PlayerId).DeathReason = CustomDeathReason.FollowingSuicide;
-        godfather.RpcMurderPlayer(janitor);
+        janitor.RpcMurderPlayer(janitor);
         godfather.SetRealKiller(janitor);
         Logger.Info($"{janitor.GetNameWithRole()}の後追い:{godfather.GetNameWithRole()}", "KillFollowingSuicide");
     }
@@ -116,6 +120,7 @@ public sealed class Janitor : RoleBase, IImpostor
         if (!commonSuiside(deadTargetId)) return;
 
         /* 後追い処理 */
+        isSuiside = true;
         MeetingHudPatch.TryAddAfterMeetingDeathPlayers(CustomDeathReason.FollowingSuicide, janitor.PlayerId);
         godfather.SetRealKiller(janitor);
         Logger.Info($"{janitor.GetNameWithRole()}の後追い:{godfather.GetNameWithRole()}", "VoteFollowingSuicide");
@@ -128,6 +133,7 @@ public sealed class Janitor : RoleBase, IImpostor
     {
         // 既にジャニターが死んでいる時は関係ない
         if (!janitor.IsAlive()) return false;
+        if (isSuiside) return false;
 
         // 生き残り設定でない場合
         if (!IsLastImpostor(deadTargetId))
@@ -161,7 +167,7 @@ public sealed class Janitor : RoleBase, IImpostor
     private static bool JanitorIsAliveSetting(byte deadTargetId)
     {
         // 死亡したのがゴッドファーザーでない時は関係ない
-        if (Utils.GetPlayerById(deadTargetId) != godfather) return false;
+        if (Utils.GetPlayerById(deadTargetId) != godfather) return true;
         // 生き残れない設定の時、falseで後追い処理へ続く
         if (!IsAliveAfterGodfatherDead) return false;
 
@@ -203,17 +209,13 @@ public sealed class Janitor : RoleBase, IImpostor
         // ジャニターターゲットへの矢印表示
         if (TrackTarget && JanitorTarget.Count > 0)
         {
-            string arrow = "";
-            foreach (var targetId in JanitorTarget)
-            {
-                // 矢印の取得
-                arrow += TargetArrow.GetArrows(Player, targetId);
-            }
+            // 矢印の取得
+            string arrow = TargetArrow.GetArrows(Player, JanitorTarget.ToArray());
             // 矢印表示があれば
             if (arrow.Length >= 0)
             {
                 // 色を付けてsb追加
-                sb.Append("<color=#e6ccff>").Append(arrow).Append("</color>");
+                sb.Append("<color=#cc00cc>").Append(arrow).Append("</color>");
             }
         }
 
