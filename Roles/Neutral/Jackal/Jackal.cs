@@ -44,7 +44,6 @@ namespace TownOfHostY.Roles.Neutral
 
             canSidekickCount = canCreateSidekick ? 1 : 0;
             sidekickTarget = new();
-            runPromote = false;
         }
 
         private static OptionItem OptionKillCooldown;
@@ -175,7 +174,7 @@ namespace TownOfHostY.Roles.Neutral
             if (Player.PlayerId != info.AttemptTarget.PlayerId) return;
 
             Logger.Info($"checkPromoted byKill Jackal:{Player?.name}", "Jackal");
-            CheckStartPromoted();
+            new LateTask(() => CheckPromoted(), 0.5f, "JackalPromotedByKill");
         }
         public override void OnExileWrapUp(NetworkedPlayerInfo exiled, ref bool DecidedWinner)
         {
@@ -183,35 +182,33 @@ namespace TownOfHostY.Roles.Neutral
             if (Player.PlayerId != exiled.PlayerId) return;
 
             Logger.Info($"checkPromoted byExiled Jackal:{Player?.name}", "Jackal");
-            CheckStartPromoted();
+            new LateTask(() => CheckPromoted(), 0.5f, "JackalPromotedByExiled");
         }
         public override void AfterMeetingTasks()
         {
             if (!AmongUsClient.Instance.AmHost) return;
 
-            Logger.Info($"checkPromoted AfterMeeting Jackal:{Player?.name}", "Jackal");
-            CheckStartPromoted();
-        }
-        private static bool runPromote = false;
-        public static void CheckStartPromoted()
-        {
-            if (runPromote) return;
-            runPromote = true;
+            if (Main.AllAlivePlayerControls.Any(pc => pc.Is(CustomRoles.Jackal))) return;
 
-            new LateTask(() => CheckPromoted(), 0.5f, "JackalAfterMeetingPromoted");
+            Logger.Info($"checkPromoted AfterMeeting Jackal:{Player?.name}", "Jackal");
+            new LateTask(() => CheckPromoted(), 0.5f, "JackalPromotedAfterMeeting");
         }
         public static void CheckPromoted()
         {
-            if (Main.AllAlivePlayerControls.Any(pc => pc.Is(CustomRoles.Jackal))) return;
-            if (Main.AllAlivePlayerControls.Any(pc => pc.Is(CustomRoles.JSidekick) && ((JSidekick)pc.GetRoleClass()).Promoted)) return;
+            if (Main.AllAlivePlayerControls.Any(pc => pc.Is(CustomRoles.JSidekick) &&
+            ((JSidekick)pc.GetRoleClass()).Promoted))
+            {
+                Logger.Info($"NotPromote exists promoted", "Jackal");
+                return;
+            }
 
             var list = Main.AllAlivePlayerControls.Where(pc => pc.Is(CustomRoles.JSidekick)).ToArray();
+
+            Logger.Info($"CheckPromote sidekick count: {list.Count()}", "Jackal");
             if (list.Count() < 1) return;
 
             var sidekick = list[IRandom.Instance.Next(list.Count())];
             ((JSidekick)sidekick.GetRoleClass()).BePromoted();
-
-            runPromote = false;
         }
     }
 }
