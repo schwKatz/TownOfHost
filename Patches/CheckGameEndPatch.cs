@@ -37,6 +37,7 @@ namespace TownOfHostY
             //ゲーム終了時
             if (CustomWinnerHolder.WinnerTeam != CustomWinner.Default)
             {
+                Logger.Info($"GameEnd winner: {CustomWinnerHolder.WinnerTeam}, reason: {reason}", "GameEndChecker");
                 //カモフラージュ強制解除
                 Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(false, pc, ForceRevert: true, RevertToDefault: true));
 
@@ -374,6 +375,7 @@ namespace TownOfHostY
             {
                 reason = GameOverReason.HumansByTask;
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Crewmate);
+                Logger.Info($"GemeEndByTask task: {GameData.Instance.CompletedTasks}/{GameData.Instance.TotalTasks}", "CheckGameEndByTask");
                 return true;
             }
             return false;
