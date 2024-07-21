@@ -54,6 +54,8 @@ public static class CustomRoleManager
         // 無効なキルをブロックする処理 必ず最初に実行する
         if (!CheckMurderPatch.CheckForInvalidMurdering(info)) return false;
 
+        if (attemptKiller.GetCustomRole().IsImpostor() && attemptTarget.GetCustomRole().IsImpostor()) return false; // インポスター同士のキル無効
+
         var killerRole = attemptKiller.GetRoleClass();
         var targetRole = attemptTarget.GetRoleClass();
 
@@ -550,6 +552,7 @@ public enum CustomRoles
     Terrorist,
     Executioner,
     Jackal,
+    JSidekick,
     JClient,
     AntiComplete,
     Workaholic,

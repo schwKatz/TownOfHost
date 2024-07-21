@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Hazel;
 
+using AmongUs.GameOptions;
 using TownOfHostY.Attributes;
 using TownOfHostY.Modules;
 using TownOfHostY.Roles.Impostor;
 using TownOfHostY.Roles.Neutral;
+using System.ComponentModel;
+using TownOfHostY.Roles.Core;
 
 namespace TownOfHostY
 {
@@ -21,8 +25,13 @@ namespace TownOfHostY
         private static Dictionary<byte, (bool isDead, bool Disconnected)> isDeadCache = new();
         private readonly static LogHandler logger = Logger.Handler("AntiBlackout");
 
+        private static CountTypes recognizeImpostor = CountTypes.Impostor;
+        public static int ExiledPlayerId = -1;
+
         public static void SetIsDead(bool doSend = true, [CallerMemberName] string callerMethodName = "")
         {
+            SetRoleChange();
+
             logger.Info($"SetIsDead is called from {callerMethodName}");
             if (IsCached)
             {
@@ -39,6 +48,34 @@ namespace TownOfHostY
             }
             IsCached = true;
             if (doSend) SendGameData();
+        }
+        private static void SetRoleChange()
+        {
+            if (CustomWinnerHolder.WinnerTeam != CustomWinner.Default) return;
+
+            CountTypes countType = CountTypes.None;
+            List<PlayerControl> list = new();
+            foreach (var type in new List<CountTypes>{ CountTypes.Impostor, CountTypes.Jackal, CountTypes.Pirate })
+            {
+                list = Main.AllAlivePlayerControls.Where(x => x.GetCustomRole().GetRoleInfo().CountType == type && x.PlayerId != ExiledPlayerId).ToList();
+                Logger.Info($"SetRoleChange type: {type}, count: {list.Count}, exiled: {ExiledPlayerId}", "AntiBlackout");
+                if (list.Count > 0) break;
+            }
+
+            if (countType <= recognizeImpostor) return;
+            recognizeImpostor = countType;
+
+            Logger.Info($"SetRoleChange count:{list.Count}", "AntiBlackout");
+            foreach (var pc in Main.AllPlayerControls.Where(x => !x.Data.Disconnected))
+            {
+                if (pc.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
+                if (pc.IsAlive() && pc.GetCustomRole().GetRoleInfo().IsDesyncImpostor) continue;
+                foreach (var desync in list)
+                {
+                    desync.RpcSetRoleDesync(RoleTypes.Impostor, pc.GetClientId());
+                }
+            }
+            ExiledPlayerId = -1;
         }
         public static void RestoreIsDead(bool doSend = true, [CallerMemberName] string callerMethodName = "")
         {
@@ -107,6 +144,7 @@ namespace TownOfHostY
             if (isDeadCache == null) isDeadCache = new();
             isDeadCache.Clear();
             IsCached = false;
+            recognizeImpostor = CountTypes.Impostor;
         }
     }
 }

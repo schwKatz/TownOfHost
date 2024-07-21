@@ -323,6 +323,7 @@ DSchrodingerCat,(Dark)SCat,(Dark)シュレ猫,(潜藏)薛定谔的猫,(Dark)薛�
 "Egoist","Egoist","エゴイスト","野心家","利己主義者","Эгоист","Egoísta"
 "Jackal","Jackal","ジャッカル","豺狼","豺狼","Шакал","Chacal"
 "JClient","Client","クライアント","客户",,,
+"JSidekick","Sidekick","サイドキック","","","",""
 "AntiComplete","Anti Complete","アンチコンプリート","防成者",,
 "Workaholic","Workaholic","ワーカホリック","工作狂",,
 "DarkHide","Dark Hide","ダークハイド","潜藏者",,
@@ -356,6 +357,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "EgoistInfo","Take over the Impostors' victory","インポスター勝利を独占しよう","夺走内鬼的胜利","讓我們來奪取偽裝者的勝利","Не дай Предателям победить","Ganhe no lugar do Impostor"
 "JackalInfo","Kill Everyone","すべてを殺せ","快去杀光所有人，一只苍蝇都不要剩下！","殺光所有人不留活口","Убей всех игроков","Mate todos"
 "JClientInfo","Finish your tasks to help the Jackal","タスクを済ませ、ジャッカルの援助をしよう",,,,
+"JSidekickInfo","Jackal's sidekick","ジャッカルの相棒","","","",""
 "AntiCompleteInfo","I hate guys who can work","仕事出来るやつが嫌いだ","我讨厌可以工作的人",,
 "WorkaholicInfo","I can't live without my job","仕事してないと生きてられない","我不能离开我的工作",,
 "DarkHideInfo","Let's kill it and cause a blackout","キルして停電を起こそう","可以对中立杀手的计数",,
@@ -383,6 +385,7 @@ DSchrodingerCatInfo,You are now on Team Darkhide,ダークハイドの味方に�
 "EgoistInfoLong","(Neutrals):\nWhen all impostors are dead, you solo victory by fulfilling impostor victory conditions.\nYou and the impostors know who each other are.","(ニュートラル):\n味方がすべて死んだ状態でインポスターが勝つと単独勝利する。\nインポスターは誰がエゴイストか分かる。エゴイストも、誰がインポスターか分かる。","(独立阵营):\n原则上野心家属于内鬼阵营。野心家与内鬼阵营玩家互认但不可以击杀对方。\n当其他内鬼阵营玩家全部死亡后，若野心家存活且内鬼阵营达成胜利条件，则野心家单独获得胜利。","(中立陣營):\n如果所有的偽裝者都死亡，且利己主義者存活，利己主義者將獨自獲勝。\n(偽裝者和利己主義者互相知道對方但是不可以互刀對方)","(Нейтрал):\nПосле того, как все Предатели умрут то Эгоист побеждает вместо Предателей. \nПредатели и Эгоист видят друг друга.","(Neutros): \nQuando todos os Impostores morrerem, você ganha sozinho assumindo o papel de Impostor. \nVocê e os Impostores sabem quem são uns aos outros."
 "JackalInfoLong","(Neutrals):\nJackal can kill all Crewmates, Impostors and Neutrals.\nTeam Jackal wins when living Jackal outnumbers living Crewmates and when there are no Impostors alive.","(ジャッカル陣営):\nジャッカルはすべてのプレイヤーを殺すことができる。\nインポスターが残っておらず、生き残っているジャッカルの人数がクルーと同じかそれ以上でジャッカルが勝利する。","(独立阵营):\n豺狼需要击杀所有人。\n存活的玩家只剩豺狼和一名其他船员时，豺狼获得胜利。","(中立):\n豺狼需要殺死所有人來獲得勝利,\n如果場上存活的玩家只剩下豺狼和另一名不帶刀職業時,豺狼將獲勝。","(Нейтрал):\nШакал может убить всех Членов Экипажа, Нейтралов и Предателей тоже. \nШакал может победить, когда в живых остался только 1 Шакал и 1 Член Экипажа.","(Neutros): \nVocê pode matar todos os jogadores. \nGanhe quando não existirem mais Impostores, e o número de Chacais for maior que o de Tripulantes."
 "JClientInfoLong","(Neutrals):\nCrewmate, but they belong to team Jackal, one type of Jackal's Madmates.\nThey can see who is the Jackal after finishing all their tasks.\nDepending on option, they can use vents.","(ジャッカル陣営):\nクルーだがジャッカルの味方をする。\nジャッカルと互いに認識できないが、タスクを全て完了させるとジャッカルを認識できるようになる。",,,,
+"JSidekickInfoLong","(Neutrals):\nThey belong to team Jackal.\nWhen the Jackal dies, it becomes the Jackal.","(ジャッカル陣営):\nジャッカルの相棒として行動する。\nジャッカルが死ぬと、ジャッカルに代わってキルができるようになる。","","","",""
 "AntiCompleteInfoLong","(Neutrals)\nDuring the meeting, you can vote for your favorite person only once in the entire meeting. If that person has already completed the task,，he or she wins alone. If you select someone who has no task or who has not completed a task，you die and lose. When the AntiComplete selects someone，the meeting is forced to end.","[ニュートラル]\n会議中、全体で1回のみ好きな人を投票で選択出来る。その人がタスクを既に完了させていたら単独勝利。タスクがない人、タスクが終わってない人を選ぶと死亡し敗北。\nアンチコンプが誰か選択した時、会議は強制終了する。","(中立阵营)\n在整个会议中，您只能投票给您喜欢的人一次。如果这个人已经完成了任务，它独自获胜。如果你选择了一个没有任务或者没有完成任务的人，你就会失败。当防成者选择某人时，会议将被迫结束。",,
 "WorkaholicInfoLong","(Neutrals)\nWhen you complete a task，you win alone. The amount of tasks is very large. Even if you die，you win when you finish the task. Vent is possible.","[ニュートラル]\nタスクを完了させた時、単独勝利。タスク量はとても多い。死亡しても関係なく、タスクが終わると勝利。霊界からでも終わらそう。ベント可。","(中立阵营)\n当你完成一项任务时，你独自获胜。任务的数量非常大。即使你死了，当你完成任务时你就赢了。钻管是可能的。",,
 "DarkHideInfoLong","(Neutrals)\nCan kill anyone. Unable to vent. Every time a kill is made, a power outage occurs. (If the power is already out, it remains as it is).\nWhen the Imposter team wins while you are alive, or when the Crewmate team wins (excluding task wins) by killing one or more Imposters (setting: + NeutralKiller) while you are alive. The victory is overwritten and becomes a single victory. ","[ニュートラル]\n誰でも切れる。ベント不可。キルを起こす度に停電が起こる。(既に停電の場合はそのまま)。\n・自身生存時にインポスター陣営が勝利した時\n・自身生存時にインポスター(設定:+斬れる第三陣営)を1人以上斬ってクルー陣営が勝利(タスク勝利除く)した時\n上書きして単独勝利となる。","(中立阵营)\n可以杀死任何人。无法钻管。每杀一次人，就会发生一次停电。(如果已经停电，则保持原状)\n当内鬼团队在你活着的时候获胜，或者当船员团队在你活着的时候通过杀死一个或多个内鬼（设置：+中立杀手）而获胜（不包括任务获胜）。胜利会被覆盖，成为单人的胜利。",,
@@ -996,6 +999,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "TotocalcioInitialCoolDown","'BET'Initial Ability Cooldown","「賭ける」の初期クールタイム",
 "TotocalcioFinalCoolDown","'BET'Final Ability Cooldown","「賭ける」の最終クールタイム",
 "JackalCanSeeNameMushroomMixup","Can See Name in MushroomMixup","キノコカオス中に名前が見える",,,,
+"JackalCanCreateSidekick","Can Create Sidekick","サイドキックを作れる",,,,
 "JClientCanVent","Client Can Vent","クライアントがベントを使える",,,,
 "JClientImpostorVision","Client Impostor Vision","クライアントがインポスター視界を持つ",,,,
 "JClientVentCooldown","Client Vent Cooldown","クライアントのベントクールダウン",,,,

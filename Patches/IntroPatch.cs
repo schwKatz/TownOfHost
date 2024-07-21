@@ -180,6 +180,7 @@ namespace TownOfHostY
                         {
                             CustomRoles.Egoist => GetString("TeamEgoist"),
                             CustomRoles.Jackal => GetString("TeamJackal"),
+                            CustomRoles.JSidekick => GetString("TeamJackal"),
                             CustomRoles.JClient => GetString("TeamJackal"),
                             _ => GetString("NeutralInfo"),
                         };
@@ -376,7 +377,7 @@ namespace TownOfHostY
                         Utils.ProtectedFirstPlayer();
                     }
                 }
-                _ = new LateTask(() => Main.AllPlayerControls.Do(pc => pc.RpcSetRoleDesync(RoleTypes.Shapeshifter, -3)), 2f, "SetImpostorForServer");
+                //_ = new LateTask(() => Main.AllPlayerControls.Do(pc => pc.RpcSetRoleDesync(RoleTypes.Shapeshifter, -3)), 2f, "SetImpostorForServer");
                 if (PlayerControl.LocalPlayer.Is(CustomRoles.GM))
                 {
                     PlayerControl.LocalPlayer.RpcExile();
