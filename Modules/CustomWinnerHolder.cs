@@ -21,6 +21,9 @@ namespace TownOfHostY
         // 勝者のPlayerIDが格納され、このIDを持つプレイヤーは全員勝利します。
         // 単独勝利するニュートラルの処理に最適です。
         public static HashSet<byte> WinnerIds;
+        // 敗者のPlayerIDが格納され、このIDを持つプレイヤーは全員敗北します。
+        // 敗者リストは勝者リスト、勝者チームのリストより優先されます。
+        public static HashSet<byte> LoserIds;
 
         [GameModuleInitializer, PluginModuleInitializer]
         public static void Reset()
@@ -29,11 +32,13 @@ namespace TownOfHostY
             AdditionalWinnerRoles = new();
             WinnerRoles = new();
             WinnerIds = new();
+            LoserIds = new();
         }
         public static void ClearWinners()
         {
             WinnerRoles.Clear();
             WinnerIds.Clear();
+            LoserIds.Clear();
         }
         /// <summary><para>WinnerTeamに値を代入します。</para><para>すでに代入されている場合、AdditionalWinnerRolesに追加します。</para></summary>
         public static void SetWinnerOrAdditonalWinner(CustomWinner winner)
@@ -71,6 +76,10 @@ namespace TownOfHostY
             foreach (var id in WinnerIds)
                 writer.Write(id);
 
+            writer.WritePacked(LoserIds.Count);
+            foreach (var id in LoserIds)
+                writer.Write(id);
+
             return writer;
         }
         public static void ReadFrom(MessageReader reader)
@@ -91,6 +100,11 @@ namespace TownOfHostY
             int WinnerIdsCount = reader.ReadPackedInt32();
             for (int i = 0; i < WinnerIdsCount; i++)
                 WinnerIds.Add(reader.ReadByte());
-        }
+
+            LoserIds = new();
+            int LoserIdsCount = reader.ReadPackedInt32();
+            for (int i = 0; i < LoserIdsCount; i++)
+                LoserIds.Add(reader.ReadByte());
+       }
     }
 }

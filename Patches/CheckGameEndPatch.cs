@@ -140,6 +140,8 @@ namespace TownOfHostY
                         {
                             if (CustomWinnerHolder.WinnerIds.Contains(pc.PlayerId))
                                 CustomWinnerHolder.WinnerIds.Remove(pc.PlayerId);
+                            if (!CustomWinnerHolder.LoserIds.Contains(pc.PlayerId))
+                                CustomWinnerHolder.LoserIds.Add(pc.PlayerId);
                         }
                     }
                 }
