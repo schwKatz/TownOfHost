@@ -179,6 +179,11 @@ public sealed class MadConnecter : RoleBase, IKiller, IKillFlashSeeable
         }
     }
 
+    public bool OverrideKillButtonText(out string text)
+    {
+        text = Translator.GetString("MadConnecterConnect");
+        return true;
+    }
     public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {
         // 相方の役職名を表示させる

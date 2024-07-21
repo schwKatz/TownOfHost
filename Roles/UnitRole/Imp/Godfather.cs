@@ -142,6 +142,11 @@ public sealed class Godfather : RoleBase, IImpostor
         }
     }
 
+    public bool OverrideKillButtonText(out string text)
+    {
+        text = Translator.GetString("GodfatherLock");
+        return canLockKill;
+    }
     public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {
         // 相方の役職名を表示させる
@@ -153,8 +158,7 @@ public sealed class Godfather : RoleBase, IImpostor
         seen ??= seer;
 
         if (seen != seer) return string.Empty;
-        string mark = "";
-        if (canLockKill) mark = "⊥";
+        string mark = canLockKill ? "⊥" : "";
         return Utils.ColorString(RoleInfo.RoleColor, mark);
     }
     public static string GetMarkOthers(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
