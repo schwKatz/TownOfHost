@@ -552,6 +552,7 @@ public enum CustomRoles
     Terrorist,
     Executioner,
     Jackal,
+    JSidekick,
     JClient,
     AntiComplete,
     Workaholic,

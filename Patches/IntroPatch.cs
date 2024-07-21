@@ -180,6 +180,7 @@ namespace TownOfHostY
                         {
                             CustomRoles.Egoist => GetString("TeamEgoist"),
                             CustomRoles.Jackal => GetString("TeamJackal"),
+                            CustomRoles.JSidekick => GetString("TeamJackal"),
                             CustomRoles.JClient => GetString("TeamJackal"),
                             _ => GetString("NeutralInfo"),
                         };

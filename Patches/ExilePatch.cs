@@ -146,6 +146,8 @@ namespace TownOfHostY
                             player?.ResetPlayerCam(1f);
                         Executioner.ChangeRoleByTarget(playerId);
                         Lawyer.ChangeRoleByTarget(player);
+                        if (roleClass is Jackal jackal)
+                            Jackal.CheckPromoted();
                     });
                     Main.AfterMeetingDeathPlayers.Clear();
                 }, 0.5f, "AfterMeetingDeathPlayers Task");
