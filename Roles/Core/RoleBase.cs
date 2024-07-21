@@ -50,7 +50,6 @@ public abstract class RoleBase : IDisposable
             RoleTypes.Engineer or
             RoleTypes.Scientist or
             RoleTypes.Tracker or
-            RoleTypes.Noisemaker or
             RoleTypes.GuardianAngel or
             RoleTypes.CrewmateGhost or
             RoleTypes.ImpostorGhost;
