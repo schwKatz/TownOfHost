@@ -351,10 +351,43 @@ namespace TownOfHostY
             var role = phantom.GetRoleClass();
             if (role?.OnCheckVanish() == false)
             {
+
+                if (phantom.PlayerId != PlayerControl.LocalPlayer.PlayerId &&
+                    phantom.IsAlive())
+                {
+                    SendDummyClearCharge(phantom);
+                }
+
                 return false;
             }
 
             return true;
+        }
+        private static void SendDummyClearCharge(PlayerControl phantom)
+        {
+            int clientId = phantom.GetClientId();
+            var stream = MessageWriter.Get(SendOption.Reliable);
+            stream.StartMessage(6);
+            stream.Write(AmongUsClient.Instance.GameId);
+            stream.WritePacked(clientId);
+            {
+                stream.StartMessage(2);
+                stream.WritePacked(phantom.NetId);
+                stream.Write((byte)RpcCalls.SetRole);
+                stream.Write((ushort)RoleTypes.Impostor);
+                stream.Write(true);     //canOverrideRole
+                stream.EndMessage();
+
+                stream.StartMessage(2);
+                stream.WritePacked(phantom.NetId);
+                stream.Write((byte)RpcCalls.SetRole);
+                stream.Write((ushort)RoleTypes.Phantom);
+                stream.Write(true);     //canOverrideRole
+                stream.EndMessage();
+            }
+            stream.EndMessage();
+            AmongUsClient.Instance.SendOrDisconnect(stream);
+            stream.Recycle();
         }
     }
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.ReportDeadBody))]
