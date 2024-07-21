@@ -221,4 +221,9 @@ public sealed class Janitor : RoleBase, IImpostor
 
         return sb.ToString();
     }
+    public bool OverrideKillButtonText(out string text)
+    {
+        text = Translator.GetString("DeathReason.Clean");
+        return true;
+    }
 }

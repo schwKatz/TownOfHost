@@ -138,4 +138,5 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
     }
 
     public override string GetProgressText(bool comms = false) => Utils.ColorString(chaseLimitCount > 0 ? RoleInfo.RoleColor : Color.gray, $"[{chaseLimitCount}]");
+    public override string GetAbilityButtonText() => Translator.GetString("ChaserChase");
 }

@@ -1426,6 +1426,9 @@ PanAlive25,\nBread was served by the bakery.\nㅤ,\nパン屋は{0}に向けて�
 "GrudgeChargerCharge","Charge","チャージ",
 "GrudgeChargerSelectTarget","Select","キル対象選択",
 "ChargerKill","Kill","キル",
+"ChaserChase","Chase","チェイス",
+"GodfatherLock","Lock","ロック",
+"MadConnecterConnect","Connect","内通",
 
 "killer","Killer","キラー","杀手",
 "AntiAdminerAD","Warning Admin","アドミン注意！","管理室地图注意",,
