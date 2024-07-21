@@ -215,8 +215,8 @@ class SelectRolesPatch
             if (Options.EnableGM.GetBool())
             {
                 AllPlayers.RemoveAll(x => x == PlayerControl.LocalPlayer);
-                PlayerControl.LocalPlayer.RpcSetCustomRole(CustomRoles.GM);
                 PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
+                PlayerState.GetByPlayerId(PlayerControl.LocalPlayer.PlayerId).SetMainRole(CustomRoles.GM);
                 PlayerControl.LocalPlayer.Data.IsDead = true;
             }
             foreach (var (role, info) in CustomRoleManager.AllRolesInfo)
