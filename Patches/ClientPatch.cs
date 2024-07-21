@@ -44,17 +44,26 @@ class MMOnlineManagerStartPatch
     {
         if (VersionChecker.IsSupported && Main.AllowPublicRoom && Main.IsPublicAvailableOnThisVersion) return;
 
-        var obj = GameObject.Find("FindGameButton");
-        if (obj)
+        var objF = GameObject.Find("Buttons/FindGameButton");
+        if (objF)
         {
-            obj?.SetActive(false);
-            var parentObj = obj.transform.parent.gameObject;
-            var textObj = Object.Instantiate<TMPro.TextMeshPro>(obj.transform.FindChild("Text_TMP").GetComponent<TMPro.TextMeshPro>());
-            textObj.transform.position = new Vector3(1f, -0.3f, 0);
-            textObj.name = "CanNotJoinPublic";
-            textObj.DestroyTranslator();
-            string message = CannotUsePublicRoom.ShowMessage();
-            textObj.text = $"<size=2>{Utils.ColorString(Color.red, message)}</size>";
+            objF?.SetActive(false);
+        }
+        var objJ = GameObject.Find("Buttons/JoinGameButton");
+        if (objJ)
+        {
+            objJ?.SetActive(false);
+        }
+
+        var objmenu = GameObject.Find("NormalMenu");
+        if (objmenu)
+        {
+            var objW = new GameObject("ModWarning");
+            objW.transform.SetParent(objmenu.transform);
+            objW.transform.localPosition = new Vector3(0f, -0.7f, 0f);
+            objW.transform.localScale = new Vector3(2f, 2f, 2f);
+            var renderer = objW.AddComponent<SpriteRenderer>();
+            renderer.sprite = Utils.LoadSprite($"TownOfHost_Y.Resources.warning_online.png", 400f);
         }
     }
 }
