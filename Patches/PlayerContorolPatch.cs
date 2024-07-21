@@ -798,8 +798,10 @@ namespace TownOfHostY
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole))]
     class PlayerControlSetRolePatch
     {
-        public static bool Prefix(PlayerControl __instance, ref RoleTypes roleType)
+        public static bool Prefix(PlayerControl __instance, ref RoleTypes roleType, bool canOverrideRole)
         {
+            if (SelectRolesPatch.RpcSetRoleReplacer.DoReplace()) return true;
+
             var target = __instance;
             var targetName = __instance.GetNameWithRole();
             Logger.Info($"{targetName} =>{roleType}", "PlayerControl.RpcSetRole");
@@ -841,7 +843,10 @@ namespace TownOfHostY
                     return false;
                 }
             }
-            return true;
+
+            target.RpcSetRoleNormal(roleType, canOverrideRole);
+
+            return false;
         }
     }
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Die))]
