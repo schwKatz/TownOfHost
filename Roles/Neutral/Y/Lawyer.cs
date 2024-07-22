@@ -86,16 +86,9 @@ public sealed class Lawyer : RoleBase
         //ターゲット割り当て
         if (AmongUsClient.Instance.AmHost)
         {
-            List<PlayerControl> targetList = new();
             var rand = IRandom.Instance;
-            foreach (var target in Main.AllPlayerControls)
-            {
-                if (Player == target) continue;
-                if ((target.Is(CustomRoleTypes.Impostor)
-                    || target.IsNeutralKiller())
-                    && !target.Is(CustomRoles.Lovers)
-                ) targetList.Add(target);
-            }
+            var targetList = GetTargetList(false);
+            if (targetList.Count == 0) targetList = GetTargetList(true);
             var SelectedTarget = targetList[rand.Next(targetList.Count)];
             Target = SelectedTarget;
             SendRPC(Player.PlayerId, SelectedTarget.PlayerId, "SetTarget");
@@ -103,6 +96,18 @@ public sealed class Lawyer : RoleBase
         }
 
         GuardCount = PursuerGuardNum;
+    }
+    private List<PlayerControl> GetTargetList(bool includeLovers)
+    {
+        List<PlayerControl> targetList = new();
+        foreach (var target in Main.AllPlayerControls)
+        {
+            if (Player == target) continue;
+            if ((target.Is(CustomRoleTypes.Impostor) || target.IsNeutralKiller()) &&
+                (includeLovers || !target.Is(CustomRoles.Lovers))
+            ) targetList.Add(target);
+        }
+        return targetList;
     }
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(HasImpostorVision);
     private void SendRPC(byte LawyerId, byte targetId = byte.MaxValue, string Progress = "")
