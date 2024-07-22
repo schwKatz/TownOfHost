@@ -360,8 +360,6 @@ public static class Utils
                 roleText.Append(GetString("killer"));
             if (mainRole == CustomRoles.Bakery && Bakery.IsNeutral(GetPlayerById(PlayerId)))
                 roleText.Replace(GetRoleName(mainRole), GetString("NBakery"));
-            if (mainRole == CustomRoles.Lawyer && ((Lawyer)GetPlayerById(PlayerId).GetRoleClass()).IsPursuer())
-                roleText.Replace(GetRoleName(mainRole), GetString("Pursuer"));
         }
 
         string subRoleMarks = string.Empty;

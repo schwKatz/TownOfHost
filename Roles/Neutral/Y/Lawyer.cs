@@ -223,7 +223,15 @@ public sealed class Lawyer : RoleBase
         SendRPC(Player.PlayerId);
         Utils.NotifyRoles();
     }
-
+    public override void OverrideTrueRoleName(ref Color roleColor, ref string roleText)
+    {
+        Logger.Info($"name {IsPursuer()} {roleText}", "Lawyer");
+        if (IsPursuer())
+        {
+            if (roleText == null) roleText = Utils.GetRoleName(CustomRoles.Pursuer); 
+            else roleText = roleText.Replace(Utils.GetRoleName(CustomRoles.Lawyer), Utils.GetRoleName(CustomRoles.Pursuer));
+        }
+    }
 
     public static void EndGameCheck()
     {
