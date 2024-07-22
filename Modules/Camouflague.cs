@@ -80,6 +80,7 @@ namespace TownOfHostY
             }
 
             var newOutfit = camouflageOutfit;
+            if (newOutfit == null) newOutfit = CamouflageOutfit;
 
             if (!isCamouflage || ForceRevert)
             {
