@@ -557,6 +557,7 @@ public enum CustomRoles
     LoveCutter,
     PlatonicLover,
     Lawyer,
+    Pursuer,
     Totocalcio,
     Duelist,
     God,

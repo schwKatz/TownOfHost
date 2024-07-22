@@ -257,7 +257,7 @@ public sealed class Lawyer : RoleBase
                 if (pc.IsAlive())
                 {
                     CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                    CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Lawyer);
+                    CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Pursuer);
                 }
             }
         }
