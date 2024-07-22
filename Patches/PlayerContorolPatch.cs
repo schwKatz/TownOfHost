@@ -469,6 +469,14 @@ namespace TownOfHostY
             Utils.SyncAllSettings();
 
             if (ShapeKiller.DummyReportDeadBody(__instance, target)) return false;
+
+            if (!__instance.IsAlive())
+            {
+                //通報者が通報処理中に死亡した場合の強制会議実行
+                RPC.ReportDeadBodyForced(__instance, target);
+                return false;
+            }
+
             return true;
         }
         public static async void ChangeLocalNameAndRevert(string name, int time)
