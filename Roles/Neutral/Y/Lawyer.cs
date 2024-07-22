@@ -247,7 +247,9 @@ public sealed class Lawyer : RoleBase
             {
                 // 弁護士
                 // 勝者に依頼人が含まれている時
-                if (role.Target != null && CustomWinnerHolder.WinnerIds.Contains(role.Target.PlayerId))
+            if (role.Target != null &&
+                (CustomWinnerHolder.WinnerIds.Contains(role.Target.PlayerId) ||
+                 CustomWinnerHolder.WinnerRoles.Contains(role.Target.GetCustomRole())))
                 {
                     // 弁護士が生きている時 リセットして単独勝利
                     if (pc.IsAlive())
