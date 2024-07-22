@@ -16,7 +16,7 @@ public sealed class Pursuer : RoleBase, IAdditionalWinner
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Neutral,
             (int)Options.offsetId.NeuY + 590,
-            null,
+            SetupOptionItem,
             "追跡者",
             "#daa520",
             introSound: () => GetIntroSound(RoleTypes.Impostor)
@@ -32,7 +32,13 @@ public sealed class Pursuer : RoleBase, IAdditionalWinner
     }
     private static bool hasImpostorVision;
     private int guardCount = 0;
-
+    private static void SetupOptionItem()
+    {
+        if (Options.CustomRoleSpawnChances.TryGetValue(CustomRoles.Pursuer, out var spawnOption))
+        {
+            spawnOption.SetGameMode(CustomGameMode.HideMenu);
+        }
+    }
     public override void ApplyGameOptions(IGameOptions opt) => opt.SetVision(hasImpostorVision);
 
     private bool CanUseGuard() => Player.IsAlive() && guardCount > 0;
