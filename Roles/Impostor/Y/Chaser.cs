@@ -59,7 +59,7 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
         OptionChaseCooldown = FloatOptionItem.Create(RoleInfo, 11, OptionName.ChaserChaseCooldown, new(1f, 180f, 1f), 30f, false)
                 .SetValueFormat(OptionFormat.Seconds);
         OptionChaseMaxCount = IntegerOptionItem.Create(RoleInfo, 12, OptionName.ChaserChaseMaxCount, new(1, 50, 1), 3, false)
-                .SetValueFormat(OptionFormat.Seconds);
+                .SetValueFormat(OptionFormat.Pieces);
         OptionReturnPosition = BooleanOptionItem.Create(RoleInfo, 13, OptionName.ChaserReturnPosition, false, false);
         OptionPositionTime = FloatOptionItem.Create(RoleInfo, 14, OptionName.ChaserPositionTime, new(1f, 99f, 1f), 10f, false, OptionReturnPosition)
             .SetValueFormat(OptionFormat.Seconds);
@@ -96,6 +96,7 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
         // 回数消化
         chaseLimitCount--;
         Logger.Info($"{Player.GetNameWithRole()} : 残り{chaseLimitCount}発", "Chaser");
+        Utils.NotifyRoles(SpecifySeer:Player);
 
         // 以下、元の場所に戻れる時の処理
         if (!ReturnPosition) return false;
