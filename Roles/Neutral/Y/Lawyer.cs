@@ -38,7 +38,6 @@ public sealed class Lawyer : RoleBase
         CustomRoleManager.OnMurderPlayerOthers.Add(OnMurderPlayerOthers);
 
         Target = null;
-        Pursuers = false;
     }
     public override void OnDestroy()
     {
@@ -61,16 +60,13 @@ public sealed class Lawyer : RoleBase
         LawyerKnowTargetRole,
         PursuerGuardNum
     }
-    private static bool HasImpostorVision;
+    public static bool HasImpostorVision;
     private static bool KnowTargetRole;
     private static bool TargetKnows;
-    private static int PursuerGuardNum;
+    public static int PursuerGuardNum;
 
     private static HashSet<Lawyer> Lawyers = new(15);
     private PlayerControl Target = null;
-    private bool Pursuers = false;
-
-    private int GuardCount = 0;
 
     private static void SetupOptionItem()
     {
@@ -82,7 +78,6 @@ public sealed class Lawyer : RoleBase
     }
     public override void Add()
     {
-        Pursuers = false;
         //ターゲット割り当て
         if (AmongUsClient.Instance.AmHost)
         {
@@ -94,8 +89,6 @@ public sealed class Lawyer : RoleBase
             SendRPC(Player.PlayerId, SelectedTarget.PlayerId, "SetTarget");
             Logger.Info($"{Player.GetNameWithRole()}:{SelectedTarget.GetNameWithRole()}", "Lawyer");
         }
-
-        GuardCount = PursuerGuardNum;
     }
     private List<PlayerControl> GetTargetList(bool includeLovers)
     {
@@ -143,8 +136,6 @@ public sealed class Lawyer : RoleBase
             Target = null;
         }
     }
-    public bool IsPursuer() => Pursuers;
-
     public static void OnMurderPlayerOthers(MurderInfo info)
     {
         var target = info.AttemptTarget;
@@ -163,13 +154,6 @@ public sealed class Lawyer : RoleBase
         if (KnowTargetRole && Target != null && seen.PlayerId == Target.PlayerId)
             enabled = true;
     }
-
-    private bool CanUseGuard() => Player.IsAlive() && GuardCount > 0;
-    public override string GetProgressText(bool comms = false)
-    {
-        if (!Pursuers) return string.Empty;
-        return Utils.ColorString(CanUseGuard() ? Color.yellow : Color.gray, $"〔{GuardCount}〕");
-    }
     public override string GetMark(PlayerControl seer, PlayerControl seen, bool _ = false)
     {
         //seenが省略の場合seer
@@ -187,28 +171,13 @@ public sealed class Lawyer : RoleBase
             return Utils.ColorString(RoleInfo.RoleColor, "§");
         return string.Empty;
     }
-
-    public override bool OnCheckMurderAsTarget(MurderInfo info)
-    {
-        (var killer, var target) = info.AttemptTuple;
-        // 直接キル出来る役職チェック
-        if (killer.GetCustomRole().IsDirectKillRole()) return true;
-
-        if (!Pursuers || GuardCount <= 0) return true;
-        killer.RpcProtectedMurderPlayer(target);
-        target.RpcProtectedMurderPlayer(target);
-        killer.SetKillCooldown();
-        GuardCount--;
-        Utils.NotifyRoles(SpecifySeer: target);
-        info.CanKill = false;
-        return true;
-    }
-
     public override void OnExileWrapUp(NetworkedPlayerInfo exiled, ref bool DecidedWinner)
     {
         if (Player == null) return;
         if (Target != null && Target.PlayerId == exiled.PlayerId && Player.IsAlive())
-            ChangeRole();
+        {
+            _ = new LateTask(() => ChangeRole(), 0.5f, "LawyerChangeRoleByExile");
+        }
     }
 
     public static void ChangeRoleByTarget(PlayerControl target)
@@ -223,56 +192,32 @@ public sealed class Lawyer : RoleBase
     }
     public void ChangeRole()
     {
-        Pursuers = true;
-        Target = null;
         SendRPC(Player.PlayerId);
+        Player.RpcSetCustomRole(CustomRoles.Pursuer);
         Utils.NotifyRoles();
     }
-    public override void OverrideTrueRoleName(ref Color roleColor, ref string roleText)
-    {
-        Logger.Info($"name {IsPursuer()} {roleText}", "Lawyer");
-        if (IsPursuer())
-        {
-            if (roleText == null) roleText = Utils.GetRoleName(CustomRoles.Pursuer); 
-            else roleText = roleText.Replace(Utils.GetRoleName(CustomRoles.Lawyer), Utils.GetRoleName(CustomRoles.Pursuer));
-        }
-    }
-
     public static void EndGameCheck()
     {
         foreach (var pc in Main.AllPlayerControls.Where(c => c.GetCustomRole() == CustomRoles.Lawyer))
         {
             var role = (Lawyer)pc.GetRoleClass();
-            if (!role.IsPursuer())
-            {
-                // 弁護士
-                // 勝者に依頼人が含まれている時
+
+            // 勝者に依頼人が含まれている時
             if (role.Target != null &&
                 (CustomWinnerHolder.WinnerIds.Contains(role.Target.PlayerId) ||
                  CustomWinnerHolder.WinnerRoles.Contains(role.Target.GetCustomRole())))
-                {
-                    // 弁護士が生きている時 リセットして単独勝利
-                    if (pc.IsAlive())
-                    {
-                        CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lawyer);
-                        CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                    }
-                    // 弁護士が死んでいる時 勝者と共に追加勝利
-                    else
-                    {
-                        CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                        CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Lawyer);
-                    }
-                }
-            }
-            else
             {
-                // 追跡者
-                // 追跡者が生き残った場合ここで追加勝利
+                // 弁護士が生きている時 リセットして単独勝利
                 if (pc.IsAlive())
                 {
+                    CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Lawyer);
                     CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
-                    CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Pursuer);
+                }
+                // 弁護士が死んでいる時 勝者と共に追加勝利
+                else
+                {
+                    CustomWinnerHolder.WinnerIds.Add(pc.PlayerId);
+                    CustomWinnerHolder.AdditionalWinnerRoles.Add(CustomRoles.Lawyer);
                 }
             }
         }

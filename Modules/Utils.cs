@@ -679,8 +679,6 @@ public static class Utils
         var roleName = myRole.ToString();
         if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
             roleName = "NBakery";
-        if (myRole == CustomRoles.Lawyer && ((Lawyer)player.GetRoleClass()).IsPursuer())
-            roleName = "Pursuer";
         var roleString = GetString(roleName);
         roleString = $"<size=95%>{roleString}</size>".Color(GetRoleColor(myRole).ToReadableColor());
 

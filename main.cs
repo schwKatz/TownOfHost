@@ -186,7 +186,6 @@ namespace TownOfHostY
                     // マッドメイト役職
                     {CustomRoles.SKMadmate, "#ff1919"},
                     //特殊クルー役職
-                    {CustomRoles.Pursuer, "#daa520"},
                     //HideAndSeek
                     {CustomRoles.HASFox, "#e478ff"},
                     {CustomRoles.HASTroll, "#00ff00"},
