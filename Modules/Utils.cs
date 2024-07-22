@@ -358,8 +358,6 @@ public static class Utils
 
             if (mainRole == CustomRoles.Opportunist && Opportunist.CanKill)
                 roleText.Append(GetString("killer"));
-            if (mainRole == CustomRoles.Bakery && Bakery.IsNeutral(GetPlayerById(PlayerId)))
-                roleText.Replace(GetRoleName(mainRole), GetString("NBakery"));
         }
 
         string subRoleMarks = string.Empty;
