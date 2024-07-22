@@ -72,8 +72,7 @@ namespace TownOfHostY
         }
         public static InnerNet.ClientData GetClient(this PlayerControl player)
         {
-            var client = AmongUsClient.Instance.allClients.ToArray().Where(cd => cd.Character.PlayerId == player.PlayerId).FirstOrDefault();
-            return client;
+            return AmongUsClient.Instance.allClients.ToArray().FirstOrDefault(cd => cd.Character.PlayerId == player.PlayerId);
         }
         public static int GetClientId(this PlayerControl player)
         {
