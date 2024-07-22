@@ -805,6 +805,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "NekoKabochaRevengeOnExile","Revenge When Exiled","追放された時に誰かを道連れにする","被驱逐时复仇","","Месть во время изгнания","Vinagança Quando Exilado"
 "PenguinAbductTimerLimit","Dragging Time","引き摺れる時間","最长拖拽时间","","Время перетаскивания","Tempo Para Arrastar"
 "PenguinMeetingKill","Kill If Meeting Starts During Dragging","会議開始時に引き摺り中ならキルする","拖拽时开会将立刻击杀目标","","Убить если встреча начнется во время перетаскивания","Matar Se Reunião Começar Enquanto Arrasta"
+"PenguinKilledAbductVictim","Penguin Killed By Dragging Target","引き摺り相手がキル役職の時、相手がキルボタンを使える",
 "InsiderCanSeeImpostorAbilities","Can See Impostor Abilities","味方インポスターの能力が分かる","可以看到内鬼技能状态","","Может видеть роли других Предателей","Pode Ver Habilidades de Impostor"
 "InsiderCanSeeAllGhostsRoles","Can See All Ghost's Roles","幽霊全員の役職が分かる","可以看到所有幽灵的职业","","Может видеть все роли Призраков","Pode Ver Todas As Classes dos Fantasmas"
 "InsiderCanSeeMadmates","Can See Madmates","マッドメイトが分かる","可以看到叛徒","","Может видеть Безумцев","Pode Ver Tripulantes Loucos"

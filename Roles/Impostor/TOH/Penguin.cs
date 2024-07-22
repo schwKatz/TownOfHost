@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using AmongUs.GameOptions;
 using Hazel;
@@ -26,6 +27,9 @@ class Penguin : RoleBase, IImpostor
     {
         AbductTimerLimit = OptionAbductTimerLimit.GetFloat();
         MeetingKill = OptionMeetingKill.GetBool();
+        KilledAbductVictim = OptionKilledAbductVictim.GetBool();
+
+        PenguinList = new();
     }
     public override void OnDestroy()
     {
@@ -34,18 +38,22 @@ class Penguin : RoleBase, IImpostor
 
     static OptionItem OptionAbductTimerLimit;
     static OptionItem OptionMeetingKill;
+    static OptionItem OptionKilledAbductVictim;
 
     enum OptionName
     {
         PenguinAbductTimerLimit,
         PenguinMeetingKill,
+        PenguinKilledAbductVictim,
     }
+    private static float AbductTimerLimit;
+    private static bool MeetingKill;
+    private static bool KilledAbductVictim;
 
-    private PlayerControl AbductVictim;
+    static HashSet<Penguin> PenguinList;
+    public PlayerControl AbductVictim;
     private float AbductTimer;
-    private float AbductTimerLimit;
     private bool stopCount;
-    private bool MeetingKill;
 
     //拉致中にキルしそうになった相手の能力を使わせないための処置
     public bool IsKiller => AbductVictim == null;
@@ -54,9 +62,11 @@ class Penguin : RoleBase, IImpostor
         OptionAbductTimerLimit = FloatOptionItem.Create(RoleInfo, 11, OptionName.PenguinAbductTimerLimit, new(5f, 20f, 1f), 10f, false)
             .SetValueFormat(OptionFormat.Seconds);
         OptionMeetingKill = BooleanOptionItem.Create(RoleInfo, 12, OptionName.PenguinMeetingKill, false, false);
+        OptionKilledAbductVictim = BooleanOptionItem.Create(RoleInfo, 13, OptionName.PenguinKilledAbductVictim, true, false);
     }
     public override void Add()
     {
+        PenguinList.Add(this);
         AbductTimer = 255f;
         stopCount = false;
     }
@@ -84,6 +94,18 @@ class Penguin : RoleBase, IImpostor
             AbductTimer = AbductTimerLimit;
         }
     }
+
+    // ペンギン拉致られ中のターゲットからキルできるか falseはその後のキル処理をキャンセル
+    public static bool CanKilledByTarget(PlayerControl pc)
+    {
+        if (!CustomRoles.Penguin.IsPresent() || KilledAbductVictim) return true;
+        foreach(var pen in PenguinList)
+        {
+            if (pen.AbductVictim == pc) return false;
+        }
+        return true;
+    }
+
     void AddVictim(PlayerControl target)
     {
         PlayerState.GetByPlayerId(target.PlayerId).CanUseMovingPlatform = MyState.CanUseMovingPlatform = false;

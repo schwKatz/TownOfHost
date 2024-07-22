@@ -58,6 +58,8 @@ public static class CustomRoleManager
         if (attemptKiller.GetCustomRole().IsImpostor() && attemptTarget.GetCustomRole().IsImpostor() && !attemptKiller.Is(CustomRoles.StrayWolf)) return false;
         // ゴッドファーザーのロックキル
         if (CustomRoles.Godfather.IsPresent() && GodfatherAndJanitor.JanitorTarget.Contains(attemptKiller.PlayerId)) return false;
+        // ペンギンの拉致られ中キル
+        if (!Penguin.CanKilledByTarget(attemptKiller)) return false;
 
         var killerRole = attemptKiller.GetRoleClass();
         var targetRole = attemptTarget.GetRoleClass();
