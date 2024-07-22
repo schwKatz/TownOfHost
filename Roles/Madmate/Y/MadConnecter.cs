@@ -249,7 +249,7 @@ public sealed class MadConnecter : RoleBase, IKiller, IKillFlashSeeable
     public static string GetSuffixOthers(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
         seen ??= seer;
-        if (seer != seen) return string.Empty;
+        if (seer != seen || isForMeeting) return string.Empty;
         // インポスターから見たマッドへの矢印
         return GetImpostorArrows(seer.PlayerId);
     }
