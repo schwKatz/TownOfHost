@@ -171,8 +171,24 @@ namespace TownOfHostY
             }
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(player.NetId, (byte)RpcCalls.SetRole, Hazel.SendOption.Reliable, clientId);
             writer.Write((ushort)role);
-            writer.Write(canOverrideRole);
+            writer.Write(true); //canOverrideRole
             AmongUsClient.Instance.FinishRpcImmediately(writer);
+
+            Logger.Info($"RpcSetRoleDesync toClientId:{clientId}) player:{player?.name}({role})", "RpcSetRole");
+        }
+        public static void RpcSetRoleNormal(this PlayerControl player, RoleTypes role, bool canOverrideRole = false)
+        {
+            if (player == null) return;
+            if (AmongUsClient.Instance.AmClient)
+            {
+                player.StartCoroutine(player.CoSetRole(role, canOverrideRole));
+            }
+            MessageWriter messageWriter = AmongUsClient.Instance.StartRpc(player.NetId, (byte)RpcCalls.SetRole, Hazel.SendOption.Reliable);
+            messageWriter.Write((ushort)role);
+            messageWriter.Write(true); //canOverrideRole
+            messageWriter.EndMessage();
+
+            Logger.Info($"RpcSetRoleNormal toClientId:All{-1}) player:{player?.name}({role})", "RpcSetRole");
         }
 
         public static void SetKillCooldown(this PlayerControl player, float time = -1f, bool ForceProtect = false)

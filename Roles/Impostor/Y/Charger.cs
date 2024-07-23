@@ -94,6 +94,7 @@ public sealed class Charger : RoleBase, IImpostor
 
     public override void AfterMeetingTasks()
     {
+        Player.MarkDirtySettings();
         Player.RpcResetAbilityCooldown();
     }
 
@@ -106,24 +107,28 @@ public sealed class Charger : RoleBase, IImpostor
         Vector2 playerPos = Player.transform.position;
         foreach (var target in Main.AllAlivePlayerControls)
         {
+            if (target == Player) continue;
             float targetDistance = Vector2.Distance(playerPos, target.transform.position);
-            if (minDistance.dist < targetDistance)
+            if (targetDistance < minDistance.dist)
             {
                 minDistance = (target, targetDistance);
             }
         }
+        Logger.Info($"最短距離プレイヤー確定 : {minDistance.target.GetNameWithRole()}・{minDistance.dist}m", "Charger");
 
         var KillRange = GameOptionsData.KillDistances[Mathf.Clamp(Main.NormalOptions.KillDistance, 0, 2)];
+        Logger.Info($"距離 : {minDistance.dist}m <= {KillRange}m", "Charger");
         if (minDistance.dist <= KillRange && Player.CanMove && minDistance.target.CanMove)
         {
-            killThisTurn = true;
             killLimit--;
             minDistance.target.SetRealKiller(Player);
             Player.RpcMurderPlayer(minDistance.target);
-            Logger.Info($"{Player.GetNameWithRole()} : 残り{killLimit}発", "GrudgeCharger");
+            Logger.Info($"{Player.GetNameWithRole()} : 残り{killLimit}発", "Charger");
 
+            killThisTurn = true;
             Player.MarkDirtySettings();
             Player.RpcResetAbilityCooldown();
+            killThisTurn = false;
         }
         return false;
     }

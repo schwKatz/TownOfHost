@@ -53,12 +53,14 @@ namespace TownOfHostY
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
         public const string PluginVersion = "517.23";
+        public const string PluginSubVersion = "-25β";
+        public const string PluginVersionName = "Ex.ChangeRole";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2024.6.18";
         // このバージョンのみで公開ルームを無効にする場合
         public static readonly bool IsPublicAvailableOnThisVersion = false;
         // プレリリースかどうか
-        public static bool IsPrerelease { get; } = true;
+        public static bool IsPrerelease { get; } = false;
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;
@@ -281,6 +283,7 @@ namespace TownOfHostY
         Fall,
         Poisoning,
         Clean,
+        NotGather,
         Senility,
         CounterAttack,
 
