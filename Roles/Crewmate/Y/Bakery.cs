@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using Hazel;
+using UnityEngine;
 
 using AmongUs.GameOptions;
 using static TownOfHostY.Translator;
@@ -95,6 +96,14 @@ public sealed class Bakery : RoleBase
                 return true;
         }
         return false;
+    }
+    public override void OverrideTrueRoleName(ref Color roleColor, ref string roleText)
+    {
+        if (IsNeutral(Player))
+        {
+            if (roleText == null) roleText = GetString("NBakery");
+            else roleText = roleText.Replace(GetRoleName(CustomRoles.Bakery), GetString("NBakery"));
+        }
     }
 
     public override void OnMurderPlayerAsTarget(MurderInfo info)

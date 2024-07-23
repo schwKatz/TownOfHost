@@ -56,8 +56,12 @@ namespace TownOfHostY
         public static void Add(byte seerId, byte targetId, string colorCode = "")
         {
             var state = PlayerState.GetByPlayerId(seerId);
-            if (state.TargetColorData.TryGetValue(targetId, out var value) && colorCode == value) return;
-            state.TargetColorData.Add(targetId, colorCode);
+            if (state.TargetColorData.TryGetValue(targetId, out var value))
+            {
+                if (colorCode == value) return;
+                Logger.Info($"SameKeyAdd seerId: {seerId}, targetId: {targetId}, colorCode: {colorCode},", "NameColorManager");
+            }
+            state.TargetColorData[targetId] = colorCode;
 
             SendRPC(seerId, targetId, colorCode);
         }

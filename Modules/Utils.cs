@@ -358,10 +358,6 @@ public static class Utils
 
             if (mainRole == CustomRoles.Opportunist && Opportunist.CanKill)
                 roleText.Append(GetString("killer"));
-            if (mainRole == CustomRoles.Bakery && Bakery.IsNeutral(GetPlayerById(PlayerId)))
-                roleText.Replace(GetRoleName(mainRole), GetString("NBakery"));
-            if (mainRole == CustomRoles.Lawyer && ((Lawyer)GetPlayerById(PlayerId).GetRoleClass()).IsPursuer())
-                roleText.Replace(GetRoleName(mainRole), GetString("Pursuer"));
         }
 
         string subRoleMarks = string.Empty;
@@ -683,8 +679,6 @@ public static class Utils
         var roleName = myRole.ToString();
         if (myRole == CustomRoles.Bakery && Bakery.IsNeutral(player))
             roleName = "NBakery";
-        if (myRole == CustomRoles.Lawyer && ((Lawyer)player.GetRoleClass()).IsPursuer())
-            roleName = "Pursuer";
         var roleString = GetString(roleName);
         roleString = $"<size=95%>{roleString}</size>".Color(GetRoleColor(myRole).ToReadableColor());
 

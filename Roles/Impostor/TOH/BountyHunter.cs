@@ -196,7 +196,10 @@ public sealed class BountyHunter : RoleBase, IImpostor
         if (!Is(seer) || !Is(seen)) return "";
 
         var target = GetTarget();
-        return target != null ? $"{(isForHud ? GetString("BountyCurrentTarget") : "Target")}:{Main.AllPlayerNames[target.PlayerId]}" : "";
+        string name;
+        if (Options.GetNameChangeModes() == NameChange.None) name = Main.AllPlayerNames[target.PlayerId];
+        else name = Palette.GetColorName(target.Data.DefaultOutfit.ColorId);
+        return target != null ? $"{(isForHud ? GetString("BountyCurrentTarget") : "Target")}:{name}" : "";
     }
     public override string GetSuffix(PlayerControl seer, PlayerControl seen = null, bool isForMeeting = false)
     {
