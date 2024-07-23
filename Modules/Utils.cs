@@ -744,7 +744,7 @@ public static class Utils
             //if (Options.DisableDevices.GetBool()) { SendMessage(GetString("DisableDevicesInfo"), PlayerId); }
             //if (Options.SyncButtonMode.GetBool()) { SendMessage(GetString("SyncButtonModeInfo"), PlayerId); }
             //if (Options.SabotageTimeControl.GetBool()) { SendMessage(GetString("SabotageTimeControlInfo"), PlayerId); }
-            //if (Options.RandomMapsMode.GetBool()) { SendMessage(GetString("RandomMapsModeInfo"), PlayerId); }
+            if (Options.RandomMapsMode.GetBool()) { SendMessage(GetString("RandomMapsModeInfo"), PlayerId); }
             if (Options.IsStandardHAS) { SendMessage(GetString("StandardHASInfo"), PlayerId); }
             if (Options.EnableGM.GetBool()) { SendMessage(GetRoleName(CustomRoles.GM) + GetString("GMInfoLong"), PlayerId); }
             foreach (var role in CustomRolesHelper.AllStandardRoles) // OneNight追加時にワンナイト役職も含める
@@ -1258,8 +1258,8 @@ public static class Utils
 
         var caller = new System.Diagnostics.StackFrame(1, false);
         var callerMethod = caller.GetMethod();
-        string callerMethodName = callerMethod.Name;
-        string callerClassName = callerMethod.DeclaringType.FullName;
+        string callerMethodName = callerMethod?.Name;
+        string callerClassName = callerMethod?.DeclaringType?.FullName;
         var logger = Logger.Handler("NotifyRoles");
         logger.Info("NotifyRolesが" + callerClassName + "." + callerMethodName + "から呼び出されました");
         HudManagerPatch.NowCallNotifyRolesCount++;
@@ -1306,7 +1306,7 @@ public static class Utils
             //seerに関わらず発動するSuffix
             SelfSuffix.Append(CustomRoleManager.GetSuffixOthers(seer, isForMeeting: isForMeeting));
             //TargetDeadArrow
-            SelfSuffix.Append(TargetDeadArrow.GetDeadBodiesArrow(seer, seer));
+            if(!isForMeeting) SelfSuffix.Append(TargetDeadArrow.GetDeadBodiesArrow(seer, seer));
 
             SelfLower.Clear();
           　// ベントタスクの対象ベント表示

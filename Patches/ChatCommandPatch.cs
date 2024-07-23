@@ -7,6 +7,8 @@ using HarmonyLib;
 using Hazel;
 
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
+using TownOfHostY.Roles.Madmate;
 using static TownOfHostY.Translator;
 
 namespace TownOfHostY
@@ -497,6 +499,17 @@ namespace TownOfHostY
             }
 
             if (!AmongUsClient.Instance.AmHost) return;
+
+            // ニムロッド会議中
+            if(Nimrod.IsExecutionMeeting() || MadNimrod.IsExecutionMeeting())
+            {
+                if(text.Length > 0)
+                {
+                    Utils.SendMessage(GetString("Message.NowNimrodMeeting"),
+                        title: $"<color={Utils.GetRoleColorCode(CustomRoles.Nimrod)}>{GetString("IsNimrodMeetingTitle")}</color>");
+                }
+            }
+
             string[] args = text.Split(' ');
             string subArgs = "";
             switch (args[0]?.ToLower())

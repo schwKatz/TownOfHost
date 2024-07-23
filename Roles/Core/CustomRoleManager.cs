@@ -54,6 +54,13 @@ public static class CustomRoleManager
         // 無効なキルをブロックする処理 必ず最初に実行する
         if (!CheckMurderPatch.CheckForInvalidMurdering(info)) return false;
 
+        // インポスター同士のキル無効
+        if (attemptKiller.GetCustomRole().IsImpostor() && attemptTarget.GetCustomRole().IsImpostor() && !attemptKiller.Is(CustomRoles.StrayWolf)) return false;
+        // ゴッドファーザーのロックキル
+        if (CustomRoles.Godfather.IsPresent() && GodfatherAndJanitor.JanitorTarget.Contains(attemptKiller.PlayerId)) return false;
+        // ペンギンの拉致られ中キル
+        if (!Penguin.CanKilledByTarget(attemptKiller)) return false;
+
         var killerRole = attemptKiller.GetRoleClass();
         var targetRole = attemptTarget.GetRoleClass();
 
@@ -469,6 +476,8 @@ public enum CustomRoles
     EvilGuesser,
     SelfBomber,
     GrudgeCharger,
+    Charger,
+    Chaser,
     CharisMastar,
 
     Godfather,
@@ -536,6 +545,7 @@ public enum CustomRoles
     Rabbit,
     VentManager,
     NiceGuesser,
+    Elder,
 
     Counselor,
     Potentialist,

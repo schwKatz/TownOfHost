@@ -1,7 +1,8 @@
 using AmongUs.GameOptions;
+using UnityEngine;
+
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
-using UnityEngine;
 using static TownOfHostY.Roles.Impostor.GodfatherAndJanitor;
 
 namespace TownOfHostY.Roles.Impostor;
@@ -38,6 +39,8 @@ public sealed class Godfather : RoleBase, IImpostor
     private static float GodfatherKillCooldown;
     private static float LockDistance;
     private static bool JanitorSeeSelectedTiming;
+    // ジャニターが近くにいる時のマーク表示
+    private static bool canLockKill;
 
     public override void Add()
     {
@@ -45,6 +48,7 @@ public sealed class Godfather : RoleBase, IImpostor
         Logger.Info($"{Player.GetNameWithRole()} : Godfather登録", "G&J");
 
         JanitorTarget.Clear();
+        canLockKill = false;
     }
     public float CalculateKillCooldown() => GodfatherKillCooldown;
 
@@ -59,7 +63,7 @@ public sealed class Godfather : RoleBase, IImpostor
         var janitorDist = Vector2.Distance(killer.transform.position, janitor.transform.position);
         Logger.Info($"{Player.GetNameWithRole()}～Janitor距離 : {janitorDist}", "G&J");
         // 設定距離に満たない場合は通常のキルをそのまま行う
-        if (janitorDist > LockDistance) return;
+        if (!canLockKill) return;
 
         /* ジャニターターゲットの設定*/
         // キルしない
@@ -116,10 +120,46 @@ public sealed class Godfather : RoleBase, IImpostor
         JanitorTarget.Clear();
     }
 
+    public override void OnFixedUpdate(PlayerControl player)
+    {
+        if (!GameStates.IsInTask || !Player.IsAlive()) return;
+
+        var pc = janitor;
+        if (pc.inVent) return;
+        bool isChange = false;
+        // ゴッドファーザーとジャニターの距離
+        var janitorDist = Vector2.Distance(godfather.transform.position, janitor.transform.position);
+
+        // 設定距離範囲内か
+        bool canDist = janitorDist <= LockDistance;
+        // 変更されているか
+        isChange = canLockKill != canDist;
+
+        if (isChange)
+        {
+            canLockKill = canDist;
+            Utils.NotifyRoles(SpecifySeer:Player);
+        }
+    }
+
+    public bool OverrideKillButtonText(out string text)
+    {
+        text = Translator.GetString("GodfatherLock");
+        return canLockKill;
+    }
     public override void OverrideDisplayRoleNameAsSeer(PlayerControl seen, bool isMeeting, ref bool enabled, ref Color roleColor, ref string roleText)
     {
         // 相方の役職名を表示させる
         if (seen.Is(CustomRoles.Janitor)) enabled = true;
+    }
+    public override string GetMark(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
+    {
+        //seenが省略の場合seer
+        seen ??= seer;
+
+        if (seen != seer) return string.Empty;
+        string mark = canLockKill ? "⊥" : "";
+        return Utils.ColorString(RoleInfo.RoleColor, mark);
     }
     public static string GetMarkOthers(PlayerControl seer, PlayerControl seen, bool isForMeeting = false)
     {

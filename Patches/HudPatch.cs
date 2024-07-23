@@ -224,6 +224,7 @@ class SetHudActivePatch
         __instance.ReportButton.ToggleVisible(!GameStates.IsLobby && isActive);
         if (!GameStates.IsModHost) return;
         IsActive = isActive;
+        if (GameStates.IsLobby) return;
         if (!isActive) return;
 
         var player = PlayerControl.LocalPlayer;
@@ -255,6 +256,7 @@ class TaskPanelBehaviourPatch
     // タスク表示の文章が更新・適用された後に実行される
     public static void Postfix(TaskPanelBehaviour __instance)
     {
+        if (GameStates.IsLobby) return; 
         if (!GameStates.IsModHost) return;
         PlayerControl player = PlayerControl.LocalPlayer;
 

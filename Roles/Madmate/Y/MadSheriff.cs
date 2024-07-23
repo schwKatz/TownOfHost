@@ -85,4 +85,10 @@ public sealed class MadSheriff : RoleBase, IKiller
 
         if (!MisfireKillsTarget) info.DoKill = false;
     }
+
+    public bool OverrideKillButtonText(out string text)
+    {
+        text = Translator.GetString("DeathReason.Misfire");
+        return true;
+    }
 }

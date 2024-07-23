@@ -98,7 +98,8 @@ namespace TownOfHostY
             return role is CustomRoles.Counselor or CustomRoles.MadDilemma
                 or CustomRoles.Godfather or CustomRoles.Janitor
                 or CustomRoles.Gang
-                
+                or CustomRoles.SKMadmate
+
                 or CustomRoles.Potentialist
                 or CustomRoles.Impostor or CustomRoles.Crewmate;
         }
@@ -122,6 +123,9 @@ namespace TownOfHostY
                 or CustomRoles.StrayWolf
                 or CustomRoles.Totocalcio
                 or CustomRoles.ChainShifter
+                // VentTask
+                or CustomRoles.MadConnecter
+
                 //VentSelect
                 or CustomRoles.Medic
                 or CustomRoles.GrudgeSheriff

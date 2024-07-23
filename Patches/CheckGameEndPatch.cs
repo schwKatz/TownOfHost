@@ -37,6 +37,7 @@ namespace TownOfHostY
             //ゲーム終了時
             if (CustomWinnerHolder.WinnerTeam != CustomWinner.Default)
             {
+                Logger.Info($"GameEnd winner: {CustomWinnerHolder.WinnerTeam}, reason: {reason}", "GameEndChecker");
                 //カモフラージュ強制解除
                 Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(false, pc, ForceRevert: true, RevertToDefault: true));
 
@@ -139,6 +140,8 @@ namespace TownOfHostY
                         {
                             if (CustomWinnerHolder.WinnerIds.Contains(pc.PlayerId))
                                 CustomWinnerHolder.WinnerIds.Remove(pc.PlayerId);
+                            if (!CustomWinnerHolder.LoserIds.Contains(pc.PlayerId))
+                                CustomWinnerHolder.LoserIds.Add(pc.PlayerId);
                         }
                     }
                 }
@@ -176,7 +179,8 @@ namespace TownOfHostY
 
                 void SetGhostRole(bool ToGhostImpostor)
                 {
-                    if (!pc.Data.IsDead) ReviveRequiredPlayerIds.Add(pc.PlayerId);
+                    var isDead = pc.Data.IsDead;
+                    if (!isDead) ReviveRequiredPlayerIds.Add(pc.PlayerId);
                     if (ToGhostImpostor)
                     {
                         Logger.Info($"{pc.GetNameWithRole()}: ImpostorGhostに変更", "ResetRoleAndEndGame");
@@ -187,6 +191,8 @@ namespace TownOfHostY
                         Logger.Info($"{pc.GetNameWithRole()}: CrewmateGhostに変更", "ResetRoleAndEndGame");
                         pc.RpcSetRole(RoleTypes.CrewmateGhost);
                     }
+                    // 蘇生までの遅延の間にオートミュートをかけられないように元に戻しておく
+                    pc.Data.IsDead = isDead;
                 }
             }
 
@@ -371,6 +377,7 @@ namespace TownOfHostY
             {
                 reason = GameOverReason.HumansByTask;
                 CustomWinnerHolder.ResetAndSetWinner(CustomWinner.Crewmate);
+                Logger.Info($"GemeEndByTask task: {GameData.Instance.CompletedTasks}/{GameData.Instance.TotalTasks}", "CheckGameEndByTask");
                 return true;
             }
             return false;

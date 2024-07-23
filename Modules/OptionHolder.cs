@@ -294,7 +294,6 @@ public static class Options
     public static OptionItem RevengeImpostorByImpostor;
 
     public static OptionItem HostGhostIgnoreTasks;
-    public static OptionItem ForceProtect;
     public static OptionItem ChangeIntro;
     public static OptionItem DisplayTeamMark;
     public static OptionItem AddonShow;
@@ -686,9 +685,6 @@ public static class Options
         KillFlashDuration = FloatOptionItem.Create((int)offsetId.FeatOther + 100, "KillFlashDuration", new(0.1f, 0.45f, 0.05f), 0.3f, TabGroup.ModMainSettings, true)
             .SetColor(Palette.ImpostorRed)
             .SetValueFormat(OptionFormat.Seconds);
-        // 強制守護天使表示
-        ForceProtect = BooleanOptionItem.Create((int)offsetId.FeatOther + 600, "ForceProtect", false, TabGroup.ModMainSettings, true)
-            .SetColor(Palette.CrewmateBlue);
         // CO可否表示(id+499まで使用)
         DisplayComingOut.SetupCustomOption((int)offsetId.FeatOther + 700);
         // 陣営マーク表示
