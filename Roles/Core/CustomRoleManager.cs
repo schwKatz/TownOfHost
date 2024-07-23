@@ -163,7 +163,7 @@ public static class CustomRoleManager
 
         //TargetDeadArrow
         if (!info.IsMeeting) TargetDeadArrow.UpdateDeadBody();
-      　//WinTask
+        //WinTask
         VentEnterTask.TaskWinCountAllComplete(attemptTarget.PlayerId);
 
         //以降共通処理
@@ -478,7 +478,8 @@ public enum CustomRoles
     GrudgeCharger,
     Charger,
     Chaser,
-    
+    CharisMastar,
+
     Godfather,
     Janitor,
     //Madmate
