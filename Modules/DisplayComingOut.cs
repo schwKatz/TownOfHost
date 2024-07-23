@@ -65,6 +65,7 @@ class DisplayComingOut
     public static string GetString(CustomRoles role)
     {
         if (!Enable.GetBool()) return string.Empty;
+        if (role == CustomRoles.GM) return string.Empty;
         if (!EachTypes[role.GetCustomRoleTypes()].GetBool()) return string.Empty;
 
         string coStr = string.Empty;

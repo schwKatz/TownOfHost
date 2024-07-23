@@ -100,8 +100,19 @@ namespace TownOfHostY
                 or CustomRoles.Gang
                 or CustomRoles.SKMadmate
 
+                or CustomRoles.Charger //通常版では今回出さない
                 or CustomRoles.Potentialist
                 or CustomRoles.Impostor or CustomRoles.Crewmate;
+        }
+        public static bool IsDontSelectLoyaltyRole(this CustomRoles role)
+        {
+            return role is CustomRoles.CustomImpostor or CustomRoles.CustomCrewmate
+                or CustomRoles.MadSnitch
+                or CustomRoles.MadDilemma
+                or CustomRoles.MadConnecter
+
+                or CustomRoles.Jackal or CustomRoles.JClient or
+                CustomRoles.LastImpostor or CustomRoles.CompleteCrew;
         }
 
         public static bool IsProtectRole(this CustomRoles role)

@@ -52,7 +52,7 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "517.22.1";
+        public const string PluginVersion = "517.23";
         public const string PluginSubVersion = "-25β";
         public const string PluginVersionName = "Ex.ChangeRole";
         // サポートされている最低のAmongUsバージョン
