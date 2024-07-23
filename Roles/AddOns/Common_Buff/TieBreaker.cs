@@ -51,7 +51,7 @@ public static class TieBreaker
                     if (tiebreakerUse) tiebreakerCollision = true;
                     Exiled = Utils.GetPlayerInfoById(data.Key);
                     tiebreakerUse = true;
-                    Logger.Info($"{Exiled.PlayerName}がTieBreakerで優先", "TieBreaker");
+                    Logger.Info($"{Exiled?.PlayerName}がTieBreakerで優先", "TieBreaker");
                 }
             }
             if (tiebreakerCollision)

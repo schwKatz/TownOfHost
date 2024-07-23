@@ -23,6 +23,7 @@ public enum CustomGameMode
     HideAndSeek,
     CatchCat,
     //OneNight,
+    HideMenu,
     All = int.MaxValue
 }
 

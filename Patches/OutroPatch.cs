@@ -59,7 +59,7 @@ namespace TownOfHostY
             }
             foreach (var pc in Main.AllPlayerControls)
             {
-                winner.RemoveAll(x => x.PlayerId == pc.PlayerId);
+                if (CustomWinnerHolder.LoserIds.Contains(pc.PlayerId)) winner.RemoveAll(x => x.PlayerId == pc.PlayerId);
             }
 
             if (CustomWinnerHolder.WinnerTeam != CustomWinner.Draw && CustomWinnerHolder.WinnerTeam != CustomWinner.None)
