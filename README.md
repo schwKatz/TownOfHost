@@ -12,13 +12,16 @@
   - 自身の役職説明が一番初めの会議にチャットで表示される設定もあります。
 
 - マッドの道連れないの？
-  - 入れるマッドを選んでから、バフ属性を付与する>>リベンジャーの選択で道連れマッド作成できます。それ以外にもたくさんの属性を付与することで様々な能力をもたせることが可能です。
+  - 入れるマッドを選んでから、バフ属性を付与する>>リベンジャーの選択で道連れマッドを作成できます。それ以外にもたくさんの属性を付与することで様々な能力をもたせることが可能です。
 
 - ホスト以外もMODいれていい？
-  - 現状考慮して作成していない部分が多い為、サポートしていません。部屋に入る際に(非ホスト時)、強制的にバニラに切り替わります。
+  - 現状考慮して作成していない部分が多い為、サポートしていません。MODを導入している際、公開/非公開ルームに関わらず既に作成されている部屋には参加することができません。ホストで部屋立てをすることは通常通り可能です。
+
+- ペットの問題は？
+  - MOD側で制御しているため、死亡した方についていたペットは生存者には見えなくなります。現在のバニラの仕様とは異なりますのでご注意ください。
 
 - TOHとなにがちがうの？
-  - 様々な役職や機能がたくさん追加されています。設定方法やコマンド等は本家TOHと同じように合わせていますので、TOHを触ったことのある方はスッと慣れて頂けるとは思います。<br>
+  - 様々な役職や機能がたくさん追加されています。本家TOHの機能も一部を除いて同じように使用できます。本家TOHの仕様についてはTOH_Yでは現在WIKIWIKIなどでは記載を省略しているため、本家TOHのGitHubをご確認ください。<br>
 
 ## 10/27更新 TOH_Yは更新休止期間です。
 TOH_Yの更新は本体アプデやTOHアプデ、不具合修正などを除き休止させていただいております。
@@ -50,33 +53,39 @@ Thank you for finding and using TOH_Y!<br>
 
 ## ★リリース
 
-AmongUsバージョン : **2024.3.5**<br>
+AmongUsバージョン : **2024.6.18**<br>
 **最新バージョンは[こちらからダウンロード](https://github.com/Yumenopai/TownOfHost_Y/releases/latest)**<br>
 
 ※[TownOfHost](https://github.com/tukasa0001/TownOfHost) Fork<br>
 
-本家TOHの説明は[本家TOH/GitHub](https://github.com/tukasa0001/TownOfHost#readme)からReadMeをご覧ください。<br>
+本家TOHで搭載されている機能の説明は[本家TOH/GitHub](https://github.com/tukasa0001/TownOfHost#readme)からReadMeをご覧ください。<br>
 <ins>TOH_Yの追加要素の説明は[WIKIWIKI](https://wikiwiki.jp/tohy_amongus/)に移行しました。</ins>
 
 ## TOH_Y外部サイト
-[WIKIWIKI](https://wikiwiki.jp/tohy_amongus)・
-[Discord](https://discord.gg/YCUY8b3jew)・
-[X/Twitter](https://twitter.com/yumeno_AmongUs)・
+[WIKIWIKI](https://wikiwiki.jp/tohy_amongus)・[Discord](https://discord.gg/YCUY8b3jew)・[X/Twitter](https://twitter.com/yumeno_AmongUs)
 
 ## 開発者
-- [ゆめの/Yumenopai](https://github.com/Yumenopai) ([Twitter本垢](https://twitter.com/Yumepai_houchi), [Youtube](https://www.youtube.com/@Yumenopai))
+- [ゆめの/Yumenopai](https://github.com/Yumenopai) ([X/Twitter雑多垢](https://twitter.com/Yumepai_houchi), [Youtube](https://www.youtube.com/@Yumenopai))
 - TownOfHostの開発者様は省略。
 
 ## TOH_Y助っ人
-- [くろにゃんこ](https://github.com/schwKatz) ([Twitter](https://twitter.com/KatzeSw), [Youtube](https://www.youtube.com/@SwKatz))
+- [くろにゃんこ](https://github.com/schwKatz) ([X/Twitter](https://twitter.com/KatzeSw), [Youtube](https://www.youtube.com/@SwKatz))
+- [希氷](https://github.com/Kihi1120) ([X/Twitter](https://twitter.com/AmongUs000A), [Youtube]( https://www.youtube.com/@lion1120_ ))
 
 ## 移植・参考クレジット
-- SPECIALTHANKS [本家TOH](https://github.com/tukasa0001/TownOfHost)・[TOH_H](https://github.com/Hyz-sui/TownOfHost-H)
-- MODクライアント視点霊界での視界拡大縮小 [TownOfPlus](https://github.com/tugaru1975/TownOfPlus)
-- 猫又系役職の道連れ・純愛者・神・マッドジェスター/マッドてるてる・パン屋レアコメント・にじいろスター/スター [SuperNewRoles](https://github.com/ykundesu/SuperNewRoles)
-- サングラス・弁護士・VIP・タイブレーカー [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles)
-- タイトル画面から見れるInfoアナウンス画面 [Nebula on the Ship](https://github.com/Dolly1016/Nebula)
-- スカベンジャー [TownOfHostEdited](https://github.com/KARPED1EM/TownOfHostEdited)
-- トトカルチョ [ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)
-- エスカレーショナー/Escalation Gamemode・シンクロカラーモード/twin,50-50,clone Gamemode (Skeld.net)
-
+- [本家TOH](https://github.com/tukasa0001/TownOfHost)・[TOH_H](https://github.com/Hyz-sui/TownOfHost-H)
+  - Fork元であり、様々な機能の参考にしています。
+- [TownOfPlus](https://github.com/tugaru1975/TownOfPlus)
+  - MODクライアント視点霊界での視界ズーム
+- [SuperNewRoles](https://github.com/ykundesu/SuperNewRoles)
+  - 猫又系役職の道連れ・純愛者・神・自爆魔・マッドジェスター/マッドてるてる・パン屋レアコメント・にじいろスター/スター・ロビーBGMのミュート
+- [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles)
+  - サングラス・弁護士・VIP・タイブレーカー・ゲッサー・チェインシフター・ゴッドファーザー＆ジャニター/マフィア・ジャッカルサイドキック
+- [Nebula on the Ship](https://github.com/Dolly1016/Nebula)
+  - タイトル画面から見れるInfoアナウンス画面
+- [TownOfHostEdited](https://github.com/KARPED1EM/TownOfHostEdited)
+  - スカベンジャー
+- [ExtremeRoles](https://github.com/yukieiji/ExtremeRoles)
+  - トトカルチョ
+- (Skeld.net)
+  - エスカレーショナー/Escalation Gamemode・シンクロカラーモード/twin,50-50,clone Gamemode
