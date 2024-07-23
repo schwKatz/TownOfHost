@@ -826,10 +826,7 @@ public static class Options
         Id += 10;
         foreach (var Addon in Enum.GetValues(typeof(CustomRoles)).Cast<CustomRoles>().Where(x => x.IsBuffAddOn()))
         {
-            if (Addon == CustomRoles.Loyalty && PlayerRole is
-                CustomRoles.CustomImpostor or CustomRoles.CustomCrewmate or
-                CustomRoles.MadSnitch or CustomRoles.MadDilemma or CustomRoles.Jackal or CustomRoles.JClient or
-                CustomRoles.LastImpostor or CustomRoles.CompleteCrew) continue;
+            if (Addon == CustomRoles.Loyalty && PlayerRole.IsDontSelectLoyaltyRole()) continue;
             if (Addon == CustomRoles.Revenger && PlayerRole is CustomRoles.MadNimrod) continue;
 
             SetUpAddOnRoleOption(PlayerRole, tab, Addon, Id, false, AddOnBuffAssign[PlayerRole]);
