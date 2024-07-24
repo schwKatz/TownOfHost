@@ -55,7 +55,7 @@ namespace TownOfHostY
             }
             foreach (var team in CustomWinnerHolder.WinnerRoles)
             {
-                winner.AddRange(Main.AllPlayerControls.Where(p => p.Is(team) && !winner.Contains(p)));
+                winner.AddRange(Main.AllPlayerControls.Where(p => p.Is(team) && !winner.Any(x => x.PlayerId == p.PlayerId)));
             }
             foreach (var pc in Main.AllPlayerControls)
             {

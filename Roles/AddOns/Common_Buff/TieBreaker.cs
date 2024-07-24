@@ -40,6 +40,8 @@ public static class TieBreaker
     }
     public static (bool, NetworkedPlayerInfo) BreakingVote(bool IsTie, NetworkedPlayerInfo Exiled, Dictionary<byte, int> votedCounts, int maxVoteNum)
     {
+        if (TieBreakerVote.Count == 0) return (IsTie, Exiled);
+
         if (IsTie)
         {
             var tiebreakerUse = false;
