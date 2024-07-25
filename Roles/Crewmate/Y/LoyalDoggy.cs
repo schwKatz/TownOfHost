@@ -75,15 +75,19 @@ public sealed class LoyalDoggy : RoleBase
     {
         // 既定値
         var (votedForId, numVotes, doVote) = base.ModifyVote(voterId, sourceVotedForId, isIntentional);
-        if (MeetingStates.FirstMeeting && voterId == Player.PlayerId && Player.IsAlive())
+        if (Player == null || voterId != Player.PlayerId || !Player.IsAlive()) return (votedForId, numVotes, doVote);
+
+        if (MeetingStates.FirstMeeting)
         {
             if (sourceVotedForId != Player.PlayerId && sourceVotedForId < 253)
             {
                 Master = Utils.GetPlayerById(sourceVotedForId);
+                Logger.Info($"MasterSelect {Player.name} master:{Master.name}", "LoyalDoggy");
             }
             else
             {
-                Master = Main.AllPlayerControls.ElementAtOrDefault(IRandom.Instance.Next(0, Main.AllPlayerControls.Count())); 
+                Master = Main.AllAlivePlayerControls.ElementAtOrDefault(IRandom.Instance.Next(0, Main.AllAlivePlayerControls.Count()));
+                Logger.Info($"MasterSelectRandom {Player.name} master:{Master.name}", "LoyalDoggy");
             }
                 numVotes = 0;//投票を見えなくする
             masterDecision = true;
@@ -95,6 +99,13 @@ public sealed class LoyalDoggy : RoleBase
 
     public override void AfterMeetingTasks()
     {
+        Logger.Info($"MasterSelectAfterMeeting {Player?.name} master: {Master?.name}", "LoyalDoggy");
+        if (Master == null)
+        {
+            Master = Main.AllPlayerControls.ElementAtOrDefault(IRandom.Instance.Next(0, Main.AllPlayerControls.Count()));
+            Logger.Info($"MasterSelectAfterMeeting {Player.name} master: {Master.name}", "LoyalDoggy");
+        }
+
         if (masterDecision && !Master.IsAlive() && !masterIsDead)
         {
             masterIsDead = true;
@@ -140,6 +151,7 @@ public sealed class LoyalDoggy : RoleBase
 
         //矢印表示する必要がなければ無し
         if (!masterDecision || isForMeeting || masterIsDead) return string.Empty;
+        if (Master == null || Master.Data.Disconnected) return string.Empty;
 
         var arrow = TargetArrow.GetArrows(seer, Master.PlayerId);
         var color = Master.IsAlive() ? RoleInfo.RoleColor : Palette.ImpostorRed;
