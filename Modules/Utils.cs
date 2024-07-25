@@ -684,7 +684,7 @@ public static class Utils
 
         sb.Append(roleString).Append("<size=80%><line-height=1.8pic>").Append(roleInfoLong).Append("</line-height></size>");
 
-        if (!myRole.IsDontShowOptionRole())
+        if (!myRole.IsDontShowOptionRole() || myRole != CustomRoles.GM)
         {
             //setting
             sb.Append("\n<size=65%><line-height=1.5pic>");
