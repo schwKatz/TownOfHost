@@ -7,6 +7,7 @@ using Hazel;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using static TownOfHostY.Utils;
+using UnityEngine;
 
 namespace TownOfHostY.Roles.Impostor;
 public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
@@ -70,38 +71,48 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
     public override bool OnCheckVanish()
     {
         if (NowGatherCount == 0) return false;
+        Vector2[] targetPositions = new Vector2[]
+        {
+            new(7.76f, 8.56f),
+        };
+        //Vector2 targetPosition = new(7.76f, 8.56f);//ジップラインの座標
 
         /* 生存者全員をワープする処理*/
-        foreach (var Worptarget in Main.AllAlivePlayerControls)
+        foreach (Vector2 targetPosition in targetPositions)
         {
-            if (Worptarget.MyPhysics.Animations.IsPlayingAnyLadderAnimation() && !Worptarget.Is(CustomRoleTypes.Impostor))
+            foreach (var Worptarget in Main.AllAlivePlayerControls)
             {
-                if (NotGatherPlayerKill)//集まらないplayerをキルするがONの時
+                if (Worptarget.MyPhysics.Animations.IsPlayingAnyLadderAnimation() || Vector2.Distance(Worptarget.GetTruePosition(), targetPosition) <= 1.9f)
                 {
-                    Worptarget.SetRealKiller(Player);
-                    Worptarget.RpcMurderPlayer(Worptarget);//集合しない時キルする設定なのでkillする
-                    GatherChoosePlayer.Remove(Worptarget.PlayerId); // キル後にリストから削除
-                    PlayerState.GetByPlayerId(Worptarget.PlayerId).DeathReason = CustomDeathReason.NotGather;
+
+                    if (NotGatherPlayerKill)//集まらないplayerをキルするがONの時
+                    {
+                        Worptarget.SetRealKiller(Player);
+                        Worptarget.RpcMurderPlayer(Worptarget);//集合しない時キルする設定なのでkillする
+                        GatherChoosePlayer.Remove(Worptarget.PlayerId); // キル後にリストから削除
+                        PlayerState.GetByPlayerId(Worptarget.PlayerId).DeathReason = CustomDeathReason.NotGather;
+                        Logger.Info($"ターゲットが特定の位置にいたためキルしました。", "CharisMastar");
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    Logger.Info($"ワープできませんでした。", "CharisMastar");
                 }
-                else
+                else if (Worptarget.IsAlive())//全員を飛ばす。
                 {
-                    return false;
-                }
-                Logger.Info($"ワープできませんでした。", "CharisMastar");
-            }
-            else if (Worptarget.IsAlive())//全員を飛ばす。
-            {
-                if (CanAllPlayerGather || !GatherChoosePlayer.Any())//全員を集めるがtrueの時 または、リストが空の時
-                {
-                    var NearestVent = GetNearestVent();
-                    Worptarget.MyPhysics.RpcExitVent(NearestVent.Id);
-                }
-                if (!CanAllPlayerGather)//全員を集めるがfalseの時
-                {
-                    if (GatherChoosePlayer.Contains(Worptarget.PlayerId))
+                    if (CanAllPlayerGather || !GatherChoosePlayer.Any())//全員を集めるがtrueの時 または、リストが空の時
                     {
                         var NearestVent = GetNearestVent();
                         Worptarget.MyPhysics.RpcExitVent(NearestVent.Id);
+                    }
+                    if (!CanAllPlayerGather)//全員を集めるがfalseの時
+                    {
+                        if (GatherChoosePlayer.Contains(Worptarget.PlayerId))
+                        {
+                            var NearestVent = GetNearestVent();
+                            Worptarget.MyPhysics.RpcExitVent(NearestVent.Id);
+                        }
                     }
                 }
             }
@@ -135,7 +146,6 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         {
             GatherChoosePlayer.Add(target.PlayerId);
             GatherChoosePlayer.Add(Player.PlayerId);
-            Player.SetKillCooldown();
             SendRPC(target.PlayerId);
         }
     }
