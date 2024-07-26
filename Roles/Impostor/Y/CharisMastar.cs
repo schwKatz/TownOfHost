@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using AmongUs.GameOptions;
+using HarmonyLib;
 using UnityEngine;
+using AmongUs.GameOptions;
 
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
-using HarmonyLib;
-using MS.Internal.Xml.XPath;
 
 namespace TownOfHostY.Roles.Impostor;
 public sealed class CharismaStar : RoleBase, IImpostor
