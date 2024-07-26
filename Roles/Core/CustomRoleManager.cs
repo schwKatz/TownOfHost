@@ -489,7 +489,7 @@ public enum CustomRoles
     GrudgeCharger,
     Charger,
     Chaser,
-    CharisMastar,
+    CharismaStar,
 
     Godfather,
     Janitor,
