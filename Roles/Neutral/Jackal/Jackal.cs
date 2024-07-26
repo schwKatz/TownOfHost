@@ -81,6 +81,11 @@ namespace TownOfHostY.Roles.Neutral
             OptionCanCreateSidekick = BooleanOptionItem.Create(RoleInfo, 15, OptionName.JackalCanCreateSidekick, true, false);
             Options.SetUpAddOnOptions(RoleInfo.ConfigId + 20, RoleInfo.RoleName, RoleInfo.Tab);
         }
+        public override void Add()
+        {
+            Player.AddDoubleTrigger();
+        }
+
         public float CalculateKillCooldown() => KillCooldown;
         public bool CanUseSabotageButton() => CanUseSabotage;
         public bool CanUseImpostorVentButton() => CanVent;
