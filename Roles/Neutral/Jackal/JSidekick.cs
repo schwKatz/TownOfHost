@@ -18,7 +18,7 @@ public sealed class JSidekick : RoleBase, IKiller, ISchrodingerCatOwner
             CustomRoleTypes.Neutral,
             (int)Options.offsetId.NeuJackal + 200,
             SetupOptionItem,
-            "ジャッカルサイドキック",
+            "サイドキック",
             "#00b4eb",
             countType: CountTypes.Jackal
         );
