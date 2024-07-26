@@ -7,6 +7,7 @@ using Hazel;
 using TownOfHostY.Roles.Core;
 using TownOfHostY.Roles.Core.Interfaces;
 using static TownOfHostY.Utils;
+using UnityEngine;
 
 namespace TownOfHostY.Roles.Impostor;
 public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
@@ -30,41 +31,27 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
     {
         KillCooldown = OptionKillCooldown.GetFloat();
         GatherCount = OptionGatherCount.GetInt();
-        GatherCooldown = OptionGatherCooldown.GetFloat();
         NotGatherPlayerKill = OptionNotGatherPlayerKill.GetBool();
-        GathersMode = (GatherMode)OptionGatherMode.GetValue();
+        CanAllPlayerGather = OptionCanAllPlayerGather.GetBool();
+
     }
-    public enum GatherMode
-    {
-        CanChoose,
-        EveryoneGather,
-    };
-    public static readonly string[] GatherModeText =
-    {
-        "CharisMastarGatherMode.CanChoose",
-        "CharisMastarGatherMode.EveryoneGather",
-    };
     enum OptionName
     {
         CharisMastarGatherCount,
-        CharisMastarGatherCooldown,
         CharisMastarNotGatherPlayerKill,
-        CharisMastarGatherMode,
+        CharisMastarCanAllPlayerGather,
     }
     private static float KillCooldown;
-    private static float GatherCooldown;
     public static bool NotGatherPlayerKill;
+    public static bool CanAllPlayerGather;
     private static OptionItem OptionKillCooldown;
     private static OptionItem OptionGatherCount;
-    private static OptionItem OptionGatherCooldown;
     private static OptionItem OptionNotGatherPlayerKill;
-    public static StringOptionItem OptionGatherMode;
-    public static GatherMode GathersMode;
+    private static OptionItem OptionCanAllPlayerGather;
     public List<byte> GatherChoosePlayer = new();
     int GatherCount;
     int NowGatherCount;
     public float CalculateKillCooldown() => KillCooldown;
-    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.PhantomCooldown = GatherCooldown;
     public override string GetAbilityButtonText() => GetString("CharisMastarGatherButtonText");
 
     private static void SetUpOptionItem()
@@ -73,10 +60,8 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
                 .SetValueFormat(OptionFormat.Seconds);
         OptionGatherCount = IntegerOptionItem.Create(RoleInfo, 11, OptionName.CharisMastarGatherCount, new(1, 10, 1), 3, false)
             .SetValueFormat(OptionFormat.Pieces);
-        OptionGatherCooldown = FloatOptionItem.Create(RoleInfo, 12, OptionName.CharisMastarGatherCooldown, new(5f, 900f, 5f), 30f, false)
-            .SetValueFormat(OptionFormat.Seconds);
         OptionNotGatherPlayerKill = BooleanOptionItem.Create(RoleInfo, 13, OptionName.CharisMastarNotGatherPlayerKill, true, false);
-        OptionGatherMode = StringOptionItem.Create(RoleInfo, 14, OptionName.CharisMastarGatherMode, GatherModeText, 2, false);
+        OptionCanAllPlayerGather = BooleanOptionItem.Create(RoleInfo, 14, OptionName.CharisMastarCanAllPlayerGather, true, false);
     }
     public override void Add()
     {
@@ -86,46 +71,53 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
     public override bool OnCheckVanish()
     {
         if (NowGatherCount == 0) return false;
+        Vector2[] targetPositions = new Vector2[]
+        {
+            new(7.76f, 8.56f),
+        };
+        //Vector2 targetPosition = new(7.76f, 8.56f);//ジップラインの座標
 
         /* 生存者全員をワープする処理*/
-        foreach (var Worptarget in Main.AllAlivePlayerControls)
+        foreach (Vector2 targetPosition in targetPositions)
         {
-            /* 梯子を使っている場合*/
-            if (Worptarget.MyPhysics.Animations.IsPlayingAnyLadderAnimation() && !Worptarget.Is(CustomRoleTypes.Impostor))
+            foreach (var Worptarget in Main.AllAlivePlayerControls)
             {
-                if (NotGatherPlayerKill)
+                if (Worptarget.MyPhysics.Animations.IsPlayingAnyLadderAnimation() || Vector2.Distance(Worptarget.GetTruePosition(), targetPosition) <= 1.9f)
                 {
-                    Worptarget.SetRealKiller(Player);
-                    Worptarget.RpcMurderPlayer(Worptarget);//集合しない時キルする設定なのでkillする
-                    GatherChoosePlayer.Remove(Worptarget.PlayerId); // キル後にリストから削除
-                    PlayerState.GetByPlayerId(Worptarget.PlayerId).DeathReason = CustomDeathReason.NotGather;
+
+                    if (NotGatherPlayerKill)//集まらないplayerをキルするがONの時
+                    {
+                        Worptarget.SetRealKiller(Player);
+                        Worptarget.RpcMurderPlayer(Worptarget);//集合しない時キルする設定なのでkillする
+                        GatherChoosePlayer.Remove(Worptarget.PlayerId); // キル後にリストから削除
+                        PlayerState.GetByPlayerId(Worptarget.PlayerId).DeathReason = CustomDeathReason.NotGather;
+                        Logger.Info($"ターゲットが特定の位置にいたためキルしました。", "CharisMastar");
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                    Logger.Info($"ワープできませんでした。", "CharisMastar");
                 }
-                else
+                else if (Worptarget.IsAlive())//全員を飛ばす。
                 {
-                    return false;
-                }
-                Logger.Info($"ワープできませんでした。", "CharisMastar");
-            }
-            /* 生存者のみ、飛ばす*/
-            if (Worptarget.IsAlive())
-            {
-                if (GathersMode == GatherMode.EveryoneGather)
-                {
-                    var NearestVent = GetNearestVent();
-                    Worptarget.MyPhysics.RpcExitVent(NearestVent.Id);
-                }
-                if (GathersMode == GatherMode.CanChoose)
-                {
-                    if (GatherChoosePlayer.Contains(Worptarget.PlayerId))
+                    if (CanAllPlayerGather || !GatherChoosePlayer.Any())//全員を集めるがtrueの時 または、リストが空の時
                     {
                         var NearestVent = GetNearestVent();
                         Worptarget.MyPhysics.RpcExitVent(NearestVent.Id);
+                    }
+                    if (!CanAllPlayerGather)//全員を集めるがfalseの時
+                    {
+                        if (GatherChoosePlayer.Contains(Worptarget.PlayerId))
+                        {
+                            var NearestVent = GetNearestVent();
+                            Worptarget.MyPhysics.RpcExitVent(NearestVent.Id);
+                        }
                     }
                 }
             }
         }
         NowGatherCount--;
-        Player.RpcResetAbilityCooldown();
         return false;
     }
     Vent GetNearestVent()
@@ -135,10 +127,10 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
     }
     public void OnCheckMurderAsKiller(MurderInfo info)
     {
-        if (!info.CanKill || NowGatherCount == 0) return;
+        if (!info.CanKill || NowGatherCount == 0 || CanAllPlayerGather) return;
 
         var (killer, target) = info.AttemptTuple;
-        if (GathersMode == GatherMode.CanChoose)
+        if (!CanAllPlayerGather)//全員を集めるがfalseの時
         {
             info.DoKill = killer.CheckDoubleTrigger(target, () => { SetGatherPlayer(target); });
         }
@@ -154,7 +146,6 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         {
             GatherChoosePlayer.Add(target.PlayerId);
             GatherChoosePlayer.Add(Player.PlayerId);
-            Player.SetKillCooldown();
             SendRPC(target.PlayerId);
         }
     }
@@ -174,7 +165,7 @@ public sealed class CharisMastar : RoleBase, IImpostor, ISidekickable
         // seenが省略の場合seer
         seen ??= seer;
 
-        if (seer.Is(CustomRoles.CharisMastar) && seer != seen && GathersMode == GatherMode.CanChoose)
+        if (seer.Is(CustomRoles.CharisMastar) && seer != seen && !CanAllPlayerGather)
         {
             if (GatherChoosePlayer.Contains(seen.PlayerId))
             {
