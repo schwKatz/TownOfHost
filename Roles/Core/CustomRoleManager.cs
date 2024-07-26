@@ -179,10 +179,21 @@ public static class CustomRoleManager
 
         //ホストの死後タスク免除
         if (attemptTarget == PlayerControl.LocalPlayer && Options.HostGhostIgnoreTasks.GetBool()
-            && !attemptTarget.Is(CustomRoles.Gang))
+            && !attemptTarget.Is(CustomRoles.Gang) && Utils.HasTasks(attemptTarget.Data))
         {
-            var task = attemptTarget.GetPlayerTaskState();
-            task.CompletedTasksCount = task.AllTasksCount;
+            var taskState = PlayerControl.LocalPlayer.GetPlayerTaskState();
+            taskState.CompletedTasksCount = taskState.AllTasksCount;
+            Logger.Info($"{PlayerControl.LocalPlayer.GetNameWithRole()}: TaskCounts = {taskState.CompletedTasksCount}/{taskState.AllTasksCount}", "OnMurderPlayer/HostGhostIgnoreTasks");
+
+            foreach (var task in PlayerControl.LocalPlayer.Data.Tasks)
+            {
+                if (!task.Complete)
+                {
+                    task.Complete = true;
+                    GameData.Instance.CompletedTasks++;
+                }
+            }
+            Logger.Info($"{PlayerControl.LocalPlayer.GetNameWithRole()}.Dead TotalTaskCounts = {GameData.Instance.CompletedTasks}/{GameData.Instance.TotalTasks}", "OnMurderPlayer/HostGhostIgnoreTasks");
         }
 
         Utils.CountAlivePlayers(true);
