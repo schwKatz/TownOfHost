@@ -29,21 +29,25 @@ public sealed class CharismaStar : RoleBase, IImpostor
     )
     {
         KillCooldown = OptionKillCooldown.GetFloat();
+        GatherCooldown = OptionGatherCooldown.GetFloat();
         GatherMaxCount = OptionGatherMaxCount.GetInt();
         NotGatherPlayerKill = OptionNotGatherPlayerKill.GetBool();
         CanAllPlayerGather = OptionCanAllPlayerGather.GetBool();
     }
     enum OptionName
     {
+        CharismaStarGatherCooldown,
         CharismaStarGatherMaxCount,
         CharismaStarNotGatherPlayerKill,
         CharismaStarCanAllPlayerGather,
     }
     private static OptionItem OptionKillCooldown;
+    private static OptionItem OptionGatherCooldown;
     private static OptionItem OptionGatherMaxCount;
     private static OptionItem OptionNotGatherPlayerKill;
     private static OptionItem OptionCanAllPlayerGather;
     private static float KillCooldown;
+    private static float GatherCooldown;
     private static int GatherMaxCount;
     private static bool NotGatherPlayerKill;
     private static bool CanAllPlayerGather;
@@ -57,13 +61,15 @@ public sealed class CharismaStar : RoleBase, IImpostor
     {
         OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 30f, false)
                 .SetValueFormat(OptionFormat.Seconds);
-        OptionGatherMaxCount = IntegerOptionItem.Create(RoleInfo, 11, OptionName.CharismaStarGatherMaxCount, new(1, 10, 1), 3, false)
+        OptionGatherCooldown = FloatOptionItem.Create(RoleInfo, 11, OptionName.CharismaStarGatherCooldown, new(2.5f, 180f, 2.5f), 30f, false)
+        .SetValueFormat(OptionFormat.Seconds);
+        OptionGatherMaxCount = IntegerOptionItem.Create(RoleInfo, 12, OptionName.CharismaStarGatherMaxCount, new(1, 10, 1), 3, false)
             .SetValueFormat(OptionFormat.Pieces);
         OptionNotGatherPlayerKill = BooleanOptionItem.Create(RoleInfo, 13, OptionName.CharismaStarNotGatherPlayerKill, true, false);
         OptionCanAllPlayerGather = BooleanOptionItem.Create(RoleInfo, 14, OptionName.CharismaStarCanAllPlayerGather, true, false);
     }
     public float CalculateKillCooldown() => KillCooldown;
-    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.PhantomCooldown = 0.1f;
+    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.PhantomCooldown = GatherCooldown;
 
     public override void Add()
     {
@@ -135,10 +141,11 @@ public sealed class CharismaStar : RoleBase, IImpostor
             // ベントに集合
             target.MyPhysics.RpcExitVent(GetNearestVent().Id);
         }
-        
+
         // 能力使用後のリセット
         GatherChoosePlayer.Clear();
         GatherLimitCount--;
+        Player.RpcResetAbilityCooldown();
         Logger.Info($"{Player.GetNameWithRole()} : 残り{GatherLimitCount}回", "CharismaStar");
         // 表示更新
         Utils.NotifyRoles(SpecifySeer: Player);
