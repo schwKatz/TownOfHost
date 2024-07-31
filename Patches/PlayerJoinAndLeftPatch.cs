@@ -79,6 +79,8 @@ namespace TownOfHostY
     {
         static void Prefix([HarmonyArgument(0)] ClientData data)
         {
+            if (data == null || data.Character == null) return;
+
             if (CustomRoles.Executioner.IsPresent())
                 Executioner.ChangeRoleByTarget(data.Character.PlayerId);
             if (CustomRoles.Lawyer.IsPresent())
