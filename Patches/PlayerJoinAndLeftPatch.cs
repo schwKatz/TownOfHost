@@ -90,21 +90,13 @@ namespace TownOfHostY
         }
         public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ClientData data, [HarmonyArgument(1)] DisconnectReasons reason)
         {
+            if (data == null || data.Character == null) return;
+
             var isFailure = false;
 
             try
             {
-                if (data == null)
-                {
-                    isFailure = true;
-                    Logger.Warn("退出者のClientDataがnull", nameof(OnPlayerLeftPatch));
-                }
-                else if (data.Character == null)
-                {
-                    isFailure = true;
-                    Logger.Warn("退出者のPlayerControlがnull", nameof(OnPlayerLeftPatch));
-                }
-                else if (data.Character.Data == null)
+                if (data.Character.Data == null)
                 {
                     isFailure = true;
                     Logger.Warn("退出者のPlayerInfoがnull", nameof(OnPlayerLeftPatch));
