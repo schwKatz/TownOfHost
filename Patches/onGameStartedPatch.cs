@@ -64,8 +64,6 @@ class ChangeRoleSettings
         //名前の記録
         Main.AllPlayerNames = new();
 
-        Main.tempImpostorNum = 0;
-
         var invalidColor = Main.AllPlayerControls.Where(p => p.Data.DefaultOutfit.ColorId < 0 || Palette.PlayerColors.Length <= p.Data.DefaultOutfit.ColorId);
         if (invalidColor.Any())
         {
@@ -138,7 +136,6 @@ class ChangeRoleSettings
 [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
 class SelectRolesPatch
 {
-    private static bool AssignedStrayWolf = false;
     public static bool Prefix()
     {
         if (!AmongUsClient.Instance.AmHost) return false;
@@ -148,6 +145,9 @@ class SelectRolesPatch
         RoleAssignManager.SelectAssignRoles();
 
         Dictionary<RoleTypes, int> roleTypesList = new();
+
+        var assignedNum = 0;
+        var assignedNumImpostors = 0;
 
         //Desync系の役職割り当て
         if (Options.IsCCMode)
@@ -171,8 +171,8 @@ class SelectRolesPatch
                 PlayerControl.LocalPlayer.Data.IsDead = true;
             }
 
-            AssignDesyncRole(CustomRoles.CCYellowLeader, AllPlayers, BaseRole: RoleTypes.Impostor);
-            AssignDesyncRole(CustomRoles.CCBlueLeader, AllPlayers, BaseRole: RoleTypes.Impostor);
+            AssignDesyncRole(CustomRoles.CCYellowLeader, AllPlayers, ref assignedNum, BaseRole: RoleTypes.Impostor);
+            AssignDesyncRole(CustomRoles.CCBlueLeader, AllPlayers, ref assignedNum, BaseRole: RoleTypes.Impostor);
         }
         //else if (Options.IsONMode())
         //{
@@ -226,20 +226,21 @@ class SelectRolesPatch
                     switch (role)
                     {
                         case CustomRoles.StrayWolf:
-                            AssignedStrayWolf = AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, BaseRole: RoleTypes.Impostor, IsImpostorRole: true);
+                            AssignDesyncRole(CustomRoles.StrayWolf, AllPlayers, ref assignedNum, BaseRole: RoleTypes.Impostor);
+                            assignedNumImpostors += assignedNum;
                             continue;
                         case CustomRoles.Opportunist:
                             if (!Opportunist.OptionCanKill.GetBool()) continue;
                             break;
                     }
 
-                    AssignDesyncRole(role, AllPlayers, BaseRole: info.BaseRoleType.Invoke());
+                AssignDesyncRole(role, AllPlayers, ref assignedNum, BaseRole: info.BaseRoleType.Invoke());
                 }
             }
         }
 
         //バニラの役職割り当て
-        AssignRolesNormal(roleTypesList);
+        AssignRolesNormal(roleTypesList, assignedNumImpostors);
 
         //MODの役職割り当て
         RpcSetRoleReplacer.Release(); //保存していたSetRoleRpcを一気に書く
@@ -465,8 +466,7 @@ class SelectRolesPatch
                 if (role.IsVanilla()) continue;
 
                 if (role == CustomRoles.Opportunist && Opportunist.OptionCanKill.GetBool()) continue;
-                if (role == CustomRoles.StrayWolf && AssignedStrayWolf) continue;
-                if (role is not CustomRoles.Opportunist and not CustomRoles.StrayWolf &&
+                if (role is not CustomRoles.Opportunist &&
                     CustomRoleManager.GetRoleInfo(role)?.IsDesyncImpostor == true) continue;
 
                 var baseRoleTypes = role.GetRoleTypes() switch
@@ -568,14 +568,14 @@ class SelectRolesPatch
 
         return false;
     }
-    public static void AssignRolesNormal(Dictionary<RoleTypes, int> roleTypesList)
+    public static void AssignRolesNormal(Dictionary<RoleTypes, int> roleTypesList, int assignedNumImpostors)
     {
         var list = AmongUsClient.Instance.allClients.ToArray()
         .Where(c => c.Character != null && c.Character.Data != null &&
                     !c.Character.Data.Disconnected && !c.Character.Data.IsDead)
         .OrderBy(c => c.Id).Select(c => c.Character.Data).ToList();
-        int adjustedNumImpostors = Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors);
-        Logger.Info($"NomalAssign list: {list.Count}, impostor: {adjustedNumImpostors}", "AssignRoles");
+        int adjustedNumImpostors = Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) - assignedNumImpostors;
+        Logger.Info($"NomalAssign list: {list.Count}, impostor: {adjustedNumImpostors}(desync: {assignedNumImpostors})", "AssignRoles");
         AssignRolesForTeam(list, roleTypesList, RoleTeamTypes.Impostor, adjustedNumImpostors, RoleTypes.Impostor);
         AssignRolesForTeam(list, roleTypesList, RoleTeamTypes.Crewmate, int.MaxValue, RoleTypes.Crewmate);
     }
@@ -621,22 +621,16 @@ class SelectRolesPatch
             rolesAssigned++;
         }
     }
-    private static bool AssignDesyncRole(CustomRoles role, List<PlayerControl> AllPlayers, RoleTypes BaseRole, RoleTypes hostBaseRole = RoleTypes.Crewmate, bool IsImpostorRole = false)
+
+    private static bool AssignDesyncRole(CustomRoles role, List<PlayerControl> AllPlayers, ref int assignedNum, RoleTypes BaseRole, RoleTypes hostBaseRole = RoleTypes.Crewmate)
     {
+        assignedNum = 0;
+
         if (!role.IsPresent()) return false;
 
         var hostId = PlayerControl.LocalPlayer.PlayerId;
         var rand = IRandom.Instance;
-        var realAssigned = 0;
         var rolesMap = RpcSetRoleReplacer.RolesMap;
-
-        if (IsImpostorRole)
-        {
-            var impostorNum = Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors);
-            if (impostorNum == role.GetRealCount()) return false;
-            if (Main.tempImpostorNum == 0)
-                Main.tempImpostorNum = impostorNum;
-        }
 
         for (var i = 0; i < role.GetRealCount(); i++)
         {
@@ -673,14 +667,12 @@ class SelectRolesPatch
             //ホスト視点はロール決定
             player.StartCoroutine(player.CoSetRole(othersRole, false));
             player.Data.IsDead = true;
-            realAssigned++;
+            assignedNum++;
 
             Logger.Info("役職設定(desync):" + player?.Data?.PlayerName + " = " + role.ToString(), "AssignRoles");
         }
 
-        if (IsImpostorRole) Main.NormalOptions.NumImpostors -= realAssigned;
-
-        return realAssigned > 0;
+        return assignedNum > 0;
     }
     private static List<PlayerControl> AssignCustomRolesFromList(CustomRoles role, List<PlayerControl> players, int RawCount = -1)
     {
