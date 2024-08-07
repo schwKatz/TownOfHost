@@ -244,73 +244,7 @@ class SelectRolesPatch
 
         //Utils.ApplySuffix();
 
-        var rand = IRandom.Instance;
-
-        List<PlayerControl> Crewmates = new();
-        List<PlayerControl> Impostors = new();
-        List<PlayerControl> Scientists = new();
-        List<PlayerControl> Engineers = new();
-        List<PlayerControl> Trackers = new();
-        List<PlayerControl> Noisemakers = new();
-        List<PlayerControl> GuardianAngels = new();
-        List<PlayerControl> Shapeshifters = new();
-        List<PlayerControl> Phantoms = new();
-
-        List<PlayerControl> allPlayersbySub = new();
-
-        foreach (var pc in Main.AllPlayerControls)
-        {
-
-            if (!pc.Is(CustomRoles.GM)) allPlayersbySub.Add(pc);
-
-            var state = PlayerState.GetByPlayerId(pc.PlayerId);
-            if (state.MainRole != CustomRoles.NotAssigned) continue; //既にカスタム役職が割り当てられていればスキップ
-            var role = CustomRoles.NotAssigned;
-            switch (pc.Data.Role.Role)
-            {
-                case RoleTypes.Crewmate:
-                    Crewmates.Add(pc);
-                    role = CustomRoles.Crewmate;
-                    break;
-                case RoleTypes.Impostor:
-                    Impostors.Add(pc);
-                    role = CustomRoles.Impostor;
-                    break;
-                case RoleTypes.Scientist:
-                    Scientists.Add(pc);
-                    role = CustomRoles.Scientist;
-                    break;
-                case RoleTypes.Engineer:
-                    Engineers.Add(pc);
-                    role = CustomRoles.Engineer;
-                    break;
-                case RoleTypes.Tracker:
-                    Trackers.Add(pc);
-                    role = CustomRoles.Tracker;
-                    break;
-                case RoleTypes.Noisemaker:
-                    Noisemakers.Add(pc);
-                    role = CustomRoles.Noisemaker;
-                    break;
-                case RoleTypes.GuardianAngel:
-                    GuardianAngels.Add(pc);
-                    role = CustomRoles.GuardianAngel;
-                    break;
-                case RoleTypes.Shapeshifter:
-                    Shapeshifters.Add(pc);
-                    role = CustomRoles.Shapeshifter;
-                    break;
-                case RoleTypes.Phantom:
-                    Phantoms.Add(pc);
-                    role = CustomRoles.Phantom;
-                    break;
-                default:
-                    Logger.SendInGame(string.Format(GetString("Error.InvalidRoleAssignment"), pc?.Data?.PlayerName));
-                    break;
-            }
-            state.SetMainRole(role);
-        }
-
+        var roleTypePlayers = GetRoleTypePlayers();
         if (Options.CurrentGameMode == CustomGameMode.HideAndSeek)
         {
             SetColorPatch.IsAntiGlitchDisabled = true;
@@ -323,8 +257,11 @@ class SelectRolesPatch
             }
 
             //役職設定処理
-            AssignCustomRolesFromList(CustomRoles.HASFox, Crewmates);
-            AssignCustomRolesFromList(CustomRoles.HASTroll, Crewmates);
+            if (roleTypePlayers.TryGetValue(RoleTypes.Crewmate, out var list))
+            {
+                AssignCustomRolesFromList(CustomRoles.HASFox, list);
+                AssignCustomRolesFromList(CustomRoles.HASTroll, list);
+            }
             foreach (var pair in PlayerState.AllPlayerStates)
             {
                 //RPCによる同期
@@ -341,18 +278,24 @@ class SelectRolesPatch
             //Impostorsを割り当て
             {
                 SetColorPatch.IsAntiGlitchDisabled = true;
-                foreach (var imp in Impostors)
+                if (roleTypePlayers.TryGetValue(RoleTypes.Impostor, out var list))
                 {
+                    foreach (var imp in list)
+                    {
                     PlayerState.GetByPlayerId(imp.PlayerId).SetMainRole(CustomRoles.CCRedLeader);
                     Logger.Info("役職設定:" + imp?.Data?.PlayerName + " = " + CustomRoles.CCRedLeader.ToString(), "AssignRoles");
                 }
             }
+            }
             //残りを割り当て
             {
-                foreach (var crew in CatchCat.Option.T_CanUseVent.GetBool() ? Engineers : Crewmates)
+                if (roleTypePlayers.TryGetValue(CatchCat.Option.T_CanUseVent.GetBool() ? RoleTypes.Engineer : RoleTypes.Crewmate, out var list))
                 {
-                    PlayerState.GetByPlayerId(crew.PlayerId).SetMainRole(CustomRoles.CCNoCat);
-                    Logger.Info("役職設定:" + crew?.Data?.PlayerName + " = " + CustomRoles.CCNoCat.ToString(), "AssignRoles");
+                    foreach (var crew in list)
+                    {
+                        PlayerState.GetByPlayerId(crew.PlayerId).SetMainRole(CustomRoles.CCNoCat);
+                        Logger.Info("役職設定:" + crew?.Data?.PlayerName + " = " + CustomRoles.CCNoCat.ToString(), "AssignRoles");
+                    }
                 }
                 SetColorPatch.IsAntiGlitchDisabled = false;
             }
@@ -465,22 +408,17 @@ class SelectRolesPatch
                 if (role is not CustomRoles.Opportunist &&
                     CustomRoleManager.GetRoleInfo(role)?.IsDesyncImpostor == true) continue;
 
-                var baseRoleTypes = role.GetRoleTypes() switch
-                {
-                    RoleTypes.Impostor => Impostors,
-                    RoleTypes.Shapeshifter => Shapeshifters,
-                    RoleTypes.Phantom => Phantoms,
-                    RoleTypes.Scientist => Scientists,
-                    RoleTypes.Engineer => Engineers,
-                    RoleTypes.Tracker => Trackers,
-                    RoleTypes.Noisemaker => Noisemakers,
-                    RoleTypes.GuardianAngel => GuardianAngels,
-                    _ => Crewmates,
-                };
-                AssignCustomRolesFromList(role, baseRoleTypes);
+            if (!roleTypePlayers.TryGetValue(role.GetRoleTypes(), out var list)) continue;
+
+            AssignCustomRolesFromList(role, list);
             }
 
             // Random-Addon
+        List<PlayerControl> allPlayersbySub = new();
+        foreach (var pc in Main.AllPlayerControls)
+        {
+            if (!pc.Is(CustomRoles.GM)) allPlayersbySub.Add(pc);
+        }
             if (!CustomRoles.PlatonicLover.IsEnable() && CustomRoles.Lovers.IsEnable())
                 AssignCustomSubRolesFromList(CustomRoles.Lovers, allPlayersbySub, 2);
             AssignCustomSubRolesFromList(CustomRoles.AddWatch, allPlayersbySub);
@@ -732,6 +670,47 @@ class SelectRolesPatch
                 count += role.GetRealCount();
         }
         return count;
+    }
+    public static Dictionary<RoleTypes, List<PlayerControl>> GetRoleTypePlayers()
+    {
+        Dictionary<RoleTypes, List<PlayerControl>> roleTypePlayers = new();
+        foreach (var roleType in new RoleTypes[] { RoleTypes.Crewmate, RoleTypes.Scientist, RoleTypes.Engineer,
+                                                   RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.GuardianAngel,
+                                                   RoleTypes.Impostor, RoleTypes.Shapeshifter, RoleTypes.Phantom })
+        {
+            roleTypePlayers.Add(roleType, new());
+        }
+
+        foreach (var pc in Main.AllPlayerControls)
+        {
+            var state = PlayerState.GetByPlayerId(pc.PlayerId);
+            if (state.MainRole != CustomRoles.NotAssigned) continue; //既にカスタム役職が割り当てられていればスキップ
+
+            var roleType = pc.Data.Role.Role;
+            if (!roleTypePlayers.TryGetValue(roleType, out var list))
+            {
+                Logger.SendInGame(string.Format(GetString("Error.InvalidRoleAssignment"), pc?.Data?.PlayerName));
+                continue;
+            }
+            list.Add(pc);
+
+            var defaultRole = roleType switch
+            {
+                RoleTypes.Crewmate => CustomRoles.Crewmate,
+                RoleTypes.Scientist => CustomRoles.Scientist,
+                RoleTypes.Engineer => CustomRoles.Engineer,
+                RoleTypes.Tracker => CustomRoles.Tracker,
+                RoleTypes.Noisemaker => CustomRoles.Noisemaker,
+                RoleTypes.GuardianAngel => CustomRoles.GuardianAngel,
+                RoleTypes.Impostor => CustomRoles.Impostor,
+                RoleTypes.Shapeshifter => CustomRoles.Shapeshifter,
+                RoleTypes.Phantom => CustomRoles.Phantom,
+                _ => CustomRoles.NotAssigned,
+            };
+            state.SetMainRole(defaultRole);
+        }
+
+        return roleTypePlayers;
     }
 }
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole)), HarmonyPriority(Priority.High)]
