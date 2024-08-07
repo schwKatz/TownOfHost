@@ -168,7 +168,6 @@ class SelectRolesPatch
                 AllPlayers.RemoveAll(x => x == PlayerControl.LocalPlayer);
                 PlayerControl.LocalPlayer.RpcSetCustomRole(CustomRoles.GM);
                 PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
-                PlayerControl.LocalPlayer.Data.IsDead = true;
             }
 
             AssignDesyncRole(CustomRoles.CCYellowLeader, AllPlayers, ref assignedNum, BaseRole: RoleTypes.Impostor);
@@ -189,7 +188,6 @@ class SelectRolesPatch
         //        AllPlayers.RemoveAll(x => x == PlayerControl.LocalPlayer);
         //        PlayerControl.LocalPlayer.RpcSetCustomRole(CustomRoles.GM);
         //        PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
-        //        PlayerControl.LocalPlayer.Data.IsDead = true;
         //    }
 
         //    Dictionary<(byte, byte), RoleTypes> rolesMap = new();
@@ -217,7 +215,6 @@ class SelectRolesPatch
                 AllPlayers.RemoveAll(x => x == PlayerControl.LocalPlayer);
                 PlayerControl.LocalPlayer.RpcSetRole(RoleTypes.Crewmate);
                 PlayerState.GetByPlayerId(PlayerControl.LocalPlayer.PlayerId).SetMainRole(CustomRoles.GM);
-                PlayerControl.LocalPlayer.Data.IsDead = true;
             }
             foreach (var (role, info) in CustomRoleManager.AllRolesInfo)
             {
@@ -263,7 +260,6 @@ class SelectRolesPatch
 
         foreach (var pc in Main.AllPlayerControls)
         {
-            pc.Data.IsDead = false; //プレイヤーの死を解除する
 
             if (!pc.Is(CustomRoles.GM)) allPlayersbySub.Add(pc);
 
@@ -572,7 +568,8 @@ class SelectRolesPatch
     {
         var list = AmongUsClient.Instance.allClients.ToArray()
         .Where(c => c.Character != null && c.Character.Data != null &&
-                    !c.Character.Data.Disconnected && !c.Character.Data.IsDead)
+                    !c.Character.Data.Disconnected && !c.Character.Data.IsDead &&
+                    PlayerState.GetByPlayerId(c.Character.PlayerId).MainRole == CustomRoles.NotAssigned)
         .OrderBy(c => c.Id).Select(c => c.Character.Data).ToList();
         int adjustedNumImpostors = Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors) - assignedNumImpostors;
         Logger.Info($"NomalAssign list: {list.Count}, impostor: {adjustedNumImpostors}(desync: {assignedNumImpostors})", "AssignRoles");
@@ -666,7 +663,6 @@ class SelectRolesPatch
             RpcSetRoleReplacer.OverriddenSenderList.Add(player.PlayerId);
             //ホスト視点はロール決定
             player.StartCoroutine(player.CoSetRole(othersRole, false));
-            player.Data.IsDead = true;
             assignedNum++;
 
             Logger.Info("役職設定(desync):" + player?.Data?.PlayerName + " = " + role.ToString(), "AssignRoles");
