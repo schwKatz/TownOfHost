@@ -153,7 +153,6 @@ class SelectRolesPatch
         var assignedNum = 0;
         var assignedNumImpostors = 0;
 
-
         foreach (var roleTypes in new RoleTypes[] { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom })
         {
             roleTypesList.Add(roleTypes, GetRoleTypesCount(roleTypes));
@@ -187,7 +186,7 @@ class SelectRolesPatch
                         break;
                 }
 
-            AssignDesyncRole(role, AllPlayers, ref assignedNum, BaseRole: info.BaseRoleType.Invoke());
+                AssignDesyncRole(role, AllPlayers, ref assignedNum, BaseRole: info.BaseRoleType.Invoke());
             }
         }
 
@@ -221,23 +220,15 @@ class SelectRolesPatch
         }
         if (!CustomRoles.PlatonicLover.IsEnable() && CustomRoles.Lovers.IsEnable())
             AssignCustomSubRolesFromList(CustomRoles.Lovers, allPlayersbySub, 2);
-        AssignCustomSubRolesFromList(CustomRoles.AddWatch, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.Sunglasses, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.AddLight, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.AddSeer, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.Autopsy, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.VIP, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.Clumsy, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.Revenger, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.Management, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.InfoPoor, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.Sending, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.TieBreaker, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.NonReport, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.PlusVote, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.Guarding, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.AddBait, allPlayersbySub);
-        AssignCustomSubRolesFromList(CustomRoles.Refusing, allPlayersbySub);
+        foreach (var role in new CustomRoles[] { CustomRoles.AddWatch, CustomRoles.Sunglasses, CustomRoles.AddLight,
+                                                   CustomRoles.AddSeer, CustomRoles.Autopsy, CustomRoles.VIP,
+                                                   CustomRoles.Clumsy, CustomRoles.Revenger, CustomRoles.Management,
+                                                   CustomRoles.InfoPoor, CustomRoles.Sending, CustomRoles.TieBreaker,
+                                                   CustomRoles.NonReport, CustomRoles.PlusVote, CustomRoles.Guarding,
+                                                   CustomRoles.AddBait, CustomRoles.Refusing })
+        {
+            AssignCustomSubRolesFromList(role, allPlayersbySub);
+        }
 
         foreach (var pair in PlayerState.AllPlayerStates)
         {
@@ -512,163 +503,163 @@ class SelectRolesPatch
         return roleTypePlayers;
     }
 }
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole)), HarmonyPriority(Priority.High)]
-    public class RpcSetRoleReplacer
+[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole)), HarmonyPriority(Priority.High)]
+public class RpcSetRoleReplacer
+{
+    private static bool doReplace = false;
+    private static Dictionary<byte, CustomRpcSender> senders;
+    public static List<(PlayerControl, RoleTypes)> StoragedData = new();
+    // 役職DesyncなどRolesMapでSetRoleRpcを書き込みするリスト
+    public static List<byte> OverriddenSenderList;
+    public static Dictionary<(byte, byte), RoleTypes> RolesMap;
+    public static bool DoReplace() => doReplace;
+
+    public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] RoleTypes roleType)
     {
-        private static bool doReplace = false;
-        private static Dictionary<byte, CustomRpcSender> senders;
-        public static List<(PlayerControl, RoleTypes)> StoragedData = new();
-        // 役職DesyncなどRolesMapでSetRoleRpcを書き込みするリスト
-        public static List<byte> OverriddenSenderList;
-        public static Dictionary<(byte, byte), RoleTypes> RolesMap;
-        public static bool DoReplace() => doReplace;
-
-        public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] RoleTypes roleType)
+        if (doReplace && senders != null)
         {
-            if (doReplace && senders != null)
-            {
-                StoragedData.Add((__instance, roleType));
-                return false;
-            }
-            else return true;
+            StoragedData.Add((__instance, roleType));
+            return false;
         }
-        public static void Release()
+        else return true;
+    }
+    public static void Release()
+    {
+        ReleaseNormalSetRole(true);
+        ReleaseDesyncSetRole(true);
+        senders.Do(kvp => kvp.Value.SendMessage());
+
+        DummySetRole();
+
+        // 不要なオブジェクトの削除
+        EndReplace();
+    }
+    public static void DummySetRole()
+    {
+        foreach (var pc in Main.AllPlayerControls)
         {
-            ReleaseNormalSetRole(true);
-            ReleaseDesyncSetRole(true);
-            senders.Do(kvp => kvp.Value.SendMessage());
-
-            DummySetRole();
-
-            // 不要なオブジェクトの削除
-            EndReplace();
-        }
-        public static void DummySetRole()
-        {
-            foreach (var pc in Main.AllPlayerControls)
-            {
-                if (pc.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
-                DummySetRole(pc);
-            }
-        }
-        public static void DummySetRole(PlayerControl target)
-        {
-            int targetClientId = target.GetClientId();
-            if (!RolesMap.TryGetValue((target.PlayerId, target.PlayerId), out var roleType))
-            {
-                roleType = StoragedData.FirstOrDefault(x => x.Item1.PlayerId == target.PlayerId).Item2;
-            }
-            Logger.Info($"sent {target.name} {roleType}", "DummySetRole");
-
-            var stream = MessageWriter.Get(SendOption.Reliable);
-            stream.StartMessage(6);
-            stream.Write(AmongUsClient.Instance.GameId);
-            stream.WritePacked(targetClientId);
-            {
-                SetDisconnectedMessage(stream, true);
-
-                stream.StartMessage(2);
-                stream.WritePacked(target.NetId);
-                stream.Write((byte)RpcCalls.SetRole);
-                stream.Write((ushort)roleType);
-                stream.Write(true);     //canOverrideRole
-                stream.EndMessage();
-                Logger.Info($"DummySetRole to:{target?.name}({targetClientId}) player:{target?.name}({roleType})", "★RpcSetRole");
-
-                SetDisconnectedMessage(stream, false);
-            }
-            stream.EndMessage();
-            AmongUsClient.Instance.SendOrDisconnect(stream);
-            stream.Recycle();
-        }
-        private static void SetDisconnectedMessage(MessageWriter stream, bool disconnected)
-        {
-            foreach (var pc in Main.AllPlayerControls)
-            {
-                //if (pc.PlayerId != target.PlayerId) continue;
-                pc.Data.Disconnected = disconnected;
-
-                stream.StartMessage(1);
-                stream.WritePacked(pc.Data.NetId);
-                pc.Data.Serialize(stream, false);
-                stream.EndMessage();
-            }
-        }
-        private static void ReleaseDesyncSetRole(bool skipSelf)
-        {
-            foreach (var seer in Main.AllPlayerControls)
-            {
-                foreach (var target in Main.AllPlayerControls)
-                {
-                    if (skipSelf && seer.PlayerId == target.PlayerId &&
-                        seer.PlayerId != PlayerControl.LocalPlayer.PlayerId) continue;
-                    if (RolesMap.TryGetValue((seer.PlayerId, target.PlayerId), out var roleType))
-                    {
-                        if (roleType == RoleTypes.Scientist &&
-                            StoragedData.Any(x => x.Item1.PlayerId == seer.PlayerId && x.Item2 == RoleTypes.Noisemaker))
-                        {
-                            Logger.Info($"ChangeNoisemaker seer: {seer.PlayerId}, target: {target.PlayerId},{roleType}=>{RoleTypes.Noisemaker}", "MakeDesyncSender");
-                            roleType = RoleTypes.Noisemaker;
-                        }
-
-                        var sender = senders[seer.PlayerId];
-                        sender.AutoStartRpc(seer.NetId, (byte)RpcCalls.SetRole, target.GetClientId())
-                            .Write((ushort)roleType)
-                            .Write(true) //canOverrideRole
-                            .EndRpc();
-                        Logger.Info($"ReleaseDesyncSetRole to:{target?.name}({target.GetClientId()}) player:{seer?.name}({roleType})", "RpcSetRole");
-                    }
-                }
-            }
-        }
-        private static void ReleaseNormalSetRole(bool skipSelf)
-        {
-            foreach (var senderPair in senders)
-            {
-                var sender = senderPair.Value;
-                var targetId = senderPair.Key;
-                if (OverriddenSenderList.Contains(targetId)) continue;
-                if (sender.CurrentState != CustomRpcSender.State.InRootMessage)
-                    throw new InvalidOperationException("A CustomRpcSender had Invalid State.");
-
-                foreach (var pair in StoragedData)
-                {
-                    if (skipSelf && targetId == pair.Item1.PlayerId &&
-                        targetId != PlayerControl.LocalPlayer.PlayerId) continue;
-
-                    var player = pair.Item1;
-                    var roleType = pair.Item2;
-                    var clientId = Utils.GetPlayerById(targetId).GetClientId();
-
-                    player.StartCoroutine(player.CoSetRole(roleType, false));
-                    sender.AutoStartRpc(player.NetId, (byte)RpcCalls.SetRole, clientId)
-                        .Write((ushort)roleType)
-                        .Write(true)           //canOverrideRole = false
-                        .EndRpc();
-                    Logger.Info($"ReleaseNormalSetRole toClientId:{clientId} player:{player?.name}({roleType})", "RpcSetRole");
-                }
-                sender.EndMessage();
-            }
-            doReplace = false;
-        }
-        public static void StartReplace()
-        {
-            senders = new();
-            foreach (var pc in Main.AllPlayerControls)
-            {
-                senders[pc.PlayerId] = new CustomRpcSender($"{pc.name}'s SetRole Sender", SendOption.Reliable, false)
-                        .StartMessage(pc.GetClientId());
-            }
-            StoragedData = new();
-            OverriddenSenderList = new();
-            RolesMap = new();
-            doReplace = true;
-        }
-        public static void EndReplace()
-        {
-            senders = null;
-            OverriddenSenderList = null;
-            RolesMap = null;
-            StoragedData = null;
+            if (pc.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
+            DummySetRole(pc);
         }
     }
+    public static void DummySetRole(PlayerControl target)
+    {
+        int targetClientId = target.GetClientId();
+        if (!RolesMap.TryGetValue((target.PlayerId, target.PlayerId), out var roleType))
+        {
+            roleType = StoragedData.FirstOrDefault(x => x.Item1.PlayerId == target.PlayerId).Item2;
+        }
+        Logger.Info($"sent {target.name} {roleType}", "DummySetRole");
+
+        var stream = MessageWriter.Get(SendOption.Reliable);
+        stream.StartMessage(6);
+        stream.Write(AmongUsClient.Instance.GameId);
+        stream.WritePacked(targetClientId);
+        {
+            SetDisconnectedMessage(stream, true);
+
+            stream.StartMessage(2);
+            stream.WritePacked(target.NetId);
+            stream.Write((byte)RpcCalls.SetRole);
+            stream.Write((ushort)roleType);
+            stream.Write(true);     //canOverrideRole
+            stream.EndMessage();
+            Logger.Info($"DummySetRole to:{target?.name}({targetClientId}) player:{target?.name}({roleType})", "★RpcSetRole");
+
+            SetDisconnectedMessage(stream, false);
+        }
+        stream.EndMessage();
+        AmongUsClient.Instance.SendOrDisconnect(stream);
+        stream.Recycle();
+    }
+    private static void SetDisconnectedMessage(MessageWriter stream, bool disconnected)
+    {
+        foreach (var pc in Main.AllPlayerControls)
+        {
+            //if (pc.PlayerId != target.PlayerId) continue;
+            pc.Data.Disconnected = disconnected;
+
+            stream.StartMessage(1);
+            stream.WritePacked(pc.Data.NetId);
+            pc.Data.Serialize(stream, false);
+            stream.EndMessage();
+        }
+    }
+    private static void ReleaseDesyncSetRole(bool skipSelf)
+    {
+        foreach (var seer in Main.AllPlayerControls)
+        {
+            foreach (var target in Main.AllPlayerControls)
+            {
+                if (skipSelf && seer.PlayerId == target.PlayerId &&
+                    seer.PlayerId != PlayerControl.LocalPlayer.PlayerId) continue;
+                if (RolesMap.TryGetValue((seer.PlayerId, target.PlayerId), out var roleType))
+                {
+                    if (roleType == RoleTypes.Scientist &&
+                        StoragedData.Any(x => x.Item1.PlayerId == seer.PlayerId && x.Item2 == RoleTypes.Noisemaker))
+                    {
+                        Logger.Info($"ChangeNoisemaker seer: {seer.PlayerId}, target: {target.PlayerId},{roleType}=>{RoleTypes.Noisemaker}", "MakeDesyncSender");
+                        roleType = RoleTypes.Noisemaker;
+                    }
+
+                    var sender = senders[seer.PlayerId];
+                    sender.AutoStartRpc(seer.NetId, (byte)RpcCalls.SetRole, target.GetClientId())
+                        .Write((ushort)roleType)
+                        .Write(true) //canOverrideRole
+                        .EndRpc();
+                    Logger.Info($"ReleaseDesyncSetRole to:{target?.name}({target.GetClientId()}) player:{seer?.name}({roleType})", "RpcSetRole");
+                }
+            }
+        }
+    }
+    private static void ReleaseNormalSetRole(bool skipSelf)
+    {
+        foreach (var senderPair in senders)
+        {
+            var sender = senderPair.Value;
+            var targetId = senderPair.Key;
+            if (OverriddenSenderList.Contains(targetId)) continue;
+            if (sender.CurrentState != CustomRpcSender.State.InRootMessage)
+                throw new InvalidOperationException("A CustomRpcSender had Invalid State.");
+
+            foreach (var pair in StoragedData)
+            {
+                if (skipSelf && targetId == pair.Item1.PlayerId &&
+                    targetId != PlayerControl.LocalPlayer.PlayerId) continue;
+
+                var player = pair.Item1;
+                var roleType = pair.Item2;
+                var clientId = Utils.GetPlayerById(targetId).GetClientId();
+
+                player.StartCoroutine(player.CoSetRole(roleType, false));
+                sender.AutoStartRpc(player.NetId, (byte)RpcCalls.SetRole, clientId)
+                    .Write((ushort)roleType)
+                    .Write(true)           //canOverrideRole = false
+                    .EndRpc();
+                Logger.Info($"ReleaseNormalSetRole toClientId:{clientId} player:{player?.name}({roleType})", "RpcSetRole");
+            }
+            sender.EndMessage();
+        }
+        doReplace = false;
+    }
+    public static void StartReplace()
+    {
+        senders = new();
+        foreach (var pc in Main.AllPlayerControls)
+        {
+            senders[pc.PlayerId] = new CustomRpcSender($"{pc.name}'s SetRole Sender", SendOption.Reliable, false)
+                    .StartMessage(pc.GetClientId());
+        }
+        StoragedData = new();
+        OverriddenSenderList = new();
+        RolesMap = new();
+        doReplace = true;
+    }
+    public static void EndReplace()
+    {
+        senders = null;
+        OverriddenSenderList = null;
+        RolesMap = null;
+        StoragedData = null;
+    }
+}
