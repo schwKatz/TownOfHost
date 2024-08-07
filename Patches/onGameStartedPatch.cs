@@ -572,6 +572,59 @@ class SelectRolesPatch
         Utils.SyncAllSettings();
         SetColorPatch.IsAntiGlitchDisabled = false;
     }
+    public static void AssignRolesNormal(Dictionary<RoleTypes, int> roleTypesList)
+    {
+        var list = AmongUsClient.Instance.allClients.ToArray()
+        .Where(c => c.Character != null && c.Character.Data != null &&
+                    !c.Character.Data.Disconnected && !c.Character.Data.IsDead)
+        .OrderBy(c => c.Id).Select(c => c.Character.Data).ToList();
+        int adjustedNumImpostors = Main.NormalOptions.GetInt(Int32OptionNames.NumImpostors);
+        Logger.Info($"NomalAssign list: {list.Count}, impostor: {adjustedNumImpostors}", "AssignRoles");
+        AssignRolesForTeam(list, roleTypesList, RoleTeamTypes.Impostor, adjustedNumImpostors, RoleTypes.Impostor);
+        AssignRolesForTeam(list, roleTypesList, RoleTeamTypes.Crewmate, int.MaxValue, RoleTypes.Crewmate);
+    }
+    private static void AssignRolesForTeam(List<NetworkedPlayerInfo> players, Dictionary<RoleTypes, int> roleTypesList, RoleTeamTypes team, int teamMax, RoleTypes defaultRole)
+    {
+        int num = 0;
+        List<RoleTypes> list = new();
+
+        if (roleTypesList != null)
+        {
+            IEnumerable<RoleBehaviour> source = from role in DestroyableSingleton<RoleManager>.Instance.AllRoles
+                                                where role.TeamType == team && !RoleManager.IsGhostRole(role.Role)
+                                                select role;
+            foreach (var roleBehaviour in source)
+            {
+                if (!roleTypesList.TryGetValue(roleBehaviour.Role, out int count)) continue;
+                Logger.Info($"NomalAssign team: {team}, role: {roleBehaviour.Role}, count: {count}", "AssignRolesForTeam");
+                for (int i = 0; i < count; i++)
+                {
+                    list.Add(roleBehaviour.Role);
+                }
+            }
+            AssignRolesFromList(players, teamMax, list, ref num);
+        }
+
+        while (list.Count < players.Count && list.Count + num < teamMax)
+        {
+            list.Add(defaultRole);
+        }
+        Logger.Info($"DefaultAssign team: {team}, role: {defaultRole}, count: {list.Count}", "AssignRolesForTeam");
+        AssignRolesFromList(players, teamMax, list, ref num);
+    }
+    private static void AssignRolesFromList(List<NetworkedPlayerInfo> players, int teamMax, List<RoleTypes> roleList, ref int rolesAssigned)
+    {
+        while (roleList.Count > 0 && players.Count > 0 && rolesAssigned < teamMax)
+        {
+            int index = HashRandom.FastNext(roleList.Count);
+            RoleTypes roleType = roleList[index];
+            roleList.RemoveAt(index);
+            int index2 = HashRandom.FastNext(players.Count);
+            players[index2].Object.RpcSetRole(roleType, false);
+            players.RemoveAt(index2);
+            rolesAssigned++;
+        }
+    }
     private static bool AssignDesyncRole(CustomRoles role, List<PlayerControl> AllPlayers, RoleTypes BaseRole, RoleTypes hostBaseRole = RoleTypes.Crewmate, bool IsImpostorRole = false)
     {
         if (!role.IsPresent()) return false;
