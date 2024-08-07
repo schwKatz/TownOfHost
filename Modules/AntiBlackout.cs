@@ -80,22 +80,27 @@ namespace TownOfHostY
             {
                 remaining = type;
                 list = Main.AllAlivePlayerControls.Where(pc => pc.PlayerId != ExiledPlayerId && IsRecognizeType(pc, type)).ToList();
-                Logger.Info($"SetRoleChange type: {type}, count: {list.Count}, exiled: {ExiledPlayerId}", "AntiBlackout");
+                Logger.Info($"CheckRoleCount type: {remaining}, count: {list.Count}, exiled: {ExiledPlayerId}", "AntiBlackout");
                 if (list.Count > 0) break;
             }
 
             if (remaining <= recognizeType) return;
             recognizeType = remaining;
 
-            Logger.Info($"SetRoleChange count:{list.Count}", "AntiBlackout");
+            Logger.Info($"SetDummyImpostor type: {recognizeType}, count:{list.Count}", "AntiBlackout");
             foreach (var pc in Main.AllPlayerControls.Where(x => !x.Data.Disconnected))
             {
                 if (pc.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
                 if (pc.IsAlive() && pc.GetCustomRole().GetRoleInfo().IsDesyncImpostor) continue;
-                foreach (var desync in list)
+                foreach (var dummy in list)
                 {
-                    desync.RpcSetRoleDesync(RoleTypes.Impostor, pc.GetClientId());
+                    dummy.RpcSetRoleDesync(RoleTypes.Impostor, pc.GetClientId());
                 }
+                foreach (var dead in Main.AllDeadPlayerControls.Where(x => !x.Data.Disconnected))
+                {
+                    dead.RpcSetRoleDesync(RoleTypes.CrewmateGhost, pc.GetClientId());
+                }
+                Logger.Info($"SetDummyImpostor player: {pc?.name}", "AntiBlackout");
             }
             ExiledPlayerId = -1;
         }
