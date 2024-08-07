@@ -696,6 +696,7 @@ class SelectRolesPatch
         }
         return count;
     }
+}
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSetRole)), HarmonyPriority(Priority.High)]
     public class RpcSetRoleReplacer
     {
@@ -856,4 +857,3 @@ class SelectRolesPatch
             StoragedData = null;
         }
     }
-}

@@ -841,7 +841,7 @@ namespace TownOfHostY
     {
         public static bool Prefix(PlayerControl __instance, ref RoleTypes roleType, bool canOverrideRole)
         {
-            if (SelectRolesPatch.RpcSetRoleReplacer.DoReplace()) return true;
+            if (RpcSetRoleReplacer.DoReplace()) return true;
 
             var target = __instance;
             var targetName = __instance.GetNameWithRole();
