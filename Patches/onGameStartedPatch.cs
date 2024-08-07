@@ -139,14 +139,17 @@ class ChangeRoleSettings
 class SelectRolesPatch
 {
     private static bool AssignedStrayWolf = false;
-    public static void Prefix()
+    public static bool Prefix()
     {
-        if (!AmongUsClient.Instance.AmHost) return;
+        if (!AmongUsClient.Instance.AmHost) return false;
         //CustomRpcSenderとRpcSetRoleReplacerの初期化
         RpcSetRoleReplacer.StartReplace();
 
         RoleAssignManager.SelectAssignRoles();
 
+        Dictionary<RoleTypes, int> roleTypesList = new();
+
+        //Desync系の役職割り当て
         if (Options.IsCCMode)
         {
             if (CatchCat.Option.T_CanUseVent.GetBool())
@@ -198,12 +201,9 @@ class SelectRolesPatch
         //}
         else if (Options.CurrentGameMode != CustomGameMode.HideAndSeek)
         {
-            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom };
-            foreach (var roleTypes in RoleTypesList)
+            foreach (var roleTypes in new RoleTypes[] { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom })
             {
-                var roleOpt = Main.NormalOptions.roleOptions;
-                int numRoleTypes = GetRoleTypesCount(roleTypes);
-                roleOpt.SetRoleRate(roleTypes, numRoleTypes, numRoleTypes > 0 ? 100 : 0);
+                roleTypesList.Add(roleTypes, GetRoleTypesCount(roleTypes));
             }
 
             List<PlayerControl> AllPlayers = new();
@@ -237,11 +237,11 @@ class SelectRolesPatch
                 }
             }
         }
-        //以下、バニラ側の役職割り当てが入る
-    }
-    public static void Postfix()
-    {
-        if (!AmongUsClient.Instance.AmHost) return;
+
+        //バニラの役職割り当て
+        AssignRolesNormal(roleTypesList);
+
+        //MODの役職割り当て
         RpcSetRoleReplacer.Release(); //保存していたSetRoleRpcを一気に書く
 
         //Utils.ApplySuffix();
@@ -552,12 +552,6 @@ class SelectRolesPatch
                 }
             }
 
-            RoleTypes[] RoleTypesList = { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom };
-            foreach (var roleTypes in RoleTypesList)
-            {
-                var roleOpt = Main.NormalOptions.roleOptions;
-                roleOpt.SetRoleRate(roleTypes, 0, 0);
-            }
             GameEndChecker.SetPredicateToNormal();
 
             GameOptionsSender.AllSenders.Clear();
@@ -571,6 +565,8 @@ class SelectRolesPatch
         Utils.CountAlivePlayers(true);
         Utils.SyncAllSettings();
         SetColorPatch.IsAntiGlitchDisabled = false;
+
+        return false;
     }
     public static void AssignRolesNormal(Dictionary<RoleTypes, int> roleTypesList)
     {
