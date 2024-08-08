@@ -26,12 +26,26 @@ public sealed class EvilHacker : RoleBase, IImpostor
         player
     )
     {
+        KillCooldown = OptionKillCooldown.GetFloat();
+        AdminCooldown = OptionAdminCooldown.GetFloat();
     }
+    private static OptionItem OptionKillCooldown;
+    private static OptionItem OptionAdminCooldown;
+    private static float KillCooldown;
+    private static float AdminCooldown;
+    public float CalculateKillCooldown() => KillCooldown;
+    public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.PhantomCooldown = AdminCooldown;
+
     enum OptionName
     {
+        EvilHackerAdminCooldown,
     }
     private static void SetUpOptionItem()
     {
+        OptionKillCooldown = FloatOptionItem.Create(RoleInfo, 10, GeneralOption.KillCooldown, new(2.5f, 180f, 2.5f), 30f, false)
+                .SetValueFormat(OptionFormat.Seconds);
+        OptionAdminCooldown = FloatOptionItem.Create(RoleInfo, 11, OptionName.EvilHackerAdminCooldown, new(2.5f, 180f, 2.5f), 30f, false)
+                .SetValueFormat(OptionFormat.Seconds);
     }
     public override bool OnCheckVanish()
     {
