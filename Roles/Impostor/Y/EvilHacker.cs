@@ -80,7 +80,18 @@ public sealed class EvilHacker : RoleBase, IImpostor
         Main.AllPlayerSpeed[Player.PlayerId] = Main.MinSpeed;
         Player.MarkDirtySettings();
         Logger.Info($"{Player.GetNameWithRole()} : プレイヤーの足止め", "EvilHacker");
-
+        _ = new LateTask(() =>
+                {
+                    Player.SnapToTeleport(LastPosition);//元の位置へ。
+                    SendRPC(Player.PlayerId);
+                    Utils.NotifyRoles();
+                    // ターゲットの足止め解除
+                    Main.AllPlayerSpeed[Player.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod);
+                    Player.MarkDirtySettings();
+                    Logger.Info($"{Player.GetNameWithRole()} : プレイヤーの足止め解除", "EvilHacker");
+                    LastPosition = default;
+                    Player.RpcResetAbilityCooldown();
+                }, 2.5f, "ReturnPosition");
         return true;
     }
     private void SendRPC(byte targetId)
