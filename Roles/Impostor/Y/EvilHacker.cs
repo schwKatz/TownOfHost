@@ -67,6 +67,19 @@ public sealed class EvilHacker : RoleBase, IImpostor
     }
     public override bool OnCheckVanish()
     {
+        // 移動前の位置を保持
+        LastPosition = Player.GetTruePosition();
+
+        // プレイヤーの位置を指定された位置に強制的に変更
+        var teleportPosition = GetTeleportPosition();
+        Player.SnapToTeleport(teleportPosition);
+        Utils.NotifyRoles();
+
+        // プレイヤーの足止め
+        Main.AllPlayerSpeed[Player.PlayerId] = Main.MinSpeed;
+        Player.MarkDirtySettings();
+        Logger.Info($"{Player.GetNameWithRole()} : プレイヤーの足止め", "EvilHacker");
+
         return true;
     }
 }
