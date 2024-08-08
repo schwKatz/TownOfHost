@@ -70,28 +70,33 @@ public sealed class EvilHacker : RoleBase, IImpostor
         // 移動前の位置を保持
         LastPosition = Player.GetTruePosition();
 
-        // プレイヤーの位置を指定された位置に強制的に変更
-        var teleportPosition = GetTeleportPosition();
-        Player.SnapToTeleport(teleportPosition);
-        SendRPC(Player.PlayerId);// RPCでクライアントと同期
-        Utils.NotifyRoles();
-
         // プレイヤーの足止め
         Main.AllPlayerSpeed[Player.PlayerId] = Main.MinSpeed;
         Player.MarkDirtySettings();
         Logger.Info($"{Player.GetNameWithRole()} : プレイヤーの足止め", "EvilHacker");
+
+        //透明化後に指定された位置へ強制移動する。
         _ = new LateTask(() =>
-                {
-                    Player.SnapToTeleport(LastPosition);//元の位置へ。
-                    SendRPC(Player.PlayerId);
-                    Utils.NotifyRoles();
-                    // ターゲットの足止め解除
-                    Main.AllPlayerSpeed[Player.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod);
-                    Player.MarkDirtySettings();
-                    Logger.Info($"{Player.GetNameWithRole()} : プレイヤーの足止め解除", "EvilHacker");
-                    LastPosition = default;
-                    Player.RpcResetAbilityCooldown();
-                }, 2.5f, "ReturnPosition");
+            {
+                var teleportPosition = GetTeleportPosition();
+                Player.SnapToTeleport(teleportPosition);
+                SendRPC(Player.PlayerId);
+                Utils.NotifyRoles();
+
+                _ = new LateTask(() =>
+                    {
+                        Player.SnapToTeleport(LastPosition);//元の位置へ。
+                        SendRPC(Player.PlayerId);
+                        Utils.NotifyRoles();
+
+                        // ターゲットの足止め解除
+                        Main.AllPlayerSpeed[Player.PlayerId] = Main.RealOptionsData.GetFloat(FloatOptionNames.PlayerSpeedMod);
+                        Player.MarkDirtySettings();
+                        Logger.Info($"{Player.GetNameWithRole()} : プレイヤーの足止め解除", "EvilHacker");
+                        LastPosition = default;
+                        Player.RpcResetAbilityCooldown();
+                    }, 2.5f, "ReturnPosition");
+            }, 2.5f, "Warp");
         return true;
     }
     private void SendRPC(byte targetId)
