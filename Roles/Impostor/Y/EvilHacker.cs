@@ -35,7 +35,7 @@ public sealed class EvilHacker : RoleBase, IImpostor
     private static float AdminCooldown;
     public float CalculateKillCooldown() => KillCooldown;
     public override void ApplyGameOptions(IGameOptions opt) => AURoleOptions.PhantomCooldown = AdminCooldown;
-
+    private Vector2 LastPosition; // 元の位置を保存する変数
     enum OptionName
     {
         EvilHackerAdminCooldown,
@@ -46,6 +46,24 @@ public sealed class EvilHacker : RoleBase, IImpostor
                 .SetValueFormat(OptionFormat.Seconds);
         OptionAdminCooldown = FloatOptionItem.Create(RoleInfo, 11, OptionName.EvilHackerAdminCooldown, new(2.5f, 180f, 2.5f), 30f, false)
                 .SetValueFormat(OptionFormat.Seconds);
+    }
+    private Vector2 GetTeleportPosition()
+    {
+        // マップに応じた座標を選択
+        switch ((MapNames)Main.NormalOptions.MapId)
+        {
+            case MapNames.Airship:
+                return new Vector2(-22.13f, 0.56f);
+            case MapNames.Skeld:
+                return new Vector2(2.96f, -8.62f);
+            case MapNames.Polus:
+                return new Vector2(22.63f, -21.75f);
+            case MapNames.Mira:
+                return new Vector2(22.22f, 18.77f);
+            default:
+                // デフォルトの座標（必要に応じて設定）
+                return new Vector2(0f, 0f);
+        }
     }
     public override bool OnCheckVanish()
     {
