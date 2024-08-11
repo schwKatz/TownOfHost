@@ -19,7 +19,7 @@ namespace TownOfHostY
         ///<summary>
         ///追放処理を上書きするかどうか
         ///</summary>
-        public static bool OverrideExiledPlayer => Options.NoGameEnd.GetBool() || Jackal.RoleInfo.IsEnable|| StrayWolf.RoleInfo.IsEnable || Options.IsCCMode;
+        public static bool OverrideExiledPlayer => Options.NoGameEnd.GetBool() || Jackal.RoleInfo.IsEnable || StrayWolf.RoleInfo.IsEnable || Options.IsCCMode;
 
         public static bool IsCached { get; private set; } = false;
         private static Dictionary<byte, (bool isDead, bool Disconnected)> isDeadCache = new();
@@ -60,7 +60,9 @@ namespace TownOfHostY
         {
             if (pc == null) return false;
             var customRole = pc.GetCustomRole();
-            var countType = customRole.GetRoleInfo().CountType;
+            var countType = PlayerState.GetByPlayerId(pc.PlayerId).CountType;
+            //var countType = customRole.GetRoleInfo().CountType;
+            Logger.Info($"RecognizeType {pc?.name}, {countType}, {customRole}({customRole.GetRoleInfo().CountType})", "AntiBlackout");
             return type switch
             {
                 RecognizeType.Impostor => countType == CountTypes.Impostor && customRole != CustomRoles.StrayWolf,
