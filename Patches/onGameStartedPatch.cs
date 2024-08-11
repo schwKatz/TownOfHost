@@ -148,11 +148,10 @@ class SelectRolesPatch
 
         RoleAssignManager.SelectAssignRoles();
 
-        Dictionary<RoleTypes, int> roleTypesList = new();
-
         var assignedNum = 0;
         var assignedNumImpostors = 0;
 
+        Dictionary<RoleTypes, int> roleTypesList = new();
         foreach (var roleTypes in new RoleTypes[] { RoleTypes.Scientist, RoleTypes.Engineer, RoleTypes.Tracker, RoleTypes.Noisemaker, RoleTypes.Shapeshifter, RoleTypes.Phantom })
         {
             roleTypesList.Add(roleTypes, GetRoleTypesCount(roleTypes));
