@@ -72,7 +72,7 @@ public sealed class Elder : RoleBase
             return true;
         }
 
-        // キルガードする。
+        // キルガードする。        
         if (!IsUseGuard)
         {
             info.CanKill = false;
@@ -89,16 +89,8 @@ public sealed class Elder : RoleBase
     }
     public override void OnFixedUpdate(PlayerControl player)
     {
-        // 長老が死んでいる場合は役職変化を行う
-        if (!Player.IsAlive())
-        {
-            ChangeRole();
-            return;
-        }
-
-        // 老衰設定でない場合は以下の処理を行わない
-        if (!DiaInLife) return;
-
+        // 老衰設定でない、または長老が死んでいる時は関係ない
+        if (!DiaInLife || !Player.IsAlive()) return;
         // 会議時間中に変化しない設定の場合はタスクターン以外返す
         if (!GameStates.IsInTask && !TimeMoveMeeting) return;
 
@@ -109,16 +101,14 @@ public sealed class Elder : RoleBase
         if (Lifetime <= 0f)
         {
             // プレイヤーを死亡させる
-            MyState.DeathReason = CustomDeathReason.Senility; // 死因：老衰
+            MyState.DeathReason = CustomDeathReason.Senility; //死因：老衰
             Player.RpcMurderPlayer(Player);
             // タスクが終わっていない場合、クルーメイトにする
-            if (!IsTaskFinished)
-            {
+            if (!IsTaskFinished) {
                 ChangeRole();
             }
         }
     }
-
     public void ChangeRole()
     {
         var crewPlayers = Main.AllAlivePlayerControls.Where(player => player.Is(CustomRoleTypes.Crewmate));
