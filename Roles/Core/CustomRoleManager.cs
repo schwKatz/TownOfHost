@@ -490,6 +490,7 @@ public enum CustomRoles
     Charger,
     Chaser,
     CharismaStar,
+    Telekinetic,
 
     Godfather,
     Janitor,

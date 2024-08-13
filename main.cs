@@ -286,6 +286,7 @@ namespace TownOfHostY
         NotGather,
         Senility,
         CounterAttack,
+        Telekinesis,
 
         Win,
         etc = -1
