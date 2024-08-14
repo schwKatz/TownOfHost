@@ -491,6 +491,7 @@ public enum CustomRoles
     Chaser,
     CharismaStar,
     EvilHacker,
+    Telekinetic,
 
     Godfather,
     Janitor,
