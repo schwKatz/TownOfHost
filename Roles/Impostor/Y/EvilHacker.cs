@@ -15,10 +15,14 @@ public sealed class EvilHacker : RoleBase, IImpostor
             CustomRoles.EvilHacker,
             () => RoleTypes.Phantom,
             CustomRoleTypes.Impostor,
-            //(int)Options.offsetId.ImpSpecial + 1900,
-            (int)Options.offsetId.ImpY + 1900,
+            (int)Options.offsetId.ImpSpecial + 300,
+            //(int)Options.offsetId.ImpY + 2000,
             SetUpOptionItem,
-            "イビルハッカー"
+            "イビルハッカー",
+            assignInfo: new(CustomRoles.EvilHacker, CustomRoleTypes.Impostor)
+            {
+                IsInitiallyAssignableCallBack = () => (MapNames)Main.NormalOptions.MapId is not MapNames.Fungle
+            }
         );
     public EvilHacker(PlayerControl player)
     : base(
