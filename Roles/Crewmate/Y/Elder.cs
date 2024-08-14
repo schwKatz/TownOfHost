@@ -1,7 +1,8 @@
 using System.Linq;
-using AmongUs.GameOptions;
-using TownOfHostY.Roles.Core;
 using UnityEngine;
+using AmongUs.GameOptions;
+
+using TownOfHostY.Roles.Core;
 
 namespace TownOfHostY.Roles.Crewmate;
 public sealed class Elder : RoleBase
@@ -57,6 +58,7 @@ public sealed class Elder : RoleBase
         IsUseGuard = false;
     }
 
+    // キル時の処理
     public override bool OnCheckMurderAsTarget(MurderInfo info)
     {
         (var killer, var target) = info.AttemptTuple;
@@ -87,6 +89,27 @@ public sealed class Elder : RoleBase
         ChangeRole();
         return true;
     }
+    // 追放時の処理
+    public override void OnExileWrapUp(NetworkedPlayerInfo exiled, ref bool DecidedWinner)
+    {
+        // 長老でない時は関係ない
+        if (Utils.GetPlayerInfoById(Player.PlayerId) != exiled) return;
+        // タスクが完了している時は何もない
+        if (PlayerState.GetByPlayerId(Player.PlayerId).GetTaskState().IsTaskFinished) return;
+
+        _ = new LateTask(() => ChangeRole(), 0.5f, "ElderChangeRoleByExile");
+    }
+    // 道連れ時の処理
+    public static void DeadByRevenge(byte targetId)
+    {
+        // 長老でない時は関係ない
+        if (Utils.GetPlayerById(targetId).Is(CustomRoles.Elder)) return;
+        // タスクが完了している時は何もない
+        if (PlayerState.GetByPlayerId(targetId).GetTaskState().IsTaskFinished) return;
+
+        ChangeRole();
+    }
+    // 寿命の処理
     public override void OnFixedUpdate(PlayerControl player)
     {
         // 老衰設定でない、または長老が死んでいる時は関係ない
@@ -109,7 +132,8 @@ public sealed class Elder : RoleBase
             }
         }
     }
-    public void ChangeRole()
+
+    public static void ChangeRole()
     {
         var crewPlayers = Main.AllAlivePlayerControls.Where(player => player.Is(CustomRoleTypes.Crewmate));
         foreach (var player in crewPlayers)
