@@ -2,6 +2,7 @@ using AmongUs.Data;
 using HarmonyLib;
 using TownOfHostY.Roles.AddOns.Common;
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Crewmate;
 using TownOfHostY.Roles.Neutral;
 
 namespace TownOfHostY
@@ -143,6 +144,7 @@ namespace TownOfHostY
                         Lawyer.ChangeRoleByTarget(player);
                         if (roleClass is Jackal jackal)
                             Jackal.CheckPromoted();
+                        Elder.DeadByRevenge(playerId);
                     });
                     Main.AfterMeetingDeathPlayers.Clear();
                 }, 0.5f, "AfterMeetingDeathPlayers Task");
