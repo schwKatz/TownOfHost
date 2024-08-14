@@ -20,6 +20,7 @@ public sealed class JSidekick : RoleBase, IKiller, ISchrodingerCatOwner
             SetupOptionItem,
             "サイドキック",
             "#00b4eb",
+            true,
             countType: CountTypes.Jackal
         );
     public JSidekick(PlayerControl player)

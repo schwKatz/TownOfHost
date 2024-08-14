@@ -19,13 +19,13 @@ namespace TownOfHostY
         ///<summary>
         ///追放処理を上書きするかどうか
         ///</summary>
-        public static bool OverrideExiledPlayer => Options.NoGameEnd.GetBool() || Jackal.RoleInfo.IsEnable|| StrayWolf.RoleInfo.IsEnable || Options.IsCCMode;
+        public static bool OverrideExiledPlayer => Options.NoGameEnd.GetBool() || Jackal.RoleInfo.IsEnable || StrayWolf.RoleInfo.IsEnable || Options.IsCCMode;
 
         public static bool IsCached { get; private set; } = false;
         private static Dictionary<byte, (bool isDead, bool Disconnected)> isDeadCache = new();
         private readonly static LogHandler logger = Logger.Handler("AntiBlackout");
 
-        private static CountTypes recognizeImpostor = CountTypes.Impostor;
+        private static RecognizeType recognizeType = RecognizeType.Impostor;
         public static int ExiledPlayerId = -1;
 
         public static void SetIsDead(bool doSend = true, [CallerMemberName] string callerMethodName = "")
@@ -49,31 +49,60 @@ namespace TownOfHostY
             IsCached = true;
             if (doSend) SendGameData();
         }
+        private enum RecognizeType
+        {
+            Impostor,
+            StrayWolf,
+            Jackal,
+            Pirate,
+        }
+        private static bool IsRecognizeType(PlayerControl pc, RecognizeType type)
+        {
+            if (pc == null) return false;
+            var customRole = pc.GetCustomRole();
+            var countType = PlayerState.GetByPlayerId(pc.PlayerId).CountType;
+            //var countType = customRole.GetRoleInfo().CountType;
+            Logger.Info($"RecognizeType {pc?.name}, {countType}, {customRole}({customRole.GetRoleInfo().CountType})", "AntiBlackout");
+            return type switch
+            {
+                RecognizeType.Impostor => countType == CountTypes.Impostor && customRole != CustomRoles.StrayWolf,
+                RecognizeType.StrayWolf => countType == CountTypes.Impostor && customRole == CustomRoles.StrayWolf,
+                RecognizeType.Jackal => countType == CountTypes.Jackal,
+                RecognizeType.Pirate => countType == CountTypes.Pirate,
+                _ => false,
+            };
+        }
         private static void SetRoleChange()
         {
             if (CustomWinnerHolder.WinnerTeam != CustomWinner.Default) return;
 
-            CountTypes countType = CountTypes.None;
+            RecognizeType remaining = RecognizeType.Impostor;
             List<PlayerControl> list = new();
-            foreach (var type in new List<CountTypes>{ CountTypes.Impostor, CountTypes.Jackal, CountTypes.Pirate })
+            foreach (RecognizeType type in Enum.GetValues(typeof(RecognizeType)))
             {
-                list = Main.AllAlivePlayerControls.Where(x => x.GetCustomRole().GetRoleInfo().CountType == type && x.PlayerId != ExiledPlayerId).ToList();
-                Logger.Info($"SetRoleChange type: {type}, count: {list.Count}, exiled: {ExiledPlayerId}", "AntiBlackout");
+                remaining = type;
+                list = Main.AllAlivePlayerControls.Where(pc => pc.PlayerId != ExiledPlayerId && IsRecognizeType(pc, type)).ToList();
+                Logger.Info($"CheckRoleCount type: {remaining}, count: {list.Count}, exiled: {ExiledPlayerId}", "AntiBlackout");
                 if (list.Count > 0) break;
             }
 
-            if (countType <= recognizeImpostor) return;
-            recognizeImpostor = countType;
+            if (remaining <= recognizeType) return;
+            recognizeType = remaining;
 
-            Logger.Info($"SetRoleChange count:{list.Count}", "AntiBlackout");
+            Logger.Info($"SetDummyImpostor type: {recognizeType}, count:{list.Count}", "AntiBlackout");
             foreach (var pc in Main.AllPlayerControls.Where(x => !x.Data.Disconnected))
             {
                 if (pc.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
                 if (pc.IsAlive() && pc.GetCustomRole().GetRoleInfo().IsDesyncImpostor) continue;
-                foreach (var desync in list)
+                foreach (var dummy in list)
                 {
-                    desync.RpcSetRoleDesync(RoleTypes.Impostor, pc.GetClientId());
+                    dummy.RpcSetRoleDesync(RoleTypes.Impostor, pc.GetClientId());
                 }
+                foreach (var dead in Main.AllDeadPlayerControls.Where(x => !x.Data.Disconnected))
+                {
+                    dead.RpcSetRoleDesync(RoleTypes.CrewmateGhost, pc.GetClientId());
+                }
+                Logger.Info($"SetDummyImpostor player: {pc?.name}", "AntiBlackout");
             }
             ExiledPlayerId = -1;
         }
@@ -144,7 +173,7 @@ namespace TownOfHostY
             if (isDeadCache == null) isDeadCache = new();
             isDeadCache.Clear();
             IsCached = false;
-            recognizeImpostor = CountTypes.Impostor;
+            recognizeType = RecognizeType.Impostor;
         }
     }
 }
