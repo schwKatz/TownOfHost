@@ -440,6 +440,11 @@ public static class NumberOptionPatch
         }
         return true;
     }
+    [HarmonyPatch(nameof(NumberOption.AdjustButtonsActiveState)), HarmonyPrefix]
+    private static bool AdjustButtonsActiveStatePrefix(NumberOption __instance)
+    {
+        return false;
+    }
     [HarmonyPatch(nameof(NumberOption.FixedUpdate)), HarmonyPrefix]
     private static bool FixedUpdatePrefix(NumberOption __instance)
     {
@@ -547,6 +552,11 @@ public static class StringOptionPatch
             return false;
         }
         return true;
+    }
+    [HarmonyPatch(nameof(StringOption.AdjustButtonsActiveState)), HarmonyPrefix]
+    private static bool AdjustButtonsActiveStatePrefix(StringOption __instance)
+    {
+        return false;
     }
     [HarmonyPatch(nameof(StringOption.FixedUpdate)), HarmonyPrefix]
     private static bool FixedUpdatePrefix(StringOption __instance)
