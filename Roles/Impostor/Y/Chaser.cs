@@ -15,8 +15,7 @@ public sealed class Chaser : RoleBase, IImpostor, ISidekickable
             CustomRoles.Chaser,
             () => RoleTypes.Shapeshifter,
             CustomRoleTypes.Impostor,
-            (int)Options.offsetId.ImpSpecial + 100,
-            //(int)Options.offsetId.ImpY + 1800,
+            (int)Options.offsetId.ImpY + 1800,
             SetUpOptionItem,
             "チェイサー"
         );

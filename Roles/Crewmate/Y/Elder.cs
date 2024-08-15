@@ -14,8 +14,7 @@ public sealed class Elder : RoleBase
             CustomRoles.Elder,
             () => RoleTypes.Crewmate,
             CustomRoleTypes.Crewmate,
-            (int)Options.offsetId.CrewSpecial + 0,
-            //(int)Options.offsetId.CrewY + 1900,
+            (int)Options.offsetId.CrewY + 1900,
             SetupOptionItem,
             "長老",
             "#2B6442"//千歳緑

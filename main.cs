@@ -52,15 +52,16 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "517.23.25";
-        public const string PluginSubVersion = "β";
-        public const string PluginVersionName = "Ex.ChangeRole";
+        public const string PluginVersion = "518.24";
         // サポートされている最低のAmongUsバージョン
         public static readonly string LowestSupportedVersion = "2024.6.18";
         // このバージョンのみで公開ルームを無効にする場合
         public static readonly bool IsPublicAvailableOnThisVersion = false;
         // プレリリースかどうか
         public static bool IsPrerelease { get; } = false;
+        public const string PluginSubVersion = "β";
+        public const string PluginVersionName = "";
+
         public Harmony Harmony { get; } = new Harmony(PluginGuid);
         public static Version version = Version.Parse(PluginVersion);
         public static BepInEx.Logging.ManualLogSource Logger;

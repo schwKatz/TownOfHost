@@ -81,12 +81,11 @@ namespace TownOfHostY
             static void Postfix(VersionShower __instance)
             {
                 TMPTemplate.SetBase(__instance.text);
-                Main.credentialsText = $"<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginVersion}{Main.PluginSubVersion}";
+                Main.credentialsText = $"<color={Main.ModColor}>{Main.ModName}</color> v{Main.PluginVersion}";
                 if (Main.IsPrerelease)
                 {
-                    Main.credentialsText += $"\r\n<#F39C12>Pre-Release</color>";
+                    Main.credentialsText += $"{Main.PluginSubVersion}\r\n<#F39C12>{Main.PluginVersionName}</color>";
                 }
-                Main.credentialsText += $"\r\n<#F39C12>{Main.PluginVersionName}</color>";
 #if DEBUG
                 Main.credentialsText += $"\r\n<color={Main.ModColor}>{ThisAssembly.Git.Branch}({ThisAssembly.Git.Commit})</color>";
 #endif
