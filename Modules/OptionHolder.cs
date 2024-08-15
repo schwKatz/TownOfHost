@@ -162,6 +162,7 @@ public static class Options
     // ランダムスポーン
     public static OptionItem RandomSpawn;
     public static OptionItem AdditionalSpawn;
+    public static OptionItem AdditionalSpawn_AirshipTAKADA;
     public static OptionItem DisableNearButton;
     public static OptionItem FirstFixedSpawn;
 
@@ -468,6 +469,8 @@ public static class Options
         // ランダムスポーン
         RandomSpawn = BooleanOptionItem.Create((int)offsetId.FeatMap + 100, "RandomSpawn", false, TabGroup.ModMainSettings, false)
             .SetColor(Color.yellow)
+            .SetGameMode(CustomGameMode.All);
+        AdditionalSpawn_AirshipTAKADA = BooleanOptionItem.Create((int)offsetId.FeatMap + 140, "AdditionalSpawn_AirshipTAKADA", false, TabGroup.ModMainSettings, false).SetParent(RandomSpawn)
             .SetGameMode(CustomGameMode.All);
         AdditionalSpawn = BooleanOptionItem.Create((int)offsetId.FeatMap + 110, "AdditionalSpawn", false, TabGroup.ModMainSettings, false).SetParent(RandomSpawn)
             .SetGameMode(CustomGameMode.All);

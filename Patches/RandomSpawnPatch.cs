@@ -185,15 +185,15 @@ namespace TownOfHostY
                 ["CargoBay"] = new(33.5f, -1.5f),
                 ["Records"] = new(20.0f, 10.5f),
                 ["MainHall"] = new(15.5f, 0.0f),
+                ["Cockpit"] = new(-23.5f, -1.6f),
+                ["Security"] = new(5.8f, -10.8f),
+                ["Medical"] = new(29.0f, -6.2f),
                 ["NapRoom"] = new(6.3f, 2.5f),
                 ["Vault"] = new(-8.9f, 12.2f),
                 ["Communications"] = new(-13.3f, 1.3f),
-                ["Cockpit"] = new(-23.5f, -1.6f),
                 ["Armory"] = new(-10.3f, -5.9f),
                 ["ViewingDeck"] = new(-13.7f, -12.6f),
-                ["Security"] = new(5.8f, -10.8f),
                 ["Electrical"] = new(16.3f, -8.8f),
-                ["Medical"] = new(29.0f, -6.2f),
                 ["Toilet"] = new(30.9f, 6.8f),
                 ["Showers"] = new(21.2f, -0.8f)
             };
@@ -203,12 +203,16 @@ namespace TownOfHostY
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray()[3..].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
+                    : Options.AdditionalSpawn_AirshipTAKADA.GetBool()
+                    ? positions.ToArray()[3..11].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
                     : positions.ToArray()[3..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
                 else
                 {
                     return Options.AdditionalSpawn.GetBool()
                     ? positions.ToArray().OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
+                    : Options.AdditionalSpawn_AirshipTAKADA.GetBool()
+                    ? positions.ToArray()[2..11].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value
                     : positions.ToArray()[2..8].OrderBy(_ => Guid.NewGuid()).Take(1).FirstOrDefault().Value;
                 }
             }

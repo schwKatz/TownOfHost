@@ -688,7 +688,8 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "FungleCanUseZiplineFromTop","Can't Use From Top","上からの下降を禁止",
 "FungleCanUseZiplineFromUnder","Can't Use From Under","下からの上昇を禁止",
 "RandomSpawn","Random Spawn","ランダムスポーン","随机出生点","隨機出生點","Случайный спавн","Spawn Aleatório"
-"AdditionalSpawn","Additional Spawn","追加スポーン位置","额外出生点","額外出生點","Дополнительный спавн","Spawn Adicional"
+"AdditionalSpawn","Additional Spawn","スポーン位置を追加する",
+"AdditionalSpawn_AirshipTAKADA","Airship Additional Spawn(Cockpit,Security,Medical)","ｺｯｸﾋﾟｯﾄ･ｾｷｭﾘﾃｨ･診察室を追加する（エアシップ）",
 "DisableNearButton","Exclude Near Button","緊急ボタン近くを除く",
 "FirstFixedSpawn","First Fixed Spawn(Except Airship)","最初の固定スポーン（エアシップ以外）",
 "CommsCamouflage","Camouflage During Comms","コミュサボ時のカモフラージュ","通信破坏时伪装","通訊破壞時所有玩家變成小灰人","Камуфляж при Саботаже Связи","Camuflagem Durante Comunicação"
