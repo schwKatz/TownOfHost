@@ -34,20 +34,24 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         CanWinTheCrewmateBeforeChange = OptionCanWinTheCrewmateBeforeChange.GetBool();
         ChangeTeamWhenExile = OptionChangeTeamWhenExile.GetBool();
         CanSeeKillableTeammate = OptionCanSeeKillableTeammate.GetBool();
+        ConsumeBullet = OptionConsumeBullet.GetBool();
     }
     static OptionItem OptionCanWinTheCrewmateBeforeChange;
     static OptionItem OptionChangeTeamWhenExile;
     static OptionItem OptionCanSeeKillableTeammate;
+    static OptionItem OptionConsumeBullet;
 
     enum OptionName
     {
         CanBeforeSchrodingerCatWinTheCrewmate,
         SchrodingerCatExiledTeamChanges,
         SchrodingerCatCanSeeKillableTeammate,
+        SchrodingerCatConsumeBullet,
     }
     static bool CanWinTheCrewmateBeforeChange;
     static bool ChangeTeamWhenExile;
     static bool CanSeeKillableTeammate;
+    public static bool ConsumeBullet;
 
     /// <summary>
     /// 自分をキルしてきた人のロール
@@ -76,6 +80,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         OptionCanWinTheCrewmateBeforeChange = BooleanOptionItem.Create(RoleInfo, 10, OptionName.CanBeforeSchrodingerCatWinTheCrewmate, false, false);
         OptionChangeTeamWhenExile = BooleanOptionItem.Create(RoleInfo, 11, OptionName.SchrodingerCatExiledTeamChanges, false, false);
         OptionCanSeeKillableTeammate = BooleanOptionItem.Create(RoleInfo, 12, OptionName.SchrodingerCatCanSeeKillableTeammate, false, false);
+        OptionConsumeBullet = BooleanOptionItem.Create(RoleInfo, 13, OptionName.SchrodingerCatConsumeBullet, false, false);
     }
     public override void ApplyGameOptions(IGameOptions opt)
     {
