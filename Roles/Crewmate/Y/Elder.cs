@@ -102,7 +102,7 @@ public sealed class Elder : RoleBase
     public static void DeadByRevenge(byte targetId)
     {
         // 長老でない時は関係ない
-        if (Utils.GetPlayerById(targetId).Is(CustomRoles.Elder)) return;
+        if (!Utils.GetPlayerById(targetId).Is(CustomRoles.Elder)) return;
         // タスクが完了している時は何もない
         if (PlayerState.GetByPlayerId(targetId).GetTaskState().IsTaskFinished) return;
 
