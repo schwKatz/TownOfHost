@@ -52,9 +52,9 @@ namespace TownOfHostY
         // ==========
         //Sorry for many Japanese comments.
         public const string PluginGuid = "com.yumenopai.townofhosty";
-        public const string PluginVersion = "518.24";
+        public const string PluginVersion = "518.24.1";
         // サポートされている最低のAmongUsバージョン
-        public static readonly string LowestSupportedVersion = "2024.6.18";
+        public static readonly string LowestSupportedVersion = "2024.8.13";
         // このバージョンのみで公開ルームを無効にする場合
         public static readonly bool IsPublicAvailableOnThisVersion = false;
         // プレリリースかどうか
