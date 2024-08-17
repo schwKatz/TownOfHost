@@ -87,6 +87,7 @@ public sealed class GrudgeCharger : RoleBase, IImpostor
             killLimit++;
             chargeCount = 0;
         }
+        Logger.Info($"{Player.GetNameWithRole()} : チャージ({chargeCount}/{oneGaugeChargeCount})", "GrudgeCharger");
         Utils.NotifyRoles(SpecifySeer: Player);
 
         killer.SetKillCooldown();

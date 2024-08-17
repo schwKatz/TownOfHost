@@ -347,10 +347,13 @@ namespace TownOfHostY
             }
 
             var phantom = __instance;
+            Logger.Info($"{phantom.GetNameWithRole()} : CheckVanishStart", "CheckVanish");
+
             // 役職の処理
             var role = phantom.GetRoleClass();
             if (role?.OnCheckVanish() == false)
             {
+                Logger.Info($"{phantom.GetNameWithRole()} : OnCheckVanish() == false", "CheckVanish");
 
                 if (phantom.PlayerId != PlayerControl.LocalPlayer.PlayerId &&
                     phantom.IsAlive())

@@ -86,6 +86,7 @@ public sealed class Charger : RoleBase, IImpostor
             killLimit++;
             chargeCount = 0;
         }
+        Logger.Info($"{Player.GetNameWithRole()} : チャージ({chargeCount}/{oneGaugeChargeCount})", "Charger");
         Utils.NotifyRoles(SpecifySeer: Player);
 
         killer.SetKillCooldown();
