@@ -152,6 +152,7 @@ namespace TownOfHostY.Roles.Neutral
 
             //サイドキック⇔ジャッカル色表示
             NameColorManager.Add(jackal.PlayerId, sidekick.PlayerId, jackal.GetRoleColorCode());
+            NameColorManager.RemoveAll(sidekick.PlayerId);
             NameColorManager.Add(sidekick.PlayerId, jackal.PlayerId, jackal.GetRoleColorCode());
 
             PlayerGameOptionsSender.SetDirty(Player.PlayerId);
