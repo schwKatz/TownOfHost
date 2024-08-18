@@ -67,6 +67,7 @@ namespace TownOfHostY.Roles.Neutral
 
         private int canSidekickCount;
         private static List<byte> sidekickTarget = new();
+        public static CustomRoles[] AdditionalRoles => canCreateSidekick ? [CustomRoles.JSidekick] : [];
 
         public SchrodingerCat.TeamType SchrodingerCatChangeTo => SchrodingerCat.TeamType.Jackal;
 

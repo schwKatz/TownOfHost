@@ -326,13 +326,22 @@ public abstract class VoteGuesser : RoleBase
                     if (targetRole != CustomRoles.Crewmate && targetRole != CustomRoles.Impostor &&
                         !roleList.Contains(targetRole)) roleList.Add(targetRole);
                 }
-                if (role == CustomRoles.ChainShifter) inChainShifter = true;
+                foreach (var targetRole in GetAdditionalRole(role))
+                {
+                    if (targetRole != CustomRoles.Crewmate && targetRole != CustomRoles.Impostor &&
+                        !roleList.Contains(targetRole)) roleList.Add(targetRole);
+                }
             }
-            if (inChainShifter)
+        }
+        public CustomRoles[] GetAdditionalRole(CustomRoles role)
             {
-                var role = ChainShifter.ShiftedRole;
-                if (!roleList.Contains(role)) roleList.Add(role);
+            switch (role)
+            {
+                case CustomRoles.ChainShifter: return ChainShifter.AdditionalRoles;
+                case CustomRoles.Jackal: return Jackal.AdditionalRoles;
             }
+
+            return [];
         }
         private void SetDispList()
         {
