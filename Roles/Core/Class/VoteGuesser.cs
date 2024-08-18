@@ -339,6 +339,8 @@ public abstract class VoteGuesser : RoleBase
             {
                 case CustomRoles.ChainShifter: return ChainShifter.AdditionalRoles;
                 case CustomRoles.Jackal: return Jackal.AdditionalRoles;
+                case CustomRoles.Executioner: return Executioner.AdditionalRoles;
+                case CustomRoles.Lawyer: return Lawyer.AdditionalRoles;
             }
 
             return [];
