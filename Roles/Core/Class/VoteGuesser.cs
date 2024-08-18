@@ -321,8 +321,11 @@ public abstract class VoteGuesser : RoleBase
             var inChainShifter = false;
             foreach (CustomRoles role in CustomRolesHelper.AllStandardRoles.Where(r => r.IsEnable()))
             {
-                if (role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse) continue;
-                roleList.Add(role);
+                foreach (var targetRole in role.GetRoleAssignInfo()?.AssignUnitRoles)
+                {
+                    if (targetRole != CustomRoles.Crewmate && targetRole != CustomRoles.Impostor &&
+                        !roleList.Contains(targetRole)) roleList.Add(targetRole);
+                }
                 if (role == CustomRoles.ChainShifter) inChainShifter = true;
             }
             if (inChainShifter)
