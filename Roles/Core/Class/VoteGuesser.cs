@@ -321,15 +321,29 @@ public abstract class VoteGuesser : RoleBase
             var inChainShifter = false;
             foreach (CustomRoles role in CustomRolesHelper.AllStandardRoles.Where(r => r.IsEnable()))
             {
-                if (role is CustomRoles.LastImpostor or CustomRoles.Lovers or CustomRoles.Workhorse) continue;
-                roleList.Add(role);
-                if (role == CustomRoles.ChainShifter) inChainShifter = true;
+                foreach (var targetRole in role.GetRoleAssignInfo()?.AssignUnitRoles)
+                {
+                    if (targetRole != CustomRoles.Crewmate && targetRole != CustomRoles.Impostor &&
+                        !roleList.Contains(targetRole)) roleList.Add(targetRole);
+                }
+                foreach (var targetRole in GetAdditionalRole(role))
+                {
+                    if (targetRole != CustomRoles.Crewmate && targetRole != CustomRoles.Impostor &&
+                        !roleList.Contains(targetRole)) roleList.Add(targetRole);
+                }
             }
-            if (inChainShifter)
+        }
+        public CustomRoles[] GetAdditionalRole(CustomRoles role)
             {
-                var role = ChainShifter.ShiftedRole;
-                if (!roleList.Contains(role)) roleList.Add(role);
+            switch (role)
+            {
+                case CustomRoles.ChainShifter: return ChainShifter.AdditionalRoles;
+                case CustomRoles.Jackal: return Jackal.AdditionalRoles;
+                case CustomRoles.Executioner: return Executioner.AdditionalRoles;
+                case CustomRoles.Lawyer: return Lawyer.AdditionalRoles;
             }
+
+            return [];
         }
         private void SetDispList()
         {
