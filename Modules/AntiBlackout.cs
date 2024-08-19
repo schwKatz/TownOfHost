@@ -11,6 +11,7 @@ using TownOfHostY.Roles.Impostor;
 using TownOfHostY.Roles.Neutral;
 using System.ComponentModel;
 using TownOfHostY.Roles.Core;
+using TownOfHostY.Roles.Core.Interfaces;
 
 namespace TownOfHostY
 {
@@ -86,7 +87,19 @@ namespace TownOfHostY
                 if (list.Count > 0) break;
             }
 
-            if (remaining <= recognizeType) return;
+            if (remaining <= recognizeType)
+            {
+                foreach (var dead in Main.AllDeadPlayerControls.Where(x => !x.Data.Disconnected))
+                {
+                    if (dead.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
+                    if (dead.CanUseSabotageButton())
+                    {
+                        dead.RpcSetRoleDesync(RoleTypes.CrewmateGhost, dead.GetClientId());
+                        Logger.Info($"SetDummyCrewmateGhost player: {dead?.name}", "AntiBlackout");
+                    }
+                }
+                return;
+            }
             recognizeType = remaining;
 
             Logger.Info($"SetDummyImpostor type: {recognizeType}, count:{list.Count}", "AntiBlackout");
@@ -121,6 +134,16 @@ namespace TownOfHostY
             isDeadCache.Clear();
             IsCached = false;
             if (doSend) SendGameData();
+
+            foreach (var dead in Main.AllDeadPlayerControls.Where(x => !x.Data.Disconnected))
+            {
+                if (dead.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
+                if (dead.CanUseSabotageButton())
+                {
+                    dead.RpcSetRoleDesync(RoleTypes.ImpostorGhost, dead.GetClientId());
+                    Logger.Info($"SetDummyImpostorGhost player: {dead?.name}", "AntiBlackout");
+                }
+            }
         }
 
         public static void SendGameData([CallerMemberName] string callerMethodName = "")

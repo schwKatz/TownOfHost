@@ -306,7 +306,7 @@ namespace TownOfHostY.Roles
             }
             return candidateRoleList;
         }
-        private static RoleAssignInfo GetRoleAssignInfo(this CustomRoles role) =>
+        public static RoleAssignInfo GetRoleAssignInfo(this CustomRoles role) =>
             CustomRoleManager.GetRoleInfo(role)?.AssignInfo;
         private static CustomRoleTypes GetAssignRoleType(this CustomRoles role) =>
             role.GetRoleAssignInfo()?.AssignRoleType ?? role.GetCustomRoleTypes();
