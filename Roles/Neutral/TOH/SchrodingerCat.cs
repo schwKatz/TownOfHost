@@ -37,6 +37,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         ConsumeBullet = OptionConsumeBullet.GetBool();
         changeKiller = OptionChangeKiller.GetBool();
         DeadDelay = OptionDeadDelay.GetFloat();
+        RevengeOnExile = OptionRevengeOnExile.GetBool();
     }
     static OptionItem OptionCanWinTheCrewmateBeforeChange;
     static OptionItem OptionChangeTeamWhenExile;
@@ -44,6 +45,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
     static OptionItem OptionConsumeBullet;
     static OptionItem OptionChangeKiller;
     static OptionItem OptionDeadDelay;
+    static OptionItem OptionRevengeOnExile;
 
     enum OptionName
     {
@@ -53,6 +55,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         SchrodingerCatConsumeBullet,
         SchrodingerCatChangeKiller,
         SchrodingerCatDeadDelay,
+        SchrodingerCatRevengeOnExile,
     }
     static bool canWinTheCrewmateBeforeChange;
     static bool changeTeamWhenExile;
@@ -60,6 +63,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
     public static bool ConsumeBullet;
     static bool changeKiller;
     public static float DeadDelay;
+    public static bool RevengeOnExile;
 
     /// <summary>
     /// 自分をキルしてきた人のロール
@@ -92,6 +96,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         OptionChangeKiller = BooleanOptionItem.Create(RoleInfo, 14, OptionName.SchrodingerCatChangeKiller, false, false);
         OptionDeadDelay = FloatOptionItem.Create(RoleInfo, 15, OptionName.SchrodingerCatDeadDelay, new(2.5f, 180f, 2.5f), 15f, false)
             .SetValueFormat(OptionFormat.Seconds);
+        OptionRevengeOnExile = BooleanOptionItem.Create(RoleInfo, 16, OptionName.SchrodingerCatRevengeOnExile, false, false);
     }
     public override void ApplyGameOptions(IGameOptions opt)
     {

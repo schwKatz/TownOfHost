@@ -1001,6 +1001,7 @@ RefusingInfoLong,"(Add-ons):\nOnce he is about to be exiled, refuses to be exile
 "SchrodingerCatConsumeBullet","Consume Bullet for Change","陣営変化時にキル数を消費する","","","",""
 "SchrodingerCatChangeKiller","Cat Change Killer","キルできる猫に変化する","","","",""
 "SchrodingerCatDeadDelay","Dead Delay for Change","キルできる猫に変化する時間","","","",""
+"SchrodingerCatRevengeOnExile","Revenge When Exiled","属性変化前に追放された時に誰かを道連れにする","被驱逐时复仇","","Месть во время изгнания","Vinagança Quando Exilado"
 "ExecutionerCanTargetImpostor","Can Target Impostors","インポスターもターゲットにできる","内鬼阵营玩家可以成为处刑人的目标","劊子手的目標可以是偽裝者陣營的玩家","Может иметь цель изгнать Предателя","Alvo Pode Ser Impostor"
 "ExecutionerCanTargetNeutralKiller","Can Target Neutrals","キルできるニュートラルもターゲットにできる","独立阵营玩家可以成为处刑人的目标","劊子手的目標可以是中立陣營的玩家","Может иметь цель изгнать Нейтрального Убийцу","Pode Ter Alvo Neutro"
 "ExecutionerChangeRolesAfterTargetKilled","Role Changes When Target Dies","ターゲットがキルされた後に変化する役職","处刑人目标死亡后将变为的职业","劊子手的目標被殺後轉變的職業","Роль после смерти его цели","Mudar Classe Caso Alvo Morra"
