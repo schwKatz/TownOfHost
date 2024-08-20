@@ -28,7 +28,8 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
     public SchrodingerCat(PlayerControl player)
     : base(
         RoleInfo,
-        player
+        player,
+        () => HasTask.ForRecompute
     )
     {
         canWinTheCrewmateBeforeChange = OptionCanWinTheCrewmateBeforeChange.GetBool();
@@ -38,6 +39,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         changeKiller = OptionChangeKiller.GetBool();
         DeadDelay = OptionDeadDelay.GetFloat();
         RevengeOnExile = OptionRevengeOnExile.GetBool();
+        taskTrigger = OptionTaskTrigger.GetInt();
     }
     static OptionItem OptionCanWinTheCrewmateBeforeChange;
     static OptionItem OptionChangeTeamWhenExile;
@@ -46,6 +48,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
     static OptionItem OptionChangeKiller;
     static OptionItem OptionDeadDelay;
     static OptionItem OptionRevengeOnExile;
+    static OptionItem OptionTaskTrigger;
 
     enum OptionName
     {
@@ -56,6 +59,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         SchrodingerCatChangeKiller,
         SchrodingerCatDeadDelay,
         SchrodingerCatRevengeOnExile,
+        SchrodingerCatTaskTrigger,
     }
     static bool canWinTheCrewmateBeforeChange;
     static bool changeTeamWhenExile;
@@ -64,6 +68,7 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
     static bool changeKiller;
     public static float DeadDelay;
     public static bool RevengeOnExile;
+    static int taskTrigger;
 
     /// <summary>
     /// 自分をキルしてきた人のロール
@@ -97,6 +102,29 @@ public sealed class SchrodingerCat : RoleBase, IAdditionalWinner, IDeathReasonSe
         OptionDeadDelay = FloatOptionItem.Create(RoleInfo, 15, OptionName.SchrodingerCatDeadDelay, new(2.5f, 180f, 2.5f), 15f, false)
             .SetValueFormat(OptionFormat.Seconds);
         OptionRevengeOnExile = BooleanOptionItem.Create(RoleInfo, 16, OptionName.SchrodingerCatRevengeOnExile, false, false);
+        OptionTaskTrigger = IntegerOptionItem.Create(RoleInfo, 17, OptionName.SchrodingerCatTaskTrigger, new(0, 99, 1), 10, false).SetValueFormat(OptionFormat.Pieces);
+    }
+    private bool KnownImpostor()
+    {
+        return MyTaskState.HasCompletedEnoughCountOfTasks(taskTrigger);
+    }
+    private void CheckAndAddNameColorToImpostors()
+    {
+        if (!KnownImpostor()) return;
+
+        foreach (var impostor in Main.AllPlayerControls.Where(pc => !pc.Data.Disconnected && pc.GetCustomRole().IsImpostor()))
+        {
+            NameColorManager.Add(impostor.PlayerId, Player.PlayerId, Utils.GetRoleColorCode(CustomRoles.SchrodingerCat));
+        }
+    }
+    public override void Add()
+    {
+        CheckAndAddNameColorToImpostors();
+    }
+    public override bool OnCompleteTask()
+    {
+        CheckAndAddNameColorToImpostors();
+        return true;
     }
     public override void ApplyGameOptions(IGameOptions opt)
     {
